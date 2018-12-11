@@ -153,7 +153,7 @@ export function IndexPermission() {
 export function Risk(param) {
   var data = { 'condition': param }
   return request({
-    url: 'tiny-tool/risky-order',
+    url: '/tiny-tool/risky-order',
     method: 'post',
     data
   })
@@ -170,5 +170,68 @@ export function postBlacklist(param) {
     url: '/tiny-tool/blacklist',
     method: 'post',
     data
+  })
+}
+export function postHandleOrder(param) {
+  const data = { 'data': param }
+  return request({
+    url: '/tiny-tool/handle-risky-order',
+    method: 'post',
+    data
+  })
+}
+export function news(data) {
+  return request({
+    url: '/news/index?page=' + data.page + '&pageSize=' + data.pageSize,
+    method: 'get'
+  })
+}
+export function newsCreate(param) {
+  const data = param
+  return request({
+    url: '/news/create',
+    method: 'post',
+    data,
+    transformRequest: [function(data) {
+      let ret = ''
+      for (const it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }],
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}
+export function newsEdit(data) {
+  return request({
+    url: 'news/update?id=' + data.id,
+    method: 'put',
+    data
+  })
+}
+export function deleteNews(id) {
+  return request({
+    url: 'news/delete?id=' + id,
+    method: 'delete'
+  })
+}
+export function newsTop(param) {
+  const data = param
+  return request({
+    url: '/news/top',
+    method: 'post',
+    data,
+    transformRequest: [function(data) {
+      let ret = ''
+      for (const it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }],
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
   })
 }

@@ -54,7 +54,7 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type='primary' class='input' @click='onSubmit(condition)'>查询</el-button>
+            <el-button size="small" type='primary' class='input' @click='onSubmit(condition)'>查询</el-button>
           </el-form-item>
         </el-form>
       </transition>

@@ -56,7 +56,7 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item style="margin-left:6rem">
-            <el-button type='primary' class='input' @click='onSubmit(condition)'>查询</el-button>
+            <el-button size="small" type='primary' class='input' @click='onSubmit(condition)'>查询</el-button>
           </el-form-item>
           </el-form>
       </transition>
@@ -381,15 +381,10 @@ export default {
             }
           }
           this.listLoading = true
-          try {
-            getSales(myform).then(response => {
-              this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
-            })
-          } catch (error) {
+          getSales(myform).then(response => {
             this.listLoading = false
-            this.show2 = false
-          }
+            this.tableData = this.searchTable = response.data.data
+          })
         } else {
           return false
         }

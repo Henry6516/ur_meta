@@ -359,10 +359,12 @@ export function getPaypal(param) {
     data
   })
 }
-export function getEdition() {
+export function getEdition(param) {
+  const data = { 'condition': param }
   return request({
     url: '/tiny-tool/exception-edition',
-    method: 'get'
+    method: 'post',
+    data
   })
 }
 

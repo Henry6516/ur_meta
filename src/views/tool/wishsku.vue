@@ -19,7 +19,7 @@
         <el-input size="small" v-model="condition.shipping" style="width:18.1rem"></el-input>
       </el-form-item>
       <el-form-item style="margin-left:28.5rem">
-        <el-button type="primary" @click="onSubmit()">属性设置
+        <el-button size="small" type="primary" @click="onSubmit()">属性设置
           <i class="el-icon-caret-right"></i>
         </el-button>
       </el-form-item>

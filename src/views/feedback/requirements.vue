@@ -9,13 +9,13 @@
         <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
           <el-form :inline="true" :model="condition">
             <el-form-item>
-              <el-input v-model="condition.name" placeholder="名称"></el-input>
+              <el-input size="small" v-model="condition.name" placeholder="名称"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="default" @click="searchRequirements">查询</el-button>
+              <el-button size="small" type="primary" @click="searchRequirements">查询</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="handleAdd">新增</el-button>
+              <el-button size="small" type="primary" plain @click="handleAdd">新增</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -183,16 +183,16 @@
         <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
           <el-form :inline="true" :model="examine">
             <el-form-item>
-              <el-input v-model="examine.name" placeholder="名称"></el-input>
+              <el-input size="small" v-model="examine.name" placeholder="名称"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="default" @click="searchRequirements">查询</el-button>
+              <el-button size="small" type="primary" @click="searchRequirements">查询</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="success" @click="auditSuccessAll">批量通过</el-button>
+              <el-button size="small" type="success" @click="auditSuccessAll">批量通过</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="danger" @click="auditFailedAll">批量驳回</el-button>
+              <el-button size="small" type="danger" @click="auditFailedAll">批量驳回</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -289,10 +289,10 @@
         <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
           <el-form :inline="true" :model="deal">
             <el-form-item>
-              <el-input v-model="deal.name" placeholder="名称"></el-input>
+              <el-input size="small" v-model="deal.name" placeholder="名称"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="default" @click="searchRequirements">查询</el-button>
+              <el-button size="small" type="primary" @click="searchRequirements">查询</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -714,6 +714,7 @@ export default {
     searchRequirements() {
       this.getRequire(this.activeName)
     },
+    // 新增
     addSubmit() {
       this.addFormVisible = false
       this.addForm.img = this.content.match(/data:([^"]*)/g)
@@ -971,7 +972,9 @@ export default {
       const menu = res.filter(e => e.name === '反馈中心')
       for (let i = 0; i < menu.length; i++) {
         for (let j = 0; j < menu[i].children.length; j++) {
-          this.allMenu = menu[i].children[j].tabs
+          if (menu[i].children[j].tabs.length) {
+            this.allMenu = menu[i].children[j].tabs
+          }
         }
       }
     })

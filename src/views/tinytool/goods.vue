@@ -1,12 +1,12 @@
 <template>
-  <div class="toolbar">
-    <el-form :model='condition' :inline='true' label-width='8.5rem' class='demo-form-inline'>
-      <el-form-item label='业绩归属人' class='input'>
+  <div>
+    <el-form :model='condition' :inline='true' label-width='8.5rem' class='demo-form-inline toolbar'>
+      <el-form-item label='美工1' class='input'>
         <el-select size="small" v-model='condition.possessMan1' clearable>
           <el-option v-for='item in possessMan1' :key='item.username' :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='业绩归属人2' class='input'>
+      <el-form-item label='美工2' class='input'>
         <el-select size="small" v-model='condition.possessMan2' clearable>
           <el-option v-for='item in possessMan2' :key='item.username' :value='item.username'></el-option>
         </el-select>
@@ -34,7 +34,7 @@
           <el-option v-for='item in goodsSkuStatus' :key='item' :value='item'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='责任人' class='input'>
+      <el-form-item label='开发' class='input'>
         <el-select size="small" v-model='condition.salerName' clearable>
           <el-option v-for='item in salerName' :key='item.username' :value='item.username'></el-option>
         </el-select>
@@ -44,7 +44,7 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item class='input' style="margin-left:20.5rem">
-        <el-button type="primary" @click="onSubmit(condition)">搜索</el-button>
+        <el-button size="small" type="primary" @click="onSubmit(condition)">搜索</el-button>
       </el-form-item>
     </el-form>
     <el-row v-loading="listLoading">
@@ -257,9 +257,9 @@ export default {
     getMember().then(response => {
       const possessMan = response.data.data
       this.possessMan1 = this.possessMan2 = possessMan.filter(
-        e => e.position === '开发'
+        e => e.position === '美工'
       )
-      this.salerName = possessMan.filter(e => e.position === '美工')
+      this.salerName = possessMan.filter(e => e.position === '开发')
     })
   }
 }

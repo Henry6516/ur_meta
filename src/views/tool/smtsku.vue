@@ -13,7 +13,7 @@
         <el-input size="small" v-model="condition.price" style="width:18rem"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit()">属性设置
+        <el-button size="small" type="primary" @click="onSubmit()">属性设置
           <i class="el-icon-caret-right"></i>
         </el-button>
       </el-form-item>

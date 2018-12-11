@@ -1,13 +1,13 @@
 <template>
   <el-form :inline="true" :rules="rules" ref="form" :model="condition" class="toolbar" label-width="150px">
     <el-form-item label="订单编号" prop="order_id">
-      <el-input v-model="condition.order_id" placeholder="多个订单用逗号隔开"></el-input>
+      <el-input size="small" v-model="condition.order_id" placeholder="多个订单用逗号隔开"></el-input>
     </el-form-item>
     <el-form-item label="申报价总和" prop="declared_value">
-      <el-input v-model.number="condition.declared_value" placeholder="默认为2(美元)"></el-input>
+      <el-input size="small" v-model.number="condition.declared_value" placeholder="默认为2(美元)"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">确定</el-button>
+      <el-button size="small" type="primary" @click="onSubmit">确定</el-button>
     </el-form-item>
   </el-form>
 </template>

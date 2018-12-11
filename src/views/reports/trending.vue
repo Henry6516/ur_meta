@@ -56,7 +56,7 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item style="margin-left:6rem">
-            <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
+            <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
           </el-form-item>
         </el-form>
       </transition>
@@ -258,7 +258,6 @@ export default {
       const val = this.condition.secDepartment
       // 人员处理
       res = this.allMember
-      debugger
       let per = []
       this.member = []
       this.condition.member = []

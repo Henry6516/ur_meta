@@ -26,7 +26,7 @@
         <el-input size="small" v-model="condition.shipping2" style="width:8.8rem;" placeholder="续件运费"></el-input>
       </el-form-item>
       <el-form-item style="margin-left:50px;">
-        <el-button type="primary" @click="onSubmit(condition)">
+        <el-button size="small" type="primary" @click="onSubmit(condition)">
           属性设置
           <i class="el-icon-caret-right"></i>
         </el-button>

@@ -38,6 +38,7 @@ import operationFee from '../views/settings/operationFee.vue'
 import exchange from '../views/settings/exchange.vue'
 // 反馈中心
 import requirements from '../views/feedback/requirements.vue'
+import news from '../views/feedback/news.vue'
 
 const routes = [{
   path: '/login',
@@ -186,6 +187,11 @@ const routes = [{
       path: '/v1/requirements/index',
       component: requirements,
       name: '需求管理'
+    },
+    {
+      path: '/v1/news/index',
+      component: news,
+      name: '公告管理'
     }
   ]
 },

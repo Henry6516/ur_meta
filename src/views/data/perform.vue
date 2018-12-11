@@ -1,16 +1,16 @@
 <template>
   <div>
     <el-form :model='form' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline toolbar'>
-      <el-form-item label='交易日期' class='input' prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-        <el-date-picker size="small" v-model='form.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions'>
+      <el-form-item label='交易日期' prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
+        <el-date-picker size="small" v-model='form.dateRange' @change="time('exchange')" type='daterange' value-format='yyyy-MM-dd' range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions'>
         </el-date-picker>
       </el-form-item>
-      <el-form-item label='新品日期' class='input'>
-        <el-date-picker size="small" v-model='form.newRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
+      <el-form-item label='新品日期'>
+        <el-date-picker size="small" v-model='form.newRange' @change="time('product')" type='daterange' value-format='yyyy-MM-dd' range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit(condition)">查询</el-button>
+        <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
     <div class="tab" v-show="show" v-loading="listLoading">
@@ -249,6 +249,25 @@ export default {
     }
   },
   methods: {
+    time(name) {
+      if (name === 'exchange') {
+        if (this.form.dateRange !== null) {
+          this.condition.beginDate = this.form.dateRange[0]
+          this.condition.endDate = this.form.dateRange[1]
+        } else {
+          this.condition.beginDate = ''
+          this.condition.endDate = ''
+        }
+      } else if (name === 'product') {
+        if (this.form.newRange !== null) {
+          this.condition.createBeginDate = this.form.newRange[0]
+          this.condition.createEndDate = this.form.newRange[1]
+        } else {
+          this.condition.createBeginDate = ''
+          this.condition.createEndDate = ''
+        }
+      }
+    },
     // 数字排序
     sortNumber1(column, prop, order) {
       const data = this.tableData1
@@ -342,10 +361,6 @@ export default {
         if (valid) {
           this.show = true
           this.listLoading = true
-          this.condition.beginDate = this.form.dateRange[0]
-          this.condition.endDate = this.form.dateRange[1]
-          this.condition.createBeginDate = this.form.newRange[0]
-          this.condition.createEndDate = this.form.newRange[1]
           getPerform(this.condition).then(response => {
             this.listLoading = false
             const tableData = response.data.data
