@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-editor-container" style="height: 1000px;">
+  <div class="dashboard-editor-container" style="height: 1010px;">
     <section>
       <div class="left-box">
         <el-card>
@@ -7,7 +7,7 @@
             <h2>完成度表</h2>
           </div>
         <div class="tabs-container">
-          <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
             <el-tab-pane v-for="(item,index) in permission" :key="index" :label="item.label" :name="item.name"></el-tab-pane>
           </el-tabs>
         </div>
@@ -119,6 +119,7 @@
           height="798" 
           size="small" 
           v-show="show.developer"
+          @sort-change="sortNumber"
           >
           <el-table-column type="index"></el-table-column>
           <el-table-column prop="depart"  label="部门" sortable></el-table-column>
@@ -160,34 +161,42 @@
             <li v-for="(item, index) in newsList" :key="index">
               <div class="post-left-box">
                 <div class="subtitle">
-                  <h2 @click="dialogTopShow(item.id)">{{item.title}}
-                    <!-- <a :href=item.detail target="_blank">{{item.detail}}
-                    </a> -->
+                  <h2 v-html="item.title">
                   </h2>
                   <p style="color:#b2b2b2;">{{item.creator}} &nbsp;&nbsp;| &nbsp;&nbsp;{{item.createDate.substring(0, 16)}}</p>
                 </div>
               </div>
               <div class="post-right-box">
-                <el-button type="text" slot="reference" style="padding:0px;" v-if="item.isTop===1">
-                  <el-badge value="顶"></el-badge>
+                <el-button type="text" @click="dialogTopShow(item.id)">
+                  <i class="el-icon-view" ></i>
                 </el-button>
-                <el-button type="text" @click="handleTop(item.id)" slot="reference" style="padding:0px;" v-else-if="item.isTop===0">
-                  <i>⇧</i>
+                <el-button type="text" slot="reference" style="padding:8px;" v-if='item.isTop==="1"'>
+                  <el-badge value="顶" style="margin-top:-5px;"></el-badge>
                 </el-button>
+                <el-button type="text" @click="handleTop(item.id)" slot="reference" style="padding:10px;" v-else-if='item.isTop==="0"'>
+                  <span>⇧</span>
+                  </el-button>
               </div>
             </li>
           </ul>
-          <el-button type="text" @click="loadMore" class="more" v-text="this.page>=this.newsData.page?'加载更多':'已无更多'"></el-button>
+          <el-button type="text" @click="loadMore" class="more" v-text="this.page>=this.newsData.page?'加载更多':'已无更多'">
+          </el-button>
         </el-card>
-        <el-dialog title="详情" :visible.sync="dialogVisible">
-          <span v-for="(item, index) in newsDetailList" :key="index">
-            <a :href="item.detail" target="_blank">{{item.detail}}</a>
-            {{item.detail}}
-          </span>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-          </span>
+        <el-card class="box-card1">
+          <div slot="header" class="clearfix">
+            <h2>活动栏</h2>
+          </div>
+          <img src="../assets/1.2.jpg" style="height:400px;width:95%;padding:15px;">
+        </el-card>
+        <el-dialog :visible.sync="dialogVisible">
+          <el-form :model="newsDetailList" label-width="80px" ref="detailForm">
+            <el-form-item label="标题：" prop="title">
+              <span v-html="newsDetailList.title" style="font-size:18px;"></span>
+            </el-form-item>
+            <el-form-item label="详情：" prop="detail">
+              <span v-html="newsDetailList.detail" style="font-size:18px;"></span>
+            </el-form-item>
+          </el-form>
         </el-dialog>
     </section>
   </div>
@@ -214,7 +223,6 @@ export default {
       moreData: [],
       newsList: [],
       tableHeight: null,
-      screenHeight: window.innerHeight,
       permission: [],
       shanghaiTable: [],
       zhengzhouTable: [],
@@ -242,6 +250,7 @@ export default {
     dialogTopShow(id) {
       this.dialogVisible = true
       this.newsDetailList = this.newsList.filter(e => e.id === id)
+      this.newsDetailList = this.newsDetailList[0]
     },
     // 置顶
     handleTop(id) {
@@ -326,26 +335,35 @@ export default {
 }
 .box-card{
   width: 30%;
-  height: 900px;
+  height: 400px;
   overflow-y: scroll;
   float: right;
   margin-top:3%;
   .post-left-box{
     position: relative;
     float: left;
-    //width: 400px;
+    width: 400px;
+    h2{
+      text-overflow:ellipsis; 
+      white-space:nowrap;
+      overflow: hidden;
+    }
   }
   .post-right-box{
     position: relative;
     float: right;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-right: 10px;
     i{
+      margin-right: -15px;
+      font-size: 20px;
+    }
+    span{
       margin-right: 5px;
       font-style: normal;
       font-size: 24px;
     }
-    i:hover{
+    span:hover{
       color: red;
     }
   }
@@ -358,6 +376,12 @@ export default {
   .more{
     margin-left: 50%;
   }
+}
+.box-card1{
+  width: 30%;
+  height: 490px;
+  float: right;
+  margin-top: 10px;
 }
 a {
   color: #428bac;

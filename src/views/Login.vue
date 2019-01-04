@@ -1,6 +1,6 @@
 <template>
   <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
-    <h3 class="title">系统登录</h3>
+    <h3 class="title">UR管理中心</h3>
     <el-form-item prop="username">
       <el-input type="text" v-model="ruleForm2.username" auto-complete="off" placeholder="账号"></el-input>
     </el-form-item>
@@ -45,7 +45,6 @@ export default {
     getCookie() {
       if (document.cookie.length > 0) {
         var arr = document.cookie.split(';')
-        console.log(arr)
         for (let i = 0; i < arr.length; i++) {
           var arr2 = arr[i].split('=')
           if (arr2[0] === 'userName') {

@@ -55,7 +55,7 @@ export function getMonthDate(dateType) {
   }
   if (dateType === 'previousMonth') {
     m = m - 1
-    if (m < 10) {
+    if (m < 10 && m > 0) {
       m = '0' + m
     }
     if (m === 0) {

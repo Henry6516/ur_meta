@@ -12,10 +12,10 @@
               <el-input size="small" v-model="condition.name" placeholder="名称"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button size="small" type="primary" @click="searchRequirements">查询</el-button>
+              <el-button size="small" plain @click="searchRequirements">查询</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button size="small" type="primary" plain @click="handleAdd">新增</el-button>
+              <el-button size="small" plain @click="handleAdd">新增</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -186,13 +186,13 @@
               <el-input size="small" v-model="examine.name" placeholder="名称"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button size="small" type="primary" @click="searchRequirements">查询</el-button>
+              <el-button size="small" plain @click="searchRequirements">查询</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button size="small" type="success" @click="auditSuccessAll">批量通过</el-button>
+              <el-button size="small" plain @click="auditSuccessAll">批量通过</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button size="small" type="danger" @click="auditFailedAll">批量驳回</el-button>
+              <el-button size="small" plain @click="auditFailedAll">批量驳回</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -292,7 +292,7 @@
               <el-input size="small" v-model="deal.name" placeholder="名称"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button size="small" type="primary" @click="searchRequirements">查询</el-button>
+              <el-button size="small" plain @click="searchRequirements">查询</el-button>
             </el-form-item>
           </el-form>
         </el-col>

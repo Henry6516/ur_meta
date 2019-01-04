@@ -27,14 +27,40 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>我的消息</el-dropdown-item>
-            <el-dropdown-item @click.native="imagecropperShow=true">设置头像</el-dropdown-item>
+            <el-dropdown-item @click.native="dialogVisible=true">设置头像</el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <span class="el-dropdown-link userinfo-inner">
-          <img :src="image" />
+          <img :src="image">
         </span>
       </el-col>
+      <el-dialog :visible.sync="dialogVisible">
+        <div class="pan-item" @click="imagecropperShow = true" :style="{zIndex:zIndex,height:height,width:width}">
+          <div class="pan-info">
+            <div class="pan-info-roles-container">
+              <slot></slot>
+            </div>
+          </div>
+          <img class="pan-thumb" :src="image">
+          <el-button round plain type="success" style="font-size:18px;margin-left:130px;margin-top:40px;">
+            修改头像
+          </el-button>
+        </div>
+        <hr style="border:1px solid #f0f0f0;">
+        <el-form :inline="true" :model="ValidateForm" status-icon ref="ValidateForm" class="demo-dynamic">
+          <el-form-item prop="email" label="邮箱" :rules="[
+          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+          { type:'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+          ]" class="lab">
+            <el-input v-model="ValidateForm.email"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="submit('ValidateForm')">提交</el-button>
+        </span>
+      </el-dialog>
       <image-cropper ref="cropper" :width="300" :height="300" :url="url" @close='close' @crop-upload-success="cropSuccess" langType="en" :key="imagecropperKey" v-show="imagecropperShow"></image-cropper>
     </el-col>
     <el-col :span="24" class="main">
@@ -68,8 +94,26 @@ import ImageCropper from '@/components/ImageCropper'
 export default {
   name: 'avatarUpload-demo',
   components: { ImageCropper },
+  props: {
+    zIndex: {
+      type: Number,
+      default: 1
+    },
+    width: {
+      type: String,
+      default: '100px'
+    },
+    height: {
+      type: String,
+      default: '100px'
+    }
+  },
   data() {
     return {
+      ValidateForm: {
+        email: ''
+      },
+      dialogVisible: false,
       activeIndex: '',
       allMenu: [],
       asideMenu: { position: 0, menu: [{ name: '', children: [] }] },
@@ -120,6 +164,16 @@ export default {
     }
   },
   methods: {
+    submit(formName) {
+      this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+    },
     generateIndex(head, tail) {
       if (head < 0) {
         return String(tail + 1)
@@ -166,8 +220,47 @@ export default {
 }
 </script>
 
+<style>
+.lab .el-form-item__label{
+  font-size: 18px;
+  color: #969696;
+  margin-top: -20px;
+  margin-right: 70px;
+}
+</style>
+
 <style lang="scss" scoped >
 @import "~scss_vars";
+.pan-item {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.pan-info-roles-container {
+  padding: 20px;
+  text-align: center;
+}
+.pan-thumb {
+  width: 100%;
+  height: 100%;
+  background-size: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+}
+.pan-info {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.05);
+}
 @media (max-width: 1152px){
   .header {
     height: 5rem;

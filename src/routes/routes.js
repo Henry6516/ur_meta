@@ -15,6 +15,7 @@ import stock from '../views/data/stock.vue'
 import pcost from '../views/data/pcost.vue'
 import perform from '../views/data/perform.vue'
 import psales from '../views/data/psales.vue'
+import saleschange from '../views/data/saleschange.vue'
 // 销售工具
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
@@ -39,6 +40,9 @@ import exchange from '../views/settings/exchange.vue'
 // 反馈中心
 import requirements from '../views/feedback/requirements.vue'
 import news from '../views/feedback/news.vue'
+// 产品中心
+import productRecommend from '../views/productDevelop/productRecommend.vue'
+import productApprove from '../views/productDevelop/productApprove.vue'
 
 const routes = [{
   path: '/login',
@@ -124,6 +128,11 @@ const routes = [{
       path: '/v1/perform/sales',
       component: psales,
       name: '销售变化表'
+    },
+    {
+      path: '/v1/data-center/sales-change',
+      component: saleschange,
+      name: '产品销售变化'
     }
   ]
 },
@@ -255,6 +264,24 @@ const routes = [{
       path: '/v1/tiny-tool/exception-edition',
       component: edition,
       name: '异常改订单'
+    }
+  ]
+},
+{
+  path: '/v1/oa-goods/list',
+  component: Home,
+  name: '产品中心',
+  iconCls: 'el-icon-message',
+  children: [
+    {
+      path: '/v1/oa-goods/list',
+      component: productRecommend,
+      name: '产品开发' 
+    },
+    {
+      path: '/v1/check/check-list',
+      component: productApprove,
+      name: '产品审批'
     }
   ]
 },

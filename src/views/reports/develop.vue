@@ -42,8 +42,16 @@
         </transition>
       </div>
     </div>
-    <el-row>
-      <el-col :span="2" :offset="17">
+    <el-row class="toolbar">
+      <el-col :span="17">
+        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+          <el-tab-pane label="业绩归属1人表" name="first">
+          </el-tab-pane>
+          <el-tab-pane label="业绩归属2人表" name="second">
+          </el-tab-pane>
+        </el-tabs>
+      </el-col>
+      <el-col :span="2">
         <el-input clearable placeholder="search" v-model="searchValue" @change="handleSearch"></el-input>
       </el-col>
       <el-col :span="2">
@@ -101,8 +109,6 @@
         </el-dropdown>
       </el-col>
     </el-row>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="业绩归属1人表" name="first">
         <el-table :data="tableData01" id="sale-table01" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" style="width: 100%;">
           <el-table-column v-if="this.checked1" min-width="115" prop="salernameZero" label="业绩归属人" :formatter="empty" sortable></el-table-column>
           <el-table-column v-if="this.checked2" min-width="130" prop="timegroupZero" label="时间段（0-6月）"></el-table-column>
@@ -145,9 +151,8 @@
           <el-table-column v-if="this.checked39" min-width="160" prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column v-if="this.checked40" min-width="155" prop="netratetotal" label="毛利率%（汇总）" :formatter="empty" sortable="custom"></el-table-column>
         </el-table>
-      </el-tab-pane>
-      <el-tab-pane label="业绩归属2人表" name="second">
-        <el-table :data="tableData02" id="sale-table02" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" style="width: 100%;">
+      
+        <el-table :data="tableData02" id="sale-table02" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show3" :height="tableHeight" :max-height="tableHeight" style="width: 100%;">
           <el-table-column v-if="this.checked1" min-width="115" prop="salernameZero" label="业绩归属人" :formatter="empty" sortable></el-table-column>
           <el-table-column v-if="this.checked2" min-width="150" prop="timegroupZero" label="时间段（0-6月）" sortable></el-table-column>
           <el-table-column v-if="this.checked3" min-width="160" prop="salemoneyrmbusZero" label="销售额$（0-6月）" :formatter="empty" sortable="custom"></el-table-column>
@@ -189,8 +194,6 @@
           <el-table-column v-if="this.checked39" min-width="160" prop="netprofittotal" label="毛利润￥（汇总）" :formatter="empty" sortable="custom"></el-table-column>
           <el-table-column v-if="this.checked40" min-width="160" prop="netratetotal" label="毛利率%（汇总）" :formatter="empty" sortable="custom"></el-table-column>
         </el-table>
-      </el-tab-pane>
-    </el-tabs>
   </div>
 </template>
 
@@ -248,7 +251,8 @@ export default {
       text: '显示输入框',
       show: true,
       show1: false,
-      show2: false,
+      show2: true,
+      show3: false,
       activeName: 'first',
       tableData01: [],
       tableData02: [],
@@ -473,11 +477,11 @@ export default {
       if (this.show === false) {
         this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 195 + 'px'
+        this.tableHeight = height - 145 + 'px'
       } else if (this.show === true) {
         this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 275 + 'px'
+        this.tableHeight = height - 225 + 'px'
       }
     },
     changeActive() {
@@ -488,11 +492,18 @@ export default {
     },
     handleClick(tab, event) {
       this.activeName = tab.name
+      if (this.activeName === 'second') {
+        this.show2 = false
+        this.show3 = true
+      } else {
+        this.show2 = true
+        this.show3 = false
+      }
     },
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form))
       const height = document.getElementById('app').clientHeight
-      this.tableHeight = height - 275 + 'px'
+      this.tableHeight = height - 225 + 'px'
       let posseman1Data
       let posseman2Data
       let ret
