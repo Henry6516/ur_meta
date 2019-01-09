@@ -21,29 +21,29 @@
           v-scrollBar:slim
           @sort-change="sortNumber"
           >
-            <el-table-column type="index"></el-table-column>
-            <el-table-column prop="depart"  label="部门" sortable></el-table-column>
-            <el-table-column prop="username"  label="姓名" sortable></el-table-column>
-            <el-table-column prop="role"  label="角色"></el-table-column>
-            <el-table-column prop="primary" label="初级目标(￥)" sortable="custom"></el-table-column>
-            <el-table-column prop="high" label="高级目标(￥)" sortable="custom"></el-table-column>
-            <el-table-column prop="amt" label="毛利润(￥)" sortable="custom"></el-table-column>
-            <el-table-column prop="primaryRate" width="140" label="初级目标完成度" sortable="custom" >
+            <el-table-column type="index" align="center"></el-table-column>
+            <el-table-column prop="depart" align="center" label="部门" sortable></el-table-column>
+            <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
+            <el-table-column prop="role" align="center" label="角色"></el-table-column>
+            <el-table-column prop="primary" align="center" label="初级目标(￥)" sortable="custom"></el-table-column>
+            <el-table-column prop="high" align="center" label="高级目标(￥)" sortable="custom"></el-table-column>
+            <el-table-column prop="amt" align="center" label="毛利润(￥)" sortable="custom"></el-table-column>
+            <el-table-column prop="primaryRate" width="140" align="center" label="初级目标完成度" sortable="custom" >
               <template slot-scope="scope">
                 <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'primaryRate')" :percentage="Math.round(scope.row.primaryRate*10000)/100"></el-progress>
               </template>
             </el-table-column>
-            <el-table-column prop="highRate" width="140" label="高级目标完成度" sortable="custom">
+            <el-table-column prop="highRate" width="140" align="center" label="高级目标完成度" sortable="custom">
               <template slot-scope="scope">
                 <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'highRate')" :percentage="Math.round(scope.row.highRate*10000)/100"></el-progress>
               </template> 
             </el-table-column>
-            <el-table-column prop="dateRate" label="时间进度" >
+            <el-table-column prop="dateRate" align="center" label="时间进度" >
               <template slot-scope="scope">
                 <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
               </template>
             </el-table-column>
-            <el-table-column prop="updatetime" label="统计截止日期">
+            <el-table-column prop="updatetime" align="center" label="统计截止日期">
               <template slot-scope="scope">
                 <i class="el-icon-time"></i>
                 <span style="margin-left: 10px">{{dateFormatter(scope.row.updatetime)}}</span>
@@ -57,23 +57,23 @@
           height="798"
           v-show="show.zhengzhou"
           >
-          <el-table-column type="index" ></el-table-column>
-          <el-table-column prop="depart" label="部门" ></el-table-column>
-          <el-table-column prop="username"  label="姓名" sortable></el-table-column>
-          <el-table-column prop="role"  label="角色"></el-table-column>
-          <el-table-column prop="high"  label="目标" sortable="custom"></el-table-column>
-          <el-table-column prop="amt"  label="毛利润(￥)" sortable="custom"></el-table-column>
-          <el-table-column prop="highRate"  label="目标完成度" sortable="custom" >
+          <el-table-column type="index" align="center"></el-table-column>
+          <el-table-column prop="depart" align="center" label="部门" ></el-table-column>
+          <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
+          <el-table-column prop="role" align="center" label="角色"></el-table-column>
+          <el-table-column prop="high" align="center" label="目标" sortable="custom"></el-table-column>
+          <el-table-column prop="amt" align="center" label="毛利润(￥)" sortable="custom"></el-table-column>
+          <el-table-column prop="highRate" align="center" label="目标完成度" sortable="custom" >
             <template slot-scope="scope">
               <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'highRate')" :percentage="Math.round(scope.row.highRate*10000)/100"></el-progress>
             </template> 
           </el-table-column>
-          <el-table-column prop="dateRate"  label="时间进度">
+          <el-table-column prop="dateRate" align="center" label="时间进度">
             <template slot-scope="scope">
               <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
             </template>
           </el-table-column>
-          <el-table-column prop="updatetime" label="统计截止日期">
+          <el-table-column prop="updatetime" align="center" label="统计截止日期">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
               <span style="margin-left: 10px">{{ dateFormatter(scope.row.updatetime) }}</span>
@@ -86,28 +86,28 @@
           height="798"
           v-show="show.depart"
           @sort-change="sortNumber">
-          <el-table-column type="index"></el-table-column>
-          <el-table-column prop="depart" label="部门" sortable></el-table-column>
-          <el-table-column prop="primary" label="初级目标(￥)" sortable="custom"></el-table-column>
-          <el-table-column prop="high" label="高级目标(￥)" sortable="custom">
+          <el-table-column type="index" align="center"></el-table-column>
+          <el-table-column prop="depart" label="部门" align="center" sortable></el-table-column>
+          <el-table-column prop="primary" align="center" label="初级目标(￥)" sortable="custom"></el-table-column>
+          <el-table-column prop="high" label="高级目标(￥)" align="center" sortable="custom">
           </el-table-column>
-          <el-table-column prop="amt" label="毛利润(￥)" sortable="custom"></el-table-column>
-          <el-table-column prop="primaryRate" label="初级目标完成度" sortable="custom">
+          <el-table-column prop="amt" label="毛利润(￥)" align="center" sortable="custom"></el-table-column>
+          <el-table-column prop="primaryRate" label="初级目标完成度" align="center" sortable="custom">
             <template slot-scope="scope">
               <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'primaryRate')" :percentage="Math.round(scope.row.primaryRate*10000)/100"></el-progress>
             </template>
           </el-table-column>
-          <el-table-column prop="highRate" label="高级目标完成度" sortable="custom">
+          <el-table-column prop="highRate" label="高级目标完成度" align="center" sortable="custom">
             <template slot-scope="scope">
               <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'highRate')" :percentage="Math.round(scope.row.highRate*10000)/100"></el-progress>
             </template> 
           </el-table-column>
-          <el-table-column prop="dateRate" label="时间进度">
+          <el-table-column prop="dateRate" align="center" label="时间进度">
             <template slot-scope="scope">
               <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
             </template>
           </el-table-column>
-          <el-table-column prop="updatetime" label="统计截止日期">
+          <el-table-column prop="updatetime" align="center" label="统计截止日期">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
               <span style="margin-left: 10px">{{ dateFormatter(scope.row.updatetime) }}</span>
@@ -121,29 +121,29 @@
           v-show="show.developer"
           @sort-change="sortNumber"
           >
-          <el-table-column type="index"></el-table-column>
-          <el-table-column prop="depart"  label="部门" sortable></el-table-column>
-          <el-table-column prop="username"  label="姓名" sortable></el-table-column>
-          <el-table-column prop="role"  label="角色"></el-table-column>
-          <el-table-column prop="primary" label="初级目标(￥)" sortable="custom"></el-table-column>
-          <el-table-column prop="high" label="高级目标(￥)" sortable="custom"></el-table-column>
-          <el-table-column prop="amt" label="毛利润(￥)" sortable="custom"></el-table-column>
-          <el-table-column prop="primaryRate" label="初级目标完成度" sortable="custom">
+          <el-table-column type="index" align="center"></el-table-column>
+          <el-table-column prop="depart" align="center" label="部门" sortable></el-table-column>
+          <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
+          <el-table-column prop="role" align="center" label="角色"></el-table-column>
+          <el-table-column prop="primary" align="center" label="初级目标(￥)" sortable="custom"></el-table-column>
+          <el-table-column prop="high" align="center" label="高级目标(￥)" sortable="custom"></el-table-column>
+          <el-table-column prop="amt" align="center" label="毛利润(￥)" sortable="custom"></el-table-column>
+          <el-table-column prop="primaryRate" align="center" label="初级目标完成度" sortable="custom">
             <template slot-scope="scope">
               <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'primaryRate')" :percentage="Math.round(scope.row.primaryRate*10000)/100"></el-progress>
             </template>
           </el-table-column>
-          <el-table-column prop="highRate"  label="高级目标完成度" sortable="custom">
+          <el-table-column prop="highRate" align="center" label="高级目标完成度" sortable="custom">
             <template slot-scope="scope">
               <el-progress :text-inside="true" :stroke-width="18" :status="checkStatus(scope.row,'highRate')" :percentage="Math.round(scope.row.highRate*10000)/100"></el-progress>
             </template> 
           </el-table-column>
-          <el-table-column prop="dateRate" label="时间进度" >
+          <el-table-column prop="dateRate" align="center" label="时间进度" >
             <template slot-scope="scope">
               <el-progress :text-inside="true" :stroke-width="18" status="exception" :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
             </template>
           </el-table-column>
-          <el-table-column prop="updatetime" label="统计截止日期">
+          <el-table-column prop="updatetime" align="center" label="统计截止日期">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
               <span style="margin-left: 10px">{{dateFormatter(scope.row.updatetime)}}</span>
@@ -186,7 +186,7 @@
           <div slot="header" class="clearfix">
             <h2>活动栏</h2>
           </div>
-          <img src="../assets/1.2.jpg" style="height:400px;width:95%;padding:15px;">
+          <img src="../assets/1.5.jpg" style="height:400px;width:95%;padding:15px;">
         </el-card>
         <el-dialog :visible.sync="dialogVisible">
           <el-form :model="newsDetailList" label-width="80px" ref="detailForm">

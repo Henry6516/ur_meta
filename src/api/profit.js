@@ -383,4 +383,20 @@ export function getRefund(param) {
     data
   })
 }
+export function getDeadFee(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/report/dead-fee?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function getExtraFee(param) {
+  const data = { 'condition': param }
+  return request({
+    url: '/report/extra-fee?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
 

@@ -4,13 +4,14 @@
             <el-table-column prop="suffix" label="账号简称" sortable align="center"></el-table-column>
             <el-table-column prop="username" label="销售员" sortable align="center"></el-table-column>
             <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
-            <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
-            <el-table-column prop="lastNum" label="上周销售额" sortable="custom" align="center"></el-table-column>
-            <el-table-column prop="lastAmt" label="上周销量" sortable="custom" align="center"></el-table-column>
-            <el-table-column prop="num" label="上上周销售额" sortable="custom" align="center"></el-table-column>
-            <el-table-column prop="amt" label="上上周销量" sortable="custom" align="center"></el-table-column>
-            <el-table-column prop="numDiff" label="销售额变化" sortable="custom" align="center"></el-table-column>
-            <el-table-column prop="amtDiff" label="销量变化" sortable="custom" align="center"></el-table-column>
+            <el-table-column prop="goodsName" label="商品名称" align="center"></el-table-column>
+            <el-table-column prop="lastNum" label="上周销量" sortable="custom" align="center"></el-table-column>
+            <el-table-column prop="lastAmt" label="上周销售额" sortable="custom" align="center"></el-table-column>
+            <el-table-column prop="num" label="上上周销量" sortable="custom" align="center"></el-table-column>
+            <el-table-column prop="amt" label="上上周销售额" sortable="custom" align="center"></el-table-column>
+            <el-table-column prop="numDiff" label="销量变化" sortable="custom" align="center"></el-table-column>
+            <el-table-column prop="amtDiff" label="销售额变化" sortable="custom" align="center"></el-table-column>
+            <el-table-column prop="createDate" label="创建时间" :formatter="empty" align="center"></el-table-column>
         </el-table>
         <div class="toolbar">
             <el-pagination 
@@ -46,15 +47,18 @@ export default {
         this.getData()
     },
     methods: {
+        empty(row, column) {
+            return row.createDate.substring(0, 10)
+        },
         // 数字排序
-    sortNumber(column, prop, order) {
-        const data = this.tableData
-        if (column.order === 'descending') {
-          this.tableData = data.sort(compareDown(data, column.prop))
-        } else {
-          this.tableData = data.sort(compareUp(data, column.prop))
-        }
-      },
+        sortNumber(column, prop, order) {
+            const data = this.tableData
+            if (column.order === 'descending') {
+                this.tableData = data.sort(compareDown(data, column.prop))
+            } else {
+                this.tableData = data.sort(compareUp(data, column.prop))
+            }
+        },
         handleCurrentChange(val) {
             this.condition.page = val
             this.getData()

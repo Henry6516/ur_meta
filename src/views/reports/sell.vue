@@ -19,7 +19,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label='平台' class='input'>
-            <el-select size="small" v-model='condition.plat' multiple collapse-tags placeholder='平台'>
+            <el-select size="small" v-model='condition.plat' clearable multiple placeholder='平台'>
               <el-option v-for='(item,index) in plat' :index='index' :key='item.plat' :label='item.plat' :value='item.plat'></el-option>
             </el-select>
           </el-form-item>
@@ -138,6 +138,29 @@
       <el-pagination @size-change='handleSizeChangeGoods' @current-change='handleCurrentChangeGoods' :current-page="this.goods.page" :page-size="this.goods.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total2">
       </el-pagination>
     </div>
+    <!-- 死库明细 -->
+    <el-table :data="tableData3" @sort-change="sortNumber" max-height="670" v-show="showTable.dead">
+      <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
+      <el-table-column prop="storename" label="出货仓库" sortable align="center"></el-table-column>
+      <el-table-column prop="total" label="总计" sortable="custom" align="center"></el-table-column>
+      <el-table-column prop="dateTime" label="时间" sortable align="center"></el-table-column>
+      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
+    </el-table>
+    <div class="block toolbar" v-show="showTable.dead">
+      <el-pagination @size-change='handleSizeChangeDead' @current-change='handleCurrentChangeDead' :current-page="this.dead.page" :page-size="this.dead.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total3">
+      </el-pagination>
+    </div>
+    <!-- 杂费明细 -->
+    <el-table :data="tableData4" @sort-change="sortNumber" max-height="670" v-show="showTable.extra">
+      <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
+      <el-table-column prop="saleOpeFeeZn" label="杂费" sortable="custom" align="center"></el-table-column>
+      <el-table-column prop="dateTime" label="时间" sortable align="center"></el-table-column>
+      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
+    </el-table>
+    <div class="block toolbar" v-show="showTable.extra">
+      <el-pagination @size-change='handleSizeChangeExtra' @current-change='handleCurrentChangeExtra' :current-page="this.extra.page" :page-size="this.extra.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total4">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -150,7 +173,9 @@ import {
   getStore,
   getAccount,
   getSales,
-  getRefund
+  getRefund,
+  getDeadFee,
+  getExtraFee
 } from '../../api/profit'
 import { isAdmin } from '../../api/api'
 import { compareUp, compareDown, getMonthDate, getDateRangeType } from '../../api/tools'
@@ -163,6 +188,8 @@ export default {
     return {
       total: null,
       total2: null,
+      total3: null,
+      total4: null,
       activeName: '毛利润报表',
       tableHeight: 0,
       allMember: [],
@@ -174,17 +201,25 @@ export default {
         sell: false,
         order: false,
         goods: false,
-        report: false
+        report: false,
+        dead: false,
+        extra: false
       },
       allMenu: [],
       allDataOrder: [],
       allDataGoods: [],
+      allDataDead: [],
+      allDataExtra: [],
       tableData: [],
       tableData1: [],
       tableData2: [],
+      tableData3: [],
+      tableData4: [],
       searchTable: [],
       searchTable1: [],
       searchTable2: [],
+      searchTable3: [],
+      searchTable4: [],
       searchValue: '',
       listLoading: false,
       department: [],
@@ -199,7 +234,7 @@ export default {
       condition: {
         department: [],
         secDepartment: [],
-        plat: '',
+        plat: [],
         member: [],
         store: [],
         dateType: 1,
@@ -209,13 +244,12 @@ export default {
         page: 1,
         pageSize: 10,
         suffix: [],
-        storename: [],
         type: 'order'
       },
       goods: {
         department: [],
         secDepartment: [],
-        plat: '',
+        plat: [],
         member: [],
         dateRange: [],
         account: [],
@@ -225,6 +259,24 @@ export default {
         type: 'goods'
       },
       order: {},
+      dead: {
+        plat: [],
+        storename: [],
+        account: [],
+        member: [],
+        dateRange: [],
+        page: 1,
+        pageSize: 10
+      },
+      extra: {
+        plat: [],
+        storename: [],
+        account: [],
+        member: [],
+        dateRange: [],
+        page: 1,
+        pageSize: 10
+      },
       pickerOptions2: {
         onPick(maxDate, minDate) {
           vue.condition.dateRangeType = 3
@@ -275,29 +327,69 @@ export default {
       this.goods.page = val
       this.getGoods()
     },
+    handleSizeChangeDead(val) {
+      this.dead.pageSize = val
+      this.getDead()
+    },
+    handleCurrentChangeDead(val) {
+      this.dead.page = val
+      this.getDead()
+    },
+    handleSizeChangeExtra(val) {
+      this.extra.pageSize = val
+      this.getExtra()
+    },
+    handleCurrentChangeExtra(val) {
+      this.extra.page = val
+      this.getExtra()
+    },
     handleClick(tab, event) {
       if (tab.label === '退款订单明细') {
         this.showTable['sell'] = false
         this.showTable['order'] = true
         this.showTable['goods'] = false
         this.showTable['report'] = false
+        this.showTable['dead'] = false
+        this.showTable['extra'] = false
         this.getData()
       } else if (tab.label === '退款产品明细') {
         this.showTable['sell'] = false
         this.showTable['order'] = false
         this.showTable['goods'] = true
         this.showTable['report'] = false
+        this.showTable['dead'] = false
+        this.showTable['extra'] = false
         this.getGoods()
       } else if (tab.label === '退款分析报告') {
         this.showTable['sell'] = false
         this.showTable['order'] = false
         this.showTable['goods'] = false
         this.showTable['report'] = true
+        this.showTable['dead'] = false
+        this.showTable['extra'] = false
+      } else if (tab.label === '死库明细') {
+        this.showTable['sell'] = false
+        this.showTable['order'] = false
+        this.showTable['goods'] = false
+        this.showTable['report'] = false
+        this.showTable['dead'] = true
+        this.showTable['extra'] = false
+        this.getDead()
+      } else if (tab.label === '杂费明细') {
+        this.showTable['sell'] = false
+        this.showTable['order'] = false
+        this.showTable['goods'] = false
+        this.showTable['report'] = false
+        this.showTable['dead'] = false
+        this.showTable['extra'] = true
+        this.getExtra()
       } else {
         this.showTable['sell'] = true
         this.showTable['order'] = false
         this.showTable['goods'] = false
         this.showTable['report'] = false
+        this.showTable['dead'] = false
+        this.showTable['extra'] = false
       }
     },
     selectalls() {
@@ -437,8 +529,8 @@ export default {
       if (myform.member.length !== 0) {
         if (isAdmin() === false) {
           myform.member = this.condition.member
-          }
         }
+      }
       // 根据选定的部门，处理人员
       if (myform.member.length === 0) {
         if (isAdmin() === false) {
@@ -501,6 +593,8 @@ export default {
       this.showTable['order'] = false
       this.showTable['goods'] = false
       this.showTable['report'] = false
+      this.showTable['dead'] = false
+      this.showTable['extra'] = false
       this.activeName = '毛利润报表'
       this.$refs.condition.validate(valid => {
         if (valid) {
@@ -563,6 +657,36 @@ export default {
         } else {
           this.tableData2 = data
         }
+      } else if (this.activeName === '死库明细') {
+        const data = this.searchTable3
+        if (searchValue) {
+          this.tableData3 = data.filter(function(row) {
+            return Object.keys(row).some(function(key) {
+              return (
+                String(row[key])
+                  .toLowerCase()
+                  .indexOf(searchValue) > -1
+              )
+            })
+          })
+        } else {
+          this.tableData3 = data
+        }
+      } else if (this.activeName === '杂费明细') {
+        const data = this.searchTable4
+        if (searchValue) {
+          this.tableData4 = data.filter(function(row) {
+            return Object.keys(row).some(function(key) {
+              return (
+                String(row[key])
+                  .toLowerCase()
+                  .indexOf(searchValue) > -1
+              )
+            })
+          })
+        } else {
+          this.tableData4 = data
+        }
       }
     },
     // 数字排序
@@ -575,18 +699,32 @@ export default {
           this.tableData = data.sort(compareUp(data, column.prop))
         }
       } else if (this.activeName === '退款订单明细') {
-        const data =this.tableData1
+        const data = this.tableData1
         if (column.order === 'descending') {
           this.tableData1 = data.sort(compareDown(data, column.prop))
         } else {
           this.tableData1 = data.sort(compareUp(data, column.prop))
         }
       } else if (this.activeName === '退款产品明细') {
-        const data =this.tableData2
+        const data = this.tableData2
         if (column.order === 'descending') {
           this.tableData2 = data.sort(compareDown(data, column.prop))
         } else {
           this.tableData2 = data.sort(compareUp(data, column.prop))
+        }
+      } else if (this.activeName === '死库明细') {
+        const data = this.tableData3
+        if (column.order === 'descending') {
+          this.tableData3 = data.sort(compareDown(data, column.prop))
+        } else {
+          this.tableData3 = data.sort(compareUp(data, column.prop))
+        }
+      } else if (this.activeName === '杂费明细') {
+        const data = this.tableData4
+        if (column.order === 'descending') {
+          this.tableData4 = data.sort(compareDown(data, column.prop))
+        } else {
+          this.tableData4 = data.sort(compareUp(data, column.prop))
         }
       }
     },
@@ -704,6 +842,52 @@ export default {
           'times',
           'salesman'
         ]
+      } else if (this.activeName === '死库明细') {
+        this.order = Object.assign({}, this.dead)
+        this.order.pageSize = this.total3
+        getDeadFee(this.order).then(res => {
+          this.allDataDead = res.data.data.items
+          const Filename = '死库明细'
+          const data = this.allDataDead.map(v => filterVal.map(k => v[k]))
+          const [fileName, fileType, sheetName] = [Filename, 'xls']
+          this.$toExcel({ th, data, fileName, fileType, sheetName })
+        })
+        const th = [
+          '账号',
+          '发货仓库',
+          '总计',
+          '时间',
+          '销售员'
+        ]
+        const filterVal = [
+          'suffix',
+          'storename',
+          'total',
+          'dateTime',
+          'salesman'
+        ]
+      } else if (this.activeName === '杂费明细') {
+        this.order = Object.assign({}, this.extra)
+        this.order.pageSize = this.total4
+        getExtraFee(this.order).then(res => {
+          this.allDataExtra = res.data.data.items
+          const Filename = '杂费明细'
+          const data = this.allDataExtra.map(v => filterVal.map(k => v[k]))
+          const [fileName, fileType, sheetName] = [Filename, 'xls']
+          this.$toExcel({ th, data, fileName, fileType, sheetName })
+        })
+        const th = [
+          '账号',
+          '杂费',
+          '时间',
+          '销售员'
+        ]
+        const filterVal = [
+          'suffix',
+          'saleOpeFeeZn',
+          'dateTime',
+          'salesman'
+        ]
       }
       //  return wbout
     },
@@ -770,7 +954,7 @@ export default {
       this.goods.account = this.condition.account
       this.goods.member = this.condition.member
       this.goods.dateRangeType = this.condition.dateRangeType
-      this.goods.department = this.condition.dateRangeType
+      this.goods.department = this.condition.department
       this.goods.secDepartment = this.condition.secDepartment
       this.goods.plat = this.condition.plat
       const myform = this.myForm(this.goods)
@@ -779,6 +963,38 @@ export default {
         this.total2 = res.data.data._meta.totalCount
         this.goods.page = res.data.data._meta.currentPage
         this.goods.pageSize = res.data.data._meta.perPage
+      })
+    },
+    getDead() {
+      this.dead.plat = this.condition.plat
+      this.dead.storename = this.condition.store
+      this.dead.account = this.condition.account
+      this.dead.member = this.condition.member
+      this.dead.dateRange = this.condition.dateRange
+      this.dead.department = this.condition.department
+      this.dead.secDepartment = this.condition.secDepartment
+      const myform = this.myForm(this.dead)
+      getDeadFee(myform).then(res => {
+        this.searchTable3 = this.tableData3 = res.data.data.items
+        this.total3 = res.data.data._meta.totalCount
+        this.dead.page = res.data.data._meta.currentPage
+        this.dead.pageSize = res.data.data._meta.perPage
+      })
+    },
+    getExtra() {
+      this.extra.plat = this.condition.plat
+      this.extra.storename = this.condition.store
+      this.extra.account = this.condition.account
+      this.extra.member = this.condition.member
+      this.extra.dateRange = this.condition.dateRange
+      this.extra.department = this.condition.department
+      this.extra.secDepartment = this.condition.secDepartment
+      const myform = this.myForm(this.extra)
+      getExtraFee(myform).then(res => {
+        this.searchTable4 = this.tableData4 = res.data.data.items
+        this.total4 = res.data.data._meta.totalCount
+        this.extra.page = res.data.data._meta.currentPage
+        this.extra.pageSize = res.data.data._meta.perPage
       })
     }
   },
