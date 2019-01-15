@@ -11,7 +11,7 @@
       </el-col>
       <el-col :span="15">
         <el-menu :default-active="activeIndex" @select="handleSelect" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
-          <el-menu-item index="/index" key="index" style="line-height:5rem;"><font size="3">主页</font></el-menu-item>
+          <el-menu-item index="/index" style="line-height:5rem;"><font size="3">主页</font></el-menu-item>
           <el-submenu v-for="(item,position) in allMenu" :index="generateIndex(-1,position)" :key="generateIndex(-1,position)">
             <template slot="title">
               <font size="3">{{item.name}}</font>
@@ -145,6 +145,7 @@ export default {
     })
     getMenu().then(response => {
       this.allMenu = response.data.data
+      this.allMenu.splice(0, 1)
     })
   },
   beforeRouteLeave(to, from, next) {

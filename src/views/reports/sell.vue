@@ -58,7 +58,7 @@
           <el-form-item style="margin-left:6rem">
             <el-button size="small" type='primary' class='input' @click='onSubmit(condition)'>查询</el-button>
           </el-form-item>
-          </el-form>
+        </el-form>
       </transition>
       <div class='demo-block-control' @click='handleChange' style='left:0rem'>
         <transition>
@@ -110,6 +110,7 @@
     <!-- 退款订单明细 -->
     <el-table :data="tableData1" @sort-change="sortNumber" max-height="670" v-show="showTable.order">
       <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
+      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
       <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
       <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
       <el-table-column prop="goodsSku" label="商品SKU" sortable align="center"></el-table-column>
@@ -118,11 +119,14 @@
       <el-table-column prop="storeName" label="仓库" sortable align="center"></el-table-column>
       <el-table-column prop="refund" label="退款$" sortable="custom" align="center"></el-table-column>
       <el-table-column prop="refundZn" label="退款￥" sortable="custom" :formatter="empty" align="center"></el-table-column>
-      <el-table-column prop="refundTime" label="退款时间" sortable="custom" align="center"></el-table-column>
-      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
+      <el-table-column prop="orderCountry" label="国家" sortable align="center"></el-table-column>
+      <el-table-column prop="expressWay" label="物流方式" sortable align="center"></el-table-column>
+      <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
+      <el-table-column prop="orderTime" label="交易时间" align="center"></el-table-column>
+      <el-table-column prop="refundTime" label="退款时间" align="center"></el-table-column>
     </el-table>
     <div class="block toolbar" v-show="showTable.order">
-      <el-pagination @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.condition.page" :page-size="this.condition.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total">
+      <el-pagination background @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.condition.page" :page-size="this.condition.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total">
       </el-pagination>
     </div>
     <!-- 退款产品明细 -->
@@ -135,7 +139,7 @@
       <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
     </el-table>
     <div class="block toolbar" v-show="showTable.goods">
-      <el-pagination @size-change='handleSizeChangeGoods' @current-change='handleCurrentChangeGoods' :current-page="this.goods.page" :page-size="this.goods.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total2">
+      <el-pagination background @size-change='handleSizeChangeGoods' @current-change='handleCurrentChangeGoods' :current-page="this.goods.page" :page-size="this.goods.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total2">
       </el-pagination>
     </div>
     <!-- 死库明细 -->
@@ -147,7 +151,7 @@
       <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
     </el-table>
     <div class="block toolbar" v-show="showTable.dead">
-      <el-pagination @size-change='handleSizeChangeDead' @current-change='handleCurrentChangeDead' :current-page="this.dead.page" :page-size="this.dead.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total3">
+      <el-pagination background @size-change='handleSizeChangeDead' @current-change='handleCurrentChangeDead' :current-page="this.dead.page" :page-size="this.dead.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total3">
       </el-pagination>
     </div>
     <!-- 杂费明细 -->
@@ -158,7 +162,7 @@
       <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
     </el-table>
     <div class="block toolbar" v-show="showTable.extra">
-      <el-pagination @size-change='handleSizeChangeExtra' @current-change='handleCurrentChangeExtra' :current-page="this.extra.page" :page-size="this.extra.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total4">
+      <el-pagination background @size-change='handleSizeChangeExtra' @current-change='handleCurrentChangeExtra' :current-page="this.extra.page" :page-size="this.extra.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total4">
       </el-pagination>
     </div>
   </div>
@@ -792,6 +796,7 @@ export default {
         })
         const th = [
           '账号',
+          '销售员',
           '商品名称',
           '商品编码',
           '商品SKU',
@@ -800,11 +805,15 @@ export default {
           '仓库',
           '退款$',
           '退款￥',
-          '退款时间',
-          '销售员'
+          '国家',
+          '物流方式',
+          '平台',
+          '交易时间',
+          '退款时间'
         ]
         const filterVal = [
           'suffix',
+          'salesman',
           'goodsName',
           'goodsCode',
           'goodsSku',
@@ -813,8 +822,11 @@ export default {
           'storeName',
           'refund',
           'refundZn',
-          'refundTime',
-          'salesman'
+          'orderCountry',
+          'expressWay',
+          'platform',
+          'orderTime',
+          'refundTime'
         ]
       } else if (this.activeName === '退款产品明细') {
         this.order = Object.assign({}, this.goods)

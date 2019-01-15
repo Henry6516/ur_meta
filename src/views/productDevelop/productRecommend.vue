@@ -11,7 +11,7 @@
   </el-col>
   <!-- 新增对话框 -->
   <el-dialog title='新增' :visible.sync="dialogVisible">
-    <el-form :model="addForm" :rules="rules" label-width="100px" class="demo-ruleForm" ref="addForm">
+    <el-form :model="addForm" :rules="rules" label-width="100px" label-position="left" class="demo-ruleForm" ref="addForm">
       <el-form-item label="图片" prop='img'>
         <el-input size="small" v-model="addForm.img" placeholder="必填"></el-input>
       </el-form-item>
@@ -566,7 +566,7 @@
       </el-col>
       <!-- 新增对话框 -->
     <el-dialog title='新增' :visible.sync="dialogVisible2">
-      <el-form :model="addForm" :rules="rules" label-width="110px" class="demo-ruleForm" ref="addForm">
+      <el-form :model="addForm" :rules="rules" label-width="110px" label-position="left" class="demo-ruleForm" ref="addForm">
         <el-form-item label="图片" prop='img'>
           <el-input size="small" v-model="addForm.img" placeholder="必填"></el-input>
         </el-form-item>

@@ -313,8 +313,8 @@ export function getPsales(param) {
 export function getSalesChange(param) {
   const data = { 'condition': param }
   return request({
-    url: '/data-center/sales-change?page=' + param.page + '&pageSize=' + param.pageSize,
-    method: 'get',
+    url: '/data-center/sales-change?page=' + param.page + '&sort=' + param.sort,
+    method: 'post',
     data
   })
 }

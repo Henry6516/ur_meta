@@ -1,6 +1,7 @@
 import Login from '../views/Login.vue'
 import NotFound from '../views/404.vue'
 import Home from '../views/Home.vue'
+import index from '../views/index.vue'
 // 毛利润报表
 import sell from '../views/reports/sell.vue'
 import develop from '../views/reports/develop.vue'
@@ -8,7 +9,6 @@ import purchase from '../views/reports/purchase.vue'
 import artist from '../views/reports/artist.vue'
 import account from '../views/reports/account.vue'
 import trending from '../views/reports/trending.vue'
-import index from '../views/index.vue'
 import introduce from '../views/reports/introduce.vue'
 // 数据中心
 import stock from '../views/data/stock.vue'

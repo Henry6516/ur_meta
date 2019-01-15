@@ -2,7 +2,7 @@
   <section>
     <!-- 新增 -->
     <el-col :span="24" class="toolbar">
-      <el-button size="small" plain @click="handleAdd">新增</el-button>
+      <el-button plain @click="handleAdd">新增</el-button>
     </el-col>
     <!-- 标题列表 -->
     <el-table :data="newsList" :loading="listLoading">
@@ -30,11 +30,12 @@
     </el-table>
     <!-- 分页 -->
     <div class="block toolbar">
-      <el-pagination @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.data.page" :page-size="this.data.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.totalCount"></el-pagination>
+      <el-pagination background @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.data.page" :page-size="this.data.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.totalCount">
+      </el-pagination>
     </div>
     <!-- 新增界面 -->
     <el-dialog title="新增" :visible.sync="addFormVisible" :close-on-click-modal="false">
-      <el-form :model="addForm" label-width="80px" ref="addForm">
+      <el-form :model="addForm" label-width="80px" label-position="left" ref="addForm">
         <el-form-item label="创建人" prop="creator">
           <el-input v-model="addForm.creator" auto-complete="off"></el-input>
         </el-form-item>
@@ -55,7 +56,7 @@
     </el-dialog>
     <!-- 编辑界面 -->
     <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
-      <el-form :model="editForm" label-width="80px" ref="editForm">
+      <el-form :model="editForm" label-width="80px" label-position="left" ref="editForm">
         <el-form-item label="创建人" prop="creator">
           <el-input v-model="editForm.creator" auto-complete="off"></el-input>
         </el-form-item>

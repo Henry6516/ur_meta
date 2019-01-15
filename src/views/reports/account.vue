@@ -88,7 +88,7 @@
       <el-table-column prop="ProfitRmb" label="利润￥" :formatter="empty" sortable="custom"></el-table-column>
       <el-table-column prop="rate" label="利润率%" :formatter="empty" sortable="custom"></el-table-column>
     </el-table>
-    <el-col :span="24" class="toolbar" style="margin-top:0rem" v-show="total>0">
+    <el-col class="toolbar" v-show="total>0">
       <div class="pagination-container">
         <el-pagination 
         :current-page="currentPage" 

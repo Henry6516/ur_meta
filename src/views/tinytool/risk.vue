@@ -40,7 +40,7 @@
           </el-table-column>
       </el-table>
       <div class="block toolbar">
-        <el-pagination @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.condition.currentPage" :page-size="this.condition.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.totalCount"></el-pagination>
+        <el-pagination background @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.condition.currentPage" :page-size="this.condition.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.totalCount"></el-pagination>
       </div>
     </div>
     <div v-show="blacklist" class="toolbar" style="padding:10px 20px;">
@@ -154,10 +154,10 @@ export default {
       value1: false,
       value2: false,
       addFormVisible: false,
-      risk: false,
+      risk: true,
       blacklist: false,
       blackloading: false,
-      activeName: '',
+      activeName: '风险订单',
       allMenu: [],
       loading: false,
       tableData: [],
@@ -205,6 +205,7 @@ export default {
         }
       }
     })
+    this.getOrder(this.activeName)
   },
   methods: {
     time() {
