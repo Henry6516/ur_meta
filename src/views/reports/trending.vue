@@ -1,76 +1,190 @@
 <template>
-  <!-- <div>销售额走势</div>     -->
   <div class="toolbar">
-    <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
+    <div class="demo-block demo-box demo-zh-CN demo-transition"
+         @mouseover="changeActive"
+         @mouseout="removeActive">
       <transition name="el-fade-in-linear">
-        <el-form :model="condition" :inline="true" ref="condition" class="demo-form-inline" label-width="10rem" v-show="show">
-          <el-form-item label="部门" class="input">
-            <el-select size="small" v-model="condition.department" multiple collapse-tags placeholder="部门" @change="choosed">
-              <el-button plain type="info" @click='selectAll("department")'>全选</el-button>
-              <el-button plain type="info" @click='unselect("department")'>取消</el-button>
-              <el-option v-for="(item,index) in department" :index="index" :key="item.department" :label="item.department" :value="item.department">
+        <el-form :model="condition"
+                 :inline="true"
+                 ref="condition"
+                 class="demo-form-inline"
+                 label-width="10rem"
+                 v-show="show">
+          <el-form-item label="部门"
+                        class="input">
+            <el-select size="small"
+                       v-model="condition.department"
+                       multiple
+                       collapse-tags
+                       placeholder="部门"
+                       @change="choosed">
+              <el-button plain
+                         type="info"
+                         @click='selectAll("department")'>全选</el-button>
+              <el-button plain
+                         type="info"
+                         @click='unselect("department")'>取消</el-button>
+              <el-option v-for="(item,index) in department"
+                         :index="index"
+                         :key="item.department"
+                         :label="item.department"
+                         :value="item.department">
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label='二级部门' class='input'>
-            <el-select size="small" v-model='condition.secDepartment' multiple collapse-tags placeholder='二级部门' @change='secChoosed'>
-              <el-button plain type="info" @click='selectAll("secDepartment")'>全选</el-button>
-              <el-button plain type="info" @click='unselect("secDepartment")'>取消</el-button>
-              <el-option v-for='(item,index) in secDepartment' :index='index' :key='item.department' :label='item.department' :value='item.department'></el-option>
+          <el-form-item label='二级部门'
+                        class='input'>
+            <el-select size="small"
+                       v-model='condition.secDepartment'
+                       multiple
+                       collapse-tags
+                       placeholder='二级部门'
+                       @change='secChoosed'>
+              <el-button plain
+                         type="info"
+                         @click='selectAll("secDepartment")'>全选</el-button>
+              <el-button plain
+                         type="info"
+                         @click='unselect("secDepartment")'>取消</el-button>
+              <el-option v-for='(item,index) in secDepartment'
+                         :index='index'
+                         :key='item.department'
+                         :label='item.department'
+                         :value='item.department'></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="平台" class="input">
-            <el-select size="small" v-model="condition.plat" multiple collapse-tags placeholder="平台" style="height: 3rem;">
-              <el-button plain type="info" @click='selectAll("plat")'>全选</el-button>
-              <el-button plain type="info" @click='unselect("plat")'>取消</el-button>
-              <el-option v-for="(item,index) in plat" :index="index" :key="item.plat" :label="item.plat" :value="item.plat">
+          <el-form-item label="平台"
+                        class="input">
+            <el-select size="small"
+                       v-model="condition.plat"
+                       multiple
+                       collapse-tags
+                       placeholder="平台"
+                       style="height: 3rem;">
+              <el-button plain
+                         type="info"
+                         @click='selectAll("plat")'>全选</el-button>
+              <el-button plain
+                         type="info"
+                         @click='unselect("plat")'>取消</el-button>
+              <el-option v-for="(item,index) in plat"
+                         :index="index"
+                         :key="item.plat"
+                         :label="item.plat"
+                         :value="item.plat">
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label='销售员' class='input'>
-            <el-select size="small" v-model='condition.member' filterable multiple collapse-tags placeholder='销售员'>
-              <el-button plain type="info" @click='selectAll("member")'>全选</el-button>
-              <el-button plain type="info" @click='unselect("member")'>取消</el-button>
-              <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
+          <el-form-item label='销售员'
+                        class='input'>
+            <el-select size="small"
+                       v-model='condition.member'
+                       filterable
+                       multiple
+                       collapse-tags
+                       placeholder='销售员'>
+              <el-button plain
+                         type="info"
+                         @click='selectAll("member")'>全选</el-button>
+              <el-button plain
+                         type="info"
+                         @click='unselect("member")'>取消</el-button>
+              <el-option v-for='(item,index) in member'
+                         :index='index'
+                         :key='item.username'
+                         :label='item.username'
+                         :value='item.username'></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="账号" class="input">
-            <el-select size="small" v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
-              <el-button plain type="info" @click='selectAll("account")'>全选</el-button>
-              <el-button plain type="info" @click='unselect("account")'>取消</el-button>
-              <el-option v-for="(item,index) in account" :index="index" :key="item.id" :label="item.store" :value="item.store"></el-option>
+          <el-form-item label="账号"
+                        class="input">
+            <el-select size="small"
+                       v-model="condition.account"
+                       filterable
+                       multiple
+                       collapse-tags
+                       placeholder="账号">
+              <el-button plain
+                         type="info"
+                         @click='selectAll("account")'>全选</el-button>
+              <el-button plain
+                         type="info"
+                         @click='unselect("account")'>取消</el-button>
+              <el-option v-for="(item,index) in account"
+                         :index="index"
+                         :key="item.id"
+                         :label="item.store"
+                         :value="item.store"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="时间类型" class="input" prop="dateType">
+          <el-form-item label="时间类型"
+                        class="input"
+                        prop="dateType">
             <el-radio-group v-model="condition.dateType">
-              <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id" style="width:8.55rem">{{item.type}}</el-radio>
+              <el-radio border
+                        v-for="(item,index) in dateType"
+                        :index="index"
+                        :key="item.id"
+                        :label="item.id"
+                        :value="item.id"
+                        style="width:8.55rem">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="显示方式" class="input" prop="flag">
+          <el-form-item label="显示方式"
+                        class="input"
+                        prop="flag">
             <el-radio-group v-model="condition.flag">
-              <el-radio border v-for="(item,index) in flag" :index="index" :key="item.id" :label="item.id" :value="item.id" style="width:8.55rem;">{{item.type}}</el-radio>
+              <el-radio border
+                        v-for="(item,index) in flag"
+                        :index="index"
+                        :key="item.id"
+                        :label="item.id"
+                        :value="item.id"
+                        style="width:8.55rem;">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="日期" class="input" prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker size="small" v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2" style="width:18rem;">
+          <el-form-item label="日期"
+                        class="input"
+                        prop="dateRange"
+                        :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
+            <el-date-picker size="small"
+                            v-model="condition.dateRange"
+                            value-format="yyyy-MM-dd"
+                            type="daterange"
+                            align="right"
+                            unlink-panels
+                            range-separator="至"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期"
+                            :picker-options="pickerOptions2"
+                            style="width:18rem;">
             </el-date-picker>
           </el-form-item>
           <el-form-item style="margin-left:6rem">
-            <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
+            <el-button size="small"
+                       type="primary"
+                       @click="onSubmit(condition)">查询</el-button>
           </el-form-item>
         </el-form>
       </transition>
-      <div class="demo-block-control" @click="handleChange" style="left:0rem;">
+      <div class="demo-block-control"
+           @click="handleChange"
+           style="left:0rem;">
         <transition>
-          <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}" class="transition-i">
+          <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}"
+             class="transition-i">
           </i>
         </transition>
         <transition>
-          <span v-show="show1" class="transition-span">{{text}}</span>
+          <span v-show="show1"
+                class="transition-span">{{text}}</span>
         </transition>
       </div>
     </div>
-    <Myecharts style="max-height:800px;overflow:auto" :options="options" v-loading="listLoading" ref="myecharts"></Myecharts>
+    <Myecharts style="max-height:800px;overflow:auto"
+               :options="options"
+               v-loading="listLoading"
+               ref="myecharts"></Myecharts>
   </div>
 </template>
 
@@ -242,7 +356,9 @@ export default {
 
           // 人员
           per = res.filter(
-            ele => (ele.department === val[i] || ele.parent_department === val[i]) && ele.position === '销售'
+            ele =>
+              (ele.department === val[i] || ele.parent_department === val[i]) &&
+              ele.position === '销售'
           )
           this.member = this.member.concat(per)
         }
@@ -293,21 +409,28 @@ export default {
       this.$refs.condition.validate(valid => {
         if (valid) {
           this.listLoading = true
-          if (this.condition.department.length === 0 &&
+          if (
+            this.condition.department.length === 0 &&
             this.condition.member.length === 0 &&
             this.condition.plat.length === 0 &&
-            this.condition.account.length === 0) {
+            this.condition.account.length === 0
+          ) {
             if (this.department.length === 1) {
               myform.department = this.department.map(m => {
                 return m.department
               })
             }
-          } else if (this.condition.department.lenght !== 0 && this.condition.member.lenght === 0) {
+          } else if (
+            this.condition.department.lenght !== 0 &&
+            this.condition.member.lenght === 0
+          ) {
             const val = form.department
             const res = this.allMember
             for (let i = 0; i < val.length; i++) {
               const per = res.filter(
-                ele => (ele.department === val[i] || ele.parent_depart === val[i]) && ele.position === '销售'
+                ele =>
+                  (ele.department === val[i] || ele.parent_depart === val[i]) &&
+                  ele.position === '销售'
               )
               this.member.concat(per)
             }
@@ -330,9 +453,9 @@ export default {
             const date = []
             lineName.forEach(name => {
               const sery = {
-                type: 'line',
+                type: 'bar',
                 stack: '总量',
-                areaStyle: { normal: {}}
+                areaStyle: { normal: {} }
               }
               const amt = []
               ret.map(element => {
@@ -369,7 +492,7 @@ export default {
     })
     getSection().then(response => {
       const res = response.data.data
-      this.department = res.filter(ele => ele.department !== '供应链' && ele.department !== '采购部')
+      this.department = res.filter(ele => ele.department && ele.type === '业务')
     })
     getSecDepartment().then(reseponse => {
       const res = reseponse.data.data

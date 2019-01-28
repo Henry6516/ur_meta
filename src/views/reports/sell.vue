@@ -1,168 +1,532 @@
 <template>
   <!-- <div>销售毛利润报表</div>     -->
   <div class="toolbar">
-    <div class='demo-block demo-box demo-zh-CN demo-transition' @mouseover='changeActive' @mouseout='removeActive'>
+    <div class='demo-block demo-box demo-zh-CN demo-transition'
+         @mouseover='changeActive'
+         @mouseout='removeActive'>
       <transition name='el-fade-in-linear'>
-        <el-form :model='condition' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline' v-show='show'>
-          <el-form-item label='部门' class='input'>
-            <el-select size="small" v-model='condition.department' multiple collapse-tags placeholder='部门' @change='choosed'>
-              <el-button plain type="info" @click="selectalld">全选</el-button>
-              <el-button plain type="info" @click="noselectd">取消</el-button>
-              <el-option v-for='(item,index) in department' :index='index' :key='item.department' :label='item.department' :value='item.department'></el-option>
+        <el-form :model='condition'
+                 :inline='true'
+                 ref='condition'
+                 label-width='10rem'
+                 class='demo-form-inline'
+                 v-show='show'>
+          <el-form-item label='部门'
+                        class='input'>
+            <el-select size="small"
+                       v-model='condition.department'
+                       multiple
+                       collapse-tags
+                       placeholder='部门'
+                       @change='choosed'>
+              <el-button plain
+                         type="info"
+                         @click="selectalld">全选</el-button>
+              <el-button plain
+                         type="info"
+                         @click="noselectd">取消</el-button>
+              <el-option v-for='(item,index) in department'
+                         :index='index'
+                         :key='item.department'
+                         :label='item.department'
+                         :value='item.department'></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label='二级部门' class='input'>
-            <el-select size="small" v-model='condition.secDepartment' multiple collapse-tags placeholder='二级部门' @change='secChoosed'>
-              <el-button plain type="info" @click="selectallSec">全选</el-button>
-              <el-button plain type="info" @click="noselectSec">取消</el-button>
-              <el-option v-for='(item,index) in secDepartment' :index='index' :key='item.department' :label='item.department' :value='item.department'></el-option>
+          <el-form-item label='二级部门'
+                        class='input'>
+            <el-select size="small"
+                       v-model='condition.secDepartment'
+                       multiple
+                       collapse-tags
+                       placeholder='二级部门'
+                       @change='secChoosed'>
+              <el-button plain
+                         type="info"
+                         @click="selectallSec">全选</el-button>
+              <el-button plain
+                         type="info"
+                         @click="noselectSec">取消</el-button>
+              <el-option v-for='(item,index) in secDepartment'
+                         :index='index'
+                         :key='item.department'
+                         :label='item.department'
+                         :value='item.department'></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label='平台' class='input'>
-            <el-select size="small" v-model='condition.plat' clearable multiple placeholder='平台'>
-              <el-option v-for='(item,index) in plat' :index='index' :key='item.plat' :label='item.plat' :value='item.plat'></el-option>
+          <el-form-item label='平台'
+                        class='input'>
+            <el-select size="small"
+                       v-model='condition.plat'
+                       clearable
+                       multiple
+                       placeholder='平台'>
+              <el-option v-for='(item,index) in plat'
+                         :index='index'
+                         :key='item.plat'
+                         :label='item.plat'
+                         :value='item.plat'></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label='销售员' class='input'>
-            <el-select size="small" v-model='condition.member' filterable multiple collapse-tags placeholder='销售员'>
-              <el-button plain type="info" @click="selectallm">全选</el-button>
-              <el-button plain type="info" @click="noselectm">取消</el-button>
-              <el-option v-for='(item,index) in member' :index='index' :key='item.username' :label='item.username' :value='item.username'></el-option>
+          <el-form-item label='销售员'
+                        class='input'>
+            <el-select size="small"
+                       v-model='condition.member'
+                       filterable
+                       multiple
+                       collapse-tags
+                       placeholder='销售员'>
+              <el-button plain
+                         type="info"
+                         @click="selectallm">全选</el-button>
+              <el-button plain
+                         type="info"
+                         @click="noselectm">取消</el-button>
+              <el-option v-for='(item,index) in member'
+                         :index='index'
+                         :key='item.username'
+                         :label='item.username'
+                         :value='item.username'></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="账号" class="input">
-            <el-select size="small" v-model="condition.account" filterable multiple collapse-tags placeholder="账号">
-              <el-button plain type="info" @click="selectall">全选</el-button>
-              <el-button plain type="info" @click="noselect">取消</el-button>
-              <el-option v-for="(item,index) in account" :index="index" :key="item.id" :label="item.store" :value="item.store">
+          <el-form-item label="账号"
+                        class="input">
+            <el-select size="small"
+                       v-model="condition.account"
+                       filterable
+                       multiple
+                       collapse-tags
+                       placeholder="账号">
+              <el-button plain
+                         type="info"
+                         @click="selectall">全选</el-button>
+              <el-button plain
+                         type="info"
+                         @click="noselect">取消</el-button>
+              <el-option v-for="(item,index) in account"
+                         :index="index"
+                         :key="item.id"
+                         :label="item.store"
+                         :value="item.store">
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label='出货仓库' class='input'>
-            <el-select size="small" v-model='condition.store' filterable multiple collapse-tags placeholder='请选择'>
-              <el-button plain type="info" @click="selectalls">全选</el-button>
-              <el-button plain type="info" @click="noselects">取消</el-button>
-              <el-option v-for='item in store' :key='item' :value='item'>
+          <el-form-item label='出货仓库'
+                        class='input'>
+            <el-select size="small"
+                       v-model='condition.store'
+                       filterable
+                       multiple
+                       collapse-tags
+                       placeholder='请选择'>
+              <el-button plain
+                         type="info"
+                         @click="selectalls">全选</el-button>
+              <el-button plain
+                         type="info"
+                         @click="noselects">取消</el-button>
+              <el-option v-for='item in store'
+                         :key='item'
+                         :value='item'>
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label='时间类型' class='input' prop='dateType'>
+          <el-form-item label='时间类型'
+                        class='input'
+                        prop='dateType'>
             <el-radio-group v-model='condition.dateType'>
-              <el-radio border v-for='(item,index) in dateType' :index='index' :key='item.id' :label='item.id' :value='item.id' style="width:8.55rem">{{item.type}}</el-radio>
+              <el-radio border
+                        v-for='(item,index) in dateType'
+                        :index='index'
+                        :key='item.id'
+                        :label='item.id'
+                        :value='item.id'
+                        style="width:8.55rem">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label='日期' class='input' prop='dateRange' :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker size="small" v-model='condition.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2' style="width:18rem;">
+          <el-form-item label='日期'
+                        class='input'
+                        prop='dateRange'
+                        :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
+            <el-date-picker size="small"
+                            v-model='condition.dateRange'
+                            type='daterange'
+                            value-format='yyyy-MM-dd'
+                            align='right'
+                            unlink-panels
+                            range-separator='至'
+                            start-placeholder='开始日期'
+                            end-placeholder='结束日期'
+                            :picker-options='pickerOptions2'
+                            style="width:18rem;">
             </el-date-picker>
           </el-form-item>
           <el-form-item style="margin-left:6rem">
-            <el-button size="small" type='primary' class='input' @click='onSubmit(condition)'>查询</el-button>
+            <el-button size="small"
+                       type='primary'
+                       class='input'
+                       @click='onSubmit(condition)'>查询</el-button>
           </el-form-item>
         </el-form>
       </transition>
-      <div class='demo-block-control' @click='handleChange' style='left:0rem'>
+      <div class='demo-block-control'
+           @click='handleChange'
+           style='left:0rem'>
         <transition>
-          <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}" class='transition-i'>
+          <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}"
+             class='transition-i'>
           </i>
         </transition>
         <transition>
-          <span v-show='show1' class='transition-span'>{{text}}</span>
+          <span v-show='show1'
+                class='transition-span'>{{text}}</span>
         </transition>
       </div>
     </div>
     <el-row>
       <el-col :span="19">
-        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-          <el-tab-pane v-for="(item, index) in this.allMenu" :label="item.name" :name="item.name" :key="index">
+        <el-tabs v-model="activeName"
+                 type="card"
+                 @tab-click="handleClick">
+          <el-tab-pane v-for="(item, index) in this.allMenu"
+                       :label="item.name"
+                       :name="item.name"
+                       :key="index">
           </el-tab-pane>
         </el-tabs>
       </el-col>
       <el-col :span='2'>
-        <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
+        <el-input clearable
+                  placeholder='search'
+                  v-model='searchValue'
+                  @change='handleSearch'></el-input>
       </el-col>
       <el-col :span='2'>
-        <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
+        <el-button style='float:left'
+                   type='default'
+                   @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
     <!-- 毛利润报表 -->
-    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" :height="tableHeight" :max-height="tableHeight" v-show="showTable.sell" style="width: 100%;zoom:0.53;">
-      <el-table-column min-width="100" prop="pingtai" label="平台" :formatter="empty" sortable align="center"></el-table-column>
-      <el-table-column min-width="100" prop="suffix" label="账号" :formatter="empty" sortable align="center"></el-table-column>
-      <el-table-column min-width="120" prop="salesman" label="销售员" :formatter="empty" sortable align="center"></el-table-column>
-      <el-table-column min-width="130" prop="salemoney" label="成交价$" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="160" prop="salemoneyzn" label="成交价￥" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="190" prop="ebayFeeebay" label="eBay成交费$" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="200" prop="ebayfeeznebay" label="eBay成交费￥" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="170" prop="ppFee" label="PP成交费$" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="180" prop="ppFeezn" label="PP成交费￥" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="170" prop="costmoney" label="商品成本￥" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="170" prop="expressFare" label="运费成本￥" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="170" prop="inpackagemoney" label="包装成本￥" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="140" prop="storename" label="发货仓库" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="170" prop="refund" label="退款金额￥" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="140" prop="refundrate" label="退款率%" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="170" prop="diefeeZn" label="死库处理￥" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="170" prop="insertionFee" label="店铺杂费￥" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="170" prop="saleOpeFeeZn" label="运营杂费￥" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="140" prop="grossprofit" label="毛利￥" :formatter="empty" sortable="custom" align="center"></el-table-column>
-      <el-table-column min-width="140" prop="grossprofitRate" label="毛利率%" :formatter="empty" sortable="custom" align="center"></el-table-column>
+    <el-table :data="tableData"
+              id="sale-table"
+              v-loading="listLoading"
+              @sort-change="sortNumber"
+              show-summary
+              :summary-method="getSummaries"
+              :height="tableHeight"
+              :max-height="tableHeight"
+              v-show="showTable.sell"
+              style="width: 100%;zoom:0.53;">
+      <el-table-column min-width="100"
+                       prop="pingtai"
+                       label="平台"
+                       :formatter="empty"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column min-width="100"
+                       prop="suffix"
+                       label="账号"
+                       :formatter="empty"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column min-width="120"
+                       prop="salesman"
+                       label="销售员"
+                       :formatter="empty"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column min-width="130"
+                       prop="salemoney"
+                       label="成交价$"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="160"
+                       prop="salemoneyzn"
+                       label="成交价￥"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="190"
+                       prop="ebayFeeebay"
+                       label="eBay成交费$"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="200"
+                       prop="ebayfeeznebay"
+                       label="eBay成交费￥"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="170"
+                       prop="ppFee"
+                       label="PP成交费$"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="180"
+                       prop="ppFeezn"
+                       label="PP成交费￥"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="170"
+                       prop="costmoney"
+                       label="商品成本￥"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="170"
+                       prop="expressFare"
+                       label="运费成本￥"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="170"
+                       prop="inpackagemoney"
+                       label="包装成本￥"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="140"
+                       prop="storename"
+                       label="发货仓库"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="170"
+                       prop="refund"
+                       label="退款金额￥"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="140"
+                       prop="refundrate"
+                       label="退款率%"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="170"
+                       prop="diefeeZn"
+                       label="死库处理￥"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="170"
+                       prop="insertionFee"
+                       label="店铺杂费￥"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="170"
+                       prop="saleOpeFeeZn"
+                       label="运营杂费￥"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="140"
+                       prop="grossprofit"
+                       label="毛利￥"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column min-width="140"
+                       prop="grossprofitRate"
+                       label="毛利率%"
+                       :formatter="empty"
+                       sortable="custom"
+                       align="center"></el-table-column>
     </el-table>
     <!-- 退款订单明细 -->
-    <el-table :data="tableData1" @sort-change="sortNumber" max-height="670" v-show="showTable.order">
-      <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
-      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
-      <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
-      <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
-      <el-table-column prop="goodsSku" label="商品SKU" sortable align="center"></el-table-column>
-      <el-table-column prop="tradeId" label="订单编号" sortable align="center"></el-table-column>
-      <el-table-column prop="orderId" label="店铺单号" sortable align="center"></el-table-column>
-      <el-table-column prop="storeName" label="仓库" sortable align="center"></el-table-column>
-      <el-table-column prop="refund" label="退款$" sortable="custom" align="center"></el-table-column>
-      <el-table-column prop="refundZn" label="退款￥" sortable="custom" :formatter="empty" align="center"></el-table-column>
-      <el-table-column prop="orderCountry" label="国家" sortable align="center"></el-table-column>
-      <el-table-column prop="expressWay" label="物流方式" sortable align="center"></el-table-column>
-      <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-      <el-table-column prop="orderTime" label="交易时间" align="center"></el-table-column>
-      <el-table-column prop="refundTime" label="退款时间" align="center"></el-table-column>
+    <el-table :data="tableData1"
+              @sort-change="sortNumber"
+              max-height="670"
+              v-show="showTable.order">
+      <el-table-column prop="suffix"
+                       label="账号"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="salesman"
+                       label="销售员"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="goodsName"
+                       label="商品名称"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="goodsCode"
+                       label="商品编码"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="goodsSku"
+                       label="商品SKU"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="tradeId"
+                       label="订单编号"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="orderId"
+                       label="店铺单号"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="storeName"
+                       label="仓库"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="refund"
+                       label="退款$"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column prop="refundZn"
+                       label="退款￥"
+                       sortable="custom"
+                       :formatter="empty"
+                       align="center"></el-table-column>
+      <el-table-column prop="orderCountry"
+                       label="国家"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="expressWay"
+                       label="物流方式"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="platform"
+                       label="平台"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="orderTime"
+                       label="交易时间"
+                       align="center"></el-table-column>
+      <el-table-column prop="refundTime"
+                       label="退款时间"
+                       align="center"></el-table-column>
     </el-table>
-    <div class="block toolbar" v-show="showTable.order">
-      <el-pagination background @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.condition.page" :page-size="this.condition.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total">
+    <div class="block toolbar"
+         v-show="showTable.order">
+      <el-pagination background
+                     @size-change='handleSizeChange'
+                     @current-change='handleCurrentChange'
+                     :current-page="this.condition.page"
+                     :page-size="this.condition.pageSize"
+                     :page-sizes="[10,20,30,40]"
+                     layout="total,sizes,prev,pager,next,jumper"
+                     :total="this.total">
       </el-pagination>
     </div>
     <!-- 退款产品明细 -->
-    <el-table :data="tableData2" @sort-change="sortNumber" max-height="670" v-show="showTable.goods">
-      <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
-      <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
-      <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
-      <el-table-column prop="goodsSku" label="商品SKU" sortable align="center"></el-table-column>
-      <el-table-column prop="times" label="退款次数" sortable="custom" align="center"></el-table-column>
-      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
+    <el-table :data="tableData2"
+              @sort-change="sortNumber"
+              max-height="670"
+              v-show="showTable.goods">
+      <el-table-column prop="suffix"
+                       label="账号"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="goodsName"
+                       label="商品名称"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="goodsCode"
+                       label="商品编码"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="goodsSku"
+                       label="商品SKU"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="times"
+                       label="退款次数"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column prop="salesman"
+                       label="销售员"
+                       sortable
+                       align="center"></el-table-column>
     </el-table>
-    <div class="block toolbar" v-show="showTable.goods">
-      <el-pagination background @size-change='handleSizeChangeGoods' @current-change='handleCurrentChangeGoods' :current-page="this.goods.page" :page-size="this.goods.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total2">
+    <div class="block toolbar"
+         v-show="showTable.goods">
+      <el-pagination background
+                     @size-change='handleSizeChangeGoods'
+                     @current-change='handleCurrentChangeGoods'
+                     :current-page="this.goods.page"
+                     :page-size="this.goods.pageSize"
+                     :page-sizes="[10,20,30,40]"
+                     layout="total,sizes,prev,pager,next,jumper"
+                     :total="this.total2">
       </el-pagination>
     </div>
     <!-- 死库明细 -->
-    <el-table :data="tableData3" @sort-change="sortNumber" max-height="670" v-show="showTable.dead">
-      <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
-      <el-table-column prop="storename" label="出货仓库" sortable align="center"></el-table-column>
-      <el-table-column prop="total" label="总计" sortable="custom" align="center"></el-table-column>
-      <el-table-column prop="dateTime" label="时间" sortable align="center"></el-table-column>
-      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
+    <el-table :data="tableData3"
+              @sort-change="sortNumber"
+              max-height="670"
+              v-show="showTable.dead">
+      <el-table-column prop="suffix"
+                       label="账号"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="storename"
+                       label="出货仓库"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="total"
+                       label="总计"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column prop="dateTime"
+                       label="时间"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="salesman"
+                       label="销售员"
+                       sortable
+                       align="center"></el-table-column>
     </el-table>
-    <div class="block toolbar" v-show="showTable.dead">
-      <el-pagination background @size-change='handleSizeChangeDead' @current-change='handleCurrentChangeDead' :current-page="this.dead.page" :page-size="this.dead.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total3">
+    <div class="block toolbar"
+         v-show="showTable.dead">
+      <el-pagination background
+                     @size-change='handleSizeChangeDead'
+                     @current-change='handleCurrentChangeDead'
+                     :current-page="this.dead.page"
+                     :page-size="this.dead.pageSize"
+                     :page-sizes="[10,20,30,40]"
+                     layout="total,sizes,prev,pager,next,jumper"
+                     :total="this.total3">
       </el-pagination>
     </div>
     <!-- 杂费明细 -->
-    <el-table :data="tableData4" @sort-change="sortNumber" max-height="670" v-show="showTable.extra">
-      <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
-      <el-table-column prop="saleOpeFeeZn" label="杂费" sortable="custom" align="center"></el-table-column>
-      <el-table-column prop="dateTime" label="时间" sortable align="center"></el-table-column>
-      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
+    <el-table :data="tableData4"
+              @sort-change="sortNumber"
+              max-height="670"
+              v-show="showTable.extra">
+      <el-table-column prop="suffix"
+                       label="账号"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="saleOpeFeeZn"
+                       label="杂费"
+                       sortable="custom"
+                       align="center"></el-table-column>
+      <el-table-column prop="dateTime"
+                       label="时间"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="salesman"
+                       label="销售员"
+                       sortable
+                       align="center"></el-table-column>
     </el-table>
-    <div class="block toolbar" v-show="showTable.extra">
-      <el-pagination background @size-change='handleSizeChangeExtra' @current-change='handleCurrentChangeExtra' :current-page="this.extra.page" :page-size="this.extra.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.total4">
+    <div class="block toolbar"
+         v-show="showTable.extra">
+      <el-pagination background
+                     @size-change='handleSizeChangeExtra'
+                     @current-change='handleCurrentChangeExtra'
+                     :current-page="this.extra.page"
+                     :page-size="this.extra.pageSize"
+                     :page-sizes="[10,20,30,40]"
+                     layout="total,sizes,prev,pager,next,jumper"
+                     :total="this.total4">
       </el-pagination>
     </div>
   </div>
@@ -182,7 +546,12 @@ import {
   getExtraFee
 } from '../../api/profit'
 import { isAdmin } from '../../api/api'
-import { compareUp, compareDown, getMonthDate, getDateRangeType } from '../../api/tools'
+import {
+  compareUp,
+  compareDown,
+  getMonthDate,
+  getDateRangeType
+} from '../../api/tools'
 import { getMenu } from '../../api/login'
 import FileSaver from 'file-saver'
 import XLSX from 'xlsx'
@@ -291,7 +660,10 @@ export default {
             onClick(vm) {
               const date = getMonthDate('thisMonth')
               vm.$emit('pick', [date['start'], date['end']])
-              vue.condition.dateRangeType = getDateRangeType(date['start'], date['end'])
+              vue.condition.dateRangeType = getDateRangeType(
+                date['start'],
+                date['end']
+              )
             }
           },
           {
@@ -478,7 +850,9 @@ export default {
 
           // 人员
           per = res.filter(
-            ele => (ele.department === val[i] || ele.parent_department === val[i]) && ele.position === '销售'
+            ele =>
+              (ele.department === val[i] || ele.parent_department === val[i]) &&
+              ele.position === '销售'
           )
           this.member = this.member.concat(per)
         }
@@ -541,9 +915,11 @@ export default {
           const name = this.$store.getters.name
           const res = this.allMember
           const per = res.filter(ele => ele.username === name)[0].department
-          myform.member = res.filter(ele => ele.department === per).map(m => {
-            return m.username
-          })
+          myform.member = res
+            .filter(ele => ele.department === per)
+            .map(m => {
+              return m.username
+            })
         }
         if (myform.department.length !== 0) {
           if (myform.secDepartment.length === 0) {
@@ -749,9 +1125,12 @@ export default {
     exportExcel() {
       /* generate workbook object from table */
       if (this.activeName === '毛利润报表') {
-        var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'), {
-          raw: true
-        })
+        var wb = XLSX.utils.table_to_book(
+          document.querySelector('#sale-table'),
+          {
+            raw: true
+          }
+        )
         var lastRow = wb.Sheets.Sheet1['!ref'].match(/\d+$/)[0]
         for (var ele in wb.Sheets.Sheet1) {
           var rowNumber = ele.replace(/[^0-9]+/g, '')
@@ -796,6 +1175,7 @@ export default {
         })
         const th = [
           '账号',
+          '退款月份',
           '销售员',
           '商品名称',
           '商品编码',
@@ -809,10 +1189,12 @@ export default {
           '物流方式',
           '平台',
           '交易时间',
-          '退款时间'
+          '退款时间',
+          '退款时间-交易时间(天)'
         ]
         const filterVal = [
           'suffix',
+          'refMonth',
           'salesman',
           'goodsName',
           'goodsCode',
@@ -826,7 +1208,8 @@ export default {
           'expressWay',
           'platform',
           'orderTime',
-          'refundTime'
+          'refundTime',
+          'dateDelta'
         ]
       } else if (this.activeName === '退款产品明细') {
         this.order = Object.assign({}, this.goods)
@@ -864,13 +1247,7 @@ export default {
           const [fileName, fileType, sheetName] = [Filename, 'xls']
           this.$toExcel({ th, data, fileName, fileType, sheetName })
         })
-        const th = [
-          '账号',
-          '发货仓库',
-          '总计',
-          '时间',
-          '销售员'
-        ]
+        const th = ['账号', '发货仓库', '总计', '时间', '销售员']
         const filterVal = [
           'suffix',
           'storename',
@@ -888,18 +1265,8 @@ export default {
           const [fileName, fileType, sheetName] = [Filename, 'xls']
           this.$toExcel({ th, data, fileName, fileType, sheetName })
         })
-        const th = [
-          '账号',
-          '杂费',
-          '时间',
-          '销售员'
-        ]
-        const filterVal = [
-          'suffix',
-          'saleOpeFeeZn',
-          'dateTime',
-          'salesman'
-        ]
+        const th = ['账号', '杂费', '时间', '销售员']
+        const filterVal = ['suffix', 'saleOpeFeeZn', 'dateTime', 'salesman']
       }
       //  return wbout
     },
@@ -1025,7 +1392,7 @@ export default {
     })
     getSection().then(response => {
       const res = response.data.data
-      this.department = res.filter(ele => ele.department !== '供应链' && ele.department !== '采购部')
+      this.department = res.filter(ele => ele.department && ele.type === '业务')
     })
     getSecDepartment().then(reseponse => {
       const res = reseponse.data.data

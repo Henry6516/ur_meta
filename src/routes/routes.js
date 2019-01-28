@@ -44,254 +44,257 @@ import news from '../views/feedback/news.vue'
 import productRecommend from '../views/productDevelop/productRecommend.vue'
 import productApprove from '../views/productDevelop/productApprove.vue'
 
-const routes = [{
-  path: '/login',
-  component: Login,
-  name: '',
-  hidden: true
-},
-{
-  path: '/404',
-  component: NotFound,
-  name: '主页'
-},
-{
-  path: '/site/index',
-  component: Home,
-  name: '毛利润报表',
-  iconCls: 'el-icon-message',
-  children: [{
-    path: '/v1/report/sales',
-    component: sell,
-    name: '销售毛利润报表'
-  },
+const routes = [
   {
-    path: '/develop',
-    component: develop,
-    name: '开发毛利润报表'
-  },
-  {
-    path: '/purchase',
-    component: purchase,
-    name: '采购毛利润报表'
-  },
-  {
-    path: '/artist',
-    component: artist,
-    name: '美工毛利润报表'
-  },
-  {
-    path: '/v1/report/introduce',
-    component: introduce,
-    name: '推荐人毛利报表'
-  },
-  {
-    path: '/v1/report/account',
-    component: account,
-    name: '账号产品利润报表'
-  },
-  {
-    path: '/v1/report/sales-trend',
-    component: trending,
-    name: '销售额走势'
-  },
-  {
-    path: '/index',
-    component: index,
-    name: '首页',
+    path: '/login',
+    component: Login,
+    name: '',
     hidden: true
-  }
-  ]
-},
-{
-  path: '/v1/data-center/options',
-  component: Home,
-  name: '数据中心',
-  iconCls: 'el-icon-message',
-  children: [
-    {
-      path: '/v1/perform/cost',
-      component: pcost,
-      name: '平台物流费用'
-    },
-    {
-      path: '/v1/data-center/out-of-stock-info',
-      component: stock,
-      name: '缺货产品分析'
-    },
-    {
-      path: '/v1/perform/perform',
-      component: perform,
-      name: '新品开发表现'
-    },
-    {
-      path: '/v1/perform/sales',
-      component: psales,
-      name: '销售变化表'
-    },
-    {
-      path: '/v1/data-center/sales-change',
-      component: saleschange,
-      name: '产品销售变化'
-    }
-  ]
-},
-{
-  path: '/site/index',
-  component: Home,
-  name: '销售工具',
-  iconCls: 'el-icon-message',
-  children: [{
-    path: '/v1/tool/ebay-template',
-    component: ebay,
-    name: 'eBay销售工具'
   },
   {
-    path: '/v1/tool/ebaysku-template',
-    component: ebaysku,
-    name: 'eBay工具'
+    path: '/404',
+    component: NotFound,
+    name: '主页'
   },
   {
-    path: '/v1/tool/wishsku-template',
-    component: wishsku,
-    name: 'Wish工具'
+    path: '/site/index',
+    component: Home,
+    name: '毛利润报表',
+    iconCls: 'el-icon-message',
+    children: [
+      {
+        path: '/v1/report/sales',
+        component: sell,
+        name: '销售毛利润报表'
+      },
+      {
+        path: '/develop',
+        component: develop,
+        name: '开发毛利润报表'
+      },
+      {
+        path: '/purchase',
+        component: purchase,
+        name: '采购毛利润报表'
+      },
+      {
+        path: '/artist',
+        component: artist,
+        name: '美工毛利润报表'
+      },
+      {
+        path: '/v1/report/introduce',
+        component: introduce,
+        name: '推荐人毛利报表'
+      },
+      {
+        path: '/v1/report/account',
+        component: account,
+        name: '账号产品利润报表'
+      },
+      {
+        path: '/v1/report/sales-trend',
+        component: trending,
+        name: '销售额走势'
+      },
+      {
+        path: '/index',
+        component: index,
+        name: '首页',
+        hidden: true
+      }
+    ]
   },
   {
-    path: '/v1/tool/smtsku-template',
-    component: smtsku,
-    name: 'SMT工具'
+    path: '/v1/data-center/options',
+    component: Home,
+    name: '数据中心',
+    iconCls: 'el-icon-message',
+    children: [
+      {
+        path: '/v1/perform/cost',
+        component: pcost,
+        name: '平台物流费用'
+      },
+      {
+        path: '/v1/data-center/out-of-stock-info',
+        component: stock,
+        name: '缺货产品分析'
+      },
+      {
+        path: '/v1/perform/perform',
+        component: perform,
+        name: '新品开发表现'
+      },
+      {
+        path: '/v1/perform/sales',
+        component: psales,
+        name: '销售变化表'
+      },
+      {
+        path: '/v1/data-center/sales-change',
+        component: saleschange,
+        name: '销量环比变化'
+      }
+    ]
+  },
+  {
+    path: '/site/index',
+    component: Home,
+    name: '销售工具',
+    iconCls: 'el-icon-message',
+    children: [
+      {
+        path: '/v1/tool/ebay-template',
+        component: ebay,
+        name: 'eBay销售工具'
+      },
+      {
+        path: '/v1/tool/ebaysku-template',
+        component: ebaysku,
+        name: 'eBay工具'
+      },
+      {
+        path: '/v1/tool/wishsku-template',
+        component: wishsku,
+        name: 'Wish工具'
+      },
+      {
+        path: '/v1/tool/smtsku-template',
+        component: smtsku,
+        name: 'SMT工具'
+      }
+    ]
+  },
+  {
+    path: '/v1/settings/options',
+    component: Home,
+    name: '设置中心',
+    iconCls: 'el-icon-message',
+    children: [
+      {
+        path: '/v1/settings/dev-dead-fee',
+        component: deadFee,
+        name: '死库费用'
+      },
+      {
+        path: '/v1/settings/dev-operate-fee',
+        component: operationFee,
+        name: '运营杂费'
+      },
+      {
+        path: '/v1/settings/exchange',
+        component: exchange,
+        name: '美元设置'
+      }
+    ]
+  },
+  {
+    path: '/v1/feedback/index',
+    component: Home,
+    name: '反馈中心',
+    iconCls: 'el-icon-message',
+    children: [
+      {
+        path: '/v1/requirements/index',
+        component: requirements,
+        name: '需求管理'
+      },
+      {
+        path: '/v1/news/index',
+        component: news,
+        name: '公告管理'
+      }
+    ]
+  },
+  {
+    path: '/v1/tiny-tool/options',
+    component: Home,
+    name: 'UR小工具',
+    iconCls: 'el-icon-message',
+    children: [
+      {
+        path: '/v1/tiny-tool/express',
+        component: express,
+        name: '物流查询网址'
+      },
+      {
+        path: '/v1/tiny-tool/brand',
+        component: brand,
+        name: '品牌列表'
+      },
+      {
+        path: '/v1/tiny-tool/goods-picture',
+        component: goods,
+        name: '产品一览表'
+      },
+      {
+        path: '/v1/tiny-tool/fyndiqz-upload',
+        component: fyndiqzUpload,
+        name: '产品上传'
+      },
+      {
+        path: '/v1/tiny-tool/uk-fic',
+        component: ukfic,
+        name: 'UK虚拟仓定价器'
+      },
+      {
+        path: '/v1/tiny-tool/uk',
+        component: uk,
+        name: 'UK真仓定价'
+      },
+      {
+        path: '/v1/tiny-tool/au',
+        component: au,
+        name: 'AU真仓定价'
+      },
+      {
+        path: '/v1/tiny-tool/declared-value',
+        component: order,
+        name: '修改订单申报价'
+      },
+      {
+        path: '/v1/tiny-tool/exception-pay-pal',
+        component: paypal,
+        name: '异常paypal列表'
+      },
+      {
+        path: '/v1/tiny-tool/risk-control',
+        component: risk,
+        name: '风险控制'
+      },
+      {
+        path: '/v1/tiny-tool/exception-edition',
+        component: edition,
+        name: '异常改订单'
+      }
+    ]
+  },
+  {
+    path: '/v1/oa-goods/list',
+    component: Home,
+    name: '产品中心',
+    iconCls: 'el-icon-message',
+    children: [
+      {
+        path: '/v1/oa-goods/list',
+        component: productRecommend,
+        name: '产品开发'
+      },
+      {
+        path: '/v1/check/check-list',
+        component: productApprove,
+        name: '产品审批'
+      }
+    ]
+  },
+  {
+    path: '*',
+    hidden: true,
+    redirect: {
+      path: '/404'
+    }
   }
-  ]
-},
-{
-  path: '/v1/settings/options',
-  component: Home,
-  name: '设置中心',
-  iconCls: 'el-icon-message',
-  children: [
-    {
-      path: '/v1/settings/dev-dead-fee',
-      component: deadFee,
-      name: '死库费用'
-    },
-    {
-      path: '/v1/settings/dev-operate-fee',
-      component: operationFee,
-      name: '运营杂费'
-    },
-    {
-      path: '/v1/settings/exchange',
-      component: exchange,
-      name: '美元设置'
-    }
-  ]
-},
-{
-  path: '/v1/feedback/index',
-  component: Home,
-  name: '反馈中心',
-  iconCls: 'el-icon-message',
-  children: [
-    {
-      path: '/v1/requirements/index',
-      component: requirements,
-      name: '需求管理'
-    },
-    {
-      path: '/v1/news/index',
-      component: news,
-      name: '公告管理'
-    }
-  ]
-},
-{
-  path: '/v1/tiny-tool/options',
-  component: Home,
-  name: 'UR小工具',
-  iconCls: 'el-icon-message',
-  children: [
-    {
-      path: '/v1/tiny-tool/express',
-      component: express,
-      name: '物流查询网址'
-    },
-    {
-      path: '/v1/tiny-tool/brand',
-      component: brand,
-      name: '品牌列表'
-    },
-    {
-      path: '/v1/tiny-tool/goods-picture',
-      component: goods,
-      name: '产品一览表'
-    },
-    {
-      path: '/v1/tiny-tool/fyndiqz-upload',
-      component: fyndiqzUpload,
-      name: '产品上传'
-    },
-    {
-      path: '/v1/tiny-tool/uk-fic',
-      component: ukfic,
-      name: 'UK虚拟仓定价器'
-    },
-    {
-      path: '/v1/tiny-tool/uk',
-      component: uk,
-      name: 'UK真仓定价'
-    },
-    {
-      path: '/v1/tiny-tool/au',
-      component: au,
-      name: 'AU真仓定价'
-    },
-    {
-      path: '/v1/tiny-tool/declared-value',
-      component: order,
-      name: '修改订单申报价'
-    },
-    {
-      path: '/v1/tiny-tool/exception-pay-pal',
-      component: paypal,
-      name: '异常paypal列表'
-    },
-    {
-      path: '/v1/tiny-tool/risk-control',
-      component: risk,
-      name: '风险控制'
-    },
-    {
-      path: '/v1/tiny-tool/exception-edition',
-      component: edition,
-      name: '异常改订单'
-    }
-  ]
-},
-{
-  path: '/v1/oa-goods/list',
-  component: Home,
-  name: '产品中心',
-  iconCls: 'el-icon-message',
-  children: [
-    {
-      path: '/v1/oa-goods/list',
-      component: productRecommend,
-      name: '产品开发' 
-    },
-    {
-      path: '/v1/check/check-list',
-      component: productApprove,
-      name: '产品审批'
-    }
-  ]
-},
-{
-  path: '*',
-  hidden: true,
-  redirect: {
-    path: '/404'
-  }
-}
 ]
 
 export default routes

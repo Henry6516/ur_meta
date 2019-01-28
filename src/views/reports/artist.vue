@@ -652,7 +652,7 @@ export default {
   mounted() {
     getSection().then(response => {
       const res = response.data.data
-      this.department = res.filter(ele => ele.department !== '供应链' && ele.department !== '采购部')
+      this.department = res.filter(ele => ele.department && ele.type === '业务')
     })
     getMember().then(response => {
       const res = response.data.data

@@ -66,21 +66,81 @@ export function fyndiqz() {
 
 export function getRequirementsDeal(condition) {
   return request({
-    url: 'requirements/deal-list?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&status=' + condition.status + '&processingPerson=' + condition.processingPerson + '&creator=' + condition.creator + '&detail=' + condition.detail,
+    url:
+      'requirements/deal-list?name=' +
+      condition.name +
+      '&page=' +
+      condition.page +
+      '&pageSize=' +
+      condition.pageSize +
+      '&type=' +
+      condition.type +
+      '&priority=' +
+      condition.priority +
+      '&status=' +
+      condition.status +
+      '&processingPerson=' +
+      condition.processingPerson +
+      '&creator=' +
+      condition.creator +
+      '&detail=' +
+      condition.detail +
+      '&sortProperty=' +
+      condition.sortProperty +
+      '&sortOrder=' +
+      condition.sortOrder,
     method: 'get'
   })
 }
 
 export function getRequirementsIndex(condition) {
   return request({
-    url: 'requirements/index?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&schedule=' + condition.schedule + '&detail=' + condition.detail,
+    url:
+      'requirements/index?name=' +
+      condition.name +
+      '&page=' +
+      condition.page +
+      '&pageSize=' +
+      condition.pageSize +
+      '&type=' +
+      condition.type +
+      '&priority=' +
+      condition.priority +
+      '&schedule=' +
+      condition.schedule +
+      '&detail=' +
+      condition.detail +
+      '&creator=' +
+      condition.creator +
+      '&status=' +
+      condition.status +
+      '&sortProperty=' +
+      condition.sortProperty +
+      '&sortOrder=' +
+      condition.sortOrder,
     method: 'get'
   })
 }
 
 export function getRequirementsExamine(condition) {
   return request({
-    url: 'requirements/examine-list?name=' + condition.name + '&page=' + condition.page + '&pageSize=' + condition.pageSize + '&flag=' + condition.flag + '&type=' + condition.type + '&priority=' + condition.priority + '&creator=' + condition.creator + '&detail=' + condition.detail,
+    url:
+      'requirements/examine-list?name=' +
+      condition.name +
+      '&page=' +
+      condition.page +
+      '&pageSize=' +
+      condition.pageSize +
+      '&type=' +
+      condition.type +
+      '&priority=' +
+      condition.priority +
+      '&creator=' +
+      condition.creator +
+      '&detail=' +
+      condition.detail +
+      '&processingPerson=' +
+      condition.processingPerson,
     method: 'get'
   })
 }
@@ -150,7 +210,7 @@ export function ProsTarget(param) {
   })
 }
 export function Risk(param) {
-  var data = { 'condition': param }
+  var data = { condition: param }
   return request({
     url: '/tiny-tool/risky-order',
     method: 'post',
@@ -164,7 +224,7 @@ export function BlackList() {
   })
 }
 export function postBlacklist(param) {
-  const data = { 'data': param }
+  const data = { data: param }
   return request({
     url: '/tiny-tool/blacklist',
     method: 'post',
@@ -172,7 +232,7 @@ export function postBlacklist(param) {
   })
 }
 export function postHandleOrder(param) {
-  const data = { 'data': param }
+  const data = { data: param }
   return request({
     url: '/tiny-tool/handle-risky-order',
     method: 'post',
@@ -191,13 +251,16 @@ export function newsCreate(param) {
     url: '/news/create',
     method: 'post',
     data,
-    transformRequest: [function(data) {
-      let ret = ''
-      for (const it in data) {
-        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+    transformRequest: [
+      function(data) {
+        let ret = ''
+        for (const it in data) {
+          ret +=
+            encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+        }
+        return ret
       }
-      return ret
-    }],
+    ],
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -222,13 +285,16 @@ export function newsTop(param) {
     url: '/news/top',
     method: 'post',
     data,
-    transformRequest: [function(data) {
-      let ret = ''
-      for (const it in data) {
-        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+    transformRequest: [
+      function(data) {
+        let ret = ''
+        for (const it in data) {
+          ret +=
+            encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+        }
+        return ret
       }
-      return ret
-    }],
+    ],
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }

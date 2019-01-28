@@ -1,444 +1,815 @@
 <template>
   <section>
-    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-      <el-tab-pane v-for="(item, index) in this.allMenu" :label="item.name" :name="item.name" :key="index">
+    <el-tabs v-model="activeName"
+             type="card"
+             @tab-click="handleClick">
+      <el-tab-pane v-for="(item, index) in this.allMenu"
+                   :label="item.name"
+                   :name="item.name"
+                   :key="index">
       </el-tab-pane>
     </el-tabs>
-      <div v-show="userShow">
-        <!--需求工具条-->
-        <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-          <el-form :inline="true" :model="condition">
-            <el-form-item>
-              <el-input size="small" v-model="condition.name" placeholder="名称"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button size="small" plain @click="searchRequirements">查询</el-button>
-            </el-form-item>
-            <el-form-item>
-              <el-button size="small" plain @click="handleAdd">新增</el-button>
-            </el-form-item>
-          </el-form>
-        </el-col>
-        <!--需求列表-->
-        <el-table :data="requirements" highlight-current-row :loading="listLoading" style="width: 100%;">
-          <el-table-column prop="id" label="id" v-if="false"></el-table-column>
-          <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column type="index" width="60"></el-table-column>
-          <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
-          <el-table-column prop="creator" label="创建人" sortable></el-table-column>
-          <el-table-column prop="name" label="名称" sortable>
+    <div v-show="userShow">
+      <!--需求工具条-->
+      <el-col :span="24"
+              class="toolbar"
+              style="padding-bottom: 0px;">
+        <el-form :inline="true"
+                 :model="condition">
+          <el-form-item>
+            <el-input size="small"
+                      v-model="condition.name"
+                      placeholder="名称"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="small"
+                       plain
+                       @click="searchRequirements">查询</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="small"
+                       plain
+                       @click="handleAdd">新增</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+      <!--需求列表-->
+      <el-table :data="requirements"
+                @sort-change="sortNumber"
+                highlight-current-row
+                :loading="listLoading"
+                max-height="750"
+                style="width: 100%;">
+        <el-table-column prop="id"
+                         label="id"
+                         v-if="false"></el-table-column>
+        <el-table-column type="selection"
+                         align="center"
+                         header-align="center"
+                         width="55"></el-table-column>
+        <el-table-column type="index"
+                         align="center"
+                         header-align="center"
+                         width="60"></el-table-column>
+        <el-table-column prop="createdDate"
+                         align="center"
+                         header-align="center"
+                         label="创建时间"
+                         :formatter="formatter"
+                         width="140"></el-table-column>
+        <el-table-column label="创建人"
+                         prop="creator"
+                         sortable
+                         header-align="center">
+          <el-table-column prop="creator"
+                           :render-header="renderHeader"
+                           align="center"></el-table-column>
+        </el-table-column>
+        <el-table-column label="名称(可按紧急程度排序)"
+                         prop="priority"
+                         sortable="impotant"
+                         header-align="center">
+          <el-table-column prop="name"
+                           :render-header="renderHeader"
+                           align="center">
             <template slot-scope="scope">
               <span class="link-type">{{ scope.row.name }}</span>
               <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="type" label="类别" min-width="100" sortable>
+        </el-table-column>
+        <el-table-column label="类别"
+                         prop="type"
+                         sortable
+                         header-align="center"
+                         min-width="100">
+          <el-table-column prop="type"
+                           :render-header="renderHeader"
+                           align="center">
             <template slot-scope="scope">
               <span>{{types[scope.row.type]}}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="detail" label="详情" min-width="180" :formatter="detailFormatter" sortable>
+        </el-table-column>
+        <el-table-column label="详情"
+                         prop="detail"
+                         sortable
+                         header-align="center"
+                         min-width="180">
+          <el-table-column prop="detail"
+                           :formatter="detailFormatter"
+                           :render-header="renderHeader"
+                           align="center">
           </el-table-column>
-          <el-table-column prop="schedule" label="进度" min-width="100" sortable>
+        </el-table-column>
+        <el-table-column label="进度"
+                         prop="schedule"
+                         sortable
+                         header-align="center"
+                         min-width="100">
+          <el-table-column prop="schedule"
+                           :render-header="renderHeader"
+                           align="center">
             <template slot-scope="scope">
-              <el-popover trigger="hover" placement="top">
+              <el-popover trigger="hover"
+                          placement="top">
                 <p>说明: {{ schedule[scope.row.schedule]['hints']}}</p>
-                <div slot="reference" class="name-wrapper">
+                <div slot="reference"
+                     class="name-wrapper">
                   <el-tag size="medium">{{ schedule[scope.row.schedule]['name']}}</el-tag>
                 </div>
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="220">
-            <template slot-scope="scope"> 
-              <el-button type="primary" size="small" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
-              <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-              <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table> 
-        <!--需求新增界面-->
-        <el-dialog title="新增" :visible.sync="addFormVisible" :close-on-click-modal="false">
-          <el-form :model="addForm" label-width="80px" ref="addForm">
-            <el-form-item label="名称" prop="name">
-              <el-input v-model="addForm.name" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="类别">
-              <el-radio-group v-model="addForm.type">
-                <el-radio class="radio" :label="0">BUG</el-radio>
-                <el-radio class="radio" :label="1">新需求</el-radio>
-                <el-radio class="radio" :label="2">任务</el-radio>
-                <el-radio class="radio" :label="3">改进建议</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item label="优先级">
-              <el-rate show-text :texts='text' v-model="addForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
-            </el-form-item>
-            <el-form-item label="详情">
-              <quill-editor v-model="content"
-                ref="QuillEditor"
-                :options="editorOption"
-                @blur="onEditorBlur($event)"
-                @focus="onEditorFocus($event)"
-                @ready="onEditorReady($event)">
-              </quill-editor>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click.native="addFormVisible = false">取消</el-button>
-            <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
-          </div>
-        </el-dialog>
-        <!--需求编辑界面-->
-        <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
-          <el-form :model="editForm" label-width="80px" label-position="left" ref="editForm">
-            <el-form-item label="id" prop="id" v-if="false">
-              <el-input v-model="editForm.id" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="名称" prop="name">
-              <el-input v-model="editForm.name" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="类别">
-              <el-radio-group v-model="editForm.type">
-                <el-radio label="0" :value="this.editForm.type">BUG</el-radio>
-                <el-radio label="1" :value="this.editForm.type">新需求</el-radio>
-                <el-radio label="2" :value="this.editForm.type">任务</el-radio>
-                <el-radio label="3" :value="this.editForm.type">改进建议</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item label="优先级">
-              <el-rate show-text :texts='text' v-model="editForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
-            </el-form-item>
-            <el-form-item label="详情">
-              <quill-editor v-model="mycontent"
-                ref="myQuillEditor"
-                :options="editorOption"
-                @blur="onEditorBlur($event)"
-                @focus="onEditorFocus($event)"
-                @ready="onEditorReady($event)">
-              </quill-editor>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click.native="editFormVisible = false">取消</el-button>
-            <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
-          </div>
-        </el-dialog>
-        <!--需求详情界面-->
-        <el-dialog title="详情" :visible.sync="detailFormVisible" :close-on-click-modal="false">
-          <el-form :model="detailForm" label-width="80px" label-position="left" ref="detailForm">
-            <el-form-item label="名称" prop="name">
-              <span>{{detailForm.name}}</span>
-          <!-- <el-tag :type="tags[detailForm.priority]['type']">{{tags[detailForm.priority]['name']}}</el-tag> -->
-            </el-form-item>
-            <el-form-item label="类别" prop="type">
-              <span>{{types[detailForm.type]}}</span>
-            </el-form-item>
-            <el-form-item label="状态" prop="schedule">
-              <el-steps :space="100" :active=this.detailForm.schedule finish-status="success">
-                <el-step title="待审核"></el-step>
-                <el-step :title='this.detailForm.schedule<=2?"已驳回":"处理中"'></el-step>
-                <el-step title="处理中"></el-step>
-                <!-- <el-step title="处理中"></el-step> -->
-                <el-step title="处理完成"></el-step>
-              </el-steps>
-            </el-form-item>
-            <el-form-item label="优先级" prop="priority">
-              <el-rate show-text disabled :texts='text' v-model="this.detailForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
-            </el-form-item>
-            <el-form-item label="创建人" prop="creator">
-              <span>{{detailForm.creator}}</span>
-            </el-form-item>
-            <el-form-item label="详情" prop="detail">
-              <!-- 从数据库读取展示 -->
-              <div v-html="str" class="ql-editor">
-                {{str}}
-              </div>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click.native="detailFormVisible = false">关闭</el-button>
-          </div>
-        </el-dialog>
-        <!--需求分页工具条-->
-        <el-col :span="24" class="toolbar">
-          <div class="pagination-container">
-            <el-pagination
-              v-show="this.total>0" 
-              :current-page="condition.page" 
-              :page-sizes="[10,20,30,50,this.total]" 
-              :page-size="condition.pageSize" 
-              :total="this.total" 
-              background 
-              layout="total, sizes, slot, prev, pager, next, jumper" 
-              @current-change="handleCurrentChange"
-              @size-change="handleSizeChange">
-              <el-button type="text" @click="showAll">显示全部</el-button>
-            </el-pagination>
-          </div>
-        </el-col>
-      </div>
-      <div v-show="auditShow">
-        <!--审核工具条-->
-        <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-          <el-form :inline="true" :model="examine">
-            <el-form-item>
-              <el-input size="small" v-model="examine.name" placeholder="名称"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button size="small" plain @click="searchRequirements">查询</el-button>
-            </el-form-item>
-            <el-form-item>
-              <el-button size="small" plain @click="auditSuccessAll">批量通过</el-button>
-            </el-form-item>
-            <el-form-item>
-              <el-button size="small" plain @click="auditFailedAll">批量驳回</el-button>
-            </el-form-item>
-          </el-form>
-        </el-col>
-        <!--审核列表-->
-        <el-table :data="requirementsAudit" highlight-current-row :loading="auditLoading" @selection-change="selsChange" style="width: 100%;">
-          <el-table-column prop="id" label="id" v-if="false"></el-table-column>
-          <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column type="index" width="60"></el-table-column>
-          <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
-          <el-table-column prop="creator" label="创建人" sortable></el-table-column>
-          <el-table-column prop="name" label="名称" sortable>
+        </el-table-column>
+        <el-table-column label="操作"
+                         header-align="center"
+                         width="220">
+          <template slot-scope="scope">
+            <el-button type="primary"
+                       size="small"
+                       @click="handleDetail(scope.$index, scope.row)">详情</el-button>
+            <el-button size="small"
+                       @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <el-button type="danger"
+                       size="small"
+                       @click="handleDel(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!--需求新增界面-->
+      <el-dialog title="新增"
+                 :visible.sync="addFormVisible"
+                 :close-on-click-modal="false">
+        <el-form :model="addForm"
+                 label-width="80px"
+                 ref="addForm">
+          <el-form-item label="名称"
+                        prop="name">
+            <el-input v-model="addForm.name"
+                      auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="类别">
+            <el-radio-group v-model="addForm.type">
+              <el-radio class="radio"
+                        :label="0">BUG</el-radio>
+              <el-radio class="radio"
+                        :label="1">新需求</el-radio>
+              <el-radio class="radio"
+                        :label="2">任务</el-radio>
+              <el-radio class="radio"
+                        :label="3">改进建议</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="优先级">
+            <el-rate show-text
+                     :texts='text'
+                     v-model="addForm.priority"
+                     :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+                     :max="5"
+                     style="margin-top:8px;" />
+          </el-form-item>
+          <el-form-item label="详情">
+            <quill-editor v-model="content"
+                          ref="QuillEditor"
+                          :options="editorOption"
+                          @blur="onEditorBlur($event)"
+                          @focus="onEditorFocus($event)"
+                          @ready="onEditorReady($event)">
+            </quill-editor>
+          </el-form-item>
+        </el-form>
+        <div slot="footer"
+             class="dialog-footer">
+          <el-button @click.native="addFormVisible = false">取消</el-button>
+          <el-button type="primary"
+                     @click.native="addSubmit"
+                     :loading="addLoading">提交</el-button>
+        </div>
+      </el-dialog>
+      <!--需求编辑界面-->
+      <el-dialog title="编辑"
+                 :visible.sync="editFormVisible"
+                 :close-on-click-modal="false">
+        <el-form :model="editForm"
+                 label-width="80px"
+                 label-position="left"
+                 ref="editForm">
+          <el-form-item label="id"
+                        prop="id"
+                        v-if="false">
+            <el-input v-model="editForm.id"
+                      auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="名称"
+                        prop="name">
+            <el-input v-model="editForm.name"
+                      auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="类别">
+            <el-radio-group v-model="editForm.type">
+              <el-radio label="0"
+                        :value="this.editForm.type">BUG</el-radio>
+              <el-radio label="1"
+                        :value="this.editForm.type">新需求</el-radio>
+              <el-radio label="2"
+                        :value="this.editForm.type">任务</el-radio>
+              <el-radio label="3"
+                        :value="this.editForm.type">改进建议</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="优先级">
+            <el-rate show-text
+                     :texts='text'
+                     v-model="editForm.priority"
+                     :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+                     :max="5"
+                     style="margin-top:8px;" />
+          </el-form-item>
+          <el-form-item label="详情">
+            <quill-editor v-model="mycontent"
+                          ref="myQuillEditor"
+                          :options="editorOption"
+                          @blur="onEditorBlur($event)"
+                          @focus="onEditorFocus($event)"
+                          @ready="onEditorReady($event)">
+            </quill-editor>
+          </el-form-item>
+        </el-form>
+        <div slot="footer"
+             class="dialog-footer">
+          <el-button @click.native="editFormVisible = false">取消</el-button>
+          <el-button type="primary"
+                     @click.native="editSubmit"
+                     :loading="editLoading">提交</el-button>
+        </div>
+      </el-dialog>
+      <!--需求详情界面-->
+      <el-dialog title="详情"
+                 :visible.sync="detailFormVisible"
+                 :close-on-click-modal="false">
+        <el-form :model="detailForm"
+                 label-width="80px"
+                 label-position="left"
+                 ref="detailForm">
+          <el-form-item label="名称"
+                        prop="name">
+            <span>{{detailForm.name}}</span>
+            <!-- <el-tag :type="tags[detailForm.priority]['type']">{{tags[detailForm.priority]['name']}}</el-tag> -->
+          </el-form-item>
+          <el-form-item label="类别"
+                        prop="type">
+            <span>{{types[detailForm.type]}}</span>
+          </el-form-item>
+          <el-form-item label="状态"
+                        prop="schedule">
+            <el-steps :space="100"
+                      :active=this.detailForm.schedule
+                      finish-status="success">
+              <el-step title="待审核"></el-step>
+              <el-step :title='this.detailForm.schedule<=2?"已驳回":"处理中"'></el-step>
+              <el-step title="处理中"></el-step>
+              <!-- <el-step title="处理中"></el-step> -->
+              <el-step title="处理完成"></el-step>
+            </el-steps>
+          </el-form-item>
+          <el-form-item label="优先级"
+                        prop="priority">
+            <el-rate show-text
+                     disabled
+                     :texts='text'
+                     v-model="this.detailForm.priority"
+                     :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+                     :max="5"
+                     style="margin-top:8px;" />
+          </el-form-item>
+          <el-form-item label="创建人"
+                        prop="creator">
+            <span>{{detailForm.creator}}</span>
+          </el-form-item>
+          <el-form-item label="详情"
+                        prop="detail">
+            <!-- 从数据库读取展示 -->
+            <div v-html="str"
+                 class="ql-editor">
+              {{str}}
+            </div>
+          </el-form-item>
+        </el-form>
+        <div slot="footer"
+             class="dialog-footer">
+          <el-button @click.native="detailFormVisible = false">关闭</el-button>
+        </div>
+      </el-dialog>
+      <!--需求分页工具条-->
+      <el-col :span="24"
+              class="toolbar">
+        <div class="pagination-container">
+          <el-pagination v-show="this.total>0"
+                         :current-page="condition.page"
+                         :page-sizes="[10,20,30,50,this.total]"
+                         :page-size="condition.pageSize"
+                         :total="this.total"
+                         background
+                         layout="total, sizes, slot, prev, pager, next, jumper"
+                         @current-change="handleCurrentChange"
+                         @size-change="handleSizeChange">
+            <el-button type="text"
+                       @click="showAll">显示全部</el-button>
+          </el-pagination>
+        </div>
+      </el-col>
+    </div>
+    <div v-show="auditShow">
+      <!--审核工具条-->
+      <el-col :span="24"
+              class="toolbar"
+              style="padding-bottom: 0px;">
+        <el-form :inline="true"
+                 :model="examine">
+          <el-form-item>
+            <el-input size="small"
+                      v-model="examine.name"
+                      placeholder="名称"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="small"
+                       plain
+                       @click="searchRequirements">查询</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="small"
+                       plain
+                       @click="auditSuccessAll">批量通过</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="small"
+                       plain
+                       @click="auditFailedAll">批量驳回</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+      <!--审核列表-->
+      <el-table :data="requirementsAudit"
+                @sort-change="sortNumber"
+                highlight-current-row
+                :loading="auditLoading"
+                @selection-change="selsChange"
+                style="width: 100%;">
+        <el-table-column prop="id"
+                         label="id"
+                         v-if="false"></el-table-column>
+        <el-table-column type="selection"
+                         width="55"></el-table-column>
+        <el-table-column type="index"
+                         width="60"></el-table-column>
+        <el-table-column prop="createdDate"
+                         label="创建时间"
+                         :formatter="formatter"
+                         width="140"></el-table-column>
+        <el-table-column label="创建人"
+                         prop="creator"
+                         header-align="center"
+                         sortable>
+          <el-table-column prop="creator"
+                           :render-header="renderHeader2"
+                           align="center"></el-table-column>
+        </el-table-column>
+        <el-table-column label="名称"
+                         prop="name"
+                         header-align="center"
+                         sortable>
+          <el-table-column prop="name"
+                           :render-header="renderHeader2"
+                           align="center">
             <template slot-scope="scope">
               <span class="link-type">{{ scope.row.name }}</span>
               <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="type" label="类别" min-width="100" sortable>
+        </el-table-column>
+        <el-table-column label="类别"
+                         prop="type"
+                         header-align="center"
+                         min-width="100"
+                         sortable>
+          <el-table-column prop="type"
+                           :render-header="renderHeader2"
+                           align="center">
             <template slot-scope="scope">
               <span>{{types[scope.row.type]}}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="detail" label="详情" min-width="180" :formatter="detailFormatter" sortable></el-table-column>
-          <el-table-column prop="processingPerson" label="处理人" min-width="80" sortable></el-table-column>
-          <el-table-column label="操作" width="240">
-            <template slot-scope="scope"> 
-              <el-button size="small" @click="handleEditAudit(scope.$index, scope.row)">修改</el-button>
-              <el-button type="success" size="small" @click="handleSuccess(scope.$index, scope.row)">通过</el-button>
-              <el-button type="danger" size="small" @click="handleReject(scope.$index, scope.row)">驳回</el-button>
-            </template>
+        </el-table-column>
+        <el-table-column label="详情"
+                         prop="detail"
+                         header-align="center"
+                         min-width="180"
+                         sortable>
+          <el-table-column prop="detail"
+                           :formatter="detailFormatter"
+                           :render-header="renderHeader2"
+                           align="center"></el-table-column>
+        </el-table-column>
+        <el-table-column label="处理人"
+                         prop="processingPerson"
+                         header-align="center"
+                         min-width="80"
+                         sortable>
+          <el-table-column prop="processingPerson"
+                           :render-header="renderHeader2"
+                           align="center"></el-table-column>
+        </el-table-column>
+        <el-table-column label="操作"
+                         width="240">
+          <template slot-scope="scope">
+            <el-button size="small"
+                       @click="handleEditAudit(scope.$index, scope.row)">修改</el-button>
+            <el-button type="success"
+                       size="small"
+                       @click="handleSuccess(scope.$index, scope.row)">通过</el-button>
+            <el-button type="danger"
+                       size="small"
+                       @click="handleReject(scope.$index, scope.row)">驳回</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!--审核编辑界面-->
+      <el-dialog title="编辑"
+                 :visible.sync="editFormVisibleAudit"
+                 :close-on-click-modal="false">
+        <el-form :model="editAuditForm"
+                 label-width="80px"
+                 label-position="left"
+                 ref="editFormAudit">
+          <el-form-item label="id"
+                        prop="id"
+                        v-if="false">
+            <el-input v-model="editAuditForm.id"
+                      auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="名称"
+                        prop="name">
+            <el-input v-model="editAuditForm.name"
+                      auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="类别">
+            <el-radio-group v-model="editAuditForm.type">
+              <el-radio label="0"
+                        :value="this.editAuditForm.type">BUG</el-radio>
+              <el-radio label="1"
+                        :value="this.editAuditForm.type">新需求</el-radio>
+              <el-radio label="2"
+                        :value="this.editAuditForm.type">任务</el-radio>
+              <el-radio label="3"
+                        :value="this.editAuditForm.type">改进建议</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="优先级">
+            <el-rate show-text
+                     :texts='text'
+                     v-model="editAuditForm.priority"
+                     :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+                     :max="5"
+                     style="margin-top:8px;" />
+          </el-form-item>
+          <el-form-item label="处理人">
+            <el-checkbox-group v-model="editAuditForm.processingPerson">
+              <el-checkbox label="周朋许"
+                           name="processingPerson"></el-checkbox>
+              <el-checkbox label="叶先钱"
+                           name="processingPerson"></el-checkbox>
+              <el-checkbox label="朱洪涛"
+                           name="processingPerson"></el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+          <el-form-item label="详情">
+            <quill-editor v-model="mycontent"
+                          ref="myQuillEditor"
+                          :options="editorOption"
+                          @blur="onEditorBlur($event)"
+                          @focus="onEditorFocus($event)"
+                          @ready="onEditorReady($event)">
+            </quill-editor>
+          </el-form-item>
+        </el-form>
+        <div slot="footer"
+             class="dialog-footer">
+          <el-button @click.native="editFormVisibleAudit = false">取消</el-button>
+          <el-button type="primary"
+                     @click.native="editSubmit('Audit')"
+                     :loading="editAuditLoading">提交</el-button>
+        </div>
+      </el-dialog>
+      <!--审核分页工具条-->
+      <el-col :span="24"
+              class="toolbar">
+        <div class="pagination-container">
+          <el-pagination v-show="this.auditTotal>0"
+                         :current-page="examine.page"
+                         :page-sizes="[10,20,30,50,this.auditTotal]"
+                         :page-size="examine.pageSize"
+                         :total="this.auditTotal"
+                         background
+                         layout="total, sizes, slot, prev, pager, next, jumper"
+                         @current-change="handleCurrentChange"
+                         @size-change="handleSizeChange">
+            <el-button type="text"
+                       @click="showAll('Audit')">显示全部</el-button>
+          </el-pagination>
+        </div>
+      </el-col>
+    </div>
+    <div v-show="dealShow">
+      <!--处理工具条-->
+      <el-col :span="24"
+              class="toolbar"
+              style="padding-bottom: 0px;">
+        <el-form :inline="true"
+                 :model="deal">
+          <el-form-item>
+            <el-input size="small"
+                      v-model="deal.name"
+                      placeholder="名称"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="small"
+                       plain
+                       @click="searchRequirements">查询</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+      <!--处理列表-->
+      <el-table :data="requirementsDeal"
+                @sort-change="sortNumber"
+                highlight-current-row
+                :loading="dealLoading"
+                max-height="750"
+                style="width: 100%;">
+        <el-table-column prop="id"
+                         label="id"
+                         v-if="false"></el-table-column>
+        <el-table-column type="selection"
+                         header-align="center"
+                         align="center"
+                         width="55"></el-table-column>
+        <el-table-column type="index"
+                         header-align="center"
+                         align="center"
+                         width="60"></el-table-column>
+        <el-table-column prop="createdDate"
+                         header-align="center"
+                         align="center"
+                         label="创建时间"
+                         :formatter="formatter"
+                         width="140"></el-table-column>
+        <el-table-column label="创建人"
+                         prop="creator"
+                         header-align="center"
+                         sortable>
+          <el-table-column prop="creator"
+                           :render-header="renderHeader1"
+                           align="center">
           </el-table-column>
-        </el-table>
-        <!--审核编辑界面-->
-        <el-dialog title="编辑" :visible.sync="editFormVisibleAudit" :close-on-click-modal="false">
-          <el-form :model="editAuditForm" label-width="80px" label-position="left" ref="editFormAudit">
-            <el-form-item label="id" prop="id" v-if="false">
-              <el-input v-model="editAuditForm.id" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="名称" prop="name">
-              <el-input v-model="editAuditForm.name" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="类别">
-              <el-radio-group v-model="editAuditForm.type">
-                <el-radio label="0" :value="this.editAuditForm.type">BUG</el-radio>
-                <el-radio label="1" :value="this.editAuditForm.type">新需求</el-radio>
-                <el-radio label="2" :value="this.editAuditForm.type">任务</el-radio>
-                <el-radio label="3" :value="this.editAuditForm.type">改进建议</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item label="优先级">
-              <el-rate show-text :texts='text' v-model="editAuditForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
-            </el-form-item>
-            <el-form-item label="处理人">
-              <el-checkbox-group v-model="editAuditForm.processingPerson">
-                <el-checkbox label="周朋许" name="processingPerson"></el-checkbox>
-                <el-checkbox label="叶先钱" name="processingPerson"></el-checkbox>
-                <el-checkbox label="朱洪涛" name="processingPerson"></el-checkbox>
-              </el-checkbox-group>
-            </el-form-item>
-            <el-form-item label="详情">
-              <quill-editor v-model="mycontent"
-                ref="myQuillEditor"
-                :options="editorOption"
-                @blur="onEditorBlur($event)"
-                @focus="onEditorFocus($event)"
-                @ready="onEditorReady($event)">
-              </quill-editor>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click.native="editFormVisibleAudit = false">取消</el-button>
-            <el-button type="primary" @click.native="editSubmit('Audit')" :loading="editAuditLoading">提交</el-button>
-          </div>
-        </el-dialog>
-        <!--审核分页工具条-->
-        <el-col :span="24" class="toolbar">
-          <div class="pagination-container">
-            <el-pagination
-              v-show="this.auditTotal>0" 
-              :current-page="examine.page" 
-              :page-sizes="[10,20,30,50,this.auditTotal]" 
-              :page-size="examine.pageSize" 
-              :total="this.auditTotal" 
-              background 
-              layout="total, sizes, slot, prev, pager, next, jumper" 
-              @current-change="handleCurrentChange"
-              @size-change="handleSizeChange">
-              <el-button type="text" @click="showAll('Audit')">显示全部</el-button>
-            </el-pagination>
-          </div>
-        </el-col>
-      </div>
-      <div v-show="dealShow">
-        <!--处理工具条-->
-        <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-          <el-form :inline="true" :model="deal">
-            <el-form-item>
-              <el-input size="small" v-model="deal.name" placeholder="名称"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button size="small" plain @click="searchRequirements">查询</el-button>
-            </el-form-item>
-          </el-form>
-        </el-col>
-        <!--处理列表-->
-        <el-table :data="requirementsDeal" highlight-current-row :loading="dealLoading" style="width: 100%;">
-          <el-table-column prop="id" label="id" v-if="false"></el-table-column>
-          <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column type="index" width="60"></el-table-column>
-          <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
-          <el-table-column prop="creator" label="创建人" sortable></el-table-column>
-          <el-table-column prop="name" label="名称" sortable>
+        </el-table-column>
+        <el-table-column label="名称"
+                         prop="priority"
+                         header-align="center"
+                         sortable="important">
+          <el-table-column prop="name"
+                           :render-header="renderHeader1"
+                           align="center">
             <template slot-scope="scope">
               <span class="link-type">{{ scope.row.name }}</span>
               <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="type" label="类别" min-width="100" sortable>
+        </el-table-column>
+        <el-table-column label="类别"
+                         prop="type"
+                         header-align="center"
+                         min-width="100"
+                         sortable>
+          <el-table-column prop="type"
+                           :render-header="renderHeader1"
+                           align="center">
             <template slot-scope="scope">
               <span>{{types[scope.row.type]}}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="detail" label="详情" min-width="180" :formatter="detailFormatter" sortable></el-table-column>
-          <el-table-column prop="processingPerson" label="处理人" min-width="80" sortable></el-table-column>
-          <el-table-column prop="status" label="状态" min-width="100" sortable>
+        </el-table-column>
+        <el-table-column label="详情"
+                         prop="detail"
+                         header-align="center"
+                         min-width="180"
+                         sortable>
+          <el-table-column prop="detail"
+                           :formatter="detailFormatter"
+                           :render-header="renderHeader1"
+                           align="center">
+          </el-table-column>
+        </el-table-column>
+        <el-table-column header-align="center"
+                         label="处理人"
+                         prop="processingPerson"
+                         min-width="80"
+                         sortable>
+          <el-table-column prop="processingPerson"
+                           :render-header="renderHeader1"
+                           align="center"></el-table-column>
+        </el-table-column>
+        <el-table-column label="状态"
+                         prop="status"
+                         header-align="center"
+                         min-width="100"
+                         sortable>
+          <el-table-column prop="status"
+                           :render-header="renderHeader1"
+                           align="center">
             <template slot-scope="scope">
-              <el-popover trigger="hover" placement="top">
+              <el-popover trigger="hover"
+                          placement="top">
                 <p>说明: {{ status[scope.row.status]['hints']}}</p>
-                <div slot="reference" class="name-wrapper">
+                <div slot="reference"
+                     class="name-wrapper">
                   <el-tag size="medium">{{ status[scope.row.status]['name']}}</el-tag>
                 </div>
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="220">
-            <template slot-scope="scope"> 
-              <el-button type="primary" size="small" @click="handleDetailDeal(scope.$index, scope.row)">详情</el-button>
-              <el-button size="small" @click="handleEditDeal(scope.$index, scope.row)">编辑</el-button>
-              <el-button type="danger" size="small" @click="handleDelDeal(scope.$index, scope.row)">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table> 
-        <!--处理编辑界面-->
-        <el-dialog title="编辑" :visible.sync="editFormVisibleDeal" :close-on-click-modal="false">
-          <el-form :model="editDealForm" label-width="80px" label-position="left" ref="editDealForm">
-            <el-form-item label="id" prop="id" v-if="false">
-              <el-input v-model="editDealForm.id" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="名称" prop="name">
-              <el-input v-model="editDealForm.name" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="类别">
-              <el-radio-group v-model="editDealForm.type">
-                <el-radio label="0" :value="this.editDealForm.type">BUG</el-radio>
-                <el-radio label="1" :value="this.editDealForm.type">新需求</el-radio>
-                <el-radio label="2" :value="this.editDealForm.type">任务</el-radio>
-                <el-radio label="3" :value="this.editDealForm.type">改进建议</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item label="状态">
-              <el-radio-group v-model="editDealForm.status">
-                <el-radio label="1" :value="this.editDealForm.status">Open</el-radio>
-                <el-radio label="2" :value="this.editDealForm.status">In Progress</el-radio>
-                <el-radio label="3" :value="this.editDealForm.status">Resovled</el-radio>
-                <el-radio label="4" :value="this.editDealForm.status">Reopened</el-radio>
-                <el-radio label="5" :value="this.editDealForm.status">Closed</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item label="优先级">
-              <el-rate show-text :texts='text' v-model="editDealForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
-            </el-form-item>
-            <el-form-item label="处理人">
-              <el-checkbox-group v-model="editDealForm.processingPerson">
-                <el-checkbox label="周朋许" name="processingPerson"></el-checkbox>
-                <el-checkbox label="叶先钱" name="processingPerson"></el-checkbox>
-                <el-checkbox label="朱洪涛" name="processingPerson"></el-checkbox>
-              </el-checkbox-group>
-            </el-form-item>
-            <el-form-item label="详情">
-              <quill-editor v-model="mycontent"
-                ref="myQuillEditor"
-                :options="editorOption"
-                @blur="onEditorBlur($event)"
-                @focus="onEditorFocus($event)"
-                @ready="onEditorReady($event)">
-              </quill-editor>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click.native="editFormVisibleDeal = false">取消</el-button>
-            <el-button type="primary" @click.native="editSubmit('Deal')" :loading="editDealLoading">提交</el-button>
-          </div>
-        </el-dialog>
-        <!--处理详情界面-->
-        <el-dialog title="详情" :visible.sync="detailFormVisibleDeal" :close-on-click-modal="false">
-          <el-form :model="detailDealForm" label-width="80px" label-position="left" ref="detailDealForm">
-            <el-form-item label="名称" prop="name">
-              <span>{{detailDealForm.name}}</span>
-          <!-- <el-tag :type="tags[detailForm.priority]['type']">{{tags[detailForm.priority]['name']}}</el-tag> -->
-            </el-form-item>
-            <el-form-item label="类别" prop="type">
-              <span>{{types[detailDealForm.type]}}</span>
-            </el-form-item>
-            <el-form-item label="状态" prop="schedule">
-              <el-steps :space="100" :active=this.detailDealForm.schedule finish-status="success">
-                <el-step title="待审核"></el-step>
-                <el-step :title='this.detailDealForm.schedule<=2?"已驳回":"处理中"'></el-step>
-                <el-step title="处理中"></el-step>
-                <!-- <el-step title="处理中"></el-step> -->
-                <el-step title="处理完成"></el-step>
-              </el-steps>
-            </el-form-item>
-            <el-form-item label="优先级" prop="priority">
-              <el-rate show-text disabled :texts='text' v-model="this.detailDealForm.priority" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
-            </el-form-item>
-            <el-form-item label="创建人" prop="creator">
-              <span>{{detailDealForm.creator}}</span>
-            </el-form-item>
-            <el-form-item label="详情" prop="detail">
-              <!-- 从数据库读取展示 -->
-              <div v-html="str" class="ql-editor">
-                {{str}}
-              </div>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click.native="detailFormVisibleDeal = false">关闭</el-button>
-          </div>
-        </el-dialog>
-        <!--处理分页工具条-->
-        <el-col :span="24" class="toolbar">
-          <div class="pagination-container">
-            <el-pagination
-              v-show="this.dealTotal>0" 
-              :current-page="deal.page" 
-              :page-sizes="[10,20,30,50,this.dealTotal]" 
-              :page-size="deal.pageSize" 
-              :total="this.dealTotal" 
-              background 
-              layout="total, sizes, slot, prev, pager, next, jumper" 
-              @current-change="handleCurrentChange"
-              @size-change="handleSizeChange">
-              <el-button type="text" @click="showAll('Deal')">显示全部</el-button>
-            </el-pagination>
-          </div>
-        </el-col>
-      </div>
+        </el-table-column>
+        <el-table-column label="操作"
+                         header-align="center"
+                         width="220">
+          <template slot-scope="scope">
+            <el-button type="primary"
+                       size="small"
+                       @click="handleDetailDeal(scope.$index, scope.row)">详情</el-button>
+            <el-button size="small"
+                       @click="handleEditDeal(scope.$index, scope.row)">编辑</el-button>
+            <el-button type="danger"
+                       size="small"
+                       @click="handleDelDeal(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!--处理编辑界面-->
+      <el-dialog title="编辑"
+                 :visible.sync="editFormVisibleDeal"
+                 :close-on-click-modal="false">
+        <el-form :model="editDealForm"
+                 label-width="80px"
+                 label-position="left"
+                 ref="editDealForm">
+          <el-form-item label="id"
+                        prop="id"
+                        v-if="false">
+            <el-input v-model="editDealForm.id"
+                      auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="名称"
+                        prop="name">
+            <el-input v-model="editDealForm.name"
+                      auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="类别">
+            <el-radio-group v-model="editDealForm.type">
+              <el-radio label="0"
+                        :value="this.editDealForm.type">BUG</el-radio>
+              <el-radio label="1"
+                        :value="this.editDealForm.type">新需求</el-radio>
+              <el-radio label="2"
+                        :value="this.editDealForm.type">任务</el-radio>
+              <el-radio label="3"
+                        :value="this.editDealForm.type">改进建议</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="状态">
+            <el-radio-group v-model="editDealForm.status">
+              <el-radio label="1"
+                        :value="this.editDealForm.status">Open</el-radio>
+              <el-radio label="2"
+                        :value="this.editDealForm.status">In Progress</el-radio>
+              <el-radio label="3"
+                        :value="this.editDealForm.status">Resovled</el-radio>
+              <el-radio label="4"
+                        :value="this.editDealForm.status">Reopened</el-radio>
+              <el-radio label="5"
+                        :value="this.editDealForm.status">Closed</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="优先级">
+            <el-rate show-text
+                     :texts='text'
+                     v-model="editDealForm.priority"
+                     :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+                     :max="5"
+                     style="margin-top:8px;" />
+          </el-form-item>
+          <el-form-item label="处理人">
+            <el-checkbox-group v-model="editDealForm.processingPerson">
+              <el-checkbox label="周朋许"
+                           name="processingPerson"></el-checkbox>
+              <el-checkbox label="叶先钱"
+                           name="processingPerson"></el-checkbox>
+              <el-checkbox label="朱洪涛"
+                           name="processingPerson"></el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+          <el-form-item label="详情">
+            <quill-editor v-model="mycontent"
+                          ref="myQuillEditor"
+                          :options="editorOption"
+                          @blur="onEditorBlur($event)"
+                          @focus="onEditorFocus($event)"
+                          @ready="onEditorReady($event)">
+            </quill-editor>
+          </el-form-item>
+        </el-form>
+        <div slot="footer"
+             class="dialog-footer">
+          <el-button @click.native="editFormVisibleDeal = false">取消</el-button>
+          <el-button type="primary"
+                     @click.native="editSubmit('Deal')"
+                     :loading="editDealLoading">提交</el-button>
+        </div>
+      </el-dialog>
+      <!--处理详情界面-->
+      <el-dialog title="详情"
+                 :visible.sync="detailFormVisibleDeal"
+                 :close-on-click-modal="false">
+        <el-form :model="detailDealForm"
+                 label-width="80px"
+                 label-position="left"
+                 ref="detailDealForm">
+          <el-form-item label="名称"
+                        prop="name">
+            <span>{{detailDealForm.name}}</span>
+            <!-- <el-tag :type="tags[detailForm.priority]['type']">{{tags[detailForm.priority]['name']}}</el-tag> -->
+          </el-form-item>
+          <el-form-item label="类别"
+                        prop="type">
+            <span>{{types[detailDealForm.type]}}</span>
+          </el-form-item>
+          <el-form-item label="状态"
+                        prop="schedule">
+            <el-steps :space="100"
+                      :active=this.detailDealForm.schedule
+                      finish-status="success">
+              <el-step title="待审核"></el-step>
+              <el-step :title='this.detailDealForm.schedule<=2?"已驳回":"处理中"'></el-step>
+              <el-step title="处理中"></el-step>
+              <!-- <el-step title="处理中"></el-step> -->
+              <el-step title="处理完成"></el-step>
+            </el-steps>
+          </el-form-item>
+          <el-form-item label="优先级"
+                        prop="priority">
+            <el-rate show-text
+                     disabled
+                     :texts='text'
+                     v-model="this.detailDealForm.priority"
+                     :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+                     :max="5"
+                     style="margin-top:8px;" />
+          </el-form-item>
+          <el-form-item label="创建人"
+                        prop="creator">
+            <span>{{detailDealForm.creator}}</span>
+          </el-form-item>
+          <el-form-item label="详情"
+                        prop="detail">
+            <!-- 从数据库读取展示 -->
+            <div v-html="str"
+                 class="ql-editor">
+              {{str}}
+            </div>
+          </el-form-item>
+        </el-form>
+        <div slot="footer"
+             class="dialog-footer">
+          <el-button @click.native="detailFormVisibleDeal = false">关闭</el-button>
+        </div>
+      </el-dialog>
+      <!--处理分页工具条-->
+      <el-col :span="24"
+              class="toolbar">
+        <div class="pagination-container">
+          <el-pagination v-show="this.dealTotal>0"
+                         :current-page="deal.page"
+                         :page-sizes="[10,20,30,50,this.dealTotal]"
+                         :page-size="deal.pageSize"
+                         :total="this.dealTotal"
+                         background
+                         layout="total, sizes, slot, prev, pager, next, jumper"
+                         @current-change="handleCurrentChange"
+                         @size-change="handleSizeChange">
+            <el-button type="text"
+                       @click="showAll('Deal')">显示全部</el-button>
+          </el-pagination>
+        </div>
+      </el-col>
+    </div>
   </section>
 </template>
 
@@ -452,9 +823,10 @@ import {
   deleteRequirements,
   getExamine
 } from '../../api/api'
+import { compareUp, compareDown } from '../../api/tools'
 import { getMenu } from '../../api/login'
-import {quillEditor, Quill} from 'vue-quill-editor'
-import {container, ImageExtend} from 'quill-image-extend-module'
+import { quillEditor, Quill } from 'vue-quill-editor'
+import { container, ImageExtend } from 'quill-image-extend-module'
 
 Quill.register('modules/ImageExtend', ImageExtend)
 export default {
@@ -481,7 +853,7 @@ export default {
             container: container
           }
         },
-        placeholder:'请输入详情内容 ...'
+        placeholder: '请输入详情内容 ...'
       },
       text: [
         '仅建议',
@@ -491,27 +863,29 @@ export default {
         '重要且紧急'
       ],
       condition: {
-        flag: '',
         detail: '',
         name: '',
         type: '',
+        creator: '',
         priority: '',
         schedule: '',
+        status: '',
+        sortProperty: '',
+        sortOrder: '',
         page: 1,
         pageSize: 10
       },
       examine: {
-        flag: '',
         detail: '',
         creator: '',
         name: '',
         type: '',
         priority: '',
+        processingPerson: '',
         page: 1,
         pageSize: 10
       },
       deal: {
-        flag: '',
         detail: '',
         name: '',
         type: '',
@@ -519,6 +893,8 @@ export default {
         status: '',
         creator: '',
         processingPerson: '',
+        sortProperty: '',
+        sortOrder: '',
         page: 1,
         pageSize: 10
       },
@@ -553,8 +929,14 @@ export default {
       status: {
         1: { name: 'Open ', hints: '问题被提交,等待处理' },
         2: { name: 'In Progress', hints: '问题被处理，尚未完成' },
-        3: { name: 'Resovled', hints: '问题曾解决，但结论尚未被认可需重新分配解决' },
-        4: { name: 'Reopened ', hints: '问题解决，等待确认结果，确认的结果是Reopend或Closed' },
+        3: {
+          name: 'Resovled',
+          hints: '问题曾解决，但结论尚未被认可需重新分配解决'
+        },
+        4: {
+          name: 'Reopened ',
+          hints: '问题解决，等待确认结果，确认的结果是Reopend或Closed'
+        },
         5: { name: 'Closed ', hints: '问题处理结果得到确认，处于关闭状态' }
       },
       dialogVisible: false,
@@ -607,6 +989,29 @@ export default {
     }
   },
   methods: {
+    //排序
+    sortNumber(column, prop, order) {
+      debugger
+      if (column.order === 'descending') {
+        if (this.activeName === '用户需求') {
+          this.condition.sortOrder = 'DESC'
+          this.condition.sortProperty = column.prop
+        } else {
+          this.deal.sortOrder = 'DESC'
+          this.deal.sortProperty = column.prop
+        }
+        this.getRequire(this.activeName)
+      } else {
+        if (this.activeName === '用户需求') {
+          this.condition.sortOrder = 'ASC'
+          this.condition.sortProperty = column.prop
+        } else {
+          this.deal.sortOrder = 'ASC'
+          this.deal.sortProperty = column.prop
+        }
+        this.getRequire(this.activeName)
+      }
+    },
     // 批量审核
     selsChange(sels) {
       this.sels = sels
@@ -732,7 +1137,9 @@ export default {
       // this.addForm.detail = this.content.replace(/<\/?[^>]*>/g,'').toString()
       const addContent = Object.assign({}, this.addForm)
       addContent.creator = this.$store.getters.name
-      addContent.processingPerson = this.addForm.processingPerson.filter(ele => ele.length > 0).join(',')
+      addContent.processingPerson = this.addForm.processingPerson
+        .filter(ele => ele.length > 0)
+        .join(',')
       addContent.detail = this.content.replace(/data:([^"]*)/g, '')
       this.addForm.processingPerson = []
       createRequirements(addContent).then(response => {
@@ -745,8 +1152,12 @@ export default {
       if (name === 'Deal') {
         this.$confirm('确认提交吗？', '提示', {}).then(() => {
           this.editDealLoading = true
-          this.editDealForm.processingPerson = this.editDealForm.processingPerson.filter(ele => ele.length > 0).join(',')
-          this.editDealForm.img = this.mycontent.match(/data:([^"]*)/g) || this.mycontent.match(/http:([^"]*)/g)
+          this.editDealForm.processingPerson = this.editDealForm.processingPerson
+            .filter(ele => ele.length > 0)
+            .join(',')
+          this.editDealForm.img =
+            this.mycontent.match(/data:([^"]*)/g) ||
+            this.mycontent.match(/http:([^"]*)/g)
           this.editDealForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
           editRequirements(this.editDealForm).then(response => {
             this.editFormVisibleDeal = false
@@ -764,9 +1175,16 @@ export default {
       } else if (name === 'Audit') {
         this.$confirm('确认提交吗？', '提示', {}).then(() => {
           this.editAuditLoading = true
-          this.editAuditForm.processingPerson = this.editAuditForm.processingPerson.filter(ele => ele.length > 0).join(',')
-          this.editAuditForm.img = this.mycontent.match(/data:([^"]*)/g) || this.mycontent.match(/http:([^"]*)/g)
-          this.editAuditForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
+          this.editAuditForm.processingPerson = this.editAuditForm.processingPerson
+            .filter(ele => ele.length > 0)
+            .join(',')
+          this.editAuditForm.img =
+            this.mycontent.match(/data:([^"]*)/g) ||
+            this.mycontent.match(/http:([^"]*)/g)
+          this.editAuditForm.detail = this.mycontent.replace(
+            /data:([^"]*)/g,
+            ''
+          )
           editRequirements(this.editAuditForm).then(response => {
             this.editFormVisibleAudit = false
             const req = response.data.data
@@ -783,8 +1201,12 @@ export default {
       } else {
         this.$confirm('确认提交吗？', '提示', {}).then(() => {
           this.editLoading = true
-          this.editForm.processingPerson = this.editForm.processingPerson.filter(ele => ele.length > 0).join(',')
-          this.editForm.img = this.mycontent.match(/data:([^"]*)/g) || this.mycontent.match(/http:([^"]*)/g)
+          this.editForm.processingPerson = this.editForm.processingPerson
+            .filter(ele => ele.length > 0)
+            .join(',')
+          this.editForm.img =
+            this.mycontent.match(/data:([^"]*)/g) ||
+            this.mycontent.match(/http:([^"]*)/g)
           this.editForm.detail = this.mycontent.replace(/data:([^"]*)/g, '')
           editRequirements(this.editForm).then(response => {
             this.editFormVisible = false
@@ -851,9 +1273,7 @@ export default {
       this.editFormVisible = true
       row.priority = parseInt(row.priority)
       this.editForm = Object.assign({}, row)
-      this.editForm.processingPerson = this.editForm.processingPerson.split(
-        ','
-      )
+      this.editForm.processingPerson = this.editForm.processingPerson.split(',')
       for (let i = 0; i < this.requirements.length; i++) {
         if (this.requirements[i].id === row.id) {
           this.editForm.detail = this.requirements[i].detail.replace(
@@ -974,10 +1394,501 @@ export default {
           this.deal.pageSize = res._meta.perPage
         })
       }
+    },
+    renderHeader(h, { column, $index }) {
+      if ($index === 0) {
+        return h(
+          'div',
+          {
+            style: {
+              height: '40px'
+            }
+          },
+          [
+            h('el-input', {
+              props: {
+                value: this.condition.creator,
+                size: 'mini',
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.creator = value
+                  this.$emit('input', value)
+                },
+                change: value => {
+                  this.getRequire(this.activeName)
+                }
+              }
+            })
+          ]
+        )
+      } else if ($index === 1) {
+        return h(
+          'div',
+          {
+            style: {
+              height: '40px'
+            }
+          },
+          [
+            h('el-input', {
+              props: {
+                value: this.condition.name,
+                size: 'mini',
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.name = value
+                  this.$emit('input', value)
+                },
+                change: value => {
+                  this.getRequire(this.activeName)
+                }
+              }
+            })
+          ]
+        )
+      } else if ($index === 2) {
+        let filters = [
+          { text: 0, value: 'BUG' },
+          { text: 1, value: '新需求' },
+          { text: 2, value: '任务' },
+          { text: 3, value: '改进建议' }
+        ]
+        return h(
+          'el-select',
+          {
+            props: {
+              placeholder: '请选择',
+              value: this.condition.type,
+              size: 'mini',
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.condition.type = value
+                this.$emit('input', value)
+              },
+              change: searchValue => {
+                this.getRequire(this.activeName)
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h('el-option', {
+                props: {
+                  value: item.text,
+                  label: item.value
+                }
+              })
+            })
+          ]
+        )
+      } else if ($index === 3) {
+        return h(
+          'div',
+          {
+            style: {
+              height: '40px'
+            }
+          },
+          [
+            h('el-input', {
+              props: {
+                value: this.condition.detail,
+                size: 'mini',
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.detail = value
+                  this.$emit('input', value)
+                },
+                change: value => {
+                  this.getRequire(this.activeName)
+                }
+              }
+            })
+          ]
+        )
+      } else if ($index === 4) {
+        let filters = [
+          { text: 1, value: '待审核' },
+          { text: 2, value: '已驳回' },
+          { text: 3, value: '处理中' },
+          { text: 4, value: '处理完成' }
+        ]
+        return h(
+          'el-select',
+          {
+            props: {
+              placeholder: '请选择',
+              value: this.condition.schedule,
+              size: 'mini',
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.condition.schedule = value
+                this.$emit('input', value)
+              },
+              change: searchValue => {
+                this.getRequire(this.activeName)
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h('el-option', {
+                props: {
+                  value: item.text,
+                  label: item.value
+                }
+              })
+            })
+          ]
+        )
+      }
+    },
+    renderHeader1(h, { column, $index }) {
+      if ($index === 0) {
+        return h(
+          'div',
+          {
+            style: {
+              height: '40px'
+            }
+          },
+          [
+            h('el-input', {
+              props: {
+                value: this.deal.creator,
+                size: 'mini',
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.deal.creator = value
+                  this.$emit('input', value)
+                },
+                change: value => {
+                  this.getRequire(this.activeName)
+                }
+              }
+            })
+          ]
+        )
+      } else if ($index === 1) {
+        return h(
+          'div',
+          {
+            style: {
+              height: '40px'
+            }
+          },
+          [
+            h('el-input', {
+              props: {
+                value: this.deal.name,
+                size: 'mini',
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.deal.name = value
+                  this.$emit('input', value)
+                },
+                change: value => {
+                  this.getRequire(this.activeName)
+                }
+              }
+            })
+          ]
+        )
+      } else if ($index === 2) {
+        let filters = [
+          { text: 0, value: 'BUG' },
+          { text: 1, value: '新需求' },
+          { text: 2, value: '任务' },
+          { text: 3, value: '改进建议' }
+        ]
+        return h(
+          'el-select',
+          {
+            props: {
+              placeholder: '请选择',
+              value: this.deal.type,
+              size: 'mini',
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.deal.type = value
+                this.$emit('input', value)
+              },
+              change: searchValue => {
+                this.getRequire(this.activeName)
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h('el-option', {
+                props: {
+                  value: item.text,
+                  label: item.value
+                }
+              })
+            })
+          ]
+        )
+      } else if ($index === 3) {
+        return h(
+          'div',
+          {
+            style: {
+              height: '40px'
+            }
+          },
+          [
+            h('el-input', {
+              props: {
+                value: this.deal.detail,
+                size: 'mini',
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.deal.detail = value
+                  this.$emit('input', value)
+                },
+                change: value => {
+                  this.getRequire(this.activeName)
+                }
+              }
+            })
+          ]
+        )
+      } else if ($index === 4) {
+        return h(
+          'div',
+          {
+            style: {
+              height: '40px'
+            }
+          },
+          [
+            h('el-input', {
+              props: {
+                value: this.deal.processingPerson,
+                size: 'mini',
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.deal.processingPerson = value
+                  this.$emit('input', value)
+                },
+                change: value => {
+                  this.getRequire(this.activeName)
+                }
+              }
+            })
+          ]
+        )
+      } else if ($index === 5) {
+        let filters = [
+          { text: 1, value: 'Open' },
+          { text: 2, value: 'In Progress' },
+          { text: 3, value: 'Resovled' },
+          { text: 4, value: 'Reopened' },
+          { text: 5, value: 'Closed' }
+        ]
+        return h(
+          'el-select',
+          {
+            props: {
+              placeholder: '请选择',
+              value: this.deal.status,
+              size: 'mini',
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.deal.status = value
+                this.$emit('input', value)
+              },
+              change: searchValue => {
+                this.getRequire(this.activeName)
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h('el-option', {
+                props: {
+                  value: item.text,
+                  label: item.value
+                }
+              })
+            })
+          ]
+        )
+      }
+    },
+    renderHeader2(h, { column, $index }) {
+      if ($index === 0) {
+        return h(
+          'div',
+          {
+            style: {
+              height: '40px'
+            }
+          },
+          [
+            h('el-input', {
+              props: {
+                value: this.examine.creator,
+                size: 'mini',
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.examine.creator = value
+                  this.$emit('input', value)
+                },
+                change: value => {
+                  this.getRequire(this.activeName)
+                }
+              }
+            })
+          ]
+        )
+      } else if ($index === 1) {
+        return h(
+          'div',
+          {
+            style: {
+              height: '40px'
+            }
+          },
+          [
+            h('el-input', {
+              props: {
+                value: this.examine.name,
+                size: 'mini',
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.examine.name = value
+                  this.$emit('input', value)
+                },
+                change: value => {
+                  this.getRequire(this.activeName)
+                }
+              }
+            })
+          ]
+        )
+      } else if ($index === 2) {
+        let filters = [
+          { text: 0, value: 'BUG' },
+          { text: 1, value: '新需求' },
+          { text: 2, value: '任务' },
+          { text: 3, value: '改进建议' }
+        ]
+        return h(
+          'el-select',
+          {
+            props: {
+              placeholder: '请选择',
+              value: this.examine.type,
+              size: 'mini',
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.examine.type = value
+                this.$emit('input', value)
+              },
+              change: searchValue => {
+                this.getRequire(this.activeName)
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h('el-option', {
+                props: {
+                  value: item.text,
+                  label: item.value
+                }
+              })
+            })
+          ]
+        )
+      } else if ($index === 3) {
+        return h(
+          'div',
+          {
+            style: {
+              height: '40px'
+            }
+          },
+          [
+            h('el-input', {
+              props: {
+                value: this.examine.detail,
+                size: 'mini',
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.examine.detail = value
+                  this.$emit('input', value)
+                },
+                change: value => {
+                  this.getRequire(this.activeName)
+                }
+              }
+            })
+          ]
+        )
+      } else if ($index === 4) {
+        return h(
+          'div',
+          {
+            style: {
+              height: '40px'
+            }
+          },
+          [
+            h('el-input', {
+              props: {
+                value: this.examine.processingPerson,
+                size: 'mini',
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.examine.processingPerson = value
+                  this.$emit('input', value)
+                },
+                change: value => {
+                  this.getRequire(this.activeName)
+                }
+              }
+            })
+          ]
+        )
+      }
     }
   },
   mounted() {
-    this.getRequire(this.activeName)
     getMenu().then(response => {
       const res = response.data.data
       const menu = res.filter(e => e.name === '反馈中心')
@@ -995,7 +1906,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.toolbar{
+.toolbar {
   padding: 10px 0;
 }
 </style>
