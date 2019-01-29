@@ -59,6 +59,7 @@
                        v-model='condition.plat'
                        clearable
                        multiple
+                       collapse-tags
                        placeholder='平台'>
               <el-option v-for='(item,index) in plat'
                          :index='index'
