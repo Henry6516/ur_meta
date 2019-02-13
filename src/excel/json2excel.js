@@ -44,25 +44,33 @@ function Workbook() {
 function s2ab(s) {
   const buf = new ArrayBuffer(s.length)
   const view = new Uint8Array(buf)
-  for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF
+  for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xff
   return buf
 }
 
 /*
-* th => 表头
-* data => 数据
-* fileName => 文件名
-* fileType => 文件类型
-* sheetName => sheet页名
-*/
+ * th => 表头
+ * data => 数据
+ * fileName => 文件名
+ * fileType => 文件类型
+ * sheetName => sheet页名
+ */
 export default function toExcel({ th, data, fileName, fileType, sheetName }) {
   data.unshift(th)
-  const wb = new Workbook(); const ws = data2ws(data)
+  const wb = new Workbook()
+  const ws = data2ws(data)
   sheetName = sheetName || 'sheet1'
   wb.SheetNames.push(sheetName)
   wb.Sheets[sheetName] = ws
   fileType = fileType || 'xlsx'
-  var wbout = XLSX.write(wb, { bookType: fileType, bookSST: false, type: 'binary' })
+  var wbout = XLSX.write(wb, {
+    bookType: fileType,
+    bookSST: false,
+    type: 'binary'
+  })
   fileName = fileName || '列表'
-  FileSaver.saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), `${fileName}.${fileType}`)
+  FileSaver.saveAs(
+    new Blob([s2ab(wbout)], { type: 'application/octet-stream' }),
+    `${fileName}.${fileType}`
+  )
 }

@@ -59,7 +59,8 @@
       <el-col :span='2'>
         <el-button style='float:left'
                    type='default'
-                   @click='exportExcel'>导出Excel</el-button>
+                   @click='exportExcel'
+                   :loading="downloadLoading">导出Excel</el-button>
       </el-col>
     </el-row>
     <div>
@@ -178,6 +179,7 @@ import { compareUp, compareDown } from '../../api/tools'
 export default {
   data() {
     return {
+      downloadLoading: false,
       allData: [],
       allSuffix: [],
       show: false,
@@ -258,6 +260,7 @@ export default {
     },
     // 导出
     exportExcel() {
+      this.downloadLoading = true
       const th = [
         '商品编码',
         '商品名称',
@@ -297,11 +300,26 @@ export default {
       const form = Object.assign({}, this.condition)
       form.limit = this.total
       getPsales(form).then(response => {
-        this.allData = response.data.data.items
-        const Filename = '销售变化表'
-        const data = this.allData.map(v => filterVal.map(k => v[k]))
-        const [fileName, fileType, sheetName] = [Filename, 'xls']
-        this.$toExcel({ th, data, fileName, fileType, sheetName })
+        if (response.data.data.items.length > 0) {
+          this.allData = response.data.data.items
+          const Filename = '销售变化表'
+          const data = this.allData.map(v => filterVal.map(k => v[k]))
+          const [fileName, fileType, sheetName] = [Filename, 'xls']
+          this.$toExcel({ th, data, fileName, fileType, sheetName })
+          this.$message({
+            message: '导出成功',
+            duration: 5000,
+            type: 'success'
+          })
+          this.downloadLoading = false
+        } else {
+          this.$message({
+            message: '数据出错，请联系管理员',
+            duration: 5000,
+            type: 'warning'
+          })
+          this.downloadLoading = false
+        }
       })
     },
     handleSearch() {
