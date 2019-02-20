@@ -16,6 +16,7 @@ import pcost from '../views/data/pcost.vue'
 import perform from '../views/data/perform.vue'
 import psales from '../views/data/psales.vue'
 import saleschange from '../views/data/saleschange.vue'
+import ptrend from '../views/data/pricetrend.vue'
 // 销售工具
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
@@ -135,6 +136,11 @@ const routes = [
         path: '/v1/data-center/sales-change',
         component: saleschange,
         name: '销量环比变化'
+      },
+      {
+        path: '/v1/data-center/price-trend',
+        component: ptrend,
+        name: '价格指数分析'
       }
     ]
   },

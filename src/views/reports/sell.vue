@@ -27,7 +27,7 @@
                          @click="noselectd">取消</el-button>
               <el-option v-for='(item,index) in department'
                          :index='index'
-                         :key='item.department'
+                         :key='item.id'
                          :label='item.department'
                          :value='item.department'></el-option>
             </el-select>
@@ -48,7 +48,7 @@
                          @click="noselectSec">取消</el-button>
               <el-option v-for='(item,index) in secDepartment'
                          :index='index'
-                         :key='item.department'
+                         :key='item.id'
                          :label='item.department'
                          :value='item.department'></el-option>
             </el-select>
@@ -560,6 +560,7 @@ export default {
   data() {
     const vue = this
     return {
+      kefu: [],
       total: null,
       total2: null,
       total3: null,
@@ -904,6 +905,7 @@ export default {
       this.show1 = false
     },
     myForm(form) {
+      debugger
       const myform = JSON.parse(JSON.stringify(form))
       if (myform.member.length !== 0) {
         if (isAdmin() === false) {
@@ -915,12 +917,22 @@ export default {
         if (isAdmin() === false) {
           const name = this.$store.getters.name
           const res = this.allMember
-          const per = res.filter(ele => ele.username === name)[0].department
-          myform.member = res
-            .filter(ele => ele.department === per)
-            .map(m => {
-              return m.username
-            })
+          const kes = this.kefu
+          const pos = kes.filter(ele => ele.username === name)[0].position
+          if (pos === 'eBay客服') {
+            myform.member = res
+              .filter(ele => ele.position === '销售')
+              .map(m => {
+                return m.username
+              })
+          } else {
+            const per = res.filter(ele => ele.username === name)[0].department
+            myform.member = res
+              .filter(ele => ele.department === per)
+              .map(m => {
+                return m.username
+              })
+          }
         }
         if (myform.department.length !== 0) {
           if (myform.secDepartment.length === 0) {
@@ -1405,6 +1417,7 @@ export default {
     getMember().then(response => {
       const res = response.data.data
       this.allMember = this.member = res.filter(ele => ele.position === '销售')
+      this.kefu = res.filter(ele => ele.position === 'eBay客服')
     })
     getStore().then(response => {
       this.store = response.data.data
