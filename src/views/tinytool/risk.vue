@@ -1,61 +1,111 @@
 <template>
   <section>
-    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-      <el-tab-pane v-for="(item, index) in this.allMenu" :label="item.name" :name="item.name" :key="index">
+    <el-tabs v-model="activeName"
+             type="card"
+             @tab-click="handleClick">
+      <el-tab-pane v-for="(item, index) in this.allMenu"
+                   :label="item.name"
+                   :name="item.name"
+                   :key="index">
       </el-tab-pane>
     </el-tabs>
     <div v-show="risk">
-      <el-form :model="condition" :inline="true" class="toolbar" label-width="100px">
+      <el-form :model="condition"
+               :inline="true"
+               class="toolbar"
+               label-width="100px">
         <el-form-item label="时间">
-          <el-date-picker size="small" v-model="date" @change="time" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"></el-date-picker>
+          <el-date-picker size="small"
+                          v-model="date"
+                          @change="time"
+                          type="daterange"
+                          value-format="yyyy-MM-dd"
+                          range-separator="至"
+                          start-placeholder="开始日期"
+                          end-placeholder="结束日期"></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button size="small" type="primary" @click="onSubmit">查询</el-button>
+          <el-button size="small"
+                     type="primary"
+                     @click="onSubmit">查询</el-button>
         </el-form-item>
       </el-form>
-      <el-table :data="this.tableData" v-loading="loading">
-        <el-table-column label="订单编号" prop="tradeNid"></el-table-column>
-        <el-table-column label="交易时间" prop="orderTime"></el-table-column>
-        <el-table-column label="账号简称" prop="suffix"></el-table-column>
-        <el-table-column label="买家ID" prop="buyerId"></el-table-column>
-        <el-table-column label="收货人" prop="shipToName"></el-table-column>
-        <el-table-column label="收货地址" prop="shipToStreet"></el-table-column>
-        <el-table-column label="收货地址2" prop="shipToStreet2"></el-table-column>
-        <el-table-column label="城市" prop="shipToCity"></el-table-column>
-        <el-table-column label="邮编" prop="shipToZip"></el-table-column>
-        <el-table-column label="国家" prop="shipToCountryCode"></el-table-column>
-        <el-table-column label="电话" prop="shipToPhoneNum"></el-table-column>
-        <el-table-column label="处理人" prop="processor"></el-table-column>
-        <el-table-column label="处理状态" prop="completeStatus">
+      <el-table :data="this.tableData"
+                v-loading="loading">
+        <el-table-column label="订单编号"
+                         prop="tradeNid"></el-table-column>
+        <el-table-column label="交易时间"
+                         prop="orderTime"></el-table-column>
+        <el-table-column label="账号简称"
+                         prop="suffix"></el-table-column>
+        <el-table-column label="买家ID"
+                         prop="buyerId"></el-table-column>
+        <el-table-column label="收货人"
+                         prop="shipToName"></el-table-column>
+        <el-table-column label="收货地址"
+                         prop="shipToStreet"></el-table-column>
+        <el-table-column label="收货地址2"
+                         prop="shipToStreet2"></el-table-column>
+        <el-table-column label="城市"
+                         prop="shipToCity"></el-table-column>
+        <el-table-column label="邮编"
+                         prop="shipToZip"></el-table-column>
+        <el-table-column label="国家"
+                         prop="shipToCountryCode"></el-table-column>
+        <el-table-column label="电话"
+                         prop="shipToPhoneNum"></el-table-column>
+        <el-table-column label="处理人"
+                         prop="processor"></el-table-column>
+        <el-table-column label="处理状态"
+                         prop="completeStatus">
           <template slot-scope="scope">
             <el-tag :type="tags[scope.row.completeStatus]['type']">{{ scope.row.completeStatus }}</el-tag>
           </template>
         </el-table-column>
-         <el-table-column label="操作" >
-            <template slot-scope="scope"> 
-              <el-button :type="tags[scope.row.completeStatus]['type']" round size="small" @click="mark(scope.$index, scope.row)">标记完成</el-button>
-            </template>
-          </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button :type="tags[scope.row.completeStatus]['type']"
+                       round
+                       size="small"
+                       @click="mark(scope.$index, scope.row)">标记完成</el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <div class="block toolbar">
-        <el-pagination background @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.condition.currentPage" :page-size="this.condition.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.totalCount"></el-pagination>
+        <el-pagination background
+                       @size-change='handleSizeChange'
+                       @current-change='handleCurrentChange'
+                       :current-page="this.condition.currentPage"
+                       :page-size="this.condition.pageSize"
+                       :page-sizes="[10,20,30,40]"
+                       layout="total,sizes,prev,pager,next,jumper"
+                       :total="this.totalCount"></el-pagination>
       </div>
     </div>
-    <div v-show="blacklist" class="toolbar" style="padding:10px 20px;">
+    <div v-show="blacklist"
+         class="toolbar"
+         style="padding:10px 20px;">
       <el-col :span="24">
         <el-form :inline="true">
           <el-form-item>
-            <el-input size="small" clearable placeholder='search' v-model='searchValue' @input='handleSearch'></el-input>
+            <el-input size="small"
+                      clearable
+                      placeholder='search'
+                      v-model='searchValue'
+                      @input='handleSearch'></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button size="small" type="primary" @click="handleAdd">新增</el-button>
+            <el-button size="small"
+                       type="primary"
+                       @click="handleAdd">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
       <!-- 黑名单列表 -->
-      <table id="oTable" border="1px solid #ebeef5" cellpadding="15" style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:100%;border-collapse:collapse;">
+      <table id="oTable"
+             border="1px solid #ebeef5"
+             cellpadding="15"
+             style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:100%;border-collapse:collapse;">
         <thead>
           <tr>
             <th>平台</th>
@@ -67,70 +117,121 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in blackData" :key="index">
+          <tr v-for="(item, index) in blackData"
+              :key="index">
             <td>{{ item.addressowner }}</td>
             <td>{{ item.buyerid}}</td>
             <td>{{ item.shipToName}}</td>
-            <td>{{ item.shiptozip}}{{ item.shiptostate}}{{ item.shiptocity}}{{ item.shiptostreet}}{{ item.shiptostreet2}}</td>
-            <td>{{ item.shiptocountryCode}}</td>
+            <td>{{ item.shiptocountryCode}}{{ item.shiptostate}}{{ item.shiptocity}}{{ item.shiptostreet}}{{ item.shiptostreet2}}</td>
+            <td>{{ item.shiptozip}}</td>
             <td>{{ item.SHIPtoPHONEnUM}}</td>
           </tr>
         </tbody>
       </table>
       <!-- 新增界面  -->
-      <el-dialog title="新增" :visible.sync="addFormVisible" :close-on-click-modal="false">
-          <el-form :inline="true" :model="data" label-width="100px" ref="data">
-            <el-form-item label="平台">
-              <el-input v-model="data.addressowner" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="是否模糊匹配">
-              <el-switch v-model="value1" @change="platmatch" active-color="#13ce66" inactive-color="#909399"></el-switch>
-            </el-form-item>
-            <br>
-            <el-form-item label="买家ID">
-              <el-input v-model="data.buyerId"></el-input>
-            </el-form-item>
-            <el-form-item label="是否模糊匹配">
-              <el-switch v-model="value2" @change="idmatch" active-color="#13ce66" inactive-color="#909399"></el-switch>
-            </el-form-item>
-            <br>
-            <el-form-item label="收货人姓名">
-              <el-input v-model="data.shipToName"></el-input>
-            </el-form-item>
-            <br>
-            <el-form-item label="区">
-              <el-input v-model="data.shipToStreet"></el-input>
-            </el-form-item>
-            <br>
-            <el-form-item label="街道">
-              <el-input v-model="data.shipToStreet2"></el-input>
-            </el-form-item>
-            <br>
-            <el-form-item label="收货人城市">
-              <el-input v-model="data.shipToCity"></el-input>
-            </el-form-item>
-            <br>
-            <el-form-item label="收货人省份">
-              <el-input v-model="data.shipToState"></el-input>
-            </el-form-item>
-            <br>
-            <el-form-item label="国家">
-              <el-input v-model="data.shipToZip"></el-input>
-            </el-form-item>
-            <br>
-            <el-form-item label="邮编">
-              <el-input v-model="data.shipToCountryCode"></el-input>
-            </el-form-item>
-            <br>
-            <el-form-item label="电话">
-              <el-input v-model="data.shipToPhoneNum"></el-input>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click.native="addFormVisible = false">取消</el-button>
-            <el-button type="primary" @click.native="addSubmit">提交</el-button>
-          </div>
-        </el-dialog>
+      <el-dialog title="新增"
+                 :visible.sync="addFormVisible"
+                 :close-on-click-modal="false">
+        <el-form :inline="true"
+                 :model="data"
+                 label-width="100px"
+                 ref="data">
+          <el-form-item label="平台">
+            <el-input v-model="data.addressowner"
+                      auto-complete="off"></el-input>
+          </el-form-item>
+          <br>
+          <el-form-item label="买家ID">
+            <el-input v-model="data.buyerId"></el-input>
+          </el-form-item>
+          <br>
+          <el-form-item label="收货人姓名">
+            <el-input v-model="data.shipToName"></el-input>
+          </el-form-item>
+          <el-form-item label="是否模糊匹配">
+            <el-switch v-model="value1"
+                       @change="match('name')"
+                       active-color="#13ce66"
+                       inactive-color="#909399"></el-switch>
+          </el-form-item>
+          <br>
+          <el-form-item label="区">
+            <el-input v-model="data.shipToStreet"></el-input>
+          </el-form-item>
+          <el-form-item label="是否模糊匹配">
+            <el-switch v-model="value2"
+                       @change="match('street')"
+                       active-color="#13ce66"
+                       inactive-color="#909399"></el-switch>
+          </el-form-item>
+          <br>
+          <el-form-item label="街道">
+            <el-input v-model="data.shipToStreet2"></el-input>
+          </el-form-item>
+          <el-form-item label="是否模糊匹配">
+            <el-switch v-model="value3"
+                       @change="match('street2')"
+                       active-color="#13ce66"
+                       inactive-color="#909399"></el-switch>
+          </el-form-item>
+          <br>
+          <el-form-item label="收货人城市">
+            <el-input v-model="data.shipToCity"></el-input>
+          </el-form-item>
+          <el-form-item label="是否模糊匹配">
+            <el-switch v-model="value4"
+                       @change="match('city')"
+                       active-color="#13ce66"
+                       inactive-color="#909399"></el-switch>
+          </el-form-item>
+          <br>
+          <el-form-item label="收货人省份">
+            <el-input v-model="data.shipToState"></el-input>
+          </el-form-item>
+          <el-form-item label="是否模糊匹配">
+            <el-switch v-model="value5"
+                       @change="match('state')"
+                       active-color="#13ce66"
+                       inactive-color="#909399"></el-switch>
+          </el-form-item>
+          <br>
+          <el-form-item label="国家">
+            <el-input v-model="data.shipToCountryCode"></el-input>
+          </el-form-item>
+          <el-form-item label="是否模糊匹配">
+            <el-switch v-model="value6"
+                       @change="match('country')"
+                       active-color="#13ce66"
+                       inactive-color="#909399"></el-switch>
+          </el-form-item>
+          <br>
+          <el-form-item label="邮编">
+            <el-input v-model="data.shipToZip"></el-input>
+          </el-form-item>
+          <el-form-item label="是否模糊匹配">
+            <el-switch v-model="value7"
+                       @change="match('zip')"
+                       active-color="#13ce66"
+                       inactive-color="#909399"></el-switch>
+          </el-form-item>
+          <br>
+          <el-form-item label="电话">
+            <el-input v-model="data.shipToPhoneNum"></el-input>
+          </el-form-item>
+          <el-form-item label="是否模糊匹配">
+            <el-switch v-model="value8"
+                       @change="match('tel')"
+                       active-color="#13ce66"
+                       inactive-color="#909399"></el-switch>
+          </el-form-item>
+        </el-form>
+        <div slot="footer"
+             class="dialog-footer">
+          <el-button @click.native="addFormVisible = false">取消</el-button>
+          <el-button type="primary"
+                     @click.native="addSubmit">提交</el-button>
+        </div>
+      </el-dialog>
     </div>
   </section>
 </template>
@@ -142,8 +243,8 @@ export default {
   data() {
     return {
       tags: {
-        '待处理': { type: 'danger' },
-        '已完成': { type: 'success' }
+        待处理: { type: 'danger' },
+        已完成: { type: 'success' }
       },
       value: '',
       currentPage: null,
@@ -153,6 +254,12 @@ export default {
       searchTable: [],
       value1: false,
       value2: false,
+      value3: false,
+      value4: false,
+      value5: false,
+      value6: false,
+      value7: false,
+      value8: false,
       addFormVisible: false,
       risk: true,
       blacklist: false,
@@ -251,26 +358,92 @@ export default {
     thstyle() {
       return 'color:black'
     },
-    platmatch() {
-      if (this.value1 === true) {
-        if (this.data.addressowner === undefined) {
-          this.data.addressowner = ''
-        } else if (this.data.addressowner !== undefined) {
-          this.data.addressowner = '%' + this.data.addressowner + '%'
+    match(item) {
+      if (item === 'name') {
+        if (this.value1 === true) {
+          if (this.data.shipToName === undefined) {
+            this.data.shipToName = ''
+          } else if (this.data.shipToName !== undefined) {
+            this.data.shipToName = '%' + this.data.shipToName + '%'
+          }
+        } else {
+          this.data.shipToName = this.data.shipToName.split('%').join('')
         }
-      } else {
-        this.data.addressowner = this.data.addressowner.split('%').join('')
-      }
-    },
-    idmatch() {
-      if (this.value2 === true) {
-        if (this.data.buyerId === undefined) {
-          this.data.buyerId = ''
-        } else if (this.data.buyerId !== undefined) {
-          this.data.buyerId = '%' + this.data.buyerId + '%'
+      } else if (item === 'street') {
+        if (this.value2 === true) {
+          if (this.data.shipToStreet === undefined) {
+            this.data.shipToStreet = ''
+          } else if (this.data.shipToStreet !== undefined) {
+            this.data.shipToStreet = '%' + this.data.shipToStreet + '%'
+          }
+        } else {
+          this.data.shipToStreet = this.data.shipToStreet.split('%').join('')
         }
-      } else {
-        this.data.buyerId = this.data.buyerId.split('%').join('')
+      } else if (item === 'street2') {
+        if (this.value3 === true) {
+          if (this.data.shipToStreet2 === undefined) {
+            this.data.shipToStreet2 = ''
+          } else if (this.data.shipToStreet2 !== undefined) {
+            this.data.shipToStreet2 = '%' + this.data.shipToStreet2 + '%'
+          }
+        } else {
+          this.data.shipToStreet2 = this.data.shipToStreet2.split('%').join('')
+        }
+      } else if (item === 'city') {
+        if (this.value4 === true) {
+          if (this.data.shipToCity === undefined) {
+            this.data.shipToCity = ''
+          } else if (this.data.shipToCity !== undefined) {
+            this.data.shipToCity = '%' + this.data.shipToCity + '%'
+          }
+        } else {
+          this.data.shipToCity = this.data.shipToCity.split('%').join('')
+        }
+      } else if (item === 'state') {
+        if (this.value5 === true) {
+          if (this.data.shipToState === undefined) {
+            this.data.shipToState = ''
+          } else if (this.data.shipToState !== undefined) {
+            this.data.shipToState = '%' + this.data.shipToState + '%'
+          }
+        } else {
+          this.data.shipToState = this.data.shipToState.split('%').join('')
+        }
+      } else if (item === 'country') {
+        if (this.value6 === true) {
+          if (this.data.shipToCountryCode === undefined) {
+            this.data.shipToCountryCode = ''
+          } else if (this.data.shipToCountryCode !== undefined) {
+            this.data.shipToCountryCode =
+              '%' + this.data.shipToCountryCode + '%'
+          }
+        } else {
+          this.data.shipToCountryCode = this.data.shipToCountryCode
+            .split('%')
+            .join('')
+        }
+      } else if (item === 'zip') {
+        if (this.value7 === true) {
+          if (this.data.shipToZip === undefined) {
+            this.data.shipToZip = ''
+          } else if (this.data.shipToZip !== undefined) {
+            this.data.shipToZip = '%' + this.data.shipToZip + '%'
+          }
+        } else {
+          this.data.shipToZip = this.data.shipToZip.split('%').join('')
+        }
+      } else if (item === 'tel') {
+        if (this.value8 === true) {
+          if (this.data.shipToPhoneNum === undefined) {
+            this.data.shipToPhoneNum = ''
+          } else if (this.data.shipToPhoneNum !== undefined) {
+            this.data.shipToPhoneNum = '%' + this.data.shipToPhoneNum + '%'
+          }
+        } else {
+          this.data.shipToPhoneNum = this.data.shipToPhoneNum
+            .split('%')
+            .join('')
+        }
       }
     },
     // 权限
@@ -306,6 +479,7 @@ export default {
     addSubmit() {
       this.addFormVisible = false
       postBlacklist(this.data).then(response => {
+        debugger
         if (response.data.code === 200) {
           this.$confirm('成功!', '提示', {
             confirmButtonText: '确定',
@@ -346,7 +520,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.toolbar{
+.toolbar {
   padding-top: 5px;
   padding-bottom: 5px;
 }
