@@ -217,9 +217,13 @@ export function Risk(param) {
     data
   })
 }
-export function BlackList() {
+export function BlackList(param) {
   return request({
-    url: '/tiny-tool/blacklist',
+    url:
+      '/tiny-tool/blacklist?pageSize=' +
+      param.pageSize +
+      '&currentPage=' +
+      param.currentPage,
     method: 'get'
   })
 }
