@@ -2,8 +2,8 @@
   <section class="chart-container">
     <el-row>
       <el-col :span="24">
-        <div id="areaStack"
-             style="width:100%; height:50rem;"></div>
+        <div id="AreaStack"
+             style="width:100%; height:500px;"></div>
       </el-col>
     </el-row>
   </section>
@@ -24,7 +24,7 @@ export default {
 
   methods: {
     drawAreaStack(opt) {
-      this.areaStack = echarts.init(document.getElementById('areaStack'))
+      this.areaStack = echarts.init(document.getElementById('AreaStack'))
       this.areaStack.setOption(opt, true)
     },
     drawCharts() {
@@ -46,13 +46,7 @@ export default {
   width: 100%;
   float: left;
 }
-/*.chart div {
-        height: 400px;
-        float: left;
-    }*/
-
 .el-col {
-  padding: 3rem 2rem;
+  padding: 30px 20px;
 }
 </style>
-

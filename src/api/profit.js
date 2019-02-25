@@ -62,7 +62,11 @@ export function getExpress() {
 }
 export function getStock(filters) {
   return request({
-    url: '/data-center/out-of-stock-info?page=' + filters.page + '&pageSize=' + filters.pageSize,
+    url:
+      '/data-center/out-of-stock-info?page=' +
+      filters.page +
+      '&pageSize=' +
+      filters.pageSize,
     method: 'get'
   })
 }
@@ -99,7 +103,7 @@ export function getPerformlogistics() {
 // name:sales method:post url:http://192.168.0.134:8089/v1/report/sales
 
 export function getSales(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/report/sales',
     method: 'post',
@@ -108,7 +112,7 @@ export function getSales(param) {
 }
 
 export function getDevelop(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/report/develop',
     method: 'post',
@@ -117,7 +121,7 @@ export function getDevelop(param) {
 }
 
 export function getPurchase(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/report/purchase',
     method: 'post',
@@ -126,7 +130,7 @@ export function getPurchase(param) {
 }
 
 export function getPossess(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/report/possess',
     method: 'post',
@@ -134,7 +138,7 @@ export function getPossess(param) {
   })
 }
 export function getEbaysales(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/report/ebay-sales',
     method: 'post',
@@ -142,7 +146,7 @@ export function getEbaysales(param) {
   })
 }
 export function getSalestrend(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/report/sales-trend',
     method: 'post',
@@ -150,7 +154,7 @@ export function getSalestrend(param) {
   })
 }
 export function getArtist(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/report/artist',
     method: 'post',
@@ -158,7 +162,7 @@ export function getArtist(param) {
   })
 }
 export function getaccount(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/report/account',
     method: 'post',
@@ -167,7 +171,7 @@ export function getaccount(param) {
 }
 
 export function getSalesdeadfee(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/upload/sales-dead-fee',
     method: 'post',
@@ -175,7 +179,7 @@ export function getSalesdeadfee(param) {
   })
 }
 export function getUpdateexchange(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/settings/exchange',
     method: 'post',
@@ -183,7 +187,7 @@ export function getUpdateexchange(param) {
   })
 }
 export function getToolaccount(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tool/account',
     method: 'post',
@@ -209,7 +213,7 @@ export function getToolcolor() {
   })
 }
 export function geteBaytemplate(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tool/ebay-template',
     method: 'post',
@@ -219,7 +223,7 @@ export function geteBaytemplate(param) {
 }
 
 export function geteBaysku(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tool/ebaysku',
     method: 'post',
@@ -228,7 +232,7 @@ export function geteBaysku(param) {
 }
 
 export function geteBayskutemplate(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tool/ebaysku-template',
     method: 'post',
@@ -237,7 +241,7 @@ export function geteBayskutemplate(param) {
   })
 }
 export function getsmtsku(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tool/smtsku',
     method: 'post',
@@ -245,7 +249,7 @@ export function getsmtsku(param) {
   })
 }
 export function getsmtskutemplate(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tool/smtsku-template',
     method: 'post',
@@ -254,7 +258,7 @@ export function getsmtskutemplate(param) {
   })
 }
 export function getwishsku(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tool/wishsku',
     method: 'post',
@@ -262,7 +266,7 @@ export function getwishsku(param) {
   })
 }
 export function getwishskutemplate(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tool/wishsku-template',
     method: 'post',
@@ -271,7 +275,7 @@ export function getwishskutemplate(param) {
   })
 }
 export function getIntroduce(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/report/introduce',
     method: 'post',
@@ -279,7 +283,7 @@ export function getIntroduce(param) {
   })
 }
 export function getBrand(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tiny-tool/brand',
     method: 'post',
@@ -287,7 +291,7 @@ export function getBrand(param) {
   })
 }
 export function getGoodspicture(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tiny-tool/goods-picture',
     method: 'post',
@@ -295,7 +299,7 @@ export function getGoodspicture(param) {
   })
 }
 export function getPerform(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/perform/perform',
     method: 'post',
@@ -303,7 +307,7 @@ export function getPerform(param) {
   })
 }
 export function getPsales(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/perform/sales',
     method: 'post',
@@ -311,15 +315,23 @@ export function getPsales(param) {
   })
 }
 export function getSalesChange(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/data-center/sales-change?page=' + param.page + '&sort=' + param.sort,
     method: 'post',
     data
   })
 }
+export function priceTrend(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/price-trend',
+    method: 'post',
+    data
+  })
+}
 export function getPerformcost(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/perform/cost',
     method: 'post',
@@ -328,7 +340,7 @@ export function getPerformcost(param) {
 }
 // 定价器
 export function getUkfic(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tiny-tool/uk-fic',
     method: 'post',
@@ -336,7 +348,7 @@ export function getUkfic(param) {
   })
 }
 export function getUK(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tiny-tool/uk',
     method: 'post',
@@ -344,7 +356,7 @@ export function getUK(param) {
   })
 }
 export function getAU(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tiny-tool/au',
     method: 'post',
@@ -352,7 +364,7 @@ export function getAU(param) {
   })
 }
 export function getOrder(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tiny-tool/declared-value',
     method: 'post',
@@ -360,7 +372,7 @@ export function getOrder(param) {
   })
 }
 export function getPaypal(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tiny-tool/exception-pay-pal',
     method: 'post',
@@ -368,7 +380,7 @@ export function getPaypal(param) {
   })
 }
 export function getEdition(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/tiny-tool/exception-edition',
     method: 'post',
@@ -376,7 +388,7 @@ export function getEdition(param) {
   })
 }
 export function getRefund(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/report/refund',
     method: 'post',
@@ -384,7 +396,7 @@ export function getRefund(param) {
   })
 }
 export function getDeadFee(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/report/dead-fee?page=' + param.page,
     method: 'post',
@@ -392,11 +404,19 @@ export function getDeadFee(param) {
   })
 }
 export function getExtraFee(param) {
-  const data = { 'condition': param }
+  const data = { condition: param }
   return request({
     url: '/report/extra-fee?page=' + param.page,
     method: 'post',
     data
   })
 }
-
+// 订单量走势
+export function APIOrderCount(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/order-count',
+    method: 'post',
+    data
+  })
+}

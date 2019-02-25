@@ -918,20 +918,14 @@ export default {
           const name = this.$store.getters.name
           const res = this.allMember
           const kes = this.kefu
-          const pos = kes.filter(ele => ele.username === name)[0].position
-          if (pos === 'eBay客服') {
-            myform.member = res
-              .filter(ele => ele.position === '销售')
-              .map(m => {
-                return m.username
-              })
+          if (kes.length > 0) {
+            myform.member = res.map(m => {
+              return m.username
+            })
           } else {
-            const per = res.filter(ele => ele.username === name)[0].department
-            myform.member = res
-              .filter(ele => ele.department === per)
-              .map(m => {
-                return m.username
-              })
+            myform.member = res.map(m => {
+              return m.username
+            })
           }
         }
         if (myform.department.length !== 0) {

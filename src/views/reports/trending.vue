@@ -181,10 +181,29 @@
         </transition>
       </div>
     </div>
-    <Myecharts style="max-height:800px;overflow:auto"
+    <el-row>
+      <el-col :span="24">
+        <el-tabs v-model="activeName"
+                 type="card"
+                 @tab-click="handleClick">
+          <el-tab-pane v-for="(item, index) in this.allMenu"
+                       :label="item.name"
+                       :name="item.name"
+                       :key="index">
+          </el-tab-pane>
+        </el-tabs>
+      </el-col>
+    </el-row>
+    <Myecharts v-if="sale"
+               style="max-height:800px;overflow:auto"
                :options="options"
                v-loading="listLoading"
                ref="myecharts"></Myecharts>
+    <Chart v-if="order"
+           style="max-height:800px;overflow:auto"
+           :options="options"
+           v-loading="listLoading"
+           ref="myechart"></Chart>
   </div>
 </template>
 
@@ -195,20 +214,30 @@ import {
   getPlatform,
   getMember,
   getAccount,
-  getSalestrend
+  getSalestrend,
+  APIOrderCount
 } from '../../api/profit'
 import { getMonthDate } from '../../api/tools'
+import { getMenu } from '../../api/login'
+import Chart from '../../component/order/Orderchart'
 
 export default {
+  components: {
+    Chart
+  },
   data() {
     return {
+      sale: true,
+      order: false,
+      allMenu: [],
+      activeName: '销售额走势',
       allMember: [],
       isA: true,
       text: '显示输入框',
       id: 'test',
       options: {
         title: {
-          text: '销售额走势$'
+          text: '销售额走势($)'
         },
         tooltip: {
           trigger: 'axis',
@@ -307,6 +336,15 @@ export default {
     }
   },
   methods: {
+    handleClick(tab, event) {
+      if (tab.label === '销售额走势') {
+        this.sale = true
+        this.order = false
+      } else {
+        this.sale = false
+        this.order = true
+      }
+    },
     selectAll(name) {
       if (name === 'member') {
         this.condition['member'] = this['member'].map(ele => ele['username'])
@@ -440,42 +478,83 @@ export default {
           } else if (this.condition.member.lenght !== 0) {
             myform.member = this.condition.member
           }
-          getSalestrend(myform).then(response => {
-            this.listLoading = false
-            const ret = response.data.data
-            const lineName = []
-            const series = []
-            ret.forEach(element => {
-              if (lineName.indexOf(element.title) < 0) {
-                lineName.push(element.title)
-              }
-            })
-            const date = []
-            lineName.forEach(name => {
-              const sery = {
-                type: 'bar',
-                stack: '总量',
-                areaStyle: { normal: {} }
-              }
-              const amt = []
-              ret.map(element => {
-                if (element.title === name) {
-                  amt.push(Number(element.totalamt))
-                  if (date.indexOf(element.ordertime) < 0) {
-                    date.push(element.ordertime)
-                  }
+          if (this.activeName === '销售额走势') {
+            getSalestrend(myform).then(response => {
+              this.listLoading = false
+              const ret = response.data.data
+              const lineName = []
+              const series = []
+              ret.forEach(element => {
+                if (lineName.indexOf(element.title) < 0) {
+                  lineName.push(element.title)
                 }
               })
-              sery['data'] = amt
-              sery['name'] = name
-              series.push(sery)
+              const date = []
+              lineName.forEach(name => {
+                const sery = {
+                  type: 'bar',
+                  stack: '总量',
+                  areaStyle: { normal: {} }
+                }
+                const amt = []
+                ret.map(element => {
+                  if (element.title === name) {
+                    amt.push(Number(element.totalamt))
+                    if (date.indexOf(element.ordertime) < 0) {
+                      date.push(element.ordertime)
+                    }
+                  }
+                })
+                sery['data'] = amt
+                sery['name'] = name
+                series.push(sery)
+              })
+              this.options.legend.data = lineName
+              this.options.xAxis[0].data = date
+              this.options.series = series
+              this.$refs.myecharts.drawAreaStack(this.options)
             })
-            this.options.legend.data = lineName
-            this.options.xAxis[0].data = date
-            this.options.series = series
-            const _this = this
-            _this.$refs.myecharts.drawAreaStack(this.options)
-          })
+            this.options.title.text = '销售额走势($)'
+            this.options.yAxis[0].axisLabel.formatter = '{value} $'
+          } else {
+            APIOrderCount(myform).then(response => {
+              this.listLoading = false
+              const ret = response.data.data
+              const lineName = []
+              const series = []
+              ret.forEach(element => {
+                if (lineName.indexOf(element.title) < 0) {
+                  lineName.push(element.title)
+                }
+              })
+              const date = []
+              lineName.forEach(name => {
+                const sery = {
+                  type: 'bar',
+                  stack: '总量',
+                  areaStyle: { normal: {} }
+                }
+                const amt = []
+                ret.map(element => {
+                  if (element.title === name) {
+                    amt.push(Number(element.totalamt))
+                    if (date.indexOf(element.ordertime) < 0) {
+                      date.push(element.ordertime)
+                    }
+                  }
+                })
+                sery['data'] = amt
+                sery['name'] = name
+                series.push(sery)
+              })
+              this.options.legend.data = lineName
+              this.options.xAxis[0].data = date
+              this.options.series = series
+              this.$refs.myechart.drawAreaStack(this.options)
+            })
+            this.options.title.text = '订单量走势(单)'
+            this.options.yAxis[0].axisLabel.formatter = '{value} 单'
+          }
         } else {
           return false
         }
@@ -483,6 +562,14 @@ export default {
     }
   },
   mounted() {
+    // 权限
+    getMenu().then(response => {
+      const res = response.data.data
+      const menu = res.filter(e => e.name === '毛利润报表')
+      if (menu[0].children[0].tabs.length) {
+        this.allMenu = menu[0].children[0].tabs
+      }
+    })
     getMember().then(response => {
       const res = response.data.data
       this.allMember = this.member = res.filter(ele => ele.position === '销售')

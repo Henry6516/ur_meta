@@ -104,7 +104,7 @@
       <!-- 黑名单列表 -->
       <table id="oTable"
              border="1px solid #ebeef5"
-             cellpadding="15"
+             cellpadding="9"
              style="border: 1px solid #ebeef5;background-color:#fff;color:#606266;width:100%;border-collapse:collapse;">
         <thead>
           <tr>
@@ -114,20 +114,38 @@
             <th>收货人地址</th>
             <th>邮编</th>
             <th>电话</th>
+            <th>操作</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in blackData"
-              :key="index">
+              :key="index"
+              style="text-align:center;">
             <td>{{ item.addressowner }}</td>
             <td>{{ item.buyerid}}</td>
             <td>{{ item.shipToName}}</td>
             <td>{{ item.shiptocountryCode}}{{ item.shiptostate}}{{ item.shiptocity}}{{ item.shiptostreet}}{{ item.shiptostreet2}}</td>
             <td>{{ item.shiptozip}}</td>
             <td>{{ item.SHIPtoPHONEnUM}}</td>
+            <td>
+              <el-button size="mini"
+                         type="danger"
+                         @click="del(item.id)"
+                         style="margin:-20px;">删除</el-button>
+            </td>
           </tr>
         </tbody>
       </table>
+      <div class="block toolbar">
+        <el-pagination background
+                       @size-change='handleSizeChange1'
+                       @current-change='handleCurrentChange1'
+                       :current-page="this.page.currentPage"
+                       :page-size="this.page.pageSize"
+                       :page-sizes="[20,30,40,50]"
+                       layout="total,sizes,prev,pager,next,jumper"
+                       :total="this.total"></el-pagination>
+      </div>
       <!-- 新增界面  -->
       <el-dialog title="新增"
                  :visible.sync="addFormVisible"
@@ -237,7 +255,13 @@
 </template>
 
 <script>
-import { Risk, BlackList, postBlacklist, postHandleOrder } from '../../api/api'
+import {
+  Risk,
+  BlackList,
+  delBlackList,
+  postBlacklist,
+  postHandleOrder
+} from '../../api/api'
 import { getMenu } from '../../api/login'
 export default {
   data() {
@@ -250,6 +274,7 @@ export default {
       currentPage: null,
       perPage: null,
       totalCount: null,
+      total: null,
       searchValue: '',
       searchTable: [],
       value1: false,
@@ -287,6 +312,10 @@ export default {
         endDate: '',
         pageSize: 10,
         currentPage: 1
+      },
+      page: {
+        currentPage: 1,
+        pageSize: 20
       },
       condition2: {
         tradeNid: '',
@@ -339,6 +368,14 @@ export default {
     },
     handleCurrentChange(val) {
       this.condition.currentPage = val
+      this.getOrder(this.activeName)
+    },
+    handleSizeChange1(val) {
+      this.page.pageSize = val
+      this.getOrder(this.activeName)
+    },
+    handleCurrentChange1(val) {
+      this.page.currentPage = val
       this.getOrder(this.activeName)
     },
     // 搜索
@@ -476,6 +513,20 @@ export default {
       this.data = Object.assign({}, form)
       this.addFormVisible = true
     },
+    // 删除
+    del(id) {
+      delBlackList(id).then(res => {
+        if (res.data.code === 200) {
+          this.$message({
+            message: '删除成功！',
+            type: 'success'
+          })
+          this.getOrder(this.activeName)
+        } else {
+          return false
+        }
+      })
+    },
     addSubmit() {
       this.addFormVisible = false
       postBlacklist(this.data).then(response => {
@@ -509,9 +560,12 @@ export default {
         })
       } else if (name === '黑名单') {
         this.blackloading = true
-        BlackList().then(response => {
+        BlackList(this.page).then(response => {
           this.blackloading = false
-          this.blackData = this.searchTable = response.data.data
+          this.blackData = this.searchTable = response.data.data.items
+          this.total = response.data.data._meta.totalCount
+          this.page.currentPage = response.data.data._meta.currentPage
+          this.page.pageSize = response.data.data._meta.perPage
         })
       }
     }

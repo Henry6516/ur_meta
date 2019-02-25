@@ -3,7 +3,7 @@
     <el-form :model='condition'
              :inline='true'
              ref='condition'
-             label-width='100px'
+             label-width='150px'
              class='demo-form-inline'>
       <el-form-item label="账号"
                     class="input">

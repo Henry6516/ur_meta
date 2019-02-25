@@ -1,86 +1,330 @@
 <template>
   <div>
-    <el-form :model='form' :inline='true' ref='condition' label-width='10rem' class='demo-form-inline toolbar'>
-      <el-form-item label='交易日期' prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-        <el-date-picker size="small" v-model='form.dateRange' @change="time('exchange')" type='daterange' value-format='yyyy-MM-dd' range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions'>
+    <el-form :model='form'
+             :inline='true'
+             ref='condition'
+             label-width='150px'
+             class='demo-form-inline toolbar'>
+      <el-form-item label='交易日期'
+                    prop="dateRange"
+                    :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
+        <el-date-picker size="small"
+                        v-model='form.dateRange'
+                        @change="time('exchange')"
+                        type='daterange'
+                        value-format='yyyy-MM-dd'
+                        range-separator='至'
+                        start-placeholder='开始日期'
+                        end-placeholder='结束日期'
+                        :picker-options='pickerOptions'>
         </el-date-picker>
       </el-form-item>
       <el-form-item label='新品日期'>
-        <el-date-picker size="small" v-model='form.newRange' @change="time('product')" type='daterange' value-format='yyyy-MM-dd' range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
+        <el-date-picker size="small"
+                        v-model='form.newRange'
+                        @change="time('product')"
+                        type='daterange'
+                        value-format='yyyy-MM-dd'
+                        range-separator='至'
+                        start-placeholder='开始日期'
+                        end-placeholder='结束日期'
+                        :picker-options='pickerOptions2'>
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
+        <el-button size="small"
+                   type="primary"
+                   style="margin-left:60px"
+                   @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <div class="tab" v-show="show" v-loading="listLoading">
+    <div class="tab"
+         v-show="show"
+         v-loading="listLoading">
       <el-row>
         <el-col :span="12">
-          <Myechart :options="option" ref="myechart"></Myechart>
+          <Myechart :options="option"
+                    ref="myechart"></Myechart>
         </el-col>
         <el-col :span="12">
-          <Myechartlre :options="options" ref="myechartlre"></Myechartlre>
+          <Myechartlre :options="options"
+                       ref="myechartlre"></Myechartlre>
         </el-col>
       </el-row>
-      <el-tabs v-model="activeName" @tab-click="handleClick" v-show="this.tableData1.length>0?true:false">
-        <el-tab-pane label="所有状态" name="first">
-          <el-table :header-row-style="rowheader" @sort-change="sortNumber1" show-summary :summary-method="getSummaries" max-height="630" :data="tableData1" style="width: 100%;">
-            <el-table-column min-width="125" prop="salername" label="业绩归属人1" :formatter="empty" sortable></el-table-column>
-            <el-table-column min-width="100" prop="goodsNum" label="商品总数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="115" prop="SoldNum" label="出单商品数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="100" prop="SoldRate" label="出单率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="100" prop="SkuSoldNum" label="销量数量" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="130" prop="saleMoneyRmb" label="销售额(RMB)" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="115" prop="profitRmb" label="利润(RMB)" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="100" prop="ProfitRate" label="利润率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="150" prop="wishSoldNum" label="Wish出单商品数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="135" prop="wishRate" label="Wish出单率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="150" prop="eabySoldNum" label="eBay出单商品数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="135" prop="eBayRate" label="eBay出单率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="145" prop="SMTSoldNum" label="SMT出单商品数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="130" prop="SMTRate" label="SMT出单率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="170" prop="amaSoldNum" label="Amazon出单商品数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="155" prop="amaRate" label="Amazon出单率%" :formatter="empty" sortable="custom"></el-table-column>
+      <el-tabs v-model="activeName"
+               @tab-click="handleClick"
+               v-show="this.tableData1.length>0?true:false">
+        <el-tab-pane label="所有状态"
+                     name="first">
+          <el-table :header-row-style="rowheader"
+                    @sort-change="sortNumber1"
+                    show-summary
+                    :summary-method="getSummaries"
+                    max-height="630"
+                    :data="tableData1"
+                    style="width: 100%;">
+            <el-table-column min-width="125"
+                             prop="salername"
+                             label="业绩归属人1"
+                             :formatter="empty"
+                             sortable></el-table-column>
+            <el-table-column min-width="100"
+                             prop="goodsNum"
+                             label="商品总数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="115"
+                             prop="SoldNum"
+                             label="出单商品数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="100"
+                             prop="SoldRate"
+                             label="出单率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="100"
+                             prop="SkuSoldNum"
+                             label="销量数量"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="130"
+                             prop="saleMoneyRmb"
+                             label="销售额(RMB)"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="115"
+                             prop="profitRmb"
+                             label="利润(RMB)"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="100"
+                             prop="ProfitRate"
+                             label="利润率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="150"
+                             prop="wishSoldNum"
+                             label="Wish出单商品数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="135"
+                             prop="wishRate"
+                             label="Wish出单率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="150"
+                             prop="eabySoldNum"
+                             label="eBay出单商品数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="135"
+                             prop="eBayRate"
+                             label="eBay出单率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="145"
+                             prop="SMTSoldNum"
+                             label="SMT出单商品数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="130"
+                             prop="SMTRate"
+                             label="SMT出单率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="170"
+                             prop="amaSoldNum"
+                             label="Amazon出单商品数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="155"
+                             prop="amaRate"
+                             label="Amazon出单率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
           </el-table>
         </el-tab-pane>
-        <el-tab-pane label="爆款" name="second">
-          <el-table :header-row-style="rowheader" @sort-change="sortNumber2" show-summary :summary-method="getSummaries" max-height="630" :data="tableData2" style="width: 100%;">
-            <el-table-column min-width="125" prop="salername" label="业绩归属人1" :formatter="empty" sortable></el-table-column>
-            <el-table-column min-width="100" prop="goodsNum" label="商品总数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="100" prop="SoldNum" label="爆款总数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="100" prop="SoldRate" label="爆款率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="100" prop="SkuSoldNum" label="销量数量" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="130" prop="saleMoneyRmb" label="销售额(RMB)" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="115" prop="profitRmb" label="利润(RMB)" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="100" prop="ProfitRate" label="利润率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="120" prop="wishSoldNum" label="Wish爆款数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="160" prop="wishRate" label="Wish爆款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="120" prop="eabySoldNum" label="eBay爆款数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="160" prop="eBayRate" label="eBay爆款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="120" prop="SMTSoldNum" label="SMT爆款数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="160" prop="SMTRate" label="SMT爆款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="145" prop="amaSoldNum" label="Amazon爆款数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="185" prop="amaRate" label="Amazon爆款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
+        <el-tab-pane label="爆款"
+                     name="second">
+          <el-table :header-row-style="rowheader"
+                    @sort-change="sortNumber2"
+                    show-summary
+                    :summary-method="getSummaries"
+                    max-height="630"
+                    :data="tableData2"
+                    style="width: 100%;">
+            <el-table-column min-width="125"
+                             prop="salername"
+                             label="业绩归属人1"
+                             :formatter="empty"
+                             sortable></el-table-column>
+            <el-table-column min-width="100"
+                             prop="goodsNum"
+                             label="商品总数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="100"
+                             prop="SoldNum"
+                             label="爆款总数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="100"
+                             prop="SoldRate"
+                             label="爆款率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="100"
+                             prop="SkuSoldNum"
+                             label="销量数量"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="130"
+                             prop="saleMoneyRmb"
+                             label="销售额(RMB)"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="115"
+                             prop="profitRmb"
+                             label="利润(RMB)"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="100"
+                             prop="ProfitRate"
+                             label="利润率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="120"
+                             prop="wishSoldNum"
+                             label="Wish爆款数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="160"
+                             prop="wishRate"
+                             label="Wish爆款贡献率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="120"
+                             prop="eabySoldNum"
+                             label="eBay爆款数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="160"
+                             prop="eBayRate"
+                             label="eBay爆款贡献率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="120"
+                             prop="SMTSoldNum"
+                             label="SMT爆款数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="160"
+                             prop="SMTRate"
+                             label="SMT爆款贡献率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="145"
+                             prop="amaSoldNum"
+                             label="Amazon爆款数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="185"
+                             prop="amaRate"
+                             label="Amazon爆款贡献率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
           </el-table>
         </el-tab-pane>
-        <el-tab-pane label="旺款" name="third">
-          <el-table :header-row-style="rowheader" @sort-change="sortNumber3" show-summary :summary-method="getSummaries" max-height="630" :data="tableData3" style="width: 100%;">
-            <el-table-column min-width="125" prop="salername" label="业绩归属人1" :formatter="empty" sortable></el-table-column>
-            <el-table-column min-width="100" prop="goodsNum" label="商品总数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="100" prop="SoldNum" label="旺款总数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="100" prop="SoldRate" label="旺款率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="100" prop="SkuSoldNum" label="销售数量" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="130" prop="saleMoneyRmb" label="销售额(RMB)" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="115" prop="profitRmb" label="利润(RMB)" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="100" prop="ProfitRate" label="利润率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="120" prop="wishSoldNum" label="Wish旺款数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="160" prop="wishRate" label="Wish旺款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="120" prop="eabySoldNum" label="eBay旺款数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="160" prop="eBayRate" label="eBay旺款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="120" prop="SMTSoldNum" label="SMT旺款数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="160" prop="SMTRate" label="SMT旺款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="145" prop="amaSoldNum" label="Amazon旺款数" :formatter="empty" sortable="custom"></el-table-column>
-            <el-table-column min-width="185" prop="amaRate" label="Amazon旺款贡献率%" :formatter="empty" sortable="custom"></el-table-column>
+        <el-tab-pane label="旺款"
+                     name="third">
+          <el-table :header-row-style="rowheader"
+                    @sort-change="sortNumber3"
+                    show-summary
+                    :summary-method="getSummaries"
+                    max-height="630"
+                    :data="tableData3"
+                    style="width: 100%;">
+            <el-table-column min-width="125"
+                             prop="salername"
+                             label="业绩归属人1"
+                             :formatter="empty"
+                             sortable></el-table-column>
+            <el-table-column min-width="100"
+                             prop="goodsNum"
+                             label="商品总数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="100"
+                             prop="SoldNum"
+                             label="旺款总数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="100"
+                             prop="SoldRate"
+                             label="旺款率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="100"
+                             prop="SkuSoldNum"
+                             label="销售数量"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="130"
+                             prop="saleMoneyRmb"
+                             label="销售额(RMB)"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="115"
+                             prop="profitRmb"
+                             label="利润(RMB)"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="100"
+                             prop="ProfitRate"
+                             label="利润率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="120"
+                             prop="wishSoldNum"
+                             label="Wish旺款数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="160"
+                             prop="wishRate"
+                             label="Wish旺款贡献率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="120"
+                             prop="eabySoldNum"
+                             label="eBay旺款数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="160"
+                             prop="eBayRate"
+                             label="eBay旺款贡献率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="120"
+                             prop="SMTSoldNum"
+                             label="SMT旺款数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="160"
+                             prop="SMTRate"
+                             label="SMT旺款贡献率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="145"
+                             prop="amaSoldNum"
+                             label="Amazon旺款数"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
+            <el-table-column min-width="185"
+                             prop="amaRate"
+                             label="Amazon旺款贡献率%"
+                             :formatter="empty"
+                             sortable="custom"></el-table-column>
           </el-table>
         </el-tab-pane>
       </el-tabs>
@@ -380,7 +624,7 @@ export default {
               const sery = {
                 type: 'bar',
                 stack: '总量',
-                itemStyle: { normal: { color: '#84C1FF' }}
+                itemStyle: { normal: { color: '#84C1FF' } }
               }
               const amt = []
               ret.map(element => {
@@ -397,7 +641,7 @@ export default {
               const sery = {
                 type: 'bar',
                 stack: '总量',
-                itemStyle: { normal: { color: '#84C1FF' }}
+                itemStyle: { normal: { color: '#84C1FF' } }
               }
               const amt = []
               ret.map(element => {
@@ -439,7 +683,7 @@ export default {
 .el-form {
   padding-top: 10px;
   margin-bottom: 10px;
-  .el-form-item{
+  .el-form-item {
     margin-bottom: 20px;
   }
 }

@@ -1,8 +1,9 @@
 <template>
-  <div class="toolbar">
+  <div>
     <el-form :model="condition"
              :inline="true"
              ref="condition"
+             class="toolbar"
              label-width="110px">
       <el-form-item label="部门"
                     class="input">
@@ -156,6 +157,35 @@
                    @click="onSubmit">查询</el-button>
       </el-form-item>
     </el-form>
+    <div class="tab"
+         v-loading="listLoading">
+      <el-row>
+        <el-col :span="12">
+          <div ref="orderpie"
+               :style="{width: '100%', height: '400px'}"></div>
+        </el-col>
+        <el-col :span="12">
+          <div ref="skupie"
+               :style="{width: '100%', height: '400px'}"></div>
+        </el-col>
+        <el-col :span="12">
+          <div ref="lineNum"
+               :style="{width: '100%', height: '400px'}"></div>
+        </el-col>
+        <el-col :span="12">
+          <div ref="lineRate"
+               :style="{width: '100%', height: '400px'}"></div>
+        </el-col>
+        <el-col :span="12">
+          <div ref="slineNum"
+               :style="{width: '100%', height: '400px'}"></div>
+        </el-col>
+        <el-col :span="12">
+          <div ref="slineRate"
+               :style="{width: '100%', height: '400px'}"></div>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -166,12 +196,270 @@ import {
   getPlatform,
   getMember,
   getAccount,
-  getSalestrend
+  getSalestrend,
+  priceTrend
 } from '../../api/profit'
 import { getMonthDate } from '../../api/tools'
 export default {
   data() {
     return {
+      options: {
+        title: {
+          text: 'orderpie',
+          subtext: '纯属虚构',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: [String]
+        },
+        series: [
+          {
+            name: 'order',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [Object],
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      },
+      opt: {
+        title: {
+          text: 'skupie',
+          subtext: '纯属虚构',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: [String]
+        },
+        series: [
+          {
+            name: 'sku',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [Object],
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      },
+      lineNum: {
+        title: {
+          text: 'orderlinenum'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        legend: {
+          data: [String]
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: true,
+            data: [String]
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            axisLabel: {
+              formatter: '{value}'
+            }
+          }
+        ],
+        series: [Object]
+      },
+      lineRate: {
+        title: {
+          text: 'orderlinerate'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        legend: {
+          data: [String]
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: true,
+            data: [String]
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            axisLabel: {
+              formatter: '{value}'
+            }
+          }
+        ],
+        series: [Object]
+      },
+      slineNum: {
+        title: {
+          text: 'skulinenum'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        legend: {
+          data: [String]
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: true,
+            data: [String]
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            axisLabel: {
+              formatter: '{value}'
+            }
+          }
+        ],
+        series: [Object]
+      },
+      slineRate: {
+        title: {
+          text: 'skulinerate'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        legend: {
+          data: [String]
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: true,
+            data: [String]
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            axisLabel: {
+              formatter: '{value}'
+            }
+          }
+        ],
+        series: [Object]
+      },
+      listLoading: false,
       allMember: [],
       plat: [],
       member: [],
@@ -220,7 +508,169 @@ export default {
     }
   },
   methods: {
-    onSubmit() {},
+    onSubmit() {
+      this.$refs.condition.validate(valid => {
+        if (valid) {
+          this.listLoading = true
+          priceTrend(this.condition).then(res => {
+            this.listLoading = false
+            const orderpie = res.data.data.orderPie
+            this.options.legend.data = orderpie.legend
+            this.options.series[0].data = orderpie.data
+            let orderPie = this.$echarts.init(this.$refs.orderpie)
+            orderPie.setOption(this.options)
+
+            const skupie = res.data.data.skuPie
+            this.opt.legend.data = skupie.legend
+            this.opt.series[0].data = skupie.data
+            let skuPie = this.$echarts.init(this.$refs.skupie)
+            skuPie.setOption(this.opt)
+
+            const orderlinenum = res.data.data.orderLineNum
+            if (orderlinenum.length > 0) {
+              const lineName = []
+              const series = []
+              orderlinenum.forEach(element => {
+                if (lineName.indexOf(element.flag) < 0) {
+                  lineName.push(element.flag)
+                }
+              })
+              const date = []
+              lineName.forEach(name => {
+                const sery = {
+                  type: 'line',
+                  stack: '总量',
+                  areaStyle: { normal: {} }
+                }
+                const amt = []
+                orderlinenum.map(element => {
+                  if (element.flag === name) {
+                    amt.push(Number(element.orderNum))
+                    if (date.indexOf(element.orderDate) < 0) {
+                      date.push(element.orderDate)
+                    }
+                  }
+                })
+                sery['data'] = amt
+                sery['name'] = name
+                series.push(sery)
+              })
+              this.lineNum.legend.data = lineName
+              this.lineNum.xAxis[0].data = date
+              this.lineNum.series = series
+              let LineNum = this.$echarts.init(this.$refs.lineNum)
+              LineNum.setOption(this.lineNum)
+            }
+
+            const orderlinerate = res.data.data.orderLineRate
+            if (orderlinerate.length > 0) {
+              const lineName = []
+              const series = []
+              orderlinerate.forEach(element => {
+                if (lineName.indexOf(element.flag) < 0) {
+                  lineName.push(element.flag)
+                }
+              })
+              const date = []
+              lineName.forEach(name => {
+                const sery = {
+                  type: 'line',
+                  stack: '总量',
+                  areaStyle: { normal: {} }
+                }
+                const amt = []
+                orderlinerate.map(element => {
+                  if (element.flag === name) {
+                    amt.push(Number(element.rate))
+                    if (date.indexOf(element.orderDate) < 0) {
+                      date.push(element.orderDate)
+                    }
+                  }
+                })
+                sery['data'] = amt
+                sery['name'] = name
+                series.push(sery)
+              })
+              this.lineRate.legend.data = lineName
+              this.lineRate.xAxis[0].data = date
+              this.lineRate.series = series
+              let LineRate = this.$echarts.init(this.$refs.lineRate)
+              LineRate.setOption(this.lineRate)
+            }
+            const skulinenum = res.data.data.skuLineNum
+            if (skulinenum.length > 0) {
+              const lineName = []
+              const series = []
+              skulinenum.forEach(element => {
+                if (lineName.indexOf(element.flag) < 0) {
+                  lineName.push(element.flag)
+                }
+              })
+              const date = []
+              lineName.forEach(name => {
+                const sery = {
+                  type: 'line',
+                  stack: '总量',
+                  areaStyle: { normal: {} }
+                }
+                const amt = []
+                skulinenum.map(element => {
+                  if (element.flag === name) {
+                    amt.push(Number(element.orderNum))
+                    if (date.indexOf(element.orderDate) < 0) {
+                      date.push(element.orderDate)
+                    }
+                  }
+                })
+                sery['data'] = amt
+                sery['name'] = name
+                series.push(sery)
+              })
+              this.slineNum.legend.data = lineName
+              this.slineNum.xAxis[0].data = date
+              this.slineNum.series = series
+              let sLineNum = this.$echarts.init(this.$refs.slineNum)
+              sLineNum.setOption(this.slineNum)
+            }
+            const skulinerate = res.data.data.skuLineRate
+            if (skulinerate.length > 0) {
+              const lineName = []
+              const series = []
+              skulinerate.forEach(element => {
+                if (lineName.indexOf(element.flag) < 0) {
+                  lineName.push(element.flag)
+                }
+              })
+              const date = []
+              lineName.forEach(name => {
+                const sery = {
+                  type: 'line',
+                  stack: '总量',
+                  areaStyle: { normal: {} }
+                }
+                const amt = []
+                skulinerate.map(element => {
+                  if (element.flag === name) {
+                    amt.push(Number(element.rate))
+                    if (date.indexOf(element.orderDate) < 0) {
+                      date.push(element.orderDate)
+                    }
+                  }
+                })
+                sery['data'] = amt
+                sery['name'] = name
+                series.push(sery)
+              })
+              this.slineRate.legend.data = lineName
+              this.slineRate.xAxis[0].data = date
+              this.slineRate.series = series
+              let sLineRate = this.$echarts.init(this.$refs.slineRate)
+              sLineRate.setOption(this.slineRate)
+            }
+          })
+        }
+      })
+    },
     selectAll(name) {
       if (name === 'member') {
         this.condition['member'] = this['member'].map(ele => ele['username'])

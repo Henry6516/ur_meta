@@ -227,6 +227,12 @@ export function BlackList(param) {
     method: 'get'
   })
 }
+export function delBlackList(param) {
+  return request({
+    url: '/tiny-tool/blacklist?id=' + param,
+    method: 'delete'
+  })
+}
 export function postBlacklist(param) {
   const data = { data: param }
   return request({

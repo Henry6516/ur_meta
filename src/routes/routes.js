@@ -17,6 +17,7 @@ import perform from '../views/data/perform.vue'
 import psales from '../views/data/psales.vue'
 import saleschange from '../views/data/saleschange.vue'
 import ptrend from '../views/data/pricetrend.vue'
+import weight from '../views/data/weight.vue'
 // 销售工具
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
@@ -141,6 +142,11 @@ const routes = [
         path: '/v1/data-center/price-trend',
         component: ptrend,
         name: '价格指数分析'
+      },
+      {
+        path: '/v1/data-center/weight-diff',
+        component: weight,
+        name: '重量差异对比'
       }
     ]
   },

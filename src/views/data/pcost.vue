@@ -1,90 +1,171 @@
 <template>
   <div>
-    <el-form :model='form' :inline='true' ref='condition' label-width='15rem' class='demo-form-inline'>
-      <el-form-item label='日期' class='input' prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-        <el-date-picker size="small" v-model='form.dateRange' type='daterange' value-format='yyyy-MM-dd' align='right' unlink-panels range-separator='至' start-placeholder='开始日期' end-placeholder='结束日期' :picker-options='pickerOptions2'>
+    <el-form :model='form'
+             :inline='true'
+             ref='condition'
+             label-width='15rem'
+             class='demo-form-inline'>
+      <el-form-item label='日期'
+                    class='input'
+                    prop="dateRange"
+                    :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
+        <el-date-picker size="small"
+                        v-model='form.dateRange'
+                        type='daterange'
+                        value-format='yyyy-MM-dd'
+                        align='right'
+                        unlink-panels
+                        range-separator='至'
+                        start-placeholder='开始日期'
+                        end-placeholder='结束日期'
+                        :picker-options='pickerOptions2'>
         </el-date-picker>
       </el-form-item>
       <el-form-item label="物流公司">
-        <el-select size="small" v-model="condition.wlCompany" clearable>
-          <el-option v-for="item in wlCompany" :key="item" :value="item"></el-option>
+        <el-select size="small"
+                   v-model="condition.wlCompany"
+                   clearable>
+          <el-option v-for="item in wlCompany"
+                     :key="item"
+                     :value="item"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
+        <el-button size="small"
+                   type="primary"
+                   @click="onSubmit(condition)"
+                   style="margin-left:60px">查询</el-button>
       </el-form-item>
     </el-form>
     <el-row class="toolbar">
-      <el-col :span='2' :offset='19'>
-        <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
+      <el-col :span='2'
+              :offset='19'>
+        <el-input clearable
+                  placeholder='search'
+                  v-model='searchValue'
+                  @change='handleSearch'></el-input>
       </el-col>
       <el-col :span='2'>
-        <el-button style='float:left' type='default' @click='exportExcel'>导出Excel</el-button>
+        <el-button style='float:left'
+                   type='default'
+                   @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
     <div v-loading="listLoading">
-      <el-table id="sale-table" :header-row-style="rowheader" max-height="800" :data="tableData" 
-      @sort-change="sortNumber" show-summary :summary-method="getSummaries" style="width: 100%;" v-show="this.tableData.length>0">
-        <el-table-column prop="wlCompany" label="物流公司" :formatter="empty" sortable>
+      <el-table id="sale-table"
+                :header-row-style="rowheader"
+                max-height="800"
+                :data="tableData"
+                @sort-change="sortNumber"
+                show-summary
+                :summary-method="getSummaries"
+                style="width: 100%;"
+                v-show="this.tableData.length>0">
+        <el-table-column prop="wlCompany"
+                         label="物流公司"
+                         :formatter="empty"
+                         sortable>
           <template slot-scope="scope">
-            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.wlCompany}}</span>
-            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.wlCompany}}</span>
+            <span v-if="scope.row.wlCompany=='汇总'"
+                  style="color:black;font-weight:600">{{scope.row.wlCompany}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'"
+                  style="color:red">{{scope.row.wlCompany}}</span>
             <span v-else>{{scope.row.wlCompany}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="eBay" label="eBay￥" :formatter="empty" sortable="custom">
+        <el-table-column prop="eBay"
+                         label="eBay￥"
+                         :formatter="empty"
+                         sortable="custom">
           <template slot-scope="scope">
-            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.eBay}}</span>
-            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.eBay}}</span>
+            <span v-if="scope.row.wlCompany=='汇总'"
+                  style="color:black;font-weight:600">{{scope.row.eBay}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'"
+                  style="color:red">{{scope.row.eBay}}</span>
             <span v-else>{{scope.row.eBay}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="Wish" label="Wish￥" :formatter="empty" sortable="custom">
+        <el-table-column prop="Wish"
+                         label="Wish￥"
+                         :formatter="empty"
+                         sortable="custom">
           <template slot-scope="scope">
-            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Wish}}</span>
-            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Wish}}</span>
+            <span v-if="scope.row.wlCompany=='汇总'"
+                  style="color:black;font-weight:600">{{scope.row.Wish}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'"
+                  style="color:red">{{scope.row.Wish}}</span>
             <span v-else>{{scope.row.Wish}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="Amazon" label="Amazon￥" :formatter="empty" sortable="custom">
+        <el-table-column prop="Amazon"
+                         label="Amazon￥"
+                         :formatter="empty"
+                         sortable="custom">
           <template slot-scope="scope">
-            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Amazon}}</span>
-            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Amazon}}</span>
+            <span v-if="scope.row.wlCompany=='汇总'"
+                  style="color:black;font-weight:600">{{scope.row.Amazon}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'"
+                  style="color:red">{{scope.row.Amazon}}</span>
             <span v-else>{{scope.row.Amazon}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="SMT" label="SMT￥" :formatter="empty" sortable="custom">
+        <el-table-column prop="SMT"
+                         label="SMT￥"
+                         :formatter="empty"
+                         sortable="custom">
           <template slot-scope="scope">
-            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.SMT}}</span>
-            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.SMT}}</span>
+            <span v-if="scope.row.wlCompany=='汇总'"
+                  style="color:black;font-weight:600">{{scope.row.SMT}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'"
+                  style="color:red">{{scope.row.SMT}}</span>
             <span v-else>{{scope.row.SMT}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="Shopee" label="Shopee￥" :formatter="empty" sortable="custom">
+        <el-table-column prop="Shopee"
+                         label="Shopee￥"
+                         :formatter="empty"
+                         sortable="custom">
           <template slot-scope="scope">
-            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Shopee}}</span>
-            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Shopee}}</span>
+            <span v-if="scope.row.wlCompany=='汇总'"
+                  style="color:black;font-weight:600">{{scope.row.Shopee}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'"
+                  style="color:red">{{scope.row.Shopee}}</span>
             <span v-else>{{scope.row.Shopee}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="Joom" label="Joom￥" :formatter="empty" sortable="custom">
+        <el-table-column prop="Joom"
+                         label="Joom￥"
+                         :formatter="empty"
+                         sortable="custom">
           <template slot-scope="scope">
-            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.Joom}}</span>
-            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.Joom}}</span>
+            <span v-if="scope.row.wlCompany=='汇总'"
+                  style="color:black;font-weight:600">{{scope.row.Joom}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'"
+                  style="color:red">{{scope.row.Joom}}</span>
             <span v-else>{{scope.row.Joom}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="total" label="合计￥" :formatter="empty" sortable="custom">
+        <el-table-column prop="total"
+                         label="合计￥"
+                         :formatter="empty"
+                         sortable="custom">
           <template slot-scope="scope">
-            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.total}}</span>
-            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.total}}</span>
+            <span v-if="scope.row.wlCompany=='汇总'"
+                  style="color:black;font-weight:600">{{scope.row.total}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'"
+                  style="color:red">{{scope.row.total}}</span>
             <span v-else>{{scope.row.total}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="fare" label="实际费用￥" :formatter="empty" sortable="custom">
+        <el-table-column prop="fare"
+                         label="实际费用￥"
+                         :formatter="empty"
+                         sortable="custom">
           <template slot-scope="scope">
-            <span v-if="scope.row.wlCompany=='汇总'" style="color:black;font-weight:600">{{scope.row.fare}}</span>
-            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'" style="color:red">{{scope.row.fare}}</span>
+            <span v-if="scope.row.wlCompany=='汇总'"
+                  style="color:black;font-weight:600">{{scope.row.fare}}</span>
+            <span v-else-if="scope.row.wlCompany=='物流方式找不到物流公司'"
+                  style="color:red">{{scope.row.fare}}</span>
             <span v-else>{{scope.row.fare}}</span>
           </template>
         </el-table-column>
@@ -181,7 +262,7 @@ export default {
           getPerformcost(this.condition).then(response => {
             this.listLoading = false
             const obj = response.data.data
-            delete(obj["allfee"]);
+            delete obj['allfee']
             const arr = []
             for (const i in obj) {
               arr.push(obj[i])
