@@ -29,7 +29,13 @@ export function getMember() {
     method: 'get'
   })
 }
-
+// 没有权限的人员
+export function getUsers() {
+  return request({
+    url: '/condition/member?flag=true',
+    method: 'get'
+  })
+}
 // store 仓库 http://192.168.0.134:8089/v1/condition/store
 
 export function getStore() {
@@ -416,6 +422,15 @@ export function APIOrderCount(param) {
   const data = { condition: param }
   return request({
     url: '/report/order-count',
+    method: 'post',
+    data
+  })
+}
+// 销售数量走势
+export function APISkuCount(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/sku-count',
     method: 'post',
     data
   })

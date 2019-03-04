@@ -18,6 +18,7 @@ import psales from '../views/data/psales.vue'
 import saleschange from '../views/data/saleschange.vue'
 import ptrend from '../views/data/pricetrend.vue'
 import weight from '../views/data/weight.vue'
+import delay from '../views/data/delay.vue'
 // 销售工具
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
@@ -147,6 +148,11 @@ const routes = [
         path: '/v1/data-center/weight-diff',
         component: weight,
         name: '重量差异对比'
+      },
+      {
+        path: '/v1/data-center/delay-delivery',
+        component: delay,
+        name: '延迟发货率分析'
       }
     ]
   },

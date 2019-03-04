@@ -22,3 +22,11 @@ export function APIUpdateWeight(param) {
     data
   })
 }
+export function APIDelay(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/delay-delivery',
+    method: 'post',
+    data
+  })
+}

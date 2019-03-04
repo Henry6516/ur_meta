@@ -206,7 +206,7 @@ export default {
       options: {
         title: {
           text: 'orderpie',
-          subtext: '纯属虚构',
+          subtext: '',
           x: 'center'
         },
         tooltip: {
@@ -238,7 +238,7 @@ export default {
       opt: {
         title: {
           text: 'skupie',
-          subtext: '纯属虚构',
+          subtext: '',
           x: 'center'
         },
         tooltip: {
@@ -326,6 +326,23 @@ export default {
             label: {
               backgroundColor: '#6a7985'
             }
+          },
+          formatter: function(params) {
+            var str = ''
+            str += '<div>' + params[0].name + '</div>'
+            for (var i = 0; i < params.length; i++) {
+              str +=
+                '<div><span style="color:' +
+                params[i].color +
+                '">' +
+                params[i].seriesName +
+                '</span> : <span>' +
+                (params[i].data
+                  ? Math.round(params[i].data * 10000) / 100 + '%'
+                  : '暂无') +
+                '</span></div>'
+            }
+            return str
           }
         },
         legend: {
@@ -422,6 +439,23 @@ export default {
             label: {
               backgroundColor: '#6a7985'
             }
+          },
+          formatter: function(params) {
+            var str = ''
+            str += '<div>' + params[0].name + '</div>'
+            for (var i = 0; i < params.length; i++) {
+              str +=
+                '<div><span style="color:' +
+                params[i].color +
+                '">' +
+                params[i].seriesName +
+                '</span> : <span>' +
+                (params[i].data
+                  ? Math.round(params[i].data * 10000) / 100 + '%'
+                  : '暂无') +
+                '</span></div>'
+            }
+            return str
           }
         },
         legend: {

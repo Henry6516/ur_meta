@@ -204,6 +204,11 @@
            :options="options"
            v-loading="listLoading"
            ref="myechart"></Chart>
+    <sku-chart v-if="count"
+               style="max-height:800px;overflow:auto"
+               :options="options"
+               v-loading="listLoading"
+               ref="skuchart"></sku-chart>
   </div>
 </template>
 
@@ -215,20 +220,24 @@ import {
   getMember,
   getAccount,
   getSalestrend,
-  APIOrderCount
+  APIOrderCount,
+  APISkuCount
 } from '../../api/profit'
 import { getMonthDate } from '../../api/tools'
 import { getMenu } from '../../api/login'
 import Chart from '../../component/order/Orderchart'
+import SkuChart from '../../component/sku/Skuchart'
 
 export default {
   components: {
-    Chart
+    Chart,
+    SkuChart
   },
   data() {
     return {
       sale: true,
       order: false,
+      count: false,
       allMenu: [],
       activeName: '销售额走势',
       allMember: [],
@@ -340,9 +349,15 @@ export default {
       if (tab.label === '销售额走势') {
         this.sale = true
         this.order = false
-      } else {
+        this.count = false
+      } else if (tab.label === '订单量走势') {
         this.sale = false
         this.order = true
+        this.count = false
+      } else {
+        this.sale = false
+        this.order = false
+        this.count = true
       }
     },
     selectAll(name) {
@@ -478,6 +493,7 @@ export default {
           } else if (this.condition.member.lenght !== 0) {
             myform.member = this.condition.member
           }
+          debugger
           if (this.activeName === '销售额走势') {
             getSalestrend(myform).then(response => {
               this.listLoading = false
@@ -516,7 +532,7 @@ export default {
             })
             this.options.title.text = '销售额走势($)'
             this.options.yAxis[0].axisLabel.formatter = '{value} $'
-          } else {
+          } else if (this.activeName === '订单量走势') {
             APIOrderCount(myform).then(response => {
               this.listLoading = false
               const ret = response.data.data
@@ -554,9 +570,45 @@ export default {
             })
             this.options.title.text = '订单量走势(单)'
             this.options.yAxis[0].axisLabel.formatter = '{value} 单'
+          } else {
+            APISkuCount(myform).then(response => {
+              this.listLoading = false
+              const ret = response.data.data
+              const lineName = []
+              const series = []
+              ret.forEach(element => {
+                if (lineName.indexOf(element.title) < 0) {
+                  lineName.push(element.title)
+                }
+              })
+              const date = []
+              lineName.forEach(name => {
+                const sery = {
+                  type: 'bar',
+                  stack: '总量',
+                  areaStyle: { normal: {} }
+                }
+                const amt = []
+                ret.map(element => {
+                  if (element.title === name) {
+                    amt.push(Number(element.totalamt))
+                    if (date.indexOf(element.ordertime) < 0) {
+                      date.push(element.ordertime)
+                    }
+                  }
+                })
+                sery['data'] = amt
+                sery['name'] = name
+                series.push(sery)
+              })
+              this.options.legend.data = lineName
+              this.options.xAxis[0].data = date
+              this.options.series = series
+              this.$refs.skuchart.drawAreaStack(this.options)
+            })
+            this.options.title.text = '销售数量走势(个)'
+            this.options.yAxis[0].axisLabel.formatter = '{value} 个'
           }
-        } else {
-          return false
         }
       })
     }
