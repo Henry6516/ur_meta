@@ -158,7 +158,8 @@
       </el-form-item>
     </el-form>
     <div class="tab"
-         v-loading="listLoading">
+         v-loading="listLoading"
+         element-loading-text="正在加载中...">
       <el-row>
         <el-col :span="12">
           <div ref="orderpie"

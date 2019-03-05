@@ -109,6 +109,7 @@
     </el-row>
     <el-table :data="tableData"
               v-loading="listLoading"
+              element-loading-text="正在加载中..."
               @sort-change="sortNumber"
               max-height="770"
               style="width:100%">

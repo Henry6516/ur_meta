@@ -31,7 +31,8 @@
         </el-form-item>
       </el-form>
       <el-table :data="this.tableData"
-                v-loading="loading">
+                v-loading="loading"
+                element-loading-text="正在加载中...">
         <el-table-column label="订单编号"
                          prop="tradeNid"></el-table-column>
         <el-table-column label="交易时间"

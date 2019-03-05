@@ -198,16 +198,19 @@
                style="max-height:800px;overflow:auto"
                :options="options"
                v-loading="listLoading"
+               element-loading-text="正在加载中..."
                ref="myecharts"></Myecharts>
     <Chart v-if="order"
            style="max-height:800px;overflow:auto"
            :options="options"
            v-loading="listLoading"
+           element-loading-text="正在加载中..."
            ref="myechart"></Chart>
     <sku-chart v-if="count"
                style="max-height:800px;overflow:auto"
                :options="options"
                v-loading="listLoading"
+               element-loading-text="正在加载中..."
                ref="skuchart"></sku-chart>
   </div>
 </template>
@@ -278,7 +281,6 @@ export default {
         xAxis: [
           {
             type: 'category',
-            boundaryGap: false,
             data: [String]
           }
         ],
@@ -493,7 +495,6 @@ export default {
           } else if (this.condition.member.lenght !== 0) {
             myform.member = this.condition.member
           }
-          debugger
           if (this.activeName === '销售额走势') {
             getSalestrend(myform).then(response => {
               this.listLoading = false

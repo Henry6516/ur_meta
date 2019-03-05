@@ -142,7 +142,8 @@
     </el-form>
     <el-table :data="tableData"
               @sort-change="sortNumber"
-              v-loading="listLoading">
+              v-loading="listLoading"
+              element-loading-text="正在加载中...">
       <el-table-column label="平台"
                        prop="platform"></el-table-column>
       <el-table-column label="销售员"

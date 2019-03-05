@@ -51,10 +51,11 @@
                    @click='exportExcel'>导出Excel</el-button>
       </el-col>
     </el-row>
-    <div v-loading="listLoading">
+    <div v-loading="listLoading"
+         element-loading-text="正在加载中...">
       <el-table id="sale-table"
                 :header-row-style="rowheader"
-                max-height="800"
+                max-height="795"
                 :data="tableData"
                 @sort-change="sortNumber"
                 show-summary

@@ -1,65 +1,178 @@
 <template>
   <!-- <div>采购毛利润报表</div>     -->
   <div class="toolbar">
-    <div class="demo-block demo-box demo-zh-CN demo-transition" @mouseover="changeActive" @mouseout="removeActive">
+    <div class="demo-block demo-box demo-zh-CN demo-transition"
+         @mouseover="changeActive"
+         @mouseout="removeActive">
       <transition name="el-fade-in-linear">
-        <el-form :model="condition" :inline="true" ref="condition" label-width="6.8rem" class="demo-form-inline" v-show="show">
-          <el-form-item label="采购员" class="input">
-            <el-select size="small" v-model="condition.member" multiple collapse-tags placeholder="采购员">
-              <el-button plain type="info" @click="selectallm">全选</el-button>
-              <el-button plain type="info" @click="noselectm">取消</el-button>
-              <el-option v-for="(item,index) in member" :index="item[index]" :key="item.username" :label="item.username" :value="item.username"></el-option>
+        <el-form :model="condition"
+                 :inline="true"
+                 ref="condition"
+                 label-width="6.8rem"
+                 class="demo-form-inline"
+                 v-show="show">
+          <el-form-item label="采购员"
+                        class="input">
+            <el-select size="small"
+                       v-model="condition.member"
+                       multiple
+                       collapse-tags
+                       placeholder="采购员">
+              <el-button plain
+                         type="info"
+                         @click="selectallm">全选</el-button>
+              <el-button plain
+                         type="info"
+                         @click="noselectm">取消</el-button>
+              <el-option v-for="(item,index) in member"
+                         :index="item[index]"
+                         :key="item.username"
+                         :label="item.username"
+                         :value="item.username"></el-option>
             </el-select>
           </el-form-item>
 
-          <el-form-item label="时间类型" class="input" prop="dateType">
+          <el-form-item label="时间类型"
+                        class="input"
+                        prop="dateType">
             <el-radio-group v-model="condition.dateType">
-              <el-radio border v-for="(item,index) in dateType" :index="index" :key="item.id" :label="item.id" :value="item.id">{{item.type}}
+              <el-radio border
+                        v-for="(item,index) in dateType"
+                        :index="index"
+                        :key="item.id"
+                        :label="item.id"
+                        :value="item.id">{{item.type}}
               </el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="日期" class="input" prop="dateRange" :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker size="small" v-model="condition.dateRange" value-format="yyyy-MM-dd" type="daterange" align="right" unlink-panels start-placeholder="开始日期" range-separator="至" end-placeholder="结束日期" :picker-options="pickerOptions2">
+          <el-form-item label="日期"
+                        class="input"
+                        prop="dateRange"
+                        :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
+            <el-date-picker size="small"
+                            v-model="condition.dateRange"
+                            value-format="yyyy-MM-dd"
+                            type="daterange"
+                            align="right"
+                            unlink-panels
+                            start-placeholder="开始日期"
+                            range-separator="至"
+                            end-placeholder="结束日期"
+                            :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
 
           <el-form-item>
-            <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
+            <el-button size="small"
+                       type="primary"
+                       @click="onSubmit(condition)">查询</el-button>
           </el-form-item>
         </el-form>
       </transition>
-      <div class="demo-block-control" @click="handleChange" style="left:0rem;">
+      <div class="demo-block-control"
+           @click="handleChange"
+           style="left:0rem;">
         <transition>
-          <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}" class="transition-i">
+          <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}"
+             class="transition-i">
           </i>
         </transition>
         <transition>
-          <span v-show="show1" class="transition-span">{{text}}</span>
+          <span v-show="show1"
+                class="transition-span">{{text}}</span>
         </transition>
       </div>
     </div>
     <el-row>
-      <el-col :span="2" :offset="19">
-        <el-input clearable placeholder="search" v-model="searchValue" @change="handleSearch"></el-input>
+      <el-col :span="2"
+              :offset="19">
+        <el-input clearable
+                  placeholder="search"
+                  v-model="searchValue"
+                  @change="handleSearch"></el-input>
       </el-col>
       <el-col :span="2">
-        <el-button style="float:left;" type="default" @click="exportExcel">导出Excel</el-button>
+        <el-button style="float:left;"
+                   type="default"
+                   @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" id="sale-table" v-loading="listLoading" @sort-change="sortNumber" show-summary :summary-method="getSummaries" v-show="show2" :height="tableHeight" :max-height="tableHeight" style="width: 100%">
-      <el-table-column min-width="90" prop="purchaser" label="采购员" :formatter="empty" sortable></el-table-column>
-      <el-table-column min-width="100" prop="salemoneyrmbus" label="成交价$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="100" prop="salemoneyrmbzn" label="成交价￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="130" prop="ppebayus" label="交易费汇总$" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="130" prop="ppebayzn" label="交易费汇总￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115" prop="costmoneyrmb" label="商品成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115" prop="expressfarermb" label="运费成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115" prop="inpackagefeermb" label="包装成本￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="115" prop="devofflinefee" label="死库处理￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120" prop="devopefee" label="运营杂费￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="90" prop="netprofit" label="毛利￥" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="100" prop="netrate" label="毛利率%" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column min-width="120" prop="totalamount" label="采购差额￥" :formatter="empty" sortable="custom"></el-table-column>
+    <el-table :data="tableData"
+              id="sale-table"
+              v-loading="listLoading"
+              element-loading-text="正在加载中..."
+              @sort-change="sortNumber"
+              show-summary
+              :summary-method="getSummaries"
+              v-show="show2"
+              :height="tableHeight"
+              :max-height="tableHeight"
+              style="width: 100%">
+      <el-table-column min-width="90"
+                       prop="purchaser"
+                       label="采购员"
+                       :formatter="empty"
+                       sortable></el-table-column>
+      <el-table-column min-width="100"
+                       prop="salemoneyrmbus"
+                       label="成交价$"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column min-width="100"
+                       prop="salemoneyrmbzn"
+                       label="成交价￥"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column min-width="130"
+                       prop="ppebayus"
+                       label="交易费汇总$"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column min-width="130"
+                       prop="ppebayzn"
+                       label="交易费汇总￥"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column min-width="115"
+                       prop="costmoneyrmb"
+                       label="商品成本￥"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column min-width="115"
+                       prop="expressfarermb"
+                       label="运费成本￥"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column min-width="115"
+                       prop="inpackagefeermb"
+                       label="包装成本￥"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column min-width="115"
+                       prop="devofflinefee"
+                       label="死库处理￥"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column min-width="120"
+                       prop="devopefee"
+                       label="运营杂费￥"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column min-width="90"
+                       prop="netprofit"
+                       label="毛利￥"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column min-width="100"
+                       prop="netrate"
+                       label="毛利率%"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column min-width="120"
+                       prop="totalamount"
+                       label="采购差额￥"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -253,7 +366,9 @@ export default {
     // 导出
     exportExcel() {
       /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'), { raw: true })
+      var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'), {
+        raw: true
+      })
       var lastRow = wb.Sheets.Sheet1['!ref'].match(/\d+$/)[0]
       for (var ele in wb.Sheets.Sheet1) {
         var rowNumber = ele.replace(/[^0-9]+/g, '')
@@ -292,7 +407,9 @@ export default {
     getMember().then(response => {
       const res = response.data.data
       this.member = res.filter(ele => ele.position === '采购')
-      this.res = res.filter(ele => ele.position === '主管' && ele.department === '采购部')
+      this.res = res.filter(
+        ele => ele.position === '主管' && ele.department === '采购部'
+      )
     })
   }
 }

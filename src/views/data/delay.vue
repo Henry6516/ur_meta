@@ -154,16 +154,20 @@
         <el-tabs v-model="activeName"
                  type="card"
                  @tab-click="handleClick">
-          <el-tab-pane label="缺货率占比饼状图"
+          <el-tab-pane label="缺货天数统计"
                        name="first">
-            <div ref="delaypie"
+            <div :span="24"
+                 ref="delaypie"
                  v-loading="listLoading"
-                 :style="{width: '100%', height: '400px'}">
+                 element-loading-text="正在加载中..."
+                 :style="{width: '100%', height: '500px'}">
             </div>
           </el-tab-pane>
-          <el-tab-pane label="缺货率占比表格"
+          <el-tab-pane label="缺货产品详情"
                        name="second">
             <el-table :data="tableData"
+                      v-loading="listLoading"
+                      element-loading-text="正在加载中..."
                       style="width: 100%"
                       height="750">
               <el-table-column label="sku"
@@ -191,7 +195,7 @@ import {
   getAccount
 } from '../../api/profit'
 import { getMonthDate } from '../../api/tools'
-import { APIDelay } from '../../api/data'
+import { APIDelay, APIDelayDetail } from '../../api/data'
 export default {
   data() {
     return {
@@ -215,35 +219,62 @@ export default {
       },
       options: {
         title: {
-          text: '延迟饼状图',
-          subtext: '延迟天数占比',
-          x: 'center'
+          text: '缺货柱状图'
         },
         tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)'
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          },
+          formatter: function(params) {
+            var str = ''
+            // str += '<div>' + params[0].name + '</div>'
+            for (var i = 0; i < params.length; i++) {
+              str +=
+                '<div><span>' +
+                params[i].name +
+                '</span> : <span>' +
+                (params[i].data
+                  ? Math.round(params[i].data * 10000) / 100 + '%'
+                  : '暂无') +
+                '</span></div>'
+            }
+            return str
+          }
         },
-        legend: {
-          orient: 'vertical',
-          left: 'left',
-          data: [String]
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
         },
-        series: [
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
           {
-            name: 'delaypie',
-            type: 'pie',
-            radius: '55%',
-            center: ['50%', '60%'],
-            data: [Object],
-            itemStyle: {
-              emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
+            type: 'category',
+            data: [String]
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            axisLabel: {
+              formatter: '{value}'
             }
           }
-        ]
+        ],
+        series: [Object]
       },
       pickerOptions2: {
         shortcuts: [
@@ -274,8 +305,11 @@ export default {
   },
   methods: {
     empty(row, column, cellValue, index) {
-      if (cellValue == null || cellValue == '') return ''
-      return Math.round(cellValue * 10000) / 100 + '%'
+      if (cellValue == null || cellValue == '') {
+        return ''
+      } else {
+        return Math.round(cellValue * 10000) / 100 + '%'
+      }
     },
     handleClick(tab, event) {
       this.activeName = tab.name
@@ -284,15 +318,28 @@ export default {
       this.$refs.condition.validate(valid => {
         if (valid) {
           this.listLoading = true
-          APIDelay(this.condition).then(res => {
-            this.listLoading = false
-            const data = res.data.data
-            this.options.legend.data = data.pieData.map(e => e.name)
-            this.options.series[0].data = data.pieData
-            let delayPie = this.$echarts.init(this.$refs.delaypie)
-            delayPie.setOption(this.options)
-            this.tableData = data.tableData
-          })
+          if (this.activeName === 'first') {
+            APIDelay(this.condition).then(res => {
+              this.listLoading = false
+              const data = res.data.data
+              const lineName = []
+              const series = []
+              this.options.xAxis[0].data = data.map(e => e.name)
+              const sery = {
+                type: 'bar'
+              }
+              sery['data'] = data.map(e => e.value)
+              series.push(sery)
+              this.options.series = series
+              let delayPie = this.$echarts.init(this.$refs.delaypie)
+              delayPie.setOption(this.options)
+            })
+          } else {
+            APIDelayDetail(this.condition).then(res => {
+              this.listLoading = false
+              this.tableData = res.data.data
+            })
+          }
         }
       })
     },

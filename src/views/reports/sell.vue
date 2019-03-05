@@ -211,6 +211,7 @@
     <el-table :data="tableData"
               id="sale-table"
               v-loading="listLoading"
+              element-loading-text="正在加载中..."
               @sort-change="sortNumber"
               show-summary
               :summary-method="getSummaries"

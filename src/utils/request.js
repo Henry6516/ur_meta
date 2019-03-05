@@ -13,21 +13,24 @@ const service = axios.create({
 })
 
 // request interceptor
-service.interceptors.request.use(config => {
-  // console.log(1)
-  // console.log(store.getters.access_token)
-  // Do something before request is sent
-  if (store.getters.token) {
-    // config.headers['Vue-Token'] = getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-    config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-    config.headers['withCredentials'] = true
+service.interceptors.request.use(
+  config => {
+    // console.log(1)
+    // console.log(store.getters.access_token)
+    // Do something before request is sent
+    if (store.getters.token) {
+      // config.headers['Vue-Token'] = getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
+      config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
+      config.headers['withCredentials'] = true
+    }
+    return config
+  },
+  error => {
+    // Do something with request error
+    console.log(error) // for debug
+    Promise.reject(error)
   }
-  return config
-}, error => {
-  // Do something with request error
-  console.log(error) // for debug
-  Promise.reject(error)
-})
+)
 // respone interceptor
 service.interceptors.response.use(
   response => {
@@ -60,5 +63,6 @@ service.interceptors.response.use(
       // })
       return Promise.reject(error)
     }
-  })
+  }
+)
 export default service

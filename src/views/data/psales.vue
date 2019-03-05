@@ -65,6 +65,7 @@
     </el-row>
     <div>
       <el-table v-loading="listLoading"
+                element-loading-text="正在加载中..."
                 max-height="760"
                 :data="this.tableData"
                 @sort-change=" sortNumber"

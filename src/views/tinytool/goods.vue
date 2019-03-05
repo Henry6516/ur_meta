@@ -24,7 +24,7 @@
                      :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='关键字'
+      <el-form-item label='商品关键字'
                     class='input'>
         <el-input size="small"
                   v-model='condition.goodsName'
@@ -56,7 +56,7 @@
                      :label="item.CategoryName"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='关键字'
+      <el-form-item label='供应商关键字'
                     class='input'>
         <el-input size="small"
                   v-model='condition.supplierName'

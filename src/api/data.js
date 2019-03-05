@@ -30,3 +30,11 @@ export function APIDelay(param) {
     data
   })
 }
+export function APIDelayDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/delay-detail',
+    method: 'post',
+    data
+  })
+}
