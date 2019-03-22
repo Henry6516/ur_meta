@@ -256,7 +256,7 @@ export default {
       },
       opt: {
         title: {
-          text: '产品单价分布',
+          text: 'SKU单价分布',
           subtext: '',
           x: 'center'
         },
@@ -271,7 +271,7 @@ export default {
         },
         series: [
           {
-            name: '产品单价分布',
+            name: 'SKU单价分布',
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
@@ -449,7 +449,7 @@ export default {
       },
       slineRate: {
         title: {
-          text: '产品单价占比走势'
+          text: 'SKU单价占比走势'
         },
         tooltip: {
           trigger: 'axis',
@@ -614,7 +614,7 @@ export default {
       flag: [{ id: 0, type: '按天' }, { id: 2, type: '按月' }],
       dateRange: [],
       condition: {
-        dateType: 1,
+        dateType: 0,
         dateRange: [],
         member: [],
         flag: 0,

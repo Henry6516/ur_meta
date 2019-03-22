@@ -219,7 +219,7 @@ export default {
       secDepartment: [],
       condition: {
         dateRange: [],
-        dateType: 1,
+        dateType: 0,
         member: [],
         plat: [],
         account: [],

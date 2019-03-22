@@ -117,6 +117,7 @@
             <el-select size="small"
                        v-model="editForm.storeName"
                        style="width:390px"
+                       filterable clearable
                        @change="repertoryIndex($event)">
               <el-option v-for="(item, key) in repertory" :key='item.key' :label="item" :value="item"></el-option>
             </el-select>
@@ -131,6 +132,88 @@
               <el-option v-for="(item, key) in seasonn" :key='item.key' :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-col :span="7">
+            <el-form-item label="禁售平台">
+              <el-select size="small"
+                         style="width:350px"
+                         multiple
+                         filterable
+                         allow-create
+                         default-first-option
+                         v-model="editForm.dictionaryName"
+                         @change="forbidSale($event)">
+                <el-button plain
+                           type="info"
+                           @click="selectalld">全选</el-button>
+                <el-button plain
+                           type="info"
+                           @click="noselectd">取消</el-button>
+                <el-option v-for="(item, key) in violation" :key='item.key' :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="7">
+            <el-form-item label="对应销售">
+              <el-select size="small"
+                         style="width:350px"
+                         multiple
+                         filterable
+                         allow-create
+                         default-first-option
+                         v-model="editForm.mapPersons"
+                         @change="forbidSale1($event)">
+                <el-button plain
+                           type="info"
+                           @click="selectalld1">全选</el-button>
+                <el-button plain
+                           type="info"
+                           @click="noselectd1">取消</el-button>
+                <el-option v-for="(item, key) in mainSsale" :key='item.key' :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <!--<el-col :span="6">-->
+          <!--<el-form-item label="对应销售">-->
+          <!--<el-select size="small"-->
+          <!--style="width:250px"-->
+          <!--multiple-->
+          <!--filterable-->
+          <!--allow-create-->
+          <!--default-first-option-->
+          <!--v-model="editForm.mapPersons"-->
+          <!--@change="forbidSale($event)">-->
+          <!--<el-button plain-->
+          <!--type="info"-->
+          <!--@click="selectalld1">全选</el-button>-->
+          <!--<el-button plain-->
+          <!--type="info"-->
+          <!--@click="noselectd1">取消</el-button>-->
+          <!--<el-option v-for="(item, key) in sale" :key='item.key' :label="item" :value="item"></el-option>-->
+          <!--</el-select>-->
+          <!--</el-form-item>-->
+          <!--</el-col>-->
+          <el-col :span="5">
+            <el-form-item label="主类目">
+              <el-select size="small"
+                         style="width:200px"
+                         v-model="oaGoods.cate"
+                         @change="mainIndex($event)">
+                <el-option v-for="(item, key) in mainCategory" :key='item.key' :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="5">
+            <el-form-item label="子类目">
+              <el-select size="small"
+                         style="width:200px"
+                         v-model="oaGoods.subCate"
+                         @change="childrenIndex($event)">
+                <el-option v-for="(item, key) in childrenCategory" :key='item.key' :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
         </el-col>
         <el-col :span="24">
           <el-form-item label="">
@@ -258,70 +341,6 @@
              label-width="100px"
              ref="oaGoods">
       <el-row>
-        <el-col :span="24">
-          <el-col :span="6">
-            <el-form-item label="禁售平台">
-              <!--<el-select size="small"-->
-              <!--style="width:250px"-->
-              <!--multiple-->
-              <!--filterable-->
-              <!--allow-create-->
-              <!--default-first-option-->
-              <!--v-model="editForm.dictionaryName">-->
-              <!--<el-option label="否"-->
-              <!--value="0"></el-option>-->
-              <!--<el-option label="是"-->
-              <!--value="1"></el-option>-->
-              <div style="width: 300px;overflow: hidden;border: #eee solid 1px;position: relative;height: 50px;overflow-y: auto;cursor: pointer" @click="addzk()">
-                <p class="fp" style="padding: 0 3px;background: #eee;margin: 5px;line-height: 28px" v-for="(item,index) in editForm.dictionaryName" :key="item">{{item}}<i class="el-icon-close" @click.stop="delljs(index)" style="cursor:pointer;"></i></p>
-                <i class="el-icon-arrow-down" style="float: right;margin-top: 10px;margin-right: 10px;cursor:pointer;"></i>
-              </div>
-              <div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: absolute;left: 0;top: 40px; z-index: 999;background: #fff;height: 300px;overflow-y: auto" v-show="jspt">
-                <p class="hovp" style="line-height: 35px;padding-left: 10px;cursor: pointer;border-bottom: #eee solid 1px;margin: 0" v-for="(item,index) in violation" :kyy="item" @click="pushVin(item)">{{item}}</p>
-              </div>
-              <!--</el-select>-->
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="主类目">
-              <el-select size="small"
-                         style="width:250px"
-                         v-model="oaGoods.cate"
-                         @change="mainIndex($event)">
-                <el-option v-for="(item, key) in mainCategory" :key='item.key' :label="item" :value="item"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="子类目">
-              <el-select size="small"
-                         style="width:250px"
-                         v-model="oaGoods.subCate"
-                         @change="childrenIndex($event)">
-                <el-option v-for="(item, key) in childrenCategory" :key='item.key' :label="item" :value="item"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="对应销售">
-              <!--<el-select size="small"-->
-                         <!--style="width:250px"-->
-                         <!--v-model="editForm.mapPersons">-->
-                <!--&lt;!&ndash;<el-option label="否"&ndash;&gt;-->
-                <!--&lt;!&ndash;value="0"></el-option>&ndash;&gt;-->
-                <!--&lt;!&ndash;<el-option label="是"&ndash;&gt;-->
-                <!--&lt;!&ndash;value="1"></el-option>&ndash;&gt;-->
-              <!--</el-select>-->
-              <div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: relative;height: 50px;overflow-y: auto;cursor: pointer" @click="addxs()">
-                <p class="fp" style="padding: 0 3px;background: #eee;margin: 5px;line-height: 28px" v-for="(item,index) in editForm.mapPersons" :key="item">{{item}}<i class="el-icon-close" @click.stop="dellxs(index)" style="cursor:pointer;"></i></p>
-                <i class="el-icon-arrow-down" style="float: right;margin-top: 10px;margin-right: 10px;cursor:pointer;"></i>
-              </div>
-              <div style="width: 290px;overflow: hidden;border: #eee solid 1px;position: absolute;left: 0;top: 40px; z-index: 999;background: #fff" v-show="dyxs">
-                <p class="hovp" style="line-height: 35px;padding-left: 10px;cursor: pointer;border-bottom: #eee solid 1px;margin: 0" v-for="(item,index) in sale" :kyy="item" @click="pushSale(item)">{{item}}</p>
-              </div>
-            </el-form-item>
-          </el-col>
-        </el-col>
         <el-col :span="8">
           <el-form-item label="供应商链接1">
             <el-input size="small"
@@ -585,7 +604,7 @@ export default {
       repertory:[],
       seasonn:[],
       violation:[],
-      sale:[],
+      mainSsale:[],
       mainCategory:[],
       childrenCategory:[],
       screen:[],
@@ -625,178 +644,114 @@ export default {
       randomData:["","","","","","","","","",""],
       editForm: {},
       oaGoods: {},
-      saveInfo: {
-        basicInfo: {
-          goodsInfo: {
-            id: 5,
-            IsLiquid: '是',
-            IsPowder: '否',
-            isMagnetism: '否',
-            IsCharged: '否',
-            description: null,
-            GoodsName: 'test-01-01-plat',
-            AliasCnName: null,
-            AliasEnName: null,
-            PackName: null,
-            Season: null,
-            DictionaryName: null,
-            SupplierName: null,
-            StoreName: null,
-            Purchaser: null,
-            possessMan1: null,
-            possessMan2: null,
-            DeclaredValue: null,
-            picUrl: null,
-            goodsid: 24,
-            GoodsCode: null,
-            achieveStatus: null,
-            devDatetime: null,
-            developer: null,
-            updateTime: null,
-            picStatus: null,
-            SupplierID: null,
-            StoreID: null,
-            AttributeName: null,
-            bgoodsid: null,
-            completeStatus: null,
-            isVar: '否',
-            headKeywords: null,
-            requiredKeywords: null,
-            randomKeywords: null,
-            tailKeywords: null,
-            wishtags: null,
-            stockUp: '否',
-            picCompleteTime: null,
-            goodsstatus: null,
-            stockdays: null,
-            wishpublish: null,
-            number: null,
-            mid: null,
-            extendStatus: null,
-            mapPersons: null,
-            filterType: 3
-          },
-          oaGoods: {
-            nid: 24,
-            vendor1: '',
-            vendor2: null,
-            vendor3: null,
-            origin1: '',
-            origin2: null,
-            origin3: null
-          }
-        },
-        skuInfo: [
-          {
-            id: 1,
-            infoId: 5,
-            sku: 'jing-a',
-            property1: null,
-            property2: null,
-            property3: null,
-            Weight: null,
-            memo1: null,
-            memo2: null,
-            memo3: null,
-            memo4: null,
-            linkurl: null,
-            goodsskuid: null,
-            RetailPrice: null,
-            CostPrice: null,
-            stockNum: null,
-            did: null,
-            joomPrice: null,
-            joomShipping: null
-          },
-          {
-            id: 2,
-            infoId: 5,
-            sku: 'jingjing-a',
-            property1: null,
-            property2: null,
-            property3: null,
-            Weight: null,
-            memo1: null,
-            memo2: null,
-            memo3: null,
-            memo4: null,
-            linkurl: null,
-            goodsskuid: null,
-            RetailPrice: null,
-            CostPrice: null,
-            stockNum: null,
-            did: null,
-            joomPrice: null,
-            joomShipping: null
-          },
-          {
-            id: 3,
-            infoId: 5,
-            sku: 'jeany-a',
-            property1: null,
-            property2: null,
-            property3: null,
-            Weight: null,
-            memo1: null,
-            memo2: null,
-            memo3: null,
-            memo4: null,
-            linkurl: null,
-            goodsskuid: null,
-            RetailPrice: null,
-            CostPrice: null,
-            stockNum: null,
-            did: null,
-            joomPrice: null,
-            joomShipping: null
-          },
-          {
-            id: 4,
-            infoId: 5,
-            sku: 'jeany-test',
-            property1: null,
-            property2: null,
-            property3: null,
-            Weight: null,
-            memo1: null,
-            memo2: null,
-            memo3: null,
-            memo4: null,
-            linkurl: null,
-            goodsskuid: null,
-            RetailPrice: null,
-            CostPrice: null,
-            stockNum: null,
-            did: null,
-            joomPrice: null,
-            joomShipping: null
-          },
-          {
-            id: 5,
-            infoId: 5,
-            sku: 'jeany-test',
-            property1: null,
-            property2: null,
-            property3: null,
-            Weight: null,
-            memo1: null,
-            memo2: null,
-            memo3: null,
-            memo4: null,
-            linkurl: null,
-            goodsskuid: null,
-            RetailPrice: null,
-            CostPrice: null,
-            stockNum: null,
-            did: null,
-            joomPrice: null,
-            joomShipping: null
-          }
-        ]
-      }
+      dictionaryName1:"",
+      mapPersons1:""
+//      saveInfo: {
+//        basicInfo: {
+//          goodsInfo: {
+//            id: 5,
+//            IsLiquid: '是',
+//            IsPowder: '否',
+//            isMagnetism: '否',
+//            IsCharged: '否',
+//            description: null,
+//            GoodsName: 'test-01-01-plat',
+//            AliasCnName: null,
+//            AliasEnName: null,
+//            PackName: null,
+//            Season: null,
+//            DictionaryName: null,
+//            SupplierName: null,
+//            StoreName: null,
+//            Purchaser: null,
+//            possessMan1: null,
+//            possessMan2: null,
+//            DeclaredValue: null,
+//            picUrl: null,
+//            goodsid: 24,
+//            GoodsCode: null,
+//            achieveStatus: null,
+//            devDatetime: null,
+//            developer: null,
+//            updateTime: null,
+//            picStatus: null,
+//            SupplierID: null,
+//            StoreID: null,
+//            AttributeName: null,
+//            bgoodsid: null,
+//            completeStatus: null,
+//            isVar: '否',
+//            headKeywords: null,
+//            requiredKeywords: null,
+//            randomKeywords: null,
+//            tailKeywords: null,
+//            wishtags: null,
+//            stockUp: '否',
+//            picCompleteTime: null,
+//            goodsstatus: null,
+//            stockdays: null,
+//            wishpublish: null,
+//            number: null,
+//            mid: null,
+//            extendStatus: null,
+//            mapPersons: null,
+//            filterType: 3
+//          },
+//          oaGoods: {
+//            nid: 24,
+//            vendor1: '',
+//            vendor2: null,
+//            vendor3: null,
+//            origin1: '',
+//            origin2: null,
+//            origin3: null
+//          }
+//        },
+//        skuInfo: [
+//
+//        ]
+//      }
     }
   },
   methods: {
+    selectalld() {
+      var ard = []
+      for (const item in this.violation) {
+        ard.push(this.violation[item])
+      }
+      this.editForm.dictionaryName = ard
+      this.dictionaryName1=ard.join(',')
+      console.log(this.dictionaryName1)
+//      this.member = this.allMember
+    },
+    noselectd() {
+      this.editForm.dictionaryName = []
+      this.dictionaryName1=""
+//      this.member = this.allMember
+      console.log(this.editForm)
+    },
+    selectalld1() {
+      var ard1 = []
+      for (const item in this.mainSsale) {
+        ard1.push(this.mainSsale[item])
+      }
+      this.editForm.mapPersons = ard1
+      this.mapPersons1=ard1.join(',')
+      console.log(this.editForm.mapPersons)
+//      this.member = this.allMember
+    },
+    noselectd1() {
+      this.editForm.mapPersons = []
+      this.mapPersons1=""
+//      this.member = this.allMember
+      console.log(this.editForm)
+    },
+    forbidSale(e){
+      this.dictionaryName1=e.join(',')
+    },
+    forbidSale1(e){
+      this.mapPersons1=e.join(',')
+    },
     top(e){
       this.foremost=e.length
     },
@@ -811,6 +766,7 @@ export default {
           this.childrenCategory.push(key)
         }
       }
+      this.oaGoods.subCate=this.childrenCategory[0]
     },
     childrenIndex(item){
       this.oaGoods.subCate=item
@@ -936,7 +892,75 @@ export default {
       }
     },
     save() {
-      APISaveAttribute(this.saveInfo).then(res => {
+      const md=JSON.stringify(this.mandatoryData)
+      const mr=JSON.stringify(this.randomData)
+      let saveInfo={
+        basicInfo: {
+          goodsInfo: {
+            id: this.condition.id,
+            isLiquid: this.editForm.isLiquid,
+            isPowder: this.editForm.isPowder,
+            isMagnetism: this.editForm.isMagnetism,
+            isCharged: this.editForm.isCharged,
+            description: this.editForm.description,
+            goodsName: this.editForm.goodsName,
+            aliasCnName: this.editForm.aliasCnName,
+            aliasEnName: this.editForm.aliasEnName,
+            packName: this.editForm.packName,
+            season: this.editForm.season,
+            dictionaryName: this.dictionaryName1,
+            supplierName: this.editForm.supplierName,
+            storeName: this.editForm.storeName,
+            purchaser: this.editForm.purchaser,
+            possessMan1: this.editForm.possessMan1,
+            possessMan2: this.editForm.possessMan2,
+            declaredValue: this.editForm.declaredValue,
+            picUrl: this.editForm.picUrl,
+            goodsId: this.editForm.goodsId,
+            goodsCode: this.editForm.goodsCode,
+            achieveStatus: this.editForm.achieveStatus,
+            devDatetime: this.editForm.devDatetime,
+            developer: this.editForm.developer,
+            updateTime: this.editForm.updateTime,
+            picStatus: this.editForm.picStatus,
+            supplierID: this.editForm.supplierID,
+            storeID: this.editForm.storeID,
+            attributeName: this.editForm.attributeName,
+            bgoodsId: this.editForm.bgoodsId,
+            completeStatus: this.editForm.completeStatus,
+            isVar: this.editForm.isVar,
+            headKeywords: this.editForm.headKeywords,
+            requiredKeywords: md,
+            randomKeywords: mr,
+            tailKeywords: this.editForm.tailKeywords,
+            wishTags: this.editForm.wishTags,
+            stockUp: this.editForm.stockUp,
+            picCompleteTime: this.editForm.picCompleteTime,
+            goodsStatus: this.editForm.goodsStatus,
+            stockDays: this.editForm.stockDays,
+            wishPublish: this.editForm.wishPublish,
+            number: this.editForm.number,
+            mid: this.editForm.mid,
+            extendStatus: this.editForm.extendStatus,
+            mapPersons: this.mapPersons1,
+            filterType: this.editForm.filterType
+          },
+          oaGoods: {
+            nid: this.oaGoods.nid,
+            cate:this.oaGoods.cate,
+            subCate:this.oaGoods.subCate,
+            vendor1: this.oaGoods.vendor1,
+            vendor2: this.oaGoods.vendor2,
+            vendor3: this.oaGoods.vendor3,
+            origin1: this.oaGoods.origin1,
+            origin2: this.oaGoods.origin2,
+            origin3: this.oaGoods.origin3
+          }
+        },
+        skuInfo: this.tableData
+      }
+      console.log(saveInfo)
+      APISaveAttribute(saveInfo).then(res => {
         if (res.data.data[0] === 'success') {
           this.$message({
             message: '保存成功',
@@ -976,6 +1000,8 @@ export default {
         this.tableData = res.data.data.skuInfo
         this.editForm = res.data.data.basicInfo.goodsInfo
         this.oaGoods = res.data.data.basicInfo.oaGoods
+        this.dictionaryName1=this.editForm.dictionaryName
+        this.mapPersons1=this.editForm.mapPersons
         this.editForm.requiredKeywords=JSON.parse(this.editForm.requiredKeywords)
         this.editForm.randomKeywords=JSON.parse(this.editForm.randomKeywords)
         this.editForm.mapPersons=this.editForm.mapPersons.split(",")
@@ -1032,15 +1058,23 @@ export default {
     })
     getAttributeInfoPlat().then(response => {
       this.violation =  response.data.data
+      console.log(this.violation)
     })
     getAttributeInfoSalesman().then(response => {
-      this.sale =  response.data.data
+      this.mainSsale =  response.data.data
+      console.log(this.mainSsale)
     })
     getAttributeInfoCat().then(response => {
       this.mainCategory =  response.data.data
     })
     getAttributeInfoSubCat().then(response => {
       this.screen =  response.data.data
+      const sCate=this.oaGoods.cate
+      for(var key in this.screen) {
+        if(this.screen[key]==sCate){
+          this.childrenCategory.push(key)
+        }
+      }
     })
   }
 }
