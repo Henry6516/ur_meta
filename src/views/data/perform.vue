@@ -64,7 +64,8 @@
                     max-height="630"
                     :data="tableData1"
                     style="width: 100%;">
-            <el-table-column min-width="125"
+            <el-table-column fixed
+                             min-width="125"
                              prop="salername"
                              label="业绩归属人1"
                              :formatter="empty"
@@ -155,7 +156,8 @@
                     max-height="630"
                     :data="tableData2"
                     style="width: 100%;">
-            <el-table-column min-width="125"
+            <el-table-column fixed
+                             min-width="125"
                              prop="salername"
                              label="业绩归属人1"
                              :formatter="empty"
@@ -246,7 +248,8 @@
                     max-height="630"
                     :data="tableData3"
                     style="width: 100%;">
-            <el-table-column min-width="125"
+            <el-table-column fixed
+                             min-width="125"
                              prop="salername"
                              label="业绩归属人1"
                              :formatter="empty"

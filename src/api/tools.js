@@ -1,27 +1,33 @@
-export function compareUp(data, propertyName) { // 升序排序
-  if ((typeof Number(data[0][propertyName])) !== 'number') { // 属性值为非数字
+export function compareUp(data, propertyName) {
+  // 升序排序
+  if (typeof Number(data[0][propertyName]) !== 'number') {
+    // 属性值为非数字
     return function(object1, object2) {
       var value1 = object1[propertyName]
       var value2 = object2[propertyName]
       return value2.localeCompare(value1)
     }
   } else {
-    return function(object1, object2) { // 属性值为数字
+    return function(object1, object2) {
+      // 属性值为数字
       var value1 = object1[propertyName]
       var value2 = object2[propertyName]
       return value1 - value2
     }
   }
 }
-export function compareDown(data, propertyName) { // 降序排序
-  if ((typeof Number(data[0][propertyName])) !== 'number') { // 属性值为非数字
+export function compareDown(data, propertyName) {
+  // 降序排序
+  if (typeof Number(data[0][propertyName]) !== 'number') {
+    // 属性值为非数字
     return function(object1, object2) {
       var value1 = object1[propertyName]
       var value2 = object2[propertyName]
       return value2.localeCompare(value1)
     }
   } else {
-    return function(object1, object2) { // 属性值为数字
+    return function(object1, object2) {
+      // 属性值为数字
       var value1 = object1[propertyName]
       var value2 = object2[propertyName]
       return value2 - value1
@@ -45,12 +51,16 @@ export function getMonthDate(dateType) {
   const today = new Date()
   let y = today.getFullYear()
   let m = today.getMonth() + 1
+  let d = today.getDate()
   if (dateType === 'thisMonth') {
     if (m < 10) {
       m = '0' + m
     }
+    if (d < 10) {
+      d = '0' + d
+    }
     const start = [y, m, '01'].join('-')
-    const end = [y, m, today.getDate()].join('-')
+    const end = [y, m, d].join('-')
     return { start: start, end: end }
   }
   if (dateType === 'previousMonth') {
@@ -63,7 +73,7 @@ export function getMonthDate(dateType) {
       y = y - 1
     }
     const start = [y, m, '01'].join('-')
-    const endDate = (new Date(y, m, 0)).getDate()
+    const endDate = new Date(y, m, 0).getDate()
     const end = [y, m, endDate].join('-')
     return { start: start, end: end }
   }
@@ -93,4 +103,3 @@ export function getDateRangeType(minDate, maxDate) {
   }
   return 3
 }
-

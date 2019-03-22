@@ -373,6 +373,10 @@
                        label="店铺单号"
                        sortable
                        align="center"></el-table-column>
+      <el-table-column prop="mergeBillId"
+                       label="合并单号"
+                       sortable
+                       align="center"></el-table-column>
       <el-table-column prop="storeName"
                        label="仓库"
                        sortable
@@ -906,7 +910,6 @@ export default {
       this.show1 = false
     },
     myForm(form) {
-      debugger
       const myform = JSON.parse(JSON.stringify(form))
       if (myform.member.length !== 0) {
         if (isAdmin() === false) {
@@ -1121,13 +1124,13 @@ export default {
       row.salemoneyzn = Math.round(row.salemoneyzn * 100) / 100
       row.ebayfeeznebay = Math.round(row.ebayfeeznebay * 100) / 100
       row.ppFeezn = Math.round(row.ppFeezn * 100) / 100
-      row.refundrate = Math.round(row.refundrate * 100) / 100
       row.grossprofit = Math.round(row.grossprofit * 100) / 100
       row.refundZn = Math.round(row.refundZn * 100) / 100
       if (!isNaN(cellValue)) {
         return Number(cellValue)
+      } else {
+        return cellValue
       }
-      return cellValue
     },
     // 导出
     exportExcel() {
@@ -1190,6 +1193,7 @@ export default {
           '商品SKU',
           '订单编号',
           '店铺单号',
+          '合并单号',
           '仓库',
           '退款$',
           '退款￥',
@@ -1209,6 +1213,7 @@ export default {
           'goodsSku',
           'tradeId',
           'orderId',
+          'mergeBillId',
           'storeName',
           'refund',
           'refundZn',

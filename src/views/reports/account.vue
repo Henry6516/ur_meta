@@ -110,9 +110,9 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item v-model="condition.sku"
-                        label="商品编码">
+          <el-form-item label="商品编码">
             <el-input size="small"
+                      v-model="condition.sku"
                       style="width:18rem;"></el-input>
           </el-form-item>
           <el-form-item label='时间类型'

@@ -230,7 +230,8 @@
               :height="tableHeight"
               :max-height="tableHeight"
               style="width: 100%;">
-      <el-table-column v-if="this.checked1"
+      <el-table-column fixed
+                       v-if="this.checked1"
                        min-width="115"
                        prop="salernameZero"
                        label="业绩归属人"
@@ -477,7 +478,8 @@
               :height="tableHeight"
               :max-height="tableHeight"
               style="width: 100%;">
-      <el-table-column v-if="this.checked1"
+      <el-table-column fixed
+                       v-if="this.checked1"
                        min-width="115"
                        prop="salernameZero"
                        label="业绩归属人"

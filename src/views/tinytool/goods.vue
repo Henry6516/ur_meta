@@ -140,9 +140,9 @@
           <el-pagination background
                          @size-change="handleSizeChange"
                          @current-change="handleCurrentChange"
-                         :current-page="currentPage"
+                         :current-page="condition.page"
                          :page-sizes="[50, 100, 500,1000,this.total]"
-                         :page-size="pageSize"
+                         :page-size="condition.pageSize"
                          layout="total, sizes, prev, pager, next, jumper"
                          :total="total">
           </el-pagination>
@@ -164,8 +164,6 @@ export default {
     return {
       dateRange: [],
       category: [],
-      currentPage: 1,
-      pageSize: 50,
       total: null,
       disabled: true,
       listLoading: false,
@@ -192,8 +190,8 @@ export default {
         goodsSkuStatus: '',
         categoryParentName: '',
         categoryName: '',
-        start: 1,
-        limit: 50
+        page: 1,
+        pageSize: 50
       },
       pickerOptions2: {
         shortcuts: [
@@ -210,9 +208,12 @@ export default {
               const start = new Date()
               const sy = start.getFullYear()
               let sm = start.getMonth() + 1
-              const sd = start.getDate()
+              let sd = start.getDate()
               if (sm < 10) {
                 sm = '0' + sm
+              }
+              if (sd < 10) {
+                sd = '0' + sd
               }
               const sfirstday = sy + '-' + sm + '-' + sd
               picker.$emit('pick', [firstday, sfirstday])
@@ -250,67 +251,17 @@ export default {
       }
     }
   },
-  // beforeRouteLeave(to, from, next) {
-  //   if (from.name === '产品一览表') {
-  //     const condition = JSON.stringify(this.condition)
-  //     sessionStorage.setItem('condition', condition)
-  //   } else {
-  //     sessionStorage.removeItem('condition')
-  //   }
-  //   next()
-  // },
-  // created() {
-  //   const condition = sessionStorage.getItem('condition')
-  //   if (condition != null) {
-  //     this.condition = JSON.parse(condition)
-  //     this.listLoading = true
-  //     getGoodspicture(this.condition)
-  //       .then(response => {
-  //         this.listLoading = false
-  //         this.tableData = response.data.data.items
-  //         this.total = Number(response.data.data.totalCount)
-  //       })
-  //       .catch(error => {
-  //         console.log(error)
-  //       })
-  //   }
-  // },
   methods: {
     onSubmit() {
-      this.pageSize = 50
-      this.currentPage = 1
-      this.condition.start = 0
-      this.condition.limit = 50
-      this.listLoading = true
-      this.condition.beginDate = this.dateRange[0]
-      this.condition.endDate = this.dateRange[1]
-      getGoodspicture(this.condition).then(response => {
-        this.listLoading = false
-        this.tableData = response.data.data.items
-        this.total = Number(response.data.data.totalCount)
-      })
+      this.getData()
     },
     handleSizeChange(val) {
-      this.pageSize = val
-      this.currentPage = 1
-      this.condition.limit = this.pageSize * this.currentPage
-      this.listLoading = true
-      getGoodspicture(this.condition).then(response => {
-        this.listLoading = false
-        this.tableData = response.data.data.items
-        this.total = Number(response.data.data.totalCount)
-      })
+      this.condition.pageSize = val
+      this.getData()
     },
     handleCurrentChange(val) {
-      this.currentPage = val
-      this.condition.start = (this.currentPage - 1) * this.pageSize + 1
-      this.condition.limit = this.pageSize - 1
-      this.listLoading = true
-      getGoodspicture(this.condition).then(response => {
-        this.listLoading = false
-        this.tableData = response.data.data.items
-        this.total = Number(response.data.data.totalCount)
-      })
+      this.condition.page = val
+      this.getData()
     },
     productcategory() {
       if (this.condition.categoryParentName !== '') {
@@ -322,6 +273,18 @@ export default {
         this.condition.categoryName = ''
         this.disabled = true
       }
+    },
+    getData() {
+      this.listLoading = true
+      this.condition.beginDate = this.dateRange[0]
+      this.condition.endDate = this.dateRange[1]
+      getGoodspicture(this.condition).then(response => {
+        this.listLoading = false
+        this.tableData = response.data.data.items
+        this.total = response.data.data._meta.totalCount
+        this.condition.page = response.data.data._meta.currentPage
+        this.condition.pageSize = response.data.data._meta.perPage
+      })
     }
   },
   mounted() {

@@ -129,19 +129,19 @@
                        label="商品名称"
                        align="center"></el-table-column>
       <el-table-column prop="lastNum"
-                       label="上上周销量"
+                       label="日期1销量"
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="lastAmt"
-                       label="上上周销售额"
+                       label="日期1销售额"
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="num"
-                       label="上周销量"
+                       label="日期2销量"
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="amt"
-                       label="上周销售额"
+                       label="日期2销售额"
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="numDiff"
@@ -198,7 +198,7 @@ export default {
         goodsName: '',
         goodsCode: '',
         page: 1,
-        pageSize: 10,
+        pageSize: 20,
         sort: ''
       }
     }

@@ -299,7 +299,7 @@ export function getBrand(param) {
 export function getGoodspicture(param) {
   const data = { condition: param }
   return request({
-    url: '/tiny-tool/goods-picture',
+    url: '/tiny-tool/goods-picture?page=' + param.page,
     method: 'post',
     data
   })
@@ -435,3 +435,63 @@ export function APISkuCount(param) {
     data
   })
 }
+//获取属性信息包装规格
+export function getAttributeInfoPackName() {
+  return request({
+    url: 'oa-goodsinfo/attribute-info-pack-name',
+    method: 'get'
+  })
+}
+//获取属性信息特殊属性
+export function getAttributeInfoSpecialAttribute() {
+  return request({
+    url: 'oa-goodsinfo/attribute-info-special-attribute',
+    method: 'get'
+  })
+}
+//获取属性信息仓库
+export function getAttributeInfoStoreName() {
+  return request({
+    url: 'oa-goodsinfo/attribute-info-store-name',
+    method: 'get'
+  })
+}
+//获取属性信息季节
+export function getAttributeInfoSeason() {
+  return request({
+    url: 'oa-goodsinfo/attribute-info-season',
+    method: 'get'
+  })
+}
+//获取属性信息禁售平台
+export function getAttributeInfoPlat() {
+  return request({
+    url: 'oa-goodsinfo/attribute-info-plat',
+    method: 'get'
+  })
+}
+//获取属性信息对应销售
+export function getAttributeInfoSalesman() {
+  return request({
+    url: 'oa-goodsinfo/attribute-info-salesman',
+    method: 'get'
+  })
+}
+//获取属性信息主类目
+export function getAttributeInfoCat() {
+  return request({
+    url: 'oa-goodsinfo/attribute-info-cat',
+    method: 'get'
+  })
+}
+//获取属性信息子类目
+export function getAttributeInfoSubCat() {
+  return request({
+    url: 'oa-goodsinfo/attribute-info-sub-cat',
+    method: 'get'
+  })
+}
+
+
+
+

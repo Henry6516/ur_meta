@@ -46,6 +46,12 @@ import news from '../views/feedback/news.vue'
 // 产品中心
 import productRecommend from '../views/productDevelop/productRecommend.vue'
 import productApprove from '../views/productDevelop/productApprove.vue'
+import goodsInfo from '../views/productDevelop/goodsInfo.vue'
+import edit from '../views/productDevelop/edit.vue'
+import picEdit from '../views/productDevelop/picEdit.vue'
+import platEdit from '../views/productDevelop/platEdit.vue'
+import supplierManagement from '../views/productDevelop/supplierManagement.vue'
+import supplierProduct from '../views/productDevelop/supplierProduct.vue'
 
 const routes = [
   {
@@ -303,6 +309,36 @@ const routes = [
         path: '/v1/check/check-list',
         component: productApprove,
         name: '产品审批'
+      },
+      {
+        path: '/v1/oa-goodsinfo/index',
+        component: goodsInfo,
+        name: '属性信息'
+      },
+      {
+        path: '/v1/supplier/supplier-list',
+        component: supplierManagement,
+        name: '供应商管理'
+      },
+      {
+        path: '/v1/supplier/supplier-goods-list',
+        component: supplierProduct,
+        name: '供应商产品管理'
+      },
+      {
+        path: '/:id',
+        component: edit,
+        name: 'tables'
+      },
+      {
+        path: '/table/:id',
+        component: picEdit,
+        name: 'pictureTable'
+      },
+      {
+        path: '/plat/:id',
+        component: platEdit,
+        name: 'platTable'
       }
     ]
   },

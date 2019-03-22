@@ -137,7 +137,7 @@
       <el-form-item style="margin-left:60px">
         <el-button size="small"
                    type="primary"
-                   @click="onSubmit">查询</el-button>
+                   @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="tableData"
@@ -206,6 +206,7 @@ import {
 } from '../../api/profit'
 import { APIWeightDiff, APIUpdateWeight } from '../../api/data'
 import { getMonthDate } from '../../api/tools'
+import { isAdmin } from '../../api/api'
 export default {
   data() {
     return {
@@ -291,15 +292,84 @@ export default {
     // 分页
     handleSizeChange(val) {
       this.condition.pageSize = val
-      this.getData()
+      this.getData(form)
     },
     handleCurrentChange(val) {
       this.condition.page = val
-      this.getData()
+      this.getData(form)
+    },
+    //权限
+    myForm(form) {
+      const myform = JSON.parse(JSON.stringify(form))
+      if (myform.member.length !== 0) {
+        if (isAdmin() === false) {
+          myform.member = this.condition.member
+        }
+      }
+      // 根据选定的部门，处理人员
+      if (myform.member.length === 0) {
+        if (isAdmin() === false) {
+          const name = this.$store.getters.name
+          const res = this.allMember
+          // const kes = this.kefu
+          // if (kes.length > 0) {
+          //   myform.member = res.map(m => {
+          //     return m.username
+          //   })
+          // } else {
+          myform.member = res.map(m => {
+            return m.username
+          })
+          // }
+        }
+        if (myform.department.length !== 0) {
+          if (myform.secDepartment.length === 0) {
+            const val = form.department
+            const res = this.allMember
+            for (let i = 0; i < val.length; i++) {
+              const per = res.filter(
+                ele => ele.department === val[i] && ele.position === '销售'
+              )
+              this.member.concat(per)
+            }
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+          }
+          if (myform.secDepartment.length !== 0) {
+            const val = form.secDepartment
+            const res = this.allMember
+            for (let i = 0; i < val.length; i++) {
+              const per = res.filter(
+                ele => ele.department === val[i] && ele.position === '销售'
+              )
+              this.member.concat(per)
+            }
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+          }
+        } else {
+          if (myform.secDepartment.length !== 0) {
+            const val = form.secDepartment
+            const res = this.allMember
+            for (let i = 0; i < val.length; i++) {
+              const per = res.filter(
+                ele => ele.department === val[i] && ele.position === '销售'
+              )
+              this.member.concat(per)
+            }
+            myform.member = this.member.map(m => {
+              return m.username
+            })
+          }
+        }
+      }
+      return myform
     },
     // 查询
-    onSubmit() {
-      this.getData()
+    onSubmit(form) {
+      this.getData(form)
     },
     selectAll(name) {
       if (name === 'member') {
@@ -383,9 +453,10 @@ export default {
         this.member = res
       }
     },
-    getData() {
+    getData(form) {
+      const myform = this.myForm(form)
       this.listLoading = true
-      APIWeightDiff(this.condition).then(res => {
+      APIWeightDiff(myform).then(res => {
         this.listLoading = false
         this.tableData = res.data.data.items
         this.condition.page = res.data.data._meta.currentPage

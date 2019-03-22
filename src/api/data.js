@@ -38,3 +38,11 @@ export function APIDelayDetail(param) {
     data
   })
 }
+export function APIDelayShip(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/delay-ship',
+    method: 'post',
+    data
+  })
+}

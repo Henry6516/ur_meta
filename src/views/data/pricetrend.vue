@@ -157,10 +157,9 @@
                    @click="onSubmit">查询</el-button>
       </el-form-item>
     </el-form>
-    <div class="tab"
-         v-loading="listLoading"
-         element-loading-text="正在加载中...">
-      <el-row>
+    <el-row>
+      <el-card v-loading="listLoading"
+               element-loading-text="正在加载中...">
         <el-col :span="12">
           <div ref="orderpie"
                :style="{width: '100%', height: '400px'}"></div>
@@ -169,24 +168,44 @@
           <div ref="skupie"
                :style="{width: '100%', height: '400px'}"></div>
         </el-col>
-        <el-col :span="12">
+      </el-card>
+      <el-col :span="12">
+        <el-card>
           <div ref="lineNum"
                :style="{width: '100%', height: '400px'}"></div>
-        </el-col>
-        <el-col :span="12">
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
           <div ref="lineRate"
                :style="{width: '100%', height: '400px'}"></div>
-        </el-col>
-        <el-col :span="12">
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
           <div ref="slineNum"
                :style="{width: '100%', height: '400px'}"></div>
-        </el-col>
-        <el-col :span="12">
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
           <div ref="slineRate"
                :style="{width: '100%', height: '400px'}"></div>
-        </el-col>
-      </el-row>
-    </div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
+          <div ref="orderAverage"
+               :style="{width: '100%', height: '400px'}"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
+          <div ref="skuAverage"
+               :style="{width: '100%', height: '400px'}"></div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -197,7 +216,6 @@ import {
   getPlatform,
   getMember,
   getAccount,
-  getSalestrend,
   priceTrend
 } from '../../api/profit'
 import { getMonthDate } from '../../api/tools'
@@ -206,7 +224,7 @@ export default {
     return {
       options: {
         title: {
-          text: 'orderpie',
+          text: '客单价分布',
           subtext: '',
           x: 'center'
         },
@@ -221,7 +239,7 @@ export default {
         },
         series: [
           {
-            name: 'order',
+            name: '客单价分布',
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
@@ -238,7 +256,7 @@ export default {
       },
       opt: {
         title: {
-          text: 'skupie',
+          text: '产品单价分布',
           subtext: '',
           x: 'center'
         },
@@ -253,7 +271,7 @@ export default {
         },
         series: [
           {
-            name: 'sku',
+            name: '产品单价分布',
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
@@ -270,7 +288,7 @@ export default {
       },
       lineNum: {
         title: {
-          text: 'orderlinenum'
+          text: '客单价订单量走势'
         },
         tooltip: {
           trigger: 'axis',
@@ -318,7 +336,7 @@ export default {
       },
       lineRate: {
         title: {
-          text: 'orderlinerate'
+          text: '客单价占比走势'
         },
         tooltip: {
           trigger: 'axis',
@@ -383,7 +401,7 @@ export default {
       },
       slineNum: {
         title: {
-          text: 'skulinenum'
+          text: 'SKU单价出单数走势'
         },
         tooltip: {
           trigger: 'axis',
@@ -431,7 +449,7 @@ export default {
       },
       slineRate: {
         title: {
-          text: 'skulinerate'
+          text: '产品单价占比走势'
         },
         tooltip: {
           trigger: 'axis',
@@ -461,6 +479,96 @@ export default {
         },
         legend: {
           data: [String]
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: true,
+            data: [String]
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            axisLabel: {
+              formatter: '{value}'
+            }
+          }
+        ],
+        series: [Object]
+      },
+      orderAverage: {
+        title: {
+          text: '平均客单价走势'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: true,
+            data: [String]
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            axisLabel: {
+              formatter: '{value}'
+            }
+          }
+        ],
+        series: [Object]
+      },
+      skuAverage: {
+        title: {
+          text: '平均SKU单价走势'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
         },
         toolbox: {
           show: true,
@@ -702,6 +810,34 @@ export default {
               let sLineRate = this.$echarts.init(this.$refs.slineRate)
               sLineRate.setOption(this.slineRate)
             }
+
+            const orderlineavg = res.data.data.orderLineAvg
+            const series = []
+            this.orderAverage.xAxis[0].data = orderlineavg.map(e => e.orderDate)
+            const sery = {
+              type: 'line',
+              stack: '总量',
+              areaStyle: { normal: {} }
+            }
+            sery['data'] = orderlineavg.map(e => e.amtAvg)
+            series.push(sery)
+            this.orderAverage.series = series
+            let orderaverage = this.$echarts.init(this.$refs.orderAverage)
+            orderaverage.setOption(this.orderAverage)
+
+            const skulineavg = res.data.data.skuLineAvg
+            const meries = []
+            this.skuAverage.xAxis[0].data = skulineavg.map(e => e.orderDate)
+            const mery = {
+              type: 'line',
+              stack: '总量',
+              areaStyle: { normal: {} }
+            }
+            mery['data'] = skulineavg.map(e => e.amtAvg)
+            meries.push(mery)
+            this.skuAverage.series = meries
+            let skuaverage = this.$echarts.init(this.$refs.skuAverage)
+            skuaverage.setOption(this.skuAverage)
           })
         }
       })
@@ -813,5 +949,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-card {
+  margin: 10px;
+  padding: 10px;
+}
 </style>
 
