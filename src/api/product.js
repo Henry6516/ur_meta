@@ -154,7 +154,6 @@ export function checkFailedList(param) {
 }
 export function APIGoodsInfo(param) {
   const data = { condition: param }
-  console.log(data)
   return request({
     url: '/oa-goodsinfo/attributes-list',
     method: 'post',
@@ -221,6 +220,14 @@ export function APIPictureInfo(param) {
   const data = { condition: param }
   return request({
     url: '/oa-goodsinfo/picture-info',
+    method: 'post',
+    data
+  })
+}
+export function APIPicturePreview(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/picture',
     method: 'post',
     data
   })

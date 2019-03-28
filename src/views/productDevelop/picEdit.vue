@@ -1,6 +1,13 @@
 <template>
   <section class="toolbar">
-    <el-col :span="24">
+    <el-row>
+      <el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #e4e7ed solid 1px; background: #eee;padding: 0">
+        <span @click="attribute()" class="adClass">属性信息</span>
+        <span @click="photo()" class="adClass actie">图片信息</span>
+        <span @click="platform()" class="adClass">平台信息</span>
+      </el-col>
+    </el-row>
+    <el-col :span="24" style="margin-top: 50px;background: #fff;border-bottom: #ccc solid 1px;padding-left: 15px">
       <el-button type="primary"
                  @click="save">保存当前数据</el-button>
       <el-button type="primary"
@@ -15,16 +22,16 @@
       <el-table-column type="selection"
                        width="55">
       </el-table-column>
-      <el-table-column prop=""
-                       label="操作">
-        <template slot-scope="scope">
-          <el-tooltip content="查看">
-            <i class="el-icon-view"
-               @click="view(scope.$index, scope.row)"
-               style="color: #409EFF;cursor:pointer;"></i>
-          </el-tooltip>
-        </template>
-      </el-table-column>
+      <!--<el-table-column prop=""-->
+                       <!--label="操作">-->
+        <!--<template slot-scope="scope">-->
+          <!--<el-tooltip content="查看">-->
+            <!--<i class="el-icon-view"-->
+               <!--@click="view(scope.$index, scope.row)"-->
+               <!--style="color: #409EFF;cursor:pointer;"></i>-->
+          <!--</el-tooltip>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
       <el-table-column prop="sku"
                        label="SKU">
         <template slot-scope="scope">
@@ -33,11 +40,11 @@
                     v-model="scope.row.sku"></el-input>
         </template>
       </el-table-column>
-      <el-table-column prop="linkurl"
+      <el-table-column prop="linkUrl"
                        label="图片库地址">
         <template slot-scope="scope">
           <el-input size="small"
-                    v-model="scope.row.linkurl"></el-input>
+                    v-model="scope.row.linkUrl"></el-input>
         </template>
       </el-table-column>
       <el-table-column prop="property1"
@@ -67,7 +74,7 @@
     </el-table>
   </section>
 </template>
-<script>
+<script type="text/ecmascript-6">
 import {
   APIPictureInfo,
   APISavePictureInfo,
@@ -79,11 +86,26 @@ export default {
     return {
       tableData: [],
       condition: {
-        id: 5
+        id: 0
       }
     }
   },
   methods: {
+    attribute(){
+      this.$router.push({
+        path: `/v1/oa-goodsinfo/index`
+      })
+    },
+    photo(){
+      this.$router.push({
+        path: `/v1/oa-goodsinfo/goodsInfoPicture`
+      })
+    },
+    platform(){
+      this.$router.push({
+        path: `/v1/oa-goodsinfo/goodsInfoPlatform`
+      })
+    },
     //保存
     save() {
       APISavePictureInfo(this.tableData).then(res => {
@@ -131,14 +153,27 @@ export default {
     }
   },
   mounted() {
+    this.condition.id = this.$route.params.id
     this.getData()
-    // this.condition.id = this.$route.params.id
   }
 }
 </script>
 <style lang="scss" scoped>
 .el-col {
   padding: 10px;
+}
+.adClass{
+  display: block;
+  float: left;
+  padding: 14px 30px;
+  border-right: 1px solid #e4e7ed;
+  cursor: pointer;
+}
+.actie{
+  color: #409EFF;
+}
+.adClass:hover{
+  color: #409EFF;
 }
 </style>
 

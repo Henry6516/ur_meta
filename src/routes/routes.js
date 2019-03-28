@@ -47,6 +47,8 @@ import news from '../views/feedback/news.vue'
 import productRecommend from '../views/productDevelop/productRecommend.vue'
 import productApprove from '../views/productDevelop/productApprove.vue'
 import goodsInfo from '../views/productDevelop/goodsInfo.vue'
+import goodsInfoPicture from '../views/productDevelop/goodsInfoPicture.vue'
+import goodsInfoPlatform from '../views/productDevelop/goodsInfoPlatform.vue'
 import edit from '../views/productDevelop/edit.vue'
 import picEdit from '../views/productDevelop/picEdit.vue'
 import platEdit from '../views/productDevelop/platEdit.vue'
@@ -314,6 +316,16 @@ const routes = [
         path: '/v1/oa-goodsinfo/index',
         component: goodsInfo,
         name: '属性信息'
+      },
+      {
+        path: '/v1/oa-goodsinfo/goodsInfoPicture',
+        component: goodsInfoPicture,
+        name: '图片信息'
+      },
+      {
+        path: '/v1/oa-goodsinfo/goodsInfoPlatform',
+        component: goodsInfoPlatform,
+        name: '平台信息'
       },
       {
         path: '/v1/supplier/supplier-list',

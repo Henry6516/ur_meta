@@ -73,7 +73,7 @@
           </el-submenu>
         </el-menu>
       </aside>
-      <section class="content-container" :class="!collapsed?'content-container2':'content-container1'">
+      <section class="content-container" :class="collapsed?'content-container1':'content-container2'">
         <div class="grid-content bg-purple-light">
           <el-col :span="24" class="content-wrapper">
             <transition name="fade" mode="out-in">
@@ -86,7 +86,7 @@
   </el-row>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import { removeToken } from '../utils/auth'
 import { getMenu } from '../api/login'
 import { getAvatarUrl } from '../api/api'
@@ -123,7 +123,7 @@ export default {
       imagecropperKey: 0,
       image: '',
       sysName: 'UR管理中心',
-      collapsed: false,
+      collapsed: true,
       sysUserName: '',
       sysUserAvatar: '',
       form: {
@@ -146,6 +146,7 @@ export default {
     getMenu().then(response => {
       this.allMenu = response.data.data
       this.allMenu.splice(0, 1)
+      this.showMenu()
     })
   },
   beforeRouteLeave(to, from, next) {
@@ -165,6 +166,17 @@ export default {
     }
   },
   methods: {
+    showMenu(){
+//      if(sessionStorage.getItem('acTi')){
+//        this.activeIndex=sessionStorage.getItem('acTi')
+//      }
+//      if(sessionStorage.getItem('aIndex')) {
+//        const asideIndex = sessionStorage.getItem('aIndex')
+//        const allMenu = this.allMenu
+//        this.asideMenu = { position: asideIndex, menu: [allMenu[asideIndex]] }
+//        console.log(this.allMenu)
+//      }
+    },
     submit(formName) {
       this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -189,8 +201,11 @@ export default {
       this.activeIndex = index
       this.collapsed = true
       var asideIndex = parseInt(indexPath[0]) - 1
+      sessionStorage.setItem('acTi',this.activeIndex)
+      sessionStorage.setItem('aIndex',asideIndex)
       const allMenu = this.allMenu
       this.asideMenu = { position: asideIndex, menu: [allMenu[asideIndex]] }
+      console.log(allMenu)
     },
     cropSuccess(resData) {
       this.imagecropperShow = false

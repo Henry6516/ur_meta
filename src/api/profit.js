@@ -491,7 +491,34 @@ export function getAttributeInfoSubCat() {
     method: 'get'
   })
 }
-
+//获取平台信息产品状态
+export function getPlatGoodsStatus() {
+  return request({
+    url: 'oa-goodsinfo/plat-goods-status',
+    method: 'get'
+  })
+}
+//获取平台信息完善的平台
+export function getPlatCompletedPlat() {
+  return request({
+    url: 'oa-goodsinfo/plat-completed-plat',
+    method: 'get'
+  })
+}
+//获取平台信息所有账号
+export function getPlatEbayAccount() {
+  return request({
+    url: 'oa-goodsinfo/plat-ebay-account',
+    method: 'get'
+  })
+}
+//获取平台信息所有仓储
+export function getPlatEbayStore() {
+  return request({
+    url: 'oa-goodsinfo/plat-ebay-store',
+    method: 'get'
+  })
+}
 
 
 

@@ -189,7 +189,7 @@
         </el-table-column>
       </el-table>
       <!-- 属性信息查看对话框 -->
-      <el-dialog title='查看'
+      <el-dialog title=''
                  :visible.sync="dialogVisible">
         <el-form
                  label-position="left"
@@ -198,8 +198,10 @@
           <el-form-item label="图片"
                         prop="picUrl"
                         class="item1">
-            <img :src='goodsInfo.picUrl'
-                 style="width: 150px;height: 100px;">
+            <a :href="goodsInfo.picUrl" target="_blank" style="cursor: pointer">
+              <img :src='goodsInfo.picUrl'
+                   style="width: 150px;height: 100px;">
+            </a>
           </el-form-item>
           <el-form-item label="图片地址"
                         prop="picUrl"
@@ -214,7 +216,7 @@
           <el-form-item label="是否备货"
                         prop="stockUp"
                         class="item">
-            <span>{{goodsInfo.stockUp === 1 ? '是' : '否'}}</span>
+            <span>{{goodsInfo.stockUp}}</span>
           </el-form-item>
           <el-form-item label="商品名称"
                         prop="goodsName"
@@ -304,6 +306,9 @@
             <span>{{oaGoods.origin3}}</span>
           </el-form-item>
         </el-form>
+        <span slot="footer" class="dialog-footer">
+             <el-button @click="dialogVisible = false" type="primary">关 闭</el-button>
+        </span>
       </el-dialog>
       <!-- 属性信息分页 -->
       <el-pagination background
@@ -364,7 +369,7 @@
         </el-table-column>
         <el-table-column label="商品编码"
                          header-align="center">
-          <el-table-column prop="GoodsCode"
+          <el-table-column prop="goodsCode"
                            :render-header="renderHeaderPic"
                            width='150'
                            align="center">
@@ -380,7 +385,7 @@
         </el-table-column>
         <el-table-column label="商品名称"
                          header-align="center">
-          <el-table-column prop="GoodsName"
+          <el-table-column prop="goodsName"
                            :render-header="renderHeaderPic"
                            width='150'
                            align="center">
@@ -388,7 +393,7 @@
         </el-table-column>
         <el-table-column label="供应商链接1"
                          header-align="center">
-          <el-table-column prop=""
+          <el-table-column prop="oaGoods.vendor1"
                            :render-header="renderHeaderPic"
                            width='150'
                            align="center">
@@ -396,7 +401,7 @@
         </el-table-column>
         <el-table-column label="供应商链接2"
                          header-align="center">
-          <el-table-column prop=""
+          <el-table-column prop="oaGoods.vendor2"
                            :render-header="renderHeaderPic"
                            width='150'
                            align="center">
@@ -404,7 +409,7 @@
         </el-table-column>
         <el-table-column label="供应商链接3"
                          header-align="center">
-          <el-table-column prop=""
+          <el-table-column prop="oaGoods.vendor3"
                            :render-header="renderHeaderPic"
                            width='150'
                            align="center">
@@ -412,7 +417,7 @@
         </el-table-column>
         <el-table-column label="平台链接1"
                          header-align="center">
-          <el-table-column prop=""
+          <el-table-column prop="oaGoods.origin1"
                            :render-header="renderHeaderPic"
                            width='150'
                            align="center">
@@ -420,7 +425,7 @@
         </el-table-column>
         <el-table-column label="平台链接2"
                          header-align="center">
-          <el-table-column prop=""
+          <el-table-column prop="oaGoods.origin2"
                            :render-header="renderHeaderPic"
                            width='150'
                            align="center">
@@ -428,7 +433,7 @@
         </el-table-column>
         <el-table-column label="平台链接3"
                          header-align="center">
-          <el-table-column prop=""
+          <el-table-column prop="oaGoods.origin3"
                            :render-header="renderHeaderPic"
                            width='150'
                            align="center">
@@ -436,7 +441,7 @@
         </el-table-column>
         <el-table-column label="图片状态"
                          header-align="center">
-          <el-table-column prop="achieveStatus"
+          <el-table-column prop="picStatus"
                            :render-header="renderHeaderPic"
                            width='150'
                            align="center">
@@ -996,8 +1001,53 @@ export default {
         "isVar":""
       },
       picture: {
-        pageSize: 10,
-        currentPage: 1
+        "pageSize": 10,
+        "page": 1,
+        "goodsCode": "",
+        "achieveStatus": "",
+        "goodsName": "",
+        "developer": "",
+        "devDatetime": [],
+        "updateTime": [],
+        "aliasCnName": "",
+        "aliasEnName": "",
+        "stockUp": "",
+        "isLiquid": "",
+        "isPowder": "",
+        "isMagnetism": "",
+        "isCharged": "",
+        "isVar": "",
+        "oaGoods":{
+          approvalNote: null,
+          bGoodsid: null,
+          catNid: "",
+          cate: "",
+          checkStatus: "",
+          createDate: "",
+          devNum: "",
+          devStatus: "",
+          developer: "",
+          hopeCost: null,
+          hopeMonthProfit: null,
+          hopeRate: "",
+          hopeSale: "",
+          hopeWeight: "",
+          img: "",
+          introReason: "",
+          introducer: "",
+          mineId: null,
+          nid: "",
+          origin1: "",
+          origin2: null,
+          origin3: "",
+          salePrice: "",
+          stockUp: null,
+          subCate: "",
+          updateDate: "",
+          vendor1: "",
+          vendor2: "",
+          vendor3: null
+        }
       },
       plat: {
         pageSize: 10,
@@ -1016,23 +1066,37 @@ export default {
     }
   },
   methods: {
+//    handleClick(tab, event) {
+//      if (tab.label === '属性信息') {
+//        this.show['status'] = true
+//      } else {
+//        this.show['status'] = false
+//      }
+//      if (tab.label === '图片信息') {
+//        this.show['picture'] = true
+//        this.getPic()
+//      } else {
+//        this.show['picture'] = false
+//      }
+//      if (tab.label === '平台信息') {
+//        this.show['plat'] = true
+//        this.getPlat()
+//      } else {
+//        this.show['plat'] = false
+//      }
+//    },
     handleClick(tab, event) {
       if (tab.label === '属性信息') {
-        this.show['status'] = true
-      } else {
-        this.show['status'] = false
       }
       if (tab.label === '图片信息') {
-        this.show['picture'] = true
-        this.getPic()
-      } else {
-        this.show['picture'] = false
+        this.$router.push({
+          path: `/v1/oa-goodsinfo/goodsInfoPicture`
+        })
       }
       if (tab.label === '平台信息') {
-        this.show['plat'] = true
-        this.getPlat()
-      } else {
-        this.show['plat'] = false
+        this.$router.push({
+          path: `/v1/oa-goodsinfo/goodsInfoPlatform`
+        })
       }
     },
     //属性信息分页
@@ -1085,7 +1149,9 @@ export default {
       })
     },
     //导入普源
-    passAll() {},
+    passAll() {
+
+    },
     //生成编码
     codeAll() {
       if (this.sels) {
@@ -1111,6 +1177,9 @@ export default {
     del() {},
     //属性信息全选
     selsChange(sels) {
+//      for(var i=0;i<sels.length;i++){
+//        console.log(sels[i].id)
+//      }
       this.sels = sels
     },
     //属性信息获取数据
@@ -1576,13 +1645,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value: this.picture.goodsCode,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                   this.picture.goodsCode = value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1593,19 +1662,19 @@ export default {
           ]
         )
       } else if ($index === 1) {
-        let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+        let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
         return h(
           'el-select',
           {
             props: {
               placeholder: '请选择',
-              value: '',
+              value: this.picture.stockUp,
               size: 'mini',
               clearable: true
             },
             on: {
               input: value => {
-                // this.condition2.stockUp=value
+                this.picture.stockUp = value
                 this.$emit('input', value)
               },
               change: searchValue => {
@@ -1635,13 +1704,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value: this.picture.goodsName,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                  this.picture.goodsName = value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1662,13 +1731,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value: this.picture.oaGoods.vendor1,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                  this.picture.oaGoods.vendor1 = value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1689,13 +1758,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value: this.picture.oaGoods.vendor2,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                  this.picture.oaGoods.vendor2 = value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1716,13 +1785,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value: this.picture.oaGoods.vendor3,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                  this.picture.oaGoods.vendor3 = value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1743,13 +1812,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value: this.picture.oaGoods.origin1,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                  this.picture.oaGoods.origin1 = value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1770,13 +1839,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value: this.picture.oaGoods.origin2,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                  this.picture.oaGoods.origin2 = value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1797,13 +1866,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value: this.picture.oaGoods.origin3,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                  this.picture.oaGoods.origin3 = value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1815,21 +1884,21 @@ export default {
         )
       } else if ($index === 9) {
         let filters = [
-          { text: '1', value: '待处理' },
-          { text: '0', value: '已完善' }
+          { text: '待处理', value: '待处理' },
+          { text: '已完善', value: '已完善' }
         ]
         return h(
           'el-select',
           {
             props: {
               placeholder: '请选择',
-              value: '',
+              value: this.picture.picStatus,
               size: 'mini',
               clearable: true
             },
             on: {
               input: value => {
-                // this.condition2.stockUp=value
+                this.picture.picStatus = value
                 this.$emit('input', value)
               },
               change: searchValue => {
@@ -1859,13 +1928,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value: this.picture.developer,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                  this.picture.developer = value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1876,32 +1945,26 @@ export default {
           ]
         )
       } else if ($index === 11) {
-        return h(
-          'div',
-          {
-            style: {
-              height: '40px'
-            }
+        return h('el-date-picker',{
+          props:{
+            value:this.time1,
+            size:'mini',
+            type:'daterange',
           },
-          [
-            h('el-input', {
-              props: {
-                value: '',
-                size: 'mini',
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  // this.condition2.subCate = value
-                  this.$emit('input', value)
-                },
-                change: value => {
-                  this.filter()
-                }
-              }
-            })
-          ]
-        )
+          style:{
+            width:'180px',
+            padding:'2px',
+          },
+          on:{
+            input:value=>{
+              this.time1=value
+              this.$emit('input', value)
+            },
+            change:value => {
+              this.filter()
+            }
+          }
+        })
       } else if ($index === 12) {
         return h(
           'div',
@@ -1913,13 +1976,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: '',
+                value: this.picture.possessman1,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  // this.condition2.subCate = value
+                  this.picture.possessman1 = value
                   this.$emit('input', value)
                 },
                 change: value => {
@@ -1930,19 +1993,19 @@ export default {
           ]
         )
       } else if ($index === 13) {
-        let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+        let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
         return h(
           'el-select',
           {
             props: {
               placeholder: '请选择',
-              value: '',
+              value: this.picture.isVar,
               size: 'mini',
               clearable: true
             },
             on: {
               input: value => {
-                // this.condition2.stockUp=value
+                this.picture.isVar = value
                 this.$emit('input', value)
               },
               change: searchValue => {
@@ -2011,28 +2074,23 @@ export default {
     filter() {
       if (this.activeName === '属性信息') {
         if (this.time1 !== null && this.time1.length !== 0) {
-          this.condition.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+          this.condition.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
         } else {
-          this.condition.createDate = []
+          this.condition.devDatetime = []
         }
         if (this.time2 !== null && this.time2.length !== 0) {
-          this.condition.updateDate = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
+          this.condition.updateTime = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
         } else {
-          this.condition.updateDate = []
+          this.condition.updateTime = []
         }
         this.getData()
       } else if (this.activeName === '图片信息') {
         if (this.time1 !== null && this.time1.length !== 0) {
-          this.condition1.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+          this.picture.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
         } else {
-          this.condition1.createDate = []
+          this.picture.devDatetime = []
         }
-        if (this.time2 !== null && this.time2.length !== 0) {
-          this.condition1.updateDate = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
-        } else {
-          this.condition1.updateDate = []
-        }
-        this.getForward()
+        this.getPic()
       } else {
         if (this.time1 !== null && this.time1.length !== 0) {
           this.condition2.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
