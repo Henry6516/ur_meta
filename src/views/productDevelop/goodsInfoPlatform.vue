@@ -631,7 +631,7 @@
                 this.getPlat()
             },
             handleCurrentChangePlat(val) {
-                this.plat.currentPage = val
+                this.plat.page = val
                 this.getPlat()
             },
             //平台信息查看
@@ -1320,7 +1320,12 @@
             getMenu().then(response => {
                 const res = response.data.data
                 const menu = res.filter(e => e.name === '产品中心')
-                this.allMenu = menu[0].children[2].tabs
+                let arr=menu[0].children
+                for(let i=0;i<arr.length;i++){
+                    if(arr[i].name=="产品资料"){
+                        this.allMenu=arr[i].tabs
+                    }
+                }
             })
             this.getPlat()
             //仓库

@@ -314,7 +314,7 @@
       <el-pagination background
                      @size-change="handleSizeChange"
                      @current-change="handleCurrentChange"
-                     :current-page="this.condition.currentPage"
+                     :current-page="this.condition.page"
                      :page-sizes="[10, 20, 30, 40]"
                      :page-size="this.condition.pageSize"
                      layout="total, sizes, prev, pager, next, jumper"
@@ -1101,7 +1101,7 @@ export default {
     },
     //属性信息分页
     handleCurrentChange(val) {
-      this.condition.currentPage = val
+      this.condition.page = val
       this.getData()
     },
     handleSizeChange(val) {
@@ -1116,8 +1116,6 @@ export default {
 //        this.viewForm = res.data.data
         this.goodsInfo = res.data.data.basicInfo.goodsInfo
         this.oaGoods = res.data.data.basicInfo.oaGoods
-        console.log(this.goodsInfo)
-        console.log(this.oaGoods)
       })
     },
     //标记
@@ -1188,7 +1186,7 @@ export default {
         this.tableData = res.data.data.items
         this.total = res.data.data._meta.totalCount
         this.condition.pageSize = res.data.data._meta.perPage
-        this.condition.currentPage = res.data.data._meta.currentPage
+        this.condition.page = res.data.data._meta.currentPage
       })
     },
     //属性信息表头input框
@@ -1607,7 +1605,7 @@ export default {
       this.getPic()
     },
     handleCurrentChangePic(val) {
-      this.picture.currentPage = val
+      this.picture.page = val
       this.getPic()
     },
     //图片信息查看
@@ -2721,7 +2719,12 @@ export default {
     getMenu().then(response => {
       const res = response.data.data
       const menu = res.filter(e => e.name === '产品中心')
-      this.allMenu = menu[0].children[2].tabs
+      let arr=menu[0].children
+      for(let i=0;i<arr.length;i++){
+        if(arr[i].name=="产品资料"){
+          this.allMenu=arr[i].tabs
+        }
+      }
     })
     this.getData()
   }

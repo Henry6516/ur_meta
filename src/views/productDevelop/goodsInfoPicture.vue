@@ -81,48 +81,66 @@
                                  header-align="center">
                     <el-table-column prop="oaGoods.vendor1"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='170'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.oaGoods.vendor1" target="_blank">{{scope.row.oaGoods.vendor1 | cutOut }}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="供应商链接2"
                                  header-align="center">
                     <el-table-column prop="oaGoods.vendor2"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='170'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.oaGoods.vendor2" target="_blank">{{scope.row.oaGoods.vendor2 | cutOut }}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="供应商链接3"
                                  header-align="center">
                     <el-table-column prop="oaGoods.vendor3"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='170'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.oaGoods.vendor3" target="_blank">{{scope.row.oaGoods.vendor3 | cutOut }}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="平台链接1"
                                  header-align="center">
                     <el-table-column prop="oaGoods.origin1"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='170'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.oaGoods.origin1" target="_blank">{{scope.row.oaGoods.origin1 | cutOut }}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="平台链接2"
                                  header-align="center">
                     <el-table-column prop="oaGoods.origin2"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='170'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.oaGoods.origin2" target="_blank">{{scope.row.oaGoods.origin2 | cutOut }}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="平台链接3"
                                  header-align="center">
                     <el-table-column prop="oaGoods.origin3"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='170'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.oaGoods.origin3" target="_blank">{{scope.row.oaGoods.origin3 | cutOut }}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="图片状态"
@@ -233,7 +251,7 @@
             <el-pagination background
                            @size-change="handleSizeChangePic"
                            @current-change="handleCurrentChangePic"
-                           :current-page="this.picture.currentPage"
+                           :current-page="this.picture.page"
                            :page-sizes="[10, 20, 30, 40]"
                            :page-size="this.picture.pageSize"
                            layout="total, sizes, prev, pager, next, jumper"
@@ -352,6 +370,13 @@
                 }
             }
         },
+        filters: {
+            cutOut: function (value) {
+                if (!value) return ''
+                value = value.substring(0,21)
+                return value
+            }
+        },
         methods: {
             handleClick(tab, event) {
                 if (tab.label === '属性信息') {
@@ -387,7 +412,7 @@
                 this.getPic()
             },
             handleCurrentChangePic(val) {
-                this.picture.currentPage = val
+                this.picture.page = val
                 this.getPic()
             },
             //图片信息查看
@@ -409,7 +434,7 @@
                     this.pictureData = res.data.data.items
                     this.totalPic = res.data.data._meta.totalCount
                     this.picture.pageSize = res.data.data._meta.perPage
-                    this.picture.currentPage = res.data.data._meta.currentPage
+                    this.picture.page = res.data.data._meta.currentPage
                 })
             },
             //图片信息表头input框
@@ -1501,7 +1526,12 @@
             getMenu().then(response => {
                 const res = response.data.data
                 const menu = res.filter(e => e.name === '产品中心')
-                this.allMenu = menu[0].children[2].tabs
+                let arr=menu[0].children
+                for(let i=0;i<arr.length;i++){
+                    if(arr[i].name=="产品资料"){
+                        this.allMenu=arr[i].tabs
+                    }
+                }
             })
             this.getPic()
         }

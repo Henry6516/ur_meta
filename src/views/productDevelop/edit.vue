@@ -92,7 +92,7 @@
         <el-col :span="8">
           <el-form-item label="责任归属人1">
             <el-input
-                      v-model="editForm.possessMan2"
+                      v-model="editForm.developer"
                       style="width:390px;"></el-input>
           </el-form-item>
         </el-col>
@@ -110,6 +110,7 @@
             <el-select
                        v-model="editForm.packName"
                        style="width:390px"
+                       filterable clearable
                        @change="specIndex($event)">
               <el-option v-for="(item, key) in spec" :key='item.key' :label="item" :value="item"></el-option>
             </el-select>
@@ -621,8 +622,8 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APIAttributeInfo, APISaveAttribute,APIAttribute } from '../../api/product'
-import { getMember, getGoodscats,getAttributeInfoPackName,getAttributeInfoSpecialAttribute,getAttributeInfoStoreName,getAttributeInfoSeason,getAttributeInfoPlat,getAttributeInfoSalesman,getAttributeInfoCat,getAttributeInfoSubCat } from '../../api/profit'
+import { APIAttributeInfo, APISaveAttribute, APIAttribute } from '../../api/product'
+import { getMember, getGoodscats, getAttributeInfoPackName, getAttributeInfoSpecialAttribute, getAttributeInfoStoreName, getAttributeInfoSeason, getAttributeInfoPlat, getAttributeInfoSalesman, getAttributeInfoCat, getAttributeInfoSubCat } from '../../api/profit'
 export default {
   data() {
     return {
@@ -630,32 +631,32 @@ export default {
       btn: '',
       rows: 1,
       rowss: 1,
-      IsF:["是","否"],
+      IsF: ['是', '否'],
       costprice: null,
       weight: null,
       retailprice: null,
       joomretailprice: null,
       transportationcost: null,
-      dialogTableVisible:false,
-      dialogTable:false,
-      sjlength:0,
-      bxlength:0,
-      jspt:false,
+      dialogTableVisible: false,
+      dialogTable: false,
+      sjlength: 0,
+      bxlength: 0,
+      jspt: false,
       cate: [],
-      last:0,
-      dyxs:false,
-      skuTotal:0,
-      category:[],
-      spec:[],
-      specificity:[],
-      repertory:[],
-      seasonn:[],
-      violation:[],
-      mainSsale:[],
-      mainCategory:[],
-      childrenCategory:[],
-      screen:[],
-      foremost:0,
+      last: 0,
+      dyxs: false,
+      skuTotal: 0,
+      category: [],
+      spec: [],
+      specificity: [],
+      repertory: [],
+      seasonn: [],
+      violation: [],
+      mainSsale: [],
+      mainCategory: [],
+      childrenCategory: [],
+      screen: [],
+      foremost: 0,
       options: [
         {
           value: '选项1',
@@ -685,164 +686,164 @@ export default {
       condition: {
         id: 0
       },
-      bxtotal:0,
-      sjtotal:0,
-      mandatoryData:["","","","","",""],
-      randomData:["","","","","","","","","",""],
+      bxtotal: 0,
+      sjtotal: 0,
+      mandatoryData: ['', '', '', '', '', ''],
+      randomData: ['', '', '', '', '', '', '', '', '', ''],
       editForm: {},
       oaGoods: {},
-      dictionaryName1:"",
-      mapPersons1:""
-//      saveInfo: {
-//        basicInfo: {
-//          goodsInfo: {
-//            id: 5,
-//            IsLiquid: '是',
-//            IsPowder: '否',
-//            isMagnetism: '否',
-//            IsCharged: '否',
-//            description: null,
-//            GoodsName: 'test-01-01-plat',
-//            AliasCnName: null,
-//            AliasEnName: null,
-//            PackName: null,
-//            Season: null,
-//            DictionaryName: null,
-//            SupplierName: null,
-//            StoreName: null,
-//            Purchaser: null,
-//            possessMan1: null,
-//            possessMan2: null,
-//            DeclaredValue: null,
-//            picUrl: null,
-//            goodsid: 24,
-//            GoodsCode: null,
-//            achieveStatus: null,
-//            devDatetime: null,
-//            developer: null,
-//            updateTime: null,
-//            picStatus: null,
-//            SupplierID: null,
-//            StoreID: null,
-//            AttributeName: null,
-//            bgoodsid: null,
-//            completeStatus: null,
-//            isVar: '否',
-//            headKeywords: null,
-//            requiredKeywords: null,
-//            randomKeywords: null,
-//            tailKeywords: null,
-//            wishtags: null,
-//            stockUp: '否',
-//            picCompleteTime: null,
-//            goodsstatus: null,
-//            stockdays: null,
-//            wishpublish: null,
-//            number: null,
-//            mid: null,
-//            extendStatus: null,
-//            mapPersons: null,
-//            filterType: 3
-//          },
-//          oaGoods: {
-//            nid: 24,
-//            vendor1: '',
-//            vendor2: null,
-//            vendor3: null,
-//            origin1: '',
-//            origin2: null,
-//            origin3: null
-//          }
-//        },
-//        skuInfo: [
-//
-//        ]
-//      }
+      dictionaryName1: '',
+      mapPersons1: ''
+      //      saveInfo: {
+      //        basicInfo: {
+      //          goodsInfo: {
+      //            id: 5,
+      //            IsLiquid: '是',
+      //            IsPowder: '否',
+      //            isMagnetism: '否',
+      //            IsCharged: '否',
+      //            description: null,
+      //            GoodsName: 'test-01-01-plat',
+      //            AliasCnName: null,
+      //            AliasEnName: null,
+      //            PackName: null,
+      //            Season: null,
+      //            DictionaryName: null,
+      //            SupplierName: null,
+      //            StoreName: null,
+      //            Purchaser: null,
+      //            possessMan1: null,
+      //            possessMan2: null,
+      //            DeclaredValue: null,
+      //            picUrl: null,
+      //            goodsid: 24,
+      //            GoodsCode: null,
+      //            achieveStatus: null,
+      //            devDatetime: null,
+      //            developer: null,
+      //            updateTime: null,
+      //            picStatus: null,
+      //            SupplierID: null,
+      //            StoreID: null,
+      //            AttributeName: null,
+      //            bgoodsid: null,
+      //            completeStatus: null,
+      //            isVar: '否',
+      //            headKeywords: null,
+      //            requiredKeywords: null,
+      //            randomKeywords: null,
+      //            tailKeywords: null,
+      //            wishtags: null,
+      //            stockUp: '否',
+      //            picCompleteTime: null,
+      //            goodsstatus: null,
+      //            stockdays: null,
+      //            wishpublish: null,
+      //            number: null,
+      //            mid: null,
+      //            extendStatus: null,
+      //            mapPersons: null,
+      //            filterType: 3
+      //          },
+      //          oaGoods: {
+      //            nid: 24,
+      //            vendor1: '',
+      //            vendor2: null,
+      //            vendor3: null,
+      //            origin1: '',
+      //            origin2: null,
+      //            origin3: null
+      //          }
+      //        },
+      //        skuInfo: [
+      //
+      //        ]
+      //      }
     }
   },
   methods: {
     formatTen(num) {
-      return num > 9 ? (num + "") : ("0" + num)
+      return num > 9 ? (num + '') : ('0' + num)
     },
-    oneKey(){
-      let obj = {}, ary = [];
+    oneKey() {
+      const obj = {}; const ary = []
       this.tableData.map((item, index, input) => {
         if (obj[item.property1] !== item.property1) {
-          ary.push(item);
-          item.index = JSON.parse(JSON.stringify(ary)).length;
-          let k = ary.length;
-          item.sku = `${this.editForm.goodsCode}${this.formatTen(k)}${item.property2 ? `_` + item.property2 : ""}${
-                  item.property3 ? `_` + item.property3 : ""
-                  }`;
+          ary.push(item)
+          item.index = JSON.parse(JSON.stringify(ary)).length
+          const k = ary.length
+          item.sku = `${this.editForm.goodsCode}${this.formatTen(k)}${item.property2 ? `_` + item.property2 : ''}${
+            item.property3 ? `_` + item.property3 : ''
+          }`
         } else {
-          var targetIndex = "";
+          var targetIndex = ''
           for (var j = 0; j < ary.length; j++) {
             if (item.property1 == ary[j].property1) {
-              targetIndex = ary[j].index;
-              break;
+              targetIndex = ary[j].index
+              break
             }
           }
           item.sku = `${this.editForm.goodsCode}${this.formatTen(targetIndex)}${
-                  item.property2 ? `_` + item.property2 : ""
-                  }${item.property3 ? `_` + item.property3 : ""}`;
+            item.property2 ? `_` + item.property2 : ''
+          }${item.property3 ? `_` + item.property3 : ''}`
         }
-        obj[item.property1] = item.property1;
-      });
+        obj[item.property1] = item.property1
+      })
     },
-    mandatoryDate(e){
-      this.bxlength=0
-      this.bxtotal=0
-      var st1=0
-      let arde=e.split(/[(\r\n)\r\n]+/)
-      for(var i=0;i<arde.length;i++){
-        var daee=arde[i]
-        for(var j=0;j<this.mandatoryData.length;j++){
-          this.mandatoryData[i]=daee
+    mandatoryDate(e) {
+      this.bxlength = 0
+      this.bxtotal = 0
+      var st1 = 0
+      const arde = e.split(/[(\r\n)\r\n]+/)
+      for (var i = 0; i < arde.length; i++) {
+        var daee = arde[i]
+        for (var j = 0; j < this.mandatoryData.length; j++) {
+          this.mandatoryData[i] = daee
         }
       }
-      for(var i=0;i<this.mandatoryData.length;i++){
-        if(this.mandatoryData[i]!=""){
+      for (var i = 0; i < this.mandatoryData.length; i++) {
+        if (this.mandatoryData[i] != '') {
           this.bxlength++
-          st1+=this.mandatoryData[i].length
+          st1 += this.mandatoryData[i].length
         }
       }
-      this.bxtotal=st1
+      this.bxtotal = st1
     },
-    mandatoryDate1(e){
-      this.sjlength=0
-      this.sjtotal=0
-      var st2=0
-      let arde1=e.split(/[(\r\n)\r\n]+/)
-      for(var i=0;i<arde1.length;i++){
-        var daee=arde1[i]
-        for(var j=0;j<this.randomData.length;j++){
-          this.randomData[i]=daee
+    mandatoryDate1(e) {
+      this.sjlength = 0
+      this.sjtotal = 0
+      var st2 = 0
+      const arde1 = e.split(/[(\r\n)\r\n]+/)
+      for (var i = 0; i < arde1.length; i++) {
+        var daee = arde1[i]
+        for (var j = 0; j < this.randomData.length; j++) {
+          this.randomData[i] = daee
         }
       }
-      for(var i=0;i<this.randomData.length;i++){
-        if(this.randomData[i]!=""){
+      for (var i = 0; i < this.randomData.length; i++) {
+        if (this.randomData[i] != '') {
           this.sjlength++
-          st2+=this.randomData[i].length
+          st2 += this.randomData[i].length
         }
       }
-      this.sjtotal=st2
+      this.sjtotal = st2
     },
-    attribute(){
+    attribute() {
       this.$router.push({
         path: `/v1/oa-goodsinfo/index`
       })
     },
-    photo(){
+    photo() {
       this.$router.push({
         path: `/v1/oa-goodsinfo/goodsInfoPicture`
       })
     },
-    platform(){
+    platform() {
       this.$router.push({
         path: `/v1/oa-goodsinfo/goodsInfoPlatform`
       })
     },
-    iSn(e){
+    iSn(e) {
       console.log(e)
     },
     selectalld() {
@@ -851,14 +852,14 @@ export default {
         ard.push(this.violation[item])
       }
       this.editForm.dictionaryName = ard
-      this.dictionaryName1=ard.join(',')
+      this.dictionaryName1 = ard.join(',')
       console.log(this.dictionaryName1)
-//      this.member = this.allMember
+      //      this.member = this.allMember
     },
     noselectd() {
       this.editForm.dictionaryName = []
-      this.dictionaryName1=""
-//      this.member = this.allMember
+      this.dictionaryName1 = ''
+      //      this.member = this.allMember
       console.log(this.editForm)
     },
     selectalld1() {
@@ -867,117 +868,115 @@ export default {
         ard1.push(this.mainSsale[item])
       }
       this.editForm.mapPersons = ard1
-      this.mapPersons1=ard1.join(',')
+      this.mapPersons1 = ard1.join(',')
       console.log(this.editForm.mapPersons)
-//      this.member = this.allMember
+      //      this.member = this.allMember
     },
     noselectd1() {
       this.editForm.mapPersons = []
-      this.mapPersons1=""
-//      this.member = this.allMember
+      this.mapPersons1 = ''
+      //      this.member = this.allMember
       console.log(this.editForm)
     },
-    forbidSale(e){
-      this.dictionaryName1=e.join(',')
+    forbidSale(e) {
+      this.dictionaryName1 = e.join(',')
     },
-    forbidSale1(e){
-      this.mapPersons1=e.join(',')
+    forbidSale1(e) {
+      this.mapPersons1 = e.join(',')
     },
-    top(e){
-      this.foremost=e.length
+    top(e) {
+      this.foremost = e.length
     },
-    bottm(e){
-      this.last=e.length
+    bottm(e) {
+      this.last = e.length
     },
-    mainIndex(item){
-      this.oaGoods.cate=item
-      this.childrenCategory=[]
-      for(var key in this.screen) {
-        if(this.screen[key]==item){
+    mainIndex(item) {
+      this.oaGoods.cate = item
+      this.childrenCategory = []
+      for (var key in this.screen) {
+        if (this.screen[key] == item) {
           this.childrenCategory.push(key)
         }
       }
-      if(this.childrenCategory.length!=0){
-        this.oaGoods.subCate=this.childrenCategory[0]
-      }else {
-        this.oaGoods.subCate=''
+      if (this.childrenCategory.length != 0) {
+        this.oaGoods.subCate = this.childrenCategory[0]
+      } else {
+        this.oaGoods.subCate = ''
       }
     },
-    childrenIndex(item){
-      this.oaGoods.subCate=item
+    childrenIndex(item) {
+      this.oaGoods.subCate = item
       console.log(this.oaGoods)
     },
-    pushVin(item){
+    pushVin(item) {
       this.editForm.dictionaryName.push(item)
-      this.jspt=!this.jspt
+      this.jspt = !this.jspt
     },
-    pushSale(item){
+    pushSale(item) {
       this.editForm.mapPersons.push(item)
-      this.dyxs=!this.dyxs
+      this.dyxs = !this.dyxs
     },
-    specIndex(e){
-      this.editForm.packName=e
+    specIndex(e) {
+      this.editForm.packName = e
       console.log(this.editForm.packName)
     },
-    specificityIndex(e){
-      this.editForm.attributeName=e
+    specificityIndex(e) {
+      this.editForm.attributeName = e
       console.log(this.editForm.attributeName)
     },
-    repertoryIndex(e){
-      this.editForm.storeName=e
+    repertoryIndex(e) {
+      this.editForm.storeName = e
       console.log(this.editForm.storeName)
     },
-    seasonnIndex(e){
-      this.editForm.season=e
+    seasonnIndex(e) {
+      this.editForm.season = e
       console.log(this.editForm.season)
     },
-    addzk(){
-      this.jspt=!this.jspt
+    addzk() {
+      this.jspt = !this.jspt
     },
-    addxs(){
-      this.dyxs=!this.dyxs
+    addxs() {
+      this.dyxs = !this.dyxs
     },
-    dellxs(index){
+    dellxs(index) {
       this.editForm.mapPersons.splice(index, 1)
     },
-    delljs(index){
+    delljs(index) {
       this.editForm.dictionaryName.splice(index, 1)
     },
     del(index, row) {
       this.tableData.splice(index, 1)
-      console.log(this.tableData)
     },
-    //增加行
+    // 增加行
     addClomun() {
       for (let i = 0; i < this.rowss; i++) {
-        var obj={}
-        obj.id=null
-        obj.infoId=this.editForm.id
-        obj.sku=''
-        obj.property1=null
-        obj.property2=null
-        obj.property3=null
-        obj.Weight=null
-        obj.memo1=null
-        obj.memo2=null
-        obj.memo3=null
-        obj.memo4=null
-        obj.linkurl=null
-        obj.goodsskuid=null
-        obj.RetailPrice=null
-        obj.CostPrice=null
-        obj.stockNum=null
-        obj.did=null
-        obj.joomPrice=null
-        obj.joomShipping=null
+        var obj = {}
+        obj.id = null
+        obj.infoId = this.editForm.id
+        obj.sku = ''
+        obj.property1 = null
+        obj.property2 = null
+        obj.property3 = null
+        obj.Weight = null
+        obj.memo1 = null
+        obj.memo2 = null
+        obj.memo3 = null
+        obj.memo4 = null
+        obj.linkurl = null
+        obj.goodsskuid = null
+        obj.RetailPrice = null
+        obj.CostPrice = null
+        obj.stockNum = null
+        obj.did = null
+        obj.joomPrice = null
+        obj.joomShipping = null
         this.tableData.push(obj)
       }
-      this.skuTotal=this.tableData.length
+      this.skuTotal = this.tableData.length
     },
-    //成本确定
+    // 成本确定
     cosprice() {
       if (this.costprice) {
-        console.log(this.costprice)
         for (let i = 0; i < this.tableData.length; i++) {
           this.tableData[i].costPrice = this.costprice
         }
@@ -985,7 +984,7 @@ export default {
         return false
       }
     },
-    //重量确定
+    // 重量确定
     weht() {
       if (this.weight) {
         for (let i = 0; i < this.tableData.length; i++) {
@@ -995,7 +994,7 @@ export default {
         return false
       }
     },
-    //零售价格确定
+    // 零售价格确定
     price() {
       if (this.retailprice) {
         for (let i = 0; i < this.tableData.length; i++) {
@@ -1005,7 +1004,7 @@ export default {
         return false
       }
     },
-    //joom零售价格确定
+    // joom零售价格确定
     joomprice() {
       if (this.joomretailprice) {
         for (let i = 0; i < this.tableData.length; i++) {
@@ -1015,7 +1014,7 @@ export default {
         return false
       }
     },
-    //joom运费
+    // joom运费
     transport() {
       if (this.transportationcost) {
         for (let i = 0; i < this.tableData.length; i++) {
@@ -1026,9 +1025,9 @@ export default {
       }
     },
     save() {
-      const md=JSON.stringify(this.mandatoryData)
-      const mr=JSON.stringify(this.randomData)
-      let saveInfo={
+      const md = JSON.stringify(this.mandatoryData)
+      const mr = JSON.stringify(this.randomData)
+      const saveInfo = {
         basicInfo: {
           goodsInfo: {
             id: this.editForm.id,
@@ -1081,8 +1080,8 @@ export default {
           },
           oaGoods: {
             nid: this.oaGoods.nid,
-            cate:this.oaGoods.cate,
-            subCate:this.oaGoods.subCate,
+            cate: this.oaGoods.cate,
+            subCate: this.oaGoods.subCate,
             vendor1: this.oaGoods.vendor1,
             vendor2: this.oaGoods.vendor2,
             vendor3: this.oaGoods.vendor3,
@@ -1093,7 +1092,6 @@ export default {
         },
         skuInfo: this.tableData
       }
-      console.log(saveInfo)
       APISaveAttribute(saveInfo).then(res => {
         if (res.data.data[0] === 'success') {
           this.$message({
@@ -1105,69 +1103,73 @@ export default {
         }
       })
     },
-    mandatory(e){
-      this.bxlength=0
-      this.bxtotal=0
-      var st1=0
-      for(var i=0;i<this.mandatoryData.length;i++){
-        if(this.mandatoryData[i]!=""){
+    mandatory(e) {
+      this.bxlength = 0
+      this.bxtotal = 0
+      var st1 = 0
+      for (var i = 0; i < this.mandatoryData.length; i++) {
+        if (this.mandatoryData[i] != '') {
           this.bxlength++
-          st1+=this.mandatoryData[i].length
+          st1 += this.mandatoryData[i].length
         }
       }
-      this.bxtotal=st1
+      this.bxtotal = st1
       console.log(this.mandatoryData)
     },
-    random(e){
-      this.sjlength=0
-      this.sjtotal=0
-      var st2=0
-      for(var i=0;i<this.randomData.length;i++){
-        if(this.randomData[i]!=""){
+    random(e) {
+      this.sjlength = 0
+      this.sjtotal = 0
+      var st2 = 0
+      for (var i = 0; i < this.randomData.length; i++) {
+        if (this.randomData[i] != '') {
           this.sjlength++
-          st2+=this.randomData[i].length
+          st2 += this.randomData[i].length
         }
       }
-      this.sjtotal=st2
+      this.sjtotal = st2
     },
     getData() {
       APIAttributeInfo(this.condition).then(res => {
         this.tableData = res.data.data.skuInfo
-        this.skuTotal=this.tableData.length
+        this.skuTotal = this.tableData.length
         this.editForm = res.data.data.basicInfo.goodsInfo
         this.oaGoods = res.data.data.basicInfo.oaGoods
-        this.dictionaryName1=this.editForm.dictionaryName
-        this.mapPersons1=this.editForm.mapPersons
-        this.editForm.requiredKeywords=JSON.parse(this.editForm.requiredKeywords)
-        this.editForm.randomKeywords=JSON.parse(this.editForm.randomKeywords)
-        this.editForm.mapPersons=this.editForm.mapPersons.split(",")
-        this.editForm.dictionaryName=this.editForm.dictionaryName.split(",")
-        if(this.editForm.headKeywords){
-          this.foremost=this.editForm.headKeywords.length
+        this.dictionaryName1 = this.editForm.dictionaryName
+        this.mapPersons1 = this.editForm.mapPersons
+        this.editForm.requiredKeywords = JSON.parse(this.editForm.requiredKeywords)
+        this.editForm.randomKeywords = JSON.parse(this.editForm.randomKeywords)
+        this.editForm.mapPersons = this.editForm.mapPersons.split(',')
+        if(this.editForm.dictionaryName){
+          this.editForm.dictionaryName = this.editForm.dictionaryName.split(',')
+        }else {
+          this.editForm.dictionaryName = []
         }
-        if(this.editForm.tailKeywords){
-          this.last=this.editForm.tailKeywords.length
+        if (this.editForm.headKeywords) {
+          this.foremost = this.editForm.headKeywords.length
         }
-        if(this.editForm.requiredKeywords){
-          this.mandatoryData= this.editForm.requiredKeywords
+        if (this.editForm.tailKeywords) {
+          this.last = this.editForm.tailKeywords.length
         }
-        if(this.editForm.randomKeywords){
-          this.randomData= this.editForm.randomKeywords
+        if (this.editForm.requiredKeywords) {
+          this.mandatoryData = this.editForm.requiredKeywords
+        }
+        if (this.editForm.randomKeywords) {
+          this.randomData = this.editForm.randomKeywords
         }
         console.log(this.randomData)
-        if(this.editForm.randomKeywords){
-          for(var i=0;i<this.editForm.randomKeywords.length;i++){
-            if(this.editForm.randomKeywords[i]!=""){
+        if (this.editForm.randomKeywords) {
+          for (var i = 0; i < this.editForm.randomKeywords.length; i++) {
+            if (this.editForm.randomKeywords[i] != '') {
               this.sjlength++
-              this.sjtotal+=this.editForm.randomKeywords[i].length
+              this.sjtotal += this.editForm.randomKeywords[i].length
             }
           }
         }
-        if(this.editForm.requiredKeywords){
-          for(var i=0;i<this.editForm.requiredKeywords.length;i++){
-            if(this.editForm.requiredKeywords[i]!=""){
+        if (this.editForm.requiredKeywords) {
+          for (var i = 0; i < this.editForm.requiredKeywords.length; i++) {
+            if (this.editForm.requiredKeywords[i] != '') {
               this.bxlength++
-              this.bxtotal+=this.editForm.requiredKeywords[i].length
+              this.bxtotal += this.editForm.requiredKeywords[i].length
             }
           }
         }
@@ -1181,33 +1183,33 @@ export default {
       this.category = this.cate = response.data.data
     })
     getAttributeInfoPackName().then(response => {
-      this.spec =  response.data.data
+      this.spec = response.data.data
     })
     getAttributeInfoSpecialAttribute().then(response => {
-      this.specificity =  response.data.data
+      this.specificity = response.data.data
     })
     getAttributeInfoStoreName().then(response => {
-      this.repertory =  response.data.data
+      this.repertory = response.data.data
     })
     getAttributeInfoSeason().then(response => {
-      this.seasonn =  response.data.data
+      this.seasonn = response.data.data
     })
     getAttributeInfoPlat().then(response => {
-      this.violation =  response.data.data
+      this.violation = response.data.data
       console.log(this.violation)
     })
     getAttributeInfoSalesman().then(response => {
-      this.mainSsale =  response.data.data
+      this.mainSsale = response.data.data
       console.log(this.mainSsale)
     })
     getAttributeInfoCat().then(response => {
-      this.mainCategory =  response.data.data
+      this.mainCategory = response.data.data
     })
     getAttributeInfoSubCat().then(response => {
-      this.screen =  response.data.data
-      const sCate=this.oaGoods.cate
-      for(var key in this.screen) {
-        if(this.screen[key]==sCate){
+      this.screen = response.data.data
+      const sCate = this.oaGoods.cate
+      for (var key in this.screen) {
+        if (this.screen[key] == sCate) {
           this.childrenCategory.push(key)
         }
       }

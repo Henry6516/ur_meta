@@ -146,7 +146,7 @@ export default {
     getMenu().then(response => {
       this.allMenu = response.data.data
       this.allMenu.splice(0, 1)
-      this.showMenu()
+//      this.showMenu()
     })
   },
   beforeRouteLeave(to, from, next) {
@@ -205,7 +205,6 @@ export default {
       sessionStorage.setItem('aIndex',asideIndex)
       const allMenu = this.allMenu
       this.asideMenu = { position: asideIndex, menu: [allMenu[asideIndex]] }
-      console.log(allMenu)
     },
     cropSuccess(resData) {
       this.imagecropperShow = false

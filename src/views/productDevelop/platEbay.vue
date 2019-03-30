@@ -952,7 +952,6 @@
                     }
                     this.tabDate[i].property=JSON.stringify(obj)
                 }
-                console.log(this.tabDate)
             },
             addClomun(){
                 for (let i = 0; i < this.rows; i++) {
@@ -1018,7 +1017,6 @@
                         }
                     }
                     this.title=this.title
-                    console.log(this.title)
                 } else {
                     return false
                 }
@@ -1072,7 +1070,6 @@
                     }
                 }
                 this.bxtotal=st1
-                console.log(this.mandatoryData)
             },
             random(e){
                 this.sjlength=0
@@ -1096,7 +1093,6 @@
                 this.shoIS1=!this.shoIS1
             },
             radioBtn() {
-                console.log(this.radio)
             },
             addColumn() {
                 if (this.columns !== '') {
@@ -1122,20 +1118,17 @@
 //                    }
 //                    console.log(aryd)
 //                    this.title.push(aryd)
-                    console.log(this.title)
                     this.innerVisible = false
                 }
             },
             titleDel(index) {
                 this.tite.splice(index, 1)
                 for(var i=0;i<this.title.length;i++){
-                    console.log(this.title[i].value)
                     this.title[i].value.splice(index, 1)
                 }
             },
             revise(e, index) {
                 this.wishForm.extraPage[index] = e
-                console.log(this.wishForm.extraPage)
             },
             swapItems(arr, index1, index2, direction) {
                 if (direction == 'up') {
@@ -1194,10 +1187,8 @@
                 if (this.addPhoto == '') {
                     this.$message.error('不能为空')
                 } else {
-                    console.log(this.addPhoto)
                     this.wishForm.extraPage.push(this.addPhoto)
                     this.dialogFormVisible1 = false
-                    console.log(this.wishForm.extraPage)
                 }
             },
             delDz(index) {
@@ -1239,7 +1230,6 @@
                     '': ''
                 }
                 this.tableData.push(obj)
-                console.log(this.tableData)
             },
             getData() {
                 APIPlatInfo(this.condition).then(res => {
@@ -1249,22 +1239,18 @@
                     this.wishForm.extraPage = this.wishForm.extraPage.split('\\n')
 //                    this.wishForm.extraPage.pop()
                     this.tableData = JSON.parse(res.data.data.basicInfo.specifics)
-                    console.log(this.tableData)
 //                    const proper = JSON.parse(res.data.data.skuInfo[0].property).columns
                     for(var i=0;i<this.tabDate.length;i++){
                         const proper = JSON.parse(res.data.data.skuInfo[i].property).columns
-                        console.log(proper)
                         var obj = {}
                         obj.label = []
                         obj.value = []
                         for (var key in proper) {
                             obj.label.push(key)
                             obj.value.push(proper[key])
-                            console.log(obj)
                         }
                         this.title.push(obj)
                     }
-                    console.log(this.title)
                     this.tite=this.title[0].label
                     this.wishForm.requiredKeywords=JSON.parse(this.wishForm.requiredKeywords)
                     this.wishForm.randomKeywords=JSON.parse(this.wishForm.randomKeywords)
@@ -1391,7 +1377,6 @@
                 for(var item in response.data.data){
                     this.accountNumber.push(response.data.data[item])
                 }
-                console.log(this.accountNumber)
             })
             getPlatEbayStore().then(response => {
                 this.warehouse =  response.data.data

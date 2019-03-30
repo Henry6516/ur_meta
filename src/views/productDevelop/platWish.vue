@@ -763,7 +763,6 @@
           }
         }
         this.bxtotal=st1
-        console.log(this.mandatoryData)
       },
       random(e){
         this.sjlength=0
@@ -781,7 +780,7 @@
         this.shoIS=!this.shoIS
       },
       handleChange(val) {
-        console.log(val);
+
       },
       // 删除URL
       delUrl(index) {

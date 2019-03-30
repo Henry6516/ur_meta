@@ -255,7 +255,6 @@
           <el-form-item label="名称"
                         prop="name">
             <span>{{detailForm.name}}</span>
-            <!-- <el-tag :type="tags[detailForm.priority]['type']">{{tags[detailForm.priority]['name']}}</el-tag> -->
           </el-form-item>
           <el-form-item label="类别"
                         prop="type">
@@ -989,7 +988,7 @@ export default {
     }
   },
   methods: {
-    //排序
+    // 排序
     sortNumber(column, prop, order) {
       debugger
       if (column.order === 'descending') {
@@ -1451,7 +1450,7 @@ export default {
           ]
         )
       } else if ($index === 2) {
-        let filters = [
+        const filters = [
           { text: 0, value: 'BUG' },
           { text: 1, value: '新需求' },
           { text: 2, value: '任务' },
@@ -1515,7 +1514,7 @@ export default {
           ]
         )
       } else if ($index === 4) {
-        let filters = [
+        const filters = [
           { text: 1, value: '待审核' },
           { text: 2, value: '已驳回' },
           { text: 3, value: '处理中' },
@@ -1609,7 +1608,7 @@ export default {
           ]
         )
       } else if ($index === 2) {
-        let filters = [
+        const filters = [
           { text: 0, value: 'BUG' },
           { text: 1, value: '新需求' },
           { text: 2, value: '任务' },
@@ -1700,7 +1699,7 @@ export default {
           ]
         )
       } else if ($index === 5) {
-        let filters = [
+        const filters = [
           { text: 1, value: 'Open' },
           { text: 2, value: 'In Progress' },
           { text: 3, value: 'Resovled' },
@@ -1795,7 +1794,7 @@ export default {
           ]
         )
       } else if ($index === 2) {
-        let filters = [
+        const filters = [
           { text: 0, value: 'BUG' },
           { text: 1, value: '新需求' },
           { text: 2, value: '任务' },

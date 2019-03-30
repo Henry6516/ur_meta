@@ -88,6 +88,14 @@ export function reverseList(param) {
     data
   })
 }
+export function reverseList1(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goods/backward-list?page=' + param.page2,
+    method: 'post',
+    data
+  })
+}
 export function reverseCreate(param) {
   const data = { condition: param }
   return request({
@@ -203,7 +211,7 @@ export function APIFinishAttribute(param) {
 export function APISaveAttribute(param) {
   const data = { condition: param }
   return request({
-    url: '/oa-goodsinfo/save-attribute-info',
+    url: '/oa-goodsinfo/save-attribute',
     method: 'post',
     data
   })
@@ -392,3 +400,244 @@ export function APISupplier(param) {
     data
   })
 }
+export function APIWishSuffix(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/wish-suffix?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APICreateWish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/create-wish',
+    method: 'post',
+    data
+  })
+}
+export function APIDeleteWish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/delete-wish',
+    method: 'post',
+    data
+  })
+}
+export function APIJoomSuffix(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/joom-suffix?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APICreateJoom(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/create-joom',
+    method: 'post',
+    data
+  })
+}
+export function APICreateEbay(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/create-ebay',
+    method: 'post',
+    data
+  })
+}
+export function APIJoomInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/joom-info',
+    method: 'post',
+    data
+  })
+}
+export function APIEbayInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/ebay-info',
+    method: 'post',
+    data
+  })
+}
+export function APIWishInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/wish-info',
+    method: 'post',
+    data
+  })
+}
+export function APIShippingInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/shipping-info',
+    method: 'post',
+    data
+  })
+}
+export function APIContrastInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/contrast-info',
+    method: 'post',
+    data
+  })
+}
+export function APIRulesInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/rules-info',
+    method: 'post',
+    data
+  })
+}
+export function APIDeleteJoom(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/delete-joom',
+    method: 'post',
+    data
+  })
+}
+export function APIDeleteEbay(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/delete-ebay',
+    method: 'post',
+    data
+  })
+}
+export function APIDeleteShipping(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/delete-shipping',
+    method: 'post',
+    data
+  })
+}
+export function APIDeleteContrast(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/delete-contrast',
+    method: 'post',
+    data
+  })
+}
+export function APIDeleteRules(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/delete-rules',
+    method: 'post',
+    data
+  })
+}
+export function APIUpdateJoom(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/update-joom',
+    method: 'post',
+    data
+  })
+}
+export function APIUpdateShipping(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/update-shipping',
+    method: 'post',
+    data
+  })
+}
+export function APIUpdateContrast(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/update-contrast',
+    method: 'post',
+    data
+  })
+}
+export function APIUpdateRules(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/update-rules',
+    method: 'post',
+    data
+  })
+}
+export function APIUpdateWish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/update-wish',
+    method: 'post',
+    data
+  })
+}
+export function APIUpdateEbay(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/update-ebay',
+    method: 'post',
+    data
+  })
+}
+export function APIEbaySuffix(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/ebay-suffix?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APIShippingService(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/shipping-service?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APIJoomWish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/joom-wish?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APISysRules(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/sys-rules?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APICreateShipping(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/create-shipping',
+    method: 'post',
+    data
+  })
+}
+export function APICreateContrast(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/create-contrast',
+    method: 'post',
+    data
+  })
+}
+export function APICreateRules(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/create-rules',
+    method: 'post',
+    data
+  })
+}
+

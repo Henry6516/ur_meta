@@ -54,6 +54,12 @@ import picEdit from '../views/productDevelop/picEdit.vue'
 import platEdit from '../views/productDevelop/platEdit.vue'
 import supplierManagement from '../views/productDevelop/supplierManagement.vue'
 import supplierProduct from '../views/productDevelop/supplierProduct.vue'
+import basicInformation from '../views/productDevelop/basicInformation.vue'
+import basicInformationeBay from '../views/productDevelop/basicInformationeBay.vue'
+import basicInformationJoom from '../views/productDevelop/basicInformationJoom.vue'
+import basicInformationJoomYs from '../views/productDevelop/basicInformationJoomYs.vue'
+import basicInformationJw from '../views/productDevelop/basicInformationJw.vue'
+import basicInformationArt from '../views/productDevelop/basicInformationArt.vue'
 
 const routes = [
   {
@@ -336,6 +342,36 @@ const routes = [
         path: '/v1/supplier/supplier-goods-list',
         component: supplierProduct,
         name: '供应商产品管理'
+      },
+      {
+        path: '/v1/basic-info/ebay-suffix',
+        component: basicInformation,
+        name: '基本信息'
+      },
+      {
+        path: '/v1/basic-info/ebay',
+        component: basicInformationeBay,
+        name: 'ebay'
+      },
+      {
+        path: '/v1/basic-info/joom',
+        component: basicInformationJoom,
+        name: 'joom'
+      },
+      {
+        path: '/v1/basic-info/ys',
+        component: basicInformationJoomYs,
+        name: 'ebay运输'
+      },
+      {
+        path: '/v1/basic-info/jw',
+        component: basicInformationJw,
+        name: 'Joom和Wish价格对比'
+      },
+      {
+        path: '/v1/basic-info/art',
+        component: basicInformationArt,
+        name: '开发采购美工对应关系'
       },
       {
         path: '/:id',
