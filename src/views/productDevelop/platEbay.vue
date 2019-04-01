@@ -1239,6 +1239,7 @@
                     this.wishForm.extraPage = this.wishForm.extraPage.split('\\n')
 //                    this.wishForm.extraPage.pop()
                     this.tableData = JSON.parse(res.data.data.basicInfo.specifics)
+                    console.log(this.tableData)
 //                    const proper = JSON.parse(res.data.data.skuInfo[0].property).columns
                     for(var i=0;i<this.tabDate.length;i++){
                         const proper = JSON.parse(res.data.data.skuInfo[i].property).columns

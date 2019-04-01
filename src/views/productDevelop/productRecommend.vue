@@ -227,7 +227,7 @@
         <el-button plain>批量导入</el-button>
         <el-button plain @click="delAll1">批量删除</el-button>
         <el-button plain>下载模板</el-button>
-        <el-button plain @click="claimAll1">批量审批</el-button>
+        <el-button plain @click="claimAll1">批量提交审批</el-button>
       </el-col>
     <!-- 新增对话框 -->
     <el-dialog title='新增' :visible.sync="dialogVisible1">
@@ -288,7 +288,7 @@
         </el-form-item>
         <el-form-item label="">
           <el-checkbox-group v-model="addForm.stockUp">
-            <el-checkbox label="是否备货" true-label="1" false-label="0" name="type"></el-checkbox>
+            <el-checkbox label="是否备货" true-label="是" false-label="否" name="type"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
       </el-form>
@@ -433,7 +433,7 @@
         </el-form-item>
         <el-form-item label="">
           <el-checkbox-group v-model="editForm.stockUp">
-            <el-checkbox label="是否备货" true-label="1" false-label="0" name="type"></el-checkbox>
+            <el-checkbox label="是否备货" true-label="是" false-label="否" name="type"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
       </el-form>
@@ -574,7 +574,7 @@
         <el-button plain>批量导入</el-button>
         <el-button plain @click="delAll2">批量删除</el-button>
         <el-button plain>下载模板</el-button>
-        <el-button plain @click="claimAll2">批量审批</el-button>
+        <el-button plain @click="claimAll2">批量提交审批</el-button>
       </el-col>
       <!-- 新增对话框 -->
     <el-dialog title='新增' :visible.sync="dialogVisible2">
@@ -635,7 +635,7 @@
         </el-form-item>
         <el-form-item label="售价($)">
           <el-checkbox-group v-model="addForm.stockUp">
-            <el-checkbox label="是否备货" true-label="1" false-label="0" name="type"></el-checkbox>
+            <el-checkbox label="是否备货" true-label="是" false-label="否" name="type"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
       </el-form>
@@ -780,7 +780,7 @@
         </el-form-item>
         <el-form-item label="">
           <el-checkbox-group v-model="editForm.stockUp">
-            <el-checkbox label="是否备货" true-label="1" false-label="0" name="type"></el-checkbox>
+            <el-checkbox label="是否备货" true-label="是" false-label="否" name="type"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
       </el-form>
@@ -1142,6 +1142,7 @@ export default {
       this.editForm.nid = row.nid
       goodsInfo(this.editForm).then(res => {
         this.editForm = res.data.data
+        this.editForm.stockUp=="是"?this.editForm.stockUp=true:this.editForm.stockUp=false
       })
       if (this.editForm.cate !== '') {
         const val = this.editForm.cate
@@ -1216,6 +1217,7 @@ export default {
       this.$refs.editForm.validate((valid)=>{
         if(valid){
           this.editForm.type = 'create'
+          this.addForm.flag='forward'
           forwardUpdate(this.editForm).then(res => {
             this.dialogVisibleEdit1 = false
             this.getForward()
@@ -1464,7 +1466,7 @@ export default {
           })
         ])
       } else if($index === 9){
-        let filters = [ {text:'已认领',value:"已认领"}, {text:'待审核',value:"待审核"}, {text:'待提交',value:"待提交"}, {text:'已审批',value:"已审批"}, {text:'未通过',value:"未通过"} ]
+        let filters = [ {text:'已认领',value:"已认领"}, {text:'待提交',value:"待提交"}, {text:'待审核',value:"待审核"}, {text:'已审批',value:"已审批"}, {text:'未通过',value:"未通过"} ]
         return h('el-select',{
           props:{
             placeholder:'请选择',
@@ -1719,6 +1721,7 @@ export default {
       this.editForm.nid = row.nid
       goodsInfo(this.editForm).then(res => {
         this.editForm = res.data.data
+        this.editForm.stockUp=="是"?this.editForm.stockUp=true:this.editForm.stockUp=false
       })
       if (this.editForm.cate !== '') {
         const val = this.editForm.cate
@@ -1809,7 +1812,7 @@ export default {
       this.$refs.editForm.validate((valid)=>{
         if(valid){
           this.editForm.type = 'create'
-          reverseUpdate(this.editForm).then(res => {
+          forwardUpdate(this.editForm).then(res => {
             this.dialogVisibleEdit2 = false
             this.getReverse()
          })
@@ -1823,7 +1826,7 @@ export default {
       this.$refs.editForm.validate((valid)=>{
         if(valid){
           this.editForm.type = 'check'
-          reverseUpdate(this.editForm).then(res => {
+          forwardUpdate(this.editForm).then(res => {
             this.dialogVisibleEdit2 = false
             this.getReverse()
          })

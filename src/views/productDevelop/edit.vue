@@ -853,14 +853,12 @@ export default {
       }
       this.editForm.dictionaryName = ard
       this.dictionaryName1 = ard.join(',')
-      console.log(this.dictionaryName1)
       //      this.member = this.allMember
     },
     noselectd() {
       this.editForm.dictionaryName = []
       this.dictionaryName1 = ''
       //      this.member = this.allMember
-      console.log(this.editForm)
     },
     selectalld1() {
       var ard1 = []
@@ -869,14 +867,12 @@ export default {
       }
       this.editForm.mapPersons = ard1
       this.mapPersons1 = ard1.join(',')
-      console.log(this.editForm.mapPersons)
       //      this.member = this.allMember
     },
     noselectd1() {
       this.editForm.mapPersons = []
       this.mapPersons1 = ''
       //      this.member = this.allMember
-      console.log(this.editForm)
     },
     forbidSale(e) {
       this.dictionaryName1 = e.join(',')
@@ -906,7 +902,6 @@ export default {
     },
     childrenIndex(item) {
       this.oaGoods.subCate = item
-      console.log(this.oaGoods)
     },
     pushVin(item) {
       this.editForm.dictionaryName.push(item)
@@ -918,19 +913,15 @@ export default {
     },
     specIndex(e) {
       this.editForm.packName = e
-      console.log(this.editForm.packName)
     },
     specificityIndex(e) {
       this.editForm.attributeName = e
-      console.log(this.editForm.attributeName)
     },
     repertoryIndex(e) {
       this.editForm.storeName = e
-      console.log(this.editForm.storeName)
     },
     seasonnIndex(e) {
       this.editForm.season = e
-      console.log(this.editForm.season)
     },
     addzk() {
       this.jspt = !this.jspt
@@ -1025,6 +1016,35 @@ export default {
       }
     },
     save() {
+      console.log(this.editForm.goodsName)
+      if(!this.editForm.goodsName){
+        this.$message.error('请填写商品名称')
+        return
+      }
+      if(!this.editForm.aliasCnName){
+        this.$message.error('请填写中文申报名')
+        return
+      }
+      if(!this.editForm.aliasEnName){
+        this.$message.error('请填写英文申报名')
+        return
+      }
+      if(!this.editForm.supplierName){
+        this.$message.error('请填写供应商名称')
+        return
+      }
+      if(!this.editForm.packName){
+        this.$message.error('请选择规格')
+        return
+      }
+      if(!this.editForm.storeName){
+        this.$message.error('请选择仓库')
+        return
+      }
+      if(!this.editForm.description){
+        this.$message.error('请填写描述')
+        return
+      }
       const md = JSON.stringify(this.mandatoryData)
       const mr = JSON.stringify(this.randomData)
       const saveInfo = {
@@ -1114,7 +1134,6 @@ export default {
         }
       }
       this.bxtotal = st1
-      console.log(this.mandatoryData)
     },
     random(e) {
       this.sjlength = 0
@@ -1138,11 +1157,15 @@ export default {
         this.mapPersons1 = this.editForm.mapPersons
         this.editForm.requiredKeywords = JSON.parse(this.editForm.requiredKeywords)
         this.editForm.randomKeywords = JSON.parse(this.editForm.randomKeywords)
-        this.editForm.mapPersons = this.editForm.mapPersons.split(',')
         if(this.editForm.dictionaryName){
           this.editForm.dictionaryName = this.editForm.dictionaryName.split(',')
         }else {
           this.editForm.dictionaryName = []
+        }
+        if(this.editForm.mapPersons){
+          this.editForm.mapPersons = this.editForm.mapPersons.split(',')
+        }else {
+          this.editForm.mapPersons = []
         }
         if (this.editForm.headKeywords) {
           this.foremost = this.editForm.headKeywords.length
@@ -1156,7 +1179,6 @@ export default {
         if (this.editForm.randomKeywords) {
           this.randomData = this.editForm.randomKeywords
         }
-        console.log(this.randomData)
         if (this.editForm.randomKeywords) {
           for (var i = 0; i < this.editForm.randomKeywords.length; i++) {
             if (this.editForm.randomKeywords[i] != '') {
@@ -1196,11 +1218,9 @@ export default {
     })
     getAttributeInfoPlat().then(response => {
       this.violation = response.data.data
-      console.log(this.violation)
     })
     getAttributeInfoSalesman().then(response => {
       this.mainSsale = response.data.data
-      console.log(this.mainSsale)
     })
     getAttributeInfoCat().then(response => {
       this.mainCategory = response.data.data
