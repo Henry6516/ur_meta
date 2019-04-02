@@ -25,12 +25,9 @@
         </el-select>
         <span class="exportAccount" style="margin-right: 10px">保存完善</span>
         <el-button type="success" style="float: left;margin-right: 10px">导出Wish模板</el-button>
-      <el-select v-model="select"
+      <el-select v-model="joom"
                  placeholder="--请选择账号--" style="float: left;">
-        <el-option label="是"
-                   value="是"></el-option>
-        <el-option label="否"
-                   value="否"></el-option>
+        <el-option v-for="(item, key) in joomArr" :key='item.key' :label="item" :value="item"></el-option>
       </el-select>
         <span class="exportAccount">导出Joom模板</span>
       </el-col>
@@ -594,7 +591,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-  import { APIPlatInfo, APISaveWishInfo, APIFinishPlat } from '../../api/product'
+  import { APIPlatInfo, APISaveWishInfo, APIFinishPlat,APIJoomName } from '../../api/product'
   export default {
     props: {
       id: {
@@ -614,6 +611,7 @@
         foremost:0,
         price: null,
         ship: null,
+        joomArr:[],
         addPhoto:"",
         advicePrice: null,
         joomPrice: null,
@@ -622,6 +620,7 @@
         dialogVisible: false,
         setVisible: false,
         select: '',
+        joom:"",
         wishForm: {},
         last:0,
         tableData: [],
@@ -1003,6 +1002,9 @@
     mounted() {
       this.condition.id = this.$route.params.id
       this.getData()
+      APIJoomName().then(response => {
+        this.joomArr =  response.data.data
+      })
     }
   }
 </script>

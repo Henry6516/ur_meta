@@ -587,7 +587,7 @@
       <el-button size="small"
                  type="success" @click="oneKey()">一键生成SKU</el-button>
       <el-button size="small"
-                 type="primary">保存并完善</el-button>
+                 type="primary" @click="save1()">保存并完善</el-button>
       <el-button size="small"
                  type="warning">导入普源</el-button>
       <el-button size="small"
@@ -622,7 +622,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APIAttributeInfo, APISaveAttribute, APIAttribute } from '../../api/product'
+import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute } from '../../api/product'
 import { getMember, getGoodscats, getAttributeInfoPackName, getAttributeInfoSpecialAttribute, getAttributeInfoStoreName, getAttributeInfoSeason, getAttributeInfoPlat, getAttributeInfoSalesman, getAttributeInfoCat, getAttributeInfoSubCat } from '../../api/profit'
 export default {
   data() {
@@ -828,19 +828,22 @@ export default {
       }
       this.sjtotal = st2
     },
-    attribute() {
+    attribute(){
+      sessionStorage.setItem('judge', "属性信息")
       this.$router.push({
         path: `/v1/oa-goodsinfo/index`
       })
     },
-    photo() {
+    photo(){
+      sessionStorage.setItem('judge', "图片信息")
       this.$router.push({
-        path: `/v1/oa-goodsinfo/goodsInfoPicture`
+        path: `/v1/oa-goodsinfo/index`
       })
     },
-    platform() {
+    platform(){
+      sessionStorage.setItem('judge', "平台信息")
       this.$router.push({
-        path: `/v1/oa-goodsinfo/goodsInfoPlatform`
+        path: `/v1/oa-goodsinfo/index`
       })
     },
     iSn(e) {
@@ -1015,8 +1018,114 @@ export default {
         return false
       }
     },
+    save1() {
+      if(!this.editForm.goodsName){
+        this.$message.error('请填写商品名称')
+        return
+      }
+      if(!this.editForm.aliasCnName){
+        this.$message.error('请填写中文申报名')
+        return
+      }
+      if(!this.editForm.aliasEnName){
+        this.$message.error('请填写英文申报名')
+        return
+      }
+      if(!this.editForm.supplierName){
+        this.$message.error('请填写供应商名称')
+        return
+      }
+      if(!this.editForm.packName){
+        this.$message.error('请选择规格')
+        return
+      }
+      if(!this.editForm.storeName){
+        this.$message.error('请选择仓库')
+        return
+      }
+      if(!this.editForm.description){
+        this.$message.error('请填写描述')
+        return
+      }
+      const md = JSON.stringify(this.mandatoryData)
+      const mr = JSON.stringify(this.randomData)
+      const saveInfo = {
+        basicInfo: {
+          goodsInfo: {
+            id: this.editForm.id,
+            isLiquid: this.editForm.isLiquid,
+            isPowder: this.editForm.isPowder,
+            isMagnetism: this.editForm.isMagnetism,
+            isCharged: this.editForm.isCharged,
+            description: this.editForm.description,
+            goodsName: this.editForm.goodsName,
+            aliasCnName: this.editForm.aliasCnName,
+            aliasEnName: this.editForm.aliasEnName,
+            packName: this.editForm.packName,
+            season: this.editForm.season,
+            dictionaryName: this.dictionaryName1,
+            supplierName: this.editForm.supplierName,
+            storeName: this.editForm.storeName,
+            purchaser: this.editForm.purchaser,
+            possessMan1: this.editForm.possessMan1,
+            possessMan2: this.editForm.possessMan2,
+            declaredValue: this.editForm.declaredValue,
+            picUrl: this.editForm.picUrl,
+            goodsId: this.editForm.goodsId,
+            goodsCode: this.editForm.goodsCode,
+            achieveStatus: this.editForm.achieveStatus,
+            devDatetime: this.editForm.devDatetime,
+            developer: this.editForm.developer,
+            updateTime: this.editForm.updateTime,
+            picStatus: this.editForm.picStatus,
+            supplierID: this.editForm.supplierID,
+            storeID: this.editForm.storeID,
+            attributeName: this.editForm.attributeName,
+            bgoodsId: this.editForm.bgoodsId,
+            completeStatus: this.editForm.completeStatus,
+            isVar: this.editForm.isVar,
+            headKeywords: this.editForm.headKeywords,
+            requiredKeywords: md,
+            randomKeywords: mr,
+            tailKeywords: this.editForm.tailKeywords,
+            wishTags: this.editForm.wishTags,
+            stockUp: this.editForm.stockUp,
+            picCompleteTime: this.editForm.picCompleteTime,
+            goodsStatus: this.editForm.goodsStatus,
+            stockDays: this.editForm.stockDays,
+            wishPublish: this.editForm.wishPublish,
+            number: this.editForm.number,
+            mid: this.editForm.mid,
+            extendStatus: this.editForm.extendStatus,
+            mapPersons: this.mapPersons1,
+            filterType: this.editForm.filterType
+          },
+          oaGoods: {
+            nid: this.oaGoods.nid,
+            cate: this.oaGoods.cate,
+            subCate: this.oaGoods.subCate,
+            vendor1: this.oaGoods.vendor1,
+            vendor2: this.oaGoods.vendor2,
+            vendor3: this.oaGoods.vendor3,
+            origin1: this.oaGoods.origin1,
+            origin2: this.oaGoods.origin2,
+            origin3: this.oaGoods.origin3
+          }
+        },
+        skuInfo: this.tableData
+      }
+      APISaveFinishAttribute(saveInfo).then(res => {
+        if (res.data.data[0] === 'success') {
+          this.$message({
+            message: '保存成功',
+            type: 'success'
+          })
+        } else {
+          this.$message.error('保存失败')
+        }
+      })
+    },
     save() {
-      console.log(this.editForm.goodsName)
       if(!this.editForm.goodsName){
         this.$message.error('请填写商品名称')
         return

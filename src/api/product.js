@@ -216,6 +216,14 @@ export function APISaveAttribute(param) {
     data
   })
 }
+export function APISaveFinishAttribute(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/save-finish-attribute',
+    method: 'post',
+    data
+  })
+}
 export function APIGenerateCode(param) {
   const data = { condition: param }
   return request({
@@ -640,4 +648,93 @@ export function APICreateRules(param) {
     data
   })
 }
+export function APIPaymentList(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/payment-list?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APIPayment(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/payment',
+    method: 'post',
+    data
+  })
+}
+export function APISavePayment(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/save-payment',
+    method: 'post',
+    data
+  })
+}
+export function APISupplierRrderList(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/supplier-order-list?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APIDeliveryTemplate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/delivery-template',
+    method: 'post',
+    data
+  })
+}
+export function APIRrderAttribute(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/order-attribute',
+    method: 'post',
+    data
+  })
+}
+export function APISyncQuery(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/sync-query',
+    method: 'post',
+    data
+  })
+}
+export function APIPay(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/pay',
+    method: 'post',
+    data
+  })
+}
+export function APIDelivery(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/delivery',
+    method: 'post',
+    data
+  })
+}
+export function APIJoomName(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/joom-name',
+    method: 'post',
+    data
+  })
+}
+//export function APIDelivery(param) {
+//  const data = { condition: param }
+//  return request({
+//    url: '/supplier-order/delivery',
+//    method: 'post',
+//    data
+//  })
+//}
+
 

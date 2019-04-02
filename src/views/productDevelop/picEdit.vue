@@ -92,18 +92,21 @@ export default {
   },
   methods: {
     attribute(){
+      sessionStorage.setItem('judge', "属性信息")
       this.$router.push({
         path: `/v1/oa-goodsinfo/index`
       })
     },
     photo(){
+      sessionStorage.setItem('judge', "图片信息")
       this.$router.push({
-        path: `/v1/oa-goodsinfo/goodsInfoPicture`
+        path: `/v1/oa-goodsinfo/index`
       })
     },
     platform(){
+      sessionStorage.setItem('judge', "平台信息")
       this.$router.push({
-        path: `/v1/oa-goodsinfo/goodsInfoPlatform`
+        path: `/v1/oa-goodsinfo/index`
       })
     },
     //保存

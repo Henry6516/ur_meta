@@ -409,7 +409,7 @@
         </el-table-column>
         <el-table-column type="index" fixed align="center" header-align="center">
         </el-table-column>
-        <el-table-column label="操作" fixed header-align="center" width="80">
+        <el-table-column label="操作" fixed header-align="center" width="105">
           <template slot-scope="scope">
             <el-tooltip content="查看">
               <el-button type="text" @click="view2(scope.$index, scope.row)">
@@ -424,6 +424,16 @@
             <el-tooltip content="作废">
               <el-button type="text" @click="cancel2(scope.$index, scope.row)">
                 <i class="iconfont icon-shanchu"></i>
+              </el-button>
+            </el-tooltip>
+            <el-tooltip content="编辑">
+              <el-button type="text" @click="editWtg(scope.$index, scope.row)">
+                <i class="el-icon-edit"></i>
+              </el-button>
+            </el-tooltip>
+            <el-tooltip content="提交审核">
+              <el-button type="text" @click="putIn(scope.$index, scope.row)">
+                <i class="el-icon-tickets"></i>
               </el-button>
             </el-tooltip>
           </template>
@@ -516,6 +526,73 @@
           </el-table-column>
         </el-table-column>
       </el-table>
+      <el-dialog title='更新' :visible.sync="dialogVisibleEdit2">
+        <el-form :model="editForm" :rules="rules" label-width="110px" label-position="left" ref="editForm">
+          <el-form-item label="图片">
+            <img :src='editForm.img' style="width: 60px;height: 50px">
+          </el-form-item>
+          <el-form-item label="图片地址" prop="img">
+            <el-input v-model="editForm.img"></el-input>
+          </el-form-item>
+          <el-form-item label="主类目" prop="cate">
+            <el-select size="small" v-model="editForm.cate" @change="getSubcate" style="width:100%;">
+              <el-option v-for="item in cate" :value="item.CategoryName" :key="item.CategoryName">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="子类目" prop="subCate">
+            <el-select size="small" v-model="editForm.subCate" style="width:100%;">
+              <el-option v-for="item in subCate" :value="item.CategoryName" :key="item.CategoryName">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="供应商链接1">
+            <el-input size="small" v-model="editForm.vendor1"></el-input>
+          </el-form-item>
+          <el-form-item label="供应商链接2">
+            <el-input size="small" v-model="editForm.vendor2"></el-input>
+          </el-form-item>
+          <el-form-item label="供应商链接3">
+            <el-input size="small" v-model="editForm.vendor3"></el-input>
+          </el-form-item>
+          <el-form-item label="平台参考链接1">
+            <el-input size="small" v-model="editForm.origin1"></el-input>
+          </el-form-item>
+          <el-form-item label="平台参考链接2">
+            <el-input size="small" v-model="editForm.origin2"></el-input>
+          </el-form-item>
+          <el-form-item label="平台参考链接3">
+            <el-input size="small" v-model="editForm.origin3"></el-input>
+          </el-form-item>
+          <el-form-item label="售价($)">
+            <el-input size="small" v-model="editForm.salePrice" placeholder="选填"></el-input>
+          </el-form-item>
+          <el-form-item label="预估月销量:">
+            <el-input size="small" v-model="editForm.hopeSale" placeholder="选填"></el-input>
+          </el-form-item>
+          <el-form-item label="预估利润率(%):">
+            <el-input size="small" v-model="editForm.hopeRate" placeholder="选填"></el-input>
+          </el-form-item>
+          <el-form-item label="预估重量(克):">
+            <el-input size="small" v-model="editForm.hopeWeight" placeholder="选填"></el-input>
+          </el-form-item>
+          <el-form-item label="预估成本(￥):">
+            <el-input size="small" v-model="editForm.hopeCost" placeholder="选填"></el-input>
+          </el-form-item>
+          <el-form-item label="预估月毛利($):">
+            <el-input size="small" v-model="editForm.hopeMonthProfit" placeholder="选填"></el-input>
+          </el-form-item>
+          <el-form-item label="">
+            <el-checkbox-group v-model="editForm.stockUp">
+              <el-checkbox label="是否备货" true-label="是" false-label="否" name="type"></el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+        </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitEdit2">更新</el-button>
+        <el-button type="primary" @click="submitEditCheck2">更新并提交审核</el-button>
+      </span>
+      </el-dialog>
       <div class="toolbar">
         <el-pagination
           background
@@ -534,7 +611,7 @@
 
 <script type="text/ecmascript-6">
 import { getGoodscats } from '../../api/profit'
-import { checkList, checkPassList, checkPass, checkFailed, checkCancel, checkFailedList, goodsInfo } from '../../api/product'
+import { checkList, checkPassList, checkPass, checkFailed, checkCancel, checkFailedList, goodsInfo,forwardSubmit,forwardUpdate  } from '../../api/product'
 import { getMenu } from '../../api/login'
 
 export default {
@@ -546,6 +623,7 @@ export default {
       total2: null,
       dialogVisible: false,
       dialogVisible2: false,
+      dialogVisibleEdit2:false,
       disabled: true,
       allMenu: [],
       category: [],
@@ -554,6 +632,7 @@ export default {
       tableData: [],
       tableData1: [],
       tableData2: [],
+      subCate:[],
       time1: [],
       time2: [],
       show: {
@@ -565,6 +644,17 @@ export default {
       passForm: {},
       unPassForm: {},
       delForm: {},
+      editForm:[],
+      editForm: {
+        nid: null,
+        img: '',
+        cate: '',
+        subCate: '',
+        vendor1: '',
+        origin1: '',
+        developer: '',
+        introReason: ''
+      },
       condition: {
         stockUp: null,
         mineId: null,
@@ -678,6 +768,69 @@ export default {
     })
   },
   methods: {
+    getSubcate() {
+      if (this.editForm.cate !== '') {
+        const val = this.editForm.cate
+        const res = this.category
+        this.subCate = res.filter(e => e.CategoryParentName === val)
+      }
+    },
+    editWtg(index,row){
+      this.dialogVisibleEdit2 = true
+      this.editForm.nid = row.nid
+      goodsInfo(this.editForm).then(res => {
+        this.editForm = res.data.data
+        this.editForm.stockUp=="是"?this.editForm.stockUp=true:this.editForm.stockUp=false
+      })
+      if (this.editForm.cate !== '') {
+        const val = this.editForm.cate
+        const res = this.category
+        this.subCate = res.filter(e => e.CategoryParentName === val)
+      }
+    },
+    submitEdit2() {
+      this.$refs.editForm.validate((valid)=>{
+        if(valid){
+          this.editForm.type = 'create'
+          console.log(this.editForm.stockUp)
+          if(!this.editForm.stockUp=="是" || !this.editForm.stockUp=="否"){
+            this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
+          }
+          forwardUpdate(this.editForm).then(res => {
+            this.dialogVisibleEdit2 = false
+            this.getFailed()
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    submitEditCheck2() {
+      this.$refs.editForm.validate((valid)=>{
+        if(valid){
+          this.editForm.type = 'check'
+          if(!this.editForm.stockUp=="是" || !this.editForm.stockUp=="否"){
+            this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
+          }
+          forwardUpdate(this.editForm).then(res => {
+            this.dialogVisibleEdit2 = false
+            this.getFailed()
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    putIn(index,row){
+      this.$confirm('确定审批该条记录？', '提示', { type: 'warning' }).then(() => {
+        this.delForm.nid = [row.nid]
+        forwardSubmit(this.delForm).then(res => {
+          this.getFailed()
+        })
+      })
+    },
     empty(row, column, cellValue, index) {
       if (cellValue === 0) {
         return '否'

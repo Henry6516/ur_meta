@@ -1,14 +1,5 @@
 <template>
     <section>
-        <el-tabs v-model="activeName"
-                 type="card"
-                 @tab-click="handleClick" class="toolbar">
-            <el-tab-pane v-for="(item, index) in this.allMenu"
-                         :label="item.name"
-                         :name="item.name"
-                         :key="index">
-            </el-tab-pane>
-        </el-tabs>
         <div>
             <el-row class="contentt">
                 <el-col :span="24">

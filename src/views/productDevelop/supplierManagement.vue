@@ -498,11 +498,19 @@
     <div v-show="show.product">
       <supplier-product></supplier-product>
     </div>
+    <div v-show="show.payment">
+      <payment-detailed></payment-detailed>
+    </div>
+    <div v-show="show.order">
+      <ordermanage></ordermanage>
+    </div>
   </section>
 </template>
-<script>
+<script type="text/ecmascript-6">
 import { getMenu } from '../../api/login'
 import SupplierProduct from './supplierProduct.vue'
+import PaymentDetailed from './paymentDetailed.vue'
+import ordermanage from './ordermanage.vue'
 import {
   APISupplierList,
   APICreateSupplier,
@@ -513,7 +521,9 @@ import {
 } from '../../api/product'
 export default {
   components: {
-    SupplierProduct
+    SupplierProduct,
+    PaymentDetailed,
+    ordermanage:ordermanage
   },
   data() {
     return {
@@ -581,15 +591,14 @@ export default {
       } else {
         this.show['product'] = false
       }
-      if (tab.label === '供应商订单') {
+      if (tab.label === '供应商订单管理') {
         this.show['order'] = true
         // this.getPlat()
       } else {
         this.show['order'] = false
       }
       if (tab.label === '付款明细') {
-        this.show['payment'] = true
-        // this.getPlat()
+         this.show['payment'] = true
       } else {
         this.show['payment'] = false
       }

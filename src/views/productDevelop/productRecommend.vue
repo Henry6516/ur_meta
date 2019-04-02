@@ -1217,7 +1217,9 @@ export default {
       this.$refs.editForm.validate((valid)=>{
         if(valid){
           this.editForm.type = 'create'
-          this.addForm.flag='forward'
+          if(!this.editForm.stockUp=="是" || !this.editForm.stockUp=="否"){
+            this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
+          }
           forwardUpdate(this.editForm).then(res => {
             this.dialogVisibleEdit1 = false
             this.getForward()
@@ -1232,6 +1234,9 @@ export default {
       this.$refs.editForm.validate((valid)=>{
         if(valid){
           this.editForm.type = 'check'
+          if(!this.editForm.stockUp=="是" || !this.editForm.stockUp=="否"){
+            this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
+          }
           forwardUpdate(this.editForm).then(res => {
             this.dialogVisibleEdit1 = false
             this.getForward()
@@ -1812,6 +1817,10 @@ export default {
       this.$refs.editForm.validate((valid)=>{
         if(valid){
           this.editForm.type = 'create'
+          console.log(this.editForm.stockUp)
+          if(!this.editForm.stockUp=="是" || !this.editForm.stockUp=="否"){
+            this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
+          }
           forwardUpdate(this.editForm).then(res => {
             this.dialogVisibleEdit2 = false
             this.getReverse()
@@ -1826,6 +1835,9 @@ export default {
       this.$refs.editForm.validate((valid)=>{
         if(valid){
           this.editForm.type = 'check'
+          if(!this.editForm.stockUp=="是" || !this.editForm.stockUp=="否"){
+            this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
+          }
           forwardUpdate(this.editForm).then(res => {
             this.dialogVisibleEdit2 = false
             this.getReverse()

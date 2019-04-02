@@ -1,14 +1,14 @@
 <template>
     <section class="toolbar">
-        <el-tabs v-model="activeName"
-                 type="card"
-                 @tab-click="handleClick">
-            <el-tab-pane v-for="(item, index) in this.allMenu"
-                         :label="item.name"
-                         :name="item.name"
-                         :key="index">
-            </el-tab-pane>
-        </el-tabs>
+        <!--<el-tabs v-model="activeName"-->
+                 <!--type="card"-->
+                 <!--@tab-click="handleClick">-->
+            <!--<el-tab-pane v-for="(item, index) in this.allMenu"-->
+                         <!--:label="item.name"-->
+                         <!--:name="item.name"-->
+                         <!--:key="index">-->
+            <!--</el-tab-pane>-->
+        <!--</el-tabs>-->
         <div>
             <!-- 图片信息列表 -->
             <el-table :data="pictureData"
@@ -79,12 +79,12 @@
                 </el-table-column>
                 <el-table-column label="供应商链接1"
                                  header-align="center">
-                    <el-table-column prop="oaGoods.vendor1"
+                    <el-table-column prop="vendor1"
                                      :render-header="renderHeaderPic"
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.oaGoods.vendor1" target="_blank">{{scope.row.oaGoods.vendor1 | cutOut }}</a>
+                            <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -95,7 +95,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.oaGoods.vendor2" target="_blank">{{scope.row.oaGoods.vendor2 | cutOut }}</a>
+                            <a :href="scope.row.vendor2" target="_blank">{{scope.row.vendor2 | cutOut }}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -106,7 +106,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.oaGoods.vendor3" target="_blank">{{scope.row.oaGoods.vendor3 | cutOut }}</a>
+                            <a :href="scope.row.vendor3" target="_blank">{{scope.row.vendor3 | cutOut }}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -117,7 +117,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.oaGoods.origin1" target="_blank">{{scope.row.oaGoods.origin1 | cutOut }}</a>
+                            <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -128,7 +128,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.oaGoods.origin2" target="_blank">{{scope.row.oaGoods.origin2 | cutOut }}</a>
+                            <a :href="scope.row.origin2" target="_blank">{{scope.row.origin2 | cutOut }}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -139,7 +139,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.oaGoods.origin3" target="_blank">{{scope.row.oaGoods.origin3 | cutOut }}</a>
+                            <a :href="scope.row.origin3" target="_blank">{{scope.row.origin3 | cutOut }}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -255,8 +255,7 @@
                            :page-sizes="[10, 20, 30, 40]"
                            :page-size="this.picture.pageSize"
                            layout="total, sizes, prev, pager, next, jumper"
-                           :total="this.totalPic"
-                           style="position: fixed;bottom: 10px;left: 0;right: 0;margin-left: 700px">
+                           :total="this.totalPic">
             </el-pagination>
         </div>
     </section>
@@ -424,6 +423,7 @@
                  })
             },
             picEdit(index, row) {
+                sessionStorage.setItem('judge', "图片信息")
                 this.$router.push({
                     path: `/table/${row.id}`
                 })

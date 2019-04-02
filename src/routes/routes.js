@@ -60,6 +60,11 @@ import basicInformationJoom from '../views/productDevelop/basicInformationJoom.v
 import basicInformationJoomYs from '../views/productDevelop/basicInformationJoomYs.vue'
 import basicInformationJw from '../views/productDevelop/basicInformationJw.vue'
 import basicInformationArt from '../views/productDevelop/basicInformationArt.vue'
+import paymentDetailed from '../views/productDevelop/paymentDetailed.vue'
+import paymentId from '../views/productDevelop/paymentId.vue'
+import ordermanage from '../views/productDevelop/ordermanage.vue'
+import ord1 from '../views/productDevelop/ord1.vue'
+import ord2 from '../views/productDevelop/ord2.vue'
 
 const routes = [
   {
@@ -374,6 +379,16 @@ const routes = [
         name: '开发采购美工对应关系'
       },
       {
+        path: '/v1/supplier/mx',
+        component: paymentDetailed,
+        name: '付款明细'
+      },
+      {
+        path: '/v1/supplier/gl',
+        component: ordermanage,
+        name: '供应商订单'
+      },
+      {
         path: '/:id',
         component: edit,
         name: 'tables'
@@ -384,9 +399,24 @@ const routes = [
         name: 'pictureTable'
       },
       {
+        path: '/ord1/:id',
+        component: ord1,
+        name: '订单明细'
+      },
+      {
+        path: '/ord2/:id',
+        component: ord2,
+        name: '付款明细2'
+      },
+      {
         path: '/plat/:id',
         component: platEdit,
         name: 'platTable'
+      },
+      {
+        path: '/payment/:id',
+        component: paymentId,
+        name: 'payment'
       }
     ]
   },

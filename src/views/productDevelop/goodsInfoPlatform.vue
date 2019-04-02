@@ -1,14 +1,14 @@
 <template>
     <section class="toolbar">
-        <el-tabs v-model="activeName"
-                 type="card"
-                 @tab-click="handleClick">
-            <el-tab-pane v-for="(item, index) in this.allMenu"
-                         :label="item.name"
-                         :name="item.name"
-                         :key="index">
-            </el-tab-pane>
-        </el-tabs>
+        <!--<el-tabs v-model="activeName"-->
+                 <!--type="card"-->
+                 <!--@tab-click="handleClick">-->
+            <!--<el-tab-pane v-for="(item, index) in this.allMenu"-->
+                         <!--:label="item.name"-->
+                         <!--:name="item.name"-->
+                         <!--:key="index">-->
+            <!--</el-tab-pane>-->
+        <!--</el-tabs>-->
         <div>
             <!-- 平台信息列表 -->
             <el-table :data="platData"
@@ -390,8 +390,7 @@
                            :page-sizes="[10, 20, 30, 40]"
                            :page-size="this.plat.pageSize"
                            layout="total, sizes, prev, pager, next, jumper"
-                           :total="this.totalPlat"
-                           style="position: fixed;bottom: 10px;left: 0;right: 0;margin-left: 700px">
+                           :total="this.totalPlat">
             </el-pagination>
         </div>
     </section>
@@ -644,6 +643,7 @@
             },
             //平台信息更新
             platEdit(index, row) {
+                sessionStorage.setItem('judge', "平台信息")
                 this.$router.push({
                     path: `/plat/${row.id}`
                 })

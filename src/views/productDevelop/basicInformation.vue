@@ -9,7 +9,7 @@
                          :key="index">
             </el-tab-pane>
         </el-tabs>
-        <div>
+        <div v-show="show.wish">
             <el-row class="contentt">
                 <el-col :span="24" class="cTop">
                     <el-col :span="8">
@@ -211,13 +211,40 @@
                 </div>
             </el-dialog>
         </div>
+        <div v-show="show.ebay">
+            <basicInformationeBay></basicInformationeBay>
+        </div>
+        <div v-show="show.joom">
+            <basicInformationJoom></basicInformationJoom>
+        </div>
+        <div v-show="show.ys">
+            <basicInformationJoomYs></basicInformationJoomYs>
+        </div>
+        <div v-show="show.jw">
+            <basicInformationJw></basicInformationJw>
+        </div>
+        <div v-show="show.kf">
+            <basicInformationArt></basicInformationArt>
+        </div>
     </section>
 </template>
 
 <script type="text/ecmascript-6">
     import { APIWishSuffix, APICreateWish, APIDeleteWish, APIWishInfo, APIUpdateWish } from '../../api/product'
     import { getMenu } from '../../api/login'
+    import basicInformationArt from './basicInformationArt.vue'
+    import basicInformationeBay from './basicInformationeBay.vue'
+    import basicInformationJoom from './basicInformationJoom.vue'
+    import basicInformationJoomYs from './basicInformationJoomYs.vue'
+    import basicInformationJw from './basicInformationJw.vue'
     export default {
+        components: {
+            basicInformationArt:basicInformationArt,
+            basicInformationeBay:basicInformationeBay,
+            basicInformationJoom:basicInformationJoom,
+            basicInformationJoomYs:basicInformationJoomYs,
+            basicInformationJw:basicInformationJw
+        },
       data() {
         return {
           allMenu: [],
@@ -231,6 +258,14 @@
           delistWish: [],
           masterGraph: null,
           abbreviation: null,
+            show: {
+                wish: true,
+                ebay: false,
+                joom: false,
+                ys: false,
+                jw: false,
+                kf: false
+            },
           Suffix: null,
           contenWish: [],
           condition: {
@@ -245,6 +280,38 @@
         }
       },
       methods: {
+          handleClick(tab, event) {
+              if (tab.label === 'Wish账号字典') {
+                  this.show['wish'] = true
+              } else {
+                  this.show['wish'] = false
+              }
+              if (tab.label === 'eBay账号字典') {
+                  this.show['ebay'] = true
+              } else {
+                  this.show['ebay'] = false
+              }
+              if (tab.label === 'Joom账号字典') {
+                  this.show['joom'] = true
+              } else {
+                  this.show['joom'] = false
+              }
+              if (tab.label === 'eBay运输方式') {
+                  this.show['ys'] = true
+              } else {
+                  this.show['ys'] = false
+              }
+              if (tab.label === 'Joom对比Wish价格') {
+                  this.show['jw'] = true
+              } else {
+                  this.show['jw'] = false
+              } if (tab.label === '开发采购美工对应关系') {
+                  this.show['kf'] = true
+              } else {
+                  this.show['kf'] = false
+              }
+
+          },
         saveWish() {
           APIUpdateWish(this.contenWish).then(res => {
             if (res.data.data) {
@@ -478,36 +545,36 @@
             )
           }
         },
-        handleClick(tab, event) {
-          if (tab.label === 'Wish账号字典') {
-
-          }
-          if (tab.label === 'eBay账号字典') {
-            this.$router.push({
-              path: '/v1/basic-info/ebay'
-            })
-          }
-          if (tab.label === 'Joom账号字典') {
-            this.$router.push({
-              path: '/v1/basic-info/joom'
-            })
-          }
-          if (tab.label === 'eBay运输方式') {
-            this.$router.push({
-              path: '/v1/basic-info/ys'
-            })
-          }
-          if (tab.label === 'Joom对比Wish价格') {
-            this.$router.push({
-              path: '/v1/basic-info/jw'
-            })
-          }
-          if (tab.label === '开发采购美工对应关系') {
-            this.$router.push({
-              path: '/v1/basic-info/art'
-            })
-          }
-        },
+//        handleClick(tab, event) {
+//          if (tab.label === 'Wish账号字典') {
+//
+//          }
+//          if (tab.label === 'eBay账号字典') {
+//            this.$router.push({
+//              path: '/v1/basic-info/ebay'
+//            })
+//          }
+//          if (tab.label === 'Joom账号字典') {
+//            this.$router.push({
+//              path: '/v1/basic-info/joom'
+//            })
+//          }
+//          if (tab.label === 'eBay运输方式') {
+//            this.$router.push({
+//              path: '/v1/basic-info/ys'
+//            })
+//          }
+//          if (tab.label === 'Joom对比Wish价格') {
+//            this.$router.push({
+//              path: '/v1/basic-info/jw'
+//            })
+//          }
+//          if (tab.label === '开发采购美工对应关系') {
+//            this.$router.push({
+//              path: '/v1/basic-info/art'
+//            })
+//          }
+//        },
         getDateWish() {
           APIWishSuffix(this.condition).then(res => {
             this.date = res.data.data.items
