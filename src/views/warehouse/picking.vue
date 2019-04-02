@@ -1,14 +1,12 @@
 <template>
     <el-form :model='condition' label-width="12rem" class="demo-ruleForm login-container" ref="condition">
         <el-form-item label="捡货人：" prop="suffix" :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]">
-            <el-select v-model="condition.suffix" filterable multiple collapse-tags>
-                <el-button plain type="info" @click="selectall">全选</el-button>
-                <el-button plain type="info" @click="noselect">取消</el-button>
+            <el-select v-model="condition.suffix">
                 <el-option v-for="item in suffix" :key="item" :value="item"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="批次号：" prop="goodsCode" :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]">
-            <el-input v-model="condition.goodsCode" placeholder="--必填--"></el-input>
+            <el-input v-model="condition.goodsCode" placeholder="--必填--" @change="myFunction()" ref="gName"></el-input>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" class="input" @click="onSubmit()">提交</el-button>
@@ -30,15 +28,8 @@
             }
         },
         methods: {
-            selectall() {
-                const allValues = []
-                for (const item of this.suffix) {
-                    allValues.push(item)
-                }
-                this.condition.suffix = allValues
-            },
-            noselect() {
-                this.condition.suffix = []
+            myFunction(){
+                this.onSubmit()
             },
             onSubmit(form) {
                 this.$refs.condition.validate(valid => {
@@ -53,10 +44,15 @@
                                     message: '提交成功',
                                     type: 'success'
                                 })
+                                this.condition.goodsCode=''
+                                this.$refs.gName.focus()
                             }else {
                                 this.$message.error(res.data.message)
                             }
                         })
+                    }
+                    if(!valid){
+                        this.$refs.gName.focus()
                     }
                 })
             }

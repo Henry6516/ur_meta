@@ -20,7 +20,7 @@
           <span>{{viewForm.img}}</span>
         </el-form-item>
         <el-form-item label="是否备货" prop="stockUp" class="item">
-          <span>{{viewForm.stockUp === 1 ? '是' : '否'}}</span>
+          <span>{{viewForm.stockUp}}</span>
         </el-form-item>
         <el-form-item label="主类目" prop="cate" class="item">
           <span>{{viewForm.cate}}</span>
@@ -333,7 +333,7 @@
           <span>{{viewForm.img}}</span>
         </el-form-item>
         <el-form-item label="是否备货" prop="stockUp" class="item">
-          <span>{{viewForm.stockUp === 1 ? '是' : '否'}}</span>
+          <span>{{viewForm.stockUp}}</span>
         </el-form-item>
         <el-form-item label="主类目" prop="cate" class="item">
           <span>{{viewForm.cate}}</span>
@@ -938,7 +938,7 @@ export default {
     },
     renderHeader1(h, {column, $index}) {
       if($index === 0) {
-        let filters = [ {text:'1','value':"是"} , {text:'0','value':"否"} ]
+        let filters = [ {text:'是','value':"是"} , {text:'否','value':"否"} ]
         return h('el-select',{
           props:{
             placeholder:'请选择',
@@ -1380,7 +1380,7 @@ export default {
     },
     renderHeader2(h, {column, $index}) {
       if($index === 0) {
-        let filters = [ {text:'1','value':"是"} , {text:'0','value':"否"} ]
+        let filters = [ {text:'是','value':"是"} , {text:'否','value':"否"} ]
         return h('el-select',{
           props:{
             placeholder:'请选择',
@@ -1890,7 +1890,7 @@ export default {
     },
     renderHeader(h, {column, $index}) {
       if($index === 0) {
-        let filters = [ {text: 1,'value':"是"} , {text: 0,'value':"否"} ]
+        let filters = [ {text: '是','value':"是"} , {text: '否','value':"否"} ]
         return h('el-select',{
           props:{
             placeholder:'请选择',

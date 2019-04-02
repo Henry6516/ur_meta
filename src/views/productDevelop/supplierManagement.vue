@@ -42,7 +42,7 @@
             <el-col :span="24">
               <el-form-item label="线下采购"
                             :rules="[{ required: true, message: '线下采购不能为空', trigger: 'blur' }]">
-                <el-input v-model="addForm.purchase"></el-input>
+                <el-input v-model="addForm.purchaser"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="24">
@@ -169,7 +169,7 @@
             <el-col :span="24">
               <el-form-item label="线下采购"
                             :rules="[{ required: true, message: '线下采购不能为空', trigger: 'blur' }]">
-                <el-input v-model="editForm.purchase"></el-input>
+                <el-input v-model="editForm.purchaser"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="24">
@@ -365,7 +365,7 @@
             <el-col :span="24">
               <el-form-item label="线下采购"
                             class="item">
-                <span>{{viewForm.purchase}}</span>
+                <span>{{viewForm.purchaser}}</span>
               </el-form-item>
             </el-col>
             <el-col :span="24">
@@ -408,7 +408,7 @@
         </el-table-column>
         <el-table-column label="线下采购"
                          header-align="center">
-          <el-table-column prop="purchase"
+          <el-table-column prop="purchaser"
                            :render-header="renderHeader"
                            align="center">
           </el-table-column>
@@ -546,7 +546,7 @@ export default {
         payment: false
       },
       condition: {
-        purchase: null,
+        purchaser: null,
         supplierName: null,
         contactPerson1: null,
         phone1: null,
@@ -705,13 +705,13 @@ export default {
           [
             h('el-input', {
               props: {
-                value: this.condition.purchase,
+                value: this.condition.purchaser,
                 size: 'mini',
                 clearable: true
               },
               on: {
                 input: value => {
-                  this.condition.purchase = value
+                  this.condition.purchaser = value
                   this.$emit('input', value)
                 },
                 change: value => {

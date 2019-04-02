@@ -29,13 +29,13 @@
                 </el-form-item>
             </el-form>
         </el-row>
-        <el-table :data="tableData1" style="width:100%">
-            <el-table-column prop="suffix" label="账号"></el-table-column>
-            <el-table-column prop="tradeId" label="订单编号"></el-table-column>
+        <el-table :data="tableData1" style="width:100%" @sort-change='sortChange'>
+            <el-table-column prop="suffix" label="账号" sortable='custom'></el-table-column>
+            <el-table-column prop="tradeId" label="订单编号" sortable='custom'></el-table-column>
             <el-table-column prop="expressName" label="物流名称"></el-table-column>
             <el-table-column prop="trackNo" label="跟踪号"></el-table-column>
-            <el-table-column prop="orderTime" label="订单时间"></el-table-column>
-            <el-table-column prop="lastDate" label="物流更新时间"></el-table-column>
+            <el-table-column prop="orderTime" label="订单时间" sortable='custom'></el-table-column>
+            <el-table-column prop="lastDate" label="物流更新时间" sortable='custom'></el-table-column>
             <el-table-column prop="lastDetail" label="当前物流状态"></el-table-column>
         </el-table>
         <el-pagination background
@@ -66,11 +66,28 @@
                     "tradeId": null,
                     "expressName": null,
                     "trackNo": null,
-                    "orderTime": []
+                    "orderTime": [],
+                    "sortProperty": null,
+                    "sortOrder": null
                 }
             }
         },
+        mounted(){
+          this.onSubmit()
+        },
         methods: {
+            sortChange: function(column, prop, order) {
+                if(column.order=="ascending"){
+                    this.condition.sortOrder="ASC"
+                    this.condition.sortProperty=column.prop
+                    this.onSubmit1()
+                }
+                if(column.order=="descending"){
+                    this.condition.sortOrder="DESC"
+                    this.condition.sortProperty=column.prop
+                    this.onSubmit1()
+                }
+            },
             handleSizeChangePic(val) {
                 this.condition.pageSize = val
                 this.onSubmit1()
@@ -96,6 +113,8 @@
             },
             onSubmit() {
                 this.condition.currentPage=1
+                this.condition.sortProperty=null
+                this.condition.sortOrder=null
                 getExpressTracking(this.condition).then(response => {
                     this.tableData1 = response.data.data.items
                     this.totalPic = response.data.data._meta.totalCount

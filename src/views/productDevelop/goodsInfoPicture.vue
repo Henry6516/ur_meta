@@ -317,38 +317,13 @@
                     "isPowder": "",
                     "isMagnetism": "",
                     "isCharged": "",
-                    "isVar": "",
-                    "oaGoods":{
-                        approvalNote: null,
-                        bGoodsid: null,
-                        catNid: "",
-                        cate: "",
-                        checkStatus: "",
-                        createDate: "",
-                        devNum: "",
-                        devStatus: "",
-                        developer: "",
-                        hopeCost: null,
-                        hopeMonthProfit: null,
-                        hopeRate: "",
-                        hopeSale: "",
-                        hopeWeight: "",
-                        img: "",
-                        introReason: "",
-                        introducer: "",
-                        mineId: null,
-                        nid: "",
-                        origin1: "",
-                        origin2: null,
-                        origin3: "",
-                        salePrice: "",
-                        stockUp: null,
-                        subCate: "",
-                        updateDate: "",
-                        vendor1: "",
-                        vendor2: "",
-                        vendor3: null
-                    }
+                    "isVar": null,
+                    origin1: null,
+                    origin2: null,
+                    origin3: null,
+                    vendor1: null,
+                    vendor2: null,
+                    vendor3: null
                 },
                 plat: {
                     pageSize: 10,
@@ -536,13 +511,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.oaGoods.vendor1,
+                                        value: this.picture.vendor1,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.oaGoods.vendor1 = value
+                                            this.picture.vendor1 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -563,13 +538,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.oaGoods.vendor2,
+                                        value: this.picture.vendor2,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.oaGoods.vendor2 = value
+                                            this.picture.vendor2 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -590,13 +565,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.oaGoods.vendor3,
+                                        value: this.picture.vendor3,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.oaGoods.vendor3 = value
+                                            this.picture.vendor3 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -617,13 +592,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.oaGoods.origin1,
+                                        value: this.picture.origin1,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.oaGoods.origin1 = value
+                                            this.picture.origin1 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -644,13 +619,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.oaGoods.origin2,
+                                        value: this.picture.origin2,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.oaGoods.origin2 = value
+                                            this.picture.origin2 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -671,13 +646,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.oaGoods.origin3,
+                                        value: this.picture.origin3,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.oaGoods.origin3 = value
+                                            this.picture.origin3 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
