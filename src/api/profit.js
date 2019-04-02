@@ -353,6 +353,14 @@ export function getUkfic(param) {
     data
   })
 }
+export function getExpressTracking(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/express-tracking',
+    method: 'post',
+    data
+  })
+}
 export function getUK(param) {
   const data = { condition: param }
   return request({
@@ -517,6 +525,20 @@ export function getPlatEbayStore() {
   return request({
     url: 'oa-goodsinfo/plat-ebay-store',
     method: 'get'
+  })
+}
+export function getPickMembe() {
+  return request({
+    url: 'warehouse-tools/pick-member',
+    method: 'get'
+  })
+}
+export function APIPick(param) {
+  const data = { condition: param }
+  return request({
+    url: 'warehouse-tools/pick',
+    method: 'post',
+    data
   })
 }
 

@@ -36,10 +36,13 @@ import order from '../views/tinytool/order.vue'
 import paypal from '../views/tinytool/paypal.vue'
 import risk from '../views/tinytool/risk.vue'
 import edition from '../views/tinytool/edition.vue'
+import logistics from '../views/tinytool/logistics.vue'
 // 设置中心
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
 import exchange from '../views/settings/exchange.vue'
+//仓库工具
+import picking from '../views/warehouse/picking.vue'
 // 反馈中心
 import requirements from '../views/feedback/requirements.vue'
 import news from '../views/feedback/news.vue'
@@ -227,6 +230,19 @@ const routes = [
     ]
   },
   {
+    path: '/v1/warehouse-tools/index',
+    component: Home,
+    name: '仓库工具',
+    iconCls: 'el-icon-message',
+    children: [
+      {
+        path: '/v1/warehoue-tools/pick-index',
+        component: picking,
+        name: '拣货单'
+      }
+    ]
+  },
+  {
     path: '/v1/feedback/index',
     component: Home,
     name: '反馈中心',
@@ -304,6 +320,11 @@ const routes = [
         path: '/v1/tiny-tool/exception-edition',
         component: edition,
         name: '异常改订单'
+      },
+      {
+        path: '/v1/tiny-tool/express-tracking',
+        component: logistics,
+        name: '物流跟踪'
       }
     ]
   },

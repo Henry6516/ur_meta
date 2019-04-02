@@ -1221,8 +1221,16 @@ export default {
             this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
           }
           forwardUpdate(this.editForm).then(res => {
-            this.dialogVisibleEdit1 = false
-            this.getForward()
+            if (res.data.code === 200) {
+              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
+                this.dialogVisibleEdit1 = false
+                this.getForward()
+              })
+            } else {
+              this.$confirm('错误！', '提示', { type: 'error' }).then(() => {
+                this.dialogVisibleEdit1=false
+              })
+            }
          })
         } else {
           console.log('error submit!!')
@@ -1238,8 +1246,16 @@ export default {
             this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
           }
           forwardUpdate(this.editForm).then(res => {
-            this.dialogVisibleEdit1 = false
-            this.getForward()
+            if (res.data.code === 200) {
+              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
+                this.dialogVisibleEdit1 = false
+                this.getForward()
+              })
+            } else {
+              this.$confirm('错误！', '提示', { type: 'error' }).then(() => {
+                this.dialogVisibleEdit1=false
+              })
+            }
          })
         } else {
           console.log('error submit!!')
@@ -1821,8 +1837,16 @@ export default {
             this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
           }
           forwardUpdate(this.editForm).then(res => {
-            this.dialogVisibleEdit2 = false
-            this.getReverse()
+            if (res.data.code === 200) {
+              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
+                this.dialogVisibleEdit2 = false
+                this.getReverse()
+              })
+            } else {
+              this.$confirm('错误！', '提示', { type: 'error' }).then(() => {
+                this.dialogVisibleEdit2=false
+              })
+            }
          })
         } else {
           console.log('error submit!!')
@@ -1838,8 +1862,16 @@ export default {
             this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
           }
           forwardUpdate(this.editForm).then(res => {
-            this.dialogVisibleEdit2 = false
-            this.getReverse()
+            if (res.data.code === 200) {
+              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
+                this.dialogVisibleEdit2 = false
+                this.getReverse()
+              })
+            } else {
+              this.$confirm('错误！', '提示', { type: 'error' }).then(() => {
+                this.dialogVisibleEdit2=false
+              })
+            }
          })
         } else {
           console.log('error submit!!')

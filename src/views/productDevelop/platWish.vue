@@ -23,7 +23,7 @@
           <el-option label="Joom"
                      value="Joom"></el-option>
         </el-select>
-        <span class="exportAccount" style="margin-right: 10px">保存完善</span>
+        <span class="exportAccount" style="margin-right: 10px" @click="keepPerfect">保存完善</span>
         <el-button type="success" style="float: left;margin-right: 10px" @click="exportWish">导出Wish模板</el-button>
       <el-select v-model="joom"
                  placeholder="--请选择账号--" style="float: left;">
@@ -591,7 +591,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-  import { APIPlatInfo, APISaveWishInfo, APIFinishPlat,APIJoomName,APIPlatExportWish } from '../../api/product'
+  import { APIPlatInfo, APISaveWishInfo, APIFinishPlat,APIJoomName,APIPlatExportWish,APIPlatExportJoom } from '../../api/product'
   export default {
     props: {
       id: {
@@ -639,6 +639,55 @@
       }
     },
     methods: {
+      keepPerfect(){
+
+      },
+      exportJoom(){
+        if(this.joom){
+          let objStr1={
+            id:this.wishForm.infoId,
+            account:this.joom
+          }
+          APIPlatExportJoom(objStr1).then(res => {
+            const blob = new Blob([res.data], {
+              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+            })
+            const downloadElement = document.createElement('a')
+            const objectUrl = window.URL.createObjectURL(blob)
+            downloadElement.href = objectUrl
+            const date = new Date()
+            const year = date.getFullYear()
+            let month = date.getMonth() + 1
+            let strDate = date.getDate()
+            let hour = date.getHours()
+            let minute = date.getMinutes()
+            let second = date.getSeconds()
+            if (month >= 1 && month <= 9) {
+              month = '0' + month
+            }
+            if (strDate >= 0 && strDate <= 9) {
+              strDate = '0' + strDate
+            }
+            if (hour >= 0 && hour <= 9) {
+              hour = '0' + hour
+            }
+            if (minute >= 0 && minute <= 9) {
+              minute = '0' + minute
+            }
+            if (second >= 0 && second <= 9) {
+              second = '0' + second
+            }
+            const filename =
+                    'joom_' + year + month + strDate + hour + minute + second
+            downloadElement.download = filename + '.csv'
+            document.body.appendChild(downloadElement)
+            downloadElement.click()
+            document.body.removeChild(downloadElement)
+          })
+        }else {
+          this.$message.error('请选择账号')
+        }
+      },
       exportWish(){
           let objStr={
             id:this.wishForm.infoId

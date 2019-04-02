@@ -738,6 +738,24 @@ export function APIPlatExportWish(param) {
     responseType: 'arraybuffer'
   })
 }
+export function APIPlatExportEbay(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat-export-ebay',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
+export function APIPlatExportJoom(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat-export-joom',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({
