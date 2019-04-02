@@ -1217,7 +1217,7 @@ export default {
       this.$refs.editForm.validate((valid)=>{
         if(valid){
           this.editForm.type = 'create'
-          if(!this.editForm.stockUp=="是" && !this.editForm.stockUp=="否"){
+          if(this.editForm.stockUp!=="是" && this.editForm.stockUp!=="否"){
             this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
           }
           forwardUpdate(this.editForm).then(res => {
@@ -1234,7 +1234,7 @@ export default {
       this.$refs.editForm.validate((valid)=>{
         if(valid){
           this.editForm.type = 'check'
-          if(!this.editForm.stockUp=="是" && !this.editForm.stockUp=="否"){
+          if(this.editForm.stockUp!=="是" && this.editForm.stockUp!=="否"){
             this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
           }
           forwardUpdate(this.editForm).then(res => {
@@ -1834,7 +1834,7 @@ export default {
       this.$refs.editForm.validate((valid)=>{
         if(valid){
           this.editForm.type = 'check'
-          if(!this.editForm.stockUp=="是" && !this.editForm.stockUp=="否"){
+          if(this.editForm.stockUp!=="是" && this.editForm.stockUp!=="否"){
             this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
           }
           forwardUpdate(this.editForm).then(res => {

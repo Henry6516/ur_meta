@@ -24,7 +24,7 @@
                      value="Joom"></el-option>
         </el-select>
         <span class="exportAccount" style="margin-right: 10px">保存完善</span>
-        <el-button type="success" style="float: left;margin-right: 10px">导出Wish模板</el-button>
+        <el-button type="success" style="float: left;margin-right: 10px" @click="exportWish">导出Wish模板</el-button>
       <el-select v-model="joom"
                  placeholder="--请选择账号--" style="float: left;">
         <el-option v-for="(item, key) in joomArr" :key='item.key' :label="item" :value="item"></el-option>
@@ -639,14 +639,13 @@
       }
     },
     methods: {
-      exportJoom(){
-        if(this.joom){
+      exportWish(){
           let objStr={
-            id:this.joom
+            id:this.wishForm.infoId
           }
           APIPlatExportWish(objStr).then(res => {
             const blob = new Blob([res.data], {
-              type: 'application/vnd.ms-excel;charset=UTF-8'
+              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
             })
             const downloadElement = document.createElement('a')
             const objectUrl = window.URL.createObjectURL(blob)
@@ -674,13 +673,12 @@
               second = '0' + second
             }
             const filename =
-                    'joom_' + year + month + strDate + hour + minute + second
+                    'Wish_' + year + month + strDate + hour + minute + second
             downloadElement.download = filename + '.xls'
             document.body.appendChild(downloadElement)
             downloadElement.click()
             document.body.removeChild(downloadElement)
           })
-        }
       },
       top(e){
         this.foremost=e.length

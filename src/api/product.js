@@ -685,7 +685,8 @@ export function APIDeliveryTemplate(param) {
   return request({
     url: '/supplier-order/delivery-template',
     method: 'post',
-    data
+    data,
+    responseType: 'arraybuffer'
   })
 }
 export function APIRrderAttribute(param) {
@@ -733,7 +734,8 @@ export function APIPlatExportWish(param) {
   return request({
     url: '/oa-goodsinfo/plat-export-wish',
     method: 'post',
-    data
+    data,
+    responseType: 'arraybuffer'
   })
 }
 //export function APIDelivery(param) {

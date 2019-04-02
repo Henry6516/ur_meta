@@ -299,43 +299,41 @@
                 })
             },
             fhTemplate(){
-                APIDeliveryTemplate().then(response => {
-                    if (response.data.byteLength > 42) {
-                        const blob = new Blob([response.data], {
-                            type: 'application/vnd.ms-excel;charset=UTF-8'
-                        })
-                        const downloadElement = document.createElement('a')
-                        const objectUrl = window.URL.createObjectURL(blob)
-                        downloadElement.href = objectUrl
-                        const date = new Date()
-                        const year = date.getFullYear()
-                        let month = date.getMonth() + 1
-                        let strDate = date.getDate()
-                        let hour = date.getHours()
-                        let minute = date.getMinutes()
-                        let second = date.getSeconds()
-                        if (month >= 1 && month <= 9) {
-                            month = '0' + month
-                        }
-                        if (strDate >= 0 && strDate <= 9) {
-                            strDate = '0' + strDate
-                        }
-                        if (hour >= 0 && hour <= 9) {
-                            hour = '0' + hour
-                        }
-                        if (minute >= 0 && minute <= 9) {
-                            minute = '0' + minute
-                        }
-                        if (second >= 0 && second <= 9) {
-                            second = '0' + second
-                        }
-                        const filename =
-                                'ebay_' + year + month + strDate + hour + minute + second
-                        downloadElement.download = filename + '.xls'
-                        document.body.appendChild(downloadElement)
-                        downloadElement.click()
-                        document.body.removeChild(downloadElement)
+                APIDeliveryTemplate().then(res => {
+                    const blob = new Blob([res.data], {
+                        type: 'application/vnd.ms-excel;charset=UTF-8'
+                    })
+                    const downloadElement = document.createElement('a')
+                    const objectUrl = window.URL.createObjectURL(blob)
+                    downloadElement.href = objectUrl
+                    const date = new Date()
+                    const year = date.getFullYear()
+                    let month = date.getMonth() + 1
+                    let strDate = date.getDate()
+                    let hour = date.getHours()
+                    let minute = date.getMinutes()
+                    let second = date.getSeconds()
+                    if (month >= 1 && month <= 9) {
+                        month = '0' + month
                     }
+                    if (strDate >= 0 && strDate <= 9) {
+                        strDate = '0' + strDate
+                    }
+                    if (hour >= 0 && hour <= 9) {
+                        hour = '0' + hour
+                    }
+                    if (minute >= 0 && minute <= 9) {
+                        minute = '0' + minute
+                    }
+                    if (second >= 0 && second <= 9) {
+                        second = '0' + second
+                    }
+                    const filename =
+                            '发货单模板' + year + month + strDate + hour + minute + second
+                    downloadElement.download = filename + '.xls'
+                    document.body.appendChild(downloadElement)
+                    downloadElement.click()
+                    document.body.removeChild(downloadElement)
                 })
             },
             mx(index, row){
