@@ -29,7 +29,7 @@
                  placeholder="--请选择账号--" style="float: left;">
         <el-option v-for="(item, key) in joomArr" :key='item.key' :label="item" :value="item"></el-option>
       </el-select>
-        <span class="exportAccount">导出Joom模板</span>
+        <span class="exportAccount" @click="exportJoom">导出Joom模板</span>
       </el-col>
     </el-col>
     <el-col :span="24"
@@ -591,7 +591,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-  import { APIPlatInfo, APISaveWishInfo, APIFinishPlat,APIJoomName } from '../../api/product'
+  import { APIPlatInfo, APISaveWishInfo, APIFinishPlat,APIJoomName,APIPlatExportWish } from '../../api/product'
   export default {
     props: {
       id: {
@@ -620,7 +620,7 @@
         dialogVisible: false,
         setVisible: false,
         select: '',
-        joom:"",
+        joom:null,
         wishForm: {},
         last:0,
         tableData: [],
@@ -639,6 +639,49 @@
       }
     },
     methods: {
+      exportJoom(){
+        if(this.joom){
+          let objStr={
+            id:this.joom
+          }
+          APIPlatExportWish(objStr).then(res => {
+            const blob = new Blob([res.data], {
+              type: 'application/vnd.ms-excel;charset=UTF-8'
+            })
+            const downloadElement = document.createElement('a')
+            const objectUrl = window.URL.createObjectURL(blob)
+            downloadElement.href = objectUrl
+            const date = new Date()
+            const year = date.getFullYear()
+            let month = date.getMonth() + 1
+            let strDate = date.getDate()
+            let hour = date.getHours()
+            let minute = date.getMinutes()
+            let second = date.getSeconds()
+            if (month >= 1 && month <= 9) {
+              month = '0' + month
+            }
+            if (strDate >= 0 && strDate <= 9) {
+              strDate = '0' + strDate
+            }
+            if (hour >= 0 && hour <= 9) {
+              hour = '0' + hour
+            }
+            if (minute >= 0 && minute <= 9) {
+              minute = '0' + minute
+            }
+            if (second >= 0 && second <= 9) {
+              second = '0' + second
+            }
+            const filename =
+                    'joom_' + year + month + strDate + hour + minute + second
+            downloadElement.download = filename + '.xls'
+            document.body.appendChild(downloadElement)
+            downloadElement.click()
+            document.body.removeChild(downloadElement)
+          })
+        }
+      },
       top(e){
         this.foremost=e.length
       },

@@ -16,7 +16,7 @@
   </el-form>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import { geteBaytemplate, getToolaccount } from '../../api/profit'
 export default {
   data() {

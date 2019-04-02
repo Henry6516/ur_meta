@@ -728,6 +728,14 @@ export function APIJoomName(param) {
     data
   })
 }
+export function APIPlatExportWish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat-export-wish',
+    method: 'post',
+    data
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({
