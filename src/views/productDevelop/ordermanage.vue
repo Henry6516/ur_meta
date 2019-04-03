@@ -5,7 +5,7 @@
                 <el-col :span="24" style="margin-top: 15px">
                     <el-button type="primary" style="margin-left: 1%" @click="fhTemplate">发货单模板</el-button>
                     <el-button type="primary">同步采购单</el-button>
-                    <el-button type="primary">同步普源数据</el-button>
+                    <el-button type="primary" @click="synchroTotal">同步普源数据</el-button>
                     <el-button type="primary">导入物流单号</el-button>
                     <el-button type="primary">导入发货单</el-button>
                     <el-button type="primary">审核单据</el-button>
@@ -218,6 +218,9 @@
             }
         },
         methods: {
+            synchroTotal(){
+
+            },
             importMx(index,row){
                 const aryy2=[]
                 aryy2.push(row.id)
