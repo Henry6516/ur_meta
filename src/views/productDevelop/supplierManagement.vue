@@ -383,7 +383,7 @@
           </el-row>
         </el-form>
       </el-dialog>
-      <el-table :data="tableData">
+      <el-table :data="tableData" class="elTablee">
         <el-table-column type="index"
                          fixed
                          width="50"></el-table-column>

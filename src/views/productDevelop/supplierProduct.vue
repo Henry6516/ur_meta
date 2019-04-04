@@ -190,7 +190,7 @@
                    @click="edit">更 新</el-button>
       </span>
     </el-dialog>
-    <el-table :data="tableData">
+    <el-table :data="tableData" class="elTablee">
       <el-table-column type="index"
                        width="50"></el-table-column>
       <el-table-column label="操作"

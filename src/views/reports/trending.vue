@@ -352,14 +352,17 @@ export default {
         this.sale = true
         this.order = false
         this.count = false
+        this.onSubmit(this.condition)
       } else if (tab.label === '订单量走势') {
         this.sale = false
         this.order = true
         this.count = false
+        this.onSubmit(this.condition)
       } else {
         this.sale = false
         this.order = false
         this.count = true
+        this.onSubmit(this.condition)
       }
     },
     selectAll(name) {

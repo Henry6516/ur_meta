@@ -4,19 +4,20 @@
             <el-row>
                 <el-col :span="24" style="margin-top: 15px">
                     <el-button type="primary" style="margin-left: 1%" @click="fhTemplate">发货单模板</el-button>
-                    <el-button type="primary">同步采购单</el-button>
+                    <el-button type="primary" @click="goPurchase">同步采购单</el-button>
                     <el-button type="primary" @click="synchroTotal">同步普源数据</el-button>
-                    <el-button type="primary">导入物流单号</el-button>
+                    <el-button type="primary" @click="importWlTotal">导入物流单号</el-button>
                     <el-button type="primary">导入发货单</el-button>
-                    <el-button type="primary">审核单据</el-button>
-                    <el-button type="primary">导出采购单明细</el-button>
+                    <el-button type="primary" @click="toExamineTotal">审核单据</el-button>
+                    <el-button type="primary" @click="importMxTotal">导出采购单明细</el-button>
                 </el-col>
             </el-row>
-            <el-table :data="tableData" class="elTablee" style="width: 98%;margin-left: 1%;margin-top: 10px">
+            <el-table :data="tableData" class="elTablee" style="width: 98%;margin-left: 1%;margin-top: 10px" @selection-change="selsChange">
                 <el-table-column type="selection"
                                  fixed
                                  align="center"
-                                 header-align="center"></el-table-column>
+                                 header-align="center"
+                                 width="65"></el-table-column>
                 <el-table-column label="动作"
                                  fixed
                                  header-align="center"
@@ -26,7 +27,7 @@
                             <span class="el-dropdown-link" style="font-size: 14px;margin-left: 10px">操作<i class="el-icon-arrow-down el-icon--right"></i></span>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item><span @click="mx(scope.$index, scope.row)">订单明细</span></el-dropdown-item>
-                                <el-dropdown-item>编辑订单</el-dropdown-item>
+                                <!--<el-dropdown-item>编辑订单</el-dropdown-item>-->
                                 <el-dropdown-item><span @click="synchro(scope.$index, scope.row)">同步普源数据</span></el-dropdown-item>
                                 <el-dropdown-item><span @click="pay(scope.$index, scope.row)">请求付款</span></el-dropdown-item>
                                 <el-dropdown-item><span @click="payMx(scope.$index, scope.row)">付款明细</span></el-dropdown-item>
@@ -218,12 +219,110 @@
             }
         },
         methods: {
+            goPurchase(){
+                this.$router.push({
+                    path: `/v1/basic-info/cgd`
+                })
+            },
+            importMxTotal(){
+                const aryMx=[]
+                this.sels.map(e => aryMx.push(e.id))
+                let objMx={
+                    ids:aryMx
+                }
+                APIExportDetail(objMx).then(res => {
+                    const blob = new Blob([res.data], {
+                        type: 'application/vnd.ms-excel;charset=UTF-8'
+                    })
+                    const downloadElement = document.createElement('a')
+                    const objectUrl = window.URL.createObjectURL(blob)
+                    downloadElement.href = objectUrl
+                    const date = new Date()
+                    const year = date.getFullYear()
+                    let month = date.getMonth() + 1
+                    let strDate = date.getDate()
+                    let hour = date.getHours()
+                    let minute = date.getMinutes()
+                    let second = date.getSeconds()
+                    if (month >= 1 && month <= 9) {
+                        month = '0' + month
+                    }
+                    if (strDate >= 0 && strDate <= 9) {
+                        strDate = '0' + strDate
+                    }
+                    if (hour >= 0 && hour <= 9) {
+                        hour = '0' + hour
+                    }
+                    if (minute >= 0 && minute <= 9) {
+                        minute = '0' + minute
+                    }
+                    if (second >= 0 && second <= 9) {
+                        second = '0' + second
+                    }
+                    const filename =
+                            '采购单明细' + year + month + strDate + hour + minute + second
+                    downloadElement.download = filename + '.xls'
+                    document.body.appendChild(downloadElement)
+                    downloadElement.click()
+                    document.body.removeChild(downloadElement)
+                })
+            },
+            toExamineTotal(){
+                const aryTo=[]
+                this.sels.map(e => aryTo.push(e.id))
+                let objTo={
+                    ids:aryTo
+                }
+                APICheck(objTo).then(res=>{
+                    if(res.data.code==200){
+                        this.$message({
+                            message: '成功',
+                            type: 'success'
+                        })
+                    }else {
+                        this.$message.error(res.data.message)
+                    }
+                })
+            },
+            importWlTotal(){
+                let aryWl=[]
+                this.sels.map(e => aryWl.push(e.id))
+                let strWl={
+                    ids:aryWl
+                }
+                APIInputExpress(strWl).then(res=>{
+                    if(res.data.code==200){
+                        this.$message({
+                            message: '成功',
+                            type: 'success'
+                        })
+                    }else {
+                        this.$message.error(res.data.message)
+                    }
+                })
+            },
+            selsChange(sels) {
+                this.sels = sels
+            },
             synchroTotal(){
-
+                let arySyn=[]
+                this.sels.map(e => arySyn.push(e.id))
+                let strSyn={
+                    ids:arySyn
+                }
+                APISyncQuery(strSyn).then(res => {
+                    if(res.data.code==200){
+                        this.$message({
+                            message: '成功',
+                            type: 'success'
+                        })
+                    }else {
+                        this.$message.error(res.data.message)
+                    }
+                })
             },
             importMx(index,row){
                 const aryy2=[]
-                aryy2.push(row.id)
                 let obj2={
                     ids:aryy2
                 }
@@ -266,7 +365,6 @@
             },
             toExamine(index,row){
                 const aryy1=[]
-                aryy1.push(row.id)
                 let obj1={
                     ids:aryy1
                 }
@@ -506,13 +604,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.condition.requestTime,
+                                        value: this.condition.supplierName,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.condition.requestTime = value
+                                            this.condition.supplierName = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -533,13 +631,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.condition.contactPerson1,
+                                        value: this.condition.billStatus,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.condition.contactPerson1 = value
+                                            this.condition.billStatus = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -560,13 +658,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.condition.paymentStatus,
+                                        value: this.condition.purchaser,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.condition.paymentStatus = value
+                                            this.condition.purchaser = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -641,13 +739,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.condition.paymentDays,
+                                        value: this.condition.paymentAmt,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.condition.paymentDays = value
+                                            this.condition.paymentAmt = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -668,13 +766,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.condition.payChannel,
+                                        value: this.condition.paymentAmt,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.condition.payChannel = value
+                                            this.condition.paymentAmt = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -695,13 +793,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.condition.payChannel,
+                                        value: this.condition.unpaidAmt,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.condition.payChannel = value
+                                            this.condition.unpaidAmt = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -722,13 +820,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.condition.payChannel,
+                                        value: this.condition.deliveryStatus,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.condition.payChannel = value
+                                            this.condition.deliveryStatus = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -749,13 +847,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.condition.payChannel,
+                                        value: this.condition.expressNumber,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.condition.payChannel = value
+                                            this.condition.expressNumber = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -776,13 +874,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.condition.payChannel,
+                                        value: this.condition.paymentStatus,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.condition.payChannel = value
+                                            this.condition.paymentStatus = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {

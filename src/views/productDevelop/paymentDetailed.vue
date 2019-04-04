@@ -5,7 +5,7 @@
                 <el-table-column type="index"
                                  fixed
                                  header-align="center"
-                                 width="50"></el-table-column>
+                                 width="30"></el-table-column>
                 <el-table-column label="操作"
                                  fixed
                                  header-align="center"

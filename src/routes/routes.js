@@ -68,6 +68,7 @@ import paymentId from '../views/productDevelop/paymentId.vue'
 import ordermanage from '../views/productDevelop/ordermanage.vue'
 import ord1 from '../views/productDevelop/ord1.vue'
 import ord2 from '../views/productDevelop/ord2.vue'
+import paymentDetail from '../views/productDevelop/paymentDetail.vue'
 
 const routes = [
   {
@@ -418,6 +419,11 @@ const routes = [
         path: '/table/:id',
         component: picEdit,
         name: 'pictureTable'
+      },
+      {
+        path: '/v1/basic-info/cgd',
+        component: paymentDetail,
+        name: '同步采购单'
       },
       {
         path: '/ord1/:id',

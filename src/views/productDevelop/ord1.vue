@@ -8,7 +8,12 @@
         <el-table
                 :data="tableData"
                 border
-                style="width: 98%;margin-left: 1%;margin-top: 20px" class="elTable11">
+                @selection-change="selsChange"
+                style="width: 98%;margin-left: 1%;margin-top: 20px" class="elTable11or">
+            <el-table-column type="selection"
+                             fixed
+                             align="center"
+                             header-align="center"></el-table-column>
             <el-table-column
                     prop="sku"
                     label="SKU"
@@ -64,15 +69,25 @@
                     header-align="center">
             </el-table-column>
             <el-table-column
-                    prop="deliveryAmt"
+                    prop=""
                     label="发货数量"
                     header-align="center">
+                <template slot-scope="scope">
+                    <el-input size="small"
+                              v-model="scope.row.deliveryAmt" style="text-align: center"></el-input>
+                </template>
             </el-table-column>
         </el-table>
+        <el-row>
+            <el-col :span="24">
+                <el-button type="primary" style="margin-left: 1%;
+                margin-top: 15px" @click="keepData()">保存</el-button>
+            </el-col>
+        </el-row>
     </div>
 </template>
 <script type="text/ecmascript-6">
-    import {APIRrderAttribute} from '../../api/product'
+    import {APIRrderAttribute,APISaveRrderDetail} from '../../api/product'
     export default {
         data() {
             return {
@@ -84,6 +99,33 @@
             }
         },
         methods:{
+            selsChange(sels) {
+                this.sels = sels
+            },
+            keepData(){
+                if(this.sels){
+                    const aryKeep=[]
+                    for(let i=0;i<this.sels.length;i++){
+                        let objKeep={
+                            id:this.sels[i].id,
+                            deliveryAmt:this.sels[i].deliveryAmt
+                        }
+                        aryKeep.push(objKeep)
+                    }
+                    APISaveRrderDetail(aryKeep).then(res=>{
+                        if(res.data.code==200){
+                            this.$message({
+                                message: '成功',
+                                type: 'success'
+                            })
+                        }else {
+                            this.$message.error(res.data.message)
+                        }
+                    })
+                }else {
+                    this.$message.error("请选择订单")
+                }
+            },
             payMent(index,row){
                 let data={
                     id:row.id,
@@ -114,9 +156,22 @@
     }
 </script>
 <style lang="scss">
-    .elTable11 td{
-        padding: 10px 0 !important;
+    .elTable11or td{
+        padding: 5px 0 !important;
         text-align: center;
+        font-size: 12px;
+    }
+    .elTable11or th{
+        font-size: 13px;
+    }
+    .holdord{
+        background: #409EFF;
+        display: block;
+        color: #fff;
+        line-height: 35px;
+        width: 80%;
+        margin: auto;
+        cursor: pointer;
     }
 </style>
 

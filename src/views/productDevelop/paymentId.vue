@@ -98,6 +98,7 @@
                             message: '付款成功',
                             type: 'success'
                         })
+                        this.getData()
                     }
                 })
             },

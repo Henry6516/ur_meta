@@ -472,16 +472,72 @@
                        label="账号"
                        sortable
                        align="center"></el-table-column>
-      <el-table-column prop="storename"
+      <el-table-column prop="sku"
+                       label="sku"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="storeName"
                        label="出货仓库"
                        sortable
                        align="center"></el-table-column>
-      <el-table-column prop="total"
-                       label="总计"
-                       sortable="custom"
+      <el-table-column prop="importDate"
+                       label="导入时间"
+                       sortable
                        align="center"></el-table-column>
-      <el-table-column prop="dateTime"
-                       label="时间"
+      <el-table-column prop="type"
+                       label="清仓类型"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="plat"
+                       label="平台"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="goodsCode"
+                       label="商品编码"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="goodsName"
+                       label="商品名称"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="createDate"
+                       label="开发时间"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="lastPurchaseDate"
+                       label="最后采购时间"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="checkNumber"
+                       label="盘点数量"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="preCheckPrice"
+                       label="盘点前单价"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="deadPrice"
+                       label="盘少单价（死库）"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="aftCheckPrice"
+                       label="盘后单价"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="suffixSalesNumber"
+                       label="账号销量"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="totalNumber"
+                       label="总销量"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="amount"
+                       label="库存金额"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="aveAmount"
+                       label="分摊金额"
                        sortable
                        align="center"></el-table-column>
       <el-table-column prop="salesman"

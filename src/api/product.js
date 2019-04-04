@@ -700,7 +700,7 @@ export function APIRrderAttribute(param) {
 export function APISyncQuery(param) {
   const data = { condition: param }
   return request({
-    url: '/supplier-order/sync-query',
+    url: '/supplier-order/sync',
     method: 'post',
     data
   })
@@ -779,6 +779,38 @@ export function APIExportDetail(param) {
     method: 'post',
     data,
     responseType: 'arraybuffer'
+  })
+}
+export function APIQuery(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/query?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APIQueryDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/query-detail',
+    method: 'post',
+    data
+  })
+}
+export function APISyncQueryCon(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/sync-query',
+    method: 'post',
+    data
+  })
+}
+export function APISaveRrderDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/supplier-order/save-order-detail',
+    method: 'post',
+    data
   })
 }
 //export function APIDelivery(param) {
