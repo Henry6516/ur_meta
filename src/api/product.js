@@ -813,6 +813,14 @@ export function APISaveRrderDetail(param) {
     data
   })
 }
+export function APIDeleteVariant(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/attribute-info-delete-variant',
+    method: 'post',
+    data
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

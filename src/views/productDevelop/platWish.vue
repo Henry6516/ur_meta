@@ -3,7 +3,7 @@
     <el-col :span="24"
             class="toolbar"
             style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:8px;padding-top: 8px">
-      <el-col :span="11"
+      <el-col :span="12"
               :offset="5">
       <el-button type="primary"
                  @click="update"
@@ -213,135 +213,164 @@
         <h3 class="toolbar essential">主信息</h3>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="关键词Tags:">
+         <span style="text-align: center;float: left;margin-left: 15px;margin-top: 6px">
+            关键词Tags
+          </span>
+        <el-col :span="22" style="margin-left: 15px;">
           <el-input v-model="wishForm.wishTags"
-                    size="small"
-                    style="width:1500px;"></el-input>
-        </el-form-item>
+                    style="width: 100%"></el-input>
+        </el-col>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="最前关键词">
-            <span>
+        <el-col :span="24" style="margin-top: 15px">
+          <span style="text-align: center;float: left;margin-left: 15px;margin-right: 13px">
+            最前关键词
+          </span>
+           <span>
               <span style="color: red">{{foremost}}</span>个字符
             </span>
              <span style="margin-left: 10px">
               <font style="color: red">说明：</font>性别定位/多个一卖等。如Women/Men/Girl/Baby/Kids/1PC/2PC/5PC/4 Colors/5Pcs Set…
             </span>
-          <br>
-          <el-input size="small"
+        </el-col>
+        <el-col :span="22" style="margin-left: 100px;margin-top: 10px">
+          <el-input
                     v-model="wishForm.headKeywords"
-                    style="width:1500px"
+                    style="width:100%"
                     placeholder="--一个关键词--"
                     @input="top($event)"
           ></el-input>
-        </el-form-item>
+        </el-col>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="必选关键词">
-             <span>
+        <el-col :span="24" style="margin-top: 4px">
+          <span style="text-align: center;margin-left: 15px;margin-right: 13px">
+            必选关键词
+           </span>
+            <span>
               <span style="color: red">{{bxlength}}</span>个关键词<span style="color: red;margin-left: 10px">{{bxtotal}}</span>个字符
             </span>
             <span>
               <font style="color: red;margin-left: 10px">说明：</font>物品名/材质/特征等。如T-Shirt(物品名)/V-neck(特征)/Cotton(材质)
             </span>
           <el-button type="text" @click="dialogTableVisible = true">批量设置</el-button>
-          <div>
+        </el-col>
+        <el-col :span="23">
+          <div style="margin-left: 70px">
             必填
-            <el-input size="small"
-                      style="width:487px" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
-            <el-input size="small"
-                      style="width:487px" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
-            <el-input size="small"
-                      style="width:487px" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
+            <el-input
+                      style="width:32%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
+            <el-input
+                      style="width:32%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
+            <el-input
+                      style="width:32%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
           </div>
-          <div>
+          <div style="margin-left: 70px;margin-top: 5px">
             选填
-            <el-input size="small"
-                      style="width:487px" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
-            <el-input size="small"
-                      style="width:487px" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
-            <el-input size="small"
-                      style="width:487px" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
+            <el-input
+                      style="width:32%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
+            <el-input
+                      style="width:32%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
+            <el-input
+                      style="width:32%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
 
           </div>
-        </el-form-item>
+        </el-col>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="随机关键词">
-            <span>
+        <el-col :span="24" style="margin-top: 4px">
+           <span style="text-align: center;margin-left: 15px;margin-right: 13px">
+            随机关键词
+           </span>
+             <span>
               <span style="color: red">{{sjlength}}</span>个关键词<span style="color: red;margin-left: 10px">{{sjtotal}}</span>个字符
             </span>
             <span>
               <font style="color: red;margin-left: 10px">说明：</font>形容词/品类热词等。如Fashion/Elegant/Hot/DIY/Casual…
             </span>
           <el-button type="text" @click="dialogTable = true">批量设置</el-button>
-          <div>
+        </el-col>
+        <el-col :span="23">
+          <div style="margin-left: 70px">
             必填
-            <el-input size="small"
-                      style="width:290px" v-model="randomData[0]" @blur="random()"></el-input>
-            <el-input size="small"
-                      style="width:290px" v-model="randomData[1]" @blur="random()"></el-input>
-            <el-input size="small"
-                      style="width:290px" v-model="randomData[2]" @blur="random()"></el-input>
-            <el-input size="small"
-                      style="width:290px" v-model="randomData[3]" @blur="random()"></el-input>
-            <el-input size="small"
-                      style="width:290px" v-model="randomData[4]" @blur="random()"></el-input>
+            <el-input
+                      style="width:19.1%" v-model="randomData[0]" @blur="random()"></el-input>
+            <el-input
+                      style="width:19.1%" v-model="randomData[1]" @blur="random()"></el-input>
+            <el-input
+                      style="width:19.1%" v-model="randomData[2]" @blur="random()"></el-input>
+            <el-input
+                      style="width:19.1%" v-model="randomData[3]" @blur="random()"></el-input>
+            <el-input
+                      style="width:19.3%" v-model="randomData[4]" @blur="random()"></el-input>
           </div>
-          <div>
+          <div style="margin-left: 70px;margin-top: 5px">
             选填
-            <el-input size="small"
-                      style="width:290px" v-model="randomData[5]" @blur="random()"></el-input>
-            <el-input size="small"
-                      style="width:290px" v-model="randomData[6]" @blur="random()"></el-input>
-            <el-input size="small"
-                      style="width:290px" v-model="randomData[7]" @blur="random()"></el-input>
-            <el-input size="small"
-                      style="width:290px" v-model="randomData[8]" @blur="random()"></el-input>
-            <el-input size="small"
-                      style="width:290px" v-model="randomData[9]" @blur="random()"></el-input>
+            <el-input
+                      style="width:19.1%" v-model="randomData[5]" @blur="random()"></el-input>
+            <el-input
+                      style="width:19.1%" v-model="randomData[6]" @blur="random()"></el-input>
+            <el-input
+                      style="width:19.1%" v-model="randomData[7]" @blur="random()"></el-input>
+            <el-input
+                      style="width:19.1%" v-model="randomData[8]" @blur="random()"></el-input>
+            <el-input
+                      style="width:19.3%" v-model="randomData[9]" @blur="random()"></el-input>
 
           </div>
-        </el-form-item>
+        </el-col>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="最后关键词">
+        <el-col :span="24" style="margin-top: 15px">
+           <span style="text-align: center;float: left;margin-left: 15px;margin-right: 13px">
+            最后关键词
+          </span>
             <span>
               <span style="color: red">{{last}}</span>个字符
             </span>
             <span>
               <font style="color: red">说明：</font>附加说明词。如Randomly/S-3XL/2ml/(Color: Nude)/Big Size…
             </span>
-          <br>
-          <el-input size="small"
+        </el-col>
+        <el-col :span="22" style="margin-left: 100px;margin-top: 10px;margin-bottom: 20px">
+          <el-input
                     v-model="wishForm.tailKeywords"
-                    style="width: 1500px"
+                    style="width: 100%"
                     placeholder="--最多一个关键词--"
                     @input="bottm($event)"
           ></el-input>
-        </el-form-item>
+        </el-col>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="描述">
-          <el-input size="small"
+         <span  style="text-align: right;margin-top: 8px;float: left;padding-left: 44px">
+            描述
+          </span>
+        <el-col :span="22">
+          <el-input
                     v-model="wishForm.description"
                     type="textarea"
-                    style="width:1500px"></el-input>
-        </el-form-item>
+                    style="width:100%;margin-left: 27px"></el-input>
+        </el-col>
       </el-col>
-      <el-col :span="24">
-        <el-form-item label="数量">
-          <el-input size="small"
+      <el-col :span="24" style="margin-top: 15px">
+         <span  style="text-align: right;margin-top: 8px;float: left;padding-left: 44px">
+            数量
+          </span>
+        <el-col :span="22">
+          <el-input
                     v-model="wishForm.inventory"
-                    style="width:1500px"></el-input>
-        </el-form-item>
+                    style="width:100%;margin-left: 27px"></el-input>
+        </el-col>
       </el-col>
-      <el-col :span="24">
-        <el-form-item label="运输时间">
-          <el-input size="small"
+      <el-col :span="24" style="margin-top: 15px">
+         <span  style="text-align: right;margin-top: 8px;float: left;padding-left: 35px;margin-right: 7px">
+            运输时间
+          </span>
+        <el-col :span="22">
+          <el-input
                     v-model="wishForm.shippingTime"
-                    style="width:1500px"></el-input>
-        </el-form-item>
+                    style="width:100%"></el-input>
+        </el-col>
       </el-col>
     </el-form>
     <el-col :span="24"
@@ -487,7 +516,7 @@
           <!--<el-button size="small"-->
                      <!--@click="setNum">数量确定</el-button>-->
           <input placeholder="数量" v-model="num"
-                 style="width:100px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:95px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setNum">数量确定</span>
         </el-col>
         <el-col :span="3">
@@ -498,7 +527,7 @@
           <!--<el-button size="small"-->
                      <!--@click="setPrice">价格确定</el-button>-->
           <input placeholder="价格" v-model="price"
-                 style="width:100px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:95px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setPrice">价格确定</span>
         </el-col>
         <el-col :span="3">
@@ -509,7 +538,7 @@
           <!--<el-button size="small"-->
                      <!--@click="setShip">运费确定</el-button>-->
           <input placeholder="运费" v-model="ship"
-                 style="width:100px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:95px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setShip">运费确定</span>
         </el-col>
         <el-col :span="3">
@@ -520,7 +549,7 @@
           <!--<el-button size="small"-->
                      <!--@click="setAdvice">建议零售价</el-button>-->
           <input placeholder="建议零售价" v-model="advicePrice"
-                 style="width:85px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:75px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setAdvice">建议零售价</span>
         </el-col>
         <el-col :span="3">
@@ -531,7 +560,7 @@
           <!--<el-button size="small"-->
                      <!--@click="setJoom">Joom零售价</el-button>-->
           <input placeholder="Joom零售价" v-model="joomPrice"
-                 style="width:82px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:75px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setJoom">Joom零售价</span>
         </el-col>
         <el-col :span="3">
@@ -542,7 +571,7 @@
           <!--<el-button size="small"-->
                      <!--@click="setTransport">Joom运费</el-button>-->
           <input placeholder="Joom运费" v-model="transport"
-                 style="width:95px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                 style="width:85px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setTransport">Joom运费</span>
         </el-col>
         <el-col :span="3">

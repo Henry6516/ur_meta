@@ -2,7 +2,7 @@
     <section>
         <el-col :span="24"
                 style="position: fixed; bottom:0; z-index:10;background: #f2f2f2;padding: 8px 0;border-top: #eee solid 1px;">
-            <el-col :span="11"
+            <el-col :span="12"
                     :offset="5">
                 <el-button @click="keep()"
                            type="primary" style="float: left;margin-right:10px">保存当前数据</el-button>
@@ -269,131 +269,179 @@
                 </el-form-item>
             </el-col>
             <el-col :span="24">
-                <el-form-item label="最前关键词">
-            <span>
-              <span style="color: red">{{foremost1}}</span>个字符
-            </span>
-             <span style="margin-left: 10px">
-              <font style="color: red">说明：</font>性别定位/多个一卖等。如Women/Men/Girl/Baby/Kids/1PC/2PC/5PC/4 Colors/5Pcs Set…
-            </span>
-                    <br>
-                    <el-input size="small"
+                <el-col :span="24">
+                     <span style="text-align: center;float: left;margin-left: 15px;margin-right: 13px">
+                        最前关键词
+                      </span>
+                     <span>
+                      <span style="color: red">{{foremost1}}</span>个字符
+                    </span>
+                     <span style="margin-left: 10px">
+                      <font style="color: red">说明：</font>性别定位/多个一卖等。如Women/Men/Girl/Baby/Kids/1PC/2PC/5PC/4 Colors/5Pcs Set…
+                    </span>
+                </el-col>
+                <el-col :span="22" style="margin-left: 100px;margin-top: 10px">
+                    <el-input
                               v-model="wishForm.headKeywords"
-                              style="width:1500px"
+                              style="width:100%"
                               placeholder="--一个关键词--"
                               @input="top1($event)"
                     ></el-input>
-                </el-form-item>
+                </el-col>
             </el-col>
             <el-col :span="24">
-                <el-form-item label="必选关键词">
-             <span>
-              <span style="color: red">{{bxlength}}</span>个关键词<span style="color: red;margin-left: 10px">{{bxtotal}}</span>个字符
-            </span>
-            <span>
-              <font style="color: red;margin-left: 10px">说明：</font>物品名/材质/特征等。如T-Shirt(物品名)/V-neck(特征)/Cotton(材质)
-            </span>
+                <el-col :span="24" style="margin-top: 4px">
+                     <span style="text-align: center;margin-left: 15px;margin-right: 13px">
+                    必选关键词
+                   </span>
+                      <span>
+                          <span style="color: red">{{bxlength}}</span>个关键词<span style="color: red;margin-left: 10px">{{bxtotal}}</span>个字符
+                        </span>
+                        <span>
+                          <font style="color: red;margin-left: 10px">说明：</font>物品名/材质/特征等。如T-Shirt(物品名)/V-neck(特征)/Cotton(材质)
+                        </span>
                     <el-button type="text" @click="dialogTableVisible = true">批量设置</el-button>
-                    <div>
+                </el-col>
+                <el-col :span="23">
+                    <div style="margin-left: 70px;">
                         必填
-                        <el-input size="small"
-                                  style="width:487px" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
-                        <el-input size="small"
-                                  style="width:487px" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
-                        <el-input size="small"
-                                  style="width:487px" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
+                        <el-input
+                                  style="width:32%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
+                        <el-input
+                                  style="width:32%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
+                        <el-input
+                                  style="width:32%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
                     </div>
-                    <div>
+                    <div style="margin-left: 70px;margin-top: 5px">
                         选填
-                        <el-input size="small"
-                                  style="width:487px" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
-                        <el-input size="small"
-                                  style="width:487px" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
-                        <el-input size="small"
-                                  style="width:487px" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
+                        <el-input
+                                  style="width:32%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
+                        <el-input
+                                  style="width:32%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
+                        <el-input
+                                  style="width:32%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
 
                     </div>
-                </el-form-item>
+                </el-col>
             </el-col>
             <el-col :span="24">
-                <el-form-item label="随机关键词">
-            <span>
+                <el-col :span="24" style="margin-top: 4px">
+                     <span style="text-align: center;margin-left: 15px;margin-right: 13px">
+                    随机关键词
+                   </span>
+                      <span>
               <span style="color: red">{{sjlength}}</span>个关键词<span style="color: red;margin-left: 10px">{{sjtotal}}</span>个字符
             </span>
             <span>
               <font style="color: red;margin-left: 10px">说明：</font>形容词/品类热词等。如Fashion/Elegant/Hot/DIY/Casual…
             </span>
                     <el-button type="text" @click="dialogTable = true">批量设置</el-button>
-                    <div>
+                </el-col>
+                <el-col :span="23">
+                    <div style="margin-left: 70px">
                         必填
-                        <el-input size="small"
-                                  style="width:290px" v-model="randomData[0]" @blur="random()"></el-input>
-                        <el-input size="small"
-                                  style="width:290px" v-model="randomData[1]" @blur="random()"></el-input>
-                        <el-input size="small"
-                                  style="width:290px" v-model="randomData[2]" @blur="random()"></el-input>
-                        <el-input size="small"
-                                  style="width:290px" v-model="randomData[3]" @blur="random()"></el-input>
-                        <el-input size="small"
-                                  style="width:290px" v-model="randomData[4]" @blur="random()"></el-input>
+                        <el-input
+                                  style="width:19.1%" v-model="randomData[0]" @blur="random()"></el-input>
+                        <el-input
+                                  style="width:19.1%" v-model="randomData[1]" @blur="random()"></el-input>
+                        <el-input
+                                  style="width:19.1%" v-model="randomData[2]" @blur="random()"></el-input>
+                        <el-input
+                                  style="width:19.1%" v-model="randomData[3]" @blur="random()"></el-input>
+                        <el-input
+                                  style="width:19.3%" v-model="randomData[4]" @blur="random()"></el-input>
                     </div>
-                    <div>
+                    <div style="margin-left: 70px;margin-top: 5px">
                         选填
-                        <el-input size="small"
-                                  style="width:290px" v-model="randomData[5]" @blur="random()"></el-input>
-                        <el-input size="small"
-                                  style="width:290px" v-model="randomData[6]" @blur="random()"></el-input>
-                        <el-input size="small"
-                                  style="width:290px" v-model="randomData[7]" @blur="random()"></el-input>
-                        <el-input size="small"
-                                  style="width:290px" v-model="randomData[8]" @blur="random()"></el-input>
-                        <el-input size="small"
-                                  style="width:290px" v-model="randomData[9]" @blur="random()"></el-input>
+                        <el-input
+                                  style="width:19.1%" v-model="randomData[5]" @blur="random()"></el-input>
+                        <el-input
+                                  style="width:19.1%" v-model="randomData[6]" @blur="random()"></el-input>
+                        <el-input
+                                  style="width:19.1%" v-model="randomData[7]" @blur="random()"></el-input>
+                        <el-input
+                                  style="width:19.1%" v-model="randomData[8]" @blur="random()"></el-input>
+                        <el-input
+                                  style="width:19.3%" v-model="randomData[9]" @blur="random()"></el-input>
 
                     </div>
-                </el-form-item>
+                </el-col>
             </el-col>
             <el-col :span="24">
-                <el-form-item label="最后关键词">
-            <span>
+                <el-col :span="24" style="margin-top: 10px">
+                     <span style="text-align: center;float: left;margin-left: 15px;margin-right: 13px">
+                    最后关键词
+                  </span>
+                     <span>
               <span style="color: red">{{last}}</span>个字符
             </span>
             <span>
               <font style="color: red">说明：</font>附加说明词。如Randomly/S-3XL/2ml/(Color: Nude)/Big Size…
             </span>
-                    <br>
-                    <el-input size="small"
+                </el-col>
+                <el-col :span="22" style="margin-left: 100px;margin-top: 10px;margin-bottom: 20px">
+                    <el-input
                               v-model="wishForm.tailKeywords"
-                              style="width: 1500px"
+                              style="width: 100%"
                               placeholder="--最多一个关键词--"
                               @input="bottm1($event)"
                     ></el-input>
-                </el-form-item>
+                </el-col>
             </el-col>
             <el-col :span="24">
-                <el-form-item label="描述">
+                 <span  style="text-align: right;margin-top: 8px;float: left;padding-left: 40px">
+                    *描述
+                  </span>
+                <el-col :span="22">
                     <el-input size="small"
                               v-model="wishForm.description"
                               type="textarea"
-                              style="width:1500px"></el-input>
-                </el-form-item>
+                              style="width:100%;margin-left: 27px"></el-input>
+                </el-col>
             </el-col>
-            <el-col :span="24">
-                <el-form-item label="数量">
-                    <el-input size="small"
-                              style="width:430px;"
-                              v-model="wishForm.quantity"></el-input>
-                </el-form-item>
-                <el-form-item label="UPC">
-                    <el-input size="small"
-                              style="width:430px;"
-                              v-model="wishForm.UPC"></el-input>
-                </el-form-item>
-                <el-form-item label="EAN">
-                    <el-input size="small"
-                              style="width:430px;"
-                              v-model="wishForm.EAN"></el-input>
-                </el-form-item>
+            <el-col :span="24" style="margin-top: 20px">
+                <el-col :span="8">
+                    <el-col :span="4" style="text-align: right;margin-top: 13px;padding-right: 10px">
+                        数量
+                    </el-col>
+                    <el-col :span="20">
+                        <el-input
+                                  style="width:100%;"
+                                  v-model="wishForm.quantity"></el-input>
+                    </el-col>
+                </el-col>
+                <el-col :span="8">
+                    <el-col :span="4" style="text-align: right;margin-top: 13px;padding-right: 10px">
+                        UPC
+                    </el-col>
+                    <el-col :span="20">
+                        <el-input
+                                  style="width:100%;"
+                                  v-model="wishForm.UPC"></el-input>
+                    </el-col>
+                </el-col>
+                <el-col :span="8">
+                    <el-col :span="4" style="text-align: right;margin-top: 13px;padding-right: 10px">
+                        EAN
+                    </el-col>
+                    <el-col :span="19">
+                        <el-input
+                                  style="width:100%;"
+                                  v-model="wishForm.EAN"></el-input>
+                    </el-col>
+                </el-col>
+                <!--<el-form-item label="数量">-->
+                <!--</el-form-item>-->
+                <!--<el-form-item label="UPC">-->
+                    <!--<el-input size="small"-->
+                              <!--style="width:430px;"-->
+                              <!--v-model="wishForm.UPC"></el-input>-->
+                <!--</el-form-item>-->
+                <!--<el-form-item label="EAN">-->
+                    <!--<el-input size="small"-->
+                              <!--style="width:430px;"-->
+                              <!--v-model="wishForm.EAN"></el-input>-->
+                <!--</el-form-item>-->
             </el-col>
             <el-col :span="24"
                     style="padding: 0">
@@ -467,100 +515,159 @@
                 <h3 class="toolbar essential">物流设置</h3>
             </el-col>
             <el-col :span="12"
-                    style="margin-bottom: 10px;padding-left: 15px">
+                    style="margin-bottom: 30px;">
                 <h4 class="adres">境内运输方式</h4>
-                <el-form-item label="运输方式1">
-                    <el-select size="small"
-                               v-model="select"
-                               placeholder="--境内物流选择--">
-                        <el-option label="是"
-                                   value="是"></el-option>
-                        <el-option label="否"
-                                   value="否"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="首件运费">
-                    <el-input size="small"
-                              placeholder="--USD--"
-                              style="width:150px;"
-                              v-model="wishForm.inFirstCost1"></el-input>
-                </el-form-item>
-                <el-form-item label="续件运费">
-                    <el-input size="small"
-                              placeholder="--USD--"
-                              style="width:150px;"
-                              v-model="wishForm.inSuccessorCost1"></el-input>
-                </el-form-item>
-                <el-form-item label="运输方式2">
-                    <el-select size="small"
-                               v-model="select"
-                               placeholder="--境内物流选择--">
-                        <el-option label="是"
-                                   value="是"></el-option>
-                        <el-option label="否"
-                                   value="否"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="首件运费">
-                    <el-input size="small"
-                              placeholder="--USD--"
-                              style="width:150px;"
-                              v-model="wishForm.inFirstCost2"></el-input>
-                </el-form-item>
-                <el-form-item label="续件运费">
-                    <el-input size="small"
-                              placeholder="--USD--"
-                              style="width:150px;"
-                              v-model="wishForm.inSuccessorCost2"></el-input>
-                </el-form-item>
+                <el-col :span="12">
+                    <el-col :span="5" style="margin-top: 10px;text-align: center">
+                        运输方式1
+                    </el-col>
+                    <el-col :span="19">
+                        <el-select style="width: 95%"
+                                   v-model="select"
+                                   placeholder="--境内物流选择--">
+                            <el-option label="是"
+                                       value="是"></el-option>
+                            <el-option label="否"
+                                       value="否"></el-option>
+                        </el-select>
+                    </el-col>
+                </el-col>
+                <el-col :span="12">
+                    <el-col :span="5" style="margin-top: 10px;text-align: center">
+                        首件运费
+                    </el-col>
+                    <el-col :span="19">
+                        <el-input
+                                  placeholder="--USD--"
+                                  style="width: 95%"
+                                  v-model="wishForm.inFirstCost1"></el-input>
+                    </el-col>
+                </el-col>
+                <el-col :span="12" style="margin-top: 15px">
+                    <el-col :span="5" style="margin-top: 10px;text-align: center">
+                        续件运费
+                    </el-col>
+                    <el-col :span="19">
+                        <el-input
+                                  placeholder="--USD--"
+                                  style="width: 95%"
+                                  v-model="wishForm.inSuccessorCost1"></el-input>
+                    </el-col>
+                </el-col>
+                <el-col :span="12" style="margin-top: 15px">
+                    <el-col :span="5" style="margin-top: 10px;text-align: center">
+                        运输方式2
+                    </el-col>
+                    <el-col :span="19">
+                        <el-select style="width: 95%"
+                                   v-model="select"
+                                   placeholder="--境内物流选择--">
+                            <el-option label="是"
+                                       value="是"></el-option>
+                            <el-option label="否"
+                                       value="否"></el-option>
+                        </el-select>
+                    </el-col>
+                </el-col>
+                <el-col :span="12" style="margin-top: 15px">
+                    <el-col :span="5" style="margin-top: 10px;text-align: center">
+                        首件运费
+                    </el-col>
+                    <el-col :span="19">
+                        <el-input
+                                  placeholder="--USD--"
+                                  style="width: 95%"
+                                  v-model="wishForm.inFirstCost2"></el-input>
+                    </el-col>
+                </el-col>
+                <el-col :span="12" style="margin-top: 15px">
+                    <el-col :span="5" style="margin-top: 10px;text-align: center">
+                        续件运费
+                    </el-col>
+                    <el-col :span="19">
+                        <el-input
+                                  placeholder="--USD--"
+                                  style="width: 95%"
+                                  v-model="wishForm.inSuccessorCost2"></el-input>
+                    </el-col>
+                </el-col>
             </el-col>
-            <el-col :span="12"
-                    style="padding-left: 15px">
+            <el-col :span="12">
                 <h4 class="adres">境外运输方式</h4>
-                <el-form-item label="运输方式1">
-                    <el-select size="small"
-                               v-model="select"
-                               placeholder="--境外物流选择--">
-                        <el-option label="是"
-                                   value="是"></el-option>
-                        <el-option label="否"
-                                   value="否"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="首件运费">
-                    <el-input size="small"
-                              placeholder="--USD--"
-                              style="width:150px;"
-                              v-model="wishForm.outFirstCost1"></el-input>
-                </el-form-item>
-                <el-form-item label="续件运费">
-                    <el-input size="small"
-                              placeholder="--USD--"
-                              style="width:150px;"
-                              v-model="wishForm.outSuccessorCost1"></el-input>
-                </el-form-item>
-                <el-form-item label="运输方式2">
-                    <el-select size="small"
-                               v-model="select"
-                               placeholder="--境外物流选择--">
-                        <el-option label="是"
-                                   value="是"></el-option>
-                        <el-option label="否"
-                                   value="否"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="首件运费">
-                    <el-input size="small"
-                              placeholder="--USD--"
-                              style="width:150px;"
-                              v-model="wishForm.outFirstCost2"></el-input>
-                </el-form-item>
-                <el-form-item label="续件运费">
-                    <el-input size="small"
-                              placeholder="--USD--"
-                              style="width:150px;"
-                              v-model="wishForm.outSuccessorCost2"></el-input>
-                </el-form-item>
+                <el-col :span="12">
+                    <el-col :span="5" style="margin-top: 10px;text-align: center">
+                        运输方式1
+                    </el-col>
+                    <el-col :span="19">
+                        <el-select style="width: 95%"
+                                   v-model="select"
+                                   placeholder="--境外物流选择--">
+                            <el-option label="是"
+                                       value="是"></el-option>
+                            <el-option label="否"
+                                       value="否"></el-option>
+                        </el-select>
+                    </el-col>
+                </el-col>
+                <el-col :span="12">
+                    <el-col :span="5" style="margin-top: 10px;text-align: center">
+                        首件运费
+                    </el-col>
+                    <el-col :span="19">
+                        <el-input
+                                  placeholder="--USD--"
+                                  style="width: 95%"
+                                  v-model="wishForm.outFirstCost1"></el-input>
+                    </el-col>
+                </el-col>
+                <el-col :span="12" style="margin-top: 15px">
+                    <el-col :span="5" style="margin-top: 10px;text-align: center">
+                        续件运费
+                    </el-col>
+                    <el-col :span="19">
+                        <el-input
+                                placeholder="--USD--"
+                                style="width: 95%"
+                                v-model="wishForm.outSuccessorCost1"></el-input>
+                    </el-col>
+                </el-col>
+                <el-col :span="12" style="margin-top: 15px">
+                    <el-col :span="5" style="margin-top: 10px;text-align: center">
+                        运输方式2
+                    </el-col>
+                    <el-col :span="19">
+                        <el-select style="width: 95%"
+                                   v-model="select"
+                                   placeholder="--境外物流选择--">
+                            <el-option label="是"
+                                       value="是"></el-option>
+                            <el-option label="否"
+                                       value="否"></el-option>
+                        </el-select>
+                    </el-col>
+                </el-col>
+                <el-col :span="12" style="margin-top: 15px">
+                    <el-col :span="5" style="margin-top: 10px;text-align: center">
+                        首件运费
+                    </el-col>
+                    <el-col :span="19">
+                        <el-input
+                                placeholder="--USD--"
+                                style="width: 95%"
+                                v-model="wishForm.outFirstCost2"></el-input>
+                    </el-col>
+                </el-col>
+                <el-col :span="12" style="margin-top: 15px">
+                    <el-col :span="5" style="margin-top: 10px;text-align: center">
+                        续件运费
+                    </el-col>
+                    <el-col :span="19">
+                        <el-input
+                                placeholder="--USD--"
+                                style="width: 95%"
+                                v-model="wishForm.outSuccessorCost2"></el-input>
+                    </el-col>
+                </el-col>
             </el-col>
             <el-dialog title="批量增加必选关键词"
                        :visible.sync="dialogTableVisible">
@@ -596,99 +703,6 @@
                         </el-col>
                     </el-col>
                 </el-row>
-                <!-- <el-button @click="innerVisible = true">添加属性</el-button> -->
-                <!-- <el-table :data="tabDate">
-                  <el-table-column type="selection"
-                                   align="center"
-                                   header-align="center"></el-table-column>
-                  <el-table-column type="index"
-                                   align="center"
-                                   header-align="center">
-                  </el-table-column>
-                  <el-table-column label="操作"
-                                   header-align="center"
-                                   align="center">
-                    <template slot-scope="scope">
-                      <el-tooltip content="删除">
-                        <i class="el-icon-delete"
-                           @click="del(scope.$index, scope.row)"
-                           style="color:#409EFF;cursor:pointer;"></i>
-                      </el-tooltip>
-                    </template>
-                  </el-table-column>
-                  <el-table-column label="SKU"
-                                   prop="sku"
-                                   header-align="center">
-                    <template slot-scope="scope">
-                      <el-input size="small"
-                                v-model="scope.row.sku"></el-input>
-                    </template>
-                  </el-table-column>
-                  <el-table-column label="数量"
-                                   prop="color"
-                                   header-align="center">
-                    <template slot-scope="scope">
-                      <el-input size="small"
-                                v-model="scope.row.quantity"></el-input>
-                    </template>
-                  </el-table-column>
-                  <el-table-column label="价格"
-                                   prop="size"
-                                   header-align="center">
-                    <template slot-scope="scope">
-                      <el-input size="small"
-                                v-model="scope.row.retailPrice"></el-input>
-                    </template>
-                  </el-table-column>
-                  <el-table-column label="图片地址"
-                                   prop="imageUrl"
-                                   header-align="center">
-                    <template slot-scope="scope">
-                      <el-input size="small"
-                                v-model="scope.row.imageUrl"></el-input>
-                    </template>
-                  </el-table-column>
-                  <el-table-column label="图片"
-                                   prop="imageUrl"
-                                   header-align="center">
-                    <template slot-scope="scope">
-                      <img :src="scope.row.imageUrl"
-                           style="width:50px;height:50px;">
-                    </template>
-                  </el-table-column>
-                  <el-table-column label="Color"
-                                   prop="imageUrl"
-                                   header-align="center">
-                    <template slot-scope="scope">
-                      <el-input size="small"
-                                v-model="scope.row.property.Color"></el-input>
-                    </template>
-                  </el-table-column>
-                  <el-table-column label="Size"
-                                   prop="imageUrl"
-                                   header-align="center">
-                    <template slot-scope="scope">
-                      <el-input size="small"
-                                v-model="scope.row.property.Size"></el-input>
-                    </template>
-                  </el-table-column>
-                  <el-table-column label="款式3"
-                                   prop="imageUrl"
-                                   header-align="center">
-                    <template slot-scope="scope">
-                      <el-input size="small"
-                                v-model="scope.row.property.Color"></el-input>
-                    </template>
-                  </el-table-column>
-                  <el-table-column label="CPU"
-                                   prop="imageUrl"
-                                   header-align="center">
-                    <template slot-scope="scope">
-                      <el-input size="small"
-                                v-model="scope.row.property.Color"></el-input>
-                    </template>
-                  </el-table-column>
-                </el-table> -->
                 <el-row>
                     <el-col :span="24">
                         <table id="oTable"
@@ -1013,9 +1027,14 @@
                     obj.property="",
                     this.tabDate.push(obj)
                     var lenth=0
-                    for(var k=0;k<this.title.length;k++){
-                        lenth=this.title[k].value.length
+                    if(this.title.length!=0){
+                        for(var k=0;k<this.title.length;k++){
+                            lenth=this.title[k].value.length
+                        }
+                    }else {
+                        lenth=4
                     }
+                    console.log(lenth)
                     var aryd={
                         label:[],
                         value:[]
@@ -1024,6 +1043,7 @@
                         aryd.value.push(null)
                     }
                     this.title.push(aryd)
+                    console.log(this.title)
                 }
             },
             setNum(){
@@ -1284,21 +1304,26 @@
                     this.wishForm.site == 0 ? (this.wishForm.site = '美国') : ''
                     this.wishForm.extraPage = this.wishForm.extraPage.split('\\n')
 //                    this.wishForm.extraPage.pop()
-                    this.tableData = JSON.parse(res.data.data.basicInfo.specifics)
+                    this.tableData = JSON.parse(res.data.data.basicInfo.specifics).specifics
                     console.log(this.tableData)
 //                    const proper = JSON.parse(res.data.data.skuInfo[0].property).columns
-                    for(var i=0;i<this.tabDate.length;i++){
-                        const proper = JSON.parse(res.data.data.skuInfo[i].property).columns
-                        var obj = {}
-                        obj.label = []
-                        obj.value = []
-                        for (var key in proper) {
-                            obj.label.push(key)
-                            obj.value.push(proper[key])
+                    if(this.tabDate.length!=0){
+                        for(var i=0;i<this.tabDate.length;i++){
+                            const proper = JSON.parse(res.data.data.skuInfo[i].property).columns
+                            var obj = {}
+                            obj.label = []
+                            obj.value = []
+                            for (var key in proper) {
+                                obj.label.push(key)
+                                obj.value.push(proper[key])
+                            }
+                            this.title.push(obj)
                         }
-                        this.title.push(obj)
+                        this.tite=this.title[0].label
+                    }else {
+                        let arrDe=["Color","Size","款式3","UPC"]
+                        this.tite=arrDe
                     }
-                    this.tite=this.title[0].label
                     this.wishForm.requiredKeywords=JSON.parse(this.wishForm.requiredKeywords)
                     this.wishForm.randomKeywords=JSON.parse(this.wishForm.randomKeywords)
                     if(this.wishForm.headKeywords){
@@ -1344,7 +1369,10 @@
                 const md=JSON.stringify(this.mandatoryData)
                 const mr=JSON.stringify(this.randomData)
                 const url=this.wishForm.extraPage.join('\\n')
-                var specificsData=JSON.stringify(this.tableData)
+                let objStr={
+                    specifics:this.tableData
+                }
+                var specificsData=JSON.stringify(objStr)
               const data = {
                 basicInfo: {
                     "nid": this.wishForm.nid,

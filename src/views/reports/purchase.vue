@@ -84,8 +84,19 @@
       </div>
     </div>
     <el-row>
-      <el-col :span="2"
-              :offset="19">
+      <el-col :span="20">
+        <el-tabs v-model="activeName"
+                 type="card"
+                 @tab-click="handleClick">
+          <el-tab-pane label="毛利润报表"
+                       name="first">
+          </el-tab-pane>
+          <el-tab-pane label="死库明细"
+                       name="second">
+          </el-tab-pane>
+        </el-tabs>
+      </el-col>
+      <el-col :span="2">
         <el-input clearable
                   placeholder="search"
                   v-model="searchValue"
@@ -97,88 +108,175 @@
                    @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData"
-              id="sale-table"
-              v-loading="listLoading"
-              element-loading-text="正在加载中..."
-              @sort-change="sortNumber"
-              show-summary
-              :summary-method="getSummaries"
-              v-show="show2"
-              :height="tableHeight"
-              :max-height="tableHeight"
-              style="width: 100%">
-      <el-table-column min-width="90"
-                       prop="purchaser"
-                       label="采购员"
-                       :formatter="empty"
-                       sortable></el-table-column>
-      <el-table-column min-width="100"
-                       prop="salemoneyrmbus"
-                       label="成交价$"
-                       :formatter="empty"
-                       sortable="custom"></el-table-column>
-      <el-table-column min-width="100"
-                       prop="salemoneyrmbzn"
-                       label="成交价￥"
-                       :formatter="empty"
-                       sortable="custom"></el-table-column>
-      <el-table-column min-width="130"
-                       prop="ppebayus"
-                       label="交易费汇总$"
-                       :formatter="empty"
-                       sortable="custom"></el-table-column>
-      <el-table-column min-width="130"
-                       prop="ppebayzn"
-                       label="交易费汇总￥"
-                       :formatter="empty"
-                       sortable="custom"></el-table-column>
-      <el-table-column min-width="115"
-                       prop="costmoneyrmb"
-                       label="商品成本￥"
-                       :formatter="empty"
-                       sortable="custom"></el-table-column>
-      <el-table-column min-width="115"
-                       prop="expressfarermb"
-                       label="运费成本￥"
-                       :formatter="empty"
-                       sortable="custom"></el-table-column>
-      <el-table-column min-width="115"
-                       prop="inpackagefeermb"
-                       label="包装成本￥"
-                       :formatter="empty"
-                       sortable="custom"></el-table-column>
-      <el-table-column min-width="115"
-                       prop="devofflinefee"
-                       label="死库处理￥"
-                       :formatter="empty"
-                       sortable="custom"></el-table-column>
-      <el-table-column min-width="120"
-                       prop="devopefee"
-                       label="运营杂费￥"
-                       :formatter="empty"
-                       sortable="custom"></el-table-column>
-      <el-table-column min-width="90"
-                       prop="netprofit"
-                       label="毛利￥"
-                       :formatter="empty"
-                       sortable="custom"></el-table-column>
-      <el-table-column min-width="100"
-                       prop="netrate"
-                       label="毛利率%"
-                       :formatter="empty"
-                       sortable="custom"></el-table-column>
-      <el-table-column min-width="120"
-                       prop="totalamount"
-                       label="采购差额￥"
-                       :formatter="empty"
-                       sortable="custom"></el-table-column>
-    </el-table>
+    <div v-show="showis1">
+      <el-table :data="tableData"
+                id="sale-table"
+                v-loading="listLoading"
+                element-loading-text="正在加载中..."
+                @sort-change="sortNumber"
+                show-summary
+                :summary-method="getSummaries"
+                :height="tableHeight"
+                :max-height="tableHeight"
+                style="width: 100%">
+        <el-table-column min-width="90"
+                         prop="purchaser"
+                         label="采购员"
+                         :formatter="empty"
+                         sortable></el-table-column>
+        <el-table-column min-width="100"
+                         prop="salemoneyrmbus"
+                         label="成交价$"
+                         :formatter="empty"
+                         sortable="custom"></el-table-column>
+        <el-table-column min-width="100"
+                         prop="salemoneyrmbzn"
+                         label="成交价￥"
+                         :formatter="empty"
+                         sortable="custom"></el-table-column>
+        <el-table-column min-width="130"
+                         prop="ppebayus"
+                         label="交易费汇总$"
+                         :formatter="empty"
+                         sortable="custom"></el-table-column>
+        <el-table-column min-width="130"
+                         prop="ppebayzn"
+                         label="交易费汇总￥"
+                         :formatter="empty"
+                         sortable="custom"></el-table-column>
+        <el-table-column min-width="115"
+                         prop="costmoneyrmb"
+                         label="商品成本￥"
+                         :formatter="empty"
+                         sortable="custom"></el-table-column>
+        <el-table-column min-width="115"
+                         prop="expressfarermb"
+                         label="运费成本￥"
+                         :formatter="empty"
+                         sortable="custom"></el-table-column>
+        <el-table-column min-width="115"
+                         prop="inpackagefeermb"
+                         label="包装成本￥"
+                         :formatter="empty"
+                         sortable="custom"></el-table-column>
+        <el-table-column min-width="115"
+                         prop="devofflinefee"
+                         label="死库处理￥"
+                         :formatter="empty"
+                         sortable="custom"></el-table-column>
+        <el-table-column min-width="120"
+                         prop="devopefee"
+                         label="运营杂费￥"
+                         :formatter="empty"
+                         sortable="custom"></el-table-column>
+        <el-table-column min-width="90"
+                         prop="netprofit"
+                         label="毛利￥"
+                         :formatter="empty"
+                         sortable="custom"></el-table-column>
+        <el-table-column min-width="100"
+                         prop="netrate"
+                         label="毛利率%"
+                         :formatter="empty"
+                         sortable="custom"></el-table-column>
+        <el-table-column min-width="120"
+                         prop="totalamount"
+                         label="采购差额￥"
+                         :formatter="empty"
+                         sortable="custom"></el-table-column>
+      </el-table>
+    </div>
+    <div v-show="showis2">
+      <el-table :data="tableData1"
+                @sort-change="sortNumber1"
+                max-height="670">
+        <el-table-column prop="importDate"
+                         label="导入时间"
+                         sortable
+                         min-width="120"></el-table-column>
+        <el-table-column prop="type"
+                         label="清仓类型"
+                         min-width="100"
+                         sortable></el-table-column>
+        <el-table-column prop="developer"
+                         label="开发1"
+                         sortable
+                         min-width="100"></el-table-column>
+        <el-table-column prop="developer2"
+                         label="开发2"
+                         sortable></el-table-column>
+        <el-table-column prop="possessMan"
+                         label="美工"
+                         sortable></el-table-column>
+        <el-table-column prop="introducer"
+                         label="推荐人"
+                         min-width="100"
+                         sortable></el-table-column>
+        <el-table-column prop="storeName"
+                         label="仓库"
+                         sortable></el-table-column>
+        <el-table-column prop="goodsCode"
+                         label="商品编码"
+                         min-width="100"
+                         sortable></el-table-column>
+        <el-table-column prop="sku"
+                         label="SKU"
+                         min-width="100"
+                         sortable></el-table-column>
+        <el-table-column prop="goodsName"
+                         label="商品名称"
+                         min-width="100"
+                         sortable></el-table-column>
+        <el-table-column prop="createDate"
+                         label="商品创建时间"
+                         min-width="130"
+                         sortable></el-table-column>
+        <el-table-column prop="lastPurchaseDate"
+                         label="最后采购时间"
+                         min-width="130"
+                         sortable></el-table-column>
+        <el-table-column prop="checkNumber"
+                         label="盘点数量"
+                         min-width="100"
+                         sortable="custom"
+                         align="center"></el-table-column>
+        <el-table-column prop="preCheckPrice"
+                         label="盘前价格"
+                         min-width="100"
+                         sortable="custom"></el-table-column>
+        <el-table-column prop="deadPrice"
+                         label="盘少价格（死库）"
+                         sortable="custom"
+                         min-width="160"></el-table-column>
+        <el-table-column prop="aftCheckPrice"
+                         label="盘后价格"
+                         sortable="custom"
+                         min-width="100"></el-table-column>
+        <el-table-column prop="aveAmount"
+                         label="分摊死库"
+                         min-width="105"
+                         sortable></el-table-column>
+        <el-table-column prop="purchaser"
+                         label="采购"
+                         sortable></el-table-column>
+      </el-table>
+      <div class="block toolbar">
+        <el-pagination background
+                       @size-change='handleSizeChangeDead'
+                       @current-change='handleCurrentChangeDead'
+                       :current-page="this.dead.page"
+                       :page-size="this.dead.pageSize"
+                       :page-sizes="[10,20,30,40]"
+                       layout="total,sizes,prev,pager,next,jumper"
+                       :total="this.totalpur">
+        </el-pagination>
+      </div>
+    </div>
   </div>
 </template>
 
-<script>
-import { getMember, getPurchase } from '../../api/profit'
+<script type="text/ecmascript-6">
+import { getMember, getPurchase,getOtherDeadFee  } from '../../api/profit'
 import { compareUp, compareDown, getMonthDate } from '../../api/tools'
 import FileSaver from 'file-saver'
 import XLSX from 'xlsx'
@@ -193,11 +291,27 @@ export default {
       show: true,
       show1: false,
       show2: false,
+      showis1:true,
+      showis2:false,
+      activeName: 'first',
       tableData: [],
       searchTable: [],
+      tableData1:[],
+      searchTable1:[],
       searchValue: '',
+      totalpur:0,
       listLoading: false,
+      order: {},
       res: [],
+      allDataDead:[],
+      dead: {
+        dateType: [],
+        dateRange: [],
+        role: 'purchaser',
+        member: [],
+        page: 1,
+        pageSize: 20
+      },
       member: [],
       dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
       condition: {
@@ -233,6 +347,25 @@ export default {
     }
   },
   methods: {
+    handleSizeChangeDead(val) {
+      this.dead.pageSize = val
+      this.onSubmit1(this.condition)
+    },
+    handleCurrentChangeDead(val) {
+      this.dead.page = val
+      this.onSubmit1(this.condition)
+    },
+    handleClick(tab, event){
+      this.activeName = tab.name
+      if (this.activeName === 'second') {
+        this.showis1 = false
+        this.showis2 = true
+        this.onSubmit1(this.condition)
+      } else {
+        this.showis1 = true
+        this.showis2 = false
+      }
+    },
     selectallm() {
       const allValues = []
       for (const item of this.member) {
@@ -262,55 +395,110 @@ export default {
     removeActive() {
       this.show1 = false
     },
-    onSubmit(form) {
+    onSubmit1(form){
       const myform = JSON.parse(JSON.stringify(form))
+      this.dead.member=myform.member
+      this.dead.dateType=myform.dateType
+      this.dead.dateRange=myform.dateRange
       const height = document.getElementById('app').clientHeight
       this.tableHeight = height - 220 + 'px'
-      this.show2 = true
       let admin = ''
-      this.$refs.condition.validate(valid => {
-        if (valid) {
           const username = sessionStorage.getItem('user')
           for (let i = 0; i < this.res.length; i++) {
             admin = this.res[i].username
           }
           if (username === admin || isAdmin() === true) {
             this.listLoading = true
-            getPurchase(myform).then(response => {
+            getOtherDeadFee(this.dead).then(response => {
               this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
+              this.tableData1 = this.searchTable1 = response.data.data.items
+              this.totalpur = response.data.data._meta.totalCount
+              this.dead.page = response.data.data._meta.currentPage
+              this.dead.pageSize = response.data.data._meta.perPage
             })
           } else {
-            myform.member = this.member.map(m => {
+            this.dead.member = this.member.map(m => {
               return m.username
             })
             this.listLoading = true
-            getPurchase(myform).then(response => {
+            getOtherDeadFee(this.dead).then(response => {
               this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
+              this.tableData1 = this.searchTable1 = response.data.data.items
+              this.totalpur = response.data.data._meta.totalCount
+              this.dead.page = response.data.data._meta.currentPage
+              this.dead.pageSize = response.data.data._meta.perPage
             })
           }
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+    },
+    onSubmit(form) {
+        const myform = JSON.parse(JSON.stringify(form))
+        const height = document.getElementById('app').clientHeight
+        this.tableHeight = height - 220 + 'px'
+        this.showis2 = false
+        this.showis1 = true
+        this.activeName = 'first'
+        let admin = ''
+        this.$refs.condition.validate(valid => {
+          if (valid) {
+            const username = sessionStorage.getItem('user')
+            for (let i = 0; i < this.res.length; i++) {
+              admin = this.res[i].username
+            }
+            if (username === admin || isAdmin() === true) {
+              this.listLoading = true
+              getPurchase(myform).then(response => {
+                this.listLoading = false
+                this.tableData = this.searchTable = response.data.data
+              })
+            } else {
+              myform.member = this.member.map(m => {
+                return m.username
+              })
+              this.listLoading = true
+              getPurchase(myform).then(response => {
+                this.listLoading = false
+                this.tableData = this.searchTable = response.data.data
+              })
+            }
+          } else {
+            this.listLoading = false
+            console.log('error submit!!')
+            return false
+          }
+        })
     },
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()
-      const data = this.searchTable
-      if (searchValue) {
-        this.tableData = data.filter(function(row) {
-          return Object.keys(row).some(function(key) {
-            return (
-              String(row[key])
-                .toLowerCase()
-                .indexOf(searchValue) > -1
-            )
+      if(this.activeName === 'first'){
+        const data = this.searchTable
+        if (searchValue) {
+          this.tableData = data.filter(function(row) {
+            return Object.keys(row).some(function(key) {
+              return (
+                      String(row[key])
+                              .toLowerCase()
+                              .indexOf(searchValue) > -1
+              )
+            })
           })
-        })
-      } else {
-        this.tableData = data
+        } else {
+          this.tableData = data
+        }
+      }else{
+        const data = this.searchTable1
+        if (searchValue) {
+          this.tableData1 = data.filter(function(row) {
+            return Object.keys(row).some(function(key) {
+              return (
+                      String(row[key])
+                              .toLowerCase()
+                              .indexOf(searchValue) > -1
+              )
+            })
+          })
+        } else {
+          this.tableData1 = data
+        }
       }
     },
     empty(row, column, cellValue, index) {
@@ -363,43 +551,53 @@ export default {
         this.tableData = data.sort(compareUp(data, column.prop))
       }
     },
+    sortNumber1(column, prop, order) {
+      const data = this.tableData1
+      if (column.order === 'descending') {
+        this.tableData1 = data.sort(compareDown(data, column.prop))
+      } else {
+        this.tableData1 = data.sort(compareUp(data, column.prop))
+      }
+    },
     // 导出
     exportExcel() {
       /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'), {
-        raw: true
-      })
-      var lastRow = wb.Sheets.Sheet1['!ref'].match(/\d+$/)[0]
-      for (var ele in wb.Sheets.Sheet1) {
-        var rowNumber = ele.replace(/[^0-9]+/g, '')
-        if (rowNumber === lastRow) {
-          delete wb.Sheets.Sheet1[ele]
-          continue
-        }
-        const row = wb.Sheets.Sheet1[ele]
-        try {
-          if (!isNaN(row['v'])) {
-            row['t'] = 'n'
-            row['v'] = Number(row['v'])
+      if (this.activeName === 'first') {
+        var wb = XLSX.utils.table_to_book(document.querySelector('#sale-table'), {
+          raw: true
+        })
+        var lastRow = wb.Sheets.Sheet1['!ref'].match(/\d+$/)[0]
+        for (var ele in wb.Sheets.Sheet1) {
+          var rowNumber = ele.replace(/[^0-9]+/g, '')
+          if (rowNumber === lastRow) {
+            delete wb.Sheets.Sheet1[ele]
+            continue
           }
-        } catch (err) {
-          console.log(err)
+          const row = wb.Sheets.Sheet1[ele]
+          try {
+            if (!isNaN(row['v'])) {
+              row['t'] = 'n'
+              row['v'] = Number(row['v'])
+            }
+          } catch (err) {
+            console.log(err)
+          }
         }
-      }
-      /* get binary string as output */
-      const filename = '采购毛利润报表'
-      var wbout = XLSX.write(wb, {
-        bookType: 'xls',
-        bookSST: true,
-        type: 'array'
-      })
-      try {
-        FileSaver.saveAs(
-          new Blob([wbout], { type: 'application/octet-stream' }),
-          filename + '.xls'
-        )
-      } catch (e) {
-        if (typeof console !== 'undefined') console.log(e, wbout)
+        /* get binary string as output */
+        const filename = '采购毛利润报表'
+        var wbout = XLSX.write(wb, {
+          bookType: 'xls',
+          bookSST: true,
+          type: 'array'
+        })
+        try {
+          FileSaver.saveAs(
+                  new Blob([wbout], {type: 'application/octet-stream'}),
+                  filename + '.xls'
+          )
+        } catch (e) {
+          if (typeof console !== 'undefined') console.log(e, wbout)
+        }
       }
     }
   },

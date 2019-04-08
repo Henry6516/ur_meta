@@ -12,8 +12,7 @@
         <div>
             <!-- 图片信息列表 -->
             <el-table :data="pictureData"
-                      @selection-change="selsChange"
-                      style="width: 97%;margin-left:20px">
+                      @selection-change="selsChange">
                 <el-table-column type="selection"
                                  fixed
                                  align="center"
@@ -40,7 +39,7 @@
                         </el-tooltip>
                         <el-tooltip content="标记已完善">
                             <i class="el-icon-star-on"
-                               style="color: #409EFF;cursor:pointer;"></i>
+                               style="color: #409EFF;cursor:pointer;" @click="signPerfect(scope.$index, scope.row)"></i>
                         </el-tooltip>
                     </template>
                 </el-table-column>
@@ -163,7 +162,7 @@
                                  header-align="center">
                     <el-table-column prop="devDatetime"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='200'
                                      align="center">
                     </el-table-column>
                 </el-table-column>
@@ -214,7 +213,7 @@
                     <el-form-item label="是否备货"
                                   prop="stockUp"
                                   class="item">
-                        <span>{{goodsInfo.stockUp === 1 ? '是' : '否'}}</span>
+                        <span>{{goodsInfo.stockUp}}</span>
                     </el-form-item>
                     <el-form-item label="供应商名称"
                                   prop="supplierName"
@@ -272,7 +271,8 @@
             APIGenerateCode,
             APIPictureInfo,
             APIPlat,
-            APIPicturePreview
+            APIPicturePreview,
+            APIFinishPicture
     } from '../../api/product'
     import { getMenu } from '../../api/login'
     export default {
@@ -352,6 +352,22 @@
             }
         },
         methods: {
+            signPerfect(index,row){
+                let objSin={
+                    id:row.id
+                }
+                APIFinishPicture(objSin).then(res => {
+                    if(res.data.code==200){
+                        this.$message({
+                            message: '成功',
+                            type: 'success'
+                        })
+                        this.getPic()
+                    }else {
+                        this.$message.error(res.data.message)
+                    }
+                })
+            },
             handleClick(tab, event) {
                 if (tab.label === '属性信息') {
                     this.$router.push({

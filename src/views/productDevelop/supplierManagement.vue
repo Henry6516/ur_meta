@@ -12,7 +12,7 @@
     <div v-show="show.management">
       <el-button @click="addVisible = true"
                  type="primary"
-                 style="margin:10px;">添加新供应商</el-button>
+                 style="margin:10px;margin-left: 1%">添加新供应商</el-button>
       <el-dialog title="添加新供应商"
                  :visible.sync="addVisible"
                  width="60%">
@@ -383,7 +383,7 @@
           </el-row>
         </el-form>
       </el-dialog>
-      <el-table :data="tableData" class="elTablee">
+      <el-table :data="tableData" class="elTablee" style="width: 98%;margin-left: 1%">
         <el-table-column type="index"
                          fixed
                          width="50"></el-table-column>

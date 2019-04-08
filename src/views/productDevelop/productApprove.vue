@@ -88,7 +88,7 @@
       </el-form>
     </el-dialog>
     <!-- 列表 -->
-    <el-table :data="tableData" @selection-change="selsChange" style="width: 97%;margin-left:20px">
+    <el-table :data="tableData" @selection-change="selsChange">
       <el-table-column type="selection" fixed align="center" header-align="center">
       </el-table-column>
       <el-table-column type="index" fixed align="center" header-align="center">
@@ -141,14 +141,14 @@
       <el-table-column label="供应商链接1" header-align="center">
         <el-table-column prop="vendor1" :render-header="renderHeader" width='170' align="center">
           <template slot-scope="scope">
-            <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+            <a :href="scope.row.vendor1" target="_blank" class="classa">{{scope.row.vendor1 | cutOut }}</a>
           </template>
         </el-table-column>
       </el-table-column>
       <el-table-column label="平台参考链接1" header-align="center">
         <el-table-column prop="origin1" :render-header="renderHeader" width='170' align="center">
           <template slot-scope="scope">
-            <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+            <a :href="scope.row.origin1" target="_blank" class="classa">{{scope.row.origin1 | cutOut }}</a>
           </template>
         </el-table-column>
       </el-table-column>
@@ -170,6 +170,9 @@
       </el-table-column>
       <el-table-column label="产品状态" header-align="center">
         <el-table-column prop="checkStatus" :render-header="renderHeader" width='150' align="center">
+          <template slot-scope="scope">
+            <a class="clasRed">{{scope.row.checkStatus}}</a>
+          </template>
         </el-table-column>
       </el-table-column>
       <el-table-column label="创建时间" header-align="center">
@@ -220,7 +223,7 @@
     </div>
     <div v-show="show.pass">
       <!-- 列表 -->
-      <el-table :data="tableData1" @selection-change="selsChange" style="width: 97%;margin-left:20px">
+      <el-table :data="tableData1" @selection-change="selsChange">
         <el-table-column type="selection" fixed align="center" header-align="center">
         </el-table-column>
         <el-table-column type="index" fixed align="center" header-align="center">
@@ -245,14 +248,14 @@
         <el-table-column label="供应商链接1" header-align="center">
           <el-table-column prop="vendor1" :render-header="renderHeader1" width='170' align="center">
             <template slot-scope="scope">
-              <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+              <a :href="scope.row.vendor1" target="_blank" class="classa">{{scope.row.vendor1 | cutOut }}</a>
             </template>
           </el-table-column>
         </el-table-column>
         <el-table-column label="平台参考链接1" header-align="center">
           <el-table-column prop="origin1" :render-header="renderHeader1" width='170' align="center">
             <template slot-scope="scope">
-              <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+              <a :href="scope.row.origin1" target="_blank" class="classa">{{scope.row.origin1 | cutOut }}</a>
             </template>
           </el-table-column>
         </el-table-column>
@@ -270,6 +273,9 @@
         </el-table-column>
         <el-table-column label="产品状态" header-align="center">
           <el-table-column prop="checkStatus" :render-header="renderHeader1" width='150'  align="center">
+            <template slot-scope="scope">
+              <a class="clasGreen">{{scope.row.checkStatus}}</a>
+            </template>
           </el-table-column>
         </el-table-column>
         <el-table-column label="审批备注" header-align="center">
@@ -404,7 +410,7 @@
       </el-form>
     </el-dialog>
       <!-- 列表 -->
-      <el-table :data="tableData2" @selection-change="selsChange" style="width: 97%;margin-left:20px">
+      <el-table :data="tableData2" @selection-change="selsChange">
         <el-table-column type="selection" fixed align="center" header-align="center">
         </el-table-column>
         <el-table-column type="index" fixed align="center" header-align="center">
@@ -458,14 +464,14 @@
         <el-table-column label="供应商链接1" header-align="center">
           <el-table-column prop="vendor1" :render-header="renderHeader2" width='170' align="center">
             <template slot-scope="scope">
-              <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+              <a :href="scope.row.vendor1" target="_blank" class="classa">{{scope.row.vendor1 | cutOut }}</a>
             </template>
           </el-table-column>
         </el-table-column>
         <el-table-column label="平台参考链接1" header-align="center">
           <el-table-column prop="origin1" :render-header="renderHeader2" width='170' align="center">
             <template slot-scope="scope">
-              <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+              <a :href="scope.row.origin1" target="_blank" class="classa">{{scope.row.origin1 | cutOut }}</a>
             </template>
           </el-table-column>
         </el-table-column>
@@ -487,6 +493,9 @@
         </el-table-column>
         <el-table-column label="产品状态" header-align="center">
           <el-table-column prop="checkStatus" :render-header="renderHeader2" width='150'  align="center">
+            <template slot-scope="scope">
+              <a class="clasRed">{{scope.row.checkStatus}}</a>
+            </template>
           </el-table-column>
         </el-table-column>
         <el-table-column label="审批备注" header-align="center">
@@ -843,6 +852,7 @@ export default {
     handleClick(tab, event) {
       if (tab.label === '待审批列表') {
         this.show['wait'] = true
+        this.getData()
       } else {
         this.show['wait'] = false
       }
@@ -2332,5 +2342,14 @@ export default {
 <style lang="scss" scoped>
 .el-button{
   margin-left: 0px;
+}
+.clasRed{
+  color: red;
+}
+.clasGreen{
+  color: #0E9A00;
+}
+.classa{
+  color: #409EFF;
 }
 </style>

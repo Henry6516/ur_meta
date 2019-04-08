@@ -97,6 +97,9 @@
                                      :render-header="renderHeader"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="scope.row.achieveStatus=='待处理'?'clasRed':'clasGreen'">{{scope.row.achieveStatus}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="商品名称"
@@ -322,10 +325,634 @@
             </el-pagination>
         </div>
         <div v-show="show.picture">
-           <goodsInfoPicture></goodsInfoPicture>
+            <!-- 图片信息列表 -->
+            <el-table :data="pictureData"
+                      @selection-change="selsChange">
+                <el-table-column type="selection"
+                                 fixed
+                                 align="center"
+                                 header-align="center"></el-table-column>
+                <el-table-column type="index"
+                                 fixed
+                                 align="center"
+                                 header-align="center">
+                </el-table-column>
+                <el-table-column label="操作"
+                                 fixed
+                                 header-align="center"
+                                 width="80">
+                    <template slot-scope="scope">
+                        <el-tooltip content="查看">
+                            <i class="el-icon-view"
+                               @click="viewPic(scope.$index, scope.row)"
+                               style="color: #409EFF;cursor:pointer;"></i>
+                        </el-tooltip>
+                        <el-tooltip content="更新">
+                            <i @click="picEdit(scope.$index, scope.row)"
+                               class="el-icon-edit"
+                               style="color: #409EFF;cursor:pointer;"></i>
+                        </el-tooltip>
+                        <el-tooltip content="标记已完善">
+                            <i class="el-icon-star-on"
+                               style="color: #409EFF;cursor:pointer;" @click="signPerfect(scope.$index, scope.row)"></i>
+                        </el-tooltip>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="picUrl"
+                                 fixed
+                                 label="商品图片"
+                                 header-align="center">
+                    <template slot-scope="scope">
+                        <img :src='scope.row.picUrl'
+                             style="width: 60px;height: 50px">
+                    </template>
+                </el-table-column>
+                <el-table-column label="商品编码"
+                                 header-align="center">
+                    <el-table-column prop="goodsCode"
+                                     :render-header="renderHeaderPic"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="是否备货"
+                                 header-align="center">
+                    <el-table-column prop="stockUp"
+                                     :render-header="renderHeaderPic"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="商品名称"
+                                 header-align="center">
+                    <el-table-column prop="goodsName"
+                                     :render-header="renderHeaderPic"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="供应商链接1"
+                                 header-align="center">
+                    <el-table-column prop="vendor1"
+                                     :render-header="renderHeaderPic"
+                                     width='170'
+                                     align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+                        </template>
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="供应商链接2"
+                                 header-align="center">
+                    <el-table-column prop="oaGoods.vendor2"
+                                     :render-header="renderHeaderPic"
+                                     width='170'
+                                     align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.vendor2" target="_blank">{{scope.row.vendor2 | cutOut }}</a>
+                        </template>
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="供应商链接3"
+                                 header-align="center">
+                    <el-table-column prop="oaGoods.vendor3"
+                                     :render-header="renderHeaderPic"
+                                     width='170'
+                                     align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.vendor3" target="_blank">{{scope.row.vendor3 | cutOut }}</a>
+                        </template>
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="平台链接1"
+                                 header-align="center">
+                    <el-table-column prop="oaGoods.origin1"
+                                     :render-header="renderHeaderPic"
+                                     width='170'
+                                     align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+                        </template>
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="平台链接2"
+                                 header-align="center">
+                    <el-table-column prop="oaGoods.origin2"
+                                     :render-header="renderHeaderPic"
+                                     width='170'
+                                     align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.origin2" target="_blank">{{scope.row.origin2 | cutOut }}</a>
+                        </template>
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="平台链接3"
+                                 header-align="center">
+                    <el-table-column prop="oaGoods.origin3"
+                                     :render-header="renderHeaderPic"
+                                     width='170'
+                                     align="center">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.origin3" target="_blank">{{scope.row.origin3 | cutOut }}</a>
+                        </template>
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="图片状态"
+                                 header-align="center">
+                    <el-table-column prop="picStatus"
+                                     :render-header="renderHeaderPic"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="开发员"
+                                 header-align="center">
+                    <el-table-column prop="developer"
+                                     :render-header="renderHeaderPic"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="开发时间"
+                                 header-align="center">
+                    <el-table-column prop="devDatetime"
+                                     :render-header="renderHeaderPic"
+                                     width='200'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="美工"
+                                 header-align="center">
+                    <el-table-column prop="possessMan1"
+                                     :render-header="renderHeaderPic"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="是否多属性"
+                                 header-align="center">
+                    <el-table-column prop="isVar"
+                                     :render-header="renderHeaderPic"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+            </el-table>
+            <!-- 图片信息查看对话框 -->
+            <el-dialog title='查看'
+                       :visible.sync="dialogPicture">
+                <el-form
+                        label-position="left"
+                        label-width="110px"
+                        ref="picForm">
+                    <el-form-item label="图片"
+                                  prop="goodsInfo.picUrl"
+                                  class="item1">
+                        <img :src='goodsInfo.picUrl'
+                             style="width: 150px;height: 100px;">
+                    </el-form-item>
+                    <el-form-item label="图片地址"
+                                  prop="picUrl"
+                                  class="item">
+                        <span>{{goodsInfo.picUrl}}</span>
+                    </el-form-item>
+                    <el-form-item label="商品名称"
+                                  prop="GoodsName"
+                                  class="item">
+                        <span>{{goodsInfo.goodsName}}</span></el-form-item>
+                    <el-form-item label="商品编码"
+                                  prop="GoodsCode"
+                                  class="item">
+                        <span>{{goodsInfo.goodsCode}}</span>
+                    </el-form-item>
+                    <el-form-item label="是否备货"
+                                  prop="stockUp"
+                                  class="item">
+                        <span>{{goodsInfo.stockUp}}</span>
+                    </el-form-item>
+                    <el-form-item label="供应商名称"
+                                  prop="supplierName"
+                                  class="item"><span>{{goodsInfo.supplierName}}</span></el-form-item>
+                    <el-form-item label="中文申报名"
+                                  prop="aliasCnName"
+                                  class="item"><span>{{goodsInfo.aliasCnName}}</span></el-form-item>
+                    <el-form-item label="英文申报名"
+                                  prop="aliasEnName"
+                                  class="item"><span>{{goodsInfo.aliasEnName}}</span></el-form-item>
+                    <el-form-item label="规格"
+                                  prop=""
+                                  class="item"><span>{{goodsInfo.packName}}</span></el-form-item>
+                    <el-form-item label="季节"
+                                  prop="season"
+                                  class="item"><span>{{goodsInfo.season}}</span></el-form-item>
+                    <el-form-item label="仓库"
+                                  prop="storeName"
+                                  class="item"><span>{{goodsInfo.storeName}}</span></el-form-item>
+                    <el-form-item label="是否液体"
+                                  prop="isLiquid"
+                                  class="item"><span>{{goodsInfo.isLiquid}}</span></el-form-item>
+                    <el-form-item label="是否粉末"
+                                  prop="isPowder"
+                                  class="item"><span>{{goodsInfo.isPowder}}</span></el-form-item>
+                    <el-form-item label="是否带磁"
+                                  prop="isMagnetism"
+                                  class="item"><span>{{goodsInfo.isMagnetism}}</span></el-form-item>
+                    <el-form-item label="是否带电"
+                                  prop="isCharged"
+                                  class="item"><span>{{goodsInfo.isCharged}}</span></el-form-item>
+                </el-form>
+            </el-dialog>
+            <el-pagination background
+                           @size-change="handleSizeChangePic"
+                           @current-change="handleCurrentChangePic"
+                           :current-page="this.picture.page"
+                           :page-sizes="[10, 20, 30, 40]"
+                           :page-size="this.picture.pageSize"
+                           layout="total, sizes, prev, pager, next, jumper"
+                           :total="this.totalPic">
+            </el-pagination>
         </div>
         <div v-show="show.plat">
-          <goodsInfoPlatform></goodsInfoPlatform>
+            <el-table :data="platData"
+                      @selection-change="selsChange">
+                <el-table-column type="selection"
+                                 fixed
+                                 align="center"
+                                 header-align="center"></el-table-column>
+                <el-table-column type="index"
+                                 fixed
+                                 align="center"
+                                 header-align="center">
+                </el-table-column>
+                <el-table-column label="操作"
+                                 fixed
+                                 header-align="center"
+                                 width="70">
+                    <template slot-scope="scope">
+                        <el-tooltip content="查看">
+                            <i class="el-icon-view"
+                               @click="viewPlat(scope.$index, scope.row)"
+                               style="color: #409EFF;cursor:pointer;"></i>
+                        </el-tooltip>
+                        <el-tooltip content="更新">
+                            <i @click="platEdit(scope.$index, scope.row)"
+                               class="el-icon-edit"
+                               style="color: #409EFF;cursor:pointer;margin-left: 15px"></i>
+                        </el-tooltip>
+                        <!--<el-tooltip content="删除">-->
+                        <!--<i class="el-icon-delete"-->
+                        <!--style="color: #409EFF;cursor:pointer;"></i>-->
+                        <!--</el-tooltip>-->
+                    </template>
+                </el-table-column>
+                <el-table-column prop="picUrl"
+                                 fixed
+                                 label="主图"
+                                 header-align="center">
+                    <template slot-scope="scope">
+                        <img :src='scope.row.picUrl'
+                             style="width: 60px;height: 50px">
+                    </template>
+                </el-table-column>
+                <el-table-column label="商品编码"
+                                 header-align="center">
+                    <el-table-column prop="goodsCode"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="对应销售"
+                                 header-align="center">
+                    <el-table-column prop="possessMan1"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="仓库"
+                                 header-align="center">
+                    <el-table-column prop="storeName"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="是否备货"
+                                 header-align="center">
+                    <el-table-column prop="stockUp"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="Wish待刊登"
+                                 header-align="center">
+                    <el-table-column prop="wishpublish"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="完成状况"
+                                 header-align="center">
+                    <el-table-column prop="completeStatus"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="商品名称"
+                                 header-align="center">
+                    <el-table-column prop="goodsName"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="主类目"
+                                 header-align="center">
+                    <el-table-column prop="cate"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="子类目"
+                                 header-align="center">
+                    <el-table-column prop=""
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="供应商名称"
+                                 header-align="center">
+                    <el-table-column prop="supplierName"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="推荐人"
+                                 header-align="center">
+                    <el-table-column prop=""
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="开发员"
+                                 header-align="center">
+                    <el-table-column prop="developer"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="采购"
+                                 header-align="center">
+                    <el-table-column prop="purchaser"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="美工"
+                                 header-align="center">
+                    <el-table-column prop="possessman1"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="是否是采集数据"
+                                 header-align="center">
+                    <el-table-column prop=""
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="禁售平台"
+                                 header-align="center">
+                    <el-table-column prop="dictionaryName"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="开发时间"
+                                 header-align="center">
+                    <el-table-column prop="devDatetime"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="更新时间"
+                                 header-align="center">
+                    <el-table-column prop="updateTime"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="是否多属性"
+                                 header-align="center">
+                    <el-table-column prop="isVar"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="商品状态"
+                                 header-align="center">
+                    <el-table-column prop="goodsStatus"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="采购到货天数"
+                                 header-align="center">
+                    <el-table-column prop="filterType"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                    </el-table-column>
+                </el-table-column>
+            </el-table>
+            <!-- 平台信息查看对话框 -->
+            <el-dialog title='查看'
+                       :visible.sync="dialogPlat">
+                <el-form :model="platForm"
+                         label-position="left"
+                         label-width="110px"
+                         ref="platForm">
+                    <el-form-item label="供应商链接1"
+                                  prop=""
+                                  class="item">
+                        <span>{{}}</span>
+                    </el-form-item>
+                    <el-form-item label="供应商链接2"
+                                  prop=""
+                                  class="item">
+                        <span>{{}}</span>
+                    </el-form-item>
+                    <el-form-item label="供应商链接3"
+                                  prop=""
+                                  class="item">
+                        <span>{{}}</span>
+                    </el-form-item>
+                    <el-form-item label="平台参考链接1"
+                                  prop=""
+                                  class="item">
+                        <span>{{}}</span>
+                    </el-form-item>
+                    <el-form-item label="平台参考链接2"
+                                  prop=""
+                                  class="item">
+                        <span>{{}}</span></el-form-item>
+                    <el-form-item label="平台参考链接3"
+                                  prop=""
+                                  class="item">
+                        <span>{{}}</span></el-form-item>
+                    <el-form-item label="是否液体"
+                                  prop="IsLiquid"
+                                  class="item"><span>{{platForm.IsLiquid}}</span></el-form-item>
+                    <el-form-item label="是否粉末"
+                                  prop="IsPowder"
+                                  class="item"><span>{{platForm.IsPowder}}</span></el-form-item>
+                    <el-form-item label="是否带磁"
+                                  prop="isMagnetism"
+                                  class="item"><span>{{platForm.isMagnetism}}</span></el-form-item>
+                    <el-form-item label="是否带电"
+                                  prop="IsCharged"
+                                  class="item"><span>{{platForm.IsCharged}}</span></el-form-item>
+                    <el-form-item label="描述"
+                                  prop="description"
+                                  class="item"><span>{{platForm.description}}</span></el-form-item>
+                    <el-form-item label="商品名称"
+                                  prop="GoodsName"
+                                  class="item"><span>{{platForm.GoodsName}}</span></el-form-item>
+                    <el-form-item label="中文申报名"
+                                  prop="AliasCnName"
+                                  class="item"><span>{{platForm.AliasCnName}}</span></el-form-item>
+                    <el-form-item label="英文申报名"
+                                  prop="AliasEnName"
+                                  class="item"><span>{{platForm.AliasEnName}}</span></el-form-item>
+                    <el-form-item label="Pack Name"
+                                  prop=""
+                                  class="item"><span>{{}}</span></el-form-item>
+                    <el-form-item label="季节"
+                                  prop="Season"
+                                  class="item"><span>{{platForm.Season}}</span></el-form-item>
+                    <el-form-item label="禁售平台"
+                                  prop="DictionaryName"
+                                  class="item"><span>{{platForm.DictionaryName}}</span></el-form-item>
+                    <el-form-item label="供应商名称"
+                                  prop="SupplierName"
+                                  class="item"><span>{{platForm.SupplierName}}</span></el-form-item>
+                    <el-form-item label="仓库"
+                                  prop="StoreName"
+                                  class="item"><span>{{platForm.StoreName}}</span></el-form-item>
+                    <el-form-item label="采购"
+                                  prop="Purchaser"
+                                  class="item">
+                        <span>{{platForm.Purchaser}}</span>
+                    </el-form-item>
+                    <el-form-item label="美工"
+                                  prop="possessMan1"
+                                  class="item">
+                        <span>{{platForm.possessMan1}}</span>
+                    </el-form-item>
+                    <el-form-item label="责任人2"
+                                  prop="possessMan2"
+                                  class="item">
+                        <span>{{platForm.possessMan2}}</span>
+                    </el-form-item>
+                    <el-form-item label="声明价"
+                                  prop=""
+                                  class="item">
+                        <span></span>
+                    </el-form-item>
+                    <el-form-item label="图片"
+                                  prop="picUrl"
+                                  class="item">
+                        <span>{{platForm.picUrl}}</span>
+                    </el-form-item>
+                    <el-form-item label="Goodsid"
+                                  prop="goodsid"
+                                  class="item">
+                        <span>{{platForm.goodsid}}</span>
+                    </el-form-item>
+                    <el-form-item label="商品编码"
+                                  prop="GoodsCode"
+                                  class="item">
+                        <span>{{platForm.GoodsCode}}</span>
+                    </el-form-item>
+                    <el-form-item label="是否备货"
+                                  prop="stockUp"
+                                  class="item">
+                        <span>{{platForm.stockUp}}</span>
+                    </el-form-item>
+                    <el-form-item label="Achieve Status"
+                                  prop="achieveStatus"
+                                  class="item">
+                        <span>{{platForm.achieveStatus}}</span>
+                    </el-form-item>
+                    <el-form-item label="开发时间"
+                                  prop="devDatetime"
+                                  class="item">
+                        <span>{{platForm.devDatetime}}</span>
+                    </el-form-item>
+                    <el-form-item label="开发员"
+                                  prop="developer"
+                                  class="item">
+                        <span>{{platForm.developer}}</span>
+                    </el-form-item>
+                    <el-form-item label="更新时间"
+                                  prop="updateTime"
+                                  class="item">
+                        <span>{{platForm.updateTime}}</span>
+                    </el-form-item>
+                    <el-form-item label="图片状态"
+                                  prop="picStatus"
+                                  class="item">
+                        <span>{{platForm.picStatus}}</span>
+                    </el-form-item>
+                    <el-form-item label="供应商ID"
+                                  prop="SupplierID"
+                                  class="item">
+                        <span>{{platForm.SupplierID}}</span>
+                    </el-form-item>
+                    <el-form-item label="仓库ID"
+                                  prop="StoreID"
+                                  class="item">
+                        <span>{{platForm.StoreID}}</span>
+                    </el-form-item>
+                    <el-form-item label="特殊属性名"
+                                  prop=""
+                                  class="item">
+                        <span></span>
+                    </el-form-item>
+                    <el-form-item label="Bgoodsid"
+                                  prop="bgoodsid"
+                                  class="item">
+                        <span>{{platForm.bgoodsid}}</span>
+                    </el-form-item>
+                </el-form>
+            </el-dialog>
+            <el-pagination background
+                           @size-change="handleSizeChangePlat"
+                           @current-change="handleCurrentChangePlat"
+                           :current-page="this.plat.currentPage"
+                           :page-sizes="[10, 20, 30, 40]"
+                           :page-size="this.plat.pageSize"
+                           layout="total, sizes, prev, pager, next, jumper"
+                           :total="this.totalPlat">
+            </el-pagination>
         </div>
     </section>
 </template>
@@ -341,8 +968,12 @@
             APIAttributeInfo,
             APIFinishAttribute,
             APIGenerateCode,
-            APIPlat
+            APIPlat,
+            APIDeleteVariant,
+            APIPicturePreview,
+            APIFinishPicture
     } from '../../api/product'
+    import {getAttributeInfoStoreName,getAttributeInfoCat,getPlatGoodsStatus,getPlatCompletedPlat} from '../../api/profit'
     import { getMenu } from '../../api/login'
     export default {
         components: {
@@ -362,6 +993,11 @@
                 time1: '',
                 time2: '',
                 allMenu: [],
+                repertory:[],
+                productState:[],
+                mainCategory:[],
+                perfectPlatform:[],
+                goodsState:[],
                 goodsInfo:[],
                 oaGoods:[],
                 tableData: [
@@ -408,37 +1044,12 @@
                     "isMagnetism": "",
                     "isCharged": "",
                     "isVar": "",
-                    "oaGoods":{
-                        approvalNote: null,
-                        bGoodsid: null,
-                        catNid: "",
-                        cate: "",
-                        checkStatus: "",
-                        createDate: "",
-                        devNum: "",
-                        devStatus: "",
-                        developer: "",
-                        hopeCost: null,
-                        hopeMonthProfit: null,
-                        hopeRate: "",
-                        hopeSale: "",
-                        hopeWeight: "",
-                        img: "",
-                        introReason: "",
-                        introducer: "",
-                        mineId: null,
-                        nid: "",
-                        origin1: "",
-                        origin2: null,
-                        origin3: "",
-                        salePrice: "",
-                        stockUp: null,
-                        subCate: "",
-                        updateDate: "",
-                        vendor1: "",
-                        vendor2: "",
-                        vendor3: null
-                    }
+                    origin1: "",
+                    origin2: null,
+                    origin3: "",
+                    vendor1: "",
+                    vendor2: "",
+                    vendor3: null
                 },
                 plat: {
                     pageSize: 10,
@@ -475,30 +1086,30 @@
               if (tab.label === '图片信息') {
                   sessionStorage.setItem('judge', "图片信息")
                 this.show['picture'] = true
+                  this.getPic()
               } else {
                 this.show['picture'] = false
               }
               if (tab.label === '平台信息') {
                   sessionStorage.setItem('judge', "平台信息")
                 this.show['plat'] = true
+                  this.getPlat()
+                  getAttributeInfoStoreName().then(response => {
+                      this.repertory =  response.data.data
+                  })
+                  getAttributeInfoCat().then(response => {
+                      this.mainCategory =  response.data.data
+                  })
+                  getPlatGoodsStatus().then(response => {
+                      this.goodsState =  response.data.data
+                  })
+                  getPlatCompletedPlat().then(response => {
+                      this.perfectPlatform =  response.data.data
+                  })
               } else {
                 this.show['plat'] = false
               }
             },
-//            handleClick(tab, event) {
-//                if (tab.label === '属性信息') {
-//                }
-//                if (tab.label === '图片信息') {
-//                    this.$router.push({
-//                        path: `/v1/oa-goodsinfo/goodsInfoPicture`
-//                    })
-//                }
-//                if (tab.label === '平台信息') {
-//                    this.$router.push({
-//                        path: `/v1/oa-goodsinfo/goodsInfoPlatform`
-//                    })
-//                }
-//            },
             //属性信息分页
             handleCurrentChange(val) {
                 this.condition.page = val
@@ -527,6 +1138,7 @@
                             message: '标记成功',
                             type: 'success'
                         })
+                        this.getData()
                     } else {
                         this.$message.error('标记失败')
                     }
@@ -541,6 +1153,7 @@
                             message: '标记成功',
                             type: 'success'
                         })
+                        this.getData()
                     } else {
                         this.$message.error('标记失败')
                     }
@@ -556,9 +1169,15 @@
                         id: this.sels.map(e => e.id)[0]
                     }
                     APIGenerateCode(data).then(res => {
-                        for (let i = 0; i < this.tableData.length; i++) {
-                            if (this.tableData[i].id === data.id) {
-                                this.tableData[i].GoodsCode = res.data.data[0]
+                        if(res.data.code==200){
+                            this.$message({
+                                message: '生成成功',
+                                type: 'success'
+                            })
+                            for (let i = 0; i < this.tableData.length; i++) {
+                                if (this.tableData[i].id === data.id) {
+                                    this.tableData[i].GoodsCode = res.data.data[0]
+                                }
                             }
                         }
                     })
@@ -571,12 +1190,26 @@
                 }
             },
             //属性信息删除
-            del() {},
+            del(index,row) {
+                let arrId = []
+                arrId.push(row.id)
+                let aryId={
+                    id:arrId
+                }
+                APIDeleteVariant(aryId).then(res => {
+                    if (res.data.code === 200) {
+                        this.$message({
+                            message: '删除成功',
+                            type: 'success'
+                        })
+                        this.getData()
+                    } else {
+                        this.$message.error('删除失败')
+                    }
+                })
+            },
             //属性信息全选
             selsChange(sels) {
-//      for(var i=0;i<sels.length;i++){
-//        console.log(sels[i].id)
-//      }
                 this.sels = sels
             },
             //属性信息获取数据
@@ -997,7 +1630,75 @@
                     )
                 }
             },
-            //图片信息分页
+            upte(index,row){
+                sessionStorage.setItem('judge', "属性信息")
+                this.$router.push({
+                    path: `/${row.id}`
+                })
+            },
+            formatTen(num) {
+                return num > 9 ? (num + "") : ("0" + num)
+            },
+            formatDate(date) {
+                const year = date.getFullYear()
+                const month = date.getMonth() + 1
+                const day = date.getDate()
+                const hour = date.getHours()
+                const minute = date.getMinutes()
+                const second = date.getSeconds()
+                return year + "-" + this.formatTen(month) + "-" + this.formatTen(day)
+            },
+            filter() {
+                if (this.activeName === '属性信息') {
+                    if (this.time1 !== null && this.time1.length !== 0) {
+                        this.condition.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+                    } else {
+                        this.condition.devDatetime = []
+                    }
+                    if (this.time2 !== null && this.time2.length !== 0) {
+                        this.condition.updateTime = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
+                    } else {
+                        this.condition.updateTime = []
+                    }
+                    this.getData()
+                } else if (this.activeName === '图片信息') {
+                    if (this.time1 !== null && this.time1.length !== 0) {
+                        this.picture.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+                    } else {
+                        this.picture.devDatetime = []
+                    }
+                    this.getPic()
+                } else {
+                    if (this.time1 !== null && this.time1.length !== 0) {
+                        this.condition2.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+                    } else {
+                        this.condition2.createDate = []
+                    }
+                    if (this.time2 !== null && this.time2.length !== 0) {
+                        this.condition2.updateDate = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
+                    } else {
+                        this.condition2.updateDate = []
+                    }
+                    this.getReverse()
+                }
+            },
+            //图片信息
+            signPerfect(index,row){
+                let objSin={
+                    id:row.id
+                }
+                APIFinishPicture(objSin).then(res => {
+                    if(res.data.code==200){
+                        this.$message({
+                            message: '成功',
+                            type: 'success'
+                        })
+                        this.getPic()
+                    }else {
+                        this.$message.error(res.data.message)
+                    }
+                })
+            },
             handleSizeChangePic(val) {
                 this.picture.pageSize = val
                 this.getPic()
@@ -1009,12 +1710,13 @@
             //图片信息查看
             viewPic(index, row) {
                 this.dialogPicture = true
-                // this.picForm.id = row.id
-                // APIPictureInfo(this.picForm).then(res => {
-                //   this.picForm = res.data.data
-                // })
+                this.picId.id = row.id
+                APIPicturePreview(this.picId).then(res => {
+                    this.goodsInfo = res.data.data
+                })
             },
             picEdit(index, row) {
+                sessionStorage.setItem('judge', "图片信息")
                 this.$router.push({
                     path: `/table/${row.id}`
                 })
@@ -1025,7 +1727,7 @@
                     this.pictureData = res.data.data.items
                     this.totalPic = res.data.data._meta.totalCount
                     this.picture.pageSize = res.data.data._meta.perPage
-                    this.picture.currentPage = res.data.data._meta.currentPage
+                    this.picture.page = res.data.data._meta.currentPage
                 })
             },
             //图片信息表头input框
@@ -1127,13 +1829,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.oaGoods.vendor1,
+                                        value: this.picture.vendor1,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.oaGoods.vendor1 = value
+                                            this.picture.vendor1 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1154,13 +1856,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.oaGoods.vendor2,
+                                        value: this.picture.vendor2,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.oaGoods.vendor2 = value
+                                            this.picture.vendor2 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1181,13 +1883,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.oaGoods.vendor3,
+                                        value: this.picture.vendor3,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.oaGoods.vendor3 = value
+                                            this.picture.vendor3 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1208,13 +1910,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.oaGoods.origin1,
+                                        value: this.picture.origin1,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.oaGoods.origin1 = value
+                                            this.picture.origin1 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1235,13 +1937,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.oaGoods.origin2,
+                                        value: this.picture.origin2,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.oaGoods.origin2 = value
+                                            this.picture.origin2 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1262,13 +1964,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.oaGoods.origin3,
+                                        value: this.picture.origin3,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.oaGoods.origin3 = value
+                                            this.picture.origin3 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1422,13 +2124,13 @@
                     )
                 }
             },
-            //平台信息分页
+            //平台信息
             handleSizeChangePlat(val) {
                 this.plat.pageSize = val
                 this.getPlat()
             },
             handleCurrentChangePlat(val) {
-                this.plat.currentPage = val
+                this.plat.page = val
                 this.getPlat()
             },
             //平台信息查看
@@ -1440,13 +2142,8 @@
                 })
             },
             //平台信息更新
-            upte(index,row){
-                sessionStorage.setItem('judge', "属性信息")
-                this.$router.push({
-                    path: `/${row.id}`
-                })
-            },
             platEdit(index, row) {
+                sessionStorage.setItem('judge', "平台信息")
                 this.$router.push({
                     path: `/plat/${row.id}`
                 })
@@ -1460,53 +2157,6 @@
                     this.plat.currentPage = res.data.data._meta.currentPage
                 })
             },
-            formatTen(num) {
-                return num > 9 ? (num + "") : ("0" + num)
-            },
-            formatDate(date) {
-                const year = date.getFullYear()
-                const month = date.getMonth() + 1
-                const day = date.getDate()
-                const hour = date.getHours()
-                const minute = date.getMinutes()
-                const second = date.getSeconds()
-                return year + "-" + this.formatTen(month) + "-" + this.formatTen(day)
-            },
-            filter() {
-                if (this.activeName === '属性信息') {
-                    if (this.time1 !== null && this.time1.length !== 0) {
-                        this.condition.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
-                    } else {
-                        this.condition.devDatetime = []
-                    }
-                    if (this.time2 !== null && this.time2.length !== 0) {
-                        this.condition.updateTime = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
-                    } else {
-                        this.condition.updateTime = []
-                    }
-                    this.getData()
-                } else if (this.activeName === '图片信息') {
-                    if (this.time1 !== null && this.time1.length !== 0) {
-                        this.picture.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
-                    } else {
-                        this.picture.devDatetime = []
-                    }
-                    this.getPic()
-                } else {
-                    if (this.time1 !== null && this.time1.length !== 0) {
-                        this.condition2.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
-                    } else {
-                        this.condition2.createDate = []
-                    }
-                    if (this.time2 !== null && this.time2.length !== 0) {
-                        this.condition2.updateDate = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
-                    } else {
-                        this.condition2.updateDate = []
-                    }
-                    this.getReverse()
-                }
-            },
-            //平台信息表头input框
             renderHeaderPlat(h, { column, $index }) {
                 if ($index === 0) {
                     return h(
@@ -1563,23 +2213,23 @@
                             ]
                     )
                 } else if ($index === 2) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = this.repertory
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.platData.storeName,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.platData.storeName=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
-                                        this.filter()
+//                                        this.filter()
                                     }
                                 }
                             },
@@ -1587,8 +2237,8 @@
                                 filters.map(item => {
                                     return h('el-option', {
                                         props: {
-                                            value: item.text,
-                                            label: item.value
+                                            value: item,
+                                            label: item
                                         }
                                     })
                                 })
@@ -1627,7 +2277,7 @@
                             ]
                     )
                 } else if ($index === 4) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = [{ text: 'Y', value: 'Y' }, { text: 'N', value: 'N' }]
                     return h(
                             'el-select',
                             {
@@ -1659,7 +2309,8 @@
                             ]
                     )
                 } else if ($index === 5) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+//                    let filters = [{ text: '未设置', value: '未设置' }, { text: 'eBay已完善', value: 'eBay已完善' }, { text: 'Wish已完善', value: 'Wish已完善' }, { text: 'Joom已完善', value: 'Joom已完善' }, { text: 'Wish已完善|eBay已完善', value: 'Wish已完善|eBay已完善' }, { text: 'Wish已完善|Joom已完善', value: 'Wish已完善|Joom已完善' }, { text: 'Joom已完善|eBay已完善', value: 'Joom已完善|eBay已完善'}, { text: 'Wish已完善|Joom已完善|eBay已完善', value: 'Wish已完善|Joom已完善|eBay已完善'}]
+                    let filters=this.perfectPlatform
                     return h(
                             'el-select',
                             {
@@ -1683,8 +2334,8 @@
                                 filters.map(item => {
                                     return h('el-option', {
                                         props: {
-                                            value: item.text,
-                                            label: item.value
+                                            value: item,
+                                            label: item
                                         }
                                     })
                                 })
@@ -1718,19 +2369,19 @@
                             ]
                     )
                 } else if ($index === 7) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = this.mainCategory
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.platData.cate,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.platData.cate=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -1742,8 +2393,8 @@
                                 filters.map(item => {
                                     return h('el-option', {
                                         props: {
-                                            value: item.text,
-                                            label: item.value
+                                            value: item,
+                                            label: item
                                         }
                                     })
                                 })
@@ -2057,7 +2708,7 @@
                             ]
                     )
                 } else if ($index === 19) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = this.goodsState
                     return h(
                             'el-select',
                             {
@@ -2081,8 +2732,8 @@
                                 filters.map(item => {
                                     return h('el-option', {
                                         props: {
-                                            value: item.text,
-                                            label: item.value
+                                            value: item,
+                                            label: item
                                         }
                                     })
                                 })
@@ -2140,12 +2791,26 @@
             if (judge === '图片信息') {
                 this.show['picture'] = true
                 this.activeName="图片信息"
+                this.getPic()
             } else {
                 this.show['picture'] = false
             }
             if (judge === '平台信息') {
                 this.show['plat'] = true
                 this.activeName="平台信息"
+                this.getPlat()
+                getAttributeInfoStoreName().then(response => {
+                    this.repertory =  response.data.data
+                })
+                getAttributeInfoCat().then(response => {
+                    this.mainCategory =  response.data.data
+                })
+                getPlatGoodsStatus().then(response => {
+                    this.goodsState =  response.data.data
+                })
+                getPlatCompletedPlat().then(response => {
+                    this.perfectPlatform =  response.data.data
+                })
             } else {
                 this.show['plat'] = false
             }
@@ -2158,4 +2823,13 @@
 </script>
 
 <style lang="scss" scoped>
+    .clasRed{
+        color: red;
+    }
+    .clasGreen{
+        color: #0E9A00;
+    }
+    .classa{
+        color: #409EFF;
+    }
 </style>

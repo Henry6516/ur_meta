@@ -123,7 +123,7 @@
       <el-button type="primary" @click="submitClaim">确定</el-button>
     </span>
   </el-dialog>
-  <el-table :data="tableData" @selection-change="selsChange" style="width: 97%;margin-left:20px">
+  <el-table :data="tableData" @selection-change="selsChange">
     <el-table-column type="selection" fixed align="center" header-align="center">
     </el-table-column>
     <el-table-column type="index" fixed align="center" header-align="center">
@@ -168,14 +168,14 @@
     <el-table-column label="供应商链接" header-align="center">
       <el-table-column prop="vendor1" :render-header="renderHeader" width='170' align="center">
         <template slot-scope="scope">
-          <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+          <a :href="scope.row.vendor1" target="_blank" class="classa">{{scope.row.vendor1 | cutOut }}</a>
         </template>
       </el-table-column>
     </el-table-column>
     <el-table-column label="平台参考链接" header-align="center">
       <el-table-column prop="origin1" :render-header="renderHeader" width='170' align="center">
         <template slot-scope="scope">
-          <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+          <a :href="scope.row.origin1" target="_blank" class="classa">{{scope.row.origin1 | cutOut }}</a>
         </template>
       </el-table-column>
     </el-table-column>
@@ -193,6 +193,9 @@
     </el-table-column>
     <el-table-column label="产品状态" header-align="center">
       <el-table-column prop="checkStatus" :render-header="renderHeader" width='150' align="center">
+        <template slot-scope="scope">
+          <a :class="scope.row.checkStatus=='未认领'?'clasRed':'clasGreen'">{{scope.row.checkStatus}}</a>
+        </template>
       </el-table-column>
     </el-table-column>
     <el-table-column label="审批备注" header-align="center">
@@ -442,7 +445,7 @@
         <el-button type="primary" @click="submitEditCheck">更新并提交审批</el-button>
       </span>
     </el-dialog>
-    <el-table :data="tableData1" @selection-change="selsChange" style="width: 97%;margin-left:20px">
+    <el-table :data="tableData1" @selection-change="selsChange">
       <el-table-column type="selection" fixed align="center" header-align="center">
       </el-table-column>
       <el-table-column type="index" fixed align="center" header-align="center">
@@ -491,14 +494,14 @@
       <el-table-column label="供应商链接1" header-align="center">
         <el-table-column prop="vendor1" :render-header="renderHeader1" width='170' align="center">
           <template slot-scope="scope">
-            <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+            <a :href="scope.row.vendor1" target="_blank" class="classa">{{scope.row.vendor1 | cutOut }}</a>
           </template>
         </el-table-column>
       </el-table-column>
       <el-table-column label="平台参考链接1" header-align="center">
         <el-table-column prop="origin1" :render-header="renderHeader1" width='170' align="center">
           <template slot-scope="scope">
-            <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+            <a :href="scope.row.origin1" target="_blank" class="classa">{{scope.row.origin1 | cutOut }}</a>
           </template>
         </el-table-column>
       </el-table-column>
@@ -520,6 +523,9 @@
       </el-table-column>
       <el-table-column label="产品状态" header-align="center">
         <el-table-column prop="checkStatus" :render-header="renderHeader1" width='150' align="center">
+          <template slot-scope="scope">
+            <a :class="scope.row.checkStatus=='已审批'?'clasGreen':scope.row.checkStatus=='已认领'?'clasGreen':'clasRed'">{{scope.row.checkStatus}}</a>
+          </template>
         </el-table-column>
       </el-table-column>
       <el-table-column label="审批备注" header-align="center">
@@ -789,7 +795,7 @@
         <el-button type="primary" @click="submitEditCheck2">更新并提交审核</el-button>
       </span>
     </el-dialog>
-    <el-table :data="tableData2" @selection-change="selsChange" style="width: 97%;margin-left:20px">
+    <el-table :data="tableData2" @selection-change="selsChange">
       <el-table-column type="selection" fixed align="center" header-align="center">
       </el-table-column>
       <el-table-column type="index" fixed align="center" header-align="center">
@@ -838,14 +844,14 @@
       <el-table-column label="供应商链接1" header-align="center">
         <el-table-column prop="vendor1" :render-header="renderHeader2" width='170' align="center">
           <template slot-scope="scope">
-            <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+            <a :href="scope.row.vendor1" target="_blank" class="classa">{{scope.row.vendor1 | cutOut }}</a>
           </template>
         </el-table-column>
       </el-table-column>
       <el-table-column label="平台参考链接1" header-align="center">
         <el-table-column prop="origin1" :render-header="renderHeader2" width='170' align="center">
           <template slot-scope="scope">
-            <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+            <a :href="scope.row.origin1" target="_blank" class="classa">{{scope.row.origin1 | cutOut }}</a>
           </template>
         </el-table-column>
       </el-table-column>
@@ -867,6 +873,9 @@
       </el-table-column>
       <el-table-column label="产品状态" header-align="center">
         <el-table-column prop="checkStatus" :render-header="renderHeader2" width='150' align="center">
+          <template slot-scope="scope">
+            <a :class="scope.row.checkStatus=='已审批'?'clasGreen':scope.row.checkStatus=='已认领'?'clasGreen':'clasRed'">{{scope.row.checkStatus}}</a>
+          </template>
         </el-table-column>
       </el-table-column>
       <el-table-column label="审批备注" header-align="center">
@@ -2778,4 +2787,13 @@ export default {
 .el-button{
   margin-left: 0px;
 }
+  .clasRed{
+    color: red;
+  }
+  .clasGreen{
+    color: #0E9A00;
+  }
+  .classa{
+    color: #409EFF;
+  }
 </style>

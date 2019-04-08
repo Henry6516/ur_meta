@@ -2,9 +2,7 @@
   <section>
     <el-row>
       <el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #e4e7ed solid 1px; background: #eee;padding: 0">
-        <span @click="attribute()" class="adClass">属性信息</span>
-        <span @click="photo()" class="adClass">图片信息</span>
-        <span @click="platform()" class="adClass actie">平台信息</span>
+        <span @click="attribute(log.name)" class="adClass" :class="log.name=='平台信息'?'actie':''" v-for="(log,index) in allMenu" :key="index">{{log.name}}</span>
       </el-col>
     </el-row>
     <el-tabs v-model="activeName"
@@ -21,8 +19,9 @@
     </el-tabs>
   </section>
 </template>
-<script>
+<script type="text/ecmascript-6">
 import { APIPlatInfo, APISaveWishInfo } from '../../api/product'
+import { getMenu } from '../../api/login'
 import platWish from './platWish.vue'
 import platEbay from './platEbay.vue'
 export default {
@@ -34,7 +33,8 @@ export default {
     return {
       // select: '',
       // select1: '',
-      activeName: 'first'
+      activeName: 'first',
+      allMenu:[],
       // wishForm: {},
       // mainForm: {},
       // tableData: [
@@ -46,27 +46,38 @@ export default {
     }
   },
   methods: {
-    attribute(){
-      sessionStorage.setItem('judge', "属性信息")
-      this.$router.push({
-        path: `/v1/oa-goodsinfo/index`
-      })
-    },
-    photo(){
-      sessionStorage.setItem('judge', "图片信息")
-      this.$router.push({
-        path: `/v1/oa-goodsinfo/index`
-      })
-    },
-    platform(){
-      sessionStorage.setItem('judge', "平台信息")
-      this.$router.push({
-        path: `/v1/oa-goodsinfo/index`
-      })
+    attribute(name){
+      if(name=='属性信息'){
+        sessionStorage.setItem('judge', "属性信息")
+        this.$router.push({
+          path: `/v1/oa-goodsinfo/index`
+        })
+      }else if(name=='图片信息'){
+        sessionStorage.setItem('judge', "图片信息")
+        this.$router.push({
+          path: `/v1/oa-goodsinfo/index`
+        })
+      }else {
+        sessionStorage.setItem('judge', "平台信息")
+        this.$router.push({
+          path: `/v1/oa-goodsinfo/index`
+        })
+      }
     },
     handleClick() {}
   },
   mounted() {
+    getMenu().then(response => {
+      const res = response.data.data
+      const menu = res.filter(e => e.name === '产品中心')
+    let arr=menu[0].children
+    for(let i=0;i<arr.length;i++){
+      if(arr[i].name=="产品资料"){
+        this.allMenu=arr[i].tabs
+      }
+    }
+    console.log(this.allMenu)
+  })
   }
 }
 </script>

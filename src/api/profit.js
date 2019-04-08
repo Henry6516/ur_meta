@@ -304,6 +304,14 @@ export function getGoodspicture(param) {
     data
   })
 }
+export function getOtherDeadFee(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/other-dead-fee?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
 export function getPerform(param) {
   const data = { condition: param }
   return request({

@@ -2,9 +2,7 @@
   <section class="toolbar">
     <el-row>
       <el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #e4e7ed solid 1px; background: #eee;padding: 0">
-        <span @click="attribute()" class="adClass">属性信息</span>
-        <span @click="photo()" class="adClass actie">图片信息</span>
-        <span @click="platform()" class="adClass">平台信息</span>
+        <span @click="attribute(log.name)" class="adClass" :class="log.name=='图片信息'?'actie':''" v-for="(log,index) in allMenu" :key="index">{{log.name}}</span>
       </el-col>
     </el-row>
     <el-col :span="24" style="margin-top: 50px;background: #fff;border-bottom: #ccc solid 1px;padding-left: 15px">
@@ -81,34 +79,54 @@ import {
   APIFinishPicture,
   APIPictureToFtp
 } from '../../api/product'
+import { getMenu } from '../../api/login'
 export default {
   data() {
     return {
       tableData: [],
+      allMenu:[],
       condition: {
         id: 0
       }
     }
   },
   methods: {
-    attribute(){
-      sessionStorage.setItem('judge', "属性信息")
-      this.$router.push({
-        path: `/v1/oa-goodsinfo/index`
-      })
+    attribute(name){
+      if(name=='属性信息'){
+        sessionStorage.setItem('judge', "属性信息")
+        this.$router.push({
+          path: `/v1/oa-goodsinfo/index`
+        })
+      }else if(name=='图片信息'){
+        sessionStorage.setItem('judge', "图片信息")
+        this.$router.push({
+          path: `/v1/oa-goodsinfo/index`
+        })
+      }else {
+        sessionStorage.setItem('judge', "平台信息")
+        this.$router.push({
+          path: `/v1/oa-goodsinfo/index`
+        })
+      }
     },
-    photo(){
-      sessionStorage.setItem('judge', "图片信息")
-      this.$router.push({
-        path: `/v1/oa-goodsinfo/index`
-      })
-    },
-    platform(){
-      sessionStorage.setItem('judge', "平台信息")
-      this.$router.push({
-        path: `/v1/oa-goodsinfo/index`
-      })
-    },
+//    attribute(){
+//      sessionStorage.setItem('judge', "属性信息")
+//      this.$router.push({
+//        path: `/v1/oa-goodsinfo/index`
+//      })
+//    },
+//    photo(){
+//      sessionStorage.setItem('judge', "图片信息")
+//      this.$router.push({
+//        path: `/v1/oa-goodsinfo/index`
+//      })
+//    },
+//    platform(){
+//      sessionStorage.setItem('judge', "平台信息")
+//      this.$router.push({
+//        path: `/v1/oa-goodsinfo/index`
+//      })
+//    },
     //保存
     save() {
       APISavePictureInfo(this.tableData).then(res => {
@@ -158,6 +176,17 @@ export default {
   mounted() {
     this.condition.id = this.$route.params.id
     this.getData()
+    getMenu().then(response => {
+      const res = response.data.data
+      const menu = res.filter(e => e.name === '产品中心')
+      let arr=menu[0].children
+      for(let i=0;i<arr.length;i++){
+        if(arr[i].name=="产品资料"){
+          this.allMenu=arr[i].tabs
+        }
+      }
+      console.log(this.allMenu)
+    })
   }
 }
 </script>

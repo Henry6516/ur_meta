@@ -79,8 +79,7 @@
                            :page-sizes="[20, 30, 40, 50]"
                            :page-size="condition.pageSize"
                            layout="total, sizes, prev, pager, next, jumper"
-                           :total="this.total"
-                            style="padding: 10px 0;padding-left: 1%;">
+                           :total="this.total">
             </el-pagination>
         </div>
     </section>

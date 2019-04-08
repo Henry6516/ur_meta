@@ -2,9 +2,7 @@
   <section>
     <el-row>
       <el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #e4e7ed solid 1px; background: #eee">
-          <span @click="attribute()" class="adClass actie">属性信息</span>
-          <span @click="photo()" class="adClass">图片信息</span>
-          <span @click="platform()" class="adClass">平台信息</span>
+          <span @click="attribute(log.name)" class="adClass" :class="log.name=='属性信息'?'actie':''" v-for="(log,index) in allMenu" :key="index">{{log.name}}</span>
       </el-col>
     </el-row>
     <el-form :model="editForm"
@@ -27,142 +25,181 @@
               </a>
           </el-form-item>
         </el-col>
-        <el-col :span="8" style="margin-top: 20px">
-          <el-form-item label="商品图片链接">
-            <el-input
+        <el-col :span="8" style="margin-top: 20px;">
+          <el-col :span="5" style="text-align: center;margin-top: 8px">
+            商品图片链接
+          </el-col>
+          <el-col :span="18">
+              <el-input
                       v-model="editForm.picUrl"
-                      style="width:390px;"></el-input>
-          </el-form-item>
-        </el-col>
+                      style=""></el-input>
+          </el-col>
+          </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-form-item label="是否备货">
+          <el-col :span="5" style="text-align: center;margin-top: 8px">
+            是否备货
+          </el-col>
+          <el-col :span="18">
             <el-select
-                       v-model="editForm.stockUp"
-                       style="width:400px;"
-                       @change="iSn($event)">
+                    v-model="editForm.stockUp"
+                    style="width: 100%"
+                    @change="iSn($event)">
               <el-option v-for="(item, key) in IsF" :key='item.key' :label="item" :value="item"></el-option>
             </el-select>
-          </el-form-item>
+          </el-col>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="商品编码">
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px">
+            商品编码
+          </el-col>
+          <el-col :span="18">
             <el-input
-                      v-model="editForm.goodsCode"
-                      style="width:390px;"></el-input>
-          </el-form-item>
+                    v-model="editForm.goodsCode"
+                    style=""></el-input>
+          </el-col>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="">
-            <span style="color: red;margin-left: 30px;margin-right: 6px">*商品名称</span>
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red;">
+            *商品名称
+          </el-col>
+          <el-col :span="18">
             <el-input
-                      v-model="editForm.goodsName"
-                      style="width:400px;"></el-input>
-          </el-form-item>
+                    v-model="editForm.goodsName"
+                    style=""></el-input>
+          </el-col>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="">
-            <span style="color: red;margin-left: 14px;margin-right: 8px">*中文申报名</span>
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red;">
+            *中文申报名
+          </el-col>
+          <el-col :span="18">
             <el-input
-                      v-model="editForm.aliasCnName"
-                      style="width:390px;"></el-input>
-          </el-form-item>
+                    v-model="editForm.aliasCnName"
+                    style=""></el-input>
+          </el-col>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="">
-            <span style="color: red;margin-left: 14px;margin-right: 7px">*英文申报名</span>
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red;">
+            *英文申报名
+          </el-col>
+          <el-col :span="18">
             <el-input
-                      v-model="editForm.aliasEnName"
-                      style="width:400px;"></el-input>
-          </el-form-item>
+                    v-model="editForm.aliasEnName"
+                    style=""></el-input>
+          </el-col>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="采购">
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;">
+            采购
+          </el-col>
+          <el-col :span="18">
             <el-input
-                      v-model="editForm.purchaser"
-                      style="width:390px;"></el-input>
-          </el-form-item>
+                    v-model="editForm.purchaser"
+                    style=""></el-input>
+          </el-col>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="业绩归属人1">
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;">
+            业绩归属人1
+          </el-col>
+          <el-col :span="18">
             <el-input
-                      v-model="editForm.possessMan1"
-                      style="width:400px;"></el-input>
-          </el-form-item>
+                    v-model="editForm.possessMan1"
+                    style=""></el-input>
+          </el-col>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="责任归属人1">
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;">
+            责任归属人1
+          </el-col>
+          <el-col :span="18">
             <el-input
-                      v-model="editForm.developer"
-                      style="width:390px;"></el-input>
-          </el-form-item>
+                    v-model="editForm.developer"
+                    style=""></el-input>
+          </el-col>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="">
-            <span style="color: red;margin-left: 14px;margin-right: 8px">*供应商名称</span>
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red">
+            *供应商名称
+          </el-col>
+          <el-col :span="18">
             <el-input
-                      v-model="editForm.supplierName"
-                      style="width:400px;"></el-input>
-          </el-form-item>
+                    v-model="editForm.supplierName"
+                    style=""></el-input>
+          </el-col>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="">
-            <span style="color: red;margin-left: 54px;margin-right: 8px">*规格</span>
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red">
+            *规格
+          </el-col>
+          <el-col :span="18">
             <el-select
-                       v-model="editForm.packName"
-                       style="width:390px"
-                       filterable clearable
-                       @change="specIndex($event)">
+                    v-model="editForm.packName"
+                    style="width: 100%"
+                    filterable clearable
+                    @change="specIndex($event)">
               <el-option v-for="(item, key) in spec" :key='item.key' :label="item" :value="item"></el-option>
             </el-select>
-          </el-form-item>
+          </el-col>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="特殊属性必填">
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;">
+            特殊属性必填
+          </el-col>
+          <el-col :span="18">
             <el-select
-                       v-model="editForm.attributeName"
-                       style="width:400px"
-                       @change="specificityIndex($event)">
+                    v-model="editForm.attributeName"
+                    style="width: 100%"
+                    @change="specificityIndex($event)">
               <el-option v-for="(item, key) in specificity" :key='item.key' :label="item" :value="item"></el-option>
             </el-select>
-          </el-form-item>
+          </el-col>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="">
-            <span style="color: red;margin-left: 54px;margin-right: 8px">*仓库</span>
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red">
+            *仓库
+          </el-col>
+          <el-col :span="18">
             <el-select
-                       v-model="editForm.storeName"
-                       style="width:390px"
-                       filterable clearable
-                       @change="repertoryIndex($event)">
+                    v-model="editForm.storeName"
+                    style="width: 100%"
+                    filterable clearable
+                    @change="repertoryIndex($event)">
               <el-option v-for="(item, key) in repertory" :key='item.key' :label="item" :value="item"></el-option>
             </el-select>
-          </el-form-item>
+          </el-col>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="季节">
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;">
+            季节
+          </el-col>
+          <el-col :span="18">
             <el-select
-                       v-model="editForm.season"
-                       style="width:400px"
-                       @change="seasonnIndex($event)">
+                    v-model="editForm.season"
+                    style="width: 100%"
+                    @change="seasonnIndex($event)">
               <el-option v-for="(item, key) in seasonn" :key='item.key' :label="item" :value="item"></el-option>
             </el-select>
-          </el-form-item>
+          </el-col>
         </el-col>
         <el-col :span="24"
                 style="padding: 0;margin-left: 15px;">
           <h3 class="toolbar essential" style="margin-top: 15px;margin-bottom: 10px">主信息</h3>
         </el-col>
-        <el-col :span="24" style="margin-top: 10px;margin-left: 10px">
+        <el-col :span="24" style="margin-top: 10px;margin-bottom: 15px">
           <el-col :span="7">
-            <el-form-item label="禁售平台">
+            <el-col :span="5" style="text-align: center;margin-top: 8px;">
+              禁售平台
+            </el-col>
+            <el-col :span="19">
               <el-select
-                         style="width:350px"
-                         multiple
-                         filterable
-                         allow-create
-                         default-first-option
-                         v-model="editForm.dictionaryName"
-                         @change="forbidSale($event)">
+                      style="width:98%"
+                      multiple
+                      filterable
+                      allow-create
+                      default-first-option
+                      v-model="editForm.dictionaryName"
+                      @change="forbidSale($event)">
                 <el-button plain
                            type="info"
                            @click="selectalld">全选</el-button>
@@ -171,18 +208,21 @@
                            @click="noselectd">取消</el-button>
                 <el-option v-for="(item, key) in violation" :key='item.key' :label="item" :value="item"></el-option>
               </el-select>
-            </el-form-item>
+            </el-col>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="对应销售">
+            <el-col :span="5" style="text-align: center;margin-top: 8px;">
+              对应销售
+            </el-col>
+            <el-col :span="19">
               <el-select
-                         style="width:300px"
-                         multiple
-                         filterable
-                         allow-create
-                         default-first-option
-                         v-model="editForm.mapPersons"
-                         @change="forbidSale1($event)">
+                      style="width:98%"
+                      multiple
+                      filterable
+                      allow-create
+                      default-first-option
+                      v-model="editForm.mapPersons"
+                      @change="forbidSale1($event)">
                 <el-button plain
                            type="info"
                            @click="selectalld1">全选</el-button>
@@ -191,7 +231,7 @@
                            @click="noselectd1">取消</el-button>
                 <el-option v-for="(item, key) in mainSsale" :key='item.key' :label="item" :value="item"></el-option>
               </el-select>
-            </el-form-item>
+            </el-col>
           </el-col>
           <!--<el-col :span="6">-->
           <!--<el-form-item label="对应销售">-->
@@ -214,62 +254,69 @@
           <!--</el-form-item>-->
           <!--</el-col>-->
           <el-col :span="5">
-            <el-form-item label="主类目">
+            <el-col :span="5" style="text-align: center;margin-top: 8px;">
+              主类目
+            </el-col>
+            <el-col :span="19">
               <el-select
-                         style="width:230px"
-                         v-model="oaGoods.cate"
-                         @change="mainIndex($event)">
+                      style="width:230px"
+                      v-model="oaGoods.cate"
+                      @change="mainIndex($event)">
                 <el-option v-for="(item, key) in mainCategory" :key='item.key' :label="item" :value="item"></el-option>
               </el-select>
-            </el-form-item>
+            </el-col>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="子类目">
+            <el-col :span="5" style="text-align: center;margin-top: 8px;">
+              子类目
+            </el-col>
+            <el-col :span="19">
               <el-select
-                         style="width:245px"
-                         v-model="oaGoods.subCate"
-                         @change="childrenIndex($event)">
+                      style="width: 98%"
+                      v-model="oaGoods.subCate"
+                      @change="childrenIndex($event)">
                 <el-option v-for="(item, key) in childrenCategory" :key='item.key' :label="item" :value="item"></el-option>
               </el-select>
-            </el-form-item>
+            </el-col>
           </el-col>
         </el-col>
-        <el-col :span="24" style="margin-left: 10px">
-          <el-form-item label="">
-            <span style="color: red;margin-left: 54px;margin-right: 8px">*描述</span>
+        <el-col :span="24">
+             <span style="text-align: center;float: left;margin-left: 15px;margin-top: 6px">
+            关键词Tags
+          </span>
+          <el-col :span="22" style="margin-left: 15px;">
             <el-input
-                      type="textarea"
-                      v-model="editForm.description"
-                      style="width:1500px"></el-input>
-          </el-form-item>
+                    v-model="editForm.wishTags"
+                    style="width: 100%"
+                    placeholder="--tags关键词不能超过10个，逗号分隔--"></el-input>
+          </el-col>
         </el-col>
-        <el-col :span="24" style="margin-left: 10px">
-          <el-form-item label="关键词Tags">
-            <el-input
-                      v-model="editForm.wishTags"
-                      style="width: 1500px"
-                      placeholder="--tags关键词不能超过10个，逗号分隔--"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="24" style="margin-left: 10px">
-          <el-form-item label="最前关键词">
-            <span>
+        <el-col :span="24" style="margin-top: 4px">
+          <el-col :span="24" style="margin-top: 15px">
+             <span style="text-align: center;float: left;margin-left: 15px;margin-right: 13px">
+            最前关键词
+          </span>
+             <span>
               <span style="color: red">{{foremost}}</span>个字符
             </span>
              <span style="margin-left: 10px">
               <font style="color: red">说明：</font>性别定位/多个一卖等。如Women/Men/Girl/Baby/Kids/1PC/2PC/5PC/4 Colors/5Pcs Set…
             </span>
-            <br>
-            <el-input size="small"
+          </el-col>
+          <el-col :span="22" style="margin-left: 100px;margin-top: 10px">
+            <el-input
                       v-model="editForm.headKeywords"
-                      style="width:1500px"
+                      style="width: 100%"
                       placeholder="--一个关键词--"
                       @input="top($event)"
             ></el-input>
-          </el-form-item>
+          </el-col>
         </el-col>
-        <el-col :span="24" style="margin-left: 10px">
-          <el-form-item label="必选关键词">
+        <el-col :span="24">
+          <el-col :span="24" style="margin-top: 4px">
+           <span style="text-align: center;margin-left: 15px;margin-right: 13px">
+            必选关键词
+           </span>
              <span>
               <span style="color: red">{{bxlength}}</span>个关键词<span style="color: red;margin-left: 10px">{{bxtotal}}</span>个字符
             </span>
@@ -277,81 +324,103 @@
               <font style="color: red;margin-left: 10px">说明：</font>物品名/材质/特征等。如T-Shirt(物品名)/V-neck(特征)/Cotton(材质)
             </span>
             <el-button type="text" @click="dialogTableVisible = true">批量设置</el-button>
-            <div>
+          </el-col>
+          <el-col :span="23">
+            <div style="margin-left: 70px">
               必填
-              <el-input size="small"
-                        style="width:487px" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
-              <el-input size="small"
-                        style="width:487px" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
-              <el-input size="small"
-                        style="width:487px" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
+              <el-input
+                        style="width:32%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
+              <el-input
+                        style="width:32%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
+              <el-input
+                        style="width:32%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
             </div>
-            <div>
+            <div style="margin-left: 70px;margin-top: 5px">
               选填
-              <el-input size="small"
-                        style="width:487px" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
-              <el-input size="small"
-                        style="width:487px" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
-              <el-input size="small"
-                        style="width:487px" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
+              <el-input
+                        style="width:32%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
+              <el-input
+                        style="width:32%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
+              <el-input
+                        style="width:32%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
 
             </div>
-          </el-form-item>
+          </el-col>
         </el-col>
-        <el-col :span="24" style="margin-left: 10px">
-          <el-form-item label="随机关键词">
-            <span>
+        <el-col :span="24">
+          <el-col :span="24" style="margin-top: 4px">
+            <span style="text-align: center;margin-left: 15px;margin-right: 13px">
+            随机关键词
+           </span>
+              <span>
               <span style="color: red">{{sjlength}}</span>个关键词<span style="color: red;margin-left: 10px">{{sjtotal}}</span>个字符
             </span>
             <span>
               <font style="color: red;margin-left: 10px">说明：</font>形容词/品类热词等。如Fashion/Elegant/Hot/DIY/Casual…
             </span>
             <el-button type="text" @click="dialogTable = true">批量设置</el-button>
-            <div>
+          </el-col>
+          <el-col :span="23">
+            <div style="margin-left: 70px">
               必填
-              <el-input size="small"
-                        style="width:290px" v-model="randomData[0]" @blur="random()"></el-input>
-              <el-input size="small"
-                        style="width:290px" v-model="randomData[1]" @blur="random()"></el-input>
-              <el-input size="small"
-                        style="width:290px" v-model="randomData[2]" @blur="random()"></el-input>
-              <el-input size="small"
-                        style="width:290px" v-model="randomData[3]" @blur="random()"></el-input>
-              <el-input size="small"
-                        style="width:290px" v-model="randomData[4]" @blur="random()"></el-input>
+              <el-input
+                        style="width:19.1%" v-model="randomData[0]" @blur="random()"></el-input>
+              <el-input
+                        style="width:19.1%" v-model="randomData[1]" @blur="random()"></el-input>
+              <el-input
+                        style="width:19.1%" v-model="randomData[2]" @blur="random()"></el-input>
+              <el-input
+                        style="width:19.1%" v-model="randomData[3]" @blur="random()"></el-input>
+              <el-input
+                        style="width:19.3%" v-model="randomData[4]" @blur="random()"></el-input>
             </div>
-            <div>
+            <div style="margin-left: 70px;margin-top: 5px">
               选填
-              <el-input size="small"
-                        style="width:290px" v-model="randomData[5]" @blur="random()"></el-input>
-              <el-input size="small"
-                        style="width:290px" v-model="randomData[6]" @blur="random()"></el-input>
-              <el-input size="small"
-                        style="width:290px" v-model="randomData[7]" @blur="random()"></el-input>
-              <el-input size="small"
-                        style="width:290px" v-model="randomData[8]" @blur="random()"></el-input>
-              <el-input size="small"
-                        style="width:290px" v-model="randomData[9]" @blur="random()"></el-input>
+              <el-input
+                        style="width:19.1%" v-model="randomData[5]" @blur="random()"></el-input>
+              <el-input
+                        style="width:19.1%" v-model="randomData[6]" @blur="random()"></el-input>
+              <el-input
+                        style="width:19.1%" v-model="randomData[7]" @blur="random()"></el-input>
+              <el-input
+                        style="width:19.1%" v-model="randomData[8]" @blur="random()"></el-input>
+              <el-input
+                        style="width:19.3%" v-model="randomData[9]" @blur="random()"></el-input>
 
             </div>
-          </el-form-item>
+          </el-col>
         </el-col>
-        <el-col :span="24" style="margin-left: 10px">
-          <el-form-item label="最后关键词">
-            <span>
+        <el-col :span="24">
+          <el-col :span="24" style="margin-top: 10px">
+             <span style="text-align: center;float: left;margin-left: 15px;margin-right: 13px">
+            最后关键词
+          </span>
+               <span>
               <span style="color: red">{{last}}</span>个字符
             </span>
             <span>
               <font style="color: red">说明：</font>附加说明词。如Randomly/S-3XL/2ml/(Color: Nude)/Big Size…
             </span>
-            <br>
-            <el-input size="small"
+            </el-col>
+          <el-col :span="22" style="margin-left: 100px;margin-top: 10px;margin-bottom: 20px">
+            <el-input
                       v-model="editForm.tailKeywords"
-                      style="width: 1500px"
+                      style="width: 100%"
                       placeholder="--最多一个关键词--"
                       @input="bottm($event)"
             ></el-input>
-          </el-form-item>
+          </el-col>
+        </el-col>
+        <el-col :span="24" style="margin-bottom: 15px">
+          <span  style="text-align: right;margin-top: 8px;color: red;float: left;padding-left: 40px">
+            *描述
+          </span>
+          <el-col :span="22">
+            <el-input
+                    type="textarea"
+                    v-model="editForm.description"
+                    style="width:100%;margin-left: 27px"></el-input>
+          </el-col>
         </el-col>
       </el-row>
     </el-form>
@@ -529,7 +598,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="成本价￥" v-model="costprice"
-               style="width:116px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:110px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="cosprice">成本确定</span>
         <!--<el-input v-model="costprice"-->
                   <!--size="small"-->
@@ -540,7 +609,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="重量g" v-model="weight"
-               style="width:116px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:110px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="weht">重量确定</span>
         <!--<el-input v-model="weight"-->
                   <!--size="small"-->
@@ -551,7 +620,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="零售价$" v-model="retailprice"
-               style="width:116px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:110px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="price">价格确定</span>
         <!--<el-input v-model="retailprice"-->
                   <!--size="small"-->
@@ -562,7 +631,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="joom零售价$" v-model="joomretailprice"
-               style="width:116px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:110px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="joomprice">价格确定</span>
         <!--<el-input v-model="joomretailprice"-->
                   <!--size="small"-->
@@ -573,7 +642,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="joom运费$" v-model="transportationcost"
-               style="width:116px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:110px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="transport">价格确定</span>
         <!--<el-input v-model="transportationcost"-->
                   <!--size="small"-->
@@ -624,6 +693,7 @@
 <script type="text/ecmascript-6">
 import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute } from '../../api/product'
 import { getMember, getGoodscats, getAttributeInfoPackName, getAttributeInfoSpecialAttribute, getAttributeInfoStoreName, getAttributeInfoSeason, getAttributeInfoPlat, getAttributeInfoSalesman, getAttributeInfoCat, getAttributeInfoSubCat } from '../../api/profit'
+import { getMenu } from '../../api/login'
 export default {
   data() {
     return {
@@ -693,7 +763,8 @@ export default {
       editForm: {},
       oaGoods: {},
       dictionaryName1: '',
-      mapPersons1: ''
+      mapPersons1: '',
+      allMenu:[]
       //      saveInfo: {
       //        basicInfo: {
       //          goodsInfo: {
@@ -828,26 +899,25 @@ export default {
       }
       this.sjtotal = st2
     },
-    attribute(){
-      sessionStorage.setItem('judge', "属性信息")
-      this.$router.push({
-        path: `/v1/oa-goodsinfo/index`
-      })
-    },
-    photo(){
-      sessionStorage.setItem('judge', "图片信息")
-      this.$router.push({
-        path: `/v1/oa-goodsinfo/index`
-      })
-    },
-    platform(){
-      sessionStorage.setItem('judge', "平台信息")
-      this.$router.push({
-        path: `/v1/oa-goodsinfo/index`
-      })
+    attribute(name){
+      if(name=='属性信息'){
+        sessionStorage.setItem('judge', "属性信息")
+        this.$router.push({
+          path: `/v1/oa-goodsinfo/index`
+        })
+      }else if(name=='图片信息'){
+        sessionStorage.setItem('judge', "图片信息")
+        this.$router.push({
+          path: `/v1/oa-goodsinfo/index`
+        })
+      }else {
+        sessionStorage.setItem('judge', "平台信息")
+        this.$router.push({
+          path: `/v1/oa-goodsinfo/index`
+        })
+      }
     },
     iSn(e) {
-      console.log(e)
     },
     selectalld() {
       var ard = []
@@ -1308,6 +1378,17 @@ export default {
     }
   },
   mounted() {
+    getMenu().then(response => {
+      const res = response.data.data
+      const menu = res.filter(e => e.name === '产品中心')
+      let arr=menu[0].children
+      for(let i=0;i<arr.length;i++){
+        if(arr[i].name=="产品资料"){
+          this.allMenu=arr[i].tabs
+        }
+      }
+      console.log(this.allMenu)
+    })
     this.condition.id = this.$route.params.id
     this.getData()
     getGoodscats().then(response => {

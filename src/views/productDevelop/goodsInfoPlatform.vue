@@ -12,8 +12,7 @@
         <div>
             <!-- 平台信息列表 -->
             <el-table :data="platData"
-                      @selection-change="selsChange"
-                      style="width: 97%;margin-left:20px">
+                      @selection-change="selsChange">
                 <el-table-column type="selection"
                                  fixed
                                  align="center"
@@ -524,46 +523,8 @@
             }
         },
         methods: {
-            handleClick(tab, event) {
-                if (tab.label === '属性信息') {
-                    this.$router.push({
-                        path: `/v1/oa-goodsinfo/index`
-                    })
-                }
-                if (tab.label === '图片信息') {
-                    this.$router.push({
-                        path: `/v1/oa-goodsinfo/goodsInfoPicture`
-                    })
-                }
-                if (tab.label === '平台信息') {
-
-                }
-            },
-            //属性信息分页
-            handleCurrentChange(val) {
-                this.condition.currentPage = val
-                this.getData()
-            },
-            handleSizeChange(val) {
-                this.condition.pageSize = val
-                this.getData()
-            },
-            //导入普源
-            passAll() {},
-            //生成编码
-            codeAll() {
-                if (this.sels) {
-                    let data = {
-                        id: this.sels.map(e => e.id)[0]
-                    }
-                    APIGenerateCode(data).then(res => {
-                        for (let i = 0; i < this.tableData.length; i++) {
-                            if (this.tableData[i].id === data.id) {
-                                this.tableData[i].GoodsCode = res.data.data[0]
-                            }
-                        }
-                    })
-                }
+            selsChange(sels) {
+                this.sels = sels
             },
             //单元格样式
             cellStyle({ row, column, rowIndex, columnIndex }) {
@@ -571,59 +532,6 @@
                     return 'color: red'
                 }
             },
-            //属性信息删除
-            del() {},
-            //属性信息全选
-            selsChange(sels) {
-//      for(var i=0;i<sels.length;i++){
-//        console.log(sels[i].id)
-//      }
-                this.sels = sels
-            },
-            //属性信息获取数据
-            getData() {
-                APIGoodsInfo(this.condition).then(res => {
-                    this.tableData = res.data.data.items
-                    this.total = res.data.data._meta.totalCount
-                    this.condition.pageSize = res.data.data._meta.perPage
-                    this.condition.currentPage = res.data.data._meta.currentPage
-                })
-            },
-            //属性信息表头input框
-
-            //图片信息分页
-            handleSizeChangePic(val) {
-                this.picture.pageSize = val
-                this.getPic()
-            },
-            handleCurrentChangePic(val) {
-                this.picture.currentPage = val
-                this.getPic()
-            },
-            //图片信息查看
-            viewPic(index, row) {
-                this.dialogPicture = true
-                // this.picForm.id = row.id
-                // APIPictureInfo(this.picForm).then(res => {
-                //   this.picForm = res.data.data
-                // })
-            },
-            picEdit(index, row) {
-                this.$router.push({
-                    path: `/table/${row.id}`
-                })
-            },
-            //图片信息获取数据
-            getPic() {
-                APIPictureList(this.picture).then(res => {
-                    this.pictureData = res.data.data.items
-                    this.totalPic = res.data.data._meta.totalCount
-                    this.picture.pageSize = res.data.data._meta.perPage
-                    this.picture.currentPage = res.data.data._meta.currentPage
-                })
-            },
-            //图片信息表头input框
-
             //平台信息分页
             handleSizeChangePlat(val) {
                 this.plat.pageSize = val
