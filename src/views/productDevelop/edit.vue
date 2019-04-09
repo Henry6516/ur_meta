@@ -104,7 +104,7 @@
           </el-col>
           <el-col :span="18">
             <el-input
-                    v-model="editForm.possessMan1"
+                    v-model="editForm.developer"
                     style=""></el-input>
           </el-col>
         </el-col>
@@ -114,7 +114,7 @@
           </el-col>
           <el-col :span="18">
             <el-input
-                    v-model="editForm.developer"
+                    v-model="editForm.possessMan1"
                     style=""></el-input>
           </el-col>
         </el-col>
@@ -590,15 +590,15 @@
     </el-table>
     <el-row style="margin-top:15px;padding-left: 1%">
       <el-col :span="2">
-        <input placeholder="行数" v-model="rowss"
-                  style="width:70px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <input placeholder="行数" v-model="rows"
+                  style="width:58%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz" @click="addClomun">新增行</span>
         <!--<el-button size="small"-->
                    <!--@click="addClomun">新增行</el-button>-->
       </el-col>
       <el-col :span="3">
         <input placeholder="成本价￥" v-model="costprice"
-               style="width:110px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:58%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="cosprice">成本确定</span>
         <!--<el-input v-model="costprice"-->
                   <!--size="small"-->
@@ -609,7 +609,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="重量g" v-model="weight"
-               style="width:110px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:58%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="weht">重量确定</span>
         <!--<el-input v-model="weight"-->
                   <!--size="small"-->
@@ -620,7 +620,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="零售价$" v-model="retailprice"
-               style="width:110px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:58%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="price">价格确定</span>
         <!--<el-input v-model="retailprice"-->
                   <!--size="small"-->
@@ -631,7 +631,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="joom零售价$" v-model="joomretailprice"
-               style="width:110px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:58%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="joomprice">价格确定</span>
         <!--<el-input v-model="joomretailprice"-->
                   <!--size="small"-->
@@ -642,7 +642,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="joom运费$" v-model="transportationcost"
-               style="width:110px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:58%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="transport">价格确定</span>
         <!--<el-input v-model="transportationcost"-->
                   <!--size="small"-->
@@ -699,7 +699,7 @@ export default {
     return {
       tableData: [],
       btn: '',
-      rows: 1,
+      rows: null,
       rowss: 1,
       IsF: ['是', '否'],
       costprice: null,
@@ -765,71 +765,6 @@ export default {
       dictionaryName1: '',
       mapPersons1: '',
       allMenu:[]
-      //      saveInfo: {
-      //        basicInfo: {
-      //          goodsInfo: {
-      //            id: 5,
-      //            IsLiquid: '是',
-      //            IsPowder: '否',
-      //            isMagnetism: '否',
-      //            IsCharged: '否',
-      //            description: null,
-      //            GoodsName: 'test-01-01-plat',
-      //            AliasCnName: null,
-      //            AliasEnName: null,
-      //            PackName: null,
-      //            Season: null,
-      //            DictionaryName: null,
-      //            SupplierName: null,
-      //            StoreName: null,
-      //            Purchaser: null,
-      //            possessMan1: null,
-      //            possessMan2: null,
-      //            DeclaredValue: null,
-      //            picUrl: null,
-      //            goodsid: 24,
-      //            GoodsCode: null,
-      //            achieveStatus: null,
-      //            devDatetime: null,
-      //            developer: null,
-      //            updateTime: null,
-      //            picStatus: null,
-      //            SupplierID: null,
-      //            StoreID: null,
-      //            AttributeName: null,
-      //            bgoodsid: null,
-      //            completeStatus: null,
-      //            isVar: '否',
-      //            headKeywords: null,
-      //            requiredKeywords: null,
-      //            randomKeywords: null,
-      //            tailKeywords: null,
-      //            wishtags: null,
-      //            stockUp: '否',
-      //            picCompleteTime: null,
-      //            goodsstatus: null,
-      //            stockdays: null,
-      //            wishpublish: null,
-      //            number: null,
-      //            mid: null,
-      //            extendStatus: null,
-      //            mapPersons: null,
-      //            filterType: 3
-      //          },
-      //          oaGoods: {
-      //            nid: 24,
-      //            vendor1: '',
-      //            vendor2: null,
-      //            vendor3: null,
-      //            origin1: '',
-      //            origin2: null,
-      //            origin3: null
-      //          }
-      //        },
-      //        skuInfo: [
-      //
-      //        ]
-      //      }
     }
   },
   methods: {
@@ -1013,7 +948,7 @@ export default {
     },
     // 增加行
     addClomun() {
-      for (let i = 0; i < this.rowss; i++) {
+      for (let i = 0; i < this.rows; i++) {
         var obj = {}
         obj.id = null
         obj.infoId = this.editForm.id
@@ -1021,15 +956,15 @@ export default {
         obj.property1 = null
         obj.property2 = null
         obj.property3 = null
-        obj.Weight = null
+        obj.weight = null
         obj.memo1 = null
         obj.memo2 = null
         obj.memo3 = null
         obj.memo4 = null
         obj.linkurl = null
         obj.goodsskuid = null
-        obj.RetailPrice = null
-        obj.CostPrice = null
+        obj.retailPrice = null
+        obj.costPrice = null
         obj.stockNum = null
         obj.did = null
         obj.joomPrice = null
@@ -1044,6 +979,7 @@ export default {
         for (let i = 0; i < this.tableData.length; i++) {
           this.tableData[i].costPrice = this.costprice
         }
+        console.log(this.tableData)
       } else {
         return false
       }
@@ -1185,7 +1121,7 @@ export default {
         skuInfo: this.tableData
       }
       APISaveFinishAttribute(saveInfo).then(res => {
-        if (res.data.data[0] === 'success') {
+        if (res.data.code === 200) {
           this.$message({
             message: '保存成功',
             type: 'success'
@@ -1292,7 +1228,7 @@ export default {
         skuInfo: this.tableData
       }
       APISaveAttribute(saveInfo).then(res => {
-        if (res.data.data[0] === 'success') {
+        if (res.data.code == 200) {
           this.$message({
             message: '保存成功',
             type: 'success'
@@ -1387,7 +1323,6 @@ export default {
           this.allMenu=arr[i].tabs
         }
       }
-      console.log(this.allMenu)
     })
     this.condition.id = this.$route.params.id
     this.getData()

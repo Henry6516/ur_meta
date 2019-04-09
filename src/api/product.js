@@ -163,7 +163,7 @@ export function checkFailedList(param) {
 export function APIGoodsInfo(param) {
   const data = { condition: param }
   return request({
-    url: '/oa-goodsinfo/attributes-list',
+    url: '/oa-goodsinfo/attributes-list?page=' + param.page,
     method: 'post',
     data
   })
@@ -171,7 +171,7 @@ export function APIGoodsInfo(param) {
 export function APIPictureList(param) {
   const data = { condition: param }
   return request({
-    url: '/oa-goodsinfo/picture-list',
+    url: '/oa-goodsinfo/picture-list?page=' + param.page,
     method: 'post',
     data
   })
@@ -179,7 +179,7 @@ export function APIPictureList(param) {
 export function APIPlatList(param) {
   const data = { condition: param }
   return request({
-    url: '/oa-goodsinfo/plat-list',
+    url: '/oa-goodsinfo/plat-list?page=' + param.page,
     method: 'post',
     data
   })

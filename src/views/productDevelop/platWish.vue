@@ -1082,6 +1082,9 @@
           const extraPic = res.data.data.basicInfo.extraImages
           const picture = extraPic.split('\n')[0]
           this.url = picture.split('\\n')
+          if(this.url[this.url.length - 1]==''){
+            this.url.pop()
+          }
 //          this.url.pop()
           this.wishForm.requiredKeywords=JSON.parse(this.wishForm.requiredKeywords)
           this.wishForm.randomKeywords=JSON.parse(this.wishForm.randomKeywords)

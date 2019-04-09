@@ -66,7 +66,7 @@
     <el-col :span="24" class="main">
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'" v-show="collapsed">
         <!--导航菜单-->
-        <el-menu :default-active="activeIndex" @select="handleSelect" class="el-menu-vertical-demo" router>
+        <el-menu :default-active="activeIndex" @select="handleSelect1" class="el-menu-vertical-demo" router>
           <el-submenu v-for="item in asideMenu.menu" :index="generateIndex(-1, asideMenu.position)" :key="generateIndex(-1, asideMenu.position)">
             <template slot="title">{{item.name}} </template>
             <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(asideMenu.position,index)">{{child.name}}</el-menu-item>
@@ -146,18 +146,18 @@ export default {
     getMenu().then(response => {
       this.allMenu = response.data.data
       this.allMenu.splice(0, 1)
-//      this.showMenu()
+      this.showMenu()
     })
   },
-  beforeRouteLeave(to, from, next) {
-    if (to.name === '首页') {
-      const collapsed = JSON.stringify(this.collapsed)
-      sessionStorage.setItem('collapsed', collapsed)
-    } else {
-      sessionStorage.removeItem('collapsed')
-    }
-    next()
-  },
+//  beforeRouteLeave(to, from, next) {
+//    if (to.name === '首页') {
+//      const collapsed = JSON.stringify(this.collapsed)
+//      sessionStorage.setItem('collapsed', collapsed)
+//    } else {
+//      sessionStorage.removeItem('collapsed')
+//    }
+//    next()
+//  },
   created() {
     // 从localStorage中读取条件并赋值给查询表单
     const collapsed = sessionStorage.getItem('collapsed')
@@ -167,15 +167,15 @@ export default {
   },
   methods: {
     showMenu(){
-//      if(sessionStorage.getItem('acTi')){
-//        this.activeIndex=sessionStorage.getItem('acTi')
-//      }
-//      if(sessionStorage.getItem('aIndex')) {
-//        const asideIndex = sessionStorage.getItem('aIndex')
-//        const allMenu = this.allMenu
-//        this.asideMenu = { position: asideIndex, menu: [allMenu[asideIndex]] }
-//        console.log(this.allMenu)
-//      }
+      if(sessionStorage.getItem('acTi')){
+        this.activeIndex=sessionStorage.getItem('acTi')
+      }
+      if(sessionStorage.getItem('aIndex')) {
+        const asideIndex = sessionStorage.getItem('aIndex')
+        const allMenu = this.allMenu
+        this.asideMenu = { position: asideIndex, menu: [allMenu[asideIndex]] }
+        console.log(this.asideMenu)
+      }
     },
     submit(formName) {
       this.$refs[formName].validate((valid) => {
@@ -193,18 +193,27 @@ export default {
       }
       return String(head + 1) + '-' + String(tail + 1)
     },
+    handleSelect1(index, indexPath){
+      sessionStorage.setItem('acTi',index)
+    },
     handleSelect(index, indexPath) {
       if (index === '/index') {
         this.collapsed = false
+        sessionStorage.removeItem('acTi')
+        sessionStorage.removeItem('aIndex')
         return
       }
       this.activeIndex = index
       this.collapsed = true
+//      if(sessionStorage.getItem('aIndex')) {
+//        var asideIndex = sessionStorage.getItem('aIndex')
+//      }
       var asideIndex = parseInt(indexPath[0]) - 1
       sessionStorage.setItem('acTi',this.activeIndex)
       sessionStorage.setItem('aIndex',asideIndex)
       const allMenu = this.allMenu
       this.asideMenu = { position: asideIndex, menu: [allMenu[asideIndex]] }
+      console.log(this.asideMenu)
     },
     cropSuccess(resData) {
       this.imagecropperShow = false

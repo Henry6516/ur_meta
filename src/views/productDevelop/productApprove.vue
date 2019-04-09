@@ -806,8 +806,12 @@ export default {
             this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
           }
           forwardUpdate(this.editForm).then(res => {
-            this.dialogVisibleEdit2 = false
-            this.getFailed()
+            if(res.data.code==200){
+              this.dialogVisibleEdit2 = false
+              this.getFailed()
+            }else {
+              this.$message.error(res.data.message)
+            }
           })
         } else {
           console.log('error submit!!')
@@ -823,8 +827,12 @@ export default {
             this.editForm.stockUp?this.editForm.stockUp="是":this.editForm.stockUp="否"
           }
           forwardUpdate(this.editForm).then(res => {
-            this.dialogVisibleEdit2 = false
-            this.getFailed()
+            if(res.data.code==200){
+              this.dialogVisibleEdit2 = false
+              this.getFailed()
+            }else {
+              this.$message.error(res.data.message)
+            }
           })
         } else {
           console.log('error submit!!')
@@ -836,7 +844,11 @@ export default {
       this.$confirm('确定审批该条记录？', '提示', { type: 'warning' }).then(() => {
         this.delForm.nid = [row.nid]
         forwardSubmit(this.delForm).then(res => {
-          this.getFailed()
+          if(res.data.code==200){
+            this.getFailed()
+          }else {
+            this.$message.error(res.data.message)
+          }
         })
       })
     },
@@ -890,7 +902,11 @@ export default {
       this.$confirm('确定通过该条记录？', '提示', { type: 'warning' }).then(() => {
         this.passForm.nid = [row.nid]
         checkPass(this.passForm).then(res => {
-          this.getData()
+          if(res.data.code==200){
+            this.getData()
+          }else {
+            this.$message.error(res.data.message)
+          }
         })
       })
     },
@@ -898,7 +914,11 @@ export default {
       this.passForm.nid = this.sels.map(e => e.nid)
       this.$confirm('确定通过所选记录？', '提示', { type: 'warning' }).then(() => {
         checkPass(this.passForm).then(res => {
-          this.getData()
+          if(res.data.code==200){
+            this.getData()
+          }else {
+            this.$message.error(res.data.message)
+          }
         })
       })
     },
@@ -906,7 +926,11 @@ export default {
       this.$confirm('确定不通过该条记录？', '提示', { type: 'warning' }).then(() => {
         this.unPassForm.nid = [row.nid]
         checkFailed(this.unPassForm).then(res => {
-          this.getData()
+          if(res.data.code==200){
+            this.getData()
+          }else {
+            this.$message.error(res.data.message)
+          }
         })
       })
     },
@@ -914,7 +938,11 @@ export default {
       this.unPassForm.nid = this.sels.map(e => e.nid)
       this.$confirm('确定不通过所选记录？', '提示', { type: 'warning' }).then(() => {
         checkFailed(this.unPassForm).then(res => {
-          this.getData()
+          if(res.data.code==200){
+            this.getData()
+          }else {
+            this.$message.error(res.data.message)
+          }
         })
       })
     },
@@ -924,7 +952,11 @@ export default {
         this.delForm.nid = [row.nid]
         checkCancel(this.delForm).then(res => {
           // this.tableData.splice(index, 1)
-          this.getData()
+          if(res.data.code==200){
+            this.getData()
+          }else {
+            this.$message.error(res.data.message)
+          }
         })
       })
     },
@@ -932,7 +964,11 @@ export default {
       this.delForm.nid = this.sels.map(e => e.nid)
       this.$confirm('确定作废所选记录？', '提示', { type: 'warning' }).then(() => {
         checkCancel(this.delForm).then(res => {
-          this.getData()
+          if(res.data.code==200){
+            this.getData()
+          }else {
+            this.$message.error(res.data.message)
+          }
         })
       })
     },
@@ -1384,7 +1420,11 @@ export default {
       this.$confirm('确定作废该条记录？', '提示', { type: 'warning' }).then(() => {
         this.delForm.nid = [row.nid]
         checkCancel(this.delForm).then(res => {
-          this.tableData2.splice(index, 1)
+          if(res.data.code==200){
+            this.tableData2.splice(index, 1)
+          }else {
+            this.$message.error(res.data.message)
+          }
         })
       })
     },

@@ -1301,9 +1301,11 @@
                 APIPlatInfo(this.condition).then(res => {
                     this.wishForm = res.data.data.basicInfo
                     this.tabDate = res.data.data.skuInfo
-                    this.wishForm.site == 0 ? (this.wishForm.site = '美国') : ''
+                    this.wishForm.site == 0 ? (this.wishForm.site = '美国') : this.wishForm.site
                     this.wishForm.extraPage = this.wishForm.extraPage.split('\\n')
-//                    this.wishForm.extraPage.pop()
+                    if(this.wishForm.extraPage[this.wishForm.extraPage.length - 1]==''){
+                        this.wishForm.extraPage.pop()
+                    }
                     this.tableData = JSON.parse(res.data.data.basicInfo.specifics).specifics
                     console.log(this.tableData)
 //                    const proper = JSON.parse(res.data.data.skuInfo[0].property).columns

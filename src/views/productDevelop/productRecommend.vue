@@ -1164,7 +1164,15 @@ export default {
       this.$confirm('确定审批该条记录？', '提示', { type: 'warning' }).then(() => {
         this.delForm.nid = [row.nid]
         forwardSubmit(this.delForm).then(res => {
-          this.getForward()
+          if(res.data.code==200){
+            this.getForward()
+            this.$message({
+              message: '成功',
+              type: 'success'
+            })
+          }else {
+            this.$message.error(res.data.message)
+          }
         })
       })
     },
@@ -1172,7 +1180,15 @@ export default {
       this.delForm.nid = this.sels.map(e => e.nid)
       this.$confirm('确定审批所选记录？', '提示', { type: 'warning' }).then(() => {
         forwardSubmit(this.delForm).then(res => {
-          this.getForward()
+          if(res.data.code==200){
+            this.getForward()
+            this.$message({
+              message: '成功',
+              type: 'success'
+            })
+          }else {
+            this.$message.error(res.data.message)
+          }
         })
       })
     },
@@ -1183,9 +1199,11 @@ export default {
           this.addForm.flag='forward'
           forwardCreate(this.addForm).then(res => {
             if (res.data.code === 200) {
-              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
-                this.dialogVisible1 = false
-                this.getForward()
+              this.dialogVisible1 = false
+              this.getForward()
+              this.$message({
+                message: '成功',
+                type: 'success'
               })
             } else {
               this.$confirm('错误！', '提示', { type: 'error' }).then(() => {
@@ -1206,9 +1224,11 @@ export default {
           this.addForm.flag='forward'
           forwardCreate(this.addForm).then(res => {
             if (res.data.code === 200) {
-              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
-                this.dialogVisible1 = false
-                this.getForward()
+              this.dialogVisible1 = false
+              this.getForward()
+              this.$message({
+                message: '成功',
+                type: 'success'
               })
             } else {
               this.$confirm('错误！', '提示', { type: 'error' }).then(() => {
@@ -1231,9 +1251,11 @@ export default {
           }
           forwardUpdate(this.editForm).then(res => {
             if (res.data.code === 200) {
-              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
-                this.dialogVisibleEdit1 = false
-                this.getForward()
+              this.dialogVisibleEdit1 = false
+              this.getForward()
+              this.$message({
+                message: '成功',
+                type: 'success'
               })
             } else {
               this.$confirm('错误！', '提示', { type: 'error' }).then(() => {
@@ -1256,10 +1278,16 @@ export default {
           }
           forwardUpdate(this.editForm).then(res => {
             if (res.data.code === 200) {
-              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
-                this.dialogVisibleEdit1 = false
-                this.getForward()
+              this.dialogVisibleEdit1 = false
+              this.getForward()
+              this.$message({
+                message: '成功',
+                type: 'success'
               })
+//              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
+//                this.dialogVisibleEdit1 = false
+//                this.getForward()
+//              })
             } else {
               this.$confirm('错误！', '提示', { type: 'error' }).then(() => {
                 this.dialogVisibleEdit1=false
@@ -1780,7 +1808,15 @@ export default {
       this.$confirm('确定审批该条记录？', '提示', { type: 'warning' }).then(() => {
         this.delForm.nid = [row.nid]
         forwardSubmit(this.delForm).then(res => {
-          this.getReverse()
+          if(res.data.code==200){
+            this.getReverse()
+            this.$message({
+              message: '成功',
+              type: 'success'
+            })
+          }else {
+            this.$message.error(res.data.message)
+          }
         })
       })
     },
@@ -1788,7 +1824,15 @@ export default {
       this.delForm.nid = this.sels.map(e => e.nid)
       this.$confirm('确定审批所选记录？', '提示', { type: 'warning' }).then(() => {
         forwardSubmit(this.delForm).then(res => {
-          this.getReverse()
+          if(res.data.code==200){
+            this.getReverse()
+            this.$message({
+              message: '成功',
+              type: 'success'
+            })
+          }else {
+            this.$message.error(res.data.message)
+          }
         })
       })
     },
@@ -1799,9 +1843,11 @@ export default {
           this.addForm.flag='backward'
           forwardCreate(this.addForm).then(res => {
             if (res.data.code === 200) {
-              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
-                this.dialogVisible2 = false
-                this.getReverse()
+              this.dialogVisible2 = false
+              this.getReverse()
+              this.$message({
+                message: '成功',
+                type: 'success'
               })
             } else {
               this.$confirm('错误！', '提示', { type: 'error' }).then(() => {
@@ -1822,9 +1868,11 @@ export default {
           this.addForm.flag='backward'
           forwardCreate(this.addForm).then(res => {
             if (res.data.code === 200) {
-              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
-                this.dialogVisible2 = false
-                this.getReverse()
+              this.dialogVisible2 = false
+              this.getReverse()
+              this.$message({
+                message: '成功',
+                type: 'success'
               })
             } else {
               this.$confirm('错误！', '提示', { type: 'error' }).then(() => {
@@ -1847,9 +1895,11 @@ export default {
           }
           forwardUpdate(this.editForm).then(res => {
             if (res.data.code === 200) {
-              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
-                this.dialogVisibleEdit2 = false
-                this.getReverse()
+              this.dialogVisibleEdit2 = false
+              this.getReverse()
+              this.$message({
+                message: '成功',
+                type: 'success'
               })
             } else {
               this.$confirm('错误！', '提示', { type: 'error' }).then(() => {
@@ -1872,9 +1922,11 @@ export default {
           }
           forwardUpdate(this.editForm).then(res => {
             if (res.data.code === 200) {
-              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
-                this.dialogVisibleEdit2 = false
-                this.getReverse()
+              this.dialogVisibleEdit2 = false
+              this.getReverse()
+              this.$message({
+                message: '成功',
+                type: 'success'
               })
             } else {
               this.$confirm('错误！', '提示', { type: 'error' }).then(() => {
@@ -2431,9 +2483,11 @@ export default {
         if(valid){
           goodsCreate(this.addForm).then(res => {
             if (res.data.code === 200) {
-              this.$confirm('成功！', '提示', { type: 'success' }).then(() => {
-                this.dialogVisible=false
-                this.getData()
+              this.dialogVisible=false
+              this.getData()
+              this.$message({
+                message: '新增成功',
+                type: 'success'
               })
             } else {
               this.$confirm('错误！', '提示', { type: 'error' }).then(() => {

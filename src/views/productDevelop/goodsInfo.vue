@@ -233,8 +233,8 @@
                                   prop="developer"
                                   class="item"><span>{{goodsInfo.developer}}</span></el-form-item>
                     <el-form-item label="美工"
-                                  prop="possessMan2"
-                                  class="item"><span>{{goodsInfo.possessMan2}}</span></el-form-item>
+                                  prop="possessMan1"
+                                  class="item"><span>{{goodsInfo.possessMan1}}</span></el-form-item>
                     <el-form-item label="供应商名称"
                                   prop="SupplierName"
                                   class="item"><span>{{goodsInfo.supplierName}}</span></el-form-item>
@@ -398,7 +398,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+                            <a :href="scope.row.vendor1" target="_blank" class="classa">{{scope.row.vendor1 | cutOut }}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -409,7 +409,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.vendor2" target="_blank">{{scope.row.vendor2 | cutOut }}</a>
+                            <a :href="scope.row.vendor2" target="_blank" class="classa">{{scope.row.vendor2 | cutOut }}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -420,7 +420,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.vendor3" target="_blank">{{scope.row.vendor3 | cutOut }}</a>
+                            <a :href="scope.row.vendor3" target="_blank" class="classa">{{scope.row.vendor3 | cutOut }}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -431,7 +431,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+                            <a :href="scope.row.origin1" target="_blank" class="classa">{{scope.row.origin1 | cutOut }}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -442,7 +442,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.origin2" target="_blank">{{scope.row.origin2 | cutOut }}</a>
+                            <a :href="scope.row.origin2" target="_blank" class="classa">{{scope.row.origin2 | cutOut }}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -453,7 +453,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.origin3" target="_blank">{{scope.row.origin3 | cutOut }}</a>
+                            <a :href="scope.row.origin3" target="_blank" class="classa">{{scope.row.origin3 | cutOut }}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -463,6 +463,9 @@
                                      :render-header="renderHeaderPic"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="scope.row.picStatus=='待处理'?'clasRed':'clasGreen'">{{scope.row.picStatus}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="开发员"
@@ -624,7 +627,7 @@
                 </el-table-column>
                 <el-table-column label="对应销售"
                                  header-align="center">
-                    <el-table-column prop="possessMan1"
+                    <el-table-column prop="mapPersons"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -648,7 +651,7 @@
                 </el-table-column>
                 <el-table-column label="Wish待刊登"
                                  header-align="center">
-                    <el-table-column prop="wishpublish"
+                    <el-table-column prop="wishPublish"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -680,7 +683,7 @@
                 </el-table-column>
                 <el-table-column label="子类目"
                                  header-align="center">
-                    <el-table-column prop=""
+                    <el-table-column prop="subCate"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -696,7 +699,7 @@
                 </el-table-column>
                 <el-table-column label="推荐人"
                                  header-align="center">
-                    <el-table-column prop=""
+                    <el-table-column prop="introducer"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -720,7 +723,7 @@
                 </el-table-column>
                 <el-table-column label="美工"
                                  header-align="center">
-                    <el-table-column prop="possessman1"
+                    <el-table-column prop="possessMan1"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -746,7 +749,7 @@
                                  header-align="center">
                     <el-table-column prop="devDatetime"
                                      :render-header="renderHeaderPlat"
-                                     width='150'
+                                     width='220'
                                      align="center">
                     </el-table-column>
                 </el-table-column>
@@ -754,7 +757,7 @@
                                  header-align="center">
                     <el-table-column prop="updateTime"
                                      :render-header="renderHeaderPlat"
-                                     width='150'
+                                     width='220'
                                      align="center">
                     </el-table-column>
                 </el-table-column>
@@ -776,7 +779,7 @@
                 </el-table-column>
                 <el-table-column label="采购到货天数"
                                  header-align="center">
-                    <el-table-column prop="filterType"
+                    <el-table-column prop="stockDays"
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
@@ -786,161 +789,161 @@
             <!-- 平台信息查看对话框 -->
             <el-dialog title='查看'
                        :visible.sync="dialogPlat">
-                <el-form :model="platForm"
+                <el-form
                          label-position="left"
                          label-width="110px"
                          ref="platForm">
                     <el-form-item label="供应商链接1"
                                   prop=""
                                   class="item">
-                        <span>{{}}</span>
+                        <span>{{oaGoods.vendor1}}</span>
                     </el-form-item>
                     <el-form-item label="供应商链接2"
                                   prop=""
                                   class="item">
-                        <span>{{}}</span>
+                        <span>{{oaGoods.vendor2}}</span>
                     </el-form-item>
                     <el-form-item label="供应商链接3"
                                   prop=""
                                   class="item">
-                        <span>{{}}</span>
+                        <span>{{oaGoods.vendor3}}</span>
                     </el-form-item>
                     <el-form-item label="平台参考链接1"
                                   prop=""
                                   class="item">
-                        <span>{{}}</span>
+                        <span>{{oaGoods.origin1}}</span>
                     </el-form-item>
                     <el-form-item label="平台参考链接2"
                                   prop=""
                                   class="item">
-                        <span>{{}}</span></el-form-item>
+                        <span>{{oaGoods.origin2}}</span></el-form-item>
                     <el-form-item label="平台参考链接3"
                                   prop=""
                                   class="item">
-                        <span>{{}}</span></el-form-item>
+                        <span>{{oaGoods.origin3}}</span></el-form-item>
                     <el-form-item label="是否液体"
                                   prop="IsLiquid"
-                                  class="item"><span>{{platForm.IsLiquid}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.isLiquid}}</span></el-form-item>
                     <el-form-item label="是否粉末"
                                   prop="IsPowder"
-                                  class="item"><span>{{platForm.IsPowder}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.isPowder}}</span></el-form-item>
                     <el-form-item label="是否带磁"
                                   prop="isMagnetism"
-                                  class="item"><span>{{platForm.isMagnetism}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.isMagnetism}}</span></el-form-item>
                     <el-form-item label="是否带电"
                                   prop="IsCharged"
-                                  class="item"><span>{{platForm.IsCharged}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.isCharged}}</span></el-form-item>
                     <el-form-item label="描述"
                                   prop="description"
-                                  class="item"><span>{{platForm.description}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.description}}</span></el-form-item>
                     <el-form-item label="商品名称"
                                   prop="GoodsName"
-                                  class="item"><span>{{platForm.GoodsName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.goodsName}}</span></el-form-item>
                     <el-form-item label="中文申报名"
                                   prop="AliasCnName"
-                                  class="item"><span>{{platForm.AliasCnName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.aliasCnName}}</span></el-form-item>
                     <el-form-item label="英文申报名"
                                   prop="AliasEnName"
-                                  class="item"><span>{{platForm.AliasEnName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.aliasEnName}}</span></el-form-item>
                     <el-form-item label="Pack Name"
                                   prop=""
-                                  class="item"><span>{{}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.packName}}</span></el-form-item>
                     <el-form-item label="季节"
                                   prop="Season"
-                                  class="item"><span>{{platForm.Season}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.season}}</span></el-form-item>
                     <el-form-item label="禁售平台"
-                                  prop="DictionaryName"
-                                  class="item"><span>{{platForm.DictionaryName}}</span></el-form-item>
+                                  prop="dictionaryName"
+                                  class="item"><span>{{goodsInfo.dictionaryName}}</span></el-form-item>
                     <el-form-item label="供应商名称"
-                                  prop="SupplierName"
-                                  class="item"><span>{{platForm.SupplierName}}</span></el-form-item>
+                                  prop="supplierName"
+                                  class="item"><span>{{goodsInfo.supplierName}}</span></el-form-item>
                     <el-form-item label="仓库"
                                   prop="StoreName"
-                                  class="item"><span>{{platForm.StoreName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.storeName}}</span></el-form-item>
                     <el-form-item label="采购"
                                   prop="Purchaser"
                                   class="item">
-                        <span>{{platForm.Purchaser}}</span>
+                        <span>{{goodsInfo.purchaser}}</span>
                     </el-form-item>
                     <el-form-item label="美工"
                                   prop="possessMan1"
                                   class="item">
-                        <span>{{platForm.possessMan1}}</span>
+                        <span>{{goodsInfo.possessMan1}}</span>
                     </el-form-item>
                     <el-form-item label="责任人2"
                                   prop="possessMan2"
                                   class="item">
-                        <span>{{platForm.possessMan2}}</span>
+                        <span>{{goodsInfo.possessMan2}}</span>
                     </el-form-item>
                     <el-form-item label="声明价"
                                   prop=""
                                   class="item">
-                        <span></span>
+                        <span>{{goodsInfo.declaredValue}}</span>
                     </el-form-item>
                     <el-form-item label="图片"
                                   prop="picUrl"
                                   class="item">
-                        <span>{{platForm.picUrl}}</span>
+                        <span>{{goodsInfo.picUrl}}</span>
                     </el-form-item>
                     <el-form-item label="Goodsid"
                                   prop="goodsid"
                                   class="item">
-                        <span>{{platForm.goodsid}}</span>
+                        <span>{{goodsInfo.goodsId}}</span>
                     </el-form-item>
                     <el-form-item label="商品编码"
-                                  prop="GoodsCode"
+                                  prop="goodsCode"
                                   class="item">
-                        <span>{{platForm.GoodsCode}}</span>
+                        <span>{{goodsInfo.goodsCode}}</span>
                     </el-form-item>
                     <el-form-item label="是否备货"
                                   prop="stockUp"
                                   class="item">
-                        <span>{{platForm.stockUp}}</span>
+                        <span>{{goodsInfo.stockUp}}</span>
                     </el-form-item>
                     <el-form-item label="Achieve Status"
                                   prop="achieveStatus"
                                   class="item">
-                        <span>{{platForm.achieveStatus}}</span>
+                        <span>{{goodsInfo.achieveStatus}}</span>
                     </el-form-item>
                     <el-form-item label="开发时间"
                                   prop="devDatetime"
                                   class="item">
-                        <span>{{platForm.devDatetime}}</span>
+                        <span>{{goodsInfo.devDatetime}}</span>
                     </el-form-item>
                     <el-form-item label="开发员"
                                   prop="developer"
                                   class="item">
-                        <span>{{platForm.developer}}</span>
+                        <span>{{goodsInfo.developer}}</span>
                     </el-form-item>
                     <el-form-item label="更新时间"
                                   prop="updateTime"
                                   class="item">
-                        <span>{{platForm.updateTime}}</span>
+                        <span>{{goodsInfo.updateTime}}</span>
                     </el-form-item>
                     <el-form-item label="图片状态"
                                   prop="picStatus"
                                   class="item">
-                        <span>{{platForm.picStatus}}</span>
+                        <span>{{goodsInfo.picStatus}}</span>
                     </el-form-item>
                     <el-form-item label="供应商ID"
-                                  prop="SupplierID"
+                                  prop="supplierID"
                                   class="item">
-                        <span>{{platForm.SupplierID}}</span>
+                        <span>{{goodsInfo.supplierID}}</span>
                     </el-form-item>
                     <el-form-item label="仓库ID"
-                                  prop="StoreID"
+                                  prop="storeID"
                                   class="item">
-                        <span>{{platForm.StoreID}}</span>
+                        <span>{{goodsInfo.storeID}}</span>
                     </el-form-item>
                     <el-form-item label="特殊属性名"
                                   prop=""
                                   class="item">
-                        <span></span>
+                        <span>{{goodsInfo.attributeName}}</span>
                     </el-form-item>
                     <el-form-item label="Bgoodsid"
                                   prop="bgoodsid"
                                   class="item">
-                        <span>{{platForm.bgoodsid}}</span>
+                        <span>{{goodsInfo.bgoodsId}}</span>
                     </el-form-item>
                 </el-form>
             </el-dialog>
@@ -1002,6 +1005,9 @@
                 oaGoods:[],
                 tableData: [
                 ],
+                picId:{
+                    id: null
+                },
                 pictureData: [],
                 platData: [],
                 show: {
@@ -1052,8 +1058,30 @@
                     vendor3: null
                 },
                 plat: {
+                    picUrl:null,
+                    goodsCode:null,
+                    possessMan:null,
+                    storeName:null,
+                    stockUp:null,
+                    wishPublish:null,
+                    completeStatus:null,
+                    goodsName:null,
+                    cate:null,
+                    subCate:null,
+                    supplierName:null,
+                    introducer:null,
+                    developer:null,
+                    purchaser:null,
+                    possessMan1:null,
+                    mid:null,
+                    dictionaryName:null,
+                    devDatetime:[],
+                    updateTime:[],
+                    isVar:null,
+                    goodsStatus:null,
+                    stockDays:null,
                     pageSize: 10,
-                    currentPage: 1
+                    page: 1
                 },
                 viewForm: {
                     id: null
@@ -1061,7 +1089,9 @@
                 picForm: {
                     id: null
                 },
-                platForm: {},
+                platForm: {
+                    id: null
+                },
                 finish: {
                     id: []
                 }
@@ -1078,21 +1108,21 @@
             handleClick(tab, event) {
               if (tab.label === '属性信息') {
                   sessionStorage.setItem('judge', "属性信息")
-                this.show['status'] = true
+                  this.show['status'] = true
                   this.getData()
               } else {
                 this.show['status'] = false
               }
               if (tab.label === '图片信息') {
                   sessionStorage.setItem('judge', "图片信息")
-                this.show['picture'] = true
+                  this.show['picture'] = true
                   this.getPic()
               } else {
                 this.show['picture'] = false
               }
               if (tab.label === '平台信息') {
                   sessionStorage.setItem('judge', "平台信息")
-                this.show['plat'] = true
+                  this.show['plat'] = true
                   this.getPlat()
                   getAttributeInfoStoreName().then(response => {
                       this.repertory =  response.data.data
@@ -1670,16 +1700,16 @@
                     this.getPic()
                 } else {
                     if (this.time1 !== null && this.time1.length !== 0) {
-                        this.condition2.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+                        this.platData.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
                     } else {
-                        this.condition2.createDate = []
+                        this.platData.devDatetime = []
                     }
                     if (this.time2 !== null && this.time2.length !== 0) {
-                        this.condition2.updateDate = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
+                        this.platData.updateTime = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
                     } else {
-                        this.condition2.updateDate = []
+                        this.platData.updateTime = []
                     }
-                    this.getReverse()
+                    this.getPlat()
                 }
             },
             //图片信息
@@ -2138,7 +2168,8 @@
                 this.dialogPlat = true
                 this.platForm.id = row.id
                 APIPlat(this.platForm).then(res => {
-                    this.platForm = res.data.data
+                    this.goodsInfo = res.data.data
+                    this.oaGoods=this.goodsInfo.oaGoods
                 })
             },
             //平台信息更新
@@ -2154,7 +2185,7 @@
                     this.platData = res.data.data.items
                     this.totalPlat = res.data.data._meta.totalCount
                     this.plat.pageSize = res.data.data._meta.perPage
-                    this.plat.currentPage = res.data.data._meta.currentPage
+                    this.plat.page = res.data.data._meta.currentPage
                 })
             },
             renderHeaderPlat(h, { column, $index }) {
@@ -2169,13 +2200,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.goodsCode,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                             this.plat.goodsCode = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -2196,13 +2227,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.mapPersons,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.mapPersons= value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -2219,17 +2250,17 @@
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: this.platData.storeName,
+                                    value: this.plat.storeName,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        this.platData.storeName=value
+                                        this.plat.storeName=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
-//                                        this.filter()
+                                        this.filter()
                                     }
                                 }
                             },
@@ -2245,19 +2276,19 @@
                             ]
                     )
                 } else if ($index === 3) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.plat.stockUp,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.stockUp=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -2283,13 +2314,13 @@
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value:this.plat.wishPublish,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.wishPublish=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -2316,13 +2347,13 @@
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.plat.completeStatus,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.completeStatus=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -2352,13 +2383,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.goodsName,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.goodsName = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -2375,13 +2406,13 @@
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: this.platData.cate,
+                                    value: this.plat.cate,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        this.platData.cate=value
+                                        this.plat.cate=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -2411,13 +2442,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.subCate,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.subCate = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -2438,13 +2469,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.supplierName,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.supplierName = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -2465,13 +2496,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.introducer,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.introducer = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -2492,13 +2523,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.developer,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.developer = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -2519,13 +2550,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.purchaser,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.purchaser = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -2546,13 +2577,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.possessMan1,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.possessMan1 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -2563,19 +2594,19 @@
                             ]
                     )
                 } else if ($index === 14) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.plat.mid ,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.mid=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -2605,13 +2636,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.dictionaryName,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.dictionaryName = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -2622,73 +2653,61 @@
                             ]
                     )
                 } else if ($index === 16) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
+                    return h('el-date-picker',{
+                        props:{
+                            value:this.time1,
+                            size:'mini',
+                            type:'daterange',
+                        },
+                        style:{
+                            width:'200px',
+                            padding:'2px',
+                        },
+                        on:{
+                            input:value=>{
+                                this.time1=value
+                                this.$emit('input', value)
                             },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: '',
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            // this.condition2.subCate = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
+                            change:value => {
+                                this.filter()
+                            }
+                        }
+                    })
                 } else if ($index === 17) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
+                    return h('el-date-picker',{
+                        props:{
+                            value:this.time2,
+                            size:'mini',
+                            type:'daterange',
+                        },
+                        style:{
+                            width:'200px',
+                            padding:'2px',
+                        },
+                        on:{
+                            input:value=>{
+                                this.time2=value
+                                this.$emit('input', value)
                             },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: '',
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            // this.condition2.subCate = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
+                            change:value => {
+                                this.filter()
+                            }
+                        }
+                    })
                 } else if ($index === 18) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.plat.isVar,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.isVar=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -2714,13 +2733,13 @@
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.plat.goodsStatus,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.goodsStatus=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -2750,13 +2769,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.stockDays,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.stockDays=value
                                             this.$emit('input', value)
                                         },
                                         change: value => {

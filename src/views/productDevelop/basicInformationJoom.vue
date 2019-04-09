@@ -471,7 +471,6 @@
                     this.total = res.data.data._meta.totalCount
                     this.condition.pageSize = res.data.data._meta.perPage
                     this.condition.page = res.data.data._meta.currentPage
-                    console.log(this.date)
                 })
             },
         },
