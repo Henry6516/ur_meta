@@ -125,7 +125,7 @@
               </font>
               <br>
               <font color="black">
-                &nbsp;{{item.possessman1}}
+                &nbsp;{{item.developer}}
               </font>
             </p>
             <font color="black">&nbsp;{{item.GoodsName}}&nbsp;&nbsp;&nbsp;{{item.GoodsSKUStatus}}</font>

@@ -829,6 +829,7 @@ export default {
         this.showTable['report'] = false
         this.showTable['dead'] = false
         this.showTable['extra'] = false
+        this.onSubmit(this.condition)
       }
     },
     selectalls() {
@@ -1034,27 +1035,39 @@ export default {
       return myform
     },
     onSubmit(form) {
-      const height = document.documentElement.clientHeight
-      this.tableHeight = height + 360
-      this.showTable['sell'] = true
-      this.showTable['order'] = false
-      this.showTable['goods'] = false
-      this.showTable['report'] = false
-      this.showTable['dead'] = false
-      this.showTable['extra'] = false
-      this.activeName = '毛利润报表'
-      this.$refs.condition.validate(valid => {
-        if (valid) {
-          const myform = this.myForm(form)
-          this.listLoading = true
-          getSales(myform).then(response => {
-            this.listLoading = false
+      if(this.activeName === '退款订单明细'){
+         this.getData()
+      }else if(this.activeName === '退款产品明细'){
+        this.getGoods()
+      }else if(this.activeName === '退款分析报告'){
+
+      }else if(this.activeName === '死库明细'){
+        this.getDead()
+      }else if(this.activeName === '杂费明细'){
+        this.getExtra()
+      }else {
+        const height = document.documentElement.clientHeight
+        this.tableHeight = height + 360
+        this.showTable['sell'] = true
+        this.showTable['order'] = false
+        this.showTable['goods'] = false
+        this.showTable['report'] = false
+        this.showTable['dead'] = false
+        this.showTable['extra'] = false
+        this.activeName = '毛利润报表'
+        this.$refs.condition.validate(valid => {
+          if (valid) {
+            const myform = this.myForm(form)
+            this.listLoading = true
+            getSales(myform).then(response => {
+              this.listLoading = false
             this.tableData = this.searchTable = response.data.data
           })
-        } else {
-          return false
-        }
-      })
+          } else {
+            return false
+          }
+        })
+      }
     },
     // 搜索
     handleSearch() {

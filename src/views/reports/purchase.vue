@@ -364,6 +364,7 @@ export default {
       } else {
         this.showis1 = true
         this.showis2 = false
+        this.onSubmit(this.condition)
       }
     },
     selectallm() {
@@ -431,6 +432,9 @@ export default {
           }
     },
     onSubmit(form) {
+      if(this.activeName === 'second'){
+        this.onSubmit1(form)
+      }else {
         const myform = JSON.parse(JSON.stringify(form))
         const height = document.getElementById('app').clientHeight
         this.tableHeight = height - 220 + 'px'
@@ -466,6 +470,7 @@ export default {
             return false
           }
         })
+      }
     },
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()

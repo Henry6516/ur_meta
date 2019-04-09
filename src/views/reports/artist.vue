@@ -697,6 +697,7 @@ export default {
       } else {
         this.showis1 = true
         this.showis2 = false
+        this.onSubmit(this.condition)
       }
     },
     handleCheck1() {
@@ -942,70 +943,74 @@ export default {
           })
     },
     onSubmit(form) {
-      const myform = JSON.parse(JSON.stringify(form))
-      const height = document.getElementById('app').clientHeight
-      this.tableHeight = height - 225 + 'px'
-      this.showis2 = false
-      this.showis1 = true
-      this.activeName = 'first'
-      let admin = ''
-      this.$refs.condition.validate(valid => {
-        if (valid) {
-          const username = sessionStorage.getItem('user')
-          for (let i = 0; i < this.res.length; i++) {
-            admin = this.res[i].username
-          }
-          if (
-            isAdmin() === true &&
-            this.formInline.region.length === 0 &&
-            myform.member === 0
-          ) {
-            myform.member = this.member.map(m => {
-              return m.username
-            })
-          } else if (
-            this.formInline.region.length !== 0 &&
-            myform.member.length === 0
-          ) {
-            const val = this.formInline.region
-            let res = []
-            let person = []
-            res = this.allMember
-            for (let i = 0; i < val.length; i++) {
-              person = res.filter(
-                ele =>
-                  (ele.department === val[i] || ele.parent_depart === val[i]) &&
-                  ele.position === '美工'
-              )
-              this.member.concat(person)
+      if(this.activeName === 'second'){
+        this.onSubmit1(form)
+      }else {
+        const myform = JSON.parse(JSON.stringify(form))
+        const height = document.getElementById('app').clientHeight
+        this.tableHeight = height - 225 + 'px'
+        this.showis2 = false
+        this.showis1 = true
+        this.activeName = 'first'
+        let admin = ''
+        this.$refs.condition.validate(valid => {
+          if (valid) {
+            const username = sessionStorage.getItem('user')
+            for (let i = 0; i < this.res.length; i++) {
+              admin = this.res[i].username
             }
-            myform.member = this.member.map(m => {
-              return m.username
+            if (
+                    isAdmin() === true &&
+                    this.formInline.region.length === 0 &&
+                    myform.member === 0
+            ) {
+              myform.member = this.member.map(m => {
+                return m.username
+              })
+            } else if (
+                    this.formInline.region.length !== 0 &&
+                    myform.member.length === 0
+            ) {
+              const val = this.formInline.region
+              let res = []
+              let person = []
+              res = this.allMember
+              for (let i = 0; i < val.length; i++) {
+                person = res.filter(
+                        ele =>
+                        (ele.department === val[i] || ele.parent_depart === val[i]) &&
+                        ele.position === '美工'
+                )
+                this.member.concat(person)
+              }
+              myform.member = this.member.map(m => {
+                return m.username
+              })
+            } else if (
+                    username === admin &&
+                    this.formInline.region.length === 0 &&
+                    myform.member.length === 0
+            ) {
+              myform.member = this.member.map(m => {
+                return m.username
+              })
+            } else if (isAdmin() === false && username !== admin) {
+              myform.member = this.member.map(m => {
+                return m.username
+              })
+            }
+            this.listLoading = true
+            getPossess(myform).then(response => {
+              this.listLoading = false
+              this.tableData = this.searchTable = response.data.data
             })
-          } else if (
-            username === admin &&
-            this.formInline.region.length === 0 &&
-            myform.member.length === 0
-          ) {
-            myform.member = this.member.map(m => {
-              return m.username
-            })
-          } else if (isAdmin() === false && username !== admin) {
-            myform.member = this.member.map(m => {
-              return m.username
-            })
-          }
-          this.listLoading = true
-          getPossess(myform).then(response => {
+          } else {
             this.listLoading = false
-            this.tableData = this.searchTable = response.data.data
-          })
-        } else {
-          this.listLoading = false
-          console.log('error submit!!')
-          return false
-        }
-      })
+            console.log('error submit!!')
+            return false
+          }
+        })
+      }
     },
     // 空值显示“--”
     empty(row, column, cellValue, index) {

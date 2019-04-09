@@ -694,6 +694,7 @@ export default {
       } else {
         this.showis1 = true
         this.showis2 = false
+        this.onSubmit(this.condition)
       }
     },
     handleCheck1() {
@@ -929,53 +930,57 @@ export default {
     })
     },
     onSubmit(form) {
-      const myform = JSON.parse(JSON.stringify(form))
-      const height = document.getElementById('app').clientHeight
-      this.tableHeight = height - 220 + 'px'
-      this.showis2 = false
-      this.showis1 = true
-      this.activeName = 'first'
-      this.$refs.condition.validate(valid => {
-        if (valid) {
-          this.listLoading = true
-          if (
-            this.formInline.region.length !== 0 &&
-            this.condition.member.length === 0
-          ) {
-            const val = this.formInline.region
-            let res = []
-            let person = []
-            res = this.allMember
-            for (let i = 0; i < val.length; i++) {
-              person = res.filter(ele => ele.department === val[i])
-              this.member.concat(person)
+      if(this.activeName === 'second'){
+        this.onSubmit1(form)
+      }else {
+        const myform = JSON.parse(JSON.stringify(form))
+        const height = document.getElementById('app').clientHeight
+        this.tableHeight = height - 220 + 'px'
+        this.showis2 = false
+        this.showis1 = true
+        this.activeName = 'first'
+        this.$refs.condition.validate(valid => {
+          if (valid) {
+            this.listLoading = true
+            if (
+                    this.formInline.region.length !== 0 &&
+                    this.condition.member.length === 0
+            ) {
+              const val = this.formInline.region
+              let res = []
+              let person = []
+              res = this.allMember
+              for (let i = 0; i < val.length; i++) {
+                person = res.filter(ele => ele.department === val[i])
+                this.member.concat(person)
+              }
+              myform.member = this.member.map(m => {
+                return m.username
+              })
+              getIntroduce(myform).then(response => {
+                this.listLoading = false
+                this.tableData = this.searchTable = response.data.data
+              })
+            } else if (this.condition.member.length !== 0) {
+              this.listLoading = true
+              myform.member = this.condition.member
+              getIntroduce(myform).then(response => {
+                this.listLoading = false
+                this.tableData = this.searchTable = response.data.data
+              })
+            } else {
+              this.listLoading = true
+              getIntroduce(myform).then(response => {
+                this.listLoading = false
+                this.tableData = this.searchTable = response.data.data
+              })
             }
-            myform.member = this.member.map(m => {
-              return m.username
-            })
-            getIntroduce(myform).then(response => {
-              this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
-            })
-          } else if (this.condition.member.length !== 0) {
-            this.listLoading = true
-            myform.member = this.condition.member
-            getIntroduce(myform).then(response => {
-              this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
-            })
           } else {
-            this.listLoading = true
-            getIntroduce(myform).then(response => {
-              this.listLoading = false
-              this.tableData = this.searchTable = response.data.data
-            })
+            console.log('error submit!!')
+            return false
           }
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+        })
+      }
     },
     // 空值显示“--”
     empty(row, column, cellValue, index) {

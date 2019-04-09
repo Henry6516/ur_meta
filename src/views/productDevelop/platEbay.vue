@@ -1436,13 +1436,13 @@
                 // data.basicInfo = this.wishForm
                 data.skuInfo = this.tabDate
                 APISaveEbayInfo(data).then(res => {
-                    if (res.data.data[0] === 'success') {
+                    if (res.data.code === 200) {
                         this.$message({
                             message: '保存成功',
                             type: 'success'
                         })
                     } else {
-                        this.$message.error('保存失败')
+                        this.$message.error(res.data.message)
                     }
                 })
             }

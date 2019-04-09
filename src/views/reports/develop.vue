@@ -113,7 +113,7 @@
           <el-tab-pane label="业绩归属2人表"
                        name="second">
           </el-tab-pane>
-          <el-tab-pane label="死库明细"
+          <el-tab-pane label="死库明细1"
                        name="sikiu">
           </el-tab-pane>
         </el-tabs>
@@ -1139,11 +1139,13 @@ export default {
         this.show3 = true
         this.showis1=true
         this.showis2=false
+        this.onSubmit(this.condition)
       }else if(this.activeName === 'first'){
         this.show2 = true
         this.show3 = false
         this.showis1=true
         this.showis2=false
+        this.onSubmit(this.condition)
       }else {
         this.showis1=false
         this.showis2=true
@@ -1204,68 +1206,70 @@ export default {
           })
     },
     onSubmit(form) {
-      const myform = JSON.parse(JSON.stringify(form))
-      const height = document.getElementById('app').clientHeight
-      this.tableHeight = height - 225 + 'px'
-      let posseman1Data
-      let posseman2Data
-      let ret
-      let admin = ''
-      this.showis1=true
-      this.showis2=false
-      this.activeName = 'first'
-      this.$refs.condition.validate(valid => {
-        if (valid) {
-          const username = sessionStorage.getItem('user')
-          for (let i = 0; i < this.res.length; i++) {
-            admin = this.res[i].username
-          }
-          if (
-            username === admin &&
-            this.formInline.region.length === 0 &&
-            myform.member.length === 0
-          ) {
-            myform.member = this.member.map(m => {
-              return m.username
-            })
-          } else if (username !== admin && isAdmin() === false) {
-            myform.member = this.member.map(m => {
-              return m.username
-            })
-          } else if (
-            this.formInline.region.length !== 0 &&
-            myform.member.length === 0
-          ) {
-            const val = this.formInline.region
-            const res = this.allMember
-            for (let i = 0; i < val.length; i++) {
-              const per = res.filter(
-                ele =>
-                  (ele.department === val[i] || ele.parent_depart === val[i]) &&
-                  ele.position === '开发'
-              )
-              this.member.concat(per)
+      if(this.activeName === 'second' || this.activeName === 'first'){
+        const myform = JSON.parse(JSON.stringify(form))
+        const height = document.getElementById('app').clientHeight
+        this.tableHeight = height - 225 + 'px'
+        let posseman1Data
+        let posseman2Data
+        let ret
+        let admin = ''
+        this.show2 != this.show2
+        this.$refs.condition.validate(valid => {
+          if (valid) {
+            const username = sessionStorage.getItem('user')
+            for (let i = 0; i < this.res.length; i++) {
+              admin = this.res[i].username
             }
-            myform.member = this.member.map(m => {
-              return m.username
+            if (
+                    username === admin &&
+                    this.formInline.region.length === 0 &&
+                    myform.member.length === 0
+            ) {
+              myform.member = this.member.map(m => {
+                return m.username
+              })
+            } else if (username !== admin && isAdmin() === false) {
+              myform.member = this.member.map(m => {
+                return m.username
+              })
+            } else if (
+                    this.formInline.region.length !== 0 &&
+                    myform.member.length === 0
+            ) {
+              const val = this.formInline.region
+              const res = this.allMember
+              for (let i = 0; i < val.length; i++) {
+                const per = res.filter(
+                        ele =>
+                        (ele.department === val[i] || ele.parent_depart === val[i]) &&
+                        ele.position === '开发'
+                )
+                this.member.concat(per)
+              }
+              myform.member = this.member.map(m => {
+                return m.username
+              })
+            } else {
+              myform.member = this.condition.member
+            }
+            this.listLoading = true
+            getDevelop(myform).then(response => {
+              this.listLoading = false
+              ret = response.data.data
+              posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
+              posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
+              this.tableData01 = this.searchTableFirst = posseman1Data
+              this.tableData02 = this.searchTableSecond = posseman2Data
             })
           } else {
-            myform.member = this.condition.member
-          }
-          this.listLoading = true
-          getDevelop(myform).then(response => {
             this.listLoading = false
-            ret = response.data.data
-            posseman1Data = ret.filter(ele => ele.tableType === '归属1人表')
-            posseman2Data = ret.filter(ele => ele.tableType === '归属2人表')
-            this.tableData01 = this.searchTableFirst = posseman1Data
-            this.tableData02 = this.searchTableSecond = posseman2Data
-          })
-        } else {
-          this.listLoading = false
-          return false
-        }
-      })
+            return false
+          }
+        })
+      }else {
+        this.onSubmit1(form)
+      }
     },
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()

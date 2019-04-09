@@ -9,7 +9,7 @@
       <el-button type="primary"
                  @click="save">保存当前数据</el-button>
       <el-button type="primary"
-                 @click="preserve ">保存并完善</el-button>
+                 @click="preserve">保存并完善</el-button>
       <el-button type="warning"
                  @click="upload">上传到FTP</el-button>
     </el-col>
@@ -109,24 +109,6 @@ export default {
         })
       }
     },
-//    attribute(){
-//      sessionStorage.setItem('judge', "属性信息")
-//      this.$router.push({
-//        path: `/v1/oa-goodsinfo/index`
-//      })
-//    },
-//    photo(){
-//      sessionStorage.setItem('judge', "图片信息")
-//      this.$router.push({
-//        path: `/v1/oa-goodsinfo/index`
-//      })
-//    },
-//    platform(){
-//      sessionStorage.setItem('judge', "平台信息")
-//      this.$router.push({
-//        path: `/v1/oa-goodsinfo/index`
-//      })
-//    },
     //保存
     save() {
       APISavePictureInfo(this.tableData).then(res => {
