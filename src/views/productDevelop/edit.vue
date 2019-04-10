@@ -1127,7 +1127,7 @@ export default {
             type: 'success'
           })
         } else {
-          this.$message.error('保存失败')
+          this.$message.error(res.data.message)
         }
       })
     },
@@ -1234,7 +1234,7 @@ export default {
             type: 'success'
           })
         } else {
-          this.$message.error('保存失败')
+          this.$message.error(res.data.message)
         }
       })
     },

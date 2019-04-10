@@ -432,7 +432,7 @@
           <el-input size="small" v-model="editForm.hopeCost" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估月毛利($):">
-          <el-input size="small" v-model="editForm.hopeMonthProfit" placeholder="选填"></el-input>
+          <el-input size="small" v-model="editForm.hopeMonthProfit" disabled placeholder="自动计算"></el-input>
         </el-form-item>
         <el-form-item label="">
           <el-checkbox-group v-model="editForm.stockUp">
@@ -637,7 +637,7 @@
           <el-input size="small" v-model="addForm.hopeCost" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估月毛利($)" prop='hopeMonthProfit'>
-          <el-input size="small" v-model="addForm.hopeMonthProfit" placeholder="自动计算"></el-input>
+          <el-input size="small" v-model="addForm.hopeMonthProfit" disabled placeholder="自动计算"></el-input>
         </el-form-item>
         <el-form-item label="售价($)">
           <el-checkbox-group v-model="addForm.stockUp">
@@ -782,7 +782,7 @@
           <el-input size="small" v-model="editForm.hopeCost" placeholder="选填"></el-input>
         </el-form-item>
         <el-form-item label="预估月毛利($):">
-          <el-input size="small" v-model="editForm.hopeMonthProfit" placeholder="选填"></el-input>
+          <el-input size="small" v-model="editForm.hopeMonthProfit" disabled placeholder="自动计算"></el-input>
         </el-form-item>
         <el-form-item label="">
           <el-checkbox-group v-model="editForm.stockUp">
@@ -2848,6 +2848,7 @@ export default {
     color: #0E9A00;
   }
   .classa{
-    color: #409EFF;
+    color: #337ab7;
+    text-decoration: none;
   }
 </style>

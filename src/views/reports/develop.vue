@@ -113,7 +113,7 @@
           <el-tab-pane label="业绩归属2人表"
                        name="second">
           </el-tab-pane>
-          <el-tab-pane label="死库明细1"
+          <el-tab-pane label="死库明细"
                        name="sikiu">
           </el-tab-pane>
         </el-tabs>
@@ -1486,7 +1486,7 @@ export default {
 </script>
 
 <style lang="scss">
-.container .main .content-container[data-v-0ff1e341] {
+.container .main .content-container {
   .demo-block.hover {
     box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
       0 2px 4px 0 rgba(232, 237, 250, 0.5);

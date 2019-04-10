@@ -6,5 +6,4 @@ npm-debug.log
 .idea/
 Program Files/
 .vscode/settings.json
-config/dev.env.js
 

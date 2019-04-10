@@ -108,6 +108,9 @@
                                      :render-header="renderHeader"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.goodsName?'clasRed':''">{{scope.row.goodsName?scope.row.goodsName:"未设置"}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="开发员"
@@ -140,6 +143,9 @@
                                      :render-header="renderHeader"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.aliasCnName?'clasRed':''">{{scope.row.aliasCnName?scope.row.aliasCnName:"未设置"}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="英文申报名"
@@ -148,6 +154,9 @@
                                      :render-header="renderHeader"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.aliasEnName?'clasRed':''">{{scope.row.aliasEnName?scope.row.aliasEnName:"未设置"}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="是否液体"
@@ -209,12 +218,12 @@
                     <el-form-item label="图片地址"
                                   prop="picUrl"
                                   class="item">
-                        <span>{{goodsInfo.picUrl}}</span>
+                        <span><a :href="goodsInfo.picUrl" target="_blank" class="classa">{{goodsInfo.picUrl}}</a></span>
                     </el-form-item>
                     <el-form-item label="商品编码"
                                   prop="goodsCode"
                                   class="item">
-                        <span>{{goodsInfo.goodsCode}}</span>
+                        <span>{{goodsInfo.goodsCode?goodsInfo.goodsCode:"未设置"}}</span>
                     </el-form-item>
                     <el-form-item label="是否备货"
                                   prop="stockUp"
@@ -224,50 +233,50 @@
                     <el-form-item label="商品名称"
                                   prop="goodsName"
                                   class="item">
-                        <span>{{goodsInfo.goodsName}}</span></el-form-item>
+                        <span>{{goodsInfo.goodsName?goodsInfo.goodsName:"未设置"}}</span></el-form-item>
                     <el-form-item label="采购"
                                   prop="purchaser"
                                   class="item">
-                        <span>{{goodsInfo.purchaser}}</span></el-form-item>
+                        <span>{{goodsInfo.purchaser?goodsInfo.purchaser:"未设置"}}</span></el-form-item>
                     <el-form-item label="开发员"
                                   prop="developer"
-                                  class="item"><span>{{goodsInfo.developer}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.developer?goodsInfo.developer:"未设置"}}</span></el-form-item>
                     <el-form-item label="美工"
                                   prop="possessMan1"
-                                  class="item"><span>{{goodsInfo.possessMan1}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.possessMan1?goodsInfo.possessMan1:"未设置"}}</span></el-form-item>
                     <el-form-item label="供应商名称"
                                   prop="SupplierName"
-                                  class="item"><span>{{goodsInfo.supplierName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.supplierName?goodsInfo.supplierName:"未设置"}}</span></el-form-item>
                     <el-form-item label="中文申报名"
                                   prop="AttributeName"
-                                  class="item"><span>{{goodsInfo.aliasCnName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.aliasCnName?goodsInfo.aliasCnName:"未设置"}}</span></el-form-item>
                     <el-form-item label="英文申报名"
                                   prop="DictionaryName"
-                                  class="item"><span>{{goodsInfo.aliasEnName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.aliasEnName?goodsInfo.aliasEnName:"未设置"}}</span></el-form-item>
                     <el-form-item label="规格"
                                   prop=""
-                                  class="item"><span>{{goodsInfo.packName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.packName?goodsInfo.packName:"未设置"}}</span></el-form-item>
                     <el-form-item label="描述"
                                   prop=""
-                                  class="item"><span>{{goodsInfo.description}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.description?goodsInfo.description:"未设置"}}</span></el-form-item>
                     <el-form-item label="季节"
                                   prop="Season"
-                                  class="item"><span>{{goodsInfo.season}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.season?goodsInfo.season:"未设置"}}</span></el-form-item>
                     <el-form-item label="仓库"
                                   prop="StoreName"
-                                  class="item"><span>{{goodsInfo.storeName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.storeName?goodsInfo.storeName:"未设置"}}</span></el-form-item>
                     <el-form-item label="是否液体"
                                   prop="IsLiquid"
-                                  class="item"><span>{{goodsInfo.isLiquid}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.isLiquid?goodsInfo.isLiquid:"未设置"}}</span></el-form-item>
                     <el-form-item label="是否粉末"
                                   prop="IsPowder"
-                                  class="item"><span>{{goodsInfo.isPowder}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.isPowder?goodsInfo.isPowder:"未设置"}}</span></el-form-item>
                     <el-form-item label="是否带磁"
                                   prop="isMagnetism"
-                                  class="item"><span>{{goodsInfo.isMagnetism}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.isMagnetism?goodsInfo.isMagnetism:"未设置"}}</span></el-form-item>
                     <el-form-item label="是否带电"
                                   prop="IsCharged"
-                                  class="item"><span>{{goodsInfo.isCharged}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.isCharged?goodsInfo.isCharged:"未设置"}}</span></el-form-item>
                     <el-form-item label="主类目"
                                   prop=""
                                   class="item">
@@ -281,32 +290,32 @@
                     <el-form-item label="供应商链接1"
                                   prop=""
                                   class="item">
-                        <span>{{oaGoods.vendor1}}</span>
+                        <span><a :href="oaGoods.vendor1" target="_blank" class="classa">{{oaGoods.vendor1?oaGoods.vendor1:"未设置"}}</a></span>
                     </el-form-item>
                     <el-form-item label="供应商链接2"
                                   prop=""
                                   class="item">
-                        <span>{{oaGoods.vendor2}}</span>
+                        <span><a :href="oaGoods.vendor2" target="_blank" class="classa">{{oaGoods.vendor1?oaGoods.vendor2:"未设置"}}</a></span>
                     </el-form-item>
                     <el-form-item label="供应商链接3"
                                   prop=""
                                   class="item">
-                        <span>{{oaGoods.vendor3}}</span>
+                        <span><a :href="oaGoods.vendor3" target="_blank" class="classa">{{oaGoods.vendor3?oaGoods.vendor3:"未设置"}}</a></span>
                     </el-form-item>
                     <el-form-item label="平台参考链接1"
                                   prop=""
                                   class="item">
-                        <span>{{oaGoods.origin1}}</span>
+                        <span><a :href="oaGoods.origin1" target="_blank" class="classa">{{oaGoods.origin1?oaGoods.origin1:"未设置"}}</a></span>
                     </el-form-item>
                     <el-form-item label="平台参考链接2"
                                   prop=""
                                   class="item">
-                        <span>{{oaGoods.origin2}}</span>
+                        <span><a :href="oaGoods.origin2" target="_blank" class="classa">{{oaGoods.origin2?oaGoods.origin2:"未设置"}}</a></span>
                     </el-form-item>
                     <el-form-item label="平台参考链接3"
                                   prop=""
                                   class="item">
-                        <span>{{oaGoods.origin3}}</span>
+                        <span><a :href="oaGoods.origin3" target="_blank" class="classa">{{oaGoods.origin3?oaGoods.origin3:"未设置"}}</a></span>
                     </el-form-item>
                 </el-form>
         <span slot="footer" class="dialog-footer">
@@ -389,6 +398,9 @@
                                      :render-header="renderHeaderPic"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                        <a :class="!scope.row.goodsName?'clasRed':''">{{scope.row.goodsName?scope.row.goodsName:"未设置"}}</a>
+                         </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="供应商链接1"
@@ -398,7 +410,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.vendor1" target="_blank" class="classa">{{scope.row.vendor1 | cutOut }}</a>
+                            <a :href="scope.row.vendor1" target="_blank" class="classa" :class="!scope.row.vendor1?'clasRed':''">{{!scope.row.vendor1?'未设置':scope.row.vendor1 | cutOut}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -409,7 +421,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.vendor2" target="_blank" class="classa">{{scope.row.vendor2 | cutOut }}</a>
+                            <a :href="scope.row.vendor2" target="_blank" class="classa" :class="!scope.row.vendor2?'clasRed':''">{{!scope.row.vendor2?'未设置':scope.row.vendor2 | cutOut}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -420,7 +432,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.vendor3" target="_blank" class="classa">{{scope.row.vendor3 | cutOut }}</a>
+                            <a :href="scope.row.vendor3" target="_blank" class="classa" :class="!scope.row.vendor3?'clasRed':''">{{!scope.row.vendor3?'未设置':scope.row.vendor3 | cutOut}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -431,7 +443,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.origin1" target="_blank" class="classa">{{scope.row.origin1 | cutOut }}</a>
+                            <a :href="scope.row.origin1" target="_blank" class="classa" :class="!scope.row.origin1?'clasRed':''">{{!scope.row.origin1?'未设置':scope.row.origin1 | cutOut}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -442,7 +454,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.origin2" target="_blank" class="classa">{{scope.row.origin2 | cutOut }}</a>
+                            <a :href="scope.row.origin2" target="_blank" class="classa" :class="!scope.row.origin2?'clasRed':''">{{!scope.row.origin2?'未设置':scope.row.origin2 | cutOut}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -453,7 +465,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.origin3" target="_blank" class="classa">{{scope.row.origin3 | cutOut }}</a>
+                            <a :href="scope.row.origin3" target="_blank" class="classa" :class="!scope.row.origin3?'clasRed':''">{{!scope.row.origin3?'未设置':scope.row.origin3 | cutOut}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -517,12 +529,12 @@
                     <el-form-item label="图片地址"
                                   prop="picUrl"
                                   class="item">
-                        <span>{{goodsInfo.picUrl}}</span>
+                        <span><a :href="goodsInfo.picUrl" target="_blank" class="classa">{{goodsInfo.picUrl}}</a></span>
                     </el-form-item>
                     <el-form-item label="商品名称"
                                   prop="GoodsName"
                                   class="item">
-                        <span>{{goodsInfo.goodsName}}</span></el-form-item>
+                        <span>{{goodsInfo.goodsName?goodsInfo.goodsName:'未设置'}}</span></el-form-item>
                     <el-form-item label="商品编码"
                                   prop="GoodsCode"
                                   class="item">
@@ -535,22 +547,22 @@
                     </el-form-item>
                     <el-form-item label="供应商名称"
                                   prop="supplierName"
-                                  class="item"><span>{{goodsInfo.supplierName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.supplierName?goodsInfo.supplierName:'未设置'}}</span></el-form-item>
                     <el-form-item label="中文申报名"
                                   prop="aliasCnName"
-                                  class="item"><span>{{goodsInfo.aliasCnName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.aliasCnName?goodsInfo.aliasCnName:'未设置'}}</span></el-form-item>
                     <el-form-item label="英文申报名"
                                   prop="aliasEnName"
-                                  class="item"><span>{{goodsInfo.aliasEnName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.aliasEnName?goodsInfo.aliasEnName:'未设置'}}</span></el-form-item>
                     <el-form-item label="规格"
                                   prop=""
-                                  class="item"><span>{{goodsInfo.packName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.packName?goodsInfo.packName:'未设置'}}</span></el-form-item>
                     <el-form-item label="季节"
                                   prop="season"
-                                  class="item"><span>{{goodsInfo.season}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.season?goodsInfo.season:'未设置'}}</span></el-form-item>
                     <el-form-item label="仓库"
                                   prop="storeName"
-                                  class="item"><span>{{goodsInfo.storeName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfo.storeName?goodsInfo.storeName:'未设置'}}</span></el-form-item>
                     <el-form-item label="是否液体"
                                   prop="isLiquid"
                                   class="item"><span>{{goodsInfo.isLiquid}}</span></el-form-item>
@@ -631,6 +643,9 @@
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.mapPersons?'clasRed':''">{{scope.row.mapPersons?scope.row.mapPersons:'未设置'}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="仓库"
@@ -639,6 +654,9 @@
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.storeName?'clasRed':''">{{scope.row.storeName?scope.row.storeName:'未设置'}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="是否备货"
@@ -655,6 +673,9 @@
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.wishPublish?'clasRed':''">{{scope.row.wishPublish?scope.row.wishPublish:'未设置'}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="完成状况"
@@ -663,6 +684,9 @@
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.completeStatus?'clasRed':''">{{scope.row.completeStatus?scope.row.completeStatus:'未设置'}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="商品名称"
@@ -671,6 +695,9 @@
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.goodsName?'clasRed':''">{{scope.row.goodsName?scope.row.goodsName:'未设置'}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="主类目"
@@ -695,6 +722,9 @@
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.supplierName?'clasRed':''">{{scope.row.supplierName?scope.row.supplierName:'未设置'}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="推荐人"
@@ -703,6 +733,9 @@
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.introducer?'clasRed':''">{{scope.row.introducer?scope.row.introducer:'未设置'}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="开发员"
@@ -735,6 +768,9 @@
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a>{{scope.row.mid >1?'采集':'非采集'}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="禁售平台"
@@ -743,6 +779,9 @@
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.dictionaryName?'clasRed':''">{{scope.row.dictionaryName?scope.row.dictionaryName:'未设置'}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="开发时间"
@@ -775,6 +814,9 @@
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.goodsStatus?'clasRed':''">{{scope.row.goodsStatus?scope.row.goodsStatus:'未设置'}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="采购到货天数"
@@ -783,6 +825,9 @@
                                      :render-header="renderHeaderPlat"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.stockDays?'clasRed':''">{{scope.row.stockDays?scope.row.stockDays:'未设置'}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
             </el-table>
@@ -796,154 +841,154 @@
                     <el-form-item label="供应商链接1"
                                   prop=""
                                   class="item">
-                        <span>{{oaGoods.vendor1}}</span>
+                        <span><a :href="oaGoods.vendor1" target="_blank" class="classa">{{oaGoodsPlat.vendor1?oaGoodsPlat.vendor1:'未设置'}}</a></span>
                     </el-form-item>
                     <el-form-item label="供应商链接2"
                                   prop=""
                                   class="item">
-                        <span>{{oaGoods.vendor2}}</span>
+                        <span><a :href="oaGoods.vendor2" target="_blank" class="classa">{{oaGoodsPlat.vendor2?oaGoodsPlat.vendor2:'未设置'}}</a></span>
                     </el-form-item>
                     <el-form-item label="供应商链接3"
                                   prop=""
                                   class="item">
-                        <span>{{oaGoods.vendor3}}</span>
+                        <span><a :href="oaGoods.vendor3" target="_blank" class="classa">{{oaGoodsPlat.vendor3?oaGoodsPlat.vendor3:'未设置'}}</a></span>
                     </el-form-item>
                     <el-form-item label="平台参考链接1"
                                   prop=""
                                   class="item">
-                        <span>{{oaGoods.origin1}}</span>
+                        <span><a :href="oaGoods.origin1" target="_blank" class="classa">{{oaGoodsPlat.origin1?oaGoodsPlat.origin1:'未设置'}}</a></span>
                     </el-form-item>
                     <el-form-item label="平台参考链接2"
                                   prop=""
                                   class="item">
-                        <span>{{oaGoods.origin2}}</span></el-form-item>
+                        <span><a :href="oaGoods.origin2" target="_blank" class="classa">{{oaGoodsPlat.origin2?oaGoodsPlat.origin2:'未设置'}}</a></span></el-form-item>
                     <el-form-item label="平台参考链接3"
                                   prop=""
                                   class="item">
-                        <span>{{oaGoods.origin3}}</span></el-form-item>
+                        <span><a :href="oaGoods.origin3" target="_blank" class="classa">{{oaGoodsPlat.origin3?oaGoodsPlat.origin3:'未设置'}}</a></span></el-form-item>
                     <el-form-item label="是否液体"
                                   prop="IsLiquid"
-                                  class="item"><span>{{goodsInfo.isLiquid}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPlat.isLiquid?goodsInfoPlat.isLiquid:'未设置'}}</span></el-form-item>
                     <el-form-item label="是否粉末"
                                   prop="IsPowder"
-                                  class="item"><span>{{goodsInfo.isPowder}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPlat.isPowder?goodsInfoPlat.isPowder:'未设置'}}</span></el-form-item>
                     <el-form-item label="是否带磁"
                                   prop="isMagnetism"
-                                  class="item"><span>{{goodsInfo.isMagnetism}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPlat.isMagnetism?goodsInfoPlat.isMagnetism:'未设置'}}</span></el-form-item>
                     <el-form-item label="是否带电"
                                   prop="IsCharged"
-                                  class="item"><span>{{goodsInfo.isCharged}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPlat.isCharged?goodsInfoPlat.isCharged:'未设置'}}</span></el-form-item>
                     <el-form-item label="描述"
                                   prop="description"
-                                  class="item"><span>{{goodsInfo.description}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPlat.description?goodsInfoPlat.description:'未设置'}}</span></el-form-item>
                     <el-form-item label="商品名称"
                                   prop="GoodsName"
-                                  class="item"><span>{{goodsInfo.goodsName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPlat.goodsName?goodsInfoPlat.goodsName:'未设置'}}</span></el-form-item>
                     <el-form-item label="中文申报名"
                                   prop="AliasCnName"
-                                  class="item"><span>{{goodsInfo.aliasCnName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPlat.aliasCnName?goodsInfoPlat.aliasCnName:'未设置'}}</span></el-form-item>
                     <el-form-item label="英文申报名"
                                   prop="AliasEnName"
-                                  class="item"><span>{{goodsInfo.aliasEnName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPlat.aliasEnName?goodsInfoPlat.aliasEnName:'未设置'}}</span></el-form-item>
                     <el-form-item label="Pack Name"
                                   prop=""
-                                  class="item"><span>{{goodsInfo.packName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPlat.packName?goodsInfoPlat.packName:'未设置'}}</span></el-form-item>
                     <el-form-item label="季节"
                                   prop="Season"
-                                  class="item"><span>{{goodsInfo.season}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPlat.season?goodsInfoPlat.season:'未设置'}}</span></el-form-item>
                     <el-form-item label="禁售平台"
                                   prop="dictionaryName"
-                                  class="item"><span>{{goodsInfo.dictionaryName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPlat.dictionaryName?goodsInfoPlat.dictionaryName:'未设置'}}</span></el-form-item>
                     <el-form-item label="供应商名称"
                                   prop="supplierName"
-                                  class="item"><span>{{goodsInfo.supplierName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPlat.supplierName?goodsInfoPlat.supplierName:'未设置'}}</span></el-form-item>
                     <el-form-item label="仓库"
                                   prop="StoreName"
-                                  class="item"><span>{{goodsInfo.storeName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPlat.storeName?goodsInfoPlat.storeName:'未设置'}}</span></el-form-item>
                     <el-form-item label="采购"
-                                  prop="Purchaser"
+                                  prop="purchaser"
                                   class="item">
-                        <span>{{goodsInfo.purchaser}}</span>
+                        <span>{{goodsInfoPlat.purchaser?goodsInfoPlat.purchaser:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="美工"
                                   prop="possessMan1"
                                   class="item">
-                        <span>{{goodsInfo.possessMan1}}</span>
+                        <span>{{goodsInfoPlat.possessMan1?goodsInfoPlat.possessMan1:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="责任人2"
                                   prop="possessMan2"
                                   class="item">
-                        <span>{{goodsInfo.possessMan2}}</span>
+                        <span>{{goodsInfoPlat.possessMan2?goodsInfoPlat.possessMan2:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="声明价"
-                                  prop=""
+                                  prop="declaredValue"
                                   class="item">
-                        <span>{{goodsInfo.declaredValue}}</span>
+                        <span>{{goodsInfoPlat.declaredValue?goodsInfoPlat.declaredValue:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="图片"
                                   prop="picUrl"
                                   class="item">
-                        <span>{{goodsInfo.picUrl}}</span>
+                        <span><a :href="goodsInfo.picUrl" target="_blank" class="classa">{{goodsInfoPlat.picUrl?goodsInfoPlat.picUrl:'未设置'}}</a></span>
                     </el-form-item>
                     <el-form-item label="Goodsid"
                                   prop="goodsid"
                                   class="item">
-                        <span>{{goodsInfo.goodsId}}</span>
+                        <span>{{goodsInfoPlat.goodsId?goodsInfoPlat.goodsId:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="商品编码"
                                   prop="goodsCode"
                                   class="item">
-                        <span>{{goodsInfo.goodsCode}}</span>
+                        <span>{{goodsInfoPlat.goodsCode?goodsInfoPlat.goodsCode:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="是否备货"
                                   prop="stockUp"
                                   class="item">
-                        <span>{{goodsInfo.stockUp}}</span>
+                        <span>{{goodsInfoPlat.stockUp?goodsInfoPlat.stockUp:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="Achieve Status"
                                   prop="achieveStatus"
                                   class="item">
-                        <span>{{goodsInfo.achieveStatus}}</span>
+                        <span>{{goodsInfoPlat.achieveStatus?goodsInfoPlat.achieveStatus:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="开发时间"
                                   prop="devDatetime"
                                   class="item">
-                        <span>{{goodsInfo.devDatetime}}</span>
+                        <span>{{goodsInfoPlat.devDatetime?goodsInfoPlat.devDatetime:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="开发员"
                                   prop="developer"
                                   class="item">
-                        <span>{{goodsInfo.developer}}</span>
+                        <span>{{goodsInfoPlat.developer?goodsInfoPlat.developer:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="更新时间"
                                   prop="updateTime"
                                   class="item">
-                        <span>{{goodsInfo.updateTime}}</span>
+                        <span>{{goodsInfoPlat.updateTime}}</span>
                     </el-form-item>
                     <el-form-item label="图片状态"
                                   prop="picStatus"
                                   class="item">
-                        <span>{{goodsInfo.picStatus}}</span>
+                        <span>{{goodsInfoPlat.picStatus?goodsInfoPlat.picStatus:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="供应商ID"
                                   prop="supplierID"
                                   class="item">
-                        <span>{{goodsInfo.supplierID}}</span>
+                        <span>{{goodsInfoPlat.supplierID?goodsInfoPlat.supplierID:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="仓库ID"
                                   prop="storeID"
                                   class="item">
-                        <span>{{goodsInfo.storeID}}</span>
+                        <span>{{goodsInfoPlat.storeID?goodsInfoPlat.storeID:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="特殊属性名"
                                   prop=""
                                   class="item">
-                        <span>{{goodsInfo.attributeName}}</span>
+                        <span>{{goodsInfoPlat.attributeName?goodsInfoPlat.attributeName:'未设置'}}</span>
                     </el-form-item>
                     <el-form-item label="Bgoodsid"
                                   prop="bgoodsid"
                                   class="item">
-                        <span>{{goodsInfo.bgoodsId}}</span>
+                        <span>{{goodsInfoPlat.bgoodsId?goodsInfoPlat.bgoodsId:'未设置'}}</span>
                     </el-form-item>
                 </el-form>
             </el-dialog>
@@ -1003,6 +1048,8 @@
                 goodsState:[],
                 goodsInfo:[],
                 oaGoods:[],
+                goodsInfoPlat:[],
+                oaGoodsPlat:[],
                 tableData: [
                 ],
                 picId:{
@@ -1163,14 +1210,14 @@
             mark(index, row) {
                 this.finish.id = row.id
                 APIFinishAttribute(this.finish).then(res => {
-                    if (res.data.data[0] === 'success') {
+                    if (res.data.code === 200) {
                         this.$message({
                             message: '标记成功',
                             type: 'success'
                         })
                         this.getData()
                     } else {
-                        this.$message.error('标记失败')
+                        this.$message.error(res.data.message)
                     }
                 })
             },
@@ -1178,14 +1225,14 @@
             markAll() {
                 this.finish.id = this.sels.map(e => e.id)
                 APIFinishAttribute(this.finish).then(res => {
-                    if (res.data.data[0] === 'success') {
+                    if (res.data.code === 200) {
                         this.$message({
                             message: '标记成功',
                             type: 'success'
                         })
                         this.getData()
                     } else {
-                        this.$message.error('标记失败')
+                        this.$message.error(res.data.message)
                     }
                 })
             },
@@ -2168,8 +2215,12 @@
                 this.dialogPlat = true
                 this.platForm.id = row.id
                 APIPlat(this.platForm).then(res => {
-                    this.goodsInfo = res.data.data
-                    this.oaGoods=this.goodsInfo.oaGoods
+                    this.goodsInfoPlat = res.data.data
+                    if(this.goodsInfoPlat.oaGoods){
+                        this.oaGoodsPlat=this.goodsInfoPlat.oaGoods
+                    }else {
+                        this.oaGoodsPlat=[]
+                    }
                 })
             },
             //平台信息更新
@@ -2843,12 +2894,13 @@
 
 <style lang="scss" scoped>
     .clasRed{
-        color: red;
+        color: #c55 !important;
     }
     .clasGreen{
         color: #0E9A00;
     }
     .classa{
-        color: #409EFF;
+        color: #337ab7;
+        text-decoration: none;
     }
 </style>

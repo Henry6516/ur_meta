@@ -2390,6 +2390,7 @@ export default {
   color: #0E9A00;
 }
 .classa{
-  color: #409EFF;
+  color: #337ab7;
+  text-decoration: none;
 }
 </style>
