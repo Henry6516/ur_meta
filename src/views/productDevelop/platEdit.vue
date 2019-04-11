@@ -1,13 +1,13 @@
 <template>
   <section>
-    <el-row>
-      <el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #e4e7ed solid 1px; background: #eee;padding: 0">
-        <span @click="attribute(log.name)" class="adClass" :class="log.name=='平台信息'?'actie':''" v-for="(log,index) in allMenu" :key="index">{{log.name}}</span>
-      </el-col>
-    </el-row>
+    <!--<el-row>-->
+      <!--<el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #e4e7ed solid 1px; background: #eee;padding: 0">-->
+        <!--<span @click="attribute(log.name)" class="adClass" :class="log.name=='平台信息'?'actie':''" v-for="(log,index) in allMenu" :key="index">{{log.name}}</span>-->
+      <!--</el-col>-->
+    <!--</el-row>-->
     <el-tabs v-model="activeName"
              type="card"
-             @tab-click="handleClick" style="margin-top: 48px;">
+             @tab-click="handleClick" style="margin-top: 0px;">
       <el-tab-pane label='Wish'
                    name='first'>
         <plat-wish></plat-wish>

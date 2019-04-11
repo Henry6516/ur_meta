@@ -5,17 +5,17 @@
             style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:8px;padding-top: 8px">
       <el-col :span="12"
               :offset="5">
-      <el-button type="primary"
-                 @click="update"
-                 style="margin-left: 0px;float: left;margin-right: 10px">保存</el-button>
-      <!--<el-dropdown @command="handleCommand"-->
-                   <!--placement="top-start">-->
+        <el-button type="primary"
+                   @click="update"
+                   style="margin-left: 0px;float: left;margin-right: 10px">保存</el-button>
+        <!--<el-dropdown @command="handleCommand"-->
+        <!--placement="top-start">-->
         <!--<el-button type="primary">标记完善<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i></el-button>-->
         <!--<el-dropdown-menu slot="dropdown">-->
-          <!--<el-dropdown-item command="a">Wish</el-dropdown-item>-->
-          <!--<el-dropdown-item command="b">Joom</el-dropdown-item>-->
+        <!--<el-dropdown-item command="a">Wish</el-dropdown-item>-->
+        <!--<el-dropdown-item command="b">Joom</el-dropdown-item>-->
         <!--</el-dropdown-menu>-->
-      <!--</el-dropdown>-->
+        <!--</el-dropdown>-->
         <el-select v-model="tips"
                    placeholder="--保存完善--" style="float: left;width: 150px">
           <el-option label="Wish"
@@ -25,10 +25,10 @@
         </el-select>
         <span class="exportAccount" style="margin-right: 10px" @click="keepPerfect">保存完善</span>
         <el-button type="success" style="float: left;margin-right: 10px" @click="exportWish">导出Wish模板</el-button>
-      <el-select v-model="joom"
-                 placeholder="--请选择账号--" style="float: left;">
-        <el-option v-for="(item, key) in joomArr" :key='item.key' :label="item" :value="item"></el-option>
-      </el-select>
+        <el-select v-model="joom"
+                   placeholder="--请选择账号--" style="float: left;">
+          <el-option v-for="(item, key) in joomArr" :key='item.key' :label="item" :value="item"></el-option>
+        </el-select>
         <span class="exportAccount" @click="exportJoom">导出Joom模板</span>
       </el-col>
     </el-col>
@@ -91,37 +91,37 @@
         </el-col>
       </el-row>
       <!--<el-row>-->
-        <!--<el-col :span="5">-->
-          <!--<el-form-item label=" ">-->
-            <!--<a :href="wishForm.mainImage"-->
-               <!--target="_blank">-->
-              <!--<img :src="wishForm.mainImage"-->
-                   <!--style="width:230px;height:150px;" />-->
-            <!--</a>-->
-          <!--</el-form-item>-->
-        <!--</el-col>-->
-        <!--<el-col :span="19">-->
-          <!--<el-form-item label="主图">-->
-            <!--<el-input v-model="wishForm.mainImage"-->
-                      <!--size="small"-->
-                      <!--style="width:1150px;"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</el-col>-->
-        <!--<el-col :span="19">-->
-          <!--<el-form-item label="SKU">-->
-            <!--<el-input size="small"-->
-                      <!--v-model="wishForm.SKU"-->
-                      <!--style="width:1150px;"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</el-col>-->
-        <!--<el-col :span="19">-->
-          <!--<el-form-item label="是否备货">-->
-            <!--<el-input v-model="wishForm.stockUp"-->
-                      <!--size="small"-->
-                      <!--disabled-->
-                      <!--style="width:1150px;"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</el-col>-->
+      <!--<el-col :span="5">-->
+      <!--<el-form-item label=" ">-->
+      <!--<a :href="wishForm.mainImage"-->
+      <!--target="_blank">-->
+      <!--<img :src="wishForm.mainImage"-->
+      <!--style="width:230px;height:150px;" />-->
+      <!--</a>-->
+      <!--</el-form-item>-->
+      <!--</el-col>-->
+      <!--<el-col :span="19">-->
+      <!--<el-form-item label="主图">-->
+      <!--<el-input v-model="wishForm.mainImage"-->
+      <!--size="small"-->
+      <!--style="width:1150px;"></el-input>-->
+      <!--</el-form-item>-->
+      <!--</el-col>-->
+      <!--<el-col :span="19">-->
+      <!--<el-form-item label="SKU">-->
+      <!--<el-input size="small"-->
+      <!--v-model="wishForm.SKU"-->
+      <!--style="width:1150px;"></el-input>-->
+      <!--</el-form-item>-->
+      <!--</el-col>-->
+      <!--<el-col :span="19">-->
+      <!--<el-form-item label="是否备货">-->
+      <!--<el-input v-model="wishForm.stockUp"-->
+      <!--size="small"-->
+      <!--disabled-->
+      <!--style="width:1150px;"></el-input>-->
+      <!--</el-form-item>-->
+      <!--</el-col>-->
       <!--</el-row>-->
       <el-row>
         <el-col style="margin-bottom: 10px;margin-top: 5px" :span="24">
@@ -131,83 +131,83 @@
       <el-row style="margin-left: 15px">
         <el-col :span="24">
           <el-col :span="12"
-                style="margin-top: 15px;margin-bottom: 2px"
-                v-for="(item,index) in url"
-                :key="index" v-show="shoIS" >
+                  style="margin-top: 15px;margin-bottom: 2px"
+                  v-for="(item,index) in url"
+                  :key="index" v-show="shoIS" >
             <el-col :span="19">
-            <el-col :span="24">
-              <el-input v-model="url[index]"
-                        @input="revise($event,index)">
+              <el-col :span="24">
+                <el-input v-model="url[index]"
+                          @input="revise($event,index)">
 
-              </el-input>
+                </el-input>
+              </el-col>
+              <el-col>
+                <p class="sx"
+                   @click="botIndex(index)">
+                  <i class="el-icon-arrow-down"></i>下移动
+                </p>
+                <p class="sx"
+                   @click="topIndex(index)">
+                  <i class="el-icon-arrow-up"></i>上移动
+                </p>
+                <p class="sx"
+                   @click="delDz(index)">
+                  <i class="el-icon-delete"></i>删除
+                </p>
+                <p class="sx"
+                   @click="dialogFormVisible1 = true">
+                  <i class="el-icon-plus"></i>增加
+                </p>
+                <p class="ss">
+                  #{{index+1}}
+                </p>
+              </el-col>
             </el-col>
-            <el-col>
-              <p class="sx"
-                 @click="botIndex(index)">
-                <i class="el-icon-arrow-down"></i>下移动
-              </p>
-              <p class="sx"
-                 @click="topIndex(index)">
-                <i class="el-icon-arrow-up"></i>上移动
-              </p>
-              <p class="sx"
-                 @click="delDz(index)">
-                <i class="el-icon-delete"></i>删除
-              </p>
-              <p class="sx"
-                 @click="dialogFormVisible1 = true">
-                <i class="el-icon-plus"></i>增加
-              </p>
-              <p class="ss">
-                #{{index+1}}
-              </p>
+            <el-col :span="3"
+                    style="margin-left: 15px">
+              <a :href="url[index]"
+                 target="_blank">
+                <img :src="url[index]"
+                     style="display: block;width: 90px;height: 90px" />
+              </a>
             </el-col>
           </el-col>
-          <el-col :span="3"
-                  style="margin-left: 15px">
-            <a :href="url[index]"
-               target="_blank">
-              <img :src="url[index]"
-                   style="display: block;width: 90px;height: 90px" />
-            </a>
-          </el-col>
-        </el-col>
         </el-col>
       </el-row>
-          <!--<el-col v-for="(item, index) in url"-->
-                  <!--:key="index" style="margin-top: 15px" v-show="shoIS" :span="24">-->
-            <!--<el-col :span="2">-->
-              <!--<div style="margin-left:20px;">#{{index}}</div>-->
-              <!--<a :href="url[index]"-->
-                 <!--target="_blank">-->
-                <!--<img :src="url[index]"-->
-                     <!--class="image" />-->
-              <!--</a>-->
-            <!--</el-col>-->
-            <!--<el-col :span="22">-->
-              <!--<el-form-item>-->
-                <!--<el-input v-model="url[index]"-->
-                          <!--size="small"-->
-                          <!--style="width:1000px;margin-top: 16px"></el-input>-->
-              <!--</el-form-item>-->
-            <!--</el-col>-->
-            <!--<el-button size="small"-->
-                       <!--@click="addUrl">-->
-              <!--<font size="3">增加</font>-->
-            <!--</el-button>-->
-            <!--<el-button size="small"-->
-                       <!--@click="delUrl(index)">-->
-              <!--<font size="3">删除</font>-->
-            <!--</el-button>-->
-            <!--<el-button size="small"-->
-                       <!--@click="up(index)">-->
-              <!--<font size="3">上移动</font>-->
-            <!--</el-button>-->
-            <!--<el-button size="small"-->
-                       <!--@click="down(index)">-->
-              <!--<font size="3">下移动</font>-->
-            <!--</el-button>-->
-          <!--</el-col>-->
+      <!--<el-col v-for="(item, index) in url"-->
+      <!--:key="index" style="margin-top: 15px" v-show="shoIS" :span="24">-->
+      <!--<el-col :span="2">-->
+      <!--<div style="margin-left:20px;">#{{index}}</div>-->
+      <!--<a :href="url[index]"-->
+      <!--target="_blank">-->
+      <!--<img :src="url[index]"-->
+      <!--class="image" />-->
+      <!--</a>-->
+      <!--</el-col>-->
+      <!--<el-col :span="22">-->
+      <!--<el-form-item>-->
+      <!--<el-input v-model="url[index]"-->
+      <!--size="small"-->
+      <!--style="width:1000px;margin-top: 16px"></el-input>-->
+      <!--</el-form-item>-->
+      <!--</el-col>-->
+      <!--<el-button size="small"-->
+      <!--@click="addUrl">-->
+      <!--<font size="3">增加</font>-->
+      <!--</el-button>-->
+      <!--<el-button size="small"-->
+      <!--@click="delUrl(index)">-->
+      <!--<font size="3">删除</font>-->
+      <!--</el-button>-->
+      <!--<el-button size="small"-->
+      <!--@click="up(index)">-->
+      <!--<font size="3">上移动</font>-->
+      <!--</el-button>-->
+      <!--<el-button size="small"-->
+      <!--@click="down(index)">-->
+      <!--<font size="3">下移动</font>-->
+      <!--</el-button>-->
+      <!--</el-col>-->
       <el-col :span="24"
               style="padding: 0;">
         <h3 class="toolbar essential">主信息</h3>
@@ -235,10 +235,10 @@
         </el-col>
         <el-col :span="22" style="margin-left: 100px;margin-top: 10px">
           <el-input
-                    v-model="wishForm.headKeywords"
-                    style="width:100%"
-                    placeholder="--一个关键词--"
-                    @input="top($event)"
+                  v-model="wishForm.headKeywords"
+                  style="width:100%"
+                  placeholder="--一个关键词--"
+                  @input="top($event)"
           ></el-input>
         </el-col>
       </el-col>
@@ -259,20 +259,20 @@
           <div style="margin-left: 70px">
             必填
             <el-input
-                      style="width:32%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
+                    style="width:32%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
             <el-input
-                      style="width:32%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
+                    style="width:32%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
             <el-input
-                      style="width:32%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
+                    style="width:32%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
           </div>
           <div style="margin-left: 70px;margin-top: 5px">
             选填
             <el-input
-                      style="width:32%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
+                    style="width:32%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
             <el-input
-                      style="width:32%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
+                    style="width:32%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
             <el-input
-                      style="width:32%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
+                    style="width:32%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
 
           </div>
         </el-col>
@@ -294,28 +294,28 @@
           <div style="margin-left: 70px">
             必填
             <el-input
-                      style="width:19.1%" v-model="randomData[0]" @blur="random()"></el-input>
+                    style="width:19.1%" v-model="randomData[0]" @blur="random()"></el-input>
             <el-input
-                      style="width:19.1%" v-model="randomData[1]" @blur="random()"></el-input>
+                    style="width:19.1%" v-model="randomData[1]" @blur="random()"></el-input>
             <el-input
-                      style="width:19.1%" v-model="randomData[2]" @blur="random()"></el-input>
+                    style="width:19.1%" v-model="randomData[2]" @blur="random()"></el-input>
             <el-input
-                      style="width:19.1%" v-model="randomData[3]" @blur="random()"></el-input>
+                    style="width:19.1%" v-model="randomData[3]" @blur="random()"></el-input>
             <el-input
-                      style="width:19.3%" v-model="randomData[4]" @blur="random()"></el-input>
+                    style="width:19.3%" v-model="randomData[4]" @blur="random()"></el-input>
           </div>
           <div style="margin-left: 70px;margin-top: 5px">
             选填
             <el-input
-                      style="width:19.1%" v-model="randomData[5]" @blur="random()"></el-input>
+                    style="width:19.1%" v-model="randomData[5]" @blur="random()"></el-input>
             <el-input
-                      style="width:19.1%" v-model="randomData[6]" @blur="random()"></el-input>
+                    style="width:19.1%" v-model="randomData[6]" @blur="random()"></el-input>
             <el-input
-                      style="width:19.1%" v-model="randomData[7]" @blur="random()"></el-input>
+                    style="width:19.1%" v-model="randomData[7]" @blur="random()"></el-input>
             <el-input
-                      style="width:19.1%" v-model="randomData[8]" @blur="random()"></el-input>
+                    style="width:19.1%" v-model="randomData[8]" @blur="random()"></el-input>
             <el-input
-                      style="width:19.3%" v-model="randomData[9]" @blur="random()"></el-input>
+                    style="width:19.3%" v-model="randomData[9]" @blur="random()"></el-input>
 
           </div>
         </el-col>
@@ -334,10 +334,10 @@
         </el-col>
         <el-col :span="22" style="margin-left: 100px;margin-top: 10px;margin-bottom: 20px">
           <el-input
-                    v-model="wishForm.tailKeywords"
-                    style="width: 100%"
-                    placeholder="--最多一个关键词--"
-                    @input="bottm($event)"
+                  v-model="wishForm.tailKeywords"
+                  style="width: 100%"
+                  placeholder="--最多一个关键词--"
+                  @input="bottm($event)"
           ></el-input>
         </el-col>
       </el-col>
@@ -347,9 +347,9 @@
           </span>
         <el-col :span="22">
           <el-input
-                    v-model="wishForm.description"
-                    type="textarea"
-                    style="width:100%;margin-left: 27px"></el-input>
+                  v-model="wishForm.description"
+                  type="textarea"
+                  style="width:100%;margin-left: 27px"></el-input>
         </el-col>
       </el-col>
       <el-col :span="24" style="margin-top: 15px">
@@ -358,8 +358,8 @@
           </span>
         <el-col :span="22">
           <el-input
-                    v-model="wishForm.inventory"
-                    style="width:100%;margin-left: 27px"></el-input>
+                  v-model="wishForm.inventory"
+                  style="width:100%;margin-left: 27px"></el-input>
         </el-col>
       </el-col>
       <el-col :span="24" style="margin-top: 15px">
@@ -368,8 +368,8 @@
           </span>
         <el-col :span="22">
           <el-input
-                    v-model="wishForm.shippingTime"
-                    style="width:100%"></el-input>
+                  v-model="wishForm.shippingTime"
+                  style="width:100%"></el-input>
         </el-col>
       </el-col>
     </el-form>
@@ -510,77 +510,77 @@
         </el-col>
         <el-col :span="3">
           <!--<el-input v-model="num"-->
-                    <!--size="small"-->
-                    <!--placeholder="数量"-->
-                    <!--style="width:190px"></el-input>-->
+          <!--size="small"-->
+          <!--placeholder="数量"-->
+          <!--style="width:190px"></el-input>-->
           <!--<el-button size="small"-->
-                     <!--@click="setNum">数量确定</el-button>-->
+          <!--@click="setNum">数量确定</el-button>-->
           <input placeholder="数量" v-model="num"
                  style="width:95px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setNum">数量确定</span>
         </el-col>
         <el-col :span="3">
           <!--<el-input v-model="price"-->
-                    <!--size="small"-->
-                    <!--placeholder="价格"-->
-                    <!--style="width:190px"></el-input>-->
+          <!--size="small"-->
+          <!--placeholder="价格"-->
+          <!--style="width:190px"></el-input>-->
           <!--<el-button size="small"-->
-                     <!--@click="setPrice">价格确定</el-button>-->
+          <!--@click="setPrice">价格确定</el-button>-->
           <input placeholder="价格" v-model="price"
                  style="width:95px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setPrice">价格确定</span>
         </el-col>
         <el-col :span="3">
           <!--<el-input v-model="ship"-->
-                    <!--size="small"-->
-                    <!--placeholder="运费"-->
-                    <!--style="width:190px"></el-input>-->
+          <!--size="small"-->
+          <!--placeholder="运费"-->
+          <!--style="width:190px"></el-input>-->
           <!--<el-button size="small"-->
-                     <!--@click="setShip">运费确定</el-button>-->
+          <!--@click="setShip">运费确定</el-button>-->
           <input placeholder="运费" v-model="ship"
                  style="width:95px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setShip">运费确定</span>
         </el-col>
         <el-col :span="3">
           <!--<el-input v-model="advicePrice"-->
-                    <!--size="small"-->
-                    <!--placeholder="建议零售价"-->
-                    <!--style="width:190px"></el-input>-->
+          <!--size="small"-->
+          <!--placeholder="建议零售价"-->
+          <!--style="width:190px"></el-input>-->
           <!--<el-button size="small"-->
-                     <!--@click="setAdvice">建议零售价</el-button>-->
+          <!--@click="setAdvice">建议零售价</el-button>-->
           <input placeholder="建议零售价" v-model="advicePrice"
                  style="width:75px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setAdvice">建议零售价</span>
         </el-col>
         <el-col :span="3">
           <!--<el-input v-model="joomPrice"-->
-                    <!--size="small"-->
-                    <!--placeholder="Joom零售价"-->
-                    <!--style="width:185px"></el-input>-->
+          <!--size="small"-->
+          <!--placeholder="Joom零售价"-->
+          <!--style="width:185px"></el-input>-->
           <!--<el-button size="small"-->
-                     <!--@click="setJoom">Joom零售价</el-button>-->
+          <!--@click="setJoom">Joom零售价</el-button>-->
           <input placeholder="Joom零售价" v-model="joomPrice"
                  style="width:75px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setJoom">Joom零售价</span>
         </el-col>
         <el-col :span="3">
           <!--<el-input v-model="transport"-->
-                    <!--size="small"-->
-                    <!--placeholder="Joom运费"-->
-                    <!--style="width:185px"></el-input>-->
+          <!--size="small"-->
+          <!--placeholder="Joom运费"-->
+          <!--style="width:185px"></el-input>-->
           <!--<el-button size="small"-->
-                     <!--@click="setTransport">Joom运费</el-button>-->
+          <!--@click="setTransport">Joom运费</el-button>-->
           <input placeholder="Joom运费" v-model="transport"
                  style="width:85px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setTransport">Joom运费</span>
         </el-col>
         <el-col :span="3">
           <!--<el-input v-model="time"-->
-                    <!--size="small"-->
-                    <!--placeholder="运输时间"-->
-                    <!--style="width:185px"></el-input>-->
+          <!--size="small"-->
+          <!--placeholder="运输时间"-->
+          <!--style="width:185px"></el-input>-->
           <!--<el-button size="small"-->
-                     <!--@click="setTime">运输时间</el-button>-->
+          <!--@click="setTime">运输时间</el-button>-->
           <input placeholder="运输时间" v-model="time"
                  style="width:95px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
           <span class="xzz1" @click="setTime">运输时间</span>
@@ -620,7 +620,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-  import { APIPlatInfo, APISaveWishInfo, APIFinishPlat,APIJoomName,APIPlatExportWish,APIPlatExportJoom } from '../../api/product'
+  import { APIPlatInfo, APISaveWishInfo, APIFinishPlat,APIJoomName,APIPlatExportWish,APIPlatExportJoom,APIDeleteVariant } from '../../api/product'
   export default {
     props: {
       id: {
@@ -669,7 +669,29 @@
     },
     methods: {
       keepPerfect(){
-
+        if(this.tips){
+          const data = {
+            id: this.wishForm.infoId,
+            plat: []
+          }
+          if (this.tips == 'wish') {
+            data.plat = ['wish']
+          } else {
+            data.plat = ['joom']
+          }
+          APIFinishPlat(data).then(res => {
+            if (res.data.code ==200) {
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              })
+            } else {
+              this.$message.error(res.data.message)
+            }
+          })
+        }else {
+          this.$message.error('请选择要保存的模板')
+        }
       },
       exportJoom(){
         if(this.joom){
@@ -679,7 +701,7 @@
           }
           APIPlatExportJoom(objStr1).then(res => {
             const blob = new Blob([res.data], {
-              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+              type: 'data:text/csv;charset=utf-8'
             })
             const downloadElement = document.createElement('a')
             const objectUrl = window.URL.createObjectURL(blob)
@@ -718,45 +740,45 @@
         }
       },
       exportWish(){
-          let objStr={
-            id:this.wishForm.infoId
-          }
-          APIPlatExportWish(objStr).then(res => {
-            const blob = new Blob([res.data], {
-              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
-            })
-            const downloadElement = document.createElement('a')
-            const objectUrl = window.URL.createObjectURL(blob)
-            downloadElement.href = objectUrl
-            const date = new Date()
-            const year = date.getFullYear()
-            let month = date.getMonth() + 1
-            let strDate = date.getDate()
-            let hour = date.getHours()
-            let minute = date.getMinutes()
-            let second = date.getSeconds()
-            if (month >= 1 && month <= 9) {
-              month = '0' + month
-            }
-            if (strDate >= 0 && strDate <= 9) {
-              strDate = '0' + strDate
-            }
-            if (hour >= 0 && hour <= 9) {
-              hour = '0' + hour
-            }
-            if (minute >= 0 && minute <= 9) {
-              minute = '0' + minute
-            }
-            if (second >= 0 && second <= 9) {
-              second = '0' + second
-            }
-            const filename =
-                    'Wish_' + year + month + strDate + hour + minute + second
-            downloadElement.download = filename + '.xls'
-            document.body.appendChild(downloadElement)
-            downloadElement.click()
-            document.body.removeChild(downloadElement)
+        let objStr={
+          id:this.wishForm.infoId
+        }
+        APIPlatExportWish(objStr).then(res => {
+          const blob = new Blob([res.data], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
           })
+          const downloadElement = document.createElement('a')
+          const objectUrl = window.URL.createObjectURL(blob)
+          downloadElement.href = objectUrl
+          const date = new Date()
+          const year = date.getFullYear()
+          let month = date.getMonth() + 1
+          let strDate = date.getDate()
+          let hour = date.getHours()
+          let minute = date.getMinutes()
+          let second = date.getSeconds()
+          if (month >= 1 && month <= 9) {
+            month = '0' + month
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = '0' + strDate
+          }
+          if (hour >= 0 && hour <= 9) {
+            hour = '0' + hour
+          }
+          if (minute >= 0 && minute <= 9) {
+            minute = '0' + minute
+          }
+          if (second >= 0 && second <= 9) {
+            second = '0' + second
+          }
+          const filename =
+                  'Wish_' + year + month + strDate + hour + minute + second
+          downloadElement.download = filename + '.xls'
+          document.body.appendChild(downloadElement)
+          downloadElement.click()
+          document.body.removeChild(downloadElement)
+        })
       },
       top(e){
         this.foremost=e.length
@@ -898,7 +920,6 @@
         this.shoIS=!this.shoIS
       },
       handleChange(val) {
-
       },
       // 删除URL
       delUrl(index) {
@@ -906,7 +927,22 @@
       },
       // 删除table行
       del(index, row) {
-        this.tableData.splice(index, 1)
+        let arrId = []
+        arrId.push(row.id)
+        let aryId={
+          id:arrId
+        }
+        APIDeleteVariant(aryId).then(res => {
+          if (res.data.code === 200) {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+            this.tableData.splice(index, 1)
+          } else {
+            this.$message.error('删除失败')
+          }
+        })
       },
       // 增加URL
       addUrl() {
@@ -1031,7 +1067,6 @@
         const mr=JSON.stringify(this.randomData)
         const data = {
           basicInfo: {
-
           },
           skuInfo: []
         }
@@ -1042,7 +1077,7 @@
         data.basicInfo.randomKeywords=mr
         data.skuInfo = this.tableData
         APISaveWishInfo(data).then(res => {
-          if (res.data.data[0] === 'success') {
+          if (res.data.code == 200) {
             this.$message({
               message: '保存成功',
               type: 'success'
@@ -1064,7 +1099,7 @@
           data.plat = ['joom']
         }
         APIFinishPlat(data).then(res => {
-          if (res.data.data[0] === 'success') {
+          if (res.data.code == 200) {
             this.$message({
               message: '保存成功',
               type: 'success'

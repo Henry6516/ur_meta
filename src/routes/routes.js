@@ -47,6 +47,7 @@ import picking from '../views/warehouse/picking.vue'
 import requirements from '../views/feedback/requirements.vue'
 import news from '../views/feedback/news.vue'
 // 产品中心
+import goodsNav from '../views/productDevelop/goodsNav.vue'
 import productRecommend from '../views/productDevelop/productRecommend.vue'
 import productApprove from '../views/productDevelop/productApprove.vue'
 import goodsInfo from '../views/productDevelop/goodsInfo.vue'
@@ -347,18 +348,40 @@ const routes = [
       },
       {
         path: '/v1/oa-goodsinfo/index',
-        component: goodsInfo,
-        name: '属性信息'
-      },
-      {
-        path: '/v1/oa-goodsinfo/goodsInfoPicture',
-        component: goodsInfoPicture,
-        name: '图片信息'
-      },
-      {
-        path: '/v1/oa-goodsinfo/goodsInfoPlatform',
-        component: goodsInfoPlatform,
-        name: '平台信息'
+        component: goodsNav,
+        name: '产品开发',
+        children: [
+          {
+            path: '/v1/oa-goodsinfo/index',
+            component: goodsInfo,
+            name: '属性信息'
+          },
+          {
+            path: '/v1/oa-goodsinfo/goodsInfoPicture',
+            component: goodsInfoPicture,
+            name: '图片信息'
+          },
+          {
+            path: '/v1/oa-goodsinfo/goodsInfoPlatform',
+            component: goodsInfoPlatform,
+            name: '平台信息'
+          },
+          {
+            path: '/:id',
+            component: edit,
+            name: 'tables'
+          },
+          {
+            path: '/table/:id',
+            component: picEdit,
+            name: 'pictureTable'
+          },
+          {
+            path: '/plat/:id',
+            component: platEdit,
+            name: 'platTable'
+          },
+        ]
       },
       {
         path: '/v1/supplier/supplier-list',
@@ -411,16 +434,6 @@ const routes = [
         name: '供应商订单'
       },
       {
-        path: '/:id',
-        component: edit,
-        name: 'tables'
-      },
-      {
-        path: '/table/:id',
-        component: picEdit,
-        name: 'pictureTable'
-      },
-      {
         path: '/v1/basic-info/cgd',
         component: paymentDetail,
         name: '同步采购单'
@@ -434,11 +447,6 @@ const routes = [
         path: '/ord2/:id',
         component: ord2,
         name: '付款明细2'
-      },
-      {
-        path: '/plat/:id',
-        component: platEdit,
-        name: 'platTable'
       },
       {
         path: '/payment/:id',

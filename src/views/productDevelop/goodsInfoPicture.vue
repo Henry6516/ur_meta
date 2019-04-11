@@ -74,6 +74,9 @@
                                      :render-header="renderHeaderPic"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.goodsName?'clasRed':''">{{scope.row.goodsName?scope.row.goodsName:"未设置"}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="供应商链接1"
@@ -83,7 +86,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.vendor1" target="_blank">{{scope.row.vendor1 | cutOut }}</a>
+                            <a :href="scope.row.vendor1" target="_blank" class="classa" :class="!scope.row.vendor1?'clasRed':''">{{!scope.row.vendor1?'未设置':scope.row.vendor1 | cutOut}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -94,7 +97,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.vendor2" target="_blank">{{scope.row.vendor2 | cutOut }}</a>
+                            <a :href="scope.row.vendor2" target="_blank" class="classa" :class="!scope.row.vendor2?'clasRed':''">{{!scope.row.vendor2?'未设置':scope.row.vendor2 | cutOut}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -105,7 +108,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.vendor3" target="_blank">{{scope.row.vendor3 | cutOut }}</a>
+                            <a :href="scope.row.vendor3" target="_blank" class="classa" :class="!scope.row.vendor3?'clasRed':''">{{!scope.row.vendor3?'未设置':scope.row.vendor3 | cutOut}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -116,7 +119,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.origin1" target="_blank">{{scope.row.origin1 | cutOut }}</a>
+                            <a :href="scope.row.origin1" target="_blank" class="classa" :class="!scope.row.origin1?'clasRed':''">{{!scope.row.origin1?'未设置':scope.row.origin1 | cutOut}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -127,7 +130,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.origin2" target="_blank">{{scope.row.origin2 | cutOut }}</a>
+                            <a :href="scope.row.origin2" target="_blank" class="classa" :class="!scope.row.origin2?'clasRed':''">{{!scope.row.origin2?'未设置':scope.row.origin2 | cutOut}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -138,7 +141,7 @@
                                      width='170'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :href="scope.row.origin3" target="_blank">{{scope.row.origin3 | cutOut }}</a>
+                            <a :href="scope.row.origin3" target="_blank" class="classa" :class="!scope.row.origin3?'clasRed':''">{{!scope.row.origin3?'未设置':scope.row.origin3 | cutOut}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -148,6 +151,9 @@
                                      :render-header="renderHeaderPic"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                            <a :class="scope.row.picStatus=='待处理'?'clasRed':'clasGreen'">{{scope.row.picStatus}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="开发员"
@@ -187,64 +193,64 @@
             <el-dialog title='查看'
                        :visible.sync="dialogPicture">
                 <el-form
-                         label-position="left"
-                         label-width="110px"
-                         ref="picForm">
+                        label-position="left"
+                        label-width="110px"
+                        ref="picForm">
                     <el-form-item label="图片"
-                                  prop="goodsInfo.picUrl"
+                                  prop="goodsInfoPic.picUrl"
                                   class="item1">
-                        <img :src='goodsInfo.picUrl'
+                        <img :src='goodsInfoPic.picUrl'
                              style="width: 150px;height: 100px;">
                     </el-form-item>
                     <el-form-item label="图片地址"
                                   prop="picUrl"
                                   class="item">
-                        <span>{{goodsInfo.picUrl}}</span>
+                        <span><a :href="goodsInfoPic.picUrl" target="_blank" class="classa">{{goodsInfoPic.picUrl}}</a></span>
                     </el-form-item>
                     <el-form-item label="商品名称"
                                   prop="GoodsName"
                                   class="item">
-                        <span>{{goodsInfo.goodsName}}</span></el-form-item>
+                        <span>{{goodsInfoPic.goodsName?goodsInfoPic.goodsName:'未设置'}}</span></el-form-item>
                     <el-form-item label="商品编码"
                                   prop="GoodsCode"
                                   class="item">
-                        <span>{{goodsInfo.goodsCode}}</span>
+                        <span>{{goodsInfoPic.goodsCode}}</span>
                     </el-form-item>
                     <el-form-item label="是否备货"
                                   prop="stockUp"
                                   class="item">
-                        <span>{{goodsInfo.stockUp}}</span>
+                        <span>{{goodsInfoPic.stockUp}}</span>
                     </el-form-item>
                     <el-form-item label="供应商名称"
                                   prop="supplierName"
-                                  class="item"><span>{{goodsInfo.supplierName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.supplierName?goodsInfoPic.supplierName:'未设置'}}</span></el-form-item>
                     <el-form-item label="中文申报名"
                                   prop="aliasCnName"
-                                  class="item"><span>{{goodsInfo.aliasCnName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.aliasCnName?goodsInfoPic.aliasCnName:'未设置'}}</span></el-form-item>
                     <el-form-item label="英文申报名"
                                   prop="aliasEnName"
-                                  class="item"><span>{{goodsInfo.aliasEnName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.aliasEnName?goodsInfoPic.aliasEnName:'未设置'}}</span></el-form-item>
                     <el-form-item label="规格"
                                   prop=""
-                                  class="item"><span>{{goodsInfo.packName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.packName?goodsInfoPic.packName:'未设置'}}</span></el-form-item>
                     <el-form-item label="季节"
                                   prop="season"
-                                  class="item"><span>{{goodsInfo.season}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.season?goodsInfoPic.season:'未设置'}}</span></el-form-item>
                     <el-form-item label="仓库"
                                   prop="storeName"
-                                  class="item"><span>{{goodsInfo.storeName}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.storeName?goodsInfoPic.storeName:'未设置'}}</span></el-form-item>
                     <el-form-item label="是否液体"
                                   prop="isLiquid"
-                                  class="item"><span>{{goodsInfo.isLiquid}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.isLiquid}}</span></el-form-item>
                     <el-form-item label="是否粉末"
                                   prop="isPowder"
-                                  class="item"><span>{{goodsInfo.isPowder}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.isPowder}}</span></el-form-item>
                     <el-form-item label="是否带磁"
                                   prop="isMagnetism"
-                                  class="item"><span>{{goodsInfo.isMagnetism}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.isMagnetism}}</span></el-form-item>
                     <el-form-item label="是否带电"
                                   prop="isCharged"
-                                  class="item"><span>{{goodsInfo.isCharged}}</span></el-form-item>
+                                  class="item"><span>{{goodsInfoPic.isCharged}}</span></el-form-item>
                 </el-form>
             </el-dialog>
             <el-pagination background
@@ -261,6 +267,8 @@
 </template>
 
 <script type="text/ecmascript-6">
+    import goodsInfoPicture from './goodsInfoPicture.vue'
+    import goodsInfoPlatform from './goodsInfoPlatform.vue'
     import {
             APIGoodsInfo,
             APIPictureList,
@@ -269,11 +277,12 @@
             APIAttributeInfo,
             APIFinishAttribute,
             APIGenerateCode,
-            APIPictureInfo,
             APIPlat,
+            APIDeleteVariant,
             APIPicturePreview,
             APIFinishPicture
     } from '../../api/product'
+    import {getAttributeInfoStoreName,getAttributeInfoCat,getPlatGoodsStatus,getPlatCompletedPlat} from '../../api/profit'
     import { getMenu } from '../../api/login'
     export default {
         data() {
@@ -284,22 +293,51 @@
                 total: null,
                 totalPic: null,
                 totalPlat: null,
-                activeName: '图片信息',
+                activeName: '属性信息',
                 sels: [],
                 time1: '',
                 time2: '',
                 allMenu: [],
+                repertory:[],
+                productState:[],
+                mainCategory:[],
+                perfectPlatform:[],
+                goodsState:[],
                 goodsInfo:[],
                 oaGoods:[],
+                goodsInfoPlat:[],
+                oaGoodsPlat:[],
+                goodsInfoPic:[],
+                oaGoodsPic:[],
                 tableData: [
-
                 ],
+                picId:{
+                    id: null
+                },
                 pictureData: [],
                 platData: [],
                 show: {
                     status: true,
                     picture: false,
                     plat: false
+                },
+                condition: {
+                    "pageSize":10,
+                    "page":1,
+                    "goodsCode":"",
+                    "achieveStatus":"",
+                    "goodsName":"",
+                    "developer":"",
+                    "devDatetime":[],
+                    "updateTime":[],
+                    "aliasCnName":"",
+                    "aliasEnName":"",
+                    "stockUp":"",
+                    "isLiquid":"",
+                    "isPowder":"",
+                    "isMagnetism":"",
+                    "isCharged":"",
+                    "isVar":""
                 },
                 picture: {
                     "pageSize": 10,
@@ -317,28 +355,49 @@
                     "isPowder": "",
                     "isMagnetism": "",
                     "isCharged": "",
-                    "isVar": null,
-                    origin1: null,
+                    "isVar": "",
+                    origin1: "",
                     origin2: null,
-                    origin3: null,
-                    vendor1: null,
-                    vendor2: null,
+                    origin3: "",
+                    vendor1: "",
+                    vendor2: "",
                     vendor3: null
                 },
                 plat: {
+                    picUrl:null,
+                    goodsCode:null,
+                    possessMan:null,
+                    storeName:null,
+                    stockUp:null,
+                    wishPublish:null,
+                    completeStatus:null,
+                    goodsName:null,
+                    cate:null,
+                    subCate:null,
+                    supplierName:null,
+                    introducer:null,
+                    developer:null,
+                    purchaser:null,
+                    possessMan1:null,
+                    mid:null,
+                    dictionaryName:null,
+                    devDatetime:[],
+                    updateTime:[],
+                    isVar:null,
+                    goodsStatus:null,
+                    stockDays:null,
                     pageSize: 10,
-                    currentPage: 1
+                    page: 1
                 },
                 viewForm: {
                     id: null
                 },
-                picForm: [
-
-                ],
-                picId:{
+                picForm: {
                     id: null
                 },
-                platForm: {},
+                platForm: {
+                    id: null
+                },
                 finish: {
                     id: []
                 }
@@ -352,6 +411,614 @@
             }
         },
         methods: {
+//            handleClick(tab, event) {
+//                if (tab.label === '属性信息') {
+//                    sessionStorage.setItem('judge', "属性信息")
+//                    this.show['status'] = true
+//                    this.getData()
+//                } else {
+//                    this.show['status'] = false
+//                }
+//                if (tab.label === '图片信息') {
+//                    sessionStorage.setItem('judge', "图片信息")
+//                    this.show['picture'] = true
+//                    this.getPic()
+//                } else {
+//                    this.show['picture'] = false
+//                }
+//                if (tab.label === '平台信息') {
+//                    sessionStorage.setItem('judge', "平台信息")
+//                    this.show['plat'] = true
+//                    this.getPlat()
+//                    getAttributeInfoStoreName().then(response => {
+//                        this.repertory =  response.data.data
+//                    })
+//                    getAttributeInfoCat().then(response => {
+//                        this.mainCategory =  response.data.data
+//                    })
+//                    getPlatGoodsStatus().then(response => {
+//                        this.goodsState =  response.data.data
+//                    })
+//                    getPlatCompletedPlat().then(response => {
+//                        this.perfectPlatform =  response.data.data
+//                    })
+//                } else {
+//                    this.show['plat'] = false
+//                }
+//            },
+            //属性信息分页
+            handleCurrentChange(val) {
+                this.condition.page = val
+                this.getData()
+            },
+            handleSizeChange(val) {
+                this.condition.pageSize = val
+                this.getData()
+            },
+            //属性信息查看
+            view(index, row) {
+                this.dialogVisible = true
+                this.viewForm.id = row.id
+                APIAttributeInfo(this.viewForm).then(res => {
+//        this.viewForm = res.data.data
+                    this.goodsInfo = res.data.data.basicInfo.goodsInfo
+                    this.oaGoods = res.data.data.basicInfo.oaGoods
+                })
+            },
+            //标记
+            mark(index, row) {
+                this.finish.id = row.id
+                APIFinishAttribute(this.finish).then(res => {
+                    if (res.data.code === 200) {
+                        this.$message({
+                            message: '标记成功',
+                            type: 'success'
+                        })
+                        this.getData()
+                    } else {
+                        this.$message.error(res.data.message)
+                    }
+                })
+            },
+            //批量标记
+            markAll() {
+                this.finish.id = this.sels.map(e => e.id)
+                APIFinishAttribute(this.finish).then(res => {
+                    if (res.data.code === 200) {
+                        this.$message({
+                            message: '标记成功',
+                            type: 'success'
+                        })
+                        this.getData()
+                    } else {
+                        this.$message.error(res.data.message)
+                    }
+                })
+            },
+            //导入普源
+            passAll() {
+            },
+            //生成编码
+            codeAll() {
+                if (this.sels) {
+                    let data = {
+                        id: this.sels.map(e => e.id)[0]
+                    }
+                    APIGenerateCode(data).then(res => {
+                        if(res.data.code==200){
+                            this.$message({
+                                message: '生成成功',
+                                type: 'success'
+                            })
+                            for (let i = 0; i < this.tableData.length; i++) {
+                                if (this.tableData[i].id === data.id) {
+                                    this.tableData[i].GoodsCode = res.data.data[0]
+                                }
+                            }
+                        }
+                    })
+                }
+            },
+            //单元格样式
+            cellStyle({ row, column, rowIndex, columnIndex }) {
+                if (row.isVar === '是' && columnIndex === 4) {
+                    return 'color: red'
+                }
+            },
+            //属性信息删除
+            del(index,row) {
+                let arrId = []
+                arrId.push(row.id)
+                let aryId={
+                    id:arrId
+                }
+                APIDeleteVariant(aryId).then(res => {
+                    if (res.data.code === 200) {
+                        this.$message({
+                            message: '删除成功',
+                            type: 'success'
+                        })
+                        this.getData()
+                    } else {
+                        this.$message.error('删除失败')
+                    }
+                })
+            },
+            //属性信息全选
+            selsChange(sels) {
+                this.sels = sels
+            },
+            //属性信息获取数据
+            getData() {
+                APIGoodsInfo(this.condition).then(res => {
+                    this.tableData = res.data.data.items
+                    this.total = res.data.data._meta.totalCount
+                    this.condition.pageSize = res.data.data._meta.perPage
+                    this.condition.page = res.data.data._meta.currentPage
+                })
+            },
+            //属性信息表头input框
+            renderHeader(h, { column, $index }) {
+                if ($index === 0) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
+                                        value: '',
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.condition.goodsCode = value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                } else if ($index === 1) {
+                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
+                    return h(
+                            'el-select',
+                            {
+                                props: {
+                                    placeholder: '请选择',
+                                    value: this.condition.stockUp,
+                                    size: 'mini',
+                                    clearable: true
+                                },
+                                on: {
+                                    input: value => {
+                                        this.condition.stockUp=value
+                                        this.$emit('input', value)
+                                    },
+                                    change: searchValue => {
+                                        this.filter()
+                                    }
+                                }
+                            },
+                            [
+                                filters.map(item => {
+                                    return h('el-option', {
+                                        props: {
+                                            value: item.text,
+                                            label: item.value
+                                        }
+                                    })
+                                })
+                            ]
+                    )
+                } else if ($index === 2) {
+                    let filters = [
+                        { text: '待处理', value: '待处理' },
+                        { text: '已完善', value: '已完善' },
+                        { text: '已导入', value: '已导入' }
+                    ]
+                    return h(
+                            'el-select',
+                            {
+                                props: {
+                                    placeholder: '请选择',
+                                    value: this.condition.achieveStatus,
+                                    size: 'mini',
+                                    clearable: true
+                                },
+                                on: {
+                                    input: value => {
+                                        this.condition.achieveStatus=value
+                                        this.$emit('input', value)
+                                    },
+                                    change: searchValue => {
+                                        this.filter()
+                                    }
+                                }
+                            },
+                            [
+                                filters.map(item => {
+                                    return h('el-option', {
+                                        props: {
+                                            value: item.text,
+                                            label: item.value
+                                        }
+                                    })
+                                })
+                            ]
+                    )
+                } else if ($index === 3) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
+                                        value: this.condition.goodsName,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.condition.goodsName=value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                } else if ($index === 4) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
+                                        value: this.condition.developer,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.condition.developer=value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                } else if($index === 5){
+                    return h('el-date-picker',{
+                        props:{
+                            value:this.time1,
+                            size:'mini',
+                            type:'daterange',
+                        },
+                        style:{
+                            width:'180px',
+                            padding:'2px',
+                        },
+                        on:{
+                            input:value=>{
+                                this.time1=value
+                                this.$emit('input', value)
+                            },
+                            change:value => {
+                                this.filter()
+                            }
+                        }
+                    })
+                } else if ($index === 6) {
+                    return h('el-date-picker',{
+                        props:{
+                            value:this.time2,
+                            size:'mini',
+                            type:'daterange',
+                        },
+                        style:{
+                            width:'180px',
+                            padding:'2px',
+                        },
+                        on:{
+                            input:value=>{
+                                this.time2=value
+                                this.$emit('input', value)
+                            },
+                            change:value => {
+                                this.filter()
+                            }
+                        }
+                    })
+                } else if ($index === 7) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
+                                        value:this.condition.aliasCnName,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.condition.aliasCnName = value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                } else if ($index === 8) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
+                                        value: this.condition.aliasEnName,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.condition.aliasEnName = value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                } else if ($index === 9) {
+                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
+                    return h(
+                            'el-select',
+                            {
+                                props: {
+                                    placeholder: '请选择',
+                                    value: this.condition.isLiquid,
+                                    size: 'mini',
+                                    clearable: true
+                                },
+                                on: {
+                                    input: value => {
+                                        this.condition.isLiquid = value
+                                        this.$emit('input', value)
+                                    },
+                                    change: searchValue => {
+                                        this.filter()
+                                    }
+                                }
+                            },
+                            [
+                                filters.map(item => {
+                                    return h('el-option', {
+                                        props: {
+                                            value: item.text,
+                                            label: item.value
+                                        }
+                                    })
+                                })
+                            ]
+                    )
+                } else if ($index === 10) {
+                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
+                    return h(
+                            'el-select',
+                            {
+                                props: {
+                                    placeholder: '请选择',
+                                    value: this.condition.isPowder,
+                                    size: 'mini',
+                                    clearable: true
+                                },
+                                on: {
+                                    input: value => {
+                                        this.condition.isPowder = value
+                                        this.$emit('input', value)
+                                    },
+                                    change: searchValue => {
+                                        this.filter()
+                                    }
+                                }
+                            },
+                            [
+                                filters.map(item => {
+                                    return h('el-option', {
+                                        props: {
+                                            value: item.text,
+                                            label: item.value
+                                        }
+                                    })
+                                })
+                            ]
+                    )
+                } else if ($index === 11) {
+                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
+                    return h(
+                            'el-select',
+                            {
+                                props: {
+                                    placeholder: '请选择',
+                                    value: this.condition.isMagnetism,
+                                    size: 'mini',
+                                    clearable: true
+                                },
+                                on: {
+                                    input: value => {
+                                        this.condition.isMagnetism = value
+                                        this.$emit('input', value)
+                                    },
+                                    change: searchValue => {
+                                        this.filter()
+                                    }
+                                }
+                            },
+                            [
+                                filters.map(item => {
+                                    return h('el-option', {
+                                        props: {
+                                            value: item.text,
+                                            label: item.value
+                                        }
+                                    })
+                                })
+                            ]
+                    )
+                } else if ($index === 12) {
+                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
+                    return h(
+                            'el-select',
+                            {
+                                props: {
+                                    placeholder: '请选择',
+                                    value: this.condition.isCharged,
+                                    size: 'mini',
+                                    clearable: true
+                                },
+                                on: {
+                                    input: value => {
+                                        this.condition.isCharged = value
+                                        this.$emit('input', value)
+                                    },
+                                    change: searchValue => {
+                                        this.filter()
+                                    }
+                                }
+                            },
+                            [
+                                filters.map(item => {
+                                    return h('el-option', {
+                                        props: {
+                                            value: item.text,
+                                            label: item.value
+                                        }
+                                    })
+                                })
+                            ]
+                    )
+                } else if ($index === 13) {
+                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
+                    return h(
+                            'el-select',
+                            {
+                                props: {
+                                    placeholder: '请选择',
+                                    value: this.condition.isVar,
+                                    size: 'mini',
+                                    clearable: true
+                                },
+                                on: {
+                                    input: value => {
+                                        this.condition.isVar = value
+                                        this.$emit('input', value)
+                                    },
+                                    change: searchValue => {
+                                        this.filter()
+                                    }
+                                }
+                            },
+                            [
+                                filters.map(item => {
+                                    return h('el-option', {
+                                        props: {
+                                            value: item.text,
+                                            label: item.value
+                                        }
+                                    })
+                                })
+                            ]
+                    )
+                }
+            },
+            upte(index,row){
+                sessionStorage.setItem('judge', "属性信息")
+                this.$router.push({
+                    path: `/${row.id}`
+                })
+            },
+            formatTen(num) {
+                return num > 9 ? (num + "") : ("0" + num)
+            },
+            formatDate(date) {
+                const year = date.getFullYear()
+                const month = date.getMonth() + 1
+                const day = date.getDate()
+                const hour = date.getHours()
+                const minute = date.getMinutes()
+                const second = date.getSeconds()
+                return year + "-" + this.formatTen(month) + "-" + this.formatTen(day)
+            },
+            filter() {
+                if (this.activeName === '属性信息') {
+                    if (this.time1 !== null && this.time1.length !== 0) {
+                        this.condition.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+                    } else {
+                        this.condition.devDatetime = []
+                    }
+                    if (this.time2 !== null && this.time2.length !== 0) {
+                        this.condition.updateTime = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
+                    } else {
+                        this.condition.updateTime = []
+                    }
+                    this.getData()
+                } else if (this.activeName === '图片信息') {
+                    if (this.time1 !== null && this.time1.length !== 0) {
+                        this.picture.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+                    } else {
+                        this.picture.devDatetime = []
+                    }
+                    this.getPic()
+                } else {
+                    if (this.time1 !== null && this.time1.length !== 0) {
+                        this.platData.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+                    } else {
+                        this.platData.devDatetime = []
+                    }
+                    if (this.time2 !== null && this.time2.length !== 0) {
+                        this.platData.updateTime = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
+                    } else {
+                        this.platData.updateTime = []
+                    }
+                    this.getPlat()
+                }
+            },
+            //图片信息
             signPerfect(index,row){
                 let objSin={
                     id:row.id
@@ -368,35 +1035,6 @@
                     }
                 })
             },
-            handleClick(tab, event) {
-                if (tab.label === '属性信息') {
-                    this.$router.push({
-                        path: `/v1/oa-goodsinfo/index`
-                    })
-                }
-                if (tab.label === '图片信息') {
-                } else {
-
-                }
-                if (tab.label === '平台信息') {
-                    this.$router.push({
-                        path: `/v1/oa-goodsinfo/goodsInfoPlatform`
-                    })
-                }
-            },
-            //单元格样式
-            cellStyle({ row, column, rowIndex, columnIndex }) {
-                if (row.isVar === '是' && columnIndex === 4) {
-                    return 'color: red'
-                }
-            },
-            //属性信息删除
-            del() {},
-            //属性信息全选
-            selsChange(sels) {
-                this.sels = sels
-            },
-            //图片信息分页
             handleSizeChangePic(val) {
                 this.picture.pageSize = val
                 this.getPic()
@@ -408,10 +1046,10 @@
             //图片信息查看
             viewPic(index, row) {
                 this.dialogPicture = true
-                 this.picId.id = row.id
+                this.picId.id = row.id
                 APIPicturePreview(this.picId).then(res => {
-                   this.goodsInfo = res.data.data
-                 })
+                    this.goodsInfoPic = res.data.data
+                })
             },
             picEdit(index, row) {
                 sessionStorage.setItem('judge', "图片信息")
@@ -822,14 +1460,13 @@
                     )
                 }
             },
-
-            //平台信息分页
+            //平台信息
             handleSizeChangePlat(val) {
                 this.plat.pageSize = val
                 this.getPlat()
             },
             handleCurrentChangePlat(val) {
-                this.plat.currentPage = val
+                this.plat.page = val
                 this.getPlat()
             },
             //平台信息查看
@@ -837,11 +1474,17 @@
                 this.dialogPlat = true
                 this.platForm.id = row.id
                 APIPlat(this.platForm).then(res => {
-                    this.platForm = res.data.data
+                    this.goodsInfoPlat = res.data.data
+                    if(this.goodsInfoPlat.oaGoods){
+                        this.oaGoodsPlat=this.goodsInfoPlat.oaGoods
+                    }else {
+                        this.oaGoodsPlat=[]
+                    }
                 })
             },
             //平台信息更新
             platEdit(index, row) {
+                sessionStorage.setItem('judge', "平台信息")
                 this.$router.push({
                     path: `/plat/${row.id}`
                 })
@@ -852,56 +1495,9 @@
                     this.platData = res.data.data.items
                     this.totalPlat = res.data.data._meta.totalCount
                     this.plat.pageSize = res.data.data._meta.perPage
-                    this.plat.currentPage = res.data.data._meta.currentPage
+                    this.plat.page = res.data.data._meta.currentPage
                 })
             },
-            formatTen(num) {
-                return num > 9 ? (num + "") : ("0" + num)
-            },
-            formatDate(date) {
-                const year = date.getFullYear()
-                const month = date.getMonth() + 1
-                const day = date.getDate()
-                const hour = date.getHours()
-                const minute = date.getMinutes()
-                const second = date.getSeconds()
-                return year + "-" + this.formatTen(month) + "-" + this.formatTen(day)
-            },
-            filter() {
-                if (this.activeName === '属性信息') {
-                    if (this.time1 !== null && this.time1.length !== 0) {
-                        this.condition.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
-                    } else {
-                        this.condition.devDatetime = []
-                    }
-                    if (this.time2 !== null && this.time2.length !== 0) {
-                        this.condition.updateTime = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
-                    } else {
-                        this.condition.updateTime = []
-                    }
-                    this.getData()
-                } else if (this.activeName === '图片信息') {
-                    if (this.time1 !== null && this.time1.length !== 0) {
-                        this.picture.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
-                    } else {
-                        this.picture.devDatetime = []
-                    }
-                    this.getPic()
-                } else {
-                    if (this.time1 !== null && this.time1.length !== 0) {
-                        this.condition2.createDate = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
-                    } else {
-                        this.condition2.createDate = []
-                    }
-                    if (this.time2 !== null && this.time2.length !== 0) {
-                        this.condition2.updateDate = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
-                    } else {
-                        this.condition2.updateDate = []
-                    }
-                    this.getReverse()
-                }
-            },
-            //平台信息表头input框
             renderHeaderPlat(h, { column, $index }) {
                 if ($index === 0) {
                     return h(
@@ -914,13 +1510,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.goodsCode,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.goodsCode = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -941,13 +1537,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.mapPersons,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.mapPersons= value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -958,19 +1554,19 @@
                             ]
                     )
                 } else if ($index === 2) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = this.repertory
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.plat.storeName,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.storeName=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -982,27 +1578,27 @@
                                 filters.map(item => {
                                     return h('el-option', {
                                         props: {
-                                            value: item.text,
-                                            label: item.value
+                                            value: item,
+                                            label: item
                                         }
                                     })
                                 })
                             ]
                     )
                 } else if ($index === 3) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.plat.stockUp,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.stockUp=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -1022,19 +1618,19 @@
                             ]
                     )
                 } else if ($index === 4) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = [{ text: 'Y', value: 'Y' }, { text: 'N', value: 'N' }]
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value:this.plat.wishPublish,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.wishPublish=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -1054,19 +1650,20 @@
                             ]
                     )
                 } else if ($index === 5) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+//                    let filters = [{ text: '未设置', value: '未设置' }, { text: 'eBay已完善', value: 'eBay已完善' }, { text: 'Wish已完善', value: 'Wish已完善' }, { text: 'Joom已完善', value: 'Joom已完善' }, { text: 'Wish已完善|eBay已完善', value: 'Wish已完善|eBay已完善' }, { text: 'Wish已完善|Joom已完善', value: 'Wish已完善|Joom已完善' }, { text: 'Joom已完善|eBay已完善', value: 'Joom已完善|eBay已完善'}, { text: 'Wish已完善|Joom已完善|eBay已完善', value: 'Wish已完善|Joom已完善|eBay已完善'}]
+                    let filters=this.perfectPlatform
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.plat.completeStatus,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.completeStatus=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -1078,8 +1675,8 @@
                                 filters.map(item => {
                                     return h('el-option', {
                                         props: {
-                                            value: item.text,
-                                            label: item.value
+                                            value: item,
+                                            label: item
                                         }
                                     })
                                 })
@@ -1096,13 +1693,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.goodsName,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.goodsName = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1113,19 +1710,19 @@
                             ]
                     )
                 } else if ($index === 7) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = this.mainCategory
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.plat.cate,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.cate=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -1137,8 +1734,8 @@
                                 filters.map(item => {
                                     return h('el-option', {
                                         props: {
-                                            value: item.text,
-                                            label: item.value
+                                            value: item,
+                                            label: item
                                         }
                                     })
                                 })
@@ -1155,13 +1752,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.subCate,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.subCate = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1182,13 +1779,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.supplierName,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.supplierName = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1209,13 +1806,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.introducer,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.introducer = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1236,13 +1833,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.developer,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.developer = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1263,13 +1860,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.purchaser,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.purchaser = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1290,13 +1887,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.possessMan1,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.possessMan1 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1307,19 +1904,19 @@
                             ]
                     )
                 } else if ($index === 14) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.plat.mid ,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.mid=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -1349,13 +1946,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.dictionaryName,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.dictionaryName = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1366,73 +1963,61 @@
                             ]
                     )
                 } else if ($index === 16) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
+                    return h('el-date-picker',{
+                        props:{
+                            value:this.time1,
+                            size:'mini',
+                            type:'daterange',
+                        },
+                        style:{
+                            width:'200px',
+                            padding:'2px',
+                        },
+                        on:{
+                            input:value=>{
+                                this.time1=value
+                                this.$emit('input', value)
                             },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: '',
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            // this.condition2.subCate = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
+                            change:value => {
+                                this.filter()
+                            }
+                        }
+                    })
                 } else if ($index === 17) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
+                    return h('el-date-picker',{
+                        props:{
+                            value:this.time2,
+                            size:'mini',
+                            type:'daterange',
+                        },
+                        style:{
+                            width:'200px',
+                            padding:'2px',
+                        },
+                        on:{
+                            input:value=>{
+                                this.time2=value
+                                this.$emit('input', value)
                             },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: '',
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            // this.condition2.subCate = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
+                            change:value => {
+                                this.filter()
+                            }
+                        }
+                    })
                 } else if ($index === 18) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.plat.isVar,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.isVar=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -1452,19 +2037,19 @@
                             ]
                     )
                 } else if ($index === 19) {
-                    let filters = [{ text: '1', value: '是' }, { text: '0', value: '否' }]
+                    let filters = this.goodsState
                     return h(
                             'el-select',
                             {
                                 props: {
                                     placeholder: '请选择',
-                                    value: '',
+                                    value: this.plat.goodsStatus,
                                     size: 'mini',
                                     clearable: true
                                 },
                                 on: {
                                     input: value => {
-                                        // this.condition2.stockUp=value
+                                        this.plat.goodsStatus=value
                                         this.$emit('input', value)
                                     },
                                     change: searchValue => {
@@ -1476,8 +2061,8 @@
                                 filters.map(item => {
                                     return h('el-option', {
                                         props: {
-                                            value: item.text,
-                                            label: item.value
+                                            value: item,
+                                            label: item
                                         }
                                     })
                                 })
@@ -1494,13 +2079,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: '',
+                                        value: this.plat.stockDays,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            // this.condition2.subCate = value
+                                            this.plat.stockDays=value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1530,4 +2115,14 @@
 </script>
 
 <style lang="scss" scoped>
+    .clasRed{
+        color: #c55 !important;
+    }
+    .clasGreen{
+        color: #0E9A00;
+    }
+    .classa{
+        color: #337ab7;
+        text-decoration: none;
+    }
 </style>

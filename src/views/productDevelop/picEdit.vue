@@ -1,11 +1,11 @@
 <template>
   <section class="toolbar">
-    <el-row>
-      <el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #e4e7ed solid 1px; background: #eee;padding: 0">
-        <span @click="attribute(log.name)" class="adClass" :class="log.name=='图片信息'?'actie':''" v-for="(log,index) in allMenu" :key="index">{{log.name}}</span>
-      </el-col>
-    </el-row>
-    <el-col :span="24" style="margin-top: 50px;background: #fff;border-bottom: #ccc solid 1px;padding-left: 15px">
+    <!--<el-row>-->
+      <!--<el-col :span="24" style="position: fixed;z-index: 999;overflow: hidden;border-bottom: #e4e7ed solid 1px; background: #eee;padding: 0">-->
+        <!--<span @click="attribute(log.name)" class="adClass" :class="log.name=='图片信息'?'actie':''" v-for="(log,index) in allMenu" :key="index">{{log.name}}</span>-->
+      <!--</el-col>-->
+    <!--</el-row>-->
+    <el-col :span="24" style="margin-top: 0px;background: #fff;border-bottom: #ccc solid 1px;padding-left: 15px">
       <el-button type="primary"
                  @click="save">保存当前数据</el-button>
       <el-button type="primary"

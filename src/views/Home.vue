@@ -195,6 +195,9 @@ export default {
     },
     handleSelect1(index, indexPath){
       sessionStorage.setItem('acTi',index)
+      if(sessionStorage.getItem('judge')){
+        sessionStorage.removeItem('judge')
+      }
     },
     handleSelect(index, indexPath) {
       if (index === '/index') {

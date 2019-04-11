@@ -570,6 +570,9 @@
                        label="杂费"
                        sortable="custom"
                        align="center"></el-table-column>
+      <el-table-column prop="comment"
+                       label="备注"
+                       align="center"></el-table-column>
       <el-table-column prop="dateTime"
                        label="时间"
                        sortable

@@ -608,6 +608,14 @@ export function APIShippingService(param) {
     data
   })
 }
+export function APIShippingEbay(param) {
+  const data = { condition: param }
+  return request({
+    url: '/basic-info/shipping-service',
+    method: 'post',
+    data
+  })
+}
 export function APIJoomWish(param) {
   const data = { condition: param }
   return request({

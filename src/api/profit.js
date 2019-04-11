@@ -549,6 +549,13 @@ export function APIPick(param) {
     data
   })
 }
+//获取平台信息站点
+export function getEbaySite() {
+  return request({
+    url: 'oa-goodsinfo/ebay-site',
+    method: 'get'
+  })
+}
 
 
 
