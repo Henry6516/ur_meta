@@ -872,7 +872,6 @@ export default {
     },
     onSubmit1(form) {
       const myform = JSON.parse(JSON.stringify(form))
-      this.dead.member=myform.member
       this.dead.dateType=myform.dateType
       this.dead.dateRange=myform.dateRange
       const height = document.getElementById('app').clientHeight
@@ -895,6 +894,7 @@ export default {
             myform.member = this.member.map(m => {
                       return m.username
                     })
+            this.dead.member=myform.member
             getOtherDeadFee(this.dead).then(response => {
               this.listLoading = false
               this.tableData1 = this.searchTable1 = response.data.data.items
@@ -905,6 +905,7 @@ export default {
           } else if (this.condition.member.length !== 0) {
             this.listLoading = true
             myform.member = this.condition.member
+            this.dead.member=myform.member
             getOtherDeadFee(this.dead).then(response => {
               this.listLoading = false
               this.tableData1 = this.searchTable1 = response.data.data.items

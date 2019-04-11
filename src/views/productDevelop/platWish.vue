@@ -620,7 +620,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-  import { APIPlatInfo, APISaveWishInfo, APIFinishPlat,APIJoomName,APIPlatExportWish,APIPlatExportJoom,APIDeleteVariant } from '../../api/product'
+  import { APIPlatInfo, APISaveWishInfo, APIFinishPlat,APIJoomName,APIPlatExportWish,APIPlatExportJoom,APIDeleteVariant,APIDeleteEbaySku } from '../../api/product'
   export default {
     props: {
       id: {
@@ -927,12 +927,11 @@
       },
       // 删除table行
       del(index, row) {
-        let arrId = []
-        arrId.push(row.id)
         let aryId={
-          id:arrId
+          id:row.id,
+          plat:'wish'
         }
-        APIDeleteVariant(aryId).then(res => {
+        APIDeleteEbaySku(aryId).then(res => {
           if (res.data.code === 200) {
             this.$message({
               message: '删除成功',

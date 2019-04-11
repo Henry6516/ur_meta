@@ -883,7 +883,6 @@ export default {
     },
     onSubmit1(form) {
       const myform = JSON.parse(JSON.stringify(form))
-      this.dead.member=myform.member
       this.dead.dateType=myform.dateType
       this.dead.dateRange=myform.dateRange
       const height = document.getElementById('app').clientHeight
@@ -933,6 +932,7 @@ export default {
               return m.username
             })
           }
+          this.dead.member=myform.member
           this.listLoading = true
           getOtherDeadFee(this.dead).then(response => {
             this.listLoading = false

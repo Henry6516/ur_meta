@@ -829,6 +829,14 @@ export function APIDeleteVariant(param) {
     data
   })
 }
+export function APIDeleteEbaySku(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/delete-sku',
+    method: 'post',
+    data
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

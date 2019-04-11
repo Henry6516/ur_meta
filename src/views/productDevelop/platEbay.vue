@@ -856,7 +856,7 @@
     </section>
 </template>
 <script type="text/ecmascript-6">
-    import { APIPlatInfo, APISaveWishInfo,APIPlatExportEbay,APIShippingEbay,APIFinishPlat,APIDeleteVariant } from '../../api/product'
+    import { APIPlatInfo, APISaveWishInfo,APIPlatExportEbay,APIShippingEbay,APIFinishPlat,APIDeleteVariant,APIDeleteEbaySku } from '../../api/product'
     import { getPlatEbayAccount,getPlatEbayStore,getEbaySite } from '../../api/profit'
     import { APISaveEbayInfo} from '../../api/platebay'
     export default {
@@ -1001,12 +1001,12 @@
                 }
             },
             delIndex(index,row){
-                let arrId = []
-                arrId.push(row.id)
+                console.log(row)
                 let aryId={
-                    id:arrId
+                    id:row,
+                    plat:'eBay'
                 }
-                APIDeleteVariant(aryId).then(res => {
+                APIDeleteEbaySku(aryId).then(res => {
                     if (res.data.code === 200) {
                         this.$message({
                             message: '删除成功',
