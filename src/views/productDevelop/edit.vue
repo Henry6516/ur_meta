@@ -488,7 +488,7 @@
                  <!--:label="item.label"-->
                  <!--:value="item.value"></el-option>-->
     <!--</el-select>-->
-    <el-table :data="tableData" border style="width: 98%;margin-left: 1%">
+    <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange">
       <el-table-column type="selection"
                        align="center"
                        header-align="center"></el-table-column>
@@ -658,7 +658,7 @@
       <el-button size="small"
                  type="primary" @click="save1()">保存并完善</el-button>
       <el-button size="small"
-                 type="warning">导入普源</el-button>
+                 type="warning" @click="passAll">导入普源</el-button>
       <el-button size="small"
                  type="danger">生成采购单</el-button>
       <!--<el-button size="small"-->
@@ -691,7 +691,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute,APIDeleteVariant } from '../../api/product'
+import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute,APIDeleteVariant,APIAttributeToShopElf  } from '../../api/product'
 import { getMember, getGoodscats, getAttributeInfoPackName, getAttributeInfoSpecialAttribute, getAttributeInfoStoreName, getAttributeInfoSeason, getAttributeInfoPlat, getAttributeInfoSalesman, getAttributeInfoCat, getAttributeInfoSubCat } from '../../api/profit'
 import { getMenu } from '../../api/login'
 export default {
@@ -764,10 +764,33 @@ export default {
       oaGoods: {},
       dictionaryName1: '',
       mapPersons1: '',
-      allMenu:[]
+      allMenu:[],
+      sels:[]
     }
   },
   methods: {
+    selsChange(sels) {
+      this.sels = sels
+    },
+    passAll() {
+      if (this.sels.length!=0) {
+        let dataTe = {
+          id: this.sels.map(e => e.id)
+        }
+        APIAttributeToShopElf(dataTe).then(res => {
+          if (res.data.code === 200) {
+            this.$message({
+              message: '成功',
+              type: 'success'
+            })
+          } else {
+            this.$message.error(res.data.message)
+          }
+        })
+      }else{
+        this.$message.error('请选择')
+      }
+    },
     formatTen(num) {
       return num > 9 ? (num + '') : ('0' + num)
     },

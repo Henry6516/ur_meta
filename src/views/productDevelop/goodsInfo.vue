@@ -52,7 +52,7 @@
                         </el-tooltip>
                         <el-tooltip content="导入普源">
                             <i class="el-icon-printer"
-                               style="color: #409EFF;cursor:pointer;"></i>
+                               style="color: #409EFF;cursor:pointer;" @click=passPy(scope.$index,scope.row)></i>
                         </el-tooltip>
                         <el-tooltip content="标记已完善">
                             <i class="el-icon-star-on"
@@ -295,7 +295,7 @@
                     <el-form-item label="供应商链接2"
                                   prop=""
                                   class="item">
-                        <span><a :href="oaGoods.vendor2" target="_blank" class="classa">{{oaGoods.vendor1?oaGoods.vendor2:"未设置"}}</a></span>
+                        <span><a :href="oaGoods.vendor2" target="_blank" class="classa">{{oaGoods.vendor2?oaGoods.vendor2:"未设置"}}</a></span>
                     </el-form-item>
                     <el-form-item label="供应商链接3"
                                   prop=""
@@ -1019,7 +1019,8 @@
             APIPlat,
             APIDeleteVariant,
             APIPicturePreview,
-            APIFinishPicture
+            APIFinishPicture,
+            APIAttributeToShopElf
     } from '../../api/product'
     import {getAttributeInfoStoreName,getAttributeInfoCat,getPlatGoodsStatus,getPlatCompletedPlat} from '../../api/profit'
     import { getMenu } from '../../api/login'
@@ -1192,6 +1193,7 @@
             //属性信息分页
             handleCurrentChange(val) {
                 this.condition.page = val
+                sessionStorage.setItem('sepageInfo', val)
                 this.getData()
             },
             handleSizeChange(val) {
@@ -1223,6 +1225,21 @@
                     }
                 })
             },
+             passPy(index, row) {
+                 let dataTe = {
+                        id: row.id
+                    }
+                 APIAttributeToShopElf(dataTe).then(res => {
+                        if (res.data.code === 200) {
+                            this.$message({
+                                message: '成功',
+                                type: 'success'
+                            })
+                        } else {
+                            this.$message.error(res.data.message)
+                        }
+                    })
+            },
             //批量标记
             markAll() {
                 this.finish.id = this.sels.map(e => e.id)
@@ -1240,12 +1257,30 @@
             },
             //导入普源
             passAll() {
+                if (this.sels.length!=0) {
+                    let dataTe = {
+                        id: this.sels.map(e => e.id)
+                    }
+                    APIAttributeToShopElf(dataTe).then(res => {
+                        if (res.data.code === 200) {
+                            this.$message({
+                                message: '成功',
+                                type: 'success'
+                            })
+                        } else {
+                            this.$message.error(res.data.message)
+                        }
+                    })
+                }else{
+                   this.$message.error('未选择') 
+                }
             },
             //生成编码
             codeAll() {
-                if (this.sels) {
+                if (this.sels.length!=0) {
                     let data = {
-                        id: this.sels.map(e => e.id)[0]
+                        id: this.sels.map(e => e.id)
+                        // id: this.sels.map(e => e.id)[0]
                     }
                     APIGenerateCode(data).then(res => {
                         if(res.data.code==200){
@@ -1253,13 +1288,18 @@
                                 message: '生成成功',
                                 type: 'success'
                             })
-                            for (let i = 0; i < this.tableData.length; i++) {
-                                if (this.tableData[i].id === data.id) {
-                                    this.tableData[i].GoodsCode = res.data.data[0]
-                                }
-                            }
+                            this.getData()
+                            // for (let i = 0; i < this.tableData.length; i++) {
+                            //     if (this.tableData[i].id === data.id) {
+                            //         this.tableData[i].goodsCode = res.data.data[0]
+                            //     }
+                            // }
+                        }else{
+                          this.$message.error(res.data.message)  
                         }
                     })
+                }else{
+                   this.$message.error('未选择')  
                 }
             },
             //单元格样式
@@ -2852,7 +2892,11 @@
                     }
                 }
             })
-                this.getData()
+            const seePage=sessionStorage.getItem("sepageInfo")
+            if(seePage){
+                this.condition.page=Number(seePage)
+            }
+            this.getData()
         }
     }
 </script>

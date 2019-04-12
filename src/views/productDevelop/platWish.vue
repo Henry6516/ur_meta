@@ -83,7 +83,7 @@
           <el-col :span="10"
                   style="margin-left: 25px">
             <a :href="wishForm.mainImage"
-               target="_blank">
+               target="_blank" style="display: block; width: 155px;height: 155px">
               <img :src="wishForm.mainImage"
                    style="display: block; width: 155px;height: 155px" />
             </a>
@@ -382,7 +382,7 @@
     <!-- 多属性设置对话框 -->
     <el-dialog title="多属性"
                :visible.sync="dialogVisible"
-               width="80%">
+               width="90%">
       <el-table :data="tableData">
         <el-table-column type="selection"
                          width="30"
@@ -498,7 +498,7 @@
                          header-align="center">
           <template slot-scope="scope">
             <img :src="scope.row.linkUrl"
-                 style="width:50px;height:50px;">
+                 style="width:50px;height:50px;display: block;margin: auto">
           </template>
         </el-table-column>
       </el-table>
@@ -846,19 +846,19 @@
         }
       },
       delDz(index) {
-        this.$confirm('确定删除?', '提示', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消',
-                  type: 'warning'
-                })
-                .then(() => {
-                  this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                  })
+//        this.$confirm('确定删除?', '提示', {
+//                  confirmButtonText: '确定',
+//                  cancelButtonText: '取消',
+//                  type: 'warning'
+//                })
+//                .then(() => {
+//                  this.$message({
+//                    type: 'success',
+//                    message: '删除成功!'
+//                  })
                   this.url.splice(index, 1)
-                })
-                .catch(() => {})
+//                })
+//                .catch(() => {})
       },
       botOm(arr, index1, index2, direction) {
         if (direction == 'down') {

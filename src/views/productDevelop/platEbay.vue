@@ -84,7 +84,7 @@
                         <el-col :span="10"
                                 style="margin-left: 25px">
                             <a :href="wishForm.mainPage"
-                               target="_blank">
+                               target="_blank" style="display: block; width: 155px;height: 155px" >
                                 <img :src="wishForm.mainPage"
                                      style="display: block; width: 155px;height: 155px" />
                             </a>
@@ -1301,19 +1301,19 @@
                 }
             },
             delDz(index) {
-                this.$confirm('确定删除?', '提示', {
-                            confirmButtonText: '确定',
-                            cancelButtonText: '取消',
-                            type: 'warning'
-                        })
-                        .then(() => {
-                            this.$message({
-                                type: 'success',
-                                message: '删除成功!'
-                            })
+//                this.$confirm('确定删除?', '提示', {
+//                            confirmButtonText: '确定',
+//                            cancelButtonText: '取消',
+//                            type: 'warning'
+//                        })
+//                        .then(() => {
+//                            this.$message({
+//                                type: 'success',
+//                                message: '删除成功!'
+//                            })
                             this.wishForm.extraPage.splice(index, 1)
-                        })
-                        .catch(() => {})
+//                        })
+//                        .catch(() => {})
             },
             inputFunc(e,index){
                 let tab=this.tableData[index]

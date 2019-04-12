@@ -260,7 +260,7 @@
                 <el-form
                         label-position="left"
                         label-width="110px"
-                        ref="platForm">
+                        ref="platForm" style="width: 100%;overflow: hidden">
                     <el-form-item label="供应商链接1"
                                   prop=""
                                   class="item">
@@ -418,7 +418,7 @@
             <el-pagination background
                            @size-change="handleSizeChangePlat"
                            @current-change="handleCurrentChangePlat"
-                           :current-page="this.plat.currentPage"
+                           :current-page="this.plat.page"
                            :page-sizes="[10, 20, 30, 40]"
                            :page-size="this.plat.pageSize"
                            layout="total, sizes, prev, pager, next, jumper"
@@ -548,8 +548,8 @@
                     isVar:null,
                     goodsStatus:null,
                     stockDays:null,
-                    pageSize: 10,
-                    page: 1
+                    "pageSize": 10,
+                    "page": 1
                 },
                 viewForm: {
                     id: null
@@ -1629,6 +1629,7 @@
             },
             handleCurrentChangePlat(val) {
                 this.plat.page = val
+                sessionStorage.setItem('sepage', val)
                 this.getPlat()
             },
             //平台信息查看
@@ -2271,6 +2272,10 @@
                     }
                 }
             })
+            const seePage=sessionStorage.getItem("sepage")
+            if(seePage){
+                this.plat.page=Number(seePage)
+            }
             this.getPlat()
             //仓库
             getAttributeInfoStoreName().then(response => {

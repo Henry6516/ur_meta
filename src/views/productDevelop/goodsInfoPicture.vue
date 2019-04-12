@@ -1041,6 +1041,7 @@
             },
             handleCurrentChangePic(val) {
                 this.picture.page = val
+                sessionStorage.setItem('sepagePic', val)
                 this.getPic()
             },
             //图片信息查看
@@ -2109,6 +2110,10 @@
                     }
                 }
             })
+            const seePage=sessionStorage.getItem("sepagePic")
+            if(seePage){
+                this.picture.page=Number(seePage)
+            }
             this.getPic()
         }
     }

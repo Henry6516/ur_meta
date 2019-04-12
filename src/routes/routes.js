@@ -349,7 +349,7 @@ const routes = [
       {
         path: '/v1/oa-goodsinfo/index',
         component: goodsNav,
-        name: '产品开发',
+        name: '产品资料',
         children: [
           {
             path: '/v1/oa-goodsinfo/index',

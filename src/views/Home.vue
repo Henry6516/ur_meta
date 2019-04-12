@@ -174,7 +174,6 @@ export default {
         const asideIndex = sessionStorage.getItem('aIndex')
         const allMenu = this.allMenu
         this.asideMenu = { position: asideIndex, menu: [allMenu[asideIndex]] }
-        console.log(this.asideMenu)
       }
     },
     submit(formName) {
@@ -198,6 +197,9 @@ export default {
       if(sessionStorage.getItem('judge')){
         sessionStorage.removeItem('judge')
       }
+      sessionStorage.removeItem('sepage')
+      sessionStorage.removeItem('sepagePic')
+      sessionStorage.removeItem('sepageInfo')
     },
     handleSelect(index, indexPath) {
       if (index === '/index') {
@@ -216,7 +218,6 @@ export default {
       sessionStorage.setItem('aIndex',asideIndex)
       const allMenu = this.allMenu
       this.asideMenu = { position: asideIndex, menu: [allMenu[asideIndex]] }
-      console.log(this.asideMenu)
     },
     cropSuccess(resData) {
       this.imagecropperShow = false

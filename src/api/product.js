@@ -837,6 +837,14 @@ export function APIDeleteEbaySku(param) {
     data
   })
 }
+export function APIAttributeToShopElf(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/attribute-to-shop-elf',
+    method: 'post',
+    data
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({
