@@ -559,6 +559,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import {APIReportExport} from '../../api/product'
 import { getSection, getMember, getIntroduce,getOtherDeadFee } from '../../api/profit'
 import { compareUp, compareDown, getMonthDate } from '../../api/tools'
 
@@ -894,6 +895,7 @@ export default {
             myform.member = this.member.map(m => {
                       return m.username
                     })
+                    console.log(myform.member)
             this.dead.member=myform.member
             getOtherDeadFee(this.dead).then(response => {
               this.listLoading = false
@@ -915,6 +917,7 @@ export default {
             })
           } else {
             this.listLoading = true
+            this.dead.member=myform.member
             getOtherDeadFee(this.dead).then(response => {
               this.listLoading = false
               this.tableData1 = this.searchTable1 = response.data.data.items
@@ -1047,7 +1050,8 @@ export default {
     },
     // 导出
     exportExcel() {
-      const th = [
+      if (this.activeName === 'first') {
+        const th = [
         '表类型',
         '时间分组',
         '推荐人',
@@ -1137,6 +1141,52 @@ export default {
       const data = this.tableData.map(v => filterVal.map(k => v[k]))
       const [fileName, fileType, sheetName] = [Filename, 'xls']
       this.$toExcel({ th, data, fileName, fileType, sheetName })
+      }else{
+        let arrTk={}
+        arrTk.department=this.formInline.region
+        arrTk.member=this.condition.member
+        arrTk.dateRange=this.condition.dateRange
+        arrTk.dateRangeType=this.condition.dateType
+        arrTk.role='introducer'
+        arrTk.pageSize=1000000
+        arrTk.type='otherDeadFee'
+        APIReportExport(arrTk).then(res => {
+          const blob = new Blob([res.data], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+          })
+          const downloadElement = document.createElement('a')
+          const objectUrl = window.URL.createObjectURL(blob)
+          downloadElement.href = objectUrl
+          const date = new Date()
+          const year = date.getFullYear()
+          let month = date.getMonth() + 1
+          let strDate = date.getDate()
+          let hour = date.getHours()
+          let minute = date.getMinutes()
+          let second = date.getSeconds()
+          if (month >= 1 && month <= 9) {
+            month = '0' + month
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = '0' + strDate
+          }
+          if (hour >= 0 && hour <= 9) {
+            hour = '0' + hour
+          }
+          if (minute >= 0 && minute <= 9) {
+            minute = '0' + minute
+          }
+          if (second >= 0 && second <= 9) {
+            second = '0' + second
+          }
+          const filename =
+                  '司库明细_' + year + month + strDate + hour + minute + second
+          downloadElement.download = filename + '.xls'
+          document.body.appendChild(downloadElement)
+          downloadElement.click()
+          document.body.removeChild(downloadElement)
+        })
+      }
     },
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()

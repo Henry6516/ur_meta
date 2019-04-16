@@ -195,7 +195,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import {
   getSection,
   getSecDepartment,
@@ -271,7 +271,7 @@ export default {
       } else {
         this.condition.sort = column.prop
       }
-      this.getData()
+      this.getData(this.condition)
     },
     handleEdit(row) {
       this.Id.nid = [row.trendId]
@@ -292,11 +292,11 @@ export default {
     // 分页
     handleSizeChange(val) {
       this.condition.pageSize = val
-      this.getData(form)
+      this.getData(this.condition)
     },
     handleCurrentChange(val) {
       this.condition.page = val
-      this.getData(form)
+      this.getData(this.condition)
     },
     //权限
     myForm(form) {

@@ -800,13 +800,13 @@
                         </el-radio-group>
                     </el-col>
                 </el-row>
-                <div slot="footer"
+                <!-- <div slot="footer"
                      class="dialog-footer">
                     <el-button @click="keepData"
                                type="primary">保 存</el-button>
                     <el-button @click="outerVisible = false"
                                type="info">取 消</el-button>
-                </div>
+                </div> -->
                 <el-dialog width="30%"
                            title="添加属性"
                            :visible.sync="innerVisible"
@@ -862,7 +862,7 @@
     export default {
         data() {
             return {
-                radio: 'Color',
+                radio: '',
                 columns: '',
                 title: [],
                 select: '',
@@ -1048,12 +1048,14 @@
 //                }
                 for(var i=0;i<this.title.length;i++){
                     var obj={}
-                    obj.columns={}
+                    obj.columns=[]
                     obj.pictureKey=this.radio
                     for(var k=0;k<this.title[i].value.length;k++){
-                        obj.columns[this.tite[k]] = this.title[i].value[k];
+                        let strObj={}
+                        strObj[this.tite[k]] = this.title[i].value[k]
+                        obj.columns.push(strObj);
                     }
-                    this.tabDate[i].property=JSON.stringify(obj)
+                    this.tabDate[i].property=obj
                 }
             },
             addClomun(){
@@ -1350,20 +1352,28 @@
                         this.wishForm.extraPage.pop()
                     }
                     this.tableData = JSON.parse(res.data.data.basicInfo.specifics).specifics
-                    console.log(this.tableData)
 //                    const proper = JSON.parse(res.data.data.skuInfo[0].property).columns
                     if(this.tabDate.length!=0){
                         for(var i=0;i<this.tabDate.length;i++){
-                            const proper = JSON.parse(res.data.data.skuInfo[i].property).columns
+                            const proper = res.data.data.skuInfo[i].property.columns
                             var obj = {}
                             obj.label = []
                             obj.value = []
-                            for (var key in proper) {
+                            for(var k=0;k<proper.length;k++){
+                               for (var key in proper[k]) {
                                 obj.label.push(key)
-                                obj.value.push(proper[key])
+                                obj.value.push(proper[k][key])
+                               }
+                                // obj.value.push(proper[k])
                             }
+                            // for (var key in proper) {
+                            //     obj.label.push(key)
+                            //     obj.value.push(proper[key])
+                            // }
                             this.title.push(obj)
+                            console.log(this.title)
                         }
+                        this.radio=res.data.data.skuInfo[0].property.pictureKey
                         this.tite=this.title[0].label
                     }else {
                         let arrDe=["Color","Size","款式3","UPC"]
@@ -1431,12 +1441,14 @@
             keep() {
                 for(var i=0;i<this.title.length;i++){
                     var obj={}
-                    obj.columns={}
+                    obj.columns=[]
                     obj.pictureKey=this.radio
                     for(var k=0;k<this.title[i].value.length;k++){
-                        obj.columns[this.tite[k]] = this.title[i].value[k];
+                        let strObj={}
+                        strObj[this.tite[k]] = this.title[i].value[k]
+                        obj.columns.push(strObj);
                     }
-                    this.tabDate[i].property=JSON.stringify(obj)
+                    this.tabDate[i].property=obj
                 }
                 const md=JSON.stringify(this.mandatoryData)
                 const mr=JSON.stringify(this.randomData)

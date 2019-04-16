@@ -47,7 +47,7 @@
   </el-dialog>
   <!-- 查看对话框 -->
   <el-dialog title='查看' :visible.sync="dialogVisibleView">
-    <el-form :model="viewForm" label-position="left" label-width="100px" ref="viewForm">
+    <el-form :model="viewForm" label-position="left" label-width="100px" ref="viewForm" style="width: 100%;overflow: hidden">
       <el-form-item label="图片" prop="img" class="item1">
         <img :src='viewForm.img' style="width: 150px;height: 100px;">
       </el-form-item>
@@ -148,7 +148,7 @@
         <el-tooltip content="认领">
           <el-button type="text" @click="claim(scope.$index, scope.row)">
             <i class="el-icon-star-on"></i>
-          </el-button>  
+          </el-button>
         </el-tooltip>
       </template>
     </el-table-column>
@@ -302,7 +302,7 @@
     </el-dialog>
     <!-- 查看对话框 -->
     <el-dialog title='查看' :visible.sync="dialogVisibleView1">
-      <el-form :model="viewForm" label-position="left" label-width="110px" ref="viewForm">
+      <el-form :model="viewForm" label-position="left" label-width="110px" ref="viewForm" style="width: 100%;overflow: hidden">
         <el-form-item label="图片" prop="img" class="item1">
           <img :src='viewForm.img' style="width: 150px;height: 100px;">
         </el-form-item>
@@ -470,7 +470,7 @@
           <el-tooltip content="提交审核">
             <el-button type="text" @click="claim1(scope.$index, scope.row)">
               <i class="iconfont icon-zhihangfankui"></i>
-            </el-button>  
+            </el-button>
           </el-tooltip>
         </template>
       </el-table-column>
@@ -652,7 +652,7 @@
     </el-dialog>
     <!-- 查看对话框 -->
     <el-dialog title='查看' :visible.sync="dialogVisibleView2">
-      <el-form :model="viewForm" label-position="left" label-width="110px" ref="viewForm">
+      <el-form :model="viewForm" label-position="left" label-width="110px" ref="viewForm" style="width: 100%;overflow: hidden">
         <el-form-item label="图片" prop="img" class="item1">
           <img :src='viewForm.img' style="width: 150px;height: 100px;">
         </el-form-item>
@@ -820,7 +820,7 @@
           <el-tooltip content="提交审核">
             <el-button type="text" @click="claim2(scope.$index, scope.row)">
               <i class="iconfont icon-zhihangfankui"></i>
-            </el-button>  
+            </el-button>
           </el-tooltip>
         </template>
       </el-table-column>
@@ -1332,7 +1332,7 @@ export default {
         return h('el-select',{
           props:{
             placeholder:'请选择',
-            //filterable:true, 
+            //filterable:true,
             value:this.condition1.stockUp,
             size:'mini',
             clearable:true,
@@ -1361,7 +1361,7 @@ export default {
         return h('el-select',{
           props:{
             placeholder:'请选择',
-            filterable:true, 
+            filterable:true,
             value:this.condition1.cate,
             size:'mini',
             clearable:true,
@@ -1528,7 +1528,7 @@ export default {
         return h('el-select',{
           props:{
             placeholder:'请选择',
-            filterable:true, 
+            filterable:true,
             value:this.condition1.checkStatus,
             size:'mini',
             clearable:true,
@@ -1954,7 +1954,7 @@ export default {
         return h('el-select',{
           props:{
             placeholder:'请选择',
-            //filterable:true, 
+            //filterable:true,
             value:this.condition2.stockUp,
             size:'mini',
             clearable:true,
@@ -1983,7 +1983,7 @@ export default {
         return h('el-select',{
           props:{
             placeholder:'请选择',
-            filterable:true, 
+            filterable:true,
             value:this.condition2.cate,
             size:'mini',
             clearable:true,
@@ -2150,7 +2150,7 @@ export default {
         return h('el-select',{
           props:{
             placeholder:'请选择',
-            filterable:true, 
+            filterable:true,
             value:this.condition2.checkStatus,
             size:'mini',
             clearable:true,
@@ -2505,14 +2505,14 @@ export default {
     formatTen(num) {
       return num > 9 ? (num + "") : ("0" + num)
     },
-    formatDate(date) { 
+    formatDate(date) {
       const year = date.getFullYear()
       const month = date.getMonth() + 1
-      const day = date.getDate() 
+      const day = date.getDate()
       const hour = date.getHours()
       const minute = date.getMinutes()
-      const second = date.getSeconds() 
-      return year + "-" + this.formatTen(month) + "-" + this.formatTen(day) 
+      const second = date.getSeconds()
+      return year + "-" + this.formatTen(month) + "-" + this.formatTen(day)
     },
     filter() {
       if (this.activeName === '产品推荐') {
@@ -2559,7 +2559,7 @@ export default {
         return h('el-select',{
           props:{
             placeholder:'请选择',
-            filterable:true, 
+            filterable:true,
             value:this.condition.cate,
             size:'mini',
             clearable:true,
@@ -2588,7 +2588,7 @@ export default {
         return h('el-select',{
           props:{
             placeholder:'请选择',
-            filterable:true, 
+            filterable:true,
             value:this.condition.checkStatus,
             size:'mini',
             clearable:true,

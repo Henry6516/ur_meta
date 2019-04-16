@@ -76,7 +76,6 @@ export default {
         this.allMenu=arr[i].tabs
       }
     }
-    console.log(this.allMenu)
   })
   }
 }

@@ -201,12 +201,12 @@
                 </el-table-column>
             </el-table>
             <!-- 属性信息查看对话框 -->
-            <el-dialog title=''
+            <el-dialog title='查看'
                        :visible.sync="dialogVisible">
                 <el-form
                         label-position="left"
                         label-width="110px"
-                        ref="viewForm">
+                        ref="viewForm" style="width: 100%;overflow: hidden">
                     <el-form-item label="图片"
                                   prop="picUrl"
                                   class="item1">
@@ -837,7 +837,7 @@
                 <el-form
                         label-position="left"
                         label-width="110px"
-                        ref="platForm">
+                        ref="platForm" style="width: 100%;overflow: hidden">
                     <el-form-item label="供应商链接1"
                                   prop=""
                                   class="item">
@@ -1272,7 +1272,7 @@
                         }
                     })
                 }else{
-                   this.$message.error('未选择') 
+                   this.$message.error('未选择')
                 }
             },
             //生成编码
@@ -1295,11 +1295,11 @@
                             //     }
                             // }
                         }else{
-                          this.$message.error(res.data.message)  
+                          this.$message.error(res.data.message)
                         }
                     })
                 }else{
-                   this.$message.error('未选择')  
+                   this.$message.error('未选择')
                 }
             },
             //单元格样式

@@ -310,3 +310,27 @@ export function newsTop(param) {
     }
   })
 }
+export function getAmt() {
+  return request({
+    url: 'site/amt',
+    method: 'get'
+  })
+}
+export function getZzAmt() {
+  return request({
+    url: 'site/zz-amt',
+    method: 'get'
+  })
+}
+export function getDepartAmt() {
+  return request({
+    url: 'site/depart-amt',
+    method: 'get'
+  })
+}
+export function getDevAmt() {
+  return request({
+    url: 'site/dev-amt',
+    method: 'get'
+  })
+}

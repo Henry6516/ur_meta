@@ -810,6 +810,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import {APIReportExport} from '../../api/product'
 import { getSection, getMember, getDevelop,getOtherDeadFee } from '../../api/profit'
 import { compareUp, compareDown, getMonthDate } from '../../api/tools'
 import { isAdmin } from '../../api/api'
@@ -1468,6 +1469,81 @@ export default {
         const data = this.tableData02.map(v => filterVal.map(k => v[k]))
         const [fileName, fileType, sheetName] = [FileName, 'xls']
         this.$toExcel({ th, data, fileName, fileType, sheetName })
+      }else{
+        let arrTk={}
+        let admin=''
+        arrTk.department=this.formInline.region
+        // arrTk.member=this.condition.member
+        arrTk.dateRange=this.condition.dateRange
+        arrTk.dateRangeType=this.condition.dateType
+        arrTk.role='developer'
+        arrTk.pageSize=1000000
+        arrTk.type='otherDeadFee'
+        const username = sessionStorage.getItem('user')
+        for (let i = 0; i < this.res.length; i++) {
+          admin = this.res[i].username
+        }
+        if (username === admin && this.formInline.region.length === 0 && this.condition.member.length === 0) {
+            arrTk.member = this.member.map(m => {
+            return m.username
+            })
+          } else if (username !== admin && isAdmin() === false) {
+             arrTk.member = this.member.map(m => {
+                return m.username
+              })
+            } else if (this.formInline.region.length !== 0 && this.condition.member.length === 0) {
+              const val = this.formInline.region
+              const res = this.allMember
+              for (let i = 0; i < val.length; i++) {
+                const per = res.filter(
+                        ele =>
+                        (ele.department === val[i] || ele.parent_depart === val[i]) &&
+                        ele.position === '开发'
+                )
+                this.member.concat(per)
+              }
+              arrTk.member = this.member.map(m => {
+                return m.username
+              })
+            } else {
+              arrTk.member = this.condition.member
+            }
+        APIReportExport(arrTk).then(res => {
+          const blob = new Blob([res.data], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+          })
+          const downloadElement = document.createElement('a')
+          const objectUrl = window.URL.createObjectURL(blob)
+          downloadElement.href = objectUrl
+          const date = new Date()
+          const year = date.getFullYear()
+          let month = date.getMonth() + 1
+          let strDate = date.getDate()
+          let hour = date.getHours()
+          let minute = date.getMinutes()
+          let second = date.getSeconds()
+          if (month >= 1 && month <= 9) {
+            month = '0' + month
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = '0' + strDate
+          }
+          if (hour >= 0 && hour <= 9) {
+            hour = '0' + hour
+          }
+          if (minute >= 0 && minute <= 9) {
+            minute = '0' + minute
+          }
+          if (second >= 0 && second <= 9) {
+            second = '0' + second
+          }
+          const filename =
+                  '司库明细_' + year + month + strDate + hour + minute + second
+          downloadElement.download = filename + '.xls'
+          document.body.appendChild(downloadElement)
+          downloadElement.click()
+          document.body.removeChild(downloadElement)
+        })
       }
     }
   },

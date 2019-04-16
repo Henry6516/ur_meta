@@ -202,6 +202,9 @@ export default {
       sessionStorage.removeItem('sepageInfo')
     },
     handleSelect(index, indexPath) {
+      if(sessionStorage.getItem('judge')){
+        sessionStorage.removeItem('judge')
+      }
       if (index === '/index') {
         this.collapsed = false
         sessionStorage.removeItem('acTi')

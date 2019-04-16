@@ -12,7 +12,7 @@
     </el-col>
     <!-- 查看对话框 -->
     <el-dialog title='查看' :visible.sync="dialogVisible">
-      <el-form :model="viewForm" label-position="left" label-width="110px" ref="viewForm">
+      <el-form :model="viewForm" label-position="left" label-width="110px" ref="viewForm" style="width: 100%;overflow: hidden">
         <el-form-item label="图片" prop="img" class="item1">
           <img :src='viewForm.img' style="width: 150px;height: 100px;">
         </el-form-item>
@@ -108,7 +108,7 @@
           <el-tooltip content="未通过">
             <el-button type="text" @click="unPass(scope.$index, scope.row)">
               <i class="iconfont icon-dianzan-copy"></i>
-            </el-button>  
+            </el-button>
           </el-tooltip>
           <el-tooltip content="作废">
             <el-button type="text" @click="cancel(scope.$index, scope.row)">
@@ -331,7 +331,7 @@
     <div v-show="show.unPass">
       <!-- 查看对话框 -->
     <el-dialog title='查看' :visible.sync="dialogVisible2">
-      <el-form :model="viewForm" label-position="left" label-width="110px" ref="viewForm">
+      <el-form :model="viewForm" label-position="left" label-width="110px" ref="viewForm" style="width: 100%;overflow: hidden">
         <el-form-item label="图片" prop="img" class="item1">
           <img :src='viewForm.img' style="width: 150px;height: 100px;">
         </el-form-item>
@@ -749,7 +749,7 @@ export default {
         developer: [
           { required: true, message: '开发员不能为空', trigger: 'blur' }
         ],
-      }   
+      }
     }
   },
   filters: {
@@ -1016,7 +1016,7 @@ export default {
         return h('el-select',{
           props:{
             placeholder:'请选择',
-            filterable:true, 
+            filterable:true,
             value:this.condition1.cate,
             size:'mini',
             clearable:true,
@@ -1462,7 +1462,7 @@ export default {
         return h('el-select',{
           props:{
             placeholder:'请选择',
-            filterable:true, 
+            filterable:true,
             value:this.condition2.cate,
             size:'mini',
             clearable:true,
@@ -1890,14 +1890,14 @@ export default {
     formatTen(num) {
       return num > 9 ? (num + "") : ("0" + num)
     },
-    formatDate(date) { 
+    formatDate(date) {
       const year = date.getFullYear()
       const month = date.getMonth() + 1
-      const day = date.getDate() 
+      const day = date.getDate()
       const hour = date.getHours()
       const minute = date.getMinutes()
-      const second = date.getSeconds() 
-      return year + "-" + this.formatTen(month) + "-" + this.formatTen(day) 
+      const second = date.getSeconds()
+      return year + "-" + this.formatTen(month) + "-" + this.formatTen(day)
     },
     filter() {
       if (this.activeName === '待审批列表') {
@@ -2000,7 +2000,7 @@ export default {
         return h('el-select',{
           props:{
             placeholder:'请选择',
-            filterable:true, 
+            filterable:true,
             value:this.condition.cate,
             size:'mini',
             clearable:true,

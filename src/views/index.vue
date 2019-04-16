@@ -423,6 +423,18 @@
               </el-tab-pane>
             </el-tabs>
           </div>
+           <div class="tabs-container"
+               v-show="showTitle.sale">
+            <el-tabs v-model="activeSale"
+                     type="card"
+                     @tab-click="handleClickSale">
+              <el-tab-pane v-for="(item, index) in allMenu"
+                           :label="item.name"
+                           :name="item.name"
+                           :key="index">
+              </el-tab-pane>
+            </el-tabs>
+          </div>
           <div class='table-container'
                v-show="showTitle.zengzhang">
             <el-table :data="shanghaiTable"
@@ -645,6 +657,228 @@
               </el-table-column>
             </el-table>
           </div>
+           <div class='table-container'
+               v-show="showTitle.sale">
+            <el-table :data="saleSh"
+                      size="small"
+                      height="798"
+                      ref="table1"
+                      v-if="sale.shanghai"
+                      v-scrollBar:slim
+                      @sort-change="sortNumber">
+              <el-table-column type="index"
+                               align="center"></el-table-column>
+              <el-table-column prop="depart"
+                               align="center"
+                               label="部门"
+                               sortable></el-table-column>
+              <el-table-column prop="username"
+                               align="center"
+                               label="姓名"
+                               sortable></el-table-column>
+              <el-table-column prop="role"
+                               align="center"
+                               label="角色"></el-table-column>
+              <el-table-column prop="lastAmt"
+                               align="center"
+                               label="上月销售额"
+                               sortable="custom"></el-table-column>
+              <el-table-column prop="amt"
+                               align="center"
+                               label="本月销售额"
+                               sortable="custom"></el-table-column>
+              <el-table-column prop="rate"
+                               align="center"
+                               label="本月VS上月"
+                               sortable="custom">
+                <template slot-scope="scope">
+                  <el-progress :text-inside="true"
+                               :stroke-width="18"
+                               :status="checkStatus(scope.row,'rate')"
+                               :percentage="Math.round(scope.row.rate*10000)/100"></el-progress>
+                </template>
+              </el-table-column>
+              <el-table-column prop="dateRate"
+                               align="center"
+                               label="时间进度">
+                <template slot-scope="scope">
+                  <el-progress :text-inside="true"
+                               :stroke-width="18"
+                               status="exception"
+                               :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
+                </template>
+              </el-table-column>
+              <el-table-column prop="updateTime"
+                               align="center"
+                               label="统计截止日期">
+                <template slot-scope="scope">
+                  <i class="el-icon-time"></i>
+                  <span>{{dateFormatter(scope.row.updateTime)}}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-table :data="saleZz"
+                      @sort-change="sortNumber"
+                      size="small"
+                      height="798"
+                      v-show="sale.zhengzhou">
+              <el-table-column type="index"
+                               align="center"></el-table-column>
+              <el-table-column prop="depart"
+                               align="center"
+                               label="部门"></el-table-column>
+              <el-table-column prop="username"
+                               align="center"
+                               label="姓名"
+                               sortable></el-table-column>
+              <el-table-column prop="role"
+                               align="center"
+                               label="角色"></el-table-column>
+              <el-table-column prop="lastAmt"
+                               align="center"
+                               label="上月销售额"
+                               sortable="custom"></el-table-column>
+              <el-table-column prop="amt"
+                               align="center"
+                               label="本月销售额"
+                               sortable="custom"></el-table-column>
+              <el-table-column prop="rate"
+                               align="center"
+                               label="本月VS上月"
+                               sortable="custom">
+                <template slot-scope="scope">
+                  <el-progress :text-inside="true"
+                               :stroke-width="18"
+                               :status="checkStatus(scope.row,'rate')"
+                               :percentage="Math.round(scope.row.rate*10000)/100"></el-progress>
+                </template>
+              </el-table-column>
+              <el-table-column prop="dateRate"
+                               align="center"
+                               label="时间进度">
+                <template slot-scope="scope">
+                  <el-progress :text-inside="true"
+                               :stroke-width="18"
+                               status="exception"
+                               :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
+                </template>
+              </el-table-column>
+              <el-table-column prop="updateTime"
+                               align="center"
+                               label="统计截止日期">
+                <template slot-scope="scope">
+                  <i class="el-icon-time"></i>
+                  <span>{{ dateFormatter(scope.row.updateTime) }}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-table :data="saleDepartment"
+                      size="small"
+                      height="798"
+                      v-show="sale.depart"
+                      @sort-change="sortNumber">
+              <el-table-column type="index"
+                               align="center"></el-table-column>
+              <el-table-column prop="depart"
+                               label="部门"
+                               align="center"
+                               sortable></el-table-column>
+              <el-table-column prop="lastAmt"
+                               align="center"
+                               label="上月销售额"
+                               sortable="custom"></el-table-column>
+              <el-table-column prop="amt"
+                               label="本月销售额"
+                               align="center"
+                               sortable="custom">
+              </el-table-column>
+              <el-table-column prop="rate"
+                               label="本月VS上月"
+                               align="center"
+                               sortable="custom">
+                <template slot-scope="scope">
+                  <el-progress :text-inside="true"
+                               :stroke-width="18"
+                               :status="checkStatus(scope.row,'rate')"
+                               :percentage="Math.round(scope.row.rate*10000)/100"></el-progress>
+                </template>
+              </el-table-column>
+              <el-table-column prop="dateRate"
+                               align="center"
+                               label="时间进度">
+                <template slot-scope="scope">
+                  <el-progress :text-inside="true"
+                               :stroke-width="18"
+                               status="exception"
+                               :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
+                </template>
+              </el-table-column>
+              <el-table-column prop="updateTime"
+                               align="center"
+                               label="统计截止日期">
+                <template slot-scope="scope">
+                  <i class="el-icon-time"></i>
+                  <span>{{ dateFormatter(scope.row.updateTime) }}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-table :data="saleDevelop"
+                      height="798"
+                      size="small"
+                      v-show="sale.developer"
+                      @sort-change="sortNumber">
+              <el-table-column type="index"
+                               align="center"></el-table-column>
+              <el-table-column prop="depart"
+                               align="center"
+                               label="部门"
+                               sortable></el-table-column>
+              <el-table-column prop="username"
+                               align="center"
+                               label="姓名"
+                               sortable></el-table-column>
+              <el-table-column prop="role"
+                               align="center"
+                               label="角色"></el-table-column>
+              <el-table-column prop="lastAmt"
+                               align="center"
+                               label="上月销售额"
+                               sortable="custom"></el-table-column>
+              <el-table-column prop="amt"
+                               align="center"
+                               label="本月销售额"
+                               sortable="custom"></el-table-column>
+              <el-table-column prop="rate"
+                               align="center"
+                               label="本月VS上月"
+                               sortable="custom">
+                <template slot-scope="scope">
+                  <el-progress :text-inside="true"
+                               :stroke-width="18"
+                               :status="checkStatus(scope.row,'rate')"
+                               :percentage="Math.round(scope.row.rate*10000)/100"></el-progress>
+                </template>
+              </el-table-column>
+              <el-table-column prop="dateRate"
+                               align="center"
+                               label="时间进度">
+                <template slot-scope="scope">
+                  <el-progress :text-inside="true"
+                               :stroke-width="18"
+                               status="exception"
+                               :percentage="Math.round(scope.row.dateRate*10000)/100"></el-progress>
+                </template>
+              </el-table-column>
+              <el-table-column prop="updateTime"
+                               align="center"
+                               label="统计截止日期">
+                <template slot-scope="scope">
+                  <i class="el-icon-time"></i>
+                  <span>{{dateFormatter(scope.row.updateTime)}}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         </el-card>
       </div>
       <el-card class="box-card">
@@ -726,7 +960,11 @@ import {
   DeveloperTarget,
   news,
   newsTop,
-  ProsTarget
+  ProsTarget,
+  getAmt,
+  getZzAmt,
+  getDepartAmt,
+  getDevAmt
 } from '../api/api'
 import { compareUp, compareDown } from '../api/tools'
 import { getMenu } from '../api/login'
@@ -756,10 +994,21 @@ export default {
       departTable: [],
       developerTable: [],
       proTable: [],
+      saleSh:[],
+      saleDepartment:[],
+      saleDevelop:[],
+      saleZz:[],
       activeName: '上海销售',
       activeTitle: '今日爆款',
       activePlat: 'eBay-义乌仓',
+      activeSale: '上海销售',
       show: {
+        shanghai: true,
+        zhengzhou: false,
+        depart: false,
+        developer: false
+      },
+      sale:{
         shanghai: true,
         zhengzhou: false,
         depart: false,
@@ -767,7 +1016,8 @@ export default {
       },
       showTitle: {
         baokuan: true,
-        zengzhang: false
+        zengzhang: false,
+        sale:false
       }
     }
   },
@@ -823,6 +1073,28 @@ export default {
         this.show['developer'] = false
       }
     },
+     handleClickSale(tab, event) {
+      if (tab.label === '上海销售') {
+        this.sale['shanghai'] = true
+      } else {
+        this.sale['shanghai'] = false
+      }
+      if (tab.label === '郑州销售') {
+        this.sale['zhengzhou'] = true
+      } else {
+        this.sale['zhengzhou'] = false
+      }
+      if (tab.label === '所有部门') {
+        this.sale['depart'] = true
+      } else {
+        this.sale['depart'] = false
+      }
+      if (tab.label === '所有开发') {
+        this.sale['developer'] = true
+      } else {
+        this.sale['developer'] = false
+      }
+    },
     handleTitle(tab, event) {
       if (tab.label === '今日爆款') {
         this.showTitle['baokuan'] = true
@@ -833,6 +1105,11 @@ export default {
         this.showTitle['zengzhang'] = true
       } else {
         this.showTitle['zengzhang'] = false
+      }
+      if (tab.label === '销售额增长表') {
+        this.showTitle['sale'] = true
+      } else {
+        this.showTitle['sale'] = false
       }
     },
     handlePlat(tab, event) {
@@ -890,7 +1167,25 @@ export default {
         } else {
           this.tableData = data.sort(compareUp(data, column.prop))
         }
-      } else {
+      }else if (this.activeTitle === '销售额增长表') {
+        var tab
+        if (this.activeSale === '上海销售') {
+          tab = 'saleSh'
+        } else if (this.activeSale === '郑州销售') {
+          tab = 'saleZz'
+        } else if (this.activeSale === '所有部门') {
+          tab = 'saleDepartment'
+        } else if (this.activeSale === '所有开发') {
+          tab = 'saleDevelop'
+        }
+        const tableName = tab
+        const data = this[tableName]
+        if (column.order === 'descending') {
+          this.tableData = data.sort(compareDown(data, column.prop))
+        } else {
+          this.tableData = data.sort(compareUp(data, column.prop))
+        }
+      }else {
         const data = this.proTable
         if (column.order === 'descending') {
           this.tableData = data.sort(compareDown(data, column.prop))
@@ -919,6 +1214,18 @@ export default {
       const menu = res.filter(e => e.name === '主页')
       this.allMenu = menu[0].tabs[1].tabs
       this.titleMenu = menu[0].tabs
+    })
+    getAmt().then(res => {
+      this.saleSh = res.data.data
+    })
+    getZzAmt().then(res => {
+      this.saleZz = res.data.data
+    })
+    getDepartAmt().then(res => {
+      this.saleDepartment = res.data.data
+    })
+    getDevAmt().then(res => {
+      this.saleDevelop = res.data.data
     })
     ShangHaiTarget().then(res => {
       this.shanghaiTable = res.data.data

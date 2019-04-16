@@ -455,6 +455,7 @@
         </el-table-column>
         <el-table-column label="建议零售价(USD)"
                          prop="msrp"
+                         min-width="110"
                          header-align="center">
           <template slot-scope="scope">
             <el-input size="small"
@@ -463,6 +464,7 @@
         </el-table-column>
         <el-table-column label="Joom零售价(USD)"
                          prop="joomPrice"
+                         min-width="110"
                          header-align="center">
           <template slot-scope="scope">
             <el-input size="small"
@@ -471,6 +473,7 @@
         </el-table-column>
         <el-table-column label="Joom运费(USD)"
                          prop="joomShipping"
+                         min-width="110"
                          header-align="center">
           <template slot-scope="scope">
             <el-input size="small"

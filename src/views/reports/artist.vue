@@ -561,6 +561,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import {APIReportExport} from '../../api/product'
 import { getSection, getMember, getPossess,getOtherDeadFee } from '../../api/profit'
 import { compareUp, compareDown, getMonthDate } from '../../api/tools'
 import { isAdmin } from '../../api/api'
@@ -895,7 +896,7 @@ export default {
           if (
                   isAdmin() === true &&
                   this.formInline.region.length === 0 &&
-                  myform.member === 0
+                  myform.member.length === 0
           ) {
             myform.member = this.member.map(m => {
               return m.username
@@ -962,7 +963,7 @@ export default {
             if (
                     isAdmin() === true &&
                     this.formInline.region.length === 0 &&
-                    myform.member === 0
+                    myform.member.length === 0
             ) {
               myform.member = this.member.map(m => {
                 return m.username
@@ -1076,96 +1077,183 @@ export default {
     },
     // 导出
     exportExcel() {
-      const th = [
-        '表类型',
-        '时间分组',
-        '业绩归属人',
-        '销售额$(0-6月)',
-        '销售额￥(0-6月)',
-        '商品成本￥(0-6月)',
-        '交易费汇总$(0-6月)',
-        '交易费汇总￥(0-6月)',
-        '内包装成本￥(0-6月)',
-        '运费成本(0-6月)',
-        '死库费用￥(0-6月)',
-        '运营杂费(0-6月)',
-        '毛利润￥(0-6月)',
-        '毛利润率%(0-6月)',
-        '时间分组',
-        '销售额$(6-12月)',
-        '销售额￥(6-12月)',
-        '商品成本￥(6-12月)',
-        '交易费汇总$(6-12月)',
-        '交易费汇总￥(6-12月)',
-        '内包装成本￥(6-12月)',
-        '运费成本￥(6-12月)',
-        '死库费用￥(6-12月)',
-        '运营杂费(6-12月)',
-        '毛利润￥(6-12月)',
-        '毛利润率%(6-12月)',
-        '时间分组',
-        '销售额$(12月以上)',
-        '销售额￥(12月以上)',
-        '商品成本￥(12月以上)',
-        '交易费汇总$(12月以上)',
-        '交易费汇总￥(12月以上)',
-        '内包装成本￥(12月以上)',
-        '运费成本￥(12月以上)',
-        '死库费用￥(12月以上)',
-        '运营杂费(12月以上)',
-        '毛利润￥(12月以上)',
-        '毛利润率%(12月以上)',
-        '销售额￥(汇总)',
-        '毛利润￥(汇总)',
-        '毛利润率%(汇总)'
-      ]
-      const filterVal = [
-        'tableType',
-        'timegroupZero',
-        'possessman1Zero',
-        'salemoneyrmbusZero',
-        'salemoneyrmbznZero',
-        'costmoneyrmbZero',
-        'ppebayusZero',
-        'ppebayznZero',
-        'inpackagefeermbZero',
-        'expressfarermbZero',
-        'possessofflinefeeZero',
-        'possessOpeFeeZero',
-        'netprofitZero',
-        'netrateZero',
-        'timegroupSix',
-        'salemoneyrmbusSix',
-        'salemoneyrmbznSix',
-        'costmoneyrmbSix',
-        'ppebayusSix',
-        'ppebayznSix',
-        'inpackagefeermbSix',
-        'expressfarermbSix',
-        'possessofflinefeeSix',
-        'possessOpeFeeSix',
-        'netprofitSix',
-        'netrateSix',
-        'timegroupTwe',
-        'salemoneyrmbusTwe',
-        'salemoneyrmbznTwe',
-        'costmoneyrmbTwe',
-        'ppebayusTwe',
-        'ppebayznTwe',
-        'inpackagefeermbTwe',
-        'expressfarermbTwe',
-        'possessofflinefeeTwe',
-        'possessOpeFeeTwe',
-        'netprofitTwe',
-        'netrateTwe',
-        'salemoneyrmbtotal',
-        'netprofittotal',
-        'netratetotal'
-      ]
-      const Filename = '美工毛利润报表'
-      const data = this.tableData.map(v => filterVal.map(k => v[k]))
-      const [fileName, fileType, sheetName] = [Filename, 'xls']
-      this.$toExcel({ th, data, fileName, fileType, sheetName })
+      if (this.activeName === 'first') {
+         const th = [
+          '表类型',
+          '时间分组',
+          '业绩归属人',
+          '销售额$(0-6月)',
+          '销售额￥(0-6月)',
+          '商品成本￥(0-6月)',
+          '交易费汇总$(0-6月)',
+          '交易费汇总￥(0-6月)',
+          '内包装成本￥(0-6月)',
+          '运费成本(0-6月)',
+          '死库费用￥(0-6月)',
+          '运营杂费(0-6月)',
+          '毛利润￥(0-6月)',
+          '毛利润率%(0-6月)',
+          '时间分组',
+          '销售额$(6-12月)',
+          '销售额￥(6-12月)',
+          '商品成本￥(6-12月)',
+          '交易费汇总$(6-12月)',
+          '交易费汇总￥(6-12月)',
+          '内包装成本￥(6-12月)',
+          '运费成本￥(6-12月)',
+          '死库费用￥(6-12月)',
+          '运营杂费(6-12月)',
+          '毛利润￥(6-12月)',
+          '毛利润率%(6-12月)',
+          '时间分组',
+          '销售额$(12月以上)',
+          '销售额￥(12月以上)',
+          '商品成本￥(12月以上)',
+          '交易费汇总$(12月以上)',
+          '交易费汇总￥(12月以上)',
+          '内包装成本￥(12月以上)',
+          '运费成本￥(12月以上)',
+          '死库费用￥(12月以上)',
+          '运营杂费(12月以上)',
+          '毛利润￥(12月以上)',
+          '毛利润率%(12月以上)',
+          '销售额￥(汇总)',
+          '毛利润￥(汇总)',
+          '毛利润率%(汇总)'
+        ]
+        const filterVal = [
+          'tableType',
+          'timegroupZero',
+          'possessman1Zero',
+          'salemoneyrmbusZero',
+          'salemoneyrmbznZero',
+          'costmoneyrmbZero',
+          'ppebayusZero',
+          'ppebayznZero',
+          'inpackagefeermbZero',
+          'expressfarermbZero',
+          'possessofflinefeeZero',
+          'possessOpeFeeZero',
+          'netprofitZero',
+          'netrateZero',
+          'timegroupSix',
+          'salemoneyrmbusSix',
+          'salemoneyrmbznSix',
+          'costmoneyrmbSix',
+          'ppebayusSix',
+          'ppebayznSix',
+          'inpackagefeermbSix',
+          'expressfarermbSix',
+          'possessofflinefeeSix',
+          'possessOpeFeeSix',
+          'netprofitSix',
+          'netrateSix',
+          'timegroupTwe',
+          'salemoneyrmbusTwe',
+          'salemoneyrmbznTwe',
+          'costmoneyrmbTwe',
+          'ppebayusTwe',
+          'ppebayznTwe',
+          'inpackagefeermbTwe',
+          'expressfarermbTwe',
+          'possessofflinefeeTwe',
+          'possessOpeFeeTwe',
+          'netprofitTwe',
+          'netrateTwe',
+          'salemoneyrmbtotal',
+          'netprofittotal',
+          'netratetotal'
+        ]
+        const Filename = '美工毛利润报表'
+        const data = this.tableData.map(v => filterVal.map(k => v[k]))
+        const [fileName, fileType, sheetName] = [Filename, 'xls']
+        this.$toExcel({ th, data, fileName, fileType, sheetName })
+      }else{
+        let arrTk={}
+        // arrTk.department=this.formInline.region
+        // arrTk.member=this.condition.member
+        arrTk.dateRange=this.condition.dateRange
+        arrTk.dateRangeType=this.condition.dateType
+        arrTk.role='possessMan'
+        arrTk.pageSize=1000000
+        arrTk.type='otherDeadFee'
+         let admin = ''
+          const username = sessionStorage.getItem('user')
+          for (let i = 0; i < this.res.length; i++) {
+            admin = this.res[i].username
+          }
+          if (isAdmin() === true && this.formInline.region.length === 0 && this.condition.member.length === 0) {
+            console.log(1)
+            arrTk.member = this.member.map(m => {
+              return m.username
+            })
+          } else if (this.formInline.region.length !== 0 && this.condition.member.length === 0) {
+            console.log(2)
+            const val = this.formInline.region
+            let res = []
+            let person = []
+            res = this.allMember
+            for (let i = 0; i < val.length; i++) {
+              person = res.filter(
+                      ele =>
+                      (ele.department === val[i] || ele.parent_depart === val[i]) &&
+                      ele.position === '美工'
+              )
+              this.member.concat(person)
+            }
+            arrTk.member = this.member.map(m => {
+              return m.username
+            })
+          } else if (username === admin && this.formInline.region.length === 0 && this.condition.member.length === 0) {
+            console.log(3)
+            arrTk.member = this.member.map(m => {
+              return m.username
+            })
+          } else if (isAdmin() === false && username !== admin) {
+            console.log(4)
+            arrTk.member = this.member.map(m => {
+              return m.username
+            })
+          }else{
+            arrTk.member=this.condition.member
+          }
+        APIReportExport(arrTk).then(res => {
+          const blob = new Blob([res.data], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+          })
+          const downloadElement = document.createElement('a')
+          const objectUrl = window.URL.createObjectURL(blob)
+          downloadElement.href = objectUrl
+          const date = new Date()
+          const year = date.getFullYear()
+          let month = date.getMonth() + 1
+          let strDate = date.getDate()
+          let hour = date.getHours()
+          let minute = date.getMinutes()
+          let second = date.getSeconds()
+          if (month >= 1 && month <= 9) {
+            month = '0' + month
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = '0' + strDate
+          }
+          if (hour >= 0 && hour <= 9) {
+            hour = '0' + hour
+          }
+          if (minute >= 0 && minute <= 9) {
+            minute = '0' + minute
+          }
+          if (second >= 0 && second <= 9) {
+            second = '0' + second
+          }
+          const filename =
+                  '司库明细_' + year + month + strDate + hour + minute + second
+          downloadElement.download = filename + '.xls'
+          document.body.appendChild(downloadElement)
+          downloadElement.click()
+          document.body.removeChild(downloadElement)
+        })
+      }
     },
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()

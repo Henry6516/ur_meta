@@ -9,7 +9,7 @@
                     <el-input size="small" v-model="condition.tradeId" placeholder="请填写订单编号"></el-input>
                 </el-form-item>
                 <el-form-item prop="expressName" label="物流名称">
-                    <el-input size="small" v-model="condition.expressName" placeholder="请填写预计售价"></el-input>
+                    <el-input size="small" v-model="condition.expressName" placeholder="请填写物流名称"></el-input>
                 </el-form-item>
                 <el-form-item prop="trackNo" label="跟踪号">
                     <el-input size="small" v-model="condition.trackNo" placeholder="请填写跟踪号"></el-input>

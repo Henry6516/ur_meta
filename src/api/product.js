@@ -845,6 +845,15 @@ export function APIAttributeToShopElf(param) {
     data
   })
 }
+export function APIReportExport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/export',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

@@ -46,6 +46,19 @@
                 }
             },
         },
+        watch:{
+          '$route.path':function(newVal,oldVal){
+              if(newVal=='/v1/oa-goodsinfo/index'){
+                this.activeName='属性信息'
+              }
+              if(newVal=='/v1/oa-goodsinfo/goodsInfoPicture'){
+                this.activeName='图片信息'
+              }
+              if(newVal=='/v1/oa-goodsinfo/goodsInfoPlatform'){
+                this.activeName='平台信息'
+              }
+           }
+        },
         mounted() {
             const fatName=sessionStorage.getItem('judge')
             if(fatName){

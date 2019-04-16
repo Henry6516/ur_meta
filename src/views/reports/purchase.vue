@@ -276,6 +276,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import {APIReportExport} from '../../api/product'
 import { getMember, getPurchase,getOtherDeadFee  } from '../../api/profit'
 import { compareUp, compareDown, getMonthDate } from '../../api/tools'
 import FileSaver from 'file-saver'
@@ -603,6 +604,61 @@ export default {
         } catch (e) {
           if (typeof console !== 'undefined') console.log(e, wbout)
         }
+      }else{
+        let arrTk={}
+        let admin = ''
+        arrTk.dateRange=this.condition.dateRange
+        arrTk.dateRangeType=this.condition.dateType
+        arrTk.role='purchaser'
+        arrTk.pageSize=1000000
+        arrTk.type='otherDeadFee'
+        const username = sessionStorage.getItem('user')
+        for (let i = 0; i < this.res.length; i++) {
+         admin = this.res[i].username
+        }
+        if (username === admin || isAdmin() === true) {
+           arrTk.member=this.condition.member
+        } else {
+          arrTk.member = this.member.map(m => {
+           return m.username
+         })
+       }
+        APIReportExport(arrTk).then(res => {
+          const blob = new Blob([res.data], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+          })
+          const downloadElement = document.createElement('a')
+          const objectUrl = window.URL.createObjectURL(blob)
+          downloadElement.href = objectUrl
+          const date = new Date()
+          const year = date.getFullYear()
+          let month = date.getMonth() + 1
+          let strDate = date.getDate()
+          let hour = date.getHours()
+          let minute = date.getMinutes()
+          let second = date.getSeconds()
+          if (month >= 1 && month <= 9) {
+            month = '0' + month
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = '0' + strDate
+          }
+          if (hour >= 0 && hour <= 9) {
+            hour = '0' + hour
+          }
+          if (minute >= 0 && minute <= 9) {
+            minute = '0' + minute
+          }
+          if (second >= 0 && second <= 9) {
+            second = '0' + second
+          }
+          const filename =
+                  '司库明细_' + year + month + strDate + hour + minute + second
+          downloadElement.download = filename + '.xls'
+          document.body.appendChild(downloadElement)
+          downloadElement.click()
+          document.body.removeChild(downloadElement)
+        })
       }
     }
   },

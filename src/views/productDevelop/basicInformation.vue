@@ -11,7 +11,10 @@
         </el-tabs>
         <div v-show="show.wish">
             <el-row class="contentt">
-                <el-col :span="24" class="cTop">
+                <el-col :span="24">
+                  <el-button type="primary" @click="addWish()"><i class="el-icon-plus"></i>添加Wish账号</el-button>
+                </el-col>
+                <!-- <el-col :span="24" class="cTop">
                     <el-col :span="8">
                         <p class="basp">卖家账号</p>
                         <el-col :span="19">
@@ -47,7 +50,7 @@
                 </el-col>
                 <el-col :span="24" class="top20">
                     <el-button type="primary" @click="addDate()"><i class="el-icon-plus"></i>新增Add</el-button>
-                </el-col>
+                </el-col> -->
             </el-row>
             <el-row class="content1">
                 <el-col :span="24" class="font14">
@@ -210,6 +213,56 @@
                     <el-button type="primary" @click="saveWish">保 存</el-button>
                 </div>
             </el-dialog>
+             <el-dialog title="添加Wish账号" :visible.sync="dialogPictureWish">
+                <el-row class="contentt" style="margin-top: 0">
+                    <el-col :span="24" class="cTop">
+                        <el-col :span="24" style="margin-bottom: 20px">
+                            <el-col :span="3">
+                                <p class="basp">卖家账号</p>
+                            </el-col>
+                            <el-col :span="20">
+                                <el-input v-model="account"></el-input>
+                            </el-col>
+                        </el-col>
+                        <el-col :span="24" style="margin-bottom: 20px">
+                            <el-col :span="3">
+                                <p class="basp">简称</p>
+                            </el-col>
+                            <el-col :span="20">
+                                <el-input v-model="abbreviation"></el-input>
+                            </el-col>
+                        </el-col>
+                        <el-col :span="24" style="margin-bottom: 20px">
+                            <el-col :span="3">
+                                <p class="basp">后缀</p>
+                            </el-col>
+                            <el-col :span="20">
+                                <el-input v-model="Suffix"></el-input>
+                            </el-col>
+                        </el-col>
+                        <el-col :span="24" style="margin-bottom: 20px">
+                            <el-col :span="3">
+                                <p class="basp">运费比例</p>
+                            </el-col>
+                            <el-col :span="20">
+                                <el-input v-model="freight"></el-input>
+                            </el-col>
+                        </el-col>
+                        <el-col :span="24" style="margin-bottom: 20px">
+                            <el-col :span="3">
+                                <p class="basp">主图名称</p>
+                            </el-col>
+                            <el-col :span="20">
+                                <el-input v-model="masterGraph"></el-input>
+                            </el-col>
+                        </el-col>
+                    </el-col>
+                </el-row>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogPictureWish = false">取 消</el-button>
+                    <el-button type="primary" @click="addDate()">添 加</el-button>
+                </div>
+            </el-dialog>
         </div>
         <div v-show="show.ebay">
             <basicInformationeBay></basicInformationeBay>
@@ -253,6 +306,7 @@
           totalWish: 0,
           dialogPicture: false,
           dialogPictureBj: false,
+          dialogPictureWish:false,
           account: null,
           freight: null,
           delistWish: [],
@@ -280,6 +334,9 @@
         }
       },
       methods: {
+          addWish(){
+             this.dialogPictureWish = true
+          },
           handleClick(tab, event) {
               if (tab.label === 'Wish账号字典') {
                   this.show['wish'] = true
@@ -368,7 +425,7 @@
               'rate': this.freight
             }
             APICreateWish(condate).then(res => {
-              if (res.data.data) {
+              if (res.data.code==200) {
                 this.$message({
                   message: '添加成功',
                   type: 'success'
@@ -380,7 +437,10 @@
                 this.condition.mainImg = null
                 this.condition.parentCategory = null
                 this.condition.pageSize = 20
+                this.dialogPictureWish = false
                 this.getDateWish()
+              }else{
+                this.$message.error(res.data.message)
               }
             })
           } else {

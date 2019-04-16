@@ -597,7 +597,8 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
+import {APIReportExport} from '../../api/product'
 import {
   getSection,
   getSecDepartment,
@@ -1247,111 +1248,309 @@ export default {
           if (typeof console !== 'undefined') console.log(e, wbout)
         }
       } else if (this.activeName === '退款订单明细') {
-        this.order = Object.assign({}, this.condition)
-        this.order.pageSize = this.total
-        getRefund(this.order).then(res => {
-          this.allDataOrder = res.data.data.items
-          const Filename = '退款订单明细'
-          const data = this.allDataOrder.map(v => filterVal.map(k => v[k]))
-          const [fileName, fileType, sheetName] = [Filename, 'xls']
-          this.$toExcel({ th, data, fileName, fileType, sheetName })
+        console.log(this.condition.member)
+        let arrTk={}
+        arrTk.department=this.condition.department
+        arrTk.secDepartment=this.condition.secDepartment
+        arrTk.plat=this.condition.plat
+        arrTk.member=this.condition.member
+        arrTk.dateRange=this.condition.dateRange
+        arrTk.account=this.condition.account
+        arrTk.dateRangeType=this.condition.dateType
+        arrTk.role=this.condition.role
+        arrTk.storename=this.condition.store
+        arrTk.pageSize=1000000
+        arrTk.type='order'
+        const myform = this.myForm(arrTk)
+        APIReportExport(myform).then(res => {
+          const blob = new Blob([res.data], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+          })
+          const downloadElement = document.createElement('a')
+          const objectUrl = window.URL.createObjectURL(blob)
+          downloadElement.href = objectUrl
+          const date = new Date()
+          const year = date.getFullYear()
+          let month = date.getMonth() + 1
+          let strDate = date.getDate()
+          let hour = date.getHours()
+          let minute = date.getMinutes()
+          let second = date.getSeconds()
+          if (month >= 1 && month <= 9) {
+            month = '0' + month
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = '0' + strDate
+          }
+          if (hour >= 0 && hour <= 9) {
+            hour = '0' + hour
+          }
+          if (minute >= 0 && minute <= 9) {
+            minute = '0' + minute
+          }
+          if (second >= 0 && second <= 9) {
+            second = '0' + second
+          }
+          const filename =
+                  '退款订单明细_' + year + month + strDate + hour + minute + second
+          downloadElement.download = filename + '.xls'
+          document.body.appendChild(downloadElement)
+          downloadElement.click()
+          document.body.removeChild(downloadElement)
         })
-        const th = [
-          '账号',
-          '退款月份',
-          '销售员',
-          '商品名称',
-          '商品编码',
-          '商品SKU',
-          '订单编号',
-          '店铺单号',
-          '合并单号',
-          '仓库',
-          '退款$',
-          '退款￥',
-          '国家',
-          '物流方式',
-          '平台',
-          '交易时间',
-          '退款时间',
-          '退款时间-交易时间(天)'
-        ]
-        const filterVal = [
-          'suffix',
-          'refMonth',
-          'salesman',
-          'goodsName',
-          'goodsCode',
-          'goodsSku',
-          'tradeId',
-          'orderId',
-          'mergeBillId',
-          'storeName',
-          'refund',
-          'refundZn',
-          'orderCountry',
-          'expressWay',
-          'platform',
-          'orderTime',
-          'refundTime',
-          'dateDelta'
-        ]
+//        this.order = Object.assign({}, this.condition)
+//        this.order.pageSize = this.total
+//        getRefund(this.order).then(res => {
+//          this.allDataOrder = res.data.data.items
+//          const Filename = '退款订单明细'
+//          const data = this.allDataOrder.map(v => filterVal.map(k => v[k]))
+//          const [fileName, fileType, sheetName] = [Filename, 'xls']
+//          this.$toExcel({ th, data, fileName, fileType, sheetName })
+//        })
+//        const th = [
+//          '账号',
+//          '退款月份',
+//          '销售员',
+//          '商品名称',
+//          '商品编码',
+//          '商品SKU',
+//          '订单编号',
+//          '店铺单号',
+//          '合并单号',
+//          '仓库',
+//          '退款$',
+//          '退款￥',
+//          '国家',
+//          '物流方式',
+//          '平台',
+//          '交易时间',
+//          '退款时间',
+//          '退款时间-交易时间(天)'
+//        ]
+//        const filterVal = [
+//          'suffix',
+//          'refMonth',
+//          'salesman',
+//          'goodsName',
+//          'goodsCode',
+//          'goodsSku',
+//          'tradeId',
+//          'orderId',
+//          'mergeBillId',
+//          'storeName',
+//          'refund',
+//          'refundZn',
+//          'orderCountry',
+//          'expressWay',
+//          'platform',
+//          'orderTime',
+//          'refundTime',
+//          'dateDelta'
+//        ]
       } else if (this.activeName === '退款产品明细') {
-        this.order = Object.assign({}, this.goods)
-        this.order.pageSize = this.total2
-        getRefund(this.order).then(res => {
-          this.allDataGoods = res.data.data.items
-          const Filename = '退款产品明细'
-          const data = this.allDataGoods.map(v => filterVal.map(k => v[k]))
-          const [fileName, fileType, sheetName] = [Filename, 'xls']
-          this.$toExcel({ th, data, fileName, fileType, sheetName })
+        let arrTk={}
+        arrTk.department=this.condition.department
+        arrTk.secDepartment=this.condition.secDepartment
+        arrTk.plat=this.condition.plat
+        arrTk.member=this.condition.member
+        arrTk.dateRange=this.condition.dateRange
+        arrTk.account=this.condition.account
+        arrTk.dateRangeType=this.condition.dateType
+        arrTk.role=this.condition.role
+        arrTk.storename=this.condition.store
+        arrTk.pageSize=1000000
+        arrTk.type='goods'
+        const myform = this.myForm(arrTk)
+        APIReportExport(myform).then(res => {
+          const blob = new Blob([res.data], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+          })
+          const downloadElement = document.createElement('a')
+          const objectUrl = window.URL.createObjectURL(blob)
+          downloadElement.href = objectUrl
+          const date = new Date()
+          const year = date.getFullYear()
+          let month = date.getMonth() + 1
+          let strDate = date.getDate()
+          let hour = date.getHours()
+          let minute = date.getMinutes()
+          let second = date.getSeconds()
+          if (month >= 1 && month <= 9) {
+            month = '0' + month
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = '0' + strDate
+          }
+          if (hour >= 0 && hour <= 9) {
+            hour = '0' + hour
+          }
+          if (minute >= 0 && minute <= 9) {
+            minute = '0' + minute
+          }
+          if (second >= 0 && second <= 9) {
+            second = '0' + second
+          }
+          const filename =
+                  '退款产品明细_' + year + month + strDate + hour + minute + second
+          downloadElement.download = filename + '.xls'
+          document.body.appendChild(downloadElement)
+          downloadElement.click()
+          document.body.removeChild(downloadElement)
         })
-        const th = [
-          '账号',
-          '商品名称',
-          '商品编码',
-          '商品SKU',
-          '退款次数',
-          '销售员'
-        ]
-        const filterVal = [
-          'suffix',
-          'goodsName',
-          'goodsCode',
-          'goodsSku',
-          'times',
-          'salesman'
-        ]
+        // this.order = Object.assign({}, this.goods)
+        // this.order.type=order
+        // this.order.pageSize = this.total2
+        // getRefund(this.order).then(res => {
+        //   this.allDataGoods = res.data.data.items
+        //   const Filename = '退款产品明细'
+        //   const data = this.allDataGoods.map(v => filterVal.map(k => v[k]))
+        //   const [fileName, fileType, sheetName] = [Filename, 'xls']
+        //   this.$toExcel({ th, data, fileName, fileType, sheetName })
+        // })
+//        const th = [
+//          '账号',
+//          '商品名称',
+//          '商品编码',
+//          '商品SKU',
+//          '退款次数',
+//          '销售员'
+//        ]
+//        const filterVal = [
+//          'suffix',
+//          'goodsName',
+//          'goodsCode',
+//          'goodsSku',
+//          'times',
+//          'salesman'
+//        ]
       } else if (this.activeName === '死库明细') {
-        this.order = Object.assign({}, this.dead)
-        this.order.pageSize = this.total3
-        getDeadFee(this.order).then(res => {
-          this.allDataDead = res.data.data.items
-          const Filename = '死库明细'
-          const data = this.allDataDead.map(v => filterVal.map(k => v[k]))
-          const [fileName, fileType, sheetName] = [Filename, 'xls']
-          this.$toExcel({ th, data, fileName, fileType, sheetName })
+        let arrTk={}
+        arrTk.department=this.condition.department
+        arrTk.secDepartment=this.condition.secDepartment
+        arrTk.plat=this.condition.plat
+        arrTk.member=this.condition.member
+        arrTk.dateRange=this.condition.dateRange
+        arrTk.account=this.condition.account
+        arrTk.dateRangeType=this.condition.dateType
+        arrTk.role=this.condition.role
+        arrTk.storename=this.condition.store
+        arrTk.pageSize=1000000
+        arrTk.type='salesDeadFee'
+        const myform = this.myForm(arrTk)
+        APIReportExport(myform).then(res => {
+          const blob = new Blob([res.data], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+          })
+          const downloadElement = document.createElement('a')
+          const objectUrl = window.URL.createObjectURL(blob)
+          downloadElement.href = objectUrl
+          const date = new Date()
+          const year = date.getFullYear()
+          let month = date.getMonth() + 1
+          let strDate = date.getDate()
+          let hour = date.getHours()
+          let minute = date.getMinutes()
+          let second = date.getSeconds()
+          if (month >= 1 && month <= 9) {
+            month = '0' + month
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = '0' + strDate
+          }
+          if (hour >= 0 && hour <= 9) {
+            hour = '0' + hour
+          }
+          if (minute >= 0 && minute <= 9) {
+            minute = '0' + minute
+          }
+          if (second >= 0 && second <= 9) {
+            second = '0' + second
+          }
+          const filename =
+                  '司库明细_' + year + month + strDate + hour + minute + second
+          downloadElement.download = filename + '.xls'
+          document.body.appendChild(downloadElement)
+          downloadElement.click()
+          document.body.removeChild(downloadElement)
         })
-        const th = ['账号', '发货仓库', '总计', '时间', '销售员']
-        const filterVal = [
-          'suffix',
-          'storename',
-          'total',
-          'dateTime',
-          'salesman'
-        ]
+        // this.order = Object.assign({}, this.dead)
+        // this.order.pageSize = this.total3
+        // getDeadFee(this.order).then(res => {
+        //   this.allDataDead = res.data.data.items
+        //   const Filename = '死库明细'
+        //   const data = this.allDataDead.map(v => filterVal.map(k => v[k]))
+        //   const [fileName, fileType, sheetName] = [Filename, 'xls']
+        //   this.$toExcel({ th, data, fileName, fileType, sheetName })
+        // })
+        // const th = ['账号', '发货仓库', '总计', '时间', '销售员']
+        // const filterVal = [
+        //   'suffix',
+        //   'storename',
+        //   'total',
+        //   'dateTime',
+        //   'salesman'
+        // ]
       } else if (this.activeName === '杂费明细') {
-        this.order = Object.assign({}, this.extra)
-        this.order.pageSize = this.total4
-        getExtraFee(this.order).then(res => {
-          this.allDataExtra = res.data.data.items
-          const Filename = '杂费明细'
-          const data = this.allDataExtra.map(v => filterVal.map(k => v[k]))
-          const [fileName, fileType, sheetName] = [Filename, 'xls']
-          this.$toExcel({ th, data, fileName, fileType, sheetName })
+        let arrTk={}
+        arrTk.department=this.condition.department
+        arrTk.secDepartment=this.condition.secDepartment
+        arrTk.plat=this.condition.plat
+        arrTk.member=this.condition.member
+        arrTk.dateRange=this.condition.dateRange
+        arrTk.account=this.condition.account
+        arrTk.dateRangeType=this.condition.dateType
+        arrTk.role=this.condition.role
+        arrTk.storename=this.condition.store
+        arrTk.pageSize=1000000
+        arrTk.type='extra'
+        const myform = this.myForm(arrTk)
+        APIReportExport(myform).then(res => {
+          const blob = new Blob([res.data], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+          })
+          const downloadElement = document.createElement('a')
+          const objectUrl = window.URL.createObjectURL(blob)
+          downloadElement.href = objectUrl
+          const date = new Date()
+          const year = date.getFullYear()
+          let month = date.getMonth() + 1
+          let strDate = date.getDate()
+          let hour = date.getHours()
+          let minute = date.getMinutes()
+          let second = date.getSeconds()
+          if (month >= 1 && month <= 9) {
+            month = '0' + month
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = '0' + strDate
+          }
+          if (hour >= 0 && hour <= 9) {
+            hour = '0' + hour
+          }
+          if (minute >= 0 && minute <= 9) {
+            minute = '0' + minute
+          }
+          if (second >= 0 && second <= 9) {
+            second = '0' + second
+          }
+          const filename =
+                  '杂费明细_' + year + month + strDate + hour + minute + second
+          downloadElement.download = filename + '.xls'
+          document.body.appendChild(downloadElement)
+          downloadElement.click()
+          document.body.removeChild(downloadElement)
         })
-        const th = ['账号', '杂费', '时间', '销售员']
-        const filterVal = ['suffix', 'saleOpeFeeZn', 'dateTime', 'salesman']
+        // this.order = Object.assign({}, this.extra)
+        // this.order.pageSize = this.total4
+        // getExtraFee(this.order).then(res => {
+        //   this.allDataExtra = res.data.data.items
+        //   const Filename = '杂费明细'
+        //   const data = this.allDataExtra.map(v => filterVal.map(k => v[k]))
+        //   const [fileName, fileType, sheetName] = [Filename, 'xls']
+        //   this.$toExcel({ th, data, fileName, fileType, sheetName })
+        // })
+        // const th = ['账号', '杂费', '时间', '销售员']
+        // const filterVal = ['suffix', 'saleOpeFeeZn', 'dateTime', 'salesman']
       }
       //  return wbout
     },

@@ -195,7 +195,7 @@
                 <el-form
                         label-position="left"
                         label-width="110px"
-                        ref="picForm">
+                        ref="picForm" style="width: 100%;overflow: hidden">
                     <el-form-item label="图片"
                                   prop="goodsInfoPic.picUrl"
                                   class="item1">
@@ -985,38 +985,12 @@
                 return year + "-" + this.formatTen(month) + "-" + this.formatTen(day)
             },
             filter() {
-                if (this.activeName === '属性信息') {
-                    if (this.time1 !== null && this.time1.length !== 0) {
-                        this.condition.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
-                    } else {
-                        this.condition.devDatetime = []
-                    }
-                    if (this.time2 !== null && this.time2.length !== 0) {
-                        this.condition.updateTime = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
-                    } else {
-                        this.condition.updateTime = []
-                    }
-                    this.getData()
-                } else if (this.activeName === '图片信息') {
-                    if (this.time1 !== null && this.time1.length !== 0) {
-                        this.picture.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
-                    } else {
-                        this.picture.devDatetime = []
-                    }
-                    this.getPic()
+                if (this.time1 !== null && this.time1.length !== 0) {
+                    this.picture.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
                 } else {
-                    if (this.time1 !== null && this.time1.length !== 0) {
-                        this.platData.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
-                    } else {
-                        this.platData.devDatetime = []
-                    }
-                    if (this.time2 !== null && this.time2.length !== 0) {
-                        this.platData.updateTime = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
-                    } else {
-                        this.platData.updateTime = []
-                    }
-                    this.getPlat()
+                    this.picture.devDatetime = []
                 }
+                this.getPic()
             },
             //图片信息
             signPerfect(index,row){
