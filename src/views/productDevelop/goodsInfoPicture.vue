@@ -12,7 +12,7 @@
         <div>
             <!-- 图片信息列表 -->
             <el-table :data="pictureData"
-                      @selection-change="selsChange">
+                      @selection-change="selsChange" :height="tableHeight">
                 <el-table-column type="selection"
                                  fixed
                                  align="center"
@@ -46,10 +46,10 @@
                 <el-table-column prop="picUrl"
                                  fixed
                                  label="商品图片"
-                                 header-align="center">
+                                 header-align="center" width="90">
                     <template slot-scope="scope">
                         <img :src='scope.row.picUrl'
-                             style="width: 60px;height: 50px">
+                             style="width: 70px;height: 60px">
                     </template>
                 </el-table-column>
                 <el-table-column label="商品编码"
@@ -287,6 +287,7 @@
     export default {
         data() {
             return {
+                tableHeight:window.innerHeight -135,
                 dialogVisible: false,
                 dialogPicture: false,
                 dialogPlat: false,

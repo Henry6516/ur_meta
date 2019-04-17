@@ -352,7 +352,7 @@ const routes = [
         name: '产品资料',
         children: [
           {
-            path: '/v1/oa-goodsinfo/index',
+            path: '/v1/oa-goodsinfo/indexIfo',
             component: goodsInfo,
             name: '属性信息'
           },

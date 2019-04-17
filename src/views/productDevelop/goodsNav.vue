@@ -17,7 +17,7 @@ import { getMenu } from "../../api/login";
 export default {
   data() {
     return {
-      activeName: "属性信息",
+      activeName: "",
       allMenu: []
     };
   },
@@ -26,7 +26,7 @@ export default {
       if (tab.label === "属性信息") {
         sessionStorage.setItem("judge", "属性信息");
         this.$router.push({
-          path: `/v1/oa-goodsinfo/index`
+          path: `/v1/oa-goodsinfo/indexIfo`
         });
       }
       if (tab.label === "图片信息") {
@@ -47,7 +47,27 @@ export default {
   watch: {
     "$route.path": function(newVal, oldVal) {
       if (newVal == "/v1/oa-goodsinfo/index") {
-        this.activeName = "属性信息";
+        if (this.allMenu[0].name == "属性信息") {
+          this.activeName = "属性信息";
+          sessionStorage.setItem("judge", "属性信息");
+          this.$router.push({
+            path: `/v1/oa-goodsinfo/indexIfo`
+          });
+        }
+        if (this.allMenu[0].name == "图片信息") {
+          this.activeName = "图片信息";
+          sessionStorage.setItem("judge", "图片信息");
+          this.$router.push({
+            path: `/v1/oa-goodsinfo/goodsInfoPicture`
+          });
+        }
+        if (this.allMenu[0].name == "平台信息") {
+          this.activeName = "平台信息";
+          sessionStorage.setItem("judge", "平台信息");
+          this.$router.push({
+            path: `/v1/oa-goodsinfo/goodsInfoPlatform`
+          });
+        }
       }
       if (newVal == "/v1/oa-goodsinfo/goodsInfoPicture") {
         this.activeName = "图片信息";
@@ -69,6 +89,29 @@ export default {
       for (let i = 0; i < arr.length; i++) {
         if (arr[i].name == "产品资料") {
           this.allMenu = arr[i].tabs;
+        }
+      }
+      if (!sessionStorage.getItem("judge")) {
+        if (this.allMenu[0].name == "属性信息") {
+          this.activeName = "属性信息";
+          sessionStorage.setItem("judge", "属性信息");
+          this.$router.push({
+            path: `/v1/oa-goodsinfo/indexIfo`
+          });
+        }
+        if (this.allMenu[0].name == "图片信息") {
+          this.activeName = "图片信息";
+          sessionStorage.setItem("judge", "图片信息");
+          this.$router.push({
+            path: `/v1/oa-goodsinfo/goodsInfoPicture`
+          });
+        }
+        if (this.allMenu[0].name == "平台信息") {
+          this.activeName = "平台信息";
+          sessionStorage.setItem("judge", "平台信息");
+          this.$router.push({
+            path: `/v1/oa-goodsinfo/goodsInfoPlatform`
+          });
         }
       }
     });

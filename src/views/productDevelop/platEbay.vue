@@ -1371,9 +1371,12 @@
                             //     obj.value.push(proper[key])
                             // }
                             this.title.push(obj)
-                            console.log(this.title)
                         }
-                        this.radio=res.data.data.skuInfo[0].property.pictureKey
+                         if(res.data.data.skuInfo[0].property.pictureKey=='color'){
+                           this.radio='Color'
+                        }else{
+                           this.radio=res.data.data.skuInfo[0].property.pictureKey
+                        }
                         this.tite=this.title[0].label
                     }else {
                         let arrDe=["Color","Size","款式3","UPC"]

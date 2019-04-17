@@ -24,7 +24,7 @@
             <el-table :data="tableData"
                       :cell-style="cellStyle"
                       @selection-change="selsChange"
-                      style="width: 100%;border: none;">
+                      style="width: 100%;border: none;" :height="tableHeight">
                 <el-table-column type="selection"
                                  fixed
                                  align="center"
@@ -69,10 +69,10 @@
                 <el-table-column prop="picUrl"
                                  fixed
                                  label="商品图片"
-                                 header-align="center">
+                                 header-align="center" width="90">
                     <template slot-scope="scope">
                         <img :src='scope.row.picUrl'
-                             style="width: 60px;height: 50px">
+                             style="width: 70px;height: 60px">
                     </template>
                 </el-table-column>
                 <el-table-column label="商品编码"
@@ -1034,6 +1034,7 @@
         },
         data() {
             return {
+                tableHeight:window.innerHeight -195,
                 dialogVisible: false,
                 dialogPicture: false,
                 dialogPlat: false,
@@ -1229,8 +1230,10 @@
                 })
             },
              passPy(index, row) {
+                 let addy=[]
+                 addy.push(row.id)
                  let dataTe = {
-                        id: row.id
+                        id: addy
                     }
                  APIAttributeToShopElf(dataTe).then(res => {
                         if (res.data.code === 200) {

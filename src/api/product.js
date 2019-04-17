@@ -51,7 +51,7 @@ export function goodsClaim(param) {
 export function forwardList(param) {
   const data = { condition: param }
   return request({
-    url: '/oa-goods/forward-list?page=' + param.page1,
+    url: '/oa-goods/forward-list?page=' + param.page,
     method: 'post',
     data
   })
@@ -91,7 +91,7 @@ export function reverseList(param) {
 export function reverseList1(param) {
   const data = { condition: param }
   return request({
-    url: '/oa-goods/backward-list?page=' + param.page2,
+    url: '/oa-goods/backward-list?page=' + param.page,
     method: 'post',
     data
   })

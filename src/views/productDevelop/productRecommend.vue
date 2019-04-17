@@ -163,7 +163,7 @@
           <el-button type="primary" @click="submitClaim">确定</el-button>
         </span>
       </el-dialog>
-      <el-table :data="tableData" @selection-change="selsChange">
+      <el-table :data="tableData" @selection-change="selsChange" :height="tableHeight">
         <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
         <el-table-column label="操作" fixed header-align="center" width="100">
@@ -190,9 +190,9 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="img" fixed label="图片" header-align="center">
+        <el-table-column prop="img" fixed label="图片" header-align="center" width="90">
           <template slot-scope="scope">
-            <img :src="scope.row.img" style="width: 60px;height: 50px">
+            <img :src="scope.row.img" style="width: 70px;height: 60px">
           </template>
         </el-table-column>
         <el-table-column label="主类目" header-align="center">
@@ -565,7 +565,7 @@
           <el-button type="primary" @click="submitEditCheck">更新并提交审批</el-button>
         </span>
       </el-dialog>
-      <el-table :data="tableData1" @selection-change="selsChange">
+      <el-table :data="tableData1" @selection-change="selsChange" :height="tableHeight">
         <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
         <el-table-column label="操作" fixed header-align="center" width="110">
@@ -592,9 +592,9 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="img" fixed label="图片" header-align="center">
+        <el-table-column prop="img" fixed label="图片" header-align="center" width='90'>
           <template slot-scope="scope">
-            <img :src="scope.row.img" style="width: 60px;height: 50px">
+            <img :src="scope.row.img" style="width: 70px;height: 60px">
           </template>
         </el-table-column>
         <el-table-column label="是否备货" header-align="center">
@@ -745,9 +745,9 @@
           background
           @size-change="handleSizeChange1"
           @current-change="handleCurrentChange1"
-          :current-page="this.condition1.page1"
+          :current-page="this.condition1.page"
           :page-sizes="[10, 20, 30, 40]"
-          :page-size="this.condition1.pageSize1"
+          :page-size="this.condition1.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="this.total1"
         ></el-pagination>
@@ -1014,7 +1014,7 @@
           <el-button type="primary" @click="submitEditCheck2">更新并提交审核</el-button>
         </span>
       </el-dialog>
-      <el-table :data="tableData2" @selection-change="selsChange">
+      <el-table :data="tableData2" @selection-change="selsChange" :height="tableHeight">
         <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
         <el-table-column label="操作" fixed header-align="center" width="110">
@@ -1041,9 +1041,9 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="img" fixed label="图片" header-align="center">
+        <el-table-column prop="img" fixed label="图片" header-align="center" width="90">
           <template slot-scope="scope">
-            <img :src="scope.row.img" style="width: 60px;height: 50px">
+            <img :src="scope.row.img" style="width: 70px;height: 60px">
           </template>
         </el-table-column>
         <el-table-column label="是否备货" header-align="center">
@@ -1194,9 +1194,9 @@
           background
           @size-change="handleSizeChange2"
           @current-change="handleCurrentChange2"
-          :current-page="this.condition2.page2"
+          :current-page="this.condition2.page"
           :page-sizes="[10, 20, 30, 40]"
-          :page-size="this.condition2.pageSize2"
+          :page-size="this.condition2.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="this.total2"
         ></el-pagination>
@@ -1233,7 +1233,8 @@ import { getMenu } from "../../api/login";
 export default {
   data() {
     return {
-      activeName: "产品推荐",
+      tableHeight:window.innerHeight -195,
+      activeName: "",
       disabled: true,
       total: null,
       total1: null,
@@ -1288,8 +1289,8 @@ export default {
         hopeWeight: null,
         hopeCost: null,
         hopeSale: null,
-        page1: 1,
-        pageSize1: 10
+        page: 1,
+        pageSize: 10
       },
       condition2: {
         stockUp: null,
@@ -1311,8 +1312,8 @@ export default {
         hopeWeight: null,
         hopeCost: null,
         hopeSale: null,
-        page2: 1,
-        pageSize2: 10
+        page: 1,
+        pageSize: 10
       },
       allMenu: [],
       sels: [],
@@ -1405,18 +1406,21 @@ export default {
       }
       if (this.allMenu[0].name == "产品推荐") {
         this.show["product"] = true;
+        this.activeName='产品推荐'
         this.getData();
       } else {
         this.show["product"] = false;
       }
       if (this.allMenu[0].name == "正向开发") {
         this.show["forward"] = true;
+        this.activeName='正向开发'
         this.getForward();
       } else {
         this.show["forward"] = false;
       }
       if (this.allMenu[0].name == "逆向开发") {
         this.show["reverse"] = true;
+        this.activeName='逆向开发'
         this.getReverse();
       } else {
         this.show["reverse"] = false;
@@ -1482,11 +1486,11 @@ export default {
     },
     // 正向开发
     handleCurrentChange1(val) {
-      this.condition1.page1 = val;
+      this.condition1.page = val;
       this.getForward();
     },
     handleSizeChange1(val) {
-      this.condition1.pageSize1 = val;
+      this.condition1.pageSize = val;
       this.getForward();
     },
     view1(index, row) {
@@ -1504,12 +1508,21 @@ export default {
         this.editForm.stockUp == "是"
           ? (this.editForm.stockUp = true)
           : (this.editForm.stockUp = false);
+           if (this.editForm.cate !== "") {
+          this.subCate = [];
+          const val = this.editForm.cate;
+          for (var key in this.subCae) {
+            if (this.subCae[key] == val) {
+              this.subCate.push(key);
+            }
+          }
+        }
       });
-      if (this.editForm.cate !== "") {
-        const val = this.editForm.cate;
-        const res = this.category;
-        this.subCate = res.filter(e => e.CategoryParentName === val);
-      }
+      // if (this.editForm.cate !== "") {
+      //   const val = this.editForm.cate;
+      //   const res = this.category;
+      //   this.subCate = res.filter(e => e.CategoryParentName === val);
+      // }
     },
     // 审批
     claim1(index, row) {
@@ -1557,7 +1570,6 @@ export default {
             Number(this.addForm1.hopeSale) *
             Number(this.addForm1.salePrice) *
             Number(this.addForm1.hopeRate);
-          console.log(this.addForm1.stockUp);
           forwardCreate(this.addForm1).then(res => {
             if (res.data.code === 200) {
               this.dialogVisible1 = false;
@@ -1698,7 +1710,16 @@ export default {
         () => {
           this.delForm.nid = [row.nid];
           goodsDelete(this.delForm).then(res => {
-            this.tableData1.splice(index, 1);
+             if(res.data.code==200){
+               this.$message({
+                message: "成功",
+                type: "success"
+              });
+               this.getForward();
+            }else{
+              this.$message.error(res.data.message);
+            }
+            // this.tableData1.splice(index, 1);
           });
         }
       );
@@ -1708,7 +1729,15 @@ export default {
       this.$confirm("确定删除所选记录？", "提示", { type: "warning" }).then(
         () => {
           goodsDelete(this.delForm).then(res => {
-            this.getForward();
+            if(res.data.code==200){
+               this.$message({
+                message: "成功",
+                type: "success"
+              });
+               this.getForward();
+            }else{
+              this.$message.error(res.data.message);
+            }
           });
         }
       );
@@ -1716,8 +1745,8 @@ export default {
     getForward() {
       forwardList(this.condition1).then(res => {
         this.tableData1 = res.data.data.items;
-        this.condition1.page1 = res.data.data._meta.currentPage;
-        this.condition1.pageSize1 = res.data.data._meta.perPage;
+        this.condition1.page = res.data.data._meta.currentPage;
+        this.condition1.pageSize = res.data.data._meta.perPage;
         this.total1 = res.data.data._meta.totalCount;
       });
     },
@@ -1784,8 +1813,8 @@ export default {
             filters.map(item => {
               return h("el-option", {
                 props: {
-                  value: item.CategoryName,
-                  label: item.CategoryName
+                  value: item,
+                  label: item
                 }
               });
             })
@@ -2228,11 +2257,11 @@ export default {
 
     // 逆向开发
     handleCurrentChange2(val) {
-      this.condition2.page2 = val;
+      this.condition2.page = val;
       this.getReverse();
     },
     handleSizeChange2(val) {
-      this.condition2.pageSize2 = val;
+      this.condition2.pageSize = val;
       this.getReverse();
     },
     view2(index, row) {
@@ -2250,19 +2279,37 @@ export default {
         this.editForm.stockUp == "是"
           ? (this.editForm.stockUp = true)
           : (this.editForm.stockUp = false);
+          if (this.editForm.cate !== "") {
+          this.subCate = [];
+          const val = this.editForm.cate;
+          for (var key in this.subCae) {
+            if (this.subCae[key] == val) {
+              this.subCate.push(key);
+            }
+          }
+        }
       });
-      if (this.editForm.cate !== "") {
-        const val = this.editForm.cate;
-        const res = this.category;
-        this.subCate = res.filter(e => e.CategoryParentName === val);
-      }
+      // if (this.editForm.cate !== "") {
+      //   const val = this.editForm.cate;
+      //   const res = this.category;
+      //   this.subCate = res.filter(e => e.CategoryParentName === val);
+      // }
     },
     del2(index, row) {
       this.$confirm("确定删除该条记录？", "提示", { type: "warning" }).then(
         () => {
           this.delForm.nid = [row.nid];
           goodsDelete(this.delForm).then(res => {
-            this.tableData2.splice(index, 1);
+             if(res.data.code==200){
+               this.$message({
+                message: "成功",
+                type: "success"
+              });
+               this.getReverse();
+            }else{
+              this.$message.error(res.data.message);
+            }
+            // this.tableData2.splice(index, 1);
           });
         }
       );
@@ -2272,7 +2319,16 @@ export default {
       this.$confirm("确定删除所选记录？", "提示", { type: "warning" }).then(
         () => {
           goodsDelete(this.delForm).then(res => {
-            this.getReverse();
+             if(res.data.code==200){
+               this.$message({
+                message: "成功",
+                type: "success"
+              });
+               this.getReverse();
+            }else{
+              this.$message.error(res.data.message);
+            }
+            // this.getReverse();
           });
         }
       );
@@ -2455,8 +2511,8 @@ export default {
     getReverse() {
       reverseList1(this.condition2).then(res => {
         this.tableData2 = res.data.data.items;
-        this.condition2.page2 = res.data.data._meta.currentPage;
-        this.condition2.pageSize2 = res.data.data._meta.perPage;
+        this.condition2.page = res.data.data._meta.currentPage;
+        this.condition2.pageSize = res.data.data._meta.perPage;
         this.total2 = res.data.data._meta.totalCount;
       });
     },
@@ -2523,8 +2579,8 @@ export default {
             filters.map(item => {
               return h("el-option", {
                 props: {
-                  value: item.CategoryName,
-                  label: item.CategoryName
+                  value: item,
+                  label: item
                 }
               });
             })
@@ -2978,11 +3034,22 @@ export default {
     edit(index, row) {
       this.dialogVisibleEdit = true;
       this.editForm = Object.assign({}, row);
-      if (this.editForm.cate !== "") {
-        const val = this.editForm.cate;
-        const res = this.category;
-        this.subCate = res.filter(e => e.CategoryParentName === val);
-      }
+       if (this.editForm.cate !== "") {
+          this.subCate = [];
+          const val = this.editForm.cate;
+          for (var key in this.subCae) {
+            if (this.subCae[key] == val) {
+              this.subCate.push(key);
+            }
+          }
+          // const res = this.category
+          // this.subCate = res.filter(e => e.CategoryParentName === val)
+        }
+      // if (this.editForm.cate !== "") {
+      //   const val = this.editForm.cate;
+      //   const res = this.category;
+      //   this.subCate = res.filter(e => e.CategoryParentName === val);
+      // }
     },
     submitEdit() {
       this.$refs.editForm.validate(valid => {
@@ -3025,7 +3092,16 @@ export default {
         () => {
           this.delForm.nid = [row.nid];
           goodsDelete(this.delForm).then(res => {
-            this.tableData.splice(index, 1);
+            if(res.data.code==200){
+               this.$message({
+                message: "成功",
+                type: "success"
+              });
+               this.getData();
+            }else{
+              this.$message.error(res.data.message);
+            }
+            // this.tableData.splice(index, 1);
           });
         }
       );
@@ -3035,7 +3111,15 @@ export default {
       this.$confirm("确定删除所选记录？", "提示", { type: "warning" }).then(
         () => {
           goodsDelete(this.delForm).then(res => {
-            this.getData();
+             if(res.data.code==200){
+               this.$message({
+                message: "成功",
+                type: "success"
+              });
+               this.getData();
+            }else{
+              this.$message.error(res.data.message);
+            }
           });
         }
       );
@@ -3059,6 +3143,11 @@ export default {
             this.subCate.push(key);
           }
         }
+        if (this.subCate.length != 0) {
+          this.addForm.subCate = this.subCate[0];
+        } else {
+          this.addForm.subCate = "";
+        }
         // const res = this.category
         // this.subCate = res.filter(e => e.CategoryParentName === val)
       } else if (this.addForm.cate === "") {
@@ -3075,6 +3164,11 @@ export default {
             this.subCate.push(key);
           }
         }
+        if (this.subCate.length != 0) {
+          this.addForm1.subCate = this.subCate[0];
+        } else {
+          this.addForm1.subCate = "";
+        }
       } else if (this.addForm1.cate === "") {
         this.disabled = true;
       }
@@ -3089,6 +3183,11 @@ export default {
             this.subCate.push(key);
           }
         }
+        if (this.subCate.length != 0) {
+          this.addForm2.subCate = this.subCate[0];
+        } else {
+          this.addForm2.subCate = "";
+        }
       } else if (this.addForm2.cate === "") {
         this.disabled = true;
       }
@@ -3101,6 +3200,11 @@ export default {
           if (this.subCae[key] == val) {
             this.subCate.push(key);
           }
+        }
+        if (this.subCate.length != 0) {
+          this.editForm.subCate = this.subCate[0];
+        } else {
+          this.editForm.subCate = "";
         }
         // const res = this.category
         // this.subCate = res.filter(e => e.CategoryParentName === val)
@@ -3237,8 +3341,8 @@ export default {
             filters.map(item => {
               return h("el-option", {
                 props: {
-                  value: item.CategoryName,
-                  label: item.CategoryName
+                  value: item,
+                  label: item
                 }
               });
             })
