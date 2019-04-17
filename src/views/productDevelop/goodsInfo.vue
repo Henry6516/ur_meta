@@ -81,6 +81,9 @@
                                      :render-header="renderHeader"
                                      width='150'
                                      align="center">
+                        <template slot-scope="scope">
+                           <a :class="scope.row.stockUp=='是'?'redCu':''">{{scope.row.goodsCode}}</a>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="是否备货"
@@ -2911,5 +2914,9 @@
     .classa{
         color: #337ab7;
         text-decoration: none;
+    }
+    .redCu{
+        color: red;
+        font-weight: bold
     }
 </style>

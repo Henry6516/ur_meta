@@ -677,7 +677,7 @@
             id: this.wishForm.infoId,
             plat: []
           }
-          if (this.tips == 'wish') {
+          if (this.tips == 'Wish') {
             data.plat = ['wish']
           } else {
             data.plat = ['joom']

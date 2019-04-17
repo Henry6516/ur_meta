@@ -31,6 +31,10 @@ export default {
     }
   },
   mounted() {
+    if(sessionStorage.getItem('aIndex')){
+        sessionStorage.removeItem('acTi')
+        sessionStorage.removeItem('aIndex')
+      }
     this.getCookie()
   },
   methods: {

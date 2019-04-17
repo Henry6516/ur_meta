@@ -40,12 +40,15 @@
             是否备货
           </el-col>
           <el-col :span="18">
-            <el-select
+             <el-input
+                      v-model="editForm.stockUp"
+                      style="" disabled=""></el-input>
+            <!-- <el-select
                     v-model="editForm.stockUp"
                     style="width: 100%"
                     @change="iSn($event)">
               <el-option v-for="(item, key) in IsF" :key='item.key' :label="item" :value="item"></el-option>
-            </el-select>
+            </el-select> -->
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
@@ -130,7 +133,7 @@
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
           <el-col :span="5" style="text-align: center;margin-top: 8px;color: red">
-            *规格
+            *包装规格
           </el-col>
           <el-col :span="18">
             <el-select
@@ -584,7 +587,9 @@
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
-                    v-model="scope.row.stockNum"></el-input>
+                    v-model="scope.row.stockNum" v-if="editForm.stockUp=='是'"></el-input>
+          <el-input size="small"
+                    v-model="scope.row.stockNum" disabled v-if="editForm.stockUp=='否'"></el-input>
         </template>
       </el-table-column>
     </el-table>
@@ -1081,7 +1086,7 @@ export default {
         return
       }
       if(!this.editForm.packName){
-        this.$message.error('请选择规格')
+        this.$message.error('请选择包装规格')
         return
       }
       if(!this.editForm.storeName){
