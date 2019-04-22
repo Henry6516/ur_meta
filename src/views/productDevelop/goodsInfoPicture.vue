@@ -152,7 +152,7 @@
                                      width='150'
                                      align="center">
                         <template slot-scope="scope">
-                            <a :class="scope.row.picStatus=='待处理'?'clasRed':'clasGreen'">{{scope.row.picStatus}}</a>
+                            <a :class="scope.row.picStatus=='待处理'?'clasRed1':'clasGreen1'">{{scope.row.picStatus}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -2104,5 +2104,25 @@
     .classa{
         color: #337ab7;
         text-decoration: none;
+    }
+    .clasRed1 {
+      color: #f56c6c;
+      border: rgba(245, 108, 108, 0.2) solid 1px;
+      background: rgba(245, 108, 108, 0.1);
+      width: 65%;
+      margin: auto;
+      line-height: 32px;
+      display: block;
+      border-radius: 5px;
+    }
+    .clasGreen1 {
+      color: #0e9a00;
+      border-radius: 5px;
+      width: 65%;
+      margin: auto;
+      line-height: 32px;
+      display: block;
+      border: rgba(3, 82, 38, 0.2) solid 1px;
+      background: rgba(33, 170, 95, 0.1);
     }
 </style>

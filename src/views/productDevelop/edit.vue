@@ -704,7 +704,7 @@ export default {
     return {
       tableData: [],
       btn: '',
-      rows: null,
+      rows: 1,
       rowss: 1,
       IsF: ['是', '否'],
       costprice: null,
@@ -1005,8 +1005,8 @@ export default {
         obj.memo2 = null
         obj.memo3 = null
         obj.memo4 = null
-        obj.linkurl = null
-        obj.goodsskuid = null
+        obj.linkUrl = null
+        obj.goodsSkuId = null
         obj.retailPrice = null
         obj.costPrice = null
         obj.stockNum = null

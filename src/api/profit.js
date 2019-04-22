@@ -556,6 +556,14 @@ export function getEbaySite() {
     method: 'get'
   })
 }
+export function getEbayVirtualStore(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/ebay-virtual-store?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
 
 
 

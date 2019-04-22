@@ -1144,12 +1144,36 @@ export default {
       }else{
         let arrTk={}
         arrTk.department=this.formInline.region
-        arrTk.member=this.condition.member
+        // arrTk.member=this.condition.member
         arrTk.dateRange=this.condition.dateRange
         arrTk.dateRangeType=this.condition.dateType
         arrTk.role='introducer'
         arrTk.pageSize=1000000
         arrTk.type='otherDeadFee'
+         if (
+                  this.formInline.region.length !== 0 &&
+                  this.condition.member.length === 0
+          ) {
+            const val = this.formInline.region
+            let res = []
+            let person = []
+            res = this.allMember
+            for (let i = 0; i < val.length; i++) {
+              person = res.filter(ele => ele.department === val[i])
+              this.member.concat(person)
+            }
+            arrTk.member = this.member.map(m => {
+                      return m.username
+                    })
+            arrTk.member=arrTk.member
+          } else if (this.condition.member.length !== 0) {
+            this.listLoading = true
+            arrTk.member = this.condition.member
+            arrTk.member=arrTk.member
+          } else {
+            this.listLoading = true
+            arrTk.member=this.condition.member
+          }
         APIReportExport(arrTk).then(res => {
           const blob = new Blob([res.data], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'

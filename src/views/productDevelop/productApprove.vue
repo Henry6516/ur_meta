@@ -2445,7 +2445,7 @@ export default {
           ]
         );
       } else if ($index === 1) {
-        let filters = [{ text: 1, value: "是" }, { text: 0, value: "否" }];
+        let filters = [{ text: "是", value: "是" }, { text: "否", value: "否" }];
         return h(
           "el-select",
           {

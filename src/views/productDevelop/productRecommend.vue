@@ -670,7 +670,7 @@
           >
             <template slot-scope="scope">
               <a
-                :class="scope.row.checkStatus=='已审批'?'clasGreen':scope.row.checkStatus=='已认领'?'clasGreen':'clasRed'"
+                :class="scope.row.checkStatus=='已审批'?'clasGreen':scope.row.checkStatus=='待审批'?'classc':scope.row.checkStatus=='已认领'?'classl':'clasRed'"
               >{{scope.row.checkStatus}}</a>
             </template>
           </el-table-column>
@@ -1119,7 +1119,7 @@
           >
             <template slot-scope="scope">
               <a
-                :class="scope.row.checkStatus=='已审批'?'clasGreen':scope.row.checkStatus=='已认领'?'clasGreen':'clasRed'"
+                :class="scope.row.checkStatus=='已审批'?'clasGreen':scope.row.checkStatus=='待审批'?'classc':scope.row.checkStatus=='已认领'?'classl':'clasRed'"
               >{{scope.row.checkStatus}}</a>
             </template>
           </el-table-column>
@@ -1986,7 +1986,7 @@ export default {
         let filters = [
           { text: "已认领", value: "已认领" },
           { text: "待提交", value: "待提交" },
-          { text: "待审核", value: "待审核" },
+          { text: "待审批", value: "待审批" },
           { text: "已审批", value: "已审批" },
           { text: "未通过", value: "未通过" }
         ];
@@ -2751,8 +2751,8 @@ export default {
       } else if ($index === 9) {
         let filters = [
           { text: "已认领", value: "已认领" },
-          { text: "待审核", value: "待审核" },
           { text: "待提交", value: "待提交" },
+          { text: "待审批", value: "待审批" },
           { text: "已审批", value: "已审批" },
           { text: "未通过", value: "未通过" }
         ];
@@ -3664,5 +3664,25 @@ export default {
 .classa {
   color: #337ab7;
   text-decoration: none;
+}
+.classc{
+  color: #e6a23c;
+  background-color:rgba(230,162,60,.1);
+  border:rgba(214, 132, 8, 0.2) solid 1px;
+  width: 65%;
+  margin: auto;
+  line-height: 32px;
+  display: block;
+  border-radius: 5px;
+}
+.classl{
+  color: #409EFF;
+  background-color:rgba(64,158,255,.1);
+  border:1px solid rgba(64,158,255,.2);
+  width: 65%;
+  margin: auto;
+  line-height: 32px;
+  display: block;
+  border-radius: 5px;
 }
 </style>

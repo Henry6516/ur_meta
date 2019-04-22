@@ -111,8 +111,11 @@ export default {
     },
     //保存
     save() {
-      APISavePictureInfo(this.tableData).then(res => {
-        if (res.data.data[0] === 'success') {
+      let strObj={
+        pictureInfo:this.tableData
+      }
+      APISavePictureInfo(strObj).then(res => {
+        if (res.data.code === 200) {
           this.$message({
             message: '保存成功!',
             type: 'success'
@@ -124,8 +127,12 @@ export default {
     },
     //保存并完善
     preserve() {
-      APIFinishPicture(this.condition).then(res => {
-        if (res.data.data[0] === 'success') {
+      let strObj1={
+        pictureInfo:this.tableData,
+        id:this.condition.id
+      }
+      APIFinishPicture(strObj1).then(res => {
+        if (res.data.code === 200) {
           this.$message({
             message: '保存成功!',
             type: 'success'
@@ -138,7 +145,7 @@ export default {
     //上传
     upload() {
       APIPictureToFtp(this.condition).then(res => {
-        if (res.data.data[0] === 'success') {
+        if (res.data.code == 200) {
           this.$message({
             message: '保存成功!',
             type: 'success'
@@ -167,7 +174,6 @@ export default {
           this.allMenu=arr[i].tabs
         }
       }
-      console.log(this.allMenu)
     })
   }
 }
