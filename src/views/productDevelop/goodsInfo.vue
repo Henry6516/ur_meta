@@ -1216,8 +1216,13 @@
             },
             //标记
             mark(index, row) {
+                let arrRowid=[]
+                arrRowid.push(row.id)
+                let markStr={
+                    id:arrRowid
+                }
                 this.finish.id = row.id
-                APIFinishAttribute(this.finish).then(res => {
+                APIFinishAttribute(markStr).then(res => {
                     if (res.data.code === 200) {
                         this.$message({
                             message: '标记成功',

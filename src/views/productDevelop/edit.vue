@@ -778,9 +778,8 @@ export default {
       this.sels = sels
     },
     passAll() {
-      if (this.sels.length!=0) {
         let dataTe = {
-          id: this.sels.map(e => e.id)
+          id: this.editForm.id
         }
         APIAttributeToShopElf(dataTe).then(res => {
           if (res.data.code === 200) {
@@ -792,9 +791,6 @@ export default {
             this.$message.error(res.data.message)
           }
         })
-      }else{
-        this.$message.error('请选择')
-      }
     },
     formatTen(num) {
       return num > 9 ? (num + '') : ('0' + num)

@@ -69,7 +69,7 @@
         <el-menu :default-active="activeIndex" @select="handleSelect1" class="el-menu-vertical-demo" router>
           <el-submenu v-for="item in asideMenu.menu" :index="generateIndex(-1, asideMenu.position)" :key="generateIndex(-1, asideMenu.position)">
             <template slot="title">{{item.name}} </template>
-            <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(asideMenu.position,index)" style="line-height:46px;height:46px;">{{child.name}}</el-menu-item>
+            <el-menu-item v-for="(child,index) in item.children" :index="child.route" :key="generateIndex(asideMenu.position,index)" style="line-height:48px;height:48px;">{{child.name}}</el-menu-item>
           </el-submenu>
         </el-menu>
       </aside>

@@ -29,10 +29,10 @@
           style="width: 100%;overflow: hidden"
         >
           <el-form-item label="图片" prop="img" class="item1">
-            <img :src="viewForm.img" style="width: 150px;height: 100px;">
+            <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 150px;height: 130px;"></a>
           </el-form-item>
           <el-form-item label="图片地址" prop="img" class="item">
-            <span>{{viewForm.img}}</span>
+            <span><a :href="viewForm.img" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.img}}</a></span>
           </el-form-item>
           <el-form-item label="是否备货" prop="stockUp" class="item">
             <span>{{viewForm.stockUp}}</span>
@@ -44,22 +44,22 @@
             <span>{{viewForm.subCate}}</span>
           </el-form-item>
           <el-form-item label="供应商链接1" prop="vendor1" class="item">
-            <span>{{viewForm.vendor1}}</span>
+            <span><a :href="viewForm.vendor1" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.vendor1}}</a></span>
           </el-form-item>
           <el-form-item label="供应商链接2" prop="vendor2" class="item">
-            <span>{{viewForm.vendor2}}</span>
+            <span><a :href="viewForm.vendor2" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.vendor2}}</a></span>
           </el-form-item>
           <el-form-item label="供应商链接3" prop="vendor3" class="item">
-            <span>{{viewForm.vendor3}}</span>
+            <span><a :href="viewForm.vendor3" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.vendor3}}</a></span>
           </el-form-item>
           <el-form-item label="平台参考链接1" prop="origin1" class="item">
-            <span>{{viewForm.origin1}}</span>
+            <span><a :href="viewForm.origin1" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.origin1}}</a></span>
           </el-form-item>
           <el-form-item label="平台参考链接2" prop="origin2" class="item">
-            <span>{{viewForm.origin2}}</span>
+            <span><a :href="viewForm.origin2" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.origin2}}</a></span>
           </el-form-item>
           <el-form-item label="平台参考链接3" prop="origin3" class="item">
-            <span>{{viewForm.origin3}}</span>
+            <span><a :href="viewForm.origin3" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.origin3}}</a></span>
           </el-form-item>
           <el-form-item label="开发编号" prop="devNum" class="item">
             <span>{{viewForm.devNum}}</span>
@@ -462,10 +462,10 @@
           style="width: 100%;overflow: hidden"
         >
           <el-form-item label="图片" prop="img" class="item1">
-            <img :src="viewForm.img" style="width: 150px;height: 100px;">
+            <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 150px;height: 130px;"></a>
           </el-form-item>
           <el-form-item label="图片地址" prop="img" class="item">
-            <span>{{viewForm.img}}</span>
+            <span><a :href="viewForm.img" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.img}}</a></span>
           </el-form-item>
           <el-form-item label="是否备货" prop="stockUp" class="item">
             <span>{{viewForm.stockUp}}</span>
@@ -477,22 +477,22 @@
             <span>{{viewForm.subCate}}</span>
           </el-form-item>
           <el-form-item label="供应商链接1" prop="vendor1" class="item">
-            <span>{{viewForm.vendor1}}</span>
+            <span><a :href="viewForm.vendor1" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.vendor1}}</a></span>
           </el-form-item>
           <el-form-item label="供应商链接2" prop="vendor2" class="item">
-            <span>{{viewForm.vendor2}}</span>
+            <span><a :href="viewForm.vendor2" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.vendor2}}</a></span>
           </el-form-item>
           <el-form-item label="供应商链接3" prop="vendor3" class="item">
-            <span>{{viewForm.vendor3}}</span>
+            <span><a :href="viewForm.vendor3" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.vendor3}}</a></span>
           </el-form-item>
           <el-form-item label="平台参考链接1" prop="origin1" class="item">
-            <span>{{viewForm.origin1}}</span>
+            <span><a :href="viewForm.origin1" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.origin1}}</a></span>
           </el-form-item>
           <el-form-item label="平台参考链接2" prop="origin2" class="item">
-            <span>{{viewForm.origin2}}</span>
+            <span><a :href="viewForm.origin2" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.origin2}}</a></span>
           </el-form-item>
           <el-form-item label="平台参考链接3" prop="origin3" class="item">
-            <span>{{viewForm.origin3}}</span>
+            <span><a :href="viewForm.origin3" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.origin3}}</a></span>
           </el-form-item>
           <el-form-item label="开发编号" prop="devNum" class="item">
             <span>{{viewForm.devNum}}</span>
