@@ -739,16 +739,21 @@
         <el-table-column prop="developer2"
                          label="开发2"
                          sortable></el-table-column>
-        <el-table-column prop="possessMan"
+        <!-- <el-table-column prop="possessMan"
                          label="美工"
                          sortable></el-table-column>
         <el-table-column prop="introducer"
                          label="推荐人"
                          min-width="100"
-                         sortable></el-table-column>
+                         sortable></el-table-column> -->
         <el-table-column prop="storeName"
                          label="仓库"
+                         min-width="100"
                          sortable></el-table-column>
+        <el-table-column prop="purchaser"
+                         label="采购"
+                         min-width="100"
+                         sortable></el-table-column>                 
         <el-table-column prop="goodsCode"
                          label="商品编码"
                          min-width="100"
@@ -764,6 +769,10 @@
         <el-table-column prop="createDate"
                          label="商品创建时间"
                          min-width="130"
+                         sortable></el-table-column>
+        <el-table-column prop="createDate2"
+                         label="时间辅助"
+                         min-width="100"
                          sortable></el-table-column>
         <el-table-column prop="lastPurchaseDate"
                          label="最后采购时间"
@@ -789,9 +798,6 @@
         <el-table-column prop="aveAmount"
                          label="分摊死库"
                          min-width="105"
-                         sortable></el-table-column>
-        <el-table-column prop="purchaser"
-                         label="采购"
                          sortable></el-table-column>
       </el-table>
       <div class="block toolbar">
@@ -1105,7 +1111,7 @@ export default {
         for (let i = 0; i < val.length; i++) {
           per = res.filter(
             ele =>
-              (ele.department === val[i] || ele.parent_depart === val[i]) &&
+              (ele.department === val[i] || ele.parent_department === val[i]) &&
               ele.position === '开发'
           )
           this.member = this.member.concat(per)
@@ -1185,7 +1191,7 @@ export default {
             for (let i = 0; i < val.length; i++) {
               const per = res.filter(
                       ele =>
-                      (ele.department === val[i] || ele.parent_depart === val[i]) &&
+                      (ele.department === val[i] || ele.parent_department === val[i]) &&
                       ele.position === '开发'
               )
               this.member.concat(per)
@@ -1243,7 +1249,7 @@ export default {
               for (let i = 0; i < val.length; i++) {
                 const per = res.filter(
                         ele =>
-                        (ele.department === val[i] || ele.parent_depart === val[i]) &&
+                        (ele.department === val[i] || ele.parent_department === val[i]) &&
                         ele.position === '开发'
                 )
                 this.member.concat(per)
@@ -1497,7 +1503,7 @@ export default {
               for (let i = 0; i < val.length; i++) {
                 const per = res.filter(
                         ele =>
-                        (ele.department === val[i] || ele.parent_depart === val[i]) &&
+                        (ele.department === val[i] || ele.parent_department === val[i]) &&
                         ele.position === '开发'
                 )
                 this.member.concat(per)

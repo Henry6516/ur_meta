@@ -854,6 +854,14 @@ export function APIReportExport(param) {
     responseType: 'arraybuffer'
   })
 }
+export function APIDeleteAttribute(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/attribute?id=' + param.id,
+    method: 'delete',
+    data,
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

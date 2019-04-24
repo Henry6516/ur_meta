@@ -150,7 +150,7 @@
         </span>
       </el-dialog>
       <!-- 认领对话框 -->
-      <el-dialog :visible.sync="dialogVisibleClaim">
+      <el-dialog :visible.sync="dialogVisibleClaim" width="30%">
         <el-form :model="claimForm" label-position="left" label-width="50px" ref="claimForm">
           <el-form-item label="认领">
             <el-radio-group v-model="claimForm.devStatus">
@@ -162,6 +162,13 @@
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="submitClaim">确定</el-button>
         </span>
+        <!-- <div class="proClaim">
+          <div class="proClaim01">正向认领</div>
+          <div class="proClaim02">逆向认领</div>
+        </div>
+        <div class="btnQd">
+          确定
+        </div> -->
       </el-dialog>
       <el-table :data="tableData" @selection-change="selsChange" :height="tableHeight">
         <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
@@ -3079,8 +3086,16 @@ export default {
     },
     submitClaim() {
       goodsClaim(this.claimForm).then(res => {
-        this.dialogVisibleClaim = false;
-        this.getData();
+        if(res.data.code==200){
+            this.$message({
+              message: "成功",
+              type: "success"
+            });
+            this.dialogVisibleClaim = false;
+            this.getData();
+        }else{
+          this.$message.error(res.data.message);
+        }
       });
     },
     // 删除
@@ -3683,6 +3698,40 @@ export default {
   margin: auto;
   line-height: 32px;
   display: block;
+  border-radius: 5px;
+}
+.btnQd{
+  width: 90%;
+  margin: auto;
+  background: #409EFF;
+  color:#fff;
+  text-align: center;
+  line-height: 42px;
+  border-radius: 4px;
+  font-size: 16px;
+  letter-spacing: 5px;
+  margin-top: 25px;
+  cursor: pointer;
+}
+.proClaim{
+  width: 90%;
+  margin: auto;
+  overflow: hidden;
+}
+.proClaim01{
+  width: 46%;
+  float: left;
+  text-align: center;
+  border: 1px solid #dcdfe6;
+  line-height: 40px;
+  border-radius: 5px;
+}
+.proClaim02{
+  width: 46%;
+  float: right;
+  text-align: center;
+  border: 1px solid #dcdfe6;
+  line-height: 40px;
   border-radius: 5px;
 }
 </style>

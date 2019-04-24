@@ -407,7 +407,7 @@ export default {
         for (let i = 0; i < val.length; i++) {
           per = res.filter(
             ele =>
-              (ele.department === val[i] || ele.parent_depart === val[i]) &&
+              (ele.department === val[i] || ele.parent_department === val[i]) &&
               ele.position === '销售'
           )
           this.member = this.member.concat(per)
@@ -448,7 +448,7 @@ export default {
             for (let i = 0; i < val.length; i++) {
               const per = res.filter(
                 ele =>
-                  (ele.department === val[i] || ele.parent_depart === val[i]) &&
+                  (ele.department === val[i] || ele.parent_department === val[i]) &&
                   ele.position === '销售'
               )
               this.member.concat(per)

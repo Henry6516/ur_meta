@@ -21,7 +21,7 @@
             <a :href="editForm.picUrl"
                target="_blank">
             <img :src='editForm.picUrl'
-                 style="width: 450px;height: 405px;margin-left:30px;margin-top:10px;margin-bottom:0px;border-radius: 10px">
+                 style="width: 430px;height: 405px;margin-left:30px;margin-top:10px;margin-bottom:0px;border-radius: 10px">
               </a>
           </el-form-item>
         </el-col>
@@ -491,7 +491,7 @@
                  <!--:label="item.label"-->
                  <!--:value="item.value"></el-option>-->
     <!--</el-select>-->
-    <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange">
+    <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange" max-height="300">
       <el-table-column type="selection"
                        align="center"
                        header-align="center"></el-table-column>
@@ -596,14 +596,14 @@
     <el-row style="margin-top:15px;padding-left: 1%">
       <el-col :span="2">
         <input placeholder="行数" v-model="rows"
-                  style="width:58%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+                  style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz" @click="addClomun">新增行</span>
         <!--<el-button size="small"-->
                    <!--@click="addClomun">新增行</el-button>-->
       </el-col>
       <el-col :span="3">
         <input placeholder="成本价￥" v-model="costprice"
-               style="width:58%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="cosprice">成本确定</span>
         <!--<el-input v-model="costprice"-->
                   <!--size="small"-->
@@ -614,7 +614,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="重量g" v-model="weight"
-               style="width:58%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="weht">重量确定</span>
         <!--<el-input v-model="weight"-->
                   <!--size="small"-->
@@ -625,7 +625,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="零售价$" v-model="retailprice"
-               style="width:58%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="price">价格确定</span>
         <!--<el-input v-model="retailprice"-->
                   <!--size="small"-->
@@ -636,7 +636,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="joom零售价$" v-model="joomretailprice"
-               style="width:58%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="joomprice">价格确定</span>
         <!--<el-input v-model="joomretailprice"-->
                   <!--size="small"-->
@@ -647,7 +647,7 @@
       </el-col>
       <el-col :span="3">
         <input placeholder="joom运费$" v-model="transportationcost"
-               style="width:58%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="transport">价格确定</span>
         <!--<el-input v-model="transportationcost"-->
                   <!--size="small"-->
@@ -778,8 +778,10 @@ export default {
       this.sels = sels
     },
     passAll() {
+        let arrI=[]
+        arrI.push(this.editForm.id)
         let dataTe = {
-          id: this.editForm.id
+          id: arrI
         }
         APIAttributeToShopElf(dataTe).then(res => {
           if (res.data.code === 200) {

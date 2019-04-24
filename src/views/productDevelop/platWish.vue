@@ -3,7 +3,7 @@
     <el-col
       :span="24"
       class="toolbar"
-      style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:8px;padding-top: 8px"
+      style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:15px;padding-top: 12px"
     >
       <el-col :span="12" :offset="5">
         <el-button
@@ -63,19 +63,19 @@
       <el-row>
         <el-col :span="24">
           <el-col :span="12">
-            <el-col :span="2" class="textZt">SKU</el-col>
+            <el-col :span="3" class="textZt">SKU</el-col>
             <el-col :span="21">
               <el-input v-model="wishForm.sku"></el-input>
             </el-col>
-            <el-col :span="2" class="textZt" style="margin-top: 15px">是否备货</el-col>
+            <el-col :span="3" class="textZt" style="margin-top: 15px">是否备货</el-col>
             <el-col :span="21" style="margin-top: 15px">
               <el-input v-model="wishForm.stockUp" :disabled="true"></el-input>
             </el-col>
-            <el-col :span="2" class="textZt" style="margin-top: 15px">主图</el-col>
+            <el-col :span="3" class="textZt" style="margin-top: 15px">主图</el-col>
             <el-col :span="21" style="margin-top: 15px">
               <el-input v-model="wishForm.mainImage"></el-input>
             </el-col>
-            <el-col :span="2" class="textZt" style="margin-top: 15px"></el-col>
+            <el-col :span="3" class="textZt" style="margin-top: 15px"></el-col>
           </el-col>
           <el-col :span="10" style="margin-left: 25px">
             <a
@@ -437,7 +437,7 @@
         <input
           placeholder="数量"
           v-model="num"
-          style="width:56%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+          style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setNum">数量确定</span>
       </el-col>
@@ -445,7 +445,7 @@
         <input
           placeholder="价格"
           v-model="price"
-          style="width:56%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+          style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setPrice">价格确定</span>
       </el-col>
@@ -453,7 +453,7 @@
         <input
           placeholder="运费"
           v-model="ship"
-          style="width:56%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+          style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setShip">运费确定</span>
       </el-col>
@@ -467,9 +467,9 @@
         <input
           placeholder="建议零售价"
           v-model="advicePrice"
-          style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+          style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
-        <span class="xzz1" @click="setAdvice">建议零售价</span>
+        <span class="xzz1" @click="setAdvice">零售确定</span>
       </el-col>
       <el-col :span="3">
         <!--<el-input v-model="joomPrice"-->
@@ -481,9 +481,9 @@
         <input
           placeholder="Joom零售价"
           v-model="joomPrice"
-          style="width:48%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+          style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
-        <span class="xzz1" @click="setJoom">Joom零售价</span>
+        <span class="xzz1" @click="setJoom">Joom确定</span>
       </el-col>
       <el-col :span="3">
         <!--<el-input v-model="transport"-->
@@ -495,7 +495,7 @@
         <input
           placeholder="Joom运费"
           v-model="transport"
-          style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+          style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setTransport">Joom运费</span>
       </el-col>
@@ -509,9 +509,9 @@
         <input
           placeholder="运输时间"
           v-model="time"
-          style="width:95px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+          style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
-        <span class="xzz1" @click="setTime">运输时间</span>
+        <span class="xzz1" @click="setTime">时间确定</span>
       </el-col>
     </el-row>
     <!-- 多属性设置对话框 -->

@@ -256,7 +256,7 @@
             </el-table>
             <!-- 平台信息查看对话框 -->
             <el-dialog title='查看'
-                       :visible.sync="dialogPlat">
+                       :visible.sync="dialogPlat" width="55%">
                 <el-form
                         label-position="left"
                         label-width="110px"

@@ -198,7 +198,7 @@
                          label="清仓类型"
                          min-width="100"
                          sortable></el-table-column>
-        <el-table-column prop="developer"
+        <!-- <el-table-column prop="developer"
                          label="开发1"
                          sortable
                          min-width="100"></el-table-column>
@@ -211,6 +211,9 @@
         <el-table-column prop="introducer"
                          label="推荐人"
                          min-width="100"
+                         sortable></el-table-column> -->
+        <el-table-column prop="purchaser"
+                         label="采购"
                          sortable></el-table-column>
         <el-table-column prop="storeName"
                          label="仓库"
@@ -231,6 +234,10 @@
                          label="商品创建时间"
                          min-width="130"
                          sortable></el-table-column>
+        <el-table-column prop="createDate2"
+                         label="时间辅助"
+                         min-width="100"
+                         sortable></el-table-column>                 
         <el-table-column prop="lastPurchaseDate"
                          label="最后采购时间"
                          min-width="130"
@@ -255,9 +262,6 @@
         <el-table-column prop="aveAmount"
                          label="分摊死库"
                          min-width="105"
-                         sortable></el-table-column>
-        <el-table-column prop="purchaser"
-                         label="采购"
                          sortable></el-table-column>
       </el-table>
       <div class="block toolbar">

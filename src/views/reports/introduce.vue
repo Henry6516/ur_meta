@@ -105,19 +105,8 @@
       </div>
     </div>
     <el-row>
-      <el-col :span="17">
-        <el-tabs v-model="activeName"
-                 type="card"
-                 @tab-click="handleClick">
-          <el-tab-pane label="毛利润报表"
-                       name="first">
-          </el-tab-pane>
-          <el-tab-pane label="死库明细"
-                       name="second">
-          </el-tab-pane>
-        </el-tabs>
-      </el-col>
-      <el-col :span="2">
+      <el-col :span="2"
+              :offset="17">
         <el-input clearable
                   placeholder="search"
                   v-model="searchValue"
@@ -220,365 +209,264 @@
         </el-dropdown>
       </el-col>
     </el-row>
-    <div v-show="showis1">
-      <el-table ref="table"
-                :data="tableData"
-                id="sale-table"
-                v-loading="listLoading"
-                element-loading-text="正在加载中..."
-                @sort-change="sortNumber"
-                show-summary
-                :summary-method="getSummaries"
-                :height="tableHeight"
-                :max-height="tableHeight"
-                style="width: 100%;">
-        <el-table-column fixed
-                         v-if="this.checked1"
-                         min-width="100"
-                         prop="salernameZero"
-                         label="推荐人表"
-                         :formatter="empty"
-                         sortable></el-table-column>
-        <el-table-column v-if="this.checked2"
-                         min-width="130"
-                         prop="timegroupZero"
-                         label="时间段（0-6月）"></el-table-column>
-        <el-table-column v-if="this.checked3"
-                         min-width="160"
-                         prop="salemoneyrmbusZero"
-                         label="销售额$（0-6月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked4"
-                         min-width="170"
-                         prop="salemoneyrmbznZero"
-                         label="销售额￥（0-6月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked5"
-                         min-width="180"
-                         prop="costmoneyrmbZero"
-                         label="商品成本￥（0-6月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked6"
-                         min-width="190"
-                         prop="ppebayusZero"
-                         label="交易费汇总$（0-6月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked7"
-                         min-width="200"
-                         prop="ppebayznZero"
-                         label="交易费汇总￥（0-6月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked8"
-                         min-width="180"
-                         prop="inpackagefeermbZero"
-                         label="包装成本￥（0-6月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked9"
-                         min-width="180"
-                         prop="expressfarermbZero"
-                         label="运费成本￥（0-6月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked10"
-                         min-width="180"
-                         prop="devofflinefeeZero"
-                         label="死库处理￥（0-6月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked11"
-                         min-width="180"
-                         prop="devOpeFeeZero"
-                         label="运营杂费￥（0-6月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked12"
-                         min-width="170"
-                         prop="netprofitZero"
-                         label="毛利润￥（0-6月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked13"
-                         min-width="170"
-                         prop="netrateZero"
-                         label="毛利率%（0-6月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked14"
-                         min-width="140"
-                         prop="timegroupSix"
-                         label="时间段（6-12月）"></el-table-column>
-        <el-table-column v-if="this.checked15"
-                         min-width="170"
-                         prop="salemoneyrmbusSix"
-                         label="销售额$（6-12月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked16"
-                         min-width="180"
-                         prop="salemoneyrmbznSix"
-                         label="销售额￥（6-12月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked17"
-                         min-width="190"
-                         prop="costmoneyrmbSix"
-                         label="商品成本￥（6-12月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked18"
-                         min-width="200"
-                         prop="ppebayusSix"
-                         label="交易费汇总$（6-12月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked19"
-                         min-width="200"
-                         prop="ppebayznSix"
-                         label="交易费汇总￥（6-12月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked20"
-                         min-width="190"
-                         prop="inpackagefeermbSix"
-                         label="包装成本￥（6-12月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked21"
-                         min-width="190"
-                         prop="expressfarermbSix"
-                         label="运费成本￥（6-12月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked22"
-                         min-width="190"
-                         prop="devofflinefeeSix"
-                         label="死库处理￥（6-12月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked23"
-                         min-width="190"
-                         prop="devOpeFeeSix"
-                         label="运营杂费￥（6-12月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked24"
-                         min-width="180"
-                         prop="netprofitSix"
-                         label="毛利润￥（6-12月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked25"
-                         min-width="170"
-                         prop="netrateSix"
-                         label="毛利率%（6-12月）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked26"
-                         min-width="150"
-                         prop="timegroupTwe"
-                         label="时间段（12月以上）"></el-table-column>
-        <el-table-column v-if="this.checked27"
-                         min-width="180"
-                         prop="salemoneyrmbusTwe"
-                         label="销售额$（12月以上）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked28"
-                         min-width="190"
-                         prop="salemoneyrmbznTwe"
-                         label="销售额￥（12月以上）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked29"
-                         min-width="200"
-                         prop="costmoneyrmbTwe"
-                         label="商品成本￥（12月以上）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked30"
-                         min-width="210"
-                         prop="ppebayusTwe"
-                         label="交易费汇总$（12月以上）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked31"
-                         min-width="220"
-                         prop="ppebayznTwe"
-                         label="交易费汇总￥（12月以上）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked32"
-                         min-width="200"
-                         prop="inpackagefeermbTwe"
-                         label="包装成本￥（12月以上）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked33"
-                         min-width="210"
-                         prop="expressfarermbTwe"
-                         label="运费成本￥（12月以上）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked34"
-                         min-width="210"
-                         prop="devofflinefeeTwe"
-                         label="死库处理￥（12月以上）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked35"
-                         min-width="200"
-                         prop="devOpeFeeTwe"
-                         label="运营杂费￥（12月以上）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked36"
-                         min-width="190"
-                         prop="netprofitTwe"
-                         label="毛利润￥（12月以上）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked37"
-                         min-width="190"
-                         prop="netrateTwe"
-                         label="毛利率%（12月以上）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked38"
-                         min-width="160"
-                         prop="salemoneyrmbtotal"
-                         label="销售额￥（汇总）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked39"
-                         min-width="160"
-                         prop="netprofittotal"
-                         label="毛利润￥（汇总）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-        <el-table-column v-if="this.checked40"
-                         min-width="160"
-                         prop="netratetotal"
-                         label="毛利率%（汇总）"
-                         :formatter="empty"
-                         sortable="custom"></el-table-column>
-      </el-table>
-    </div>
-    <div v-show="showis2">
-      <el-table :data="tableData1"
-                @sort-change="sortNumber1"
-                max-height="670">
-        <el-table-column prop="importDate"
-                         label="导入时间"
-                         sortable
-                         min-width="120"></el-table-column>
-        <el-table-column prop="type"
-                         label="清仓类型"
-                         min-width="100"
-                         sortable></el-table-column>
-        <el-table-column prop="developer"
-                         label="开发1"
-                         sortable
-                         min-width="100"></el-table-column>
-        <el-table-column prop="developer2"
-                         label="开发2"
-                         sortable></el-table-column>
-        <el-table-column prop="possessMan"
-                         label="美工"
-                         sortable></el-table-column>
-        <el-table-column prop="introducer"
-                         label="推荐人"
-                         min-width="100"
-                         sortable></el-table-column>
-        <el-table-column prop="storeName"
-                         label="仓库"
-                         sortable></el-table-column>
-        <el-table-column prop="goodsCode"
-                         label="商品编码"
-                         min-width="100"
-                         sortable></el-table-column>
-        <el-table-column prop="sku"
-                         label="SKU"
-                         min-width="100"
-                         sortable></el-table-column>
-        <el-table-column prop="goodsName"
-                         label="商品名称"
-                         min-width="100"
-                         sortable></el-table-column>
-        <el-table-column prop="createDate"
-                         label="商品创建时间"
-                         min-width="130"
-                         sortable></el-table-column>
-        <el-table-column prop="lastPurchaseDate"
-                         label="最后采购时间"
-                         min-width="130"
-                         sortable></el-table-column>
-        <el-table-column prop="checkNumber"
-                         label="盘点数量"
-                         min-width="100"
-                         sortable="custom"
-                         align="center"></el-table-column>
-        <el-table-column prop="preCheckPrice"
-                         label="盘前价格"
-                         min-width="100"
-                         sortable="custom"></el-table-column>
-        <el-table-column prop="deadPrice"
-                         label="盘少价格（死库）"
-                         sortable="custom"
-                         min-width="160"></el-table-column>
-        <el-table-column prop="aftCheckPrice"
-                         label="盘后价格"
-                         sortable="custom"
-                         min-width="100"></el-table-column>
-        <el-table-column prop="aveAmount"
-                         label="分摊死库"
-                         min-width="105"
-                         sortable></el-table-column>
-        <el-table-column prop="purchaser"
-                         label="采购"
-                         sortable></el-table-column>
-      </el-table>
-      <div class="block toolbar">
-        <el-pagination background
-                       @size-change='handleSizeChangeDead'
-                       @current-change='handleCurrentChangeDead'
-                       :current-page="this.dead.page"
-                       :page-size="this.dead.pageSize"
-                       :page-sizes="[10,20,30,40]"
-                       layout="total,sizes,prev,pager,next,jumper"
-                       :total="this.totalpur">
-        </el-pagination>
-      </div>
-    </div>
+    <el-table ref="table"
+              :data="tableData"
+              id="sale-table"
+              v-loading="listLoading"
+              element-loading-text="正在加载中..."
+              @sort-change="sortNumber"
+              show-summary
+              :summary-method="getSummaries"
+              v-show="show2"
+              :height="tableHeight"
+              :max-height="tableHeight"
+              style="width: 100%;">
+      <el-table-column fixed
+                       v-if="this.checked1"
+                       min-width="100"
+                       prop="salernameZero"
+                       label="推荐人表"
+                       :formatter="empty"
+                       sortable></el-table-column>
+      <el-table-column v-if="this.checked2"
+                       min-width="130"
+                       prop="timegroupZero"
+                       label="时间段（0-6月）"></el-table-column>
+      <el-table-column v-if="this.checked3"
+                       min-width="160"
+                       prop="salemoneyrmbusZero"
+                       label="销售额$（0-6月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked4"
+                       min-width="170"
+                       prop="salemoneyrmbznZero"
+                       label="销售额￥（0-6月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked5"
+                       min-width="180"
+                       prop="costmoneyrmbZero"
+                       label="商品成本￥（0-6月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked6"
+                       min-width="190"
+                       prop="ppebayusZero"
+                       label="交易费汇总$（0-6月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked7"
+                       min-width="200"
+                       prop="ppebayznZero"
+                       label="交易费汇总￥（0-6月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked8"
+                       min-width="180"
+                       prop="inpackagefeermbZero"
+                       label="包装成本￥（0-6月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked9"
+                       min-width="180"
+                       prop="expressfarermbZero"
+                       label="运费成本￥（0-6月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked10"
+                       min-width="180"
+                       prop="devofflinefeeZero"
+                       label="死库处理￥（0-6月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked11"
+                       min-width="180"
+                       prop="devOpeFeeZero"
+                       label="运营杂费￥（0-6月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked12"
+                       min-width="170"
+                       prop="netprofitZero"
+                       label="毛利润￥（0-6月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked13"
+                       min-width="170"
+                       prop="netrateZero"
+                       label="毛利率%（0-6月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked14"
+                       min-width="140"
+                       prop="timegroupSix"
+                       label="时间段（6-12月）"></el-table-column>
+      <el-table-column v-if="this.checked15"
+                       min-width="170"
+                       prop="salemoneyrmbusSix"
+                       label="销售额$（6-12月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked16"
+                       min-width="180"
+                       prop="salemoneyrmbznSix"
+                       label="销售额￥（6-12月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked17"
+                       min-width="190"
+                       prop="costmoneyrmbSix"
+                       label="商品成本￥（6-12月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked18"
+                       min-width="200"
+                       prop="ppebayusSix"
+                       label="交易费汇总$（6-12月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked19"
+                       min-width="200"
+                       prop="ppebayznSix"
+                       label="交易费汇总￥（6-12月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked20"
+                       min-width="190"
+                       prop="inpackagefeermbSix"
+                       label="包装成本￥（6-12月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked21"
+                       min-width="190"
+                       prop="expressfarermbSix"
+                       label="运费成本￥（6-12月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked22"
+                       min-width="190"
+                       prop="devofflinefeeSix"
+                       label="死库处理￥（6-12月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked23"
+                       min-width="190"
+                       prop="devOpeFeeSix"
+                       label="运营杂费￥（6-12月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked24"
+                       min-width="180"
+                       prop="netprofitSix"
+                       label="毛利润￥（6-12月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked25"
+                       min-width="170"
+                       prop="netrateSix"
+                       label="毛利率%（6-12月）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked26"
+                       min-width="150"
+                       prop="timegroupTwe"
+                       label="时间段（12月以上）"></el-table-column>
+      <el-table-column v-if="this.checked27"
+                       min-width="180"
+                       prop="salemoneyrmbusTwe"
+                       label="销售额$（12月以上）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked28"
+                       min-width="190"
+                       prop="salemoneyrmbznTwe"
+                       label="销售额￥（12月以上）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked29"
+                       min-width="200"
+                       prop="costmoneyrmbTwe"
+                       label="商品成本￥（12月以上）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked30"
+                       min-width="210"
+                       prop="ppebayusTwe"
+                       label="交易费汇总$（12月以上）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked31"
+                       min-width="220"
+                       prop="ppebayznTwe"
+                       label="交易费汇总￥（12月以上）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked32"
+                       min-width="200"
+                       prop="inpackagefeermbTwe"
+                       label="包装成本￥（12月以上）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked33"
+                       min-width="210"
+                       prop="expressfarermbTwe"
+                       label="运费成本￥（12月以上）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked34"
+                       min-width="210"
+                       prop="devofflinefeeTwe"
+                       label="死库处理￥（12月以上）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked35"
+                       min-width="200"
+                       prop="devOpeFeeTwe"
+                       label="运营杂费￥（12月以上）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked36"
+                       min-width="190"
+                       prop="netprofitTwe"
+                       label="毛利润￥（12月以上）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked37"
+                       min-width="190"
+                       prop="netrateTwe"
+                       label="毛利率%（12月以上）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked38"
+                       min-width="160"
+                       prop="salemoneyrmbtotal"
+                       label="销售额￥（汇总）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked39"
+                       min-width="160"
+                       prop="netprofittotal"
+                       label="毛利润￥（汇总）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+      <el-table-column v-if="this.checked40"
+                       min-width="160"
+                       prop="netratetotal"
+                       label="毛利率%（汇总）"
+                       :formatter="empty"
+                       sortable="custom"></el-table-column>
+    </el-table>
   </div>
 </template>
 
-<script type="text/ecmascript-6">
-import {APIReportExport} from '../../api/product'
-import { getSection, getMember, getIntroduce,getOtherDeadFee } from '../../api/profit'
+<script>
+import { getSection, getMember, getIntroduce } from '../../api/profit'
 import { compareUp, compareDown, getMonthDate } from '../../api/tools'
 
 export default {
   data() {
     return {
-      showis1:true,
-      showis2:false,
-      activeName:'first',
-      tableData1:[],
-      dead: {
-        dateType: [],
-        dateRange: [],
-        role: 'introducer',
-        member: [],
-        page: 1,
-        pageSize: 20
-      },
-      totalpur:0,
       repeat: [],
       checked1: true,
       checked2: false,
@@ -670,34 +558,6 @@ export default {
     }
   },
   methods: {
-    handleSizeChangeDead(val) {
-      this.dead.pageSize = val
-      this.onSubmit1(this.condition)
-    },
-    handleCurrentChangeDead(val) {
-      this.dead.page = val
-      this.onSubmit1(this.condition)
-    },
-    sortNumber1(column, prop, order) {
-      const data = this.tableData1
-      if (column.order === 'descending') {
-        this.tableData1 = data.sort(compareDown(data, column.prop))
-      } else {
-        this.tableData1 = data.sort(compareUp(data, column.prop))
-      }
-    },
-    handleClick(tab, event){
-      this.activeName = tab.name
-      if (this.activeName === 'second') {
-        this.showis1 = false
-        this.showis2 = true
-        this.onSubmit1(this.condition)
-      } else {
-        this.showis1 = true
-        this.showis2 = false
-        this.onSubmit(this.condition)
-      }
-    },
     handleCheck1() {
       !this.checked1
     },
@@ -871,18 +731,17 @@ export default {
     removeActive() {
       this.show1 = false
     },
-    onSubmit1(form) {
+    onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form))
-      this.dead.dateType=myform.dateType
-      this.dead.dateRange=myform.dateRange
       const height = document.getElementById('app').clientHeight
       this.tableHeight = height - 220 + 'px'
+      this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {
           this.listLoading = true
           if (
-                  this.formInline.region.length !== 0 &&
-                  this.condition.member.length === 0
+            this.formInline.region.length !== 0 &&
+            this.condition.member.length === 0
           ) {
             const val = this.formInline.region
             let res = []
@@ -893,98 +752,31 @@ export default {
               this.member.concat(person)
             }
             myform.member = this.member.map(m => {
-                      return m.username
-                    })
-                    console.log(myform.member)
-            this.dead.member=myform.member
-            getOtherDeadFee(this.dead).then(response => {
+              return m.username
+            })
+            getIntroduce(myform).then(response => {
               this.listLoading = false
-              this.tableData1 = this.searchTable1 = response.data.data.items
-              this.totalpur = response.data.data._meta.totalCount
-              this.dead.page = response.data.data._meta.currentPage
-              this.dead.pageSize = response.data.data._meta.perPage
+              this.tableData = this.searchTable = response.data.data
             })
           } else if (this.condition.member.length !== 0) {
             this.listLoading = true
             myform.member = this.condition.member
-            this.dead.member=myform.member
-            getOtherDeadFee(this.dead).then(response => {
+            getIntroduce(myform).then(response => {
               this.listLoading = false
-              this.tableData1 = this.searchTable1 = response.data.data.items
-              this.totalpur = response.data.data._meta.totalCount
-              this.dead.page = response.data.data._meta.currentPage
-              this.dead.pageSize = response.data.data._meta.perPage
+              this.tableData = this.searchTable = response.data.data
             })
           } else {
             this.listLoading = true
-            this.dead.member=myform.member
-            getOtherDeadFee(this.dead).then(response => {
+            getIntroduce(myform).then(response => {
               this.listLoading = false
-              this.tableData1 = this.searchTable1 = response.data.data.items
-              this.totalpur = response.data.data._meta.totalCount
-              this.dead.page = response.data.data._meta.currentPage
-              this.dead.pageSize = response.data.data._meta.perPage
+              this.tableData = this.searchTable = response.data.data
             })
           }
         } else {
-          this.listLoading = false
           console.log('error submit!!')
-        return false
-      }
-    })
-    },
-    onSubmit(form) {
-      if(this.activeName === 'second'){
-        this.onSubmit1(form)
-      }else {
-        const myform = JSON.parse(JSON.stringify(form))
-        const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 220 + 'px'
-        this.showis2 = false
-        this.showis1 = true
-        this.activeName = 'first'
-        this.$refs.condition.validate(valid => {
-          if (valid) {
-            this.listLoading = true
-            if (
-                    this.formInline.region.length !== 0 &&
-                    this.condition.member.length === 0
-            ) {
-              const val = this.formInline.region
-              let res = []
-              let person = []
-              res = this.allMember
-              for (let i = 0; i < val.length; i++) {
-                person = res.filter(ele => ele.department === val[i])
-                this.member.concat(person)
-              }
-              myform.member = this.member.map(m => {
-                return m.username
-              })
-              getIntroduce(myform).then(response => {
-                this.listLoading = false
-                this.tableData = this.searchTable = response.data.data
-              })
-            } else if (this.condition.member.length !== 0) {
-              this.listLoading = true
-              myform.member = this.condition.member
-              getIntroduce(myform).then(response => {
-                this.listLoading = false
-                this.tableData = this.searchTable = response.data.data
-              })
-            } else {
-              this.listLoading = true
-              getIntroduce(myform).then(response => {
-                this.listLoading = false
-                this.tableData = this.searchTable = response.data.data
-              })
-            }
-          } else {
-            console.log('error submit!!')
-            return false
-          }
-        })
-      }
+          return false
+        }
+      })
     },
     // 空值显示“--”
     empty(row, column, cellValue, index) {
@@ -1050,8 +842,7 @@ export default {
     },
     // 导出
     exportExcel() {
-      if (this.activeName === 'first') {
-        const th = [
+      const th = [
         '表类型',
         '时间分组',
         '推荐人',
@@ -1141,109 +932,22 @@ export default {
       const data = this.tableData.map(v => filterVal.map(k => v[k]))
       const [fileName, fileType, sheetName] = [Filename, 'xls']
       this.$toExcel({ th, data, fileName, fileType, sheetName })
-      }else{
-        let arrTk={}
-        arrTk.department=this.formInline.region
-        // arrTk.member=this.condition.member
-        arrTk.dateRange=this.condition.dateRange
-        arrTk.dateRangeType=this.condition.dateType
-        arrTk.role='introducer'
-        arrTk.pageSize=1000000
-        arrTk.type='otherDeadFee'
-         if (
-                  this.formInline.region.length !== 0 &&
-                  this.condition.member.length === 0
-          ) {
-            const val = this.formInline.region
-            let res = []
-            let person = []
-            res = this.allMember
-            for (let i = 0; i < val.length; i++) {
-              person = res.filter(ele => ele.department === val[i])
-              this.member.concat(person)
-            }
-            arrTk.member = this.member.map(m => {
-                      return m.username
-                    })
-            arrTk.member=arrTk.member
-          } else if (this.condition.member.length !== 0) {
-            this.listLoading = true
-            arrTk.member = this.condition.member
-            arrTk.member=arrTk.member
-          } else {
-            this.listLoading = true
-            arrTk.member=this.condition.member
-          }
-        APIReportExport(arrTk).then(res => {
-          const blob = new Blob([res.data], {
-            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
-          })
-          const downloadElement = document.createElement('a')
-          const objectUrl = window.URL.createObjectURL(blob)
-          downloadElement.href = objectUrl
-          const date = new Date()
-          const year = date.getFullYear()
-          let month = date.getMonth() + 1
-          let strDate = date.getDate()
-          let hour = date.getHours()
-          let minute = date.getMinutes()
-          let second = date.getSeconds()
-          if (month >= 1 && month <= 9) {
-            month = '0' + month
-          }
-          if (strDate >= 0 && strDate <= 9) {
-            strDate = '0' + strDate
-          }
-          if (hour >= 0 && hour <= 9) {
-            hour = '0' + hour
-          }
-          if (minute >= 0 && minute <= 9) {
-            minute = '0' + minute
-          }
-          if (second >= 0 && second <= 9) {
-            second = '0' + second
-          }
-          const filename =
-                  '司库明细_' + year + month + strDate + hour + minute + second
-          downloadElement.download = filename + '.xls'
-          document.body.appendChild(downloadElement)
-          downloadElement.click()
-          document.body.removeChild(downloadElement)
-        })
-      }
     },
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()
-      if(this.activeName === 'first'){
-        const data = this.searchTable
-        if (searchValue) {
-          this.tableData = data.filter(function(row) {
-            return Object.keys(row).some(function(key) {
-              return (
-                      String(row[key])
-                              .toLowerCase()
-                              .indexOf(searchValue) > -1
-              )
-            })
+      const data = this.searchTable
+      if (searchValue) {
+        this.tableData = data.filter(function(row) {
+          return Object.keys(row).some(function(key) {
+            return (
+              String(row[key])
+                .toLowerCase()
+                .indexOf(searchValue) > -1
+            )
           })
-        } else {
-          this.tableData = data
-        }
-      }else {
-        const data = this.searchTable1
-        if (searchValue) {
-          this.tableData1 = data.filter(function(row) {
-            return Object.keys(row).some(function(key) {
-              return (
-                      String(row[key])
-                              .toLowerCase()
-                              .indexOf(searchValue) > -1
-              )
-            })
-          })
-        } else {
-          this.tableData1 = data
-        }
+        })
+      } else {
+        this.tableData = data
       }
     }
   },

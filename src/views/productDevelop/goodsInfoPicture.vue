@@ -68,6 +68,17 @@
                                      align="center">
                     </el-table-column>
                 </el-table-column>
+                <el-table-column label="图片状态"
+                                 header-align="center">
+                    <el-table-column prop="picStatus"
+                                     :render-header="renderHeaderPic"
+                                     width='150'
+                                     align="center">
+                        <template slot-scope="scope">
+                            <a :class="scope.row.picStatus=='待处理'?'clasRed1':'clasGreen1'">{{scope.row.picStatus}}</a>
+                        </template>
+                    </el-table-column>
+                </el-table-column>
                 <el-table-column label="商品名称"
                                  header-align="center">
                     <el-table-column prop="goodsName"
@@ -142,17 +153,6 @@
                                      align="center">
                         <template slot-scope="scope">
                             <a :href="scope.row.origin3" target="_blank" class="classa" :class="!scope.row.origin3?'clasRed':''">{{!scope.row.origin3?'未设置':scope.row.origin3 | cutOut}}</a>
-                        </template>
-                    </el-table-column>
-                </el-table-column>
-                <el-table-column label="图片状态"
-                                 header-align="center">
-                    <el-table-column prop="picStatus"
-                                     :render-header="renderHeaderPic"
-                                     width='150'
-                                     align="center">
-                        <template slot-scope="scope">
-                            <a :class="scope.row.picStatus=='待处理'?'clasRed1':'clasGreen1'">{{scope.row.picStatus}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -1103,196 +1103,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 2) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.goodsName,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.goodsName = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 3) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.vendor1,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.vendor1 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 4) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.vendor2,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.vendor2 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 5) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.vendor3,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.vendor3 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 6) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.origin1,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.origin1 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 7) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.origin2,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.origin2 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 8) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.origin3,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.origin3 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 9) {
+                }else if ($index === 2) {
                     let filters = [
                         { text: '待处理', value: '待处理' },
                         { text: '已完善', value: '已完善' }
@@ -1327,7 +1138,196 @@
                                 })
                             ]
                     )
-                } else if ($index === 10) {
+                } else if ($index === 3) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
+                                        value: this.picture.goodsName,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.picture.goodsName = value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                } else if ($index === 4) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
+                                        value: this.picture.vendor1,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.picture.vendor1 = value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                } else if ($index === 5) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
+                                        value: this.picture.vendor2,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.picture.vendor2 = value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                } else if ($index === 6) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
+                                        value: this.picture.vendor3,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.picture.vendor3 = value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                } else if ($index === 7) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
+                                        value: this.picture.origin1,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.picture.origin1 = value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                } else if ($index === 8) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
+                                        value: this.picture.origin2,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.picture.origin2 = value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                } else if ($index === 9) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
+                                        value: this.picture.origin3,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.picture.origin3 = value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                }  else if ($index === 10) {
                     return h(
                             'div',
                             {

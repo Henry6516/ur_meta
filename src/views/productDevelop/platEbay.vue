@@ -2,7 +2,7 @@
   <section>
     <el-col
       :span="24"
-      style="position: fixed; bottom:0; z-index:999;background: #f2f2f2;padding: 8px 0;border-top: #eee solid 1px;"
+      style="position: fixed; bottom:0; z-index:999;background: #f2f2f2;padding: 15px 0; padding-top:12px; border-top: #eee solid 1px;"
     >
       <el-col :span="12" :offset="5">
         <el-button @click="keep()" type="primary" style="float: left;margin-right:10px">保存当前数据</el-button>
@@ -11,7 +11,7 @@
           type="success"
           @click="keepWs()"
         >保存并完善</el-button>
-        <el-select v-model="depot" placeholder="--所有仓储--" style="float: left;margin-right:10px">
+        <el-select v-model="depot" placeholder="--所有仓储--" style="float: left;margin-right:10px;width:170px;">
           <el-option v-for="(item, key) in warehouse" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
         <el-select
@@ -51,19 +51,19 @@
         <el-row>
           <el-col :span="24">
             <el-col :span="12">
-              <el-col :span="2" class="textZt">SKU</el-col>
+              <el-col :span="3" class="textZt">SKU</el-col>
               <el-col :span="21">
                 <el-input v-model="wishForm.sku"></el-input>
               </el-col>
-              <el-col :span="2" class="textZt" style="margin-top: 15px">是否备货</el-col>
+              <el-col :span="3" class="textZt" style="margin-top: 15px">是否备货</el-col>
               <el-col :span="21" style="margin-top: 15px">
                 <el-input v-model="wishForm.stockUp" :disabled="true"></el-input>
               </el-col>
-              <el-col :span="2" class="textZt" style="margin-top: 15px">主图</el-col>
+              <el-col :span="3" class="textZt" style="margin-top: 15px">主图</el-col>
               <el-col :span="21" style="margin-top: 15px">
                 <el-input v-model="wishForm.mainPage"></el-input>
               </el-col>
-              <el-col :span="2" class="textZt" style="margin-top: 15px"></el-col>
+              <el-col :span="3" class="textZt" style="margin-top: 15px"></el-col>
             </el-col>
             <el-col :span="10" style="margin-left: 25px">
               <a
@@ -316,7 +316,7 @@
                 <input
                   placeholder="Does not apply"
                   v-model="ship"
-                  style="width:120px;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+                  style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
                 >
                 <span class="xzz1" @click="setShip">UPC/ENC确定</span>
               </el-col>
@@ -552,11 +552,11 @@
       <el-col :span="24" style="padding: 0">
         <h3 class="toolbar essential">物流设置</h3>
       </el-col>
-      <el-col :span="12" style="margin-bottom: 30px;">
+      <el-col :span="12" style="margin-bottom: 40px;">
         <h4 class="adres">境内运输方式</h4>
-        <el-col :span="12">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">运输方式1</el-col>
-          <el-col :span="19">
+        <el-col :span="10">
+          <el-col :span="7" style="margin-top: 10px;text-align: center">运输方式1</el-col>
+          <el-col :span="17">
             <el-select
               style="width: 95%"
               v-model="wishForm.inShippingMethod1"
@@ -571,21 +571,21 @@
             </el-select>
           </el-col>
         </el-col>
-        <el-col :span="12">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">首件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.inFirstCost1"></el-input>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">续件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.inSuccessorCost1"></el-input>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">运输方式2</el-col>
-          <el-col :span="19">
+        <el-col :span="10" style="margin-top: 15px">
+          <el-col :span="7" style="margin-top: 10px;text-align: center">运输方式2</el-col>
+          <el-col :span="17">
             <el-select
               style="width: 95%"
               v-model="wishForm.inShippingMethod2"
@@ -600,24 +600,24 @@
             </el-select>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">首件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7" style="margin-top: 15px">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.inFirstCost2"></el-input>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">续件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7" style="margin-top: 15px">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.inSuccessorCost2"></el-input>
           </el-col>
         </el-col>
       </el-col>
       <el-col :span="12">
         <h4 class="adres">境外运输方式</h4>
-        <el-col :span="12">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">运输方式1</el-col>
-          <el-col :span="19">
+        <el-col :span="10">
+          <el-col :span="7" style="margin-top: 10px;text-align: center">运输方式1</el-col>
+          <el-col :span="17">
             <el-select
               style="width: 95%"
               v-model="wishForm.outShippingMethod1"
@@ -632,21 +632,21 @@
             </el-select>
           </el-col>
         </el-col>
-        <el-col :span="12">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">首件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.outFirstCost1"></el-input>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">续件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.outSuccessorCost1"></el-input>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">运输方式2</el-col>
-          <el-col :span="19">
+        <el-col :span="10" style="margin-top: 15px">
+          <el-col :span="7" style="margin-top: 10px;text-align: center">运输方式2</el-col>
+          <el-col :span="17">
             <el-select
               style="width: 95%"
               v-model="wishForm.outShippingMethod2"
@@ -656,15 +656,15 @@
             </el-select>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">首件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7" style="margin-top: 15px">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">首件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.outFirstCost2"></el-input>
           </el-col>
         </el-col>
-        <el-col :span="12" style="margin-top: 15px">
-          <el-col :span="5" style="margin-top: 10px;text-align: center">续件运费</el-col>
-          <el-col :span="19">
+        <el-col :span="7" style="margin-top: 15px">
+          <el-col :span="8" style="margin-top: 10px;text-align: center">续件运费</el-col>
+          <el-col :span="16">
             <el-input placeholder="--USD--" style="width: 95%" v-model="wishForm.outSuccessorCost2"></el-input>
           </el-col>
         </el-col>
@@ -972,6 +972,24 @@ export default {
       this.OutFirebEbay();
       this.InFirEbay();
       this.InSecEbay();
+      setTimeout(()=>{
+        if(this.ebayInFir.length!=0){
+          console.log(this.ebayInFir[0])
+          this.wishForm.inShippingMethod1=this.ebayInFir[0].servicesName
+        }else{
+          this.wishForm.inShippingMethod1=null
+        }
+        if(this.ebayOutFir.length!=0){
+          this.wishForm.outShippingMethod1=this.ebayOutFir[0].servicesName
+        }else{
+          this.wishForm.outShippingMethod1=null
+        }
+        if(this.ebayInSec.length!=0){
+          this.wishForm.inShippingMethod2=this.ebayInSec[0].servicesName
+        }else{
+          this.wishForm.inShippingMethod2=null
+        }
+      },500)
     },
     exportEbay() {
       if (this.accountNum != "") {

@@ -148,6 +148,9 @@ export default {
       this.allMenu.splice(0, 1)
       this.showMenu()
     })
+    if(this.$route.path=='/index'){
+      this.collapsed = false
+    }
   },
 //  beforeRouteLeave(to, from, next) {
 //    if (to.name === '首页') {
