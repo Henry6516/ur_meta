@@ -196,9 +196,13 @@ export default {
       return String(head + 1) + '-' + String(tail + 1)
     },
     handleSelect1(index, indexPath){
+      this.activeIndex = index
       sessionStorage.setItem('acTi',index)
       if(sessionStorage.getItem('judge')){
         sessionStorage.removeItem('judge')
+      }
+      if(sessionStorage.getItem('judgeCollection')){
+        sessionStorage.removeItem('judgeCollection')
       }
       sessionStorage.removeItem('sepage')
       sessionStorage.removeItem('sepagePic')
@@ -207,6 +211,9 @@ export default {
     handleSelect(index, indexPath) {
       if(sessionStorage.getItem('judge')){
         sessionStorage.removeItem('judge')
+      }
+      if(sessionStorage.getItem('judgeCollection')){
+        sessionStorage.removeItem('judgeCollection')
       }
       if (index === '/index') {
         this.collapsed = false

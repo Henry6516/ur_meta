@@ -5,7 +5,7 @@
       class="toolbar"
       style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:15px;padding-top: 12px"
     >
-      <el-col :span="12" :offset="5">
+      <el-col :span="14" :offset="5">
         <el-button
           type="primary"
           @click="update"
@@ -224,7 +224,7 @@
         <el-col :span="22" style="margin-left: 100px;margin-top: 10px">
           <el-input
             v-model="wishForm.headKeywords"
-            style="width:100%"
+            style="width:96%"
             placeholder="--一个关键词--"
             @input="top($event)"
           ></el-input>
@@ -245,15 +245,15 @@
         <el-col :span="23">
           <div style="margin-left: 70px">
             必填
-            <el-input style="width:32%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
-            <el-input style="width:32%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
-            <el-input style="width:32%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
+            <el-input style="width:31.8%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
+            <el-input style="width:31.8%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
+            <el-input style="width:31.8%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
           </div>
           <div style="margin-left: 70px;margin-top: 5px">
             选填
-            <el-input style="width:32%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
-            <el-input style="width:32%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
-            <el-input style="width:32%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
+            <el-input style="width:31.8%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
+            <el-input style="width:31.8%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
+            <el-input style="width:31.8%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
           </div>
         </el-col>
       </el-col>
@@ -272,19 +272,19 @@
         <el-col :span="23">
           <div style="margin-left: 70px">
             必填
-            <el-input style="width:19.1%" v-model="randomData[0]" @blur="random()"></el-input>
-            <el-input style="width:19.1%" v-model="randomData[1]" @blur="random()"></el-input>
-            <el-input style="width:19.1%" v-model="randomData[2]" @blur="random()"></el-input>
-            <el-input style="width:19.1%" v-model="randomData[3]" @blur="random()"></el-input>
-            <el-input style="width:19.3%" v-model="randomData[4]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[0]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[1]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[2]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[3]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[4]" @blur="random()"></el-input>
           </div>
           <div style="margin-left: 70px;margin-top: 5px">
             选填
-            <el-input style="width:19.1%" v-model="randomData[5]" @blur="random()"></el-input>
-            <el-input style="width:19.1%" v-model="randomData[6]" @blur="random()"></el-input>
-            <el-input style="width:19.1%" v-model="randomData[7]" @blur="random()"></el-input>
-            <el-input style="width:19.1%" v-model="randomData[8]" @blur="random()"></el-input>
-            <el-input style="width:19.3%" v-model="randomData[9]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[5]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[6]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[7]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[8]" @blur="random()"></el-input>
+            <el-input style="width:19%" v-model="randomData[9]" @blur="random()"></el-input>
           </div>
         </el-col>
       </el-col>
@@ -301,7 +301,7 @@
         <el-col :span="22" style="margin-left: 100px;margin-top: 10px;margin-bottom: 20px">
           <el-input
             v-model="wishForm.tailKeywords"
-            style="width: 100%"
+            style="width: 96%"
             placeholder="--最多一个关键词--"
             @input="bottm($event)"
           ></el-input>
@@ -313,21 +313,20 @@
           <el-input
             v-model="wishForm.description"
             type="textarea"
-            style="width:100%;margin-left: 27px"
+            :rows="6"
+            style="width:96%;margin-left: 27px"
           ></el-input>
         </el-col>
       </el-col>
       <el-col :span="24" style="margin-top: 15px">
         <span style="text-align: right;margin-top: 8px;float: left;padding-left: 44px">数量</span>
         <el-col :span="22">
-          <el-input v-model="wishForm.inventory" style="width:100%;margin-left: 27px"></el-input>
+          <el-input v-model="wishForm.inventory" style="width:96%;margin-left: 27px"></el-input>
         </el-col>
       </el-col>
       <el-col :span="24" style="margin-top: 15px">
-        <span
-          style="text-align: right;margin-top: 8px;float: left;padding-left: 35px;margin-right: 7px"
-        >运输时间</span>
-        <el-col :span="22">
+        <span style="text-align: right;margin-top: 8px;float: left;padding-left: 35px;margin-right: 10px">运输时间</span>
+        <el-col :span="21">
           <el-input v-model="wishForm.shippingTime" style="width:100%"></el-input>
         </el-col>
       </el-col>
@@ -605,7 +604,7 @@
         </el-table-column>
       </el-table>
       <el-row style="margin-top:15px;">
-        <el-col :span="2">
+        <el-col :span="3">
           <input
             placeholder="行数"
             v-model="rows"

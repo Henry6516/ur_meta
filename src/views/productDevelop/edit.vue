@@ -17,16 +17,14 @@
       </el-row>
       <el-row style="margin-top: 0px">
         <el-col :span="8">
-          <el-form-item label="" style="margin-bottom: 5px">
             <a :href="editForm.picUrl"
                target="_blank">
             <img :src='editForm.picUrl'
-                 style="width: 430px;height: 405px;margin-left:30px;margin-top:10px;margin-bottom:0px;border-radius: 10px">
+                 style="width: 85%;height: 405px;margin-left:8%;margin-top:10px;margin-bottom:0px;border-radius: 10px">
               </a>
-          </el-form-item>
         </el-col>
         <el-col :span="8" style="margin-top: 20px;">
-          <el-col :span="5" style="text-align: center;margin-top: 8px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px" class="font13">
             商品图片链接
           </el-col>
           <el-col :span="18">
@@ -36,7 +34,7 @@
           </el-col>
           </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px" class="font13">
             是否备货
           </el-col>
           <el-col :span="18">
@@ -52,7 +50,7 @@
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px" class="font13">
             商品编码
           </el-col>
           <el-col :span="18">
@@ -62,7 +60,7 @@
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red;">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red;" class="font13">
             *商品名称
           </el-col>
           <el-col :span="18">
@@ -72,7 +70,7 @@
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red;">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red;" class="font13">
             *中文申报名
           </el-col>
           <el-col :span="18">
@@ -82,7 +80,7 @@
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red;">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red;" class="font13">
             *英文申报名
           </el-col>
           <el-col :span="18">
@@ -92,7 +90,7 @@
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px;">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;" class="font13">
             采购
           </el-col>
           <el-col :span="18">
@@ -102,7 +100,7 @@
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px;">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;" class="font13">
             业绩归属人1
           </el-col>
           <el-col :span="18">
@@ -112,7 +110,7 @@
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px;">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;" class="font13">
             责任归属人1
           </el-col>
           <el-col :span="18">
@@ -122,7 +120,7 @@
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red" class="font13">
             *供应商名称
           </el-col>
           <el-col :span="18">
@@ -132,7 +130,7 @@
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red" class="font13">
             *包装规格
           </el-col>
           <el-col :span="18">
@@ -146,7 +144,7 @@
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px;">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;" class="font13">
             特殊属性必填
           </el-col>
           <el-col :span="18">
@@ -159,7 +157,7 @@
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red" class="font13">
             *仓库
           </el-col>
           <el-col :span="18">
@@ -173,7 +171,7 @@
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px;">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;" class="font13">
             季节
           </el-col>
           <el-col :span="18">
@@ -190,16 +188,17 @@
           <h3 class="toolbar essential" style="margin-top: 15px;margin-bottom: 10px">主信息</h3>
         </el-col>
         <el-col :span="24" style="margin-top: 10px;margin-bottom: 15px">
-          <el-col :span="7">
+          <el-col :span="6">
             <el-col :span="5" style="text-align: center;margin-top: 8px;">
               禁售平台
             </el-col>
             <el-col :span="19">
               <el-select
-                      style="width:98%"
+                      style="width:97%"
                       multiple
                       filterable
                       allow-create
+                      collapse-tags
                       default-first-option
                       v-model="editForm.dictionaryName"
                       @change="forbidSale($event)">
@@ -219,9 +218,10 @@
             </el-col>
             <el-col :span="19">
               <el-select
-                      style="width:98%"
+                      style="width:95%"
                       multiple
                       filterable
+                      collapse-tags
                       allow-create
                       default-first-option
                       v-model="editForm.mapPersons"
@@ -256,13 +256,13 @@
           <!--</el-select>-->
           <!--</el-form-item>-->
           <!--</el-col>-->
-          <el-col :span="5">
+          <el-col :span="6">
             <el-col :span="5" style="text-align: center;margin-top: 8px;">
               主类目
             </el-col>
             <el-col :span="19">
               <el-select
-                      style="width:230px"
+                      style="width:95%"
                       v-model="oaGoods.cate"
                       @change="mainIndex($event)">
                 <el-option v-for="(item, key) in mainCategory" :key='item.key' :label="item" :value="item"></el-option>
@@ -275,7 +275,7 @@
             </el-col>
             <el-col :span="19">
               <el-select
-                      style="width: 98%"
+                      style="width: 95%"
                       v-model="oaGoods.subCate"
                       @change="childrenIndex($event)">
                 <el-option v-for="(item, key) in childrenCategory" :key='item.key' :label="item" :value="item"></el-option>
@@ -290,7 +290,7 @@
           <el-col :span="22" style="margin-left: 15px;">
             <el-input
                     v-model="editForm.wishTags"
-                    style="width: 100%"
+                    style="width: 96%"
                     placeholder="--tags关键词不能超过10个，逗号分隔--"></el-input>
           </el-col>
         </el-col>
@@ -309,7 +309,7 @@
           <el-col :span="22" style="margin-left: 100px;margin-top: 10px">
             <el-input
                       v-model="editForm.headKeywords"
-                      style="width: 100%"
+                      style="width: 96%"
                       placeholder="--一个关键词--"
                       @input="top($event)"
             ></el-input>
@@ -332,20 +332,20 @@
             <div style="margin-left: 70px">
               必填
               <el-input
-                        style="width:32%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
+                        style="width:31.8%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
               <el-input
-                        style="width:32%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
+                        style="width:31.8%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
               <el-input
-                        style="width:32%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
+                        style="width:31.8%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
             </div>
             <div style="margin-left: 70px;margin-top: 5px">
               选填
               <el-input
-                        style="width:32%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
+                        style="width:31.8%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
               <el-input
-                        style="width:32%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
+                        style="width:31.8%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
               <el-input
-                        style="width:32%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
+                        style="width:31.8%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
 
             </div>
           </el-col>
@@ -367,28 +367,28 @@
             <div style="margin-left: 70px">
               必填
               <el-input
-                        style="width:19.1%" v-model="randomData[0]" @blur="random()"></el-input>
+                        style="width:19%" v-model="randomData[0]" @blur="random()"></el-input>
               <el-input
-                        style="width:19.1%" v-model="randomData[1]" @blur="random()"></el-input>
+                        style="width:19%" v-model="randomData[1]" @blur="random()"></el-input>
               <el-input
-                        style="width:19.1%" v-model="randomData[2]" @blur="random()"></el-input>
+                        style="width:19%" v-model="randomData[2]" @blur="random()"></el-input>
               <el-input
-                        style="width:19.1%" v-model="randomData[3]" @blur="random()"></el-input>
+                        style="width:19%" v-model="randomData[3]" @blur="random()"></el-input>
               <el-input
-                        style="width:19.3%" v-model="randomData[4]" @blur="random()"></el-input>
+                        style="width:19%" v-model="randomData[4]" @blur="random()"></el-input>
             </div>
             <div style="margin-left: 70px;margin-top: 5px">
               选填
               <el-input
-                        style="width:19.1%" v-model="randomData[5]" @blur="random()"></el-input>
+                        style="width:19%" v-model="randomData[5]" @blur="random()"></el-input>
               <el-input
-                        style="width:19.1%" v-model="randomData[6]" @blur="random()"></el-input>
+                        style="width:19%" v-model="randomData[6]" @blur="random()"></el-input>
               <el-input
-                        style="width:19.1%" v-model="randomData[7]" @blur="random()"></el-input>
+                        style="width:19%" v-model="randomData[7]" @blur="random()"></el-input>
               <el-input
-                        style="width:19.1%" v-model="randomData[8]" @blur="random()"></el-input>
+                        style="width:19%" v-model="randomData[8]" @blur="random()"></el-input>
               <el-input
-                        style="width:19.3%" v-model="randomData[9]" @blur="random()"></el-input>
+                        style="width:19%" v-model="randomData[9]" @blur="random()"></el-input>
 
             </div>
           </el-col>
@@ -408,7 +408,7 @@
           <el-col :span="22" style="margin-left: 100px;margin-top: 10px;margin-bottom: 20px">
             <el-input
                       v-model="editForm.tailKeywords"
-                      style="width: 100%"
+                      style="width: 96%"
                       placeholder="--最多一个关键词--"
                       @input="bottm($event)"
             ></el-input>
@@ -422,7 +422,7 @@
             <el-input
                     type="textarea"
                     v-model="editForm.description"
-                    style="width:100%;margin-left: 27px"></el-input>
+                    style="width:96%;margin-left: 27px"></el-input>
           </el-col>
         </el-col>
       </el-row>
@@ -436,42 +436,42 @@
           <el-form-item label="供应商链接1">
             <el-input
                       v-model="oaGoods.vendor1"
-                      style="width:390px"></el-input>
+                      style="width:360px"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="供应商链接2">
             <el-input
                       v-model="oaGoods.vendor2"
-                      style="width:390px"></el-input>
+                      style="width:360px"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="供应商链接3">
             <el-input
                       v-model="oaGoods.vendor3"
-                      style="width:392px"></el-input>
+                      style="width:360px"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="平台链接1">
             <el-input
                       v-model="oaGoods.origin1"
-                      style="width:390px"></el-input>
+                      style="width:360px"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="平台链接2">
             <el-input
                       v-model="oaGoods.origin2"
-                      style="width:390px"></el-input>
+                      style="width:360px"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="平台链接3">
             <el-input
                       v-model="oaGoods.origin3"
-                      style="width:392px"></el-input>
+                      style="width:360px"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -594,14 +594,14 @@
       </el-table-column>
     </el-table>
     <el-row style="margin-top:15px;padding-left: 1%">
-      <el-col :span="2">
+      <el-col :span="3">
         <input placeholder="行数" v-model="rows"
                   style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz" @click="addClomun">新增行</span>
         <!--<el-button size="small"-->
                    <!--@click="addClomun">新增行</el-button>-->
       </el-col>
-      <el-col :span="3">
+      <el-col :span="4">
         <input placeholder="成本价￥" v-model="costprice"
                style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="cosprice">成本确定</span>
@@ -612,7 +612,7 @@
         <!--<el-button size="small"-->
                    <!--@click="cosprice">成本确定</el-button>-->
       </el-col>
-      <el-col :span="3">
+      <el-col :span="4">
         <input placeholder="重量g" v-model="weight"
                style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="weht">重量确定</span>
@@ -623,10 +623,10 @@
         <!--<el-button size="small"-->
                    <!--@click="weht">重量确定</el-button>-->
       </el-col>
-      <el-col :span="3">
+      <el-col :span="4">
         <input placeholder="零售价$" v-model="retailprice"
-               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
-        <span class="xzz1" @click="price">价格确定</span>
+               style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <span class="xzz1" @click="price">零售价确定</span>
         <!--<el-input v-model="retailprice"-->
                   <!--size="small"-->
                   <!--placeholder="零售价$"-->
@@ -634,10 +634,10 @@
         <!--<el-button size="small"-->
                    <!--@click="price">价格确定</el-button>-->
       </el-col>
-      <el-col :span="3">
+      <el-col :span="5">
         <input placeholder="joom零售价$" v-model="joomretailprice"
-               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
-        <span class="xzz1" @click="joomprice">价格确定</span>
+               style="width:53%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <span class="xzz1" @click="joomprice">Joom价格确定</span>
         <!--<el-input v-model="joomretailprice"-->
                   <!--size="small"-->
                   <!--placeholder="joom零售价$"-->
@@ -645,10 +645,10 @@
         <!--<el-button size="small"-->
                    <!--@click="joomprice">价格确定</el-button>-->
       </el-col>
-      <el-col :span="3">
+      <el-col :span="4">
         <input placeholder="joom运费$" v-model="transportationcost"
-               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
-        <span class="xzz1" @click="transport">价格确定</span>
+               style="width:53%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <span class="xzz1" @click="transport">运费确定</span>
         <!--<el-input v-model="transportationcost"-->
                   <!--size="small"-->
                   <!--placeholder="joom运费$"-->
@@ -982,6 +982,7 @@ export default {
             type: 'success'
           })
           this.tableData.splice(index, 1)
+          this.skuTotal = this.tableData.length
 //          this.getData()
         } else {
           this.$message.error('删除失败')
@@ -1470,6 +1471,16 @@ section {
   font-size: 13px;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
+}
+@media screen and (max-width: 1500px){
+   .font13{
+     font-size: 13px;
+   }
+}
+@media screen and (max-width: 1400px){
+   .font13{
+     font-size: 12px;
+   }
 }
 </style>
 

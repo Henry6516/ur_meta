@@ -279,6 +279,9 @@
         <div v-show="show.kf">
             <basicInformationArt></basicInformationArt>
         </div>
+        <div v-show="show.pay">
+            <basicInformationPay></basicInformationPay>
+        </div>
     </section>
 </template>
 
@@ -290,13 +293,15 @@
     import basicInformationJoom from './basicInformationJoom.vue'
     import basicInformationJoomYs from './basicInformationJoomYs.vue'
     import basicInformationJw from './basicInformationJw.vue'
+    import basicInformationPay from './basicInformationPay.vue'
     export default {
         components: {
             basicInformationArt:basicInformationArt,
             basicInformationeBay:basicInformationeBay,
             basicInformationJoom:basicInformationJoom,
             basicInformationJoomYs:basicInformationJoomYs,
-            basicInformationJw:basicInformationJw
+            basicInformationJw:basicInformationJw,
+            basicInformationPay:basicInformationPay
         },
       data() {
         return {
@@ -318,7 +323,8 @@
                 joom: false,
                 ys: false,
                 jw: false,
-                kf: false
+                kf: false,
+                pay:false
             },
           Suffix: null,
           contenWish: [],
@@ -352,6 +358,11 @@
                   this.show['joom'] = true
               } else {
                   this.show['joom'] = false
+              }
+              if (tab.label === 'payPal账号字典') {
+                  this.show['pay'] = true
+              } else {
+                  this.show['pay'] = false
               }
               if (tab.label === 'eBay运输方式') {
                   this.show['ys'] = true

@@ -1135,6 +1135,10 @@ export default {
           this.delForm.nid = [row.nid];
           forwardSubmit(this.delForm).then(res => {
             if (res.data.code == 200) {
+               this.$message({
+                message: "成功",
+                type: "success"
+              });
               this.getFailed();
             } else {
               this.$message.error(res.data.message);
@@ -1195,6 +1199,10 @@ export default {
           this.passForm.nid = [row.nid];
           checkPass(this.passForm).then(res => {
             if (res.data.code == 200) {
+               this.$message({
+                message: "成功",
+                type: "success"
+              });
               this.getData();
             } else {
               this.$message.error(res.data.message);
@@ -1209,6 +1217,10 @@ export default {
         () => {
           checkPass(this.passForm).then(res => {
             if (res.data.code == 200) {
+               this.$message({
+                message: "成功",
+                type: "success"
+              });
               this.getData();
             } else {
               this.$message.error(res.data.message);
@@ -1223,6 +1235,10 @@ export default {
           this.unPassForm.nid = [row.nid];
           checkFailed(this.unPassForm).then(res => {
             if (res.data.code == 200) {
+               this.$message({
+                message: "成功",
+                type: "success"
+              });
               this.getData();
             } else {
               this.$message.error(res.data.message);
@@ -1237,6 +1253,10 @@ export default {
         () => {
           checkFailed(this.unPassForm).then(res => {
             if (res.data.code == 200) {
+               this.$message({
+                message: "成功",
+                type: "success"
+              });
               this.getData();
             } else {
               this.$message.error(res.data.message);

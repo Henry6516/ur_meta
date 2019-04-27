@@ -61,6 +61,7 @@ import supplierManagement from '../views/productDevelop/supplierManagement.vue'
 import supplierProduct from '../views/productDevelop/supplierProduct.vue'
 import basicInformation from '../views/productDevelop/basicInformation.vue'
 import basicInformationeBay from '../views/productDevelop/basicInformationeBay.vue'
+import basicInformationpaypal from '../views/productDevelop/basicInformationPay.vue'
 import basicInformationJoom from '../views/productDevelop/basicInformationJoom.vue'
 import basicInformationJoomYs from '../views/productDevelop/basicInformationJoomYs.vue'
 import basicInformationJw from '../views/productDevelop/basicInformationJw.vue'
@@ -71,6 +72,10 @@ import ordermanage from '../views/productDevelop/ordermanage.vue'
 import ord1 from '../views/productDevelop/ord1.vue'
 import ord2 from '../views/productDevelop/ord2.vue'
 import paymentDetail from '../views/productDevelop/paymentDetail.vue'
+//数据采集
+import collection from '../views/productDevelop/collection.vue'
+import collectionJoom from '../views/productDevelop/collectionJoom.vue'
+import joomId from '../views/productDevelop/collectionJoomDetails.vue'
 
 const routes = [
   {
@@ -390,6 +395,23 @@ const routes = [
         ]
       },
       {
+        path: '/v1/oa-data-mine/index',
+        component: collection,
+        name: '数据采集',
+        children: [
+          {
+            path: '/v1/oa-data-mine/collectionJoom',
+            component: collectionJoom,
+            name: 'Joom'
+          },
+          {
+            path: '/joom/:id',
+            component: joomId,
+            name: 'joomId'
+          },
+        ]
+      },
+      {
         path: '/v1/supplier/supplier-list',
         component: supplierManagement,
         name: '供应商管理'
@@ -413,6 +435,11 @@ const routes = [
         path: '/v1/basic-info/joom',
         component: basicInformationJoom,
         name: 'joom'
+      },
+      {
+        path: '/v1/basic-info/paypal',
+        component: basicInformationpaypal,
+        name: 'paypal'
       },
       {
         path: '/v1/basic-info/ys',
