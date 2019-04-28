@@ -18,13 +18,13 @@
         <el-col :span="8" class="top15">
           <el-col :span="4" class="titCenter">标题</el-col>
           <el-col :span="18">
-            <el-input v-model="editForm.goodsCode" clearable></el-input>
+            <el-input v-model="editForm.proName" clearable></el-input>
           </el-col>
         </el-col>
         <el-col :span="8" class="top15">
           <el-col :span="4" class="titCenter">标签</el-col>
           <el-col :span="18">
-            <el-input clearable></el-input>
+            <el-input v-model="editForm.tags" clearable></el-input>
           </el-col>
         </el-col>
         <el-col :span="8" class="top15">
@@ -135,10 +135,18 @@
       </el-col>
     </div>
     <el-col :span="24" style="padding: 0;">
-      <h3 class="toolbar essential">多属性信息</h3>
+      <h3 class="toolbar essential">
+        多属性信息
+        <span
+          style="float:right;margin-right: 15px;font-size: 14px;margin-bottom: 15px;display: block"
+        >
+          共{{skuTotal}}条
+          <span style="margin-left: 15px">第1-{{skuTotal}}条数据</span>
+        </span>
+      </h3>
     </el-col>
     <el-col style="margin-top:5px;">
-      <el-table :data="tableData" border style="width:98%;margin-left:1%;margin-top:15px;">
+      <el-table :data="tableData" border style="width:98%;margin-left:1%;" max-height="300">
         <!-- <el-table-column type="selection" width="30" align="center" header-align="center"></el-table-column> -->
         <el-table-column type="index" width="50" align="center" header-align="center"></el-table-column>
         <el-table-column label="操作" width="50" header-align="center" align="center">
@@ -213,66 +221,71 @@
       </el-table>
     </el-col>
     <div class="w98">
-      <el-col :span="24" style="margin-top:10px;">
+      <el-col :span="24" style="margin-top:15px;">
         <el-col :span="3">
           <el-col :span="14">
-            <el-input placeholder="新增行数" class="font12"></el-input>
+            <el-input placeholder="新增行数" class="font12" size="small" v-model="rows"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            行数确定
+            <span @click="addClomun()" class="spBlock">行数确定</span>
           </el-col>
         </el-col>
         <el-col :span="3">
           <el-col :span="14">
-            <el-input placeholder="库存设置" class="font12"></el-input>
+            <el-input placeholder="库存设置" class="font12" size="small" v-model="stock"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            库存确定
+            <span @click="modifystock()" class="spBlock">库存确定</span>
+          </el-col>
+        </el-col>
+        <el-col :span="5">
+          <el-col :span="6">
+            <el-select v-model="sign" size="small">
+              <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="10">
+            <el-input placeholder="设置价格" class="font12" size="small" v-model="price"></el-input>
+          </el-col>
+          <el-col :span="7" class="boderrtb font12">
+            <span @click="modifyprice()" class="spBlock">价格确定</span>
           </el-col>
         </el-col>
         <el-col :span="3">
           <el-col :span="14">
-            <el-input placeholder="设置价格" class="font12"></el-input>
+            <el-input placeholder="运费设置" class="font12" size="small" v-model="freight"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            价格确定
+            <span @click="modifyfreight()" class="spBlock">运费确定</span>
           </el-col>
         </el-col>
         <el-col :span="3">
           <el-col :span="14">
-            <el-input placeholder="运费设置" class="font12"></el-input>
+            <el-input placeholder="零售价" class="font12" size="small" v-model="retail"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            运费确定
+            <span @click="modifyretail()" class="spBlock">零售确定</span>
           </el-col>
         </el-col>
         <el-col :span="3">
           <el-col :span="14">
-            <el-input placeholder="零售价" class="font12"></el-input>
+            <el-input placeholder="运输时间" class="font12" size="small" v-model="delivery"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            零售确定
+            <span @click="modifydelivery()" class="spBlock">配送确定</span>
           </el-col>
         </el-col>
         <el-col :span="3">
           <el-col :span="14">
-            <el-input placeholder="运输时间" class="font12"></el-input>
+            <el-input placeholder="重量设置" class="font12" size="small" v-model="weight"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            配送确定
-          </el-col>
-        </el-col>
-        <el-col :span="3">
-          <el-col :span="14">
-            <el-input placeholder="重量设置" class="font12"></el-input>
-          </el-col>
-          <el-col :span="9" class="boderrtb font12">
-            重量确定
+            <span @click="modifyweight" class="spBlock">重量确定</span>
           </el-col>
         </el-col>
       </el-col>
     </div>
-    <el-col style="width:100%;height:70px;"></el-col>
+    <el-col style="width:100%;height:80px;"></el-col>
   </div>
 </template>
 
@@ -288,11 +301,21 @@ export default {
   data() {
     return {
       specificity: [],
+      rows: 1,
       mainCategory: [],
       editForm: [],
       category: [],
       disabled: true,
+      skuTotal: 0,
       shoIS: false,
+      stock: null,
+      price: null,
+      sign: "=",
+      freight: null,
+      retail: null,
+      options: ["=", "+", "-", "*", "/"],
+      delivery: null,
+      weight: null,
       cate: [],
       url: [],
       tableData: [],
@@ -303,6 +326,156 @@ export default {
     };
   },
   methods: {
+    modifyweight() {
+      if (this.weight) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].shippingWeight = this.weight;
+        }
+      } else {
+        return false;
+      }
+    },
+    modifydelivery() {
+      if (this.delivery) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].shippingTime = this.delivery;
+        }
+      } else {
+        return false;
+      }
+    },
+    modifyretail() {
+      if (this.retail) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].msrPrice = this.retail;
+        }
+      } else {
+        return false;
+      }
+    },
+    modifyfreight() {
+      if (this.freight) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].shipping = this.freight;
+        }
+      } else {
+        return false;
+      }
+    },
+    modifyprice() {
+      if (this.price) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          if (this.sign == "=") {
+            this.tableData[i].price = this.price;
+          }
+          if (this.sign == "+") {
+            this.tableData[i].price = Number(this.tableData[i].price) + Number(this.price);
+          }
+          if (this.sign == "-") {
+            this.tableData[i].price = Number(this.tableData[i].price) - Number(this.price);
+          }
+          if (this.sign == "*") {
+            this.tableData[i].price = Number(this.tableData[i].price) * Number(this.price);
+          }
+          if (this.sign == "/") {
+            this.tableData[i].price = Number(this.tableData[i].price) / Number(this.price);
+          }
+        }
+      } else {
+        return false;
+      }
+    },
+    modifystock() {
+      if (this.stock) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].quantity = this.stock;
+        }
+      } else {
+        return false;
+      }
+    },
+    del(index, row) {
+      //       let arrId = []
+      //       arrId.push(row.id)
+      //       let aryId={
+      //         id:arrId
+      //       }
+      //       APIDeleteVariant(aryId).then(res => {
+      //         if (res.data.code === 200) {
+      //           this.$message({
+      //             message: '删除成功',
+      //             type: 'success'
+      //           })
+      //           this.tableData.splice(index, 1)
+      //           this.skuTotal = this.tableData.length
+      // //          this.getData()
+      //         } else {
+      //           this.$message.error('删除失败')
+      //         }
+      //       })
+    },
+    botOm(arr, index1, index2, direction) {
+      if (direction == "down") {
+        arr.push(arr[index1]);
+        arr.splice(index1, 1);
+        return arr;
+      }
+      arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+      return arr;
+    },
+    swapItems(arr, index1, index2, direction) {
+      if (direction == "up") {
+        // 置顶
+        arr.unshift(arr[index1]);
+        arr.splice(index1 + 1, 1);
+        return arr;
+      }
+      arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+      return arr;
+    },
+    botIndex(index) {
+      if (index == this.url.length - 1) {
+        this.$message({
+          message: "已经是最后一张了",
+          type: "success"
+        });
+        return;
+      }
+      this.botOm(this.url, index, index + 1);
+    },
+    topIndex(index) {
+      if (index == 0) {
+        this.$message({
+          message: "已经是第一张了",
+          type: "success"
+        });
+        return;
+      }
+      this.swapItems(this.url, index, index - 1);
+    },
+    revise(e, index) {
+      this.url[index] = e;
+    },
+    addClomun() {
+      for (let i = 0; i < this.rows; i++) {
+        var obj = {};
+        obj.id = null;
+        obj.childId = null;
+        obj.color = null;
+        obj.mid = null;
+        obj.msrPrice = null;
+        obj.parentId = null;
+        obj.price = null;
+        obj.proSize = null;
+        obj.quantity = null;
+        obj.shipping = null;
+        obj.shippingTime = null;
+        obj.shippingWeight = null;
+        obj.varMainImage = null;
+        this.tableData.push(obj);
+      }
+      this.skuTotal = this.tableData.length;
+    },
     showAttribute() {
       this.showattribute = !this.showattribute;
     },
@@ -314,6 +487,7 @@ export default {
         if (res.data.code == 200) {
           this.editForm = res.data.data.basicInfo;
           this.tableData = res.data.data.detailsInfo;
+          this.skuTotal = this.tableData.length;
           for (var item in res.data.data.images) {
             this.url.push(res.data.data.images[item]);
           }
@@ -478,13 +652,16 @@ export default {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
+.spBlock{
+  display: block;
+}
 .m15 {
   margin-top: 15px;
 }
-.boderrtb{
+.boderrtb {
   border: 1px solid #dcdfe6;
   border-left: none;
-  line-height: 38px;
+  line-height: 30px;
   text-align: center;
   cursor: pointer;
 }

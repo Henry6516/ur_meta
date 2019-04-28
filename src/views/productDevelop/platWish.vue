@@ -245,15 +245,15 @@
         <el-col :span="23">
           <div style="margin-left: 70px">
             必填
-            <el-input style="width:31.8%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
-            <el-input style="width:31.8%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
-            <el-input style="width:31.8%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
           </div>
           <div style="margin-left: 70px;margin-top: 5px">
             选填
-            <el-input style="width:31.8%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
-            <el-input style="width:31.8%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
-            <el-input style="width:31.8%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
           </div>
         </el-col>
       </el-col>
@@ -272,19 +272,19 @@
         <el-col :span="23">
           <div style="margin-left: 70px">
             必填
-            <el-input style="width:19%" v-model="randomData[0]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[1]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[2]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[3]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[4]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[0]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[1]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[2]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[3]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[4]" @blur="random()"></el-input>
           </div>
           <div style="margin-left: 70px;margin-top: 5px">
             选填
-            <el-input style="width:19%" v-model="randomData[5]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[6]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[7]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[8]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[9]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[5]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[6]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[7]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[8]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[9]" @blur="random()"></el-input>
           </div>
         </el-col>
       </el-col>
@@ -1213,7 +1213,15 @@ export default {
         skuInfo: []
       };
       data.basicInfo = this.wishForm;
-      data.basicInfo.extraImages = this.url.join("\\n");
+      var url="";
+      for(var y=0;y<this.url.length;y++){
+        if(y==this.url.length - 1){
+          url+=this.url[y];
+        }else{
+         url+=(this.url[y]+ "\n");
+        }
+      }
+      data.basicInfo.extraImages = url;
       data.basicInfo.id = this.condition.id;
       data.basicInfo.requiredKeywords = md;
       data.basicInfo.randomKeywords = mr;
@@ -1257,8 +1265,8 @@ export default {
         this.tableData = res.data.data.skuInfo;
         this.condition.id = this.wishForm.id;
         const extraPic = res.data.data.basicInfo.extraImages;
-        const picture = extraPic.split("\n")[0];
-        this.url = picture.split("\\n");
+        // const picture = extraPic.split("\n")[0];
+        this.url = extraPic.split(/[\s\n]/);
         if (this.url[this.url.length - 1] == "") {
           this.url.pop();
         }

@@ -865,7 +865,7 @@ export function APIDeleteAttribute(param) {
 export function APIMineList(param) {
   const data = { condition: param }
   return request({
-    url: '/oa-data-mine/mine-list',
+    url: '/oa-data-mine/mine-list?page=' + param.page,
     method: 'post',
     data
   })

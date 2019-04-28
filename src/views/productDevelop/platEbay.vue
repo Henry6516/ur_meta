@@ -4,7 +4,7 @@
       :span="24"
       style="position: fixed; bottom:0; z-index:999;background: #f2f2f2;padding: 15px 0; padding-top:12px; border-top: #eee solid 1px;"
     >
-      <el-col :span="14" :offset="5">
+      <el-col :span="15" :offset="5">
         <el-button @click="keep()" type="primary" style="float: left;margin-right:10px">保存当前数据</el-button>
         <el-button
           style="margin-left: 0;float: left;margin-right:10px"
@@ -316,7 +316,7 @@
                 <input
                   placeholder="Does not apply"
                   v-model="ship"
-                  style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+                  style="width:49%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
                 >
                 <span class="xzz1" @click="setShip">UPC/ENC确定</span>
               </el-col>
@@ -398,15 +398,15 @@
         <el-col :span="23">
           <div style="margin-left: 70px;">
             必填
-            <el-input style="width:31.8%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
-            <el-input style="width:31.8%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
-            <el-input style="width:31.8%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
           </div>
           <div style="margin-left: 70px;margin-top: 5px">
             选填
-            <el-input style="width:31.8%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
-            <el-input style="width:31.8%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
-            <el-input style="width:31.8%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
           </div>
         </el-col>
       </el-col>
@@ -425,19 +425,19 @@
         <el-col :span="23">
           <div style="margin-left: 70px">
             必填
-            <el-input style="width:19%" v-model="randomData[0]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[1]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[2]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[3]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[4]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[0]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[1]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[2]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[3]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[4]" @blur="random()"></el-input>
           </div>
           <div style="margin-left: 70px;margin-top: 5px">
             选填
-            <el-input style="width:19%" v-model="randomData[5]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[6]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[7]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[8]" @blur="random()"></el-input>
-            <el-input style="width:19%" v-model="randomData[9]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[5]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[6]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[7]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[8]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[9]" @blur="random()"></el-input>
           </div>
         </el-col>
       </el-col>
@@ -1401,7 +1401,7 @@ export default {
       APIPlatInfo(this.condition).then(res => {
         this.wishForm = res.data.data.basicInfo;
         this.tabDate = res.data.data.skuInfo;
-        this.wishForm.extraPage = this.wishForm.extraPage.split("\\n");
+        this.wishForm.extraPage = this.wishForm.extraPage.split(/[\s\n]/);
         // this.wishForm.site == 0
         //   ? (this.wishForm.site = "美国")
         //   : this.wishForm.site == 3
@@ -1520,7 +1520,15 @@ export default {
       }
       const md = JSON.stringify(this.mandatoryData);
       const mr = JSON.stringify(this.randomData);
-      const url = this.wishForm.extraPage.join("\\n");
+      // const url = this.wishForm.extraPage.join("\\n");
+      var url="";
+      for(var y=0;y<this.wishForm.extraPage.length;y++){
+        if(y==this.wishForm.extraPage.length - 1){
+          url+=this.wishForm.extraPage[y];
+        }else{
+         url+=(this.wishForm.extraPage[y]+ "\n");
+        }
+      }
       let objStr = {
         specifics: this.tableData
       };
@@ -1596,13 +1604,13 @@ export default {
             message: "保存成功",
             type: "success"
           });
-          for(let s=0;s<this.ebaySite.length;s++){
-            if(this.wishForm.site==this.ebaySite[s].code){
-            this.wishForm.site=this.ebaySite[s].name
-           }
-          }
         } else {
           this.$message.error(res.data.message);
+        }
+        for(let s=0;s<this.ebaySite.length;s++){
+          if(this.wishForm.site==this.ebaySite[s].code){
+           this.wishForm.site=this.ebaySite[s].name
+           }
         }
       });
     }
@@ -1612,6 +1620,9 @@ export default {
     this.getData();
     getPlatEbayAccount().then(response => {
       this.resAcc= response.data.data
+      for(let k=0;k<response.data.data.length;k++){
+         this.accountNumber.push(response.data.data[k].ebaySuffix);
+      }
       // for (var item in response.data.data) {
       //   this.accountNumber.push(response.data.data[item]);
       // }

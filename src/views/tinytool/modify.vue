@@ -126,7 +126,7 @@ export default {
       member: [],
       account: [],
       store: [],
-      showIFif:false,
+      showIFif: false,
       resJl: [],
       condition: {
         salesName: null,
@@ -153,7 +153,10 @@ export default {
           ele.position === "销售"
       );
       this.resJl = res.filter(
-        ele => (ele.department === "运营一部" || ele.parent_department === "运营一部") && ele.position=="经理"
+        ele =>
+          (ele.department === "运营一部" ||
+            ele.parent_department === "运营一部") &&
+          ele.position == "经理"
       );
     });
     getAccount().then(response => {
@@ -167,13 +170,41 @@ export default {
     exportExcel() {
       this.order = Object.assign({}, this.condition);
       this.order.pageSize = 100000;
-      getEbayVirtualStore(this.order).then(res => {
-        this.allDataOrder = res.data.data.items;
-        const Filename = "eBay海外仓修改在线数量";
-        const data = this.allDataOrder.map(v => filterVal.map(k => v[k]));
-        const [fileName, fileType, sheetName] = [Filename, "xls"];
-        this.$toExcel({ th, data, fileName, fileType, sheetName });
-      });
+      if (this.condition.salesName) {
+        getEbayVirtualStore(this.order).then(res => {
+          this.allDataOrder = res.data.data.items;
+          const Filename = "eBay海外仓修改在线数量";
+          const data = this.allDataOrder.map(v => filterVal.map(k => v[k]));
+          const [fileName, fileType, sheetName] = [Filename, "xls"];
+          this.$toExcel({ th, data, fileName, fileType, sheetName });
+        });
+      } else {
+        let admin = "";
+        const username = sessionStorage.getItem("user");
+        for (let i = 0; i < this.resJl.length; i++) {
+          admin = this.resJl[i].username;
+        }
+        if (username === admin || isAdmin() === true) {
+          getEbayVirtualStore(this.order).then(res => {
+            this.allDataOrder = res.data.data.items;
+            const Filename = "eBay海外仓修改在线数量";
+            const data = this.allDataOrder.map(v => filterVal.map(k => v[k]));
+            const [fileName, fileType, sheetName] = [Filename, "xls"];
+            this.$toExcel({ th, data, fileName, fileType, sheetName });
+          });
+        } else {
+          if (this.res.length != 0) {
+            this.order.salesName = this.res[0].username;
+            getEbayVirtualStore(this.order).then(res => {
+              this.allDataOrder = res.data.data.items;
+              const Filename = "eBay海外仓修改在线数量";
+              const data = this.allDataOrder.map(v => filterVal.map(k => v[k]));
+              const [fileName, fileType, sheetName] = [Filename, "xls"];
+              this.$toExcel({ th, data, fileName, fileType, sheetName });
+            });
+          }
+        }
+      }
       const th = [
         "销售员",
         "账号",
@@ -206,7 +237,7 @@ export default {
       this.searchMod();
     },
     searchMod() {
-      this.showIFif=true
+      this.showIFif = true;
       this.listLoading = true;
       this.shiwIS = false;
       if (this.condition.salesName) {
