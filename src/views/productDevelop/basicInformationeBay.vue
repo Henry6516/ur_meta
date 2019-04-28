@@ -56,18 +56,10 @@
               ></el-table-column>
             </el-table-column>
             <el-table-column label="eBay编码" header-align="center">
-              <el-table-column
-                prop="nameCode"
-                :render-header="renderHeaderPicEbay"
-                align="center"
-              ></el-table-column>
+              <el-table-column prop="nameCode" :render-header="renderHeaderPicEbay" align="center"></el-table-column>
             </el-table-column>
             <el-table-column label="主图" header-align="center">
-              <el-table-column
-                prop="mainImg"
-                :render-header="renderHeaderPicEbay"
-                align="center"
-              ></el-table-column>
+              <el-table-column prop="mainImg" :render-header="renderHeaderPicEbay" align="center"></el-table-column>
             </el-table-column>
             <el-table-column label="刊登风格" header-align="center">
               <el-table-column
@@ -229,8 +221,8 @@
                   <el-option
                     v-for="(item,key) in highPrice"
                     :key="key"
-                    :label="item"
-                    :value="item"
+                    :label="item.paypal"
+                    :value="item.paypal"
                   ></el-option>
                 </el-select>
                 <!-- <el-input v-model="bigEbay"></el-input> -->
@@ -243,10 +235,10 @@
               <el-col :span="20">
                 <el-select v-model="smallEbay" style="width: 100%" filterable clearable>
                   <el-option
-                    v-for="(item,key) in lowPrice"
+                    v-for="(item,key) in highPrice"
                     :key="key"
-                    :label="item"
-                    :value="item"
+                    :label="item.paypal"
+                    :value="item.paypal"
                   ></el-option>
                 </el-select>
                 <!-- <el-input v-model="smallEbay"></el-input> -->
@@ -317,12 +309,12 @@
                 <p class="basp">大额PayPal</p>
               </el-col>
               <el-col :span="20">
-                 <el-select v-model="contenEbay.high" style="width: 100%" filterable clearable>
+                <el-select v-model="contenEbay.high" style="width: 100%" filterable clearable>
                   <el-option
                     v-for="(item,key) in highPrice"
                     :key="key"
-                    :label="item"
-                    :value="item"
+                    :label="item.paypal"
+                    :value="item.paypal"
                   ></el-option>
                 </el-select>
                 <!-- <el-input v-model="contenEbay.high"></el-input> -->
@@ -333,12 +325,12 @@
                 <p class="basp">小额PayPal</p>
               </el-col>
               <el-col :span="20">
-                 <el-select v-model="contenEbay.low" style="width: 100%" filterable clearable>
+                <el-select v-model="contenEbay.low" style="width: 100%" filterable clearable>
                   <el-option
-                    v-for="(item,key) in lowPrice"
+                    v-for="(item,key) in highPrice"
                     :key="key"
-                    :label="item"
-                    :value="item"
+                    :label="item.paypal"
+                    :value="item.paypal"
                   ></el-option>
                 </el-select>
                 <!-- <el-input v-model="contenEbay.low"></el-input> -->
@@ -368,7 +360,8 @@ import {
   APICreateEbay,
   APIEbayInfo,
   APIDeleteEbay,
-  APIUpdateEbay
+  APIUpdateEbay,
+  APIPaypal
 } from "../../api/product";
 import { getMenu } from "../../api/login";
 export default {
@@ -393,6 +386,11 @@ export default {
       delistEbay: [],
       highPrice: [],
       lowPrice: [],
+      conditionPay: {
+        paypal: null,
+        pageSize: 1000000,
+        page: 1
+      },
       conditionEbay: {
         ebayName: null,
         ebaySuffix: null,
@@ -419,6 +417,14 @@ export default {
     },
     addJoomTjEbay() {
       if (this.ebayAcount) {
+        for (let i = 0; i < this.highPrice.length; i++) {
+          if (this.bigEbay && this.bigEbay == this.highPrice[i].paypal) {
+            this.bigEbay = this.highPrice[i].id;
+          }
+          if (this.smallEbay && this.smallEbay == this.highPrice[i].paypal) {
+            this.smallEbay = this.highPrice[i].id;
+          }
+        }
         var condate = {
           ebayName: this.ebayAcount,
           ebaySuffix: this.ebayAcountJC,
@@ -429,6 +435,14 @@ export default {
           high: this.bigEbay,
           low: this.smallEbay
         };
+        this.ebayAcount = null;
+        this.ebayAcountJC = null;
+        this.codeEbay = null;
+        this.smallEbay = null;
+        this.graph = null;
+        this.publish = null;
+        this.ccCountry = null;
+        this.bigEbay = null;
         APICreateEbay(condate).then(res => {
           if (res.data.data) {
             this.$message({
@@ -777,16 +791,9 @@ export default {
         this.conditionEbay.page = res.data.data._meta.currentPage;
       });
     },
-    getDateEbaylist() {
-      this.conditionEbay.pageSize = 100000;
-      APIEbaySuffix(this.conditionEbay).then(res => {
-        let arryAr = res.data.data.items;
-        for (let i = 0; i < arryAr.length; i++) {
-          this.highPrice.push(arryAr[i].high);
-          this.lowPrice.push(arryAr[i].low);
-        }
-        this.highPrice=this.uniq(this.highPrice)
-        this.lowPrice=this.uniq(this.lowPrice)
+    getDatePay() {
+      APIPaypal(this.conditionPay).then(res => {
+        this.highPrice = res.data.data.items;
       });
     }
   },
@@ -802,7 +809,7 @@ export default {
       }
     });
     this.getDateEbay();
-    this.getDateEbaylist();
+    this.getDatePay();
   }
 };
 </script>

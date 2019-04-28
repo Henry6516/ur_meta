@@ -2,6 +2,20 @@
   <section>
     <div>
       <el-row>
+        <el-col :span="24" style="padding:10px 20px;">
+          <el-col :span='5'>
+            <el-input v-model="collectionNumber" style="width:97%;" clearable></el-input>
+          </el-col>
+          <el-col :span='2'>
+            <span class="dsblock fon12 dsblockGreen" @click="collection">开始采集</span>
+          </el-col>
+          <el-col :span='3'>
+            <span class="dsblock fon12 dsblockred">批量导出joom-csv</span>
+          </el-col>
+          <el-col :span='2'>
+            <span class="dsblock fon12 dsblockcse">批量标记完善</span>
+          </el-col>
+        </el-col>
         <el-col :span="24">
           <el-table :data="pictureData" @selection-change="selsChange" :height="tableHeight">
             <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
@@ -236,7 +250,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { APIMineList, APIMineInfo } from "../../api/product";
+import { APIMineList, APIMineInfo,APICjMine } from "../../api/product";
 import { getMenu } from "../../api/login";
 import {
   getAttributeInfoStoreName,
@@ -250,7 +264,8 @@ export default {
       allMenu: [],
       activeName: "",
       pictureData: [],
-      tableHeight: window.innerHeight - 135,
+      collectionNumber:null,
+      tableHeight: window.innerHeight - 195,
       total: 0,
       dialogPicture: false,
       dialogPictureBj: false,
@@ -265,10 +280,32 @@ export default {
     };
   },
   methods: {
-    joomId(idnex,row){
-      this.$router.push({
-          path: `/joom/${row.id}`
+     collection(){
+       console.log(1)
+      if(this.collectionNumber){
+        let objStr={
+          proId:this.collectionNumber
+        }
+         APICjMine(objStr).then(res => {
+            if (res.data.code == 200) {
+              this.$message({
+                message: "采集成功",
+                type: "success"
+              });
+              this.getDate();
+              setTimeout(()=>{
+               this.getDate();
+              },1000)
+            }else{
+              this.$message.error(res.data.message)
+            }
         });
+      }
+    },
+    joomId(idnex, row) {
+      this.$router.push({
+        path: `/joom/${row.id}`
+      });
     },
     selsChange(sels) {
       this.sels = sels;
@@ -303,7 +340,11 @@ export default {
       this.dialogPicture = true;
       APIMineInfo(conId).then(res => {
         if (res.data.message == "success") {
-          this.delist = res.data.data.basicInfo;
+          if(res.data.data.basicInfo){
+            this.delist = res.data.data.basicInfo;
+          }else{
+            this.delist=[]
+          }
         }
       });
     },
@@ -724,5 +765,39 @@ export default {
 }
 .font14 {
   font-size: 14px;
+}
+.dsblock{
+  width: 95%;
+  display: block;
+  border: #ccc solid 1px;
+  line-height: 38px;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.dsblockGreen{
+  background: #008d4c;
+  color: #fff;
+  border: #008d4c solid 1px;
+}
+.dsblockred{
+  background: #d73925;
+  border: #d73925 solid 1px;
+  color: #fff;
+}
+.dsblockcse{
+  background: #e08e0b;
+  border: #e08e0b solid 1px;
+  color: #fff;
+}
+@media screen and (max-width: 1450px) {
+  .fon12 {
+    font-size: 13px;
+  }
+}
+@media screen and (max-width: 1350px) {
+  .fon12 {
+    font-size: 12px;
+  }
 }
 </style>

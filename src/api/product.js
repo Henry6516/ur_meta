@@ -918,6 +918,14 @@ export function APIDeletePaypal(param) {
     data
   })
 }
+export function APICjMine(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/mine',
+    method: 'post',
+    data
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

@@ -435,6 +435,11 @@
               'parentCategory': null,
               'rate': this.freight
             }
+            this.account = null;
+            this.abbreviation = null;
+            this.Suffix = null;
+            this.masterGraph = null;
+            this.freight = null;
             APICreateWish(condate).then(res => {
               if (res.data.code==200) {
                 this.$message({

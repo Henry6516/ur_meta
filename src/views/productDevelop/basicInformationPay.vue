@@ -154,6 +154,7 @@
                     var condate={
                         "paypal": this.payCount,
                     }
+                    this.payCount = null;
                     APICreatePaypal(condate).then(res => {
                         if(res.data.code==200){
                             this.$message({

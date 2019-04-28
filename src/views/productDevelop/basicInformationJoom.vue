@@ -235,6 +235,10 @@
                         "mainImg": this.masterGraph,
                         "skuCode": this.skuSuffix
                     }
+                    this.joomaccount = null;
+                    this.photo = null;
+                    this.masterGraph = null;
+                    this.skuSuffix = null;
                     APICreateJoom(condate).then(res => {
                         if(res.data.data){
                             this.$message({

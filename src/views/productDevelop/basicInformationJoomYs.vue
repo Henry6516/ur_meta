@@ -264,6 +264,10 @@
                         "site": this.countryYs,
                         "ibayShipping": this.transportEbayYs
                     }
+                    this.transportYs = null;
+                    this.attributeYs = null;
+                    this.countryYs = null;
+                    this.transportEbayYs = null;
                     APICreateShipping(condate).then(res => {
                         if(res.data.data){
                             this.$message({

@@ -294,6 +294,10 @@
                     "ruleValue": this.designerArt,
                     "ruleType": this.typeArt,
                 }
+                this.ruleArt = null;
+                this.developerArt = null;
+                this.designerArt = null;
+                this.typeArt = null;
                 APICreateRules(condate).then(res => {
                     if(res.data.data){
                         this.$message({

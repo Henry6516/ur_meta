@@ -299,6 +299,9 @@
                         "less": this.lessThan,
                         "addedPrice": this.priceAdd
                     }
+                    this.greaterThan = null;
+                    this.lessThan = null;
+                    this.priceAdd = null;
                 APICreateContrast(condate).then(res => {
                         if(res.data.data){
                             this.$message({
