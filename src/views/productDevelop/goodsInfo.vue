@@ -81,7 +81,7 @@
             align="center"
           >
             <template slot-scope="scope">
-              <a :class="scope.row.stockUp=='是'?'redCu':''">{{scope.row.goodsCode}}</a>
+              <a :class="scope.row.stockUp=='是'?'redCu':'redblack'">{{scope.row.goodsCode}}</a>
             </template>
           </el-table-column>
         </el-table-column>
@@ -3021,6 +3021,9 @@ export default {
 .redCu {
   color: red;
   font-weight: bold;
+}
+.redblack{
+  color: #606266;
 }
 .clasRed1 {
   color: #f56c6c;

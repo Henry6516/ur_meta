@@ -705,4 +705,7 @@
     .elTable td{
         padding: 16px 0 !important;
     }
+    .el-input__inner{
+      padding: 0 10px;
+    }
 </style>

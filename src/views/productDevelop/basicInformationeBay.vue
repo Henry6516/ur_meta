@@ -513,6 +513,7 @@ export default {
         .catch(() => {});
     },
     addJoomEbay() {
+      this.getDatePay()
       this.dialogPictureBjEbay = true;
     },
     viewPicEbay(index, row) {

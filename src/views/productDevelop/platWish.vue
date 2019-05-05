@@ -5,7 +5,7 @@
       class="toolbar"
       style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:15px;padding-top: 12px"
     >
-      <el-col :span="14" :offset="5">
+      <el-col :span="15" :offset="5">
         <el-button
           type="primary"
           @click="update"
@@ -63,19 +63,19 @@
       <el-row>
         <el-col :span="24">
           <el-col :span="12">
-            <el-col :span="3" class="textZt">SKU</el-col>
-            <el-col :span="21">
+            <el-col :span="4" class="textZt">SKU</el-col>
+            <el-col :span="20">
               <el-input v-model="wishForm.sku"></el-input>
             </el-col>
-            <el-col :span="3" class="textZt" style="margin-top: 15px">是否备货</el-col>
-            <el-col :span="21" style="margin-top: 15px">
+            <el-col :span="4" class="textZt" style="margin-top: 15px">是否备货</el-col>
+            <el-col :span="20" style="margin-top: 15px">
               <el-input v-model="wishForm.stockUp" :disabled="true"></el-input>
             </el-col>
-            <el-col :span="3" class="textZt" style="margin-top: 15px">主图</el-col>
-            <el-col :span="21" style="margin-top: 15px">
+            <el-col :span="4" class="textZt" style="margin-top: 15px">主图</el-col>
+            <el-col :span="20" style="margin-top: 15px">
               <el-input v-model="wishForm.mainImage"></el-input>
             </el-col>
-            <el-col :span="3" class="textZt" style="margin-top: 15px"></el-col>
+            <el-col :span="4" class="textZt" style="margin-top: 15px"></el-col>
           </el-col>
           <el-col :span="10" style="margin-left: 25px">
             <a
@@ -162,7 +162,7 @@
             </el-col>
             <el-col :span="3" style="margin-left: 15px">
               <a :href="url[index]" target="_blank">
-                <img :src="url[index]" style="display: block;width: 90px;height: 90px">
+                <img :src="url[index]" style="display: block;width: 99%;height: 90px">
               </a>
             </el-col>
           </el-col>

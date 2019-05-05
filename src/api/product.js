@@ -926,6 +926,131 @@ export function APICjMine(param) {
     data
   })
 }
+export function APISendToDevelop(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/send-to-develop',
+    method: 'post',
+    data
+  })
+}
+export function APIMineExport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/export',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
+export function APIMineFinish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/finish',
+    method: 'post',
+    data
+  })
+}
+export function APIMineSetPrice(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/set-price',
+    method: 'post',
+    data
+  })
+}
+export function APISetCat(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/set-cat',
+    method: 'post',
+    data
+  })
+}
+export function APIDeleteMine(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/delete-mine',
+    method: 'post',
+    data
+  })
+}
+export function APIMineSave(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/save',
+    method: 'post',
+    data
+  })
+}
+export function APISaveAndFinish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/save-and-finish',
+    method: 'post',
+    data
+  })
+}
+export function APIbindShopSku(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/bind-shop-sku',
+    method: 'post',
+    data
+  })
+}
+export function APIDeleteDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/delete-detail',
+    method: 'post',
+    data
+  })
+}
+export function APISaveShopSku(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/save-shop-sku',
+    method: 'post',
+    data
+  })
+}
+export function APIScanningLog(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/scanning-log?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APISortLog(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/sort-log?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APISortkMember() {
+  return request({
+    url: '/warehouse-tools/sort-member',
+    method: 'get'
+  })
+}
+export function APISort(param) {
+  const data = { condition: param }
+  return request({
+    url: 'warehouse-tools/sort',
+    method: 'post',
+    data
+  })
+}
+export function APIPickMember() {
+  return request({
+    url: '/warehouse-tools/pick-member',
+    method: 'get'
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

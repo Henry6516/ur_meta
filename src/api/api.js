@@ -75,6 +75,8 @@ export function getRequirementsDeal(condition) {
       condition.pageSize +
       '&type=' +
       condition.type +
+      '&schedule=' +
+      condition.schedule +
       '&priority=' +
       condition.priority +
       '&status=' +
@@ -114,6 +116,37 @@ export function getRequirementsIndex(condition) {
       condition.creator +
       '&status=' +
       condition.status +
+      '&sortProperty=' +
+      condition.sortProperty +
+      '&sortOrder=' +
+      condition.sortOrder,
+    method: 'get'
+  })
+}
+
+export function getRequirementsFinish(condition) {
+  return request({
+    url:
+      'requirements/completed-list?name=' +
+      condition.name +
+      '&page=' +
+      condition.page +
+      '&pageSize=' +
+      condition.pageSize +
+      '&type=' +
+      condition.type +
+      '&schedule=' +
+      condition.schedule +
+      '&priority=' +
+      condition.priority +
+      '&status=' +
+      condition.status +
+      '&processingPerson=' +
+      condition.processingPerson +
+      '&creator=' +
+      condition.creator +
+      '&detail=' +
+      condition.detail +
       '&sortProperty=' +
       condition.sortProperty +
       '&sortOrder=' +

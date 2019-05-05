@@ -16,7 +16,7 @@
         ref="condition"
       >
         <el-form-item
-          label="捡货人："
+          label="分货人："
           prop="suffix"
           :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]"
         >
@@ -44,7 +44,7 @@
     <div v-if="recordTab">
       <el-table :data="tabdate" :height="tableHeight">
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
-        <el-table-column label="拣货人" header-align="center">
+        <el-table-column label="分货人" header-align="center">
           <el-table-column prop="picker" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="扫描人" header-align="center">
@@ -100,7 +100,7 @@ import {
   getPickMembe,
   APIPick
 } from "../../api/profit";
-import { APIScanningLog, APIPickMember } from "../../api/product";
+import { APISortLog, APISortkMember,APISort } from "../../api/product";
 import { getMenu } from "../../api/login";
 export default {
   data() {
@@ -112,7 +112,7 @@ export default {
       pickingTab: true,
       recordTab: false,
       pickName: [],
-      activeName: "拣货扫描",
+      activeName: "分货扫描",
       goodsCode: "",
       total: 0,
       time1: null,
@@ -143,7 +143,7 @@ export default {
       this.getPic();
     },
     getPic() {
-      APIScanningLog(this.reccondition).then(response => {
+      APISortLog(this.reccondition).then(response => {
         this.tabdate = response.data.data.items;
         this.total = response.data.data._meta.totalCount;
         this.reccondition.pageSize = response.data.data._meta.perPage;
@@ -348,7 +348,7 @@ export default {
       }
     },
     handleClick(tab, event) {
-      if (tab.label === "拣货扫描") {
+      if (tab.label === "分货扫描") {
         this.pickingTab = true;
       } else {
         this.pickingTab = false;
@@ -370,7 +370,7 @@ export default {
             picker: this.condition.suffix,
             batchNumber: this.condition.goodsCode
           };
-          APIPick(obj).then(response => {
+          APISort(obj).then(response => {
             if (response.data.code == 200) {
               this.$message({
                 message: "提交成功",
@@ -390,10 +390,10 @@ export default {
     }
   },
   mounted() {
-    APIPickMember().then(response => {
+    APISortkMember().then(response => {
       this.pickName = response.data.data;
     });
-    getPickMembe().then(response => {
+    APISortkMember().then(response => {
       this.suffix = response.data.data;
     });
     this.getPic();
@@ -402,7 +402,7 @@ export default {
       const menu = res.filter(e => e.name === "仓库工具");
       let arr = menu[0].children;
       for (let i = 0; i < arr.length; i++) {
-        if (arr[i].name == "拣货工具") {
+        if (arr[i].name == "分货工具") {
           this.allMenu = arr[i].tabs;
         }
       }

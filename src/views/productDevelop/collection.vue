@@ -8,7 +8,9 @@
         :key="index"
       ></el-tab-pane>
     </el-tabs>
-    <router-view></router-view>
+    <div v-if="showis">
+        <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -18,16 +20,20 @@ export default {
   data() {
     return {
       activeName: "",
-      allMenu: []
+      allMenu: [],
+      showis:true
     };
   },
   methods: {
    handleClick(tab, event) {
       if (tab.label === "Joom") {
-        sessionStorage.setItem("judgeCollection", "属性信息");
+        this.showis=true
+        sessionStorage.setItem("judgeCollection", "Joom");
         this.$router.push({
          path: `/v1/oa-data-mine/collectionJoom`
         });
+      }else{
+        this.showis=false
       }
     }
   },

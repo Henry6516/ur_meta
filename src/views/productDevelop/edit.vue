@@ -332,20 +332,20 @@
             <div style="margin-left: 70px">
               必填
               <el-input
-                        style="width:31.8%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
+                        style="width:31.1%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
               <el-input
-                        style="width:31.8%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
+                        style="width:31.1%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
               <el-input
-                        style="width:31.8%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
+                        style="width:31.1%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
             </div>
             <div style="margin-left: 70px;margin-top: 5px">
               选填
               <el-input
-                        style="width:31.8%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
+                        style="width:31.1%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
               <el-input
-                        style="width:31.8%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
+                        style="width:31.1%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
               <el-input
-                        style="width:31.8%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
+                        style="width:31.1%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
 
             </div>
           </el-col>
@@ -367,28 +367,28 @@
             <div style="margin-left: 70px">
               必填
               <el-input
-                        style="width:19%" v-model="randomData[0]" @blur="random()"></el-input>
+                        style="width:18.5%" v-model="randomData[0]" @blur="random()"></el-input>
               <el-input
-                        style="width:19%" v-model="randomData[1]" @blur="random()"></el-input>
+                        style="width:18.5%" v-model="randomData[1]" @blur="random()"></el-input>
               <el-input
-                        style="width:19%" v-model="randomData[2]" @blur="random()"></el-input>
+                        style="width:18.5%" v-model="randomData[2]" @blur="random()"></el-input>
               <el-input
-                        style="width:19%" v-model="randomData[3]" @blur="random()"></el-input>
+                        style="width:18.5%" v-model="randomData[3]" @blur="random()"></el-input>
               <el-input
-                        style="width:19%" v-model="randomData[4]" @blur="random()"></el-input>
+                        style="width:18.5%" v-model="randomData[4]" @blur="random()"></el-input>
             </div>
             <div style="margin-left: 70px;margin-top: 5px">
               选填
               <el-input
-                        style="width:19%" v-model="randomData[5]" @blur="random()"></el-input>
+                        style="width:18.5%" v-model="randomData[5]" @blur="random()"></el-input>
               <el-input
-                        style="width:19%" v-model="randomData[6]" @blur="random()"></el-input>
+                        style="width:18.5%" v-model="randomData[6]" @blur="random()"></el-input>
               <el-input
-                        style="width:19%" v-model="randomData[7]" @blur="random()"></el-input>
+                        style="width:18.5%" v-model="randomData[7]" @blur="random()"></el-input>
               <el-input
-                        style="width:19%" v-model="randomData[8]" @blur="random()"></el-input>
+                        style="width:18.5%" v-model="randomData[8]" @blur="random()"></el-input>
               <el-input
-                        style="width:19%" v-model="randomData[9]" @blur="random()"></el-input>
+                        style="width:18.5%" v-model="randomData[9]" @blur="random()"></el-input>
 
             </div>
           </el-col>
@@ -603,7 +603,7 @@
       </el-col>
       <el-col :span="4">
         <input placeholder="成本价￥" v-model="costprice"
-               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:52%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="cosprice">成本确定</span>
         <!--<el-input v-model="costprice"-->
                   <!--size="small"-->
@@ -614,7 +614,7 @@
       </el-col>
       <el-col :span="4">
         <input placeholder="重量g" v-model="weight"
-               style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="weht">重量确定</span>
         <!--<el-input v-model="weight"-->
                   <!--size="small"-->
@@ -626,7 +626,7 @@
       <el-col :span="4">
         <input placeholder="零售价$" v-model="retailprice"
                style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
-        <span class="xzz1" @click="price">零售价确定</span>
+        <span class="xzz1" @click="price">零售确定</span>
         <!--<el-input v-model="retailprice"-->
                   <!--size="small"-->
                   <!--placeholder="零售价$"-->
@@ -636,8 +636,8 @@
       </el-col>
       <el-col :span="5">
         <input placeholder="joom零售价$" v-model="joomretailprice"
-               style="width:53%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
-        <span class="xzz1" @click="joomprice">Joom价格确定</span>
+               style="width:51%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+        <span class="xzz1" @click="joomprice">Joom价确定</span>
         <!--<el-input v-model="joomretailprice"-->
                   <!--size="small"-->
                   <!--placeholder="joom零售价$"-->
@@ -647,7 +647,7 @@
       </el-col>
       <el-col :span="4">
         <input placeholder="joom运费$" v-model="transportationcost"
-               style="width:53%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
+               style="width:52%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center">
         <span class="xzz1" @click="transport">运费确定</span>
         <!--<el-input v-model="transportationcost"-->
                   <!--size="small"-->
@@ -687,7 +687,7 @@
                 @change="mandatoryDate1($event)"></el-input>
     </el-dialog>
     <el-col :span="24" style="background: #fff;position: fixed;bottom: 0px; z-index:999;border-top: #eee solid 1px">
-      <el-col :span="24":offset="8">
+      <el-col :span="24" :offset="8">
         <el-button type="primary"
                    @click="save"
                    style="width:350px;margin: 5px 0;margin-top: 8px;padding: 15px 0">保存</el-button>

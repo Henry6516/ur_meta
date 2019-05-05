@@ -4,7 +4,7 @@
       :span="24"
       style="position: fixed; bottom:0; z-index:999;background: #f2f2f2;padding: 15px 0; padding-top:12px; border-top: #eee solid 1px;"
     >
-      <el-col :span="15" :offset="5">
+      <el-col :span="16" :offset="4">
         <el-button @click="keep()" type="primary" style="float: left;margin-right:10px">保存当前数据</el-button>
         <el-button
           style="margin-left: 0;float: left;margin-right:10px"
@@ -51,19 +51,19 @@
         <el-row>
           <el-col :span="24">
             <el-col :span="12">
-              <el-col :span="3" class="textZt">SKU</el-col>
-              <el-col :span="21">
+              <el-col :span="4" class="textZt">SKU</el-col>
+              <el-col :span="20">
                 <el-input v-model="wishForm.sku"></el-input>
               </el-col>
-              <el-col :span="3" class="textZt" style="margin-top: 15px">是否备货</el-col>
-              <el-col :span="21" style="margin-top: 15px">
+              <el-col :span="4" class="textZt" style="margin-top: 15px">是否备货</el-col>
+              <el-col :span="20" style="margin-top: 15px">
                 <el-input v-model="wishForm.stockUp" :disabled="true"></el-input>
               </el-col>
-              <el-col :span="3" class="textZt" style="margin-top: 15px">主图</el-col>
-              <el-col :span="21" style="margin-top: 15px">
+              <el-col :span="4" class="textZt" style="margin-top: 15px">主图</el-col>
+              <el-col :span="20" style="margin-top: 15px">
                 <el-input v-model="wishForm.mainPage"></el-input>
               </el-col>
-              <el-col :span="3" class="textZt" style="margin-top: 15px"></el-col>
+              <el-col :span="4" class="textZt" style="margin-top: 15px"></el-col>
             </el-col>
             <el-col :span="10" style="margin-left: 25px">
               <a
@@ -118,7 +118,7 @@
               <a :href="wishForm.extraPage[index]" target="_blank">
                 <img
                   :src="wishForm.extraPage[index]"
-                  style="display: block;width: 90px;height: 90px"
+                  style="display: block;width: 98%;height: 90px"
                 >
               </a>
             </el-col>
@@ -267,11 +267,11 @@
                       :key="index"
                       style="position: relative;line-height: 40px"
                     >
-                      <el-input clearable v-model="tite[index]"></el-input>
+                      <el-input v-model="tite[index]"></el-input>
                       <i
                         class="el-icon-delete"
                         @click="titleDel(index)"
-                        style="position: absolute;right: 45px;top: 22px;z-index: 99;cursor: pointer"
+                        style="position: absolute;right: 13%;top: 22px;z-index: 99;cursor: pointer"
                       ></i>
                     </th>
                   </tr>
@@ -300,7 +300,7 @@
                 <input
                   placeholder="数量"
                   v-model="num"
-                  style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+                  style="width:51%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
                 >
                 <span class="xzz1" @click="setNum">数量确定</span>
               </el-col>
@@ -308,11 +308,11 @@
                 <input
                   placeholder="零售价"
                   v-model="price"
-                  style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+                  style="width:52%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
                 >
                 <span class="xzz1" @click="setPrice">价格确定</span>
               </el-col>
-              <el-col :span="5">
+              <el-col :span="6">
                 <input
                   placeholder="Does not apply"
                   v-model="ship"

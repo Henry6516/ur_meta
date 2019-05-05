@@ -7,7 +7,7 @@
       <el-col :span="10" :offset="6">
         <el-button @click="keep()" type="primary">保存当前数据</el-button>
         <el-button type="success" @click="keepWs()">保存并完善</el-button>
-        <el-button @click="keep()" type="warning">导出Joom模板</el-button>
+        <el-button @click="exportJoom()" type="warning">导出Joom模板</el-button>
       </el-col>
     </el-col>
     <el-col :span="24" style="padding: 0;">
@@ -128,7 +128,7 @@
           </el-col>
           <el-col :span="3" style="margin-left: 15px">
             <a :href="url[index]" target="_blank">
-              <img :src="url[index]" style="display: block;width: 90px;height: 90px">
+              <img :src="url[index]" style="display: block;width: 98%;height: 90px">
             </a>
           </el-col>
         </el-col>
@@ -227,7 +227,7 @@
             <el-input placeholder="新增行数" class="font12" size="small" v-model="rows"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            <span @click="addClomun()" class="spBlock">行数确定</span>
+            <span @click="addClomun()" class="spBlock">行数</span>
           </el-col>
         </el-col>
         <el-col :span="3">
@@ -235,7 +235,7 @@
             <el-input placeholder="库存设置" class="font12" size="small" v-model="stock"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            <span @click="modifystock()" class="spBlock">库存确定</span>
+            <span @click="modifystock()" class="spBlock">库存</span>
           </el-col>
         </el-col>
         <el-col :span="5">
@@ -248,7 +248,7 @@
             <el-input placeholder="设置价格" class="font12" size="small" v-model="price"></el-input>
           </el-col>
           <el-col :span="7" class="boderrtb font12">
-            <span @click="modifyprice()" class="spBlock">价格确定</span>
+            <span @click="modifyprice()" class="spBlock">价格</span>
           </el-col>
         </el-col>
         <el-col :span="3">
@@ -256,7 +256,7 @@
             <el-input placeholder="运费设置" class="font12" size="small" v-model="freight"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            <span @click="modifyfreight()" class="spBlock">运费确定</span>
+            <span @click="modifyfreight()" class="spBlock">运费</span>
           </el-col>
         </el-col>
         <el-col :span="3">
@@ -264,7 +264,7 @@
             <el-input placeholder="零售价" class="font12" size="small" v-model="retail"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            <span @click="modifyretail()" class="spBlock">零售确定</span>
+            <span @click="modifyretail()" class="spBlock">零售</span>
           </el-col>
         </el-col>
         <el-col :span="3">
@@ -272,7 +272,7 @@
             <el-input placeholder="运输时间" class="font12" size="small" v-model="delivery"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            <span @click="modifydelivery()" class="spBlock">配送确定</span>
+            <span @click="modifydelivery()" class="spBlock">配送</span>
           </el-col>
         </el-col>
         <el-col :span="3">
@@ -280,7 +280,7 @@
             <el-input placeholder="重量设置" class="font12" size="small" v-model="weight"></el-input>
           </el-col>
           <el-col :span="9" class="boderrtb font12">
-            <span @click="modifyweight" class="spBlock">重量确定</span>
+            <span @click="modifyweight" class="spBlock">重量</span>
           </el-col>
         </el-col>
       </el-col>
@@ -291,7 +291,7 @@
 
 <script type="text/ecmascript-6">
 import { getMenu } from "../../api/login";
-import { APIMineInfo } from "../../api/product";
+import { APIMineInfo, APIMineSave,APIDeleteDetail,APISaveAndFinish,APIMineExport } from "../../api/product";
 import {
   getAttributeInfoSpecialAttribute,
   getAttributeInfoCat,
@@ -326,6 +326,109 @@ export default {
     };
   },
   methods: {
+    exportJoom(){
+      const arrId=[]
+      arrId.push(this.condition.id)
+       let objStr1 = {
+          id: arrId
+        };
+        APIMineExport(objStr1).then(res => {
+          const blob = new Blob([res.data], {
+            type: "data:text/csv;charset=utf-8"
+          });
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          const date = new Date();
+          const year = date.getFullYear();
+          let month = date.getMonth() + 1;
+          let strDate = date.getDate();
+          let hour = date.getHours();
+          let minute = date.getMinutes();
+          let second = date.getSeconds();
+          if (month >= 1 && month <= 9) {
+            month = "0" + month;
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+          }
+          if (hour >= 0 && hour <= 9) {
+            hour = "0" + hour;
+          }
+          if (minute >= 0 && minute <= 9) {
+            minute = "0" + minute;
+          }
+          if (second >= 0 && second <= 9) {
+            second = "0" + second;
+          }
+          const filename =
+            "joom_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename + ".csv";
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        });
+    },
+    keepWs(){
+       let imgStr = {
+        extraImage1: this.url[0],
+        extraImage2: this.url[1],
+        extraImage3: this.url[2],
+        extraImage4: this.url[3],
+        extraImage5: this.url[4],
+        extraImage6: this.url[5],
+        extraImage7: this.url[6],
+        extraImage8: this.url[7],
+        extraImage9: this.url[8],
+        extraImage10: this.url[9],
+        mainImage: this.editForm.mainImage
+      };
+      let data = {
+        basicInfo: this.editForm,
+        images: imgStr,
+        detailsInfo: this.tableData
+      };
+      APISaveAndFinish(data).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "保存成功",
+            type: "success"
+          });
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
+    keep() {
+      let imgStr = {
+        extraImage1: this.url[0],
+        extraImage2: this.url[1],
+        extraImage3: this.url[2],
+        extraImage4: this.url[3],
+        extraImage5: this.url[4],
+        extraImage6: this.url[5],
+        extraImage7: this.url[6],
+        extraImage8: this.url[7],
+        extraImage9: this.url[8],
+        extraImage10: this.url[9],
+        mainImage: this.editForm.mainImage
+      };
+      let data = {
+        basicInfo: this.editForm,
+        images: imgStr,
+        detailsInfo: this.tableData
+      };
+      APIMineSave(data).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "保存成功",
+            type: "success"
+          });
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
     modifyweight() {
       if (this.weight) {
         for (let i = 0; i < this.tableData.length; i++) {
@@ -369,16 +472,20 @@ export default {
             this.tableData[i].price = this.price;
           }
           if (this.sign == "+") {
-            this.tableData[i].price = Number(this.tableData[i].price) + Number(this.price);
+            this.tableData[i].price =
+              Number(this.tableData[i].price) + Number(this.price);
           }
           if (this.sign == "-") {
-            this.tableData[i].price = Number(this.tableData[i].price) - Number(this.price);
+            this.tableData[i].price =
+              Number(this.tableData[i].price) - Number(this.price);
           }
           if (this.sign == "*") {
-            this.tableData[i].price = Number(this.tableData[i].price) * Number(this.price);
+            this.tableData[i].price =
+              Number(this.tableData[i].price) * Number(this.price);
           }
           if (this.sign == "/") {
-            this.tableData[i].price = Number(this.tableData[i].price) / Number(this.price);
+            this.tableData[i].price =
+              Number(this.tableData[i].price) / Number(this.price);
           }
         }
       } else {
@@ -395,24 +502,24 @@ export default {
       }
     },
     del(index, row) {
-      //       let arrId = []
-      //       arrId.push(row.id)
-      //       let aryId={
-      //         id:arrId
-      //       }
-      //       APIDeleteVariant(aryId).then(res => {
-      //         if (res.data.code === 200) {
-      //           this.$message({
-      //             message: '删除成功',
-      //             type: 'success'
-      //           })
-      //           this.tableData.splice(index, 1)
-      //           this.skuTotal = this.tableData.length
-      // //          this.getData()
-      //         } else {
-      //           this.$message.error('删除失败')
-      //         }
-      //       })
+      let arrId = [];
+      arrId.push(row.id);
+      let aryId = {
+        id: arrId
+      };
+      APIDeleteDetail(aryId).then(res => {
+        if (res.data.code === 200) {
+          this.$message({
+            message: "删除成功",
+            type: "success"
+          });
+          this.tableData.splice(index, 1);
+          this.skuTotal = this.tableData.length;
+          //          this.getData()
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
     },
     botOm(arr, index1, index2, direction) {
       if (direction == "down") {
@@ -462,7 +569,7 @@ export default {
         obj.id = null;
         obj.childId = null;
         obj.color = null;
-        obj.mid = null;
+        obj.mid = this.editForm.id;
         obj.msrPrice = null;
         obj.parentId = null;
         obj.price = null;
@@ -652,7 +759,7 @@ export default {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
-.spBlock{
+.spBlock {
   display: block;
 }
 .m15 {
@@ -672,7 +779,7 @@ export default {
 }
 @media screen and (max-width: 1300px) {
   .titCenter {
-    font-size: 13px;
+    font-size: 12px;
   }
 }
 </style>
