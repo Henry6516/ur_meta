@@ -1051,6 +1051,38 @@ export function APIPickMember() {
     method: 'get'
   })
 }
+export function updateLog(param) {
+  const data = { condition: param }
+  return request({
+    url: '/update-log/list',
+    method: 'post',
+    data
+  })
+}
+export function APILogSave(param) {
+  const data = { condition: param }
+  return request({
+    url: '/update-log/save',
+    method: 'post',
+    data
+  })
+}
+export function APILogInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/update-log/info',
+    method: 'post',
+    data
+  })
+}
+export function APILogDelete(param) {
+  const data = { condition: param }
+  return request({
+    url: '/update-log/info-delete',
+    method: 'post',
+    data
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

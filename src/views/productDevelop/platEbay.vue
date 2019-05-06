@@ -1022,34 +1022,14 @@ export default {
             type:
               "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
           });
+          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+          var filename=JSON.parse(file)
           const downloadElement = document.createElement("a");
           const objectUrl = window.URL.createObjectURL(blob);
           downloadElement.href = objectUrl;
-          const date = new Date();
-          const year = date.getFullYear();
-          let month = date.getMonth() + 1;
-          let strDate = date.getDate();
-          let hour = date.getHours();
-          let minute = date.getMinutes();
-          let second = date.getSeconds();
-          if (month >= 1 && month <= 9) {
-            month = "0" + month;
-          }
-          if (strDate >= 0 && strDate <= 9) {
-            strDate = "0" + strDate;
-          }
-          if (hour >= 0 && hour <= 9) {
-            hour = "0" + hour;
-          }
-          if (minute >= 0 && minute <= 9) {
-            minute = "0" + minute;
-          }
-          if (second >= 0 && second <= 9) {
-            second = "0" + second;
-          }
-          const filename =
-            "eBay_" + year + month + strDate + hour + minute + second;
-          downloadElement.download = filename + ".xls";
+          // const filename =
+          //   "eBay_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename;
           document.body.appendChild(downloadElement);
           downloadElement.click();
           document.body.removeChild(downloadElement);

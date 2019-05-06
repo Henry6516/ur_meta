@@ -48,6 +48,7 @@ import splitcargo from '../views/warehouse/splitCargo.vue'
 // 反馈中心
 import requirements from '../views/feedback/requirements.vue'
 import news from '../views/feedback/news.vue'
+import logs from '../views/feedback/log.vue'
 // 产品中心
 import goodsNav from '../views/productDevelop/goodsNav.vue'
 import productRecommend from '../views/productDevelop/productRecommend.vue'
@@ -271,6 +272,11 @@ const routes = [
         path: '/v1/news/index',
         component: news,
         name: '公告管理'
+      },
+      {
+        path: '/v1/update-log/index',
+        component: logs,
+        name: '更新日志'
       }
     ]
   },

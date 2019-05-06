@@ -209,31 +209,39 @@ export function deleteRequirements(id) {
   })
 }
 
-export function ShangHaiTarget() {
+export function ShangHaiTarget(param) {
+  const data = { condition: param }
   return request({
     url: 'site/profit',
-    method: 'get'
+    method: 'post',
+    data
   })
 }
 
-export function ZhengZhouTarget() {
+export function ZhengZhouTarget(param) {
+  const data = { condition: param }
   return request({
     url: 'site/zz-profit',
-    method: 'get'
+    method: 'post',
+    data
   })
 }
 
-export function DepartTarget() {
+export function DepartTarget(param) {
+  const data = { condition: param }
   return request({
     url: 'site/depart-profit',
-    method: 'get'
+    method: 'post',
+    data
   })
 }
 
-export function DeveloperTarget() {
+export function DeveloperTarget(param) {
+  const data = { condition: param }
   return request({
     url: 'site/dev-profit',
-    method: 'get'
+    method: 'post',
+    data
   })
 }
 export function ProsTarget(param) {
@@ -343,27 +351,53 @@ export function newsTop(param) {
     }
   })
 }
-export function getAmt() {
+export function getAmt(param) {
+  const data = { condition: param }
   return request({
     url: 'site/amt',
-    method: 'get'
+    method: 'post',
+    data,
   })
 }
-export function getZzAmt() {
+export function getZzAmt(param) {
+  const data = { condition: param }
   return request({
     url: 'site/zz-amt',
-    method: 'get'
+    method: 'post',
+    data,
   })
 }
-export function getDepartAmt() {
+export function getDepartAmt(param) {
+  const data = { condition: param }
   return request({
     url: 'site/depart-amt',
+    method: 'post',
+    data,
+  })
+}
+export function getDevAmt(param) {
+  const data = { condition: param }
+  return request({
+    url: 'site/dev-amt',
+    method: 'post',
+    data,
+  })
+}
+export function APIHeadDpart() {
+  return request({
+    url: '/site/head-depart',
     method: 'get'
   })
 }
-export function getDevAmt() {
+export function APIAllDpart() {
   return request({
-    url: 'site/dev-amt',
+    url: '/site/all-depart',
+    method: 'get'
+  })
+}
+export function APIBranchDpart() {
+  return request({
+    url: '/site/branch-depart',
     method: 'get'
   })
 }
