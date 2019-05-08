@@ -250,6 +250,12 @@ export function ProsTarget(param) {
     method: 'get'
   })
 }
+export function ProsTargetPm(param) {
+  return request({
+    url: 'site/sales-ranking?plat=' + param,
+    method: 'get'
+  })
+}
 export function Risk(param) {
   var data = { condition: param }
   return request({

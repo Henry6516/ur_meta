@@ -11,7 +11,7 @@
       <el-row class="content1">
         <el-col :span="24" class="font14">第1-20条，共{{totalEbay}}条数据.</el-col>
         <el-col :span="24" style="margin-top: 20px">
-          <el-table :data="dateEbay" border class="elTable" style="width: 98%;">
+          <el-table :data="dateEbay" border class="elTable" style="width: 98%;" :height="tableHeight">
             <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
             <el-table-column label="操作" fixed header-align="center" width="80">
               <template slot-scope="scope">
@@ -39,13 +39,14 @@
               </template>
             </el-table-column>
             <el-table-column label="eBay账号" header-align="center">
-              <el-table-column prop="ebayName" :render-header="renderHeaderPicEbay" align="center"></el-table-column>
+              <el-table-column prop="ebayName" :render-header="renderHeaderPicEbay" align="center" min-width="180"></el-table-column>
             </el-table-column>
             <el-table-column label="eBay账号简称" header-align="center">
               <el-table-column
                 prop="ebaySuffix"
                 :render-header="renderHeaderPicEbay"
                 align="center"
+                min-width="180"
               ></el-table-column>
             </el-table-column>
             <el-table-column label="仓储国家" header-align="center">
@@ -53,26 +54,28 @@
                 prop="storeCountry"
                 :render-header="renderHeaderPicEbay"
                 align="center"
+                min-width="180"
               ></el-table-column>
             </el-table-column>
             <el-table-column label="eBay编码" header-align="center">
-              <el-table-column prop="nameCode" :render-header="renderHeaderPicEbay" align="center"></el-table-column>
+              <el-table-column prop="nameCode" :render-header="renderHeaderPicEbay" align="center" min-width="180"></el-table-column>
             </el-table-column>
             <el-table-column label="主图" header-align="center">
-              <el-table-column prop="mainImg" :render-header="renderHeaderPicEbay" align="center"></el-table-column>
+              <el-table-column prop="mainImg" :render-header="renderHeaderPicEbay" align="center" min-width="180"></el-table-column>
             </el-table-column>
             <el-table-column label="刊登风格" header-align="center">
               <el-table-column
                 prop="ibayTemplate"
                 :render-header="renderHeaderPicEbay"
                 align="center"
+                min-width="180"
               ></el-table-column>
             </el-table-column>
             <el-table-column label="大额PayPal" header-align="center">
-              <el-table-column prop="high" :render-header="renderHeaderPicEbay" align="center"></el-table-column>
+              <el-table-column prop="high" :render-header="renderHeaderPicEbay" align="center" min-width="195"></el-table-column>
             </el-table-column>
             <el-table-column label="小额PayPal" header-align="center">
-              <el-table-column prop="low" :render-header="renderHeaderPicEbay" align="center"></el-table-column>
+              <el-table-column prop="low" :render-header="renderHeaderPicEbay" align="center" min-width="180"></el-table-column>
             </el-table-column>
           </el-table>
         </el-col>
@@ -85,7 +88,7 @@
         :page-size="conditionEbay.pageSize"
         :total="this.totalEbay"
         layout="prev, pager, next"
-        style="margin: 20px 0;margin-left: 10px"
+        style="margin: 20px 0;margin-left: 10px;margin-bottom:0"
       ></el-pagination>
       <el-dialog title="eBay账号详情" :visible.sync="dialogPictureEbay">
         <el-row class="contentt" style="margin-top: 0">
@@ -367,6 +370,7 @@ import { getMenu } from "../../api/login";
 export default {
   data() {
     return {
+      tableHeight: window.innerHeight - 275,
       allMenu: [],
       activeName: "eBay账号字典",
       dateEbay: [],

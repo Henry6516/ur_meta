@@ -19,6 +19,13 @@
         <el-button plain @click="unPassAll">批量未通过</el-button>
         <el-button plain @click="cancelAll">批量作废</el-button>
       </el-col>
+      <el-dialog title="未通过备注" :visible.sync="dialogFormVisible1">
+        <el-input v-model="wtgpz"></el-input>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible1 = false">取 消</el-button>
+          <el-button type="primary" @click="addRess">确 定</el-button>
+        </div>
+      </el-dialog>
       <!-- 查看对话框 -->
       <el-dialog title="查看" :visible.sync="dialogVisible">
         <el-form
@@ -839,6 +846,9 @@ import { getMenu } from "../../api/login";
 export default {
   data() {
     return {
+      dialogFormVisible1:false,
+      wtgpz:null,
+      wtgid:null,
       tableHeight: window.innerHeight - 195,
       tableHeight1: window.innerHeight - 135,
       tableHeight2: window.innerHeight - 135,
@@ -1016,6 +1026,22 @@ export default {
     // });
   },
   methods: {
+    addRess(){
+      this.unPassForm.nid = this.wtgid;
+      this.unPassForm.approvalNote=this.wtgpz
+          checkFailed(this.unPassForm).then(res => {
+            if (res.data.code == 200) {
+               this.$message({
+                message: "成功",
+                type: "success"
+              });
+              this.dialogFormVisible1=false
+              this.getData();
+            } else {
+              this.$message.error(res.data.message);
+            }
+      });
+    },
     getSubcate() {
       if (this.editForm.cate !== "") {
         this.subCate = [];
@@ -1230,22 +1256,25 @@ export default {
       );
     },
     unPass(index, row) {
-      this.$confirm("确定不通过该条记录？", "提示", { type: "warning" }).then(
-        () => {
-          this.unPassForm.nid = [row.nid];
-          checkFailed(this.unPassForm).then(res => {
-            if (res.data.code == 200) {
-               this.$message({
-                message: "成功",
-                type: "success"
-              });
-              this.getData();
-            } else {
-              this.$message.error(res.data.message);
-            }
-          });
-        }
-      );
+      this.dialogFormVisible1=true;
+      this.wtgid=[row.nid];
+      this.wtgpz=null;
+      // this.$confirm("确定不通过该条记录？", "提示", { type: "warning" }).then(
+      //   () => {
+      //     this.unPassForm.nid = [row.nid];
+      //     checkFailed(this.unPassForm).then(res => {
+      //       if (res.data.code == 200) {
+      //          this.$message({
+      //           message: "成功",
+      //           type: "success"
+      //         });
+      //         this.getData();
+      //       } else {
+      //         this.$message.error(res.data.message);
+      //       }
+      //     });
+      //   }
+      // );
     },
     unPassAll() {
       this.unPassForm.nid = this.sels.map(e => e.nid);

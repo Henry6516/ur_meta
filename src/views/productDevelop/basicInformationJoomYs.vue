@@ -14,6 +14,7 @@
                     <el-table :data="dateEbayYs"
                               border
                               class="elTable"
+                              :height="tableHeight"
                               style="width: 98%;">
                         <el-table-column type="index"
                                          fixed
@@ -83,7 +84,7 @@
                     :page-size="conditionEbayYs.pageSize"
                     :total="this.totalEbayYs"
                     background
-                    layout="prev, pager, next" style="margin: 20px 0;margin-left: 10px">
+                    layout="prev, pager, next" style="margin: 20px 0;margin-left: 10px;margin-bottom:0">
             </el-pagination>
             <el-dialog title="运输方式详情" :visible.sync="dialogPictureEbayYs">
                 <el-row class="contentt" style="margin-top: 0">
@@ -233,6 +234,7 @@
     export default {
         data() {
             return {
+                tableHeight: window.innerHeight - 275,
                 allMenu:[],
                 activeName: 'eBay运输方式',
                 dateEbayYs:[],

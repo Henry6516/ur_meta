@@ -195,7 +195,7 @@
         </el-table-column>
       </el-table>
       <!-- 属性信息查看对话框 -->
-      <el-dialog title="查看" :visible.sync="dialogVisible" width="55%" class='dig70'>
+      <el-dialog title="查看" :visible.sync="dialogVisible" width="55%" class="dig70">
         <el-form
           label-position="left"
           label-width="110px"
@@ -1251,6 +1251,34 @@ export default {
     },
     //标记
     mark(index, row) {
+      if (!row.goodsName) {
+        this.$message.error("未完善商品名称,不可标记");
+        return;
+      }
+      if (!row.aliasCnName) {
+        this.$message.error("未完善中文申报名,不可标记");
+        return;
+      }
+      if (!row.aliasEnName) {
+        this.$message.error("未完善英文申报名,不可标记");
+        return;
+      }
+      if (!row.supplierName) {
+        this.$message.error("未完善供应商名称,不可标记");
+        return;
+      }
+      if (!row.packName) {
+        this.$message.error("未完善包装规格,不可标记");
+        return;
+      }
+      if (!row.storeName) {
+        this.$message.error("未完善仓库,不可标记");
+        return;
+      }
+      if (!row.description) {
+        this.$message.error("未完善描述,不可标记");
+        return;
+      }
       let arrRowid = [];
       arrRowid.push(row.id);
       let markStr = {
@@ -1290,20 +1318,50 @@ export default {
     //批量标记
     markAll() {
       if (this.sels.length != 0) {
-       this.finish.id = this.sels.map(e => e.id);
-       APIFinishAttribute(this.finish).then(res => {
-        if (res.data.code === 200) {
-          this.$message({
-            message: "标记成功",
-            type: "success"
-          });
-          this.getData();
-        } else {
-          this.$message.error(res.data.message);
+        for (let i = 0; i < this.sels.length; i++) {
+          if (this.sels[i].goodsName == null || this.sels[i].goodsName=='') {
+            this.$message.error("未完善商品名称,不可标记");
+            return;
+          }
+          if (this.sels[i].aliasCnName == null || this.sels[i].aliasCnName=='') {
+            this.$message.error("未完善中文申报名,不可标记");
+            return;
+          }
+          if (this.sels[i].aliasEnName == null || this.sels[i].aliasEnName=='') {
+            this.$message.error("未完善英文申报名,不可标记");
+            return;
+          }
+          if (this.sels[i].supplierName == null || this.sels[i].supplierName=='') {
+            this.$message.error("未完善供应商名称,不可标记");
+            return;
+          }
+          if (this.sels[i].packName == null || this.sels[i].packName=='') {
+            this.$message.error("未完善包装规格,不可标记");
+            return;
+          }
+          if (this.sels[i].storeName == null || this.sels[i].storeName=='') {
+            this.$message.error("未完善仓库,不可标记");
+            return;
+          }
+          if (this.sels[i].description == null || this.sels[i].description=='') {
+            this.$message.error("未完善描述,不可标记");
+            return;
+          }
         }
-       }); 
-      }else{
-       this.$message.error("未选择");
+        this.finish.id = this.sels.map(e => e.id);
+        APIFinishAttribute(this.finish).then(res => {
+          if (res.data.code === 200) {
+            this.$message({
+              message: "标记成功",
+              type: "success"
+            });
+            this.getData();
+          } else {
+            this.$message.error(res.data.message);
+          }
+        });
+      } else {
+        this.$message.error("未选择");
       }
     },
     //导入普源
@@ -1373,15 +1431,15 @@ export default {
         .then(() => {
           APIDeleteAttribute(arrString).then(res => {
             if (res.data.code === 200) {
-            this.$message({
+              this.$message({
                 message: "删除成功",
                 type: "success"
-            });
-            this.getData();
+              });
+              this.getData();
             } else {
-            this.$message.error("删除失败");
+              this.$message.error("删除失败");
             }
-           });
+          });
         })
         .catch(() => {});
     },
@@ -3022,7 +3080,7 @@ export default {
   color: red;
   font-weight: bold;
 }
-.redblack{
+.redblack {
   color: #606266;
 }
 .clasRed1 {

@@ -1576,7 +1576,7 @@ export default {
           this.addForm1.hopeMonthProfit =
             Number(this.addForm1.hopeSale) *
             Number(this.addForm1.salePrice) *
-            Number(this.addForm1.hopeRate);
+            Number(this.addForm1.hopeRate)/100;
           forwardCreate(this.addForm1).then(res => {
             if (res.data.code === 200) {
               this.dialogVisible1 = false;
@@ -1607,7 +1607,7 @@ export default {
           this.addForm1.hopeMonthProfit =
             Number(this.addForm1.hopeSale) *
             Number(this.addForm1.salePrice) *
-            Number(this.addForm1.hopeRate);
+            Number(this.addForm1.hopeRate)/100;
           forwardCreate(this.addForm1).then(res => {
             if (res.data.code === 200) {
               this.dialogVisible1 = false;
@@ -1645,7 +1645,7 @@ export default {
           this.editForm.hopeMonthProfit =
             Number(this.editForm.hopeSale) *
             Number(this.editForm.salePrice) *
-            Number(this.editForm.hopeRate);
+            Number(this.editForm.hopeRate)/100;
           forwardUpdate(this.editForm).then(res => {
             if (res.data.code === 200) {
               this.dialogVisibleEdit1 = false;
@@ -1683,7 +1683,7 @@ export default {
           this.editForm.hopeMonthProfit =
             Number(this.editForm.hopeSale) *
             Number(this.editForm.salePrice) *
-            Number(this.editForm.hopeRate);
+            Number(this.editForm.hopeRate)/100;
           forwardUpdate(this.editForm).then(res => {
             if (res.data.code === 200) {
               this.dialogVisibleEdit1 = false;
@@ -2385,7 +2385,7 @@ export default {
           this.addForm2.hopeMonthProfit =
             Number(this.addForm2.hopeSale) *
             Number(this.addForm2.salePrice) *
-            Number(this.addForm2.hopeRate);
+            Number(this.addForm2.hopeRate)/100;
           forwardCreate(this.addForm2).then(res => {
             if (res.data.code === 200) {
               this.dialogVisible2 = false;
@@ -2416,7 +2416,7 @@ export default {
           this.addForm2.hopeMonthProfit =
             Number(this.addForm2.hopeSale) *
             Number(this.addForm2.salePrice) *
-            Number(this.addForm2.hopeRate);
+            Number(this.addForm2.hopeRate)/100;
           forwardCreate(this.addForm2).then(res => {
             if (res.data.code === 200) {
               this.dialogVisible2 = false;
@@ -2454,7 +2454,7 @@ export default {
           this.editForm.hopeMonthProfit =
             Number(this.editForm.hopeSale) *
             Number(this.editForm.salePrice) *
-            Number(this.editForm.hopeRate);
+            Number(this.editForm.hopeRate)/100;
           forwardUpdate(this.editForm).then(res => {
             if (res.data.code === 200) {
               this.dialogVisibleEdit2 = false;
@@ -2492,7 +2492,7 @@ export default {
           this.editForm.hopeMonthProfit =
             Number(this.editForm.hopeSale) *
             Number(this.editForm.salePrice) *
-            Number(this.editForm.hopeRate);
+            Number(this.editForm.hopeRate)/100;
           forwardUpdate(this.editForm).then(res => {
             if (res.data.code === 200) {
               this.dialogVisibleEdit2 = false;

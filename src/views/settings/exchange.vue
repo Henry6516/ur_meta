@@ -1,17 +1,22 @@
 <template>
-  <el-form :inline="true" :model="condition" class="demo-form-inline" label-width="10rem">
+  <el-form :inline="true" :model="condition" class="demo-form-inline" label-width="12rem">
     <el-form-item label="销售汇率">
-      <el-input v-model="condition.saleRate" :placeholder="placeholders"></el-input>
+      <el-input v-model="condition.salerRate" :placeholder="condition.salerRate"></el-input>
+    </el-form-item>
+    <br>
+    <el-form-item label="其他部门开发汇率">
+      <el-input v-model="condition.devRate" :placeholder="condition.devRate"></el-input>
+    </el-form-item>
+    <br>
+    <el-form-item label="运营一部开发汇率">
+      <el-input v-model="condition.devRate1" :placeholder="condition.devRate1"></el-input>
+    </el-form-item>
+    <br>
+    <el-form-item label="运营五部开发汇率">
+      <el-input v-model="condition.devRate5" :placeholder="condition.devRate5"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">保存</el-button>
-    </el-form-item>
-    <br>
-    <el-form-item label="开发汇率">
-      <el-input v-model="condition.devRate" :placeholder="placeholderd"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit2">保存</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -22,70 +27,32 @@ export default {
     return {
       placeholderd: '',
       placeholders: '',
+      condate:[],
       condition: {
         devRate: '',
-        saleRate: ''
+        salerRate: '',
+        devRate1:'',
+        devRate5 :''
       }
     }
   },
   methods: {
-    onSubmit(form) {
-      if (this.condition.saleRate === '' && this.condition.devRate !== '') {
-        this.condition.saleRate = this.placeholders
-      } else if (this.condition.devRate === '' && this.condition.saleRate !== '') {
-        this.condition.devRate = this.placeholderd
-      } else if (this.condition.saleRate === '' && this.condition.devRate === '') {
-        this.condition.saleRate = this.placeholders
-        this.condition.devRate = this.placeholderd
-      }
-      form.saleRate = this.condition.saleRate
-      form.devRate = this.condition.devRate
-      getUpdateexchange(form).then(response => {
+    onSubmit() {
+      getUpdateexchange(this.condition).then(response => {
         if (response.data.code === 200) {
-          this.$alert('更新开发汇率成功！', '提示', {
-            confirmButtonText: '确定',
-            type: 'success'
-          })
+          this.$message({
+                message: "更新汇率成功",
+                type: "success"
+              });
         } else {
-          this.$alert('更新开发汇率失败！', '提示', {
-            confirmButtonText: '确定',
-            type: 'error'
-          })
+         this.$message.error(response.data.message);
         }
       })
     },
-    onSubmit2(form) {
-      if (this.condition.saleRate === '' && this.condition.devRate !== '') {
-        this.condition.saleRate = this.placeholders
-      } else if (this.condition.devRate === '' && this.condition.saleRate !== '') {
-        this.condition.devRate = this.placeholderd
-      } else if (this.condition.saleRate === '' && this.condition.devRate === '') {
-        this.condition.saleRate = this.placeholders
-        this.condition.devRate = this.placeholderd
-      }
-      form.saleRate = this.condition.saleRate
-      form.devRate = this.condition.devRate
-      getUpdateexchange(form).then(response => {
-        if (response.data.code === 200) {
-          this.$alert('更新开发汇率成功！', '提示', {
-            confirmButtonText: '确定',
-            type: 'success'
-          })
-        } else {
-          this.$alert('更新开发汇率失败！', '提示', {
-            confirmButtonText: '确定',
-            type: 'error'
-          })
-        }
-      })
-    }
   },
   mounted() {
     getExchange().then(response => {
-      const saler = response.data.data
-      const dev = response.data.data
-      this.placeholders = saler.salerRate
-      this.placeholderd = dev.devRate
+      this.condition=response.data.data
     })
   }
 }

@@ -749,11 +749,7 @@
         <el-table-column prop="storeName"
                          label="仓库"
                          min-width="100"
-                         sortable></el-table-column>
-        <el-table-column prop="purchaser"
-                         label="采购"
-                         min-width="100"
-                         sortable></el-table-column>                 
+                         sortable></el-table-column>               
         <el-table-column prop="goodsCode"
                          label="商品编码"
                          min-width="100"
@@ -800,8 +796,9 @@
                          min-width="105"
                          sortable></el-table-column>
       </el-table>
-      <div class="block toolbar">
-        <el-pagination background
+      <div class="block toolbar" style="overflow:hidden">
+         <div style="float:left;margin-top:5px;">
+            <el-pagination background
                        @size-change='handleSizeChangeDead'
                        @current-change='handleCurrentChangeDead'
                        :current-page="this.dead.page"
@@ -810,6 +807,11 @@
                        layout="total,sizes,prev,pager,next,jumper"
                        :total="this.totalpur">
         </el-pagination>
+         </div>
+        <div style="float:right">
+          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:5px;">死库金额合计:<span style="color:red">{{totalPrice}}</span></p>
+          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">当前页死库金额:<span style="color:red">{{currentPrice}}</span></p>
+        </div>
       </div>
     </div>
   </div>
@@ -824,6 +826,8 @@ import { isAdmin } from '../../api/api'
 export default {
   data() {
     return {
+      totalPrice:0,
+      currentPrice:0,
       showis1:true,
       showis2:false,
       tableData1:[],
@@ -833,7 +837,7 @@ export default {
         role: 'developer',
         member: [],
         page: 1,
-        pageSize: 20
+        pageSize: 10
       },
       totalpur:0,
       checked1: true,
@@ -1210,6 +1214,12 @@ export default {
             this.totalpur = response.data.data._meta.totalCount
             this.dead.page = response.data.data._meta.currentPage
             this.dead.pageSize = response.data.data._meta.perPage
+            let strNum=0;
+            for(let i=0;i<this.tableData1.length;i++){
+                strNum=strNum+Number(this.tableData1[i].aveAmount)
+            }
+            this.totalPrice=response.data.data.extra.totalAveAmount
+            this.currentPrice=strNum
           })
     },
     onSubmit(form) {

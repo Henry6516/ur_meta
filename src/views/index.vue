@@ -13,6 +13,274 @@
               ></el-tab-pane>
             </el-tabs>
           </div>
+            <div class="tabs-container" v-show="showTitle.pming">
+            <el-tabs v-model="activePlatpm" type="card" @tab-click="handlePlatpm">
+              <el-tab-pane label="eBay-义乌仓" name="eBay-义乌仓">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                  <el-table-column prop="order" label="排名" sortable="custom" align="center" width="75">
+                    <template slot-scope="scope">
+                      <img src="./j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
+                      <img src="./j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
+                      <img src="./j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
+                      <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="username" label="销售员" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="img" label="头像" align="center">
+                    <template slot-scope="scope">
+                       <div class="poImg" :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']">
+                        <img :src="scope.row.img" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img!=null">
+                        <img src="./header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="depart" label="部门" sortable="custom" align="center"></el-table-column>
+                  <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column prop="lastProfit" label="上月毛利"  sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastAve" label="上月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastDiff" label="上月毛利差额" sortable="custom" align="center">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
+                     </template> 
+                  </el-table-column>
+                  <el-table-column prop="thisProfit" label="本月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisAve" label="本月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisDiff" label="本月毛利差额" sortable="custom" align="center">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                     </template> 
+                  </el-table-column>
+                  <el-table-column prop="hireDate" label="入职时长（月）" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="createDate" label="统计时间" sortable="custom" align="center">
+                     <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.createDate)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="eBay-海外仓" name="eBay-海外仓">
+                 <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                  <el-table-column prop="order" label="排名" sortable="custom" align="center" width="75">
+                    <template slot-scope="scope">
+                      <img src="./j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
+                      <img src="./j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
+                      <img src="./j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
+                      <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="username" label="销售员" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="img" label="头像" align="center">
+                    <template slot-scope="scope">
+                       <div class="poImg" :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']">
+                        <img :src="scope.row.img" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img!=null">
+                        <img src="./header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="depart" label="部门" sortable="custom" align="center"></el-table-column>
+                  <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column prop="lastProfit" label="上月毛利"  sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastAve" label="上月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastDiff" label="上月毛利差额" sortable="custom" align="center">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
+                     </template> 
+                  </el-table-column>
+                  <el-table-column prop="thisProfit" label="本月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisAve" label="本月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisDiff" label="本月毛利差额" sortable="custom" align="center">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                     </template> 
+                  </el-table-column>
+                  <el-table-column prop="hireDate" label="入职时长（月）" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="createDate" label="统计时间" sortable="custom" align="center">
+                     <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.createDate)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="Wish" name="Wish">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                  <el-table-column prop="order" label="排名" sortable="custom" align="center" width="75">
+                    <template slot-scope="scope">
+                      <img src="./j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
+                      <img src="./j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
+                      <img src="./j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
+                      <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="username" label="销售员" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="img" label="头像" align="center">
+                    <template slot-scope="scope">
+                       <div class="poImg" :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']">
+                        <img :src="scope.row.img" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img!=null">
+                        <img src="./header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="depart" label="部门" sortable="custom" align="center"></el-table-column>
+                  <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column prop="lastProfit" label="上月毛利"  sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastAve" label="上月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastDiff" label="上月毛利差额" sortable="custom" align="center">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
+                     </template> 
+                  </el-table-column>
+                  <el-table-column prop="thisProfit" label="本月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisAve" label="本月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisDiff" label="本月毛利差额" sortable="custom" align="center">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                     </template> 
+                  </el-table-column>
+                  <el-table-column prop="hireDate" label="入职时长（月）" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="createDate" label="统计时间" sortable="custom" align="center">
+                     <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.createDate)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="SMT" name="SMT">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                  <el-table-column prop="order" label="排名" sortable="custom" align="center" width="75">
+                    <template slot-scope="scope">
+                      <img src="./j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
+                      <img src="./j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
+                      <img src="./j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
+                      <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="username" label="销售员" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="img" label="头像" align="center">
+                    <template slot-scope="scope">
+                       <div class="poImg" :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']">
+                        <img :src="scope.row.img" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img!=null">
+                        <img src="./header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="depart" label="部门" sortable="custom" align="center"></el-table-column>
+                  <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column prop="lastProfit" label="上月毛利"  sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastAve" label="上月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastDiff" label="上月毛利差额" sortable="custom" align="center">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
+                     </template> 
+                  </el-table-column>
+                  <el-table-column prop="thisProfit" label="本月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisAve" label="本月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisDiff" label="本月毛利差额" sortable="custom" align="center">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                     </template> 
+                  </el-table-column>
+                  <el-table-column prop="hireDate" label="入职时长（月）" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="createDate" label="统计时间" sortable="custom" align="center">
+                     <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.createDate)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="Amazon" name="Amazon">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                  <el-table-column prop="order" label="排名" sortable="custom" align="center" width="75">
+                    <template slot-scope="scope">
+                      <img src="./j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
+                      <img src="./j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
+                      <img src="./j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
+                      <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="username" label="销售员" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="img" label="头像" align="center">
+                    <template slot-scope="scope">
+                       <div class="poImg" :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']">
+                        <img :src="scope.row.img" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img!=null">
+                        <img src="./header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="depart" label="部门" sortable="custom" align="center"></el-table-column>
+                  <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column prop="lastProfit" label="上月毛利"  sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastAve" label="上月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastDiff" label="上月毛利差额" sortable="custom" align="center">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
+                     </template> 
+                  </el-table-column>
+                  <el-table-column prop="thisProfit" label="本月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisAve" label="本月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisDiff" label="本月毛利差额" sortable="custom" align="center">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                     </template> 
+                  </el-table-column>
+                  <el-table-column prop="hireDate" label="入职时长（月）" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="createDate" label="统计时间" sortable="custom" align="center">
+                     <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.createDate)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="Joom" name="Joom">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                  <el-table-column prop="order" label="排名" sortable="custom" align="center" width="75">
+                    <template slot-scope="scope">
+                      <img src="./j1.png" style="width: 31px;height: 38px;" v-if="scope.row.order==1">
+                      <img src="./j2.png" style="width: 31px;height: 38px;" v-if="scope.row.order==2">
+                      <img src="./j3.png" style="width: 31px;height: 38px;" v-if="scope.row.order==3">
+                      <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="username" label="销售员" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="img" label="头像" align="center">
+                    <template slot-scope="scope">
+                       <div class="poImg" :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']">
+                        <img :src="scope.row.img" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img!=null">
+                        <img src="./header.png" style="width: 60px;height: 60px;border-radius:50%;" v-if="scope.row.img==null">
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="depart" label="部门" sortable="custom" align="center"></el-table-column>
+                  <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column prop="lastProfit" label="上月毛利"  sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastAve" label="上月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="lastDiff" label="上月毛利差额" sortable="custom" align="center">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
+                     </template> 
+                  </el-table-column>
+                  <el-table-column prop="thisProfit" label="本月毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisAve" label="本月平均毛利" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="thisDiff" label="本月毛利差额" sortable="custom" align="center">
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                     </template> 
+                  </el-table-column>
+                  <el-table-column prop="hireDate" label="入职时长（月）" sortable="custom" align="center"></el-table-column>
+                  <el-table-column prop="createDate" label="统计时间" sortable="custom" align="center">
+                     <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.createDate)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
           <div class="tabs-container" v-show="showTitle.baokuan">
             <el-tabs v-model="activePlat" type="card" @tab-click="handlePlat">
               <el-tab-pane label="eBay-义乌仓" name="eBay-义乌仓">
@@ -653,6 +921,7 @@ import {
   news,
   newsTop,
   ProsTarget,
+  ProsTargetPm,
   getAmt,
   getZzAmt,
   getDepartAmt,
@@ -698,13 +967,15 @@ export default {
       departTable: [],
       developerTable: [],
       proTable: [],
+      proTablepm: [],
       saleSh: [],
       saleDepartment: [],
       saleDevelop: [],
       saleZz: [],
       activeName: "上海销售",
-      activeTitle: "今日爆款",
+      activeTitle: "销售排名",
       activePlat: "eBay-义乌仓",
+      activePlatpm:"eBay-义乌仓",
       activeSale: "上海销售",
       profitl1: {
         depart: null
@@ -743,13 +1014,22 @@ export default {
         developer: false
       },
       showTitle: {
-        baokuan: true,
+        baokuan: false,
         zengzhang: false,
-        sale: false
+        sale: false,
+        pming:true
       }
     };
   },
   methods: {
+    sortNumberPX(column, prop, order) {
+      const data = this.proTablepm
+      if (column.order === 'descending') {
+        this.proTablepm = data.sort(compareDown(data, column.prop))
+      } else {
+        this.proTablepm = data.sort(compareUp(data, column.prop))
+      }
+    },
     renderHeadertic(h, { column, $index }) {
       if ($index === 0) {
         let filters = this.shbm;
@@ -1159,6 +1439,11 @@ export default {
       } else {
         this.showTitle["sale"] = false;
       }
+      if (tab.label === "销售排名") {
+        this.showTitle["pming"] = true;
+      } else {
+        this.showTitle["pming"] = false;
+      }
     },
     handlePlat(tab, event) {
       if (tab.label === "eBay-义乌仓") {
@@ -1189,6 +1474,38 @@ export default {
       if (tab.label === "Joom") {
         ProsTarget(this.activePlat).then(res => {
           this.proTable = res.data.data;
+        });
+      }
+    },
+    handlePlatpm(tab, event) {
+      if (tab.label === "eBay-义乌仓") {
+        ProsTargetPm(this.activePlatpm).then(res => {
+          this.proTablepm = res.data.data;
+        });
+      }
+      if (tab.label === "eBay-海外仓") {
+        ProsTargetPm(this.activePlatpm).then(res => {
+          this.proTablepm = res.data.data;
+        });
+      }
+      if (tab.label === "Wish") {
+        ProsTargetPm(this.activePlatpm).then(res => {
+          this.proTablepm = res.data.data;
+        });
+      }
+      if (tab.label === "SMT") {
+        ProsTargetPm(this.activePlatpm).then(res => {
+          this.proTablepm = res.data.data;
+        });
+      }
+      if (tab.label === "Amazon") {
+        ProsTargetPm(this.activePlatpm).then(res => {
+          this.proTablepm = res.data.data;
+        });
+      }
+      if (tab.label === "Joom") {
+        ProsTargetPm(this.activePlatpm).then(res => {
+          this.proTablepm = res.data.data;
         });
       }
     },
@@ -1313,12 +1630,43 @@ export default {
     ProsTarget(this.activePlat).then(res => {
       this.proTable = res.data.data;
     });
+    ProsTargetPm(this.activePlatpm).then(res => {
+      this.proTablepm = res.data.data;
+    });
     this.getNews();
   }
 };
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.colorRed{
+  color: red;
+}
+.poImg{
+  width: 80px;
+  height: 80px;
+}
+.poImg img{
+  margin-top: 16px;
+}
+.poImg1{
+  width: 80px;
+  height: 80px;
+  background: url(./touguan.png) no-repeat center;
+  background-size: 100% 100%;
+}
+.poImg2{
+  width: 80px;
+  height: 80px;
+  background: url(./toukuang1.png) no-repeat center;
+  background-size: 100% 100%;
+}
+.poImg3{
+  width: 80px;
+  height: 80px;
+  background: url(./toukuang2.png) no-repeat center;
+  background-size: 100% 100%;
+}
 .blueround {
   display: block;
   width: 10px;
@@ -1339,7 +1687,7 @@ export default {
   padding-top: 12px;
   text-align: center;
   position: absolute;
-  left: -35%;
+  left: -37%;
   top: 0;
   font-size: 16px;
   color: #303133;
@@ -1352,7 +1700,7 @@ export default {
     border-radius: 50%;
     background: #007aff;
     position: absolute;
-    left: -9%;
+    left: -9.5%;
     top: 16px;
     z-index: 999;
   }
@@ -1373,7 +1721,7 @@ export default {
     padding-top: 12px;
     text-align: center;
     position: absolute;
-    left: -43%;
+    left: -45.5%;
     top: 0;
     font-size: 16px;
     color: #303133;
@@ -1393,10 +1741,10 @@ export default {
   float: left;
 }
 .contentBoxRight {
-  width: 70%;
+  width: 68%;
   float: right;
   border-left: #d2d4da solid 1px;
-  margin-left: 25%;
+  margin-left: 27%;
   padding-left: 5%;
   padding-top: 15px;
   min-height: 420px;

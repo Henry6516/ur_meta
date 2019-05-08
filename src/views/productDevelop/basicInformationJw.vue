@@ -53,8 +53,7 @@
                                          header-align="center">
                             <el-table-column prop="greaterEqual"
                                              :render-header="renderHeaderPicAdd"
-                                             align="center"
-                                             width="180">
+                                             align="center">
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="小于重量(g)"

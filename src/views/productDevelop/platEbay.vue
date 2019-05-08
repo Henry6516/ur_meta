@@ -4,7 +4,7 @@
       :span="24"
       style="position: fixed; bottom:0; z-index:999;background: #f2f2f2;padding: 15px 0; padding-top:12px; border-top: #eee solid 1px;"
     >
-      <el-col :span="16" :offset="4">
+      <el-col :span="16" class="leftmedia">
         <el-button @click="keep()" type="primary" style="float: left;margin-right:10px">保存当前数据</el-button>
         <el-button
           style="margin-left: 0;float: left;margin-right:10px"
@@ -308,7 +308,7 @@
                 <input
                   placeholder="零售价"
                   v-model="price"
-                  style="width:52%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+                  style="width:51%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
                 >
                 <span class="xzz1" @click="setPrice">价格确定</span>
               </el-col>
@@ -1749,9 +1749,37 @@ section {
 .selee .el-input__inner {
   border-radius: 300px !important;
 }
+.leftmedia{
+  margin-left: 21%;
+}
+@media screen and (max-width: 1600px){
+   .leftmedia{
+     margin-left: 14%;
+   }
+}
 @media screen and (max-width: 1440px){
    .font12{
      font-size: 12px;
+   }
+}
+@media screen and (max-width: 1350px){
+   .sx {
+    background: #eee;
+    text-align: center;
+    line-height: 34px;
+    margin-left: 15px;
+    margin-top: 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 60px;
+    float: right;
+    font-size: 13px;
+    border: #eee solid 1px;
+  }
+}
+@media screen and (max-width: 1200px){
+   .leftmedia{
+     margin-left: 9%;
    }
 }
 </style>

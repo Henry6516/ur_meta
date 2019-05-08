@@ -239,12 +239,12 @@
           </el-col>
         </el-col>
         <el-col :span="5">
-          <el-col :span="6">
+          <el-col :span="7">
             <el-select v-model="sign" size="small">
               <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-col>
-          <el-col :span="10">
+          <el-col :span="9">
             <el-input placeholder="设置价格" class="font12" size="small" v-model="price"></el-input>
           </el-col>
           <el-col :span="7" class="boderrtb font12">

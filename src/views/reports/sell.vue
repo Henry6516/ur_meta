@@ -468,18 +468,6 @@
               @sort-change="sortNumber"
               max-height="670"
               v-show="showTable.dead">
-      <el-table-column prop="suffix"
-                       label="账号"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="sku"
-                       label="sku"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="storeName"
-                       label="出货仓库"
-                       sortable
-                       align="center"></el-table-column>
       <el-table-column prop="importDate"
                        label="导入时间"
                        sortable
@@ -491,6 +479,18 @@
       <el-table-column prop="plat"
                        label="平台"
                        sortable
+                       align="center"></el-table-column>                                          
+      <el-table-column prop="suffix"
+                       label="账号"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="salesman"
+                       label="销售员"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="storeName"
+                       label="出货仓库"
+                       sortable
                        align="center"></el-table-column>
       <el-table-column prop="goodsCode"
                        label="商品编码"
@@ -498,6 +498,10 @@
                        align="center"></el-table-column>
       <el-table-column prop="goodsName"
                        label="商品名称"
+                       sortable
+                       align="center"></el-table-column>
+      <el-table-column prop="sku"
+                       label="sku"
                        sortable
                        align="center"></el-table-column>
       <el-table-column prop="createDate"
@@ -540,13 +544,10 @@
                        label="分摊金额"
                        sortable
                        align="center"></el-table-column>
-      <el-table-column prop="salesman"
-                       label="销售员"
-                       sortable
-                       align="center"></el-table-column>
     </el-table>
     <div class="block toolbar"
-         v-show="showTable.dead">
+         v-show="showTable.dead" style="overflow:hidden">
+      <div style="float:left;margin-top:5px;">
       <el-pagination background
                      @size-change='handleSizeChangeDead'
                      @current-change='handleCurrentChangeDead'
@@ -556,6 +557,11 @@
                      layout="total,sizes,prev,pager,next,jumper"
                      :total="this.total3">
       </el-pagination>
+      </div>
+      <div style="float:right">
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;">分摊金额合计:<span style="color:red">{{totalPrice}}</span></p>
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">当前页分摊金额:<span style="color:red">{{currentPrice}}</span></p>
+      </div>
     </div>
     <!-- 杂费明细 -->
     <el-table :data="tableData4"
@@ -626,6 +632,8 @@ export default {
     const vue = this
     return {
       kefu: [],
+      totalPrice:0,
+      currentPrice:0,
       total: null,
       total2: null,
       total3: null,
@@ -1642,6 +1650,12 @@ export default {
         this.total3 = res.data.data._meta.totalCount
         this.dead.page = res.data.data._meta.currentPage
         this.dead.pageSize = res.data.data._meta.perPage
+        let strNum=0;
+        for(let i=0;i<this.tableData3.length;i++){
+            strNum=strNum+Number(this.tableData3[i].aveAmount)
+        }
+        this.totalPrice=res.data.data.extra.totalAveAmount
+        this.currentPrice=strNum
       })
     },
     getExtra() {

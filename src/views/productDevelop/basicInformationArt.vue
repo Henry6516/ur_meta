@@ -14,6 +14,7 @@
                     <el-table :data="dateArt"
                               border
                               class="elTable"
+                              :height="tableHeight"
                               style="width: 98%;">
                         <el-table-column type="index"
                                          fixed
@@ -82,7 +83,7 @@
                     :page-size="conditionArt.pageSize"
                     :total="this.totalArt"
                     background
-                    layout="prev, pager, next" style="margin: 20px 0;margin-left: 10px">
+                    layout="prev, pager, next" style="margin: 20px 0;margin-left: 10px;margin-bottom:0">
             </el-pagination>
             <el-dialog title="详情" :visible.sync="dialogPictureArt">
                 <el-row class="contentt" style="margin-top: 0">
@@ -258,6 +259,7 @@
     export default {
         data() {
             return {
+                tableHeight: window.innerHeight - 275,
                 allMenu:[],
                 activeName: '开发采购美工对应关系',
                 dateArt:[],

@@ -84,7 +84,7 @@
       </div>
     </div>
     <el-row>
-      <el-col :span="20">
+      <el-col :span="19">
         <el-tabs v-model="activeName"
                  type="card"
                  @tab-click="handleClick">
@@ -264,7 +264,8 @@
                          min-width="105"
                          sortable></el-table-column>
       </el-table>
-      <div class="block toolbar">
+      <div class="block toolbar" style="overflow:hidden">
+        <div style="float:left;margin-top:5px;">
         <el-pagination background
                        @size-change='handleSizeChangeDead'
                        @current-change='handleCurrentChangeDead'
@@ -274,6 +275,11 @@
                        layout="total,sizes,prev,pager,next,jumper"
                        :total="this.totalpur">
         </el-pagination>
+        </div>
+        <div style="float:right">
+          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:5px;">分摊死库合计:<span style="color:red">{{totalPrice}}</span></p>
+          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">当前页分摊死库:<span style="color:red">{{currentPrice}}</span></p>
+        </div>
       </div>
     </div>
   </div>
@@ -290,6 +296,8 @@ import { isAdmin } from '../../api/api'
 export default {
   data() {
     return {
+      totalPrice:0,
+      currentPrice:0,
       tableHeight: 0,
       isA: true,
       text: '显示输入框',
@@ -315,7 +323,7 @@ export default {
         role: 'purchaser',
         member: [],
         page: 1,
-        pageSize: 20
+        pageSize: 10
       },
       member: [],
       dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
@@ -421,6 +429,12 @@ export default {
               this.totalpur = response.data.data._meta.totalCount
               this.dead.page = response.data.data._meta.currentPage
               this.dead.pageSize = response.data.data._meta.perPage
+              let strNum=0;
+              for(let i=0;i<this.tableData1.length;i++){
+                  strNum=strNum+Number(this.tableData1[i].aveAmount)
+              }
+              this.totalPrice=response.data.data.extra.totalAveAmount
+              this.currentPrice=strNum
             })
           } else {
             this.dead.member = this.member.map(m => {
@@ -433,6 +447,12 @@ export default {
               this.totalpur = response.data.data._meta.totalCount
               this.dead.page = response.data.data._meta.currentPage
               this.dead.pageSize = response.data.data._meta.perPage
+              let strNum=0;
+              for(let i=0;i<this.tableData1.length;i++){
+                  strNum=strNum+Number(this.tableData1[i].aveAmount)
+              }
+              this.totalPrice=response.data.data.extra.totalAveAmount
+              this.currentPrice=strNum
             })
           }
     },
