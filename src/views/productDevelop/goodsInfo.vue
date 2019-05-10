@@ -195,7 +195,7 @@
         </el-table-column>
       </el-table>
       <!-- 属性信息查看对话框 -->
-      <el-dialog title="查看" :visible.sync="dialogVisible" width="55%" class="dig70">
+      <el-dialog title="查看" :visible.sync="dialogVisible" width="70%" class="dig70">
         <el-form
           label-position="left"
           label-width="110px"

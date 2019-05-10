@@ -27,7 +27,7 @@
         </div>
       </el-dialog>
       <!-- 查看对话框 -->
-      <el-dialog title="查看" :visible.sync="dialogVisible">
+      <el-dialog title="查看" :visible.sync="dialogVisible" width="70%">
         <el-form
           :model="viewForm"
           label-position="left"
@@ -460,7 +460,7 @@
     </div>
     <div v-show="show.unPass">
       <!-- 查看对话框 -->
-      <el-dialog title="查看" :visible.sync="dialogVisible2">
+      <el-dialog title="查看" :visible.sync="dialogVisible2" width="70%">
         <el-form
           :model="viewForm"
           label-position="left"

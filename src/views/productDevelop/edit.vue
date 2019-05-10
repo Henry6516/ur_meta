@@ -519,15 +519,16 @@
                  <!--:value="item.value"></el-option>-->
     <!--</el-select>-->
     <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange" max-height="300">
-      <el-table-column type="selection"
+      <!-- <el-table-column type="selection"
                        align="center"
-                       header-align="center"></el-table-column>
+                       header-align="center"></el-table-column> -->
       <el-table-column type="index"
                        align="center"
                        header-align="center">
       </el-table-column>
       <el-table-column label="操作"
                        header-align="center"
+                       width="50"
                        align="center">
         <template slot-scope="scope">
           <el-tooltip content="删除">
@@ -539,6 +540,7 @@
       </el-table-column>
       <el-table-column label="SKU"
                        prop="sku"
+                       min-width="160"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -832,16 +834,18 @@ export default {
           this.$message.error('备货数量不能大于50或者等于0')
           return
         }else{
-          let arrIdr=[]
-          arrIdr.push(this.editForm.id)
+          // let arrIdr=[]
+          // arrIdr.push(this.editForm.id)
           let dataTeod = {
-            id: arrIdr
+            id: this.editForm.id
           }
           APIMakePurchasingOrder(dataTeod).then(res => {
             if (res.data.code === 200) {
               this.$message({
-                message: '成功',
-                type: 'success'
+                showClose: true,
+                message: res.data.data[0],
+                type: 'success',
+                duration: 50 * 1000
               })
             } else {
               this.$message.error(res.data.message)

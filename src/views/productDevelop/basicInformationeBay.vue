@@ -483,6 +483,14 @@ export default {
       });
     },
     saveEbay() {
+      for (let i = 0; i < this.highPrice.length; i++) {
+          if (this.contenEbay.high && this.contenEbay.high == this.highPrice[i].paypal) {
+            this.contenEbay.high = this.highPrice[i].id;
+          }
+          if (this.contenEbay.low && this.contenEbay.low == this.highPrice[i].paypal) {
+            this.contenEbay.low = this.highPrice[i].id;
+          }
+        }
       APIUpdateEbay(this.contenEbay).then(res => {
         if (res.data.data) {
           this.$message({

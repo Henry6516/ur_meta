@@ -256,7 +256,7 @@
             </el-table>
             <!-- 平台信息查看对话框 -->
             <el-dialog title='查看'
-                       :visible.sync="dialogPlat" width="55%">
+                       :visible.sync="dialogPlat" width="70%">
                 <el-form
                         label-position="left"
                         label-width="110px"
@@ -419,7 +419,7 @@
                            @size-change="handleSizeChangePlat"
                            @current-change="handleCurrentChangePlat"
                            :current-page="this.plat.page"
-                           :page-sizes="[10, 20, 30, 40]"
+                           :page-sizes="[10, 20, 40,100,200]"
                            :page-size="this.plat.pageSize"
                            layout="total, sizes, prev, pager, next, jumper"
                            :total="this.totalPlat">
@@ -1552,13 +1552,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.possessman1,
+                                        value: this.picture.possessMan1,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.possessman1 = value
+                                            this.picture.possessMan1 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -1628,9 +1628,10 @@
             //平台信息更新
             platEdit(index, row) {
                 sessionStorage.setItem('judge', "平台信息")
-                this.$router.push({
+                let Logistics=this.$router.resolve({
                     path: `/plat/${row.id}`
-                })
+                })     
+                window.open(Logistics.href);
             },
             //平台信息获取数据
             getPlat() {

@@ -53,7 +53,7 @@
           </el-form-item>
           <el-form-item label="开发员" prop="developer">
             <el-select size="small" v-model="addForm.developer" style="width:100%;">
-              <el-option v-for="item in developer" :value="item.username" :key="item.username"></el-option>
+              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="供应商链接" prop="vendor1">
@@ -72,7 +72,7 @@
         </span>
       </el-dialog>
       <!-- 查看对话框 -->
-      <el-dialog title="查看" :visible.sync="dialogVisibleView">
+      <el-dialog title="查看" :visible.sync="dialogVisibleView" width="70%">
         <el-form
           :model="viewForm"
           label-position="left"
@@ -132,7 +132,7 @@
           </el-form-item>
           <el-form-item label="开发员" prop="developer">
             <el-select size="small" v-model="editForm.developer" style="width:100%;">
-              <el-option v-for="item in developer" :value="item.username" :key="item.username"></el-option>
+              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="供应商链接">
@@ -405,7 +405,7 @@
         </span>
       </el-dialog>
       <!-- 查看对话框 -->
-      <el-dialog title="查看" :visible.sync="dialogVisibleView1">
+      <el-dialog title="查看" :visible.sync="dialogVisibleView1" width="70%">
         <el-form
           :model="viewForm"
           label-position="left"
@@ -858,7 +858,7 @@
         </span>
       </el-dialog>
       <!-- 查看对话框 -->
-      <el-dialog title="查看" :visible.sync="dialogVisibleView2">
+      <el-dialog title="查看" :visible.sync="dialogVisibleView2" width="70%">
         <el-form
           :model="viewForm"
           label-position="left"
@@ -1233,7 +1233,8 @@ import {
   getMember,
   getGoodscats,
   getAttributeInfoCat,
-  getAttributeInfoSubCat
+  getAttributeInfoSubCat,
+  getDeveloper
 } from "../../api/profit";
 import { getMenu } from "../../api/login";
 
@@ -1436,9 +1437,10 @@ export default {
     // this.getData()
     // this.getForward()
     // this.getReverse()
-    getMember().then(response => {
+    getDeveloper().then(response => {
       const possessMan = response.data.data;
-      this.developer = possessMan.filter(e => e.position === "开发");
+      this.developer = possessMan
+      console.log(this.developer)
     });
     getAttributeInfoCat().then(response => {
       this.category = this.cate = response.data.data;

@@ -191,7 +191,7 @@
             </el-table>
             <!-- 图片信息查看对话框 -->
             <el-dialog title='查看'
-                       :visible.sync="dialogPicture">
+                       :visible.sync="dialogPicture" width="70%">
                 <el-form
                         label-position="left"
                         label-width="110px"
@@ -1386,13 +1386,13 @@
                             [
                                 h('el-input', {
                                     props: {
-                                        value: this.picture.possessman1,
+                                        value: this.picture.possessMan1,
                                         size: 'mini',
                                         clearable: true
                                     },
                                     on: {
                                         input: value => {
-                                            this.picture.possessman1 = value
+                                            this.picture.possessMan1 = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {

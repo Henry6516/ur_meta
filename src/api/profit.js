@@ -29,6 +29,13 @@ export function getMember() {
     method: 'get'
   })
 }
+//全部开发
+export function getDeveloper() {
+  return request({
+    url: '/oa-goods/developer',
+    method: 'get'
+  })
+}
 // 没有权限的人员
 export function getUsers() {
   return request({
