@@ -105,7 +105,13 @@
             </el-table-column>
             <el-table-column prop="picUrl" fixed label="商品图片" header-align="center" width="90">
               <template slot-scope="scope">
+                <a
+                :href="'https://www.joom.com/en/products/'+scope.row.proId"
+                target="_blank"
+                style="display: block; width: 70px;height: 60px"
+              >
                 <img :src="scope.row.mainImage" style="width: 70px;height: 60px">
+                </a>
               </template>
             </el-table-column>
             <el-table-column label="商品编号" header-align="center">
@@ -277,15 +283,15 @@
                   <el-input size="small" v-model="scope.row.pySku"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column label="主图" prop="mainImage" header-align="center" min-width="100">
+              <el-table-column label="图片" prop="varMainImage" header-align="center" min-width="100">
                 <template slot-scope="scope">
-                  <el-input size="small" v-model="scope.row.mainImage" disabled></el-input>
+                  <el-input size="small" v-model="scope.row.varMainImage" disabled></el-input>
                 </template>
               </el-table-column>
-              <el-table-column label="图片" prop="mainImage" header-align="center">
+              <el-table-column label="图片" prop="varMainImage" header-align="center">
                 <template slot-scope="scope">
                   <img
-                    :src="scope.row.mainImage"
+                    :src="scope.row.varMainImage"
                     style="width:50px;height:50px;display: block;margin: auto"
                   >
                 </template>
@@ -450,7 +456,7 @@ export default {
             message: "保存成功",
             type: "success"
           });
-          this.dialogRelation = false;
+          // this.dialogRelation = false;
         } else {
           this.$message.error(res.data.message);
         }

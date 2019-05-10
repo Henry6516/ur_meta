@@ -467,7 +467,7 @@
             size="small"
             v-model="wishForm.description"
             type="textarea"
-            :rows="6"
+            :rows="14"
             style="width:96%;margin-left: 27px"
           ></el-input>
         </el-col>

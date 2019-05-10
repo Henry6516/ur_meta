@@ -207,7 +207,7 @@
       </el-col>
       <el-col :span="24">
         <span style="text-align: center;float: left;margin-left: 15px;margin-top: 6px">关键词Tags</span>
-        <el-col :span="22" style="margin-left: 15px;">
+        <el-col :span="21" style="margin-left: 15px;">
           <el-input v-model="wishForm.wishTags" style="width: 100%"></el-input>
         </el-col>
       </el-col>
@@ -313,7 +313,7 @@
           <el-input
             v-model="wishForm.description"
             type="textarea"
-            :rows="6"
+            :rows="14"
             style="width:96%;margin-left: 27px"
           ></el-input>
         </el-col>

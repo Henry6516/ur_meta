@@ -208,6 +208,20 @@
         <el-table-column label="子类目" header-align="center">
           <el-table-column prop="subCate" :render-header="renderHeader" width="150" align="center"></el-table-column>
         </el-table-column>
+        <el-table-column label="产品状态" header-align="center">
+          <el-table-column
+            prop="checkStatus"
+            :render-header="renderHeader"
+            width="150"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <a
+                :class="scope.row.checkStatus=='未认领'?'clasRed':'clasGreen'"
+              >{{scope.row.checkStatus}}</a>
+            </template>
+          </el-table-column>
+        </el-table-column>
         <el-table-column label="供应商链接" header-align="center">
           <el-table-column prop="vendor1" :render-header="renderHeader" width="170" align="center">
             <template slot-scope="scope">
@@ -253,20 +267,6 @@
             width="150"
             align="center"
           ></el-table-column>
-        </el-table-column>
-        <el-table-column label="产品状态" header-align="center">
-          <el-table-column
-            prop="checkStatus"
-            :render-header="renderHeader"
-            width="150"
-            align="center"
-          >
-            <template slot-scope="scope">
-              <a
-                :class="scope.row.checkStatus=='未认领'?'clasRed':'clasGreen'"
-              >{{scope.row.checkStatus}}</a>
-            </template>
-          </el-table-column>
         </el-table-column>
         <el-table-column label="审批备注" header-align="center">
           <el-table-column
@@ -619,6 +619,20 @@
         <el-table-column label="子类目" header-align="center">
           <el-table-column prop="subCate" :render-header="renderHeader1" width="150" align="center"></el-table-column>
         </el-table-column>
+        <el-table-column label="产品状态" header-align="center">
+          <el-table-column
+            prop="checkStatus"
+            :render-header="renderHeader1"
+            width="150"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <a
+                :class="scope.row.checkStatus=='已审批'?'clasGreen':scope.row.checkStatus=='待审批'?'classc':scope.row.checkStatus=='已认领'?'classl':'clasRed'"
+              >{{scope.row.checkStatus}}</a>
+            </template>
+          </el-table-column>
+        </el-table-column>
         <el-table-column label="供应商链接1" header-align="center">
           <el-table-column prop="vendor1" :render-header="renderHeader1" width="170" align="center">
             <template slot-scope="scope">
@@ -667,20 +681,6 @@
             width="150"
             align="center"
           ></el-table-column>
-        </el-table-column>
-        <el-table-column label="产品状态" header-align="center">
-          <el-table-column
-            prop="checkStatus"
-            :render-header="renderHeader1"
-            width="150"
-            align="center"
-          >
-            <template slot-scope="scope">
-              <a
-                :class="scope.row.checkStatus=='已审批'?'clasGreen':scope.row.checkStatus=='待审批'?'classc':scope.row.checkStatus=='已认领'?'classl':'clasRed'"
-              >{{scope.row.checkStatus}}</a>
-            </template>
-          </el-table-column>
         </el-table-column>
         <el-table-column label="审批备注" header-align="center">
           <el-table-column
@@ -1068,6 +1068,20 @@
         <el-table-column label="子类目" header-align="center">
           <el-table-column prop="subCate" :render-header="renderHeader2" width="150" align="center"></el-table-column>
         </el-table-column>
+        <el-table-column label="产品状态" header-align="center">
+          <el-table-column
+            prop="checkStatus"
+            :render-header="renderHeader2"
+            width="150"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <a
+                :class="scope.row.checkStatus=='已审批'?'clasGreen':scope.row.checkStatus=='待审批'?'classc':scope.row.checkStatus=='已认领'?'classl':'clasRed'"
+              >{{scope.row.checkStatus}}</a>
+            </template>
+          </el-table-column>
+        </el-table-column>
         <el-table-column label="供应商链接1" header-align="center">
           <el-table-column prop="vendor1" :render-header="renderHeader2" width="170" align="center">
             <template slot-scope="scope">
@@ -1116,20 +1130,6 @@
             width="150"
             align="center"
           ></el-table-column>
-        </el-table-column>
-        <el-table-column label="产品状态" header-align="center">
-          <el-table-column
-            prop="checkStatus"
-            :render-header="renderHeader2"
-            width="150"
-            align="center"
-          >
-            <template slot-scope="scope">
-              <a
-                :class="scope.row.checkStatus=='已审批'?'clasGreen':scope.row.checkStatus=='待审批'?'classc':scope.row.checkStatus=='已认领'?'classl':'clasRed'"
-              >{{scope.row.checkStatus}}</a>
-            </template>
-          </el-table-column>
         </el-table-column>
         <el-table-column label="审批备注" header-align="center">
           <el-table-column
@@ -1854,142 +1854,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 3) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition1.vendor1,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition1.vendor1 = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 4) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition1.origin1,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition1.origin1 = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 5) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition1.devNum,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition1.devNum = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 6) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition1.developer,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition1.developer = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 7) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition1.introducer,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition1.introducer = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 9) {
+      }else if ($index === 3) {
         let filters = [
           { text: "已认领", value: "已认领" },
           { text: "待提交", value: "待提交" },
@@ -2028,7 +1893,142 @@ export default {
             })
           ]
         );
-      } else if ($index === 10) {
+      } else if ($index === 4) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition1.vendor1,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition1.vendor1 = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 5) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition1.origin1,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition1.origin1 = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 6) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition1.devNum,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition1.devNum = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 7) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition1.developer,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition1.developer = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 8) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition1.introducer,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition1.introducer = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      }  else if ($index === 10) {
         return h(
           "div",
           {
@@ -2621,141 +2621,6 @@ export default {
           ]
         );
       } else if ($index === 3) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition2.vendor1,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition2.vendor1 = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 4) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition2.origin1,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition2.origin1 = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 5) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition2.devNum,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition2.devNum = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 6) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition2.developer,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition2.developer = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 7) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition2.introducer,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition2.introducer = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 9) {
         let filters = [
           { text: "已认领", value: "已认领" },
           { text: "待提交", value: "待提交" },
@@ -2791,6 +2656,141 @@ export default {
                   label: item.value
                 }
               });
+            })
+          ]
+        );
+      } else if ($index === 4) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition2.vendor1,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition2.vendor1 = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 5) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition2.origin1,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition2.origin1 = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 6) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition2.devNum,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition2.devNum = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 7) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition2.developer,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition2.developer = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 8) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition2.introducer,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition2.introducer = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
             })
           ]
         );
@@ -3363,7 +3363,34 @@ export default {
             })
           ]
         );
-      } else if ($index === 7) {
+      }  else if ($index === 1) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.subCate,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.subCate = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      }else if ($index === 2) {
         let filters = [
           { text: "未认领", value: "未认领" },
           { text: "已认领", value: "已认领" }
@@ -3399,7 +3426,142 @@ export default {
             })
           ]
         );
-      } else if ($index === 9) {
+      }  else if ($index === 3) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.vendor1,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.vendor1 = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 4) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.origin1,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.origin1 = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 5) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.developer,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.developer = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 6) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.introducer,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.introducer = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 7) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.introReason,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.introReason = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      }else if ($index === 9) {
         return h("el-date-picker", {
           props: {
             value: this.time1,
@@ -3441,168 +3603,6 @@ export default {
             }
           }
         });
-      } else if ($index === 1) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition.subCate,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition.subCate = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 2) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition.vendor1,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition.vendor1 = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 3) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition.origin1,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition.origin1 = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 4) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition.developer,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition.developer = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 5) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition.introducer,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition.introducer = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 6) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition.introReason,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition.introReason = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
       } else {
         return h(
           "div",

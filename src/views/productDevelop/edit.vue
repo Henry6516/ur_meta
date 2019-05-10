@@ -15,14 +15,16 @@
           <h3 class="toolbar essential" style="margin-top: 15px;margin-bottom: 10px">基本信息</h3>
         </el-col>
       </el-row>
-      <el-row style="margin-top: 0px">
-        <el-col :span="8">
+      <el-col :span="24">
+        <el-col :span="6" style="margin-left:20px;">
             <a :href="editForm.picUrl"
                target="_blank">
             <img :src='editForm.picUrl'
-                 style="width: 85%;height: 405px;margin-left:8%;margin-top:10px;margin-bottom:0px;border-radius: 10px">
+                 style="width: 155px;height:155px; margin-top:10px;margin-bottom:0px;border-radius: 10px">
               </a>
         </el-col>
+      </el-col>
+      <el-row style="margin-top: 0px">
         <el-col :span="8" style="margin-top: 20px;">
           <el-col :span="5" style="text-align: center;margin-top: 8px" class="font13">
             商品图片链接
@@ -172,6 +174,32 @@
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
           <el-col :span="5" style="text-align: center;margin-top: 8px;" class="font13">
+            主类目
+          </el-col>
+          <el-col :span="18">
+            <el-select
+                      style="width:100%"
+                      v-model="oaGoods.cate"
+                      @change="mainIndex($event)">
+                <el-option v-for="(item, key) in mainCategory" :key='item.key' :label="item" :value="item"></el-option>
+              </el-select>
+          </el-col>
+        </el-col>
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;" class="font13">
+            子类目
+          </el-col>
+          <el-col :span="18">
+            <el-select
+                      style="width: 100%"
+                      v-model="oaGoods.subCate"
+                      @change="childrenIndex($event)">
+                <el-option v-for="(item, key) in childrenCategory" :key='item.key' :label="item" :value="item"></el-option>
+              </el-select>
+          </el-col>
+        </el-col>
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;" class="font13">
             季节
           </el-col>
           <el-col :span="18">
@@ -188,17 +216,16 @@
           <h3 class="toolbar essential" style="margin-top: 15px;margin-bottom: 10px">主信息</h3>
         </el-col>
         <el-col :span="24" style="margin-top: 10px;margin-bottom: 15px">
-          <el-col :span="6">
-            <el-col :span="5" style="text-align: center;margin-top: 8px;">
-              禁售平台
-            </el-col>
-            <el-col :span="19">
+          <el-col :span="12">
+            <span style="text-align: center;float: left;margin-left: 30px;margin-top: 6px">
+            禁售平台
+          </span>
+            <el-col :span="18" style="margin-left: 15px;">
               <el-select
-                      style="width:97%"
+                      style="width:100%"
                       multiple
                       filterable
                       allow-create
-                      collapse-tags
                       default-first-option
                       v-model="editForm.dictionaryName"
                       @change="forbidSale($event)">
@@ -212,16 +239,15 @@
               </el-select>
             </el-col>
           </el-col>
-          <el-col :span="6">
-            <el-col :span="5" style="text-align: center;margin-top: 8px;">
-              对应销售
-            </el-col>
-            <el-col :span="19">
+          <el-col :span="12">
+            <span style="text-align: center;float: left;margin-top: 6px">
+            对应销售
+          </span>
+            <el-col :span="20" style="margin-left: 15px;">
               <el-select
-                      style="width:95%"
+                      style="width:100%"
                       multiple
                       filterable
-                      collapse-tags
                       allow-create
                       default-first-option
                       v-model="editForm.mapPersons"
@@ -256,7 +282,7 @@
           <!--</el-select>-->
           <!--</el-form-item>-->
           <!--</el-col>-->
-          <el-col :span="6">
+          <!-- <el-col :span="5">
             <el-col :span="5" style="text-align: center;margin-top: 8px;">
               主类目
             </el-col>
@@ -268,8 +294,8 @@
                 <el-option v-for="(item, key) in mainCategory" :key='item.key' :label="item" :value="item"></el-option>
               </el-select>
             </el-col>
-          </el-col>
-          <el-col :span="6">
+          </el-col> -->
+          <!-- <el-col :span="5">
             <el-col :span="5" style="text-align: center;margin-top: 8px;">
               子类目
             </el-col>
@@ -281,16 +307,16 @@
                 <el-option v-for="(item, key) in childrenCategory" :key='item.key' :label="item" :value="item"></el-option>
               </el-select>
             </el-col>
-          </el-col>
+          </el-col> -->
         </el-col>
         <el-col :span="24">
              <span style="text-align: center;float: left;margin-left: 15px;margin-top: 6px">
             关键词Tags
           </span>
-          <el-col :span="22" style="margin-left: 15px;">
+          <el-col :span="20" style="margin-left: 15px;">
             <el-input
                     v-model="editForm.wishTags"
-                    style="width: 96%"
+                    style="width: 100%"
                     placeholder="--tags关键词不能超过10个，逗号分隔--"></el-input>
           </el-col>
         </el-col>
@@ -306,7 +332,7 @@
               <font style="color: red">说明：</font>性别定位/多个一卖等。如Women/Men/Girl/Baby/Kids/1PC/2PC/5PC/4 Colors/5Pcs Set…
             </span>
           </el-col>
-          <el-col :span="22" style="margin-left: 100px;margin-top: 10px">
+          <el-col :span="21" style="margin-left: 100px;margin-top: 10px">
             <el-input
                       v-model="editForm.headKeywords"
                       style="width: 96%"
@@ -405,7 +431,7 @@
               <font style="color: red">说明：</font>附加说明词。如Randomly/S-3XL/2ml/(Color: Nude)/Big Size…
             </span>
             </el-col>
-          <el-col :span="22" style="margin-left: 100px;margin-top: 10px;margin-bottom: 20px">
+          <el-col :span="21" style="margin-left: 100px;margin-top: 10px;margin-bottom: 20px">
             <el-input
                       v-model="editForm.tailKeywords"
                       style="width: 96%"
@@ -421,6 +447,7 @@
           <el-col :span="22">
             <el-input
                     type="textarea"
+                    :rows="14"
                     v-model="editForm.description"
                     style="width:96%;margin-left: 27px"></el-input>
           </el-col>
@@ -665,7 +692,7 @@
       <el-button size="small"
                  type="warning" @click="passAll">导入普源</el-button>
       <el-button size="small"
-                 type="danger">生成采购单</el-button>
+                 type="danger" @click="createOrder" :disabled="orderTrue">生成采购单</el-button>
       <!--<el-button size="small"-->
                  <!--type="danger">删除行</el-button>-->
     </div>
@@ -696,7 +723,7 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute,APIDeleteVariant,APIAttributeToShopElf  } from '../../api/product'
+import { APIAttributeInfo, APISaveAttribute, APIAttribute,APISaveFinishAttribute,APIDeleteVariant,APIAttributeToShopElf,APIMakePurchasingOrder  } from '../../api/product'
 import { getMember, getGoodscats, getAttributeInfoPackName, getAttributeInfoSpecialAttribute, getAttributeInfoStoreName, getAttributeInfoSeason, getAttributeInfoPlat, getAttributeInfoSalesman, getAttributeInfoCat, getAttributeInfoSubCat } from '../../api/profit'
 import { getMenu } from '../../api/login'
 export default {
@@ -716,6 +743,7 @@ export default {
       dialogTable: false,
       sjlength: 0,
       bxlength: 0,
+      orderTrue:false,
       jspt: false,
       cate: [],
       last: 0,
@@ -793,6 +821,34 @@ export default {
             this.$message.error(res.data.message)
           }
         })
+    },
+    createOrder(){
+      if(!this.orderTrue){
+        let numberStr=0
+        for(let i=0;i<this.tableData.length;i++){
+          numberStr+=Number(this.tableData[i].stockNum)
+        }
+        if(numberStr>50 || numberStr==0){
+          this.$message.error('备货数量不能大于50或者等于0')
+          return
+        }else{
+          let arrIdr=[]
+          arrIdr.push(this.editForm.id)
+          let dataTeod = {
+            id: arrIdr
+          }
+          APIMakePurchasingOrder(dataTeod).then(res => {
+            if (res.data.code === 200) {
+              this.$message({
+                message: '成功',
+                type: 'success'
+              })
+            } else {
+              this.$message.error(res.data.message)
+            }
+          })
+        }
+      }
     },
     formatTen(num) {
       return num > 9 ? (num + '') : ('0' + num)
@@ -1313,6 +1369,10 @@ export default {
         this.oaGoods = res.data.data.basicInfo.oaGoods
         this.dictionaryName1 = this.editForm.dictionaryName
         this.mapPersons1 = this.editForm.mapPersons
+        if(this.editForm.storeName==null){
+          this.editForm.storeName='义乌仓'
+        }
+        this.editForm.stockUp=='否'?this.orderTrue=true:this.orderTrue=false
         this.editForm.requiredKeywords = JSON.parse(this.editForm.requiredKeywords)
         this.editForm.randomKeywords = JSON.parse(this.editForm.randomKeywords)
         if(this.editForm.dictionaryName){

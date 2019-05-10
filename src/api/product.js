@@ -845,6 +845,14 @@ export function APIAttributeToShopElf(param) {
     data
   })
 }
+export function APIMakePurchasingOrder(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/make-purchasing-order',
+    method: 'post',
+    data
+  })
+}
 export function APIReportExport(param) {
   const data = { condition: param }
   return request({

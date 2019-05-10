@@ -9,7 +9,7 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
-      <el-col :span="15">
+      <el-col :span="15" class="menuCon">
         <el-menu :default-active="activeIndex" @select="handleSelect" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
           <el-menu-item index="/index" style="line-height:5rem;"><font size="3">主页</font></el-menu-item>
           <el-submenu v-for="(item,position) in allMenu" :index="generateIndex(-1,position)" :key="generateIndex(-1,position)">
@@ -267,6 +267,11 @@ export default {
   color: #969696;
   margin-top: -20px;
   margin-right: 70px;
+}
+@media screen and (max-width: 1359px) {
+  .menuCon .el-submenu__title{
+    padding: 0 5px;
+  }
 }
 </style>
 

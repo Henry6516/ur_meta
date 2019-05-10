@@ -170,6 +170,18 @@
         <el-table-column label="子类目" header-align="center">
           <el-table-column prop="subCate" :render-header="renderHeader" width="150" align="center"></el-table-column>
         </el-table-column>
+        <el-table-column label="产品状态" header-align="center">
+          <el-table-column
+            prop="checkStatus"
+            :render-header="renderHeader"
+            width="150"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <a class="clasRed">{{scope.row.checkStatus}}</a>
+            </template>
+          </el-table-column>
+        </el-table-column>
         <el-table-column label="供应商链接1" header-align="center">
           <el-table-column prop="vendor1" :render-header="renderHeader" width="170" align="center">
             <template slot-scope="scope">
@@ -218,18 +230,6 @@
             width="150"
             align="center"
           ></el-table-column>
-        </el-table-column>
-        <el-table-column label="产品状态" header-align="center">
-          <el-table-column
-            prop="checkStatus"
-            :render-header="renderHeader"
-            width="150"
-            align="center"
-          >
-            <template slot-scope="scope">
-              <a class="clasRed">{{scope.row.checkStatus}}</a>
-            </template>
-          </el-table-column>
         </el-table-column>
         <el-table-column label="创建时间" header-align="center">
           <el-table-column
@@ -1573,7 +1573,34 @@ export default {
             })
           ]
         );
-      } else if ($index === 9) {
+      } else if($index === 8) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition1.checkStatus,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition1.checkStatus = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      }else if ($index === 9) {
         return h(
           "div",
           {
@@ -1707,6 +1734,33 @@ export default {
           [
             h("el-input", {
               props: {
+                value: this.condition1.hopeCost,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition1.hopeCost = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 15) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
                 value: this.condition1.hopeRate,
                 size: "mini",
                 clearable: true
@@ -1723,7 +1777,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 15) {
+      } else if ($index === 16) {
         return h(
           "div",
           {
@@ -1750,7 +1804,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 16) {
+      } else if ($index === 17) {
         return h(
           "div",
           {
@@ -1777,34 +1831,7 @@ export default {
             })
           ]
         );
-      } else {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition1.checkStatus,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition1.checkStatus = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      }
+      } 
     },
     getPass() {
       checkPassList(this.condition1).then(res => {
@@ -2089,7 +2116,34 @@ export default {
             })
           ]
         );
-      } else if ($index === 9) {
+      } else if($index === 8) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition2.introReason,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition2.introReason = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      }else if ($index === 9) {
         return h(
           "div",
           {
@@ -2347,33 +2401,6 @@ export default {
             })
           ]
         );
-      } else {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition2.introReason,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition2.introReason = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
       }
     },
     getFailed() {
@@ -2585,7 +2612,34 @@ export default {
             })
           ]
         );
-      } else if ($index === 4) {
+      }else if ($index === 4) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.checkStatus,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.checkStatus = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 5) {
         return h(
           "div",
           {
@@ -2612,7 +2666,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 5) {
+      } else if ($index === 6) {
         return h(
           "div",
           {
@@ -2639,7 +2693,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 6) {
+      } else if ($index === 7) {
         return h(
           "div",
           {
@@ -2666,7 +2720,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 7) {
+      } else if ($index === 8) {
         return h(
           "div",
           {
@@ -2693,7 +2747,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 8) {
+      } else if ($index === 9) {
         return h(
           "div",
           {
@@ -2720,7 +2774,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 10) {
+      } else if($index === 10) {
         return h(
           "div",
           {
@@ -2731,13 +2785,13 @@ export default {
           [
             h("el-input", {
               props: {
-                value: this.condition.checkStatus,
+                value: this.condition.introReason,
                 size: "mini",
                 clearable: true
               },
               on: {
                 input: value => {
-                  this.condition.checkStatus = value;
+                  this.condition.introReason = value;
                   this.$emit("input", value);
                 },
                 change: value => {
@@ -2854,6 +2908,33 @@ export default {
           [
             h("el-input", {
               props: {
+                value: this.condition.hopeCost,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.hopeCost = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      }else if ($index === 16) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
                 value: this.condition.hopeRate,
                 size: "mini",
                 clearable: true
@@ -2870,7 +2951,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 16) {
+      } else if ($index === 17) {
         return h(
           "div",
           {
@@ -2897,7 +2978,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 17) {
+      } else if ($index === 18) {
         return h(
           "div",
           {
@@ -2924,34 +3005,7 @@ export default {
             })
           ]
         );
-      } else {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition.introReason,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition.introReason = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      }
+      } 
     },
     getData() {
       checkList(this.condition).then(res => {

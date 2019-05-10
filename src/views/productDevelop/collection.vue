@@ -26,9 +26,9 @@ export default {
   },
   methods: {
    handleClick(tab, event) {
-      if (tab.label === "Joom") {
+      if (tab.label === "Joom采集") {
         this.showis=true
-        sessionStorage.setItem("judgeCollection", "Joom");
+        sessionStorage.setItem("judgeCollection", "Joom采集");
         this.$router.push({
          path: `/v1/oa-data-mine/collectionJoom`
         });
@@ -40,37 +40,37 @@ export default {
   watch: {
     "$route.path": function(newVal, oldVal) {
       if (newVal == "/v1/oa-data-mine/index") {
-        if (this.allMenu[0].name == "Joom") {
-          this.activeName = "Joom";
-          sessionStorage.setItem("judgeCollection", "Joom");
+        if (this.allMenu[0].name == "Joom采集") {
+          this.activeName = "Joom采集";
+          sessionStorage.setItem("judgeCollection", "Joom采集");
           this.$router.push({
             path: `/v1/oa-data-mine/collectionJoom`
           });
         }
-        if (this.allMenu[0].name == "Wish") {
-          this.activeName = "Wish";
-          sessionStorage.setItem("judgeCollection", "Wish");
+        if (this.allMenu[0].name == "Wish采集") {
+          this.activeName = "Wish采集";
+          sessionStorage.setItem("judgeCollection", "Wish采集");
           this.$router.push({
             path: `/v1/oa-data-mine/collectionWish`
           });
         }
-        if (this.allMenu[0].name == "Ebay") {
-          this.activeName = "Ebay";
-          sessionStorage.setItem("judgeCollection", "Ebay");
+        if (this.allMenu[0].name == "Ebay采集") {
+          this.activeName = "Ebay采集";
+          sessionStorage.setItem("judgeCollection", "Ebay采集");
           this.$router.push({
             path: `/v1/oa-data-mine/collectionEbay`
           });
         }
-        if (this.allMenu[0].name == "Amazone") {
-          this.activeName = "Amazone";
-          sessionStorage.setItem("judgeCollection", "Amazone");
+        if (this.allMenu[0].name == "Amazone采集") {
+          this.activeName = "Amazone采集";
+          sessionStorage.setItem("judgeCollection", "Amazone采集");
           this.$router.push({
             path: `/v1/oa-data-mine/collectionAmazone`
           });
         }
-         if (this.allMenu[0].name == "Aliexpress") {
-          this.activeName = "Aliexpress";
-          sessionStorage.setItem("judgeCollection", "Aliexpress");
+         if (this.allMenu[0].name == "Aliexpress采集") {
+          this.activeName = "Aliexpress采集";
+          sessionStorage.setItem("judgeCollection", "Aliexpress采集");
           this.$router.push({
             path: `/v1/oa-data-mine/collectionAliexpress`
           });
@@ -93,37 +93,37 @@ export default {
         }
       }
       if (!sessionStorage.getItem("judgeCollection")) {
-        if (this.allMenu[0].name == "Joom") {
-          this.activeName = "Joom";
-          sessionStorage.setItem("judgeCollection", "Joom");
+        if (this.allMenu[0].name == "Joom采集") {
+          this.activeName = "Joom采集";
+          sessionStorage.setItem("judgeCollection", "Joom采集");
           this.$router.push({
             path: `/v1/oa-data-mine/collectionJoom`
           });
         }
-        if (this.allMenu[0].name == "Wish") {
-          this.activeName = "Wish";
-          sessionStorage.setItem("judgeCollection", "Wish");
+        if (this.allMenu[0].name == "Wish采集") {
+          this.activeName = "Wish采集";
+          sessionStorage.setItem("judgeCollection", "Wish采集");
         //   this.$router.push({
         //     path: `/v1/oa-goodsinfo/goodsInfoPicture`
         //   });
         }
-        if (this.allMenu[0].name == "Ebay") {
-          this.activeName = "Ebay";
-          sessionStorage.setItem("judgeCollection", "Ebay");
+        if (this.allMenu[0].name == "Ebay采集") {
+          this.activeName = "Ebay采集";
+          sessionStorage.setItem("judgeCollection", "Ebay采集");
         //   this.$router.push({
         //     path: `/v1/oa-goodsinfo/goodsInfoPlatform`
         //   });
         }
-        if (this.allMenu[0].name == "Amazone") {
-          this.activeName = "Ebay";
-          sessionStorage.setItem("judgeCollection", "Amazone");
+        if (this.allMenu[0].name == "Amazone采集") {
+          this.activeName = "Amazone采集";
+          sessionStorage.setItem("judgeCollection", "Amazone采集");
         //   this.$router.push({
         //     path: `/v1/oa-goodsinfo/goodsInfoPlatform`
         //   });
         }
-        if (this.allMenu[0].name == "Aliexpress") {
-          this.activeName = "Ebay";
-          sessionStorage.setItem("judgeCollection", "Aliexpress");
+        if (this.allMenu[0].name == "Aliexpress采集") {
+          this.activeName = "Aliexpress采集";
+          sessionStorage.setItem("judgeCollection", "Aliexpress采集");
         //   this.$router.push({
         //     path: `/v1/oa-goodsinfo/goodsInfoPlatform`
         //   });

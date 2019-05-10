@@ -71,6 +71,16 @@
         </el-col>
       </el-col>
     </div>
+    <el-col :span="24">
+      <el-col :span="1" class="titCenter top15" style="text-align: center;margin-left:23px;">描述</el-col>
+      <el-col :span="22">
+        <el-input
+                    type="textarea"
+                    :rows="14"
+                    v-model="editForm.description"
+                    style="width:98%;margin-left:10px;;margin-top:15px;"></el-input>
+      </el-col>
+    </el-col>
     <el-col :span="24" style="padding: 0;">
       <h3 class="toolbar essential">图片信息</h3>
     </el-col>

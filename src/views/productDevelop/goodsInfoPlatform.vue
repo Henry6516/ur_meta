@@ -1149,14 +1149,14 @@
             },
             filter() {
                  if (this.time1 !== null && this.time1.length !== 0) {
-                     this.platData.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
+                     this.plat.devDatetime = [this.formatDate(this.time1[0]), this.formatDate(this.time1[1])]
                  } else {
-                     this.platData.devDatetime = []
+                     this.plat.devDatetime = []
                  }
                 if (this.time2 !== null && this.time2.length !== 0) {
-                    this.platData.updateTime = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
+                    this.plat.updateTime = [this.formatDate(this.time2[0]), this.formatDate(this.time2[1])]
                 } else {
-                    this.platData.updateTime = []
+                    this.plat.updateTime = []
                 }
                 this.getPlat()
             },
