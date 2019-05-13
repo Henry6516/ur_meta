@@ -463,21 +463,25 @@ export default {
       });
     },
     relation(index, row) {
-      const ary = [];
-      ary.push(row.id);
-      let objtr = {
-        id: ary
-      };
-      APIbindShopSku(objtr).then(res => {
-        if (res.data.code == 200) {
-          this.dialogRelation = true;
-          this.variations = res.data.data.variations;
-          this.relationTotal = this.variations.length;
-          this.codeRelation = res.data.data.goodsCode;
-        } else {
-          this.$message.error(res.data.message);
-        }
-      });
+      // const ary = [];
+      // ary.push(row.id);
+      // let objtr = {
+      //   id: ary
+      // };
+      // APIbindShopSku(objtr).then(res => {
+      //   if (res.data.code == 200) {
+      //     this.dialogRelation = true;
+      //     this.variations = res.data.data.variations;
+      //     this.relationTotal = this.variations.length;
+      //     this.codeRelation = res.data.data.goodsCode;
+      //   } else {
+      //     this.$message.error(res.data.message);
+      //   }
+      // });
+       let Logistics=this.$router.resolve({
+            path: `/joomRelation/${row.id}`
+        })     
+       window.open(Logistics.href);
     },
     defineCategory() {
       if (this.sels.length != 0) {

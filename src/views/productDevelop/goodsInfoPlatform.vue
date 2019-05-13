@@ -112,6 +112,17 @@
                         </template>
                     </el-table-column>
                 </el-table-column>
+                <el-table-column label="禁售平台"
+                                 header-align="center">
+                    <el-table-column prop="dictionaryName"
+                                     :render-header="renderHeaderPlat"
+                                     width='150'
+                                     align="center">
+                        <template slot-scope="scope">
+                            <a :class="!scope.row.dictionaryName?'clasRed':''">{{scope.row.dictionaryName?scope.row.dictionaryName:'未设置'}}</a>
+                        </template>
+                    </el-table-column>
+                </el-table-column>
                 <el-table-column label="商品名称"
                                  header-align="center">
                     <el-table-column prop="goodsName"
@@ -193,17 +204,6 @@
                                      align="center">
                         <template slot-scope="scope">
                             <a>{{scope.row.mid >1?'采集':'非采集'}}</a>
-                        </template>
-                    </el-table-column>
-                </el-table-column>
-                <el-table-column label="禁售平台"
-                                 header-align="center">
-                    <el-table-column prop="dictionaryName"
-                                     :render-header="renderHeaderPlat"
-                                     width='150'
-                                     align="center">
-                        <template slot-scope="scope">
-                            <a :class="!scope.row.dictionaryName?'clasRed':''">{{scope.row.dictionaryName?scope.row.dictionaryName:'未设置'}}</a>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -1839,6 +1839,33 @@
                             [
                                 h('el-input', {
                                     props: {
+                                        value: this.plat.dictionaryName,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.plat.dictionaryName = value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                }  else if ($index === 7) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
                                         value: this.plat.goodsName,
                                         size: 'mini',
                                         clearable: true
@@ -1855,7 +1882,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 7) {
+                } else if ($index === 8) {
                     let filters = this.mainCategory
                     return h(
                             'el-select',
@@ -1887,7 +1914,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 8) {
+                } else if ($index === 9) {
                     return h(
                             'div',
                             {
@@ -1914,7 +1941,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 9) {
+                } else if ($index === 10) {
                     return h(
                             'div',
                             {
@@ -1941,7 +1968,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 10) {
+                } else if ($index === 11) {
                     return h(
                             'div',
                             {
@@ -1968,7 +1995,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 11) {
+                } else if ($index === 12) {
                     return h(
                             'div',
                             {
@@ -1995,7 +2022,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 12) {
+                } else if ($index === 13) {
                     return h(
                             'div',
                             {
@@ -2022,7 +2049,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 13) {
+                } else if ($index === 14) {
                     return h(
                             'div',
                             {
@@ -2049,7 +2076,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 14) {
+                } else if ($index === 15) {
                     let filters = [{ text: '是', value: '是' }, { text: '否', value: '否' }]
                     return h(
                             'el-select',
@@ -2081,34 +2108,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 15) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.plat.dictionaryName,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.plat.dictionaryName = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                } else if ($index === 16) {
+                }else if ($index === 16) {
                     return h('el-date-picker',{
                         props:{
                             value:this.time1,

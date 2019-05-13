@@ -78,6 +78,7 @@ import paymentDetail from '../views/productDevelop/paymentDetail.vue'
 import collection from '../views/productDevelop/collection.vue'
 import collectionJoom from '../views/productDevelop/collectionJoom.vue'
 import joomId from '../views/productDevelop/collectionJoomDetails.vue'
+import joomRelation from '../views/productDevelop/joomRelation.vue'
 
 const routes = [
   {
@@ -421,6 +422,11 @@ const routes = [
             component: joomId,
             name: 'joomId'
           },
+          {
+            path: '/joomRelation/:id',
+            component: joomRelation,
+            name: 'joomRelation'
+          }
         ]
       },
       {

@@ -95,7 +95,7 @@
             <img :src="editForm.mainImage" style="display: block; width: 95%;height: 205px">
           </a>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="17">
           <el-col :span="3" class="textZt">主图</el-col>
           <el-col :span="21">
             <el-input v-model="editForm.mainImage"></el-input>
