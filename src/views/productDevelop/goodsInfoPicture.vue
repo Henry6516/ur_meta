@@ -1029,9 +1029,13 @@
             },
             picEdit(index, row) {
                 sessionStorage.setItem('judge', "图片信息")
-                this.$router.push({
-                    path: `/table/${row.id}`
-                })
+                // this.$router.push({
+                //     path: `/table/${row.id}`
+                // })
+                let Logistics=this.$router.resolve({
+                   path: `/table/${row.id}`
+                })     
+                 window.open(Logistics.href);
             },
             //图片信息获取数据
             getPic() {

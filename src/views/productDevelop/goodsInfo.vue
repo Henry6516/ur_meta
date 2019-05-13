@@ -1885,9 +1885,13 @@ export default {
     },
     upte(index, row) {
       sessionStorage.setItem("judge", "属性信息");
-      this.$router.push({
-        path: `/${row.id}`
-      });
+      // this.$router.push({
+      //   path: `/${row.id}`
+      // });
+      let Logistics=this.$router.resolve({
+                   path: `/${row.id}`
+                })     
+      window.open(Logistics.href);
     },
     formatTen(num) {
       return num > 9 ? num + "" : "0" + num;

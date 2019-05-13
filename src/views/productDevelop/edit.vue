@@ -518,7 +518,7 @@
                  <!--:label="item.label"-->
                  <!--:value="item.value"></el-option>-->
     <!--</el-select>-->
-    <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange" max-height="300">
+    <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange" max-height="1000">
       <!-- <el-table-column type="selection"
                        align="center"
                        header-align="center"></el-table-column> -->
@@ -540,7 +540,7 @@
       </el-table-column>
       <el-table-column label="SKU"
                        prop="sku"
-                       min-width="160"
+                       min-width="150"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"

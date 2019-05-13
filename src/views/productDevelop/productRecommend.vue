@@ -1440,7 +1440,6 @@ export default {
     getDeveloper().then(response => {
       const possessMan = response.data.data;
       this.developer = possessMan
-      console.log(this.developer)
     });
     getAttributeInfoCat().then(response => {
       this.category = this.cate = response.data.data;
