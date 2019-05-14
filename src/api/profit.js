@@ -493,6 +493,12 @@ export function getAttributeInfoPlat() {
     method: 'get'
   })
 }
+export function getForbidPlat() {
+  return request({
+    url: 'oa-goodsinfo/plat-forbid-plat',
+    method: 'get'
+  })
+}
 //获取属性信息对应销售
 export function getAttributeInfoSalesman() {
   return request({

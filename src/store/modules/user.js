@@ -12,6 +12,7 @@ const user = {
     admin: '',
     introduction: '',
     roles: [],
+    menu:[],
     setting: {
       articlePlatform: []
     }
@@ -42,6 +43,9 @@ const user = {
     SET_ADMIN: (state, admin) => {
       state.admin = admin
     },
+    SET_MENU: (state, menu) => {
+      state.menu = menu
+    },
     SET_ROLES: (state, roles) => {
       state.roles = roles
     }
@@ -66,6 +70,9 @@ const user = {
           reject(error)
         })
       })
+    },
+    GetMenu({commit}, data){
+      commit('SET_MENU', data)
     },
     // 获取用户信息
     GetUserInfo({ commit, state }) {

@@ -91,6 +91,8 @@ import { removeToken } from '../utils/auth'
 import { getMenu } from '../api/login'
 import { getAvatarUrl } from '../api/api'
 import ImageCropper from '@/components/ImageCropper'
+import {mapActions, mapGetters} from 'vuex'
+
 export default {
   name: 'avatarUpload-demo',
   components: { ImageCropper },
@@ -144,6 +146,8 @@ export default {
       this.image = this.$store.getters.avatar
     })
     getMenu().then(response => {
+      let arrDat=response.data.data
+      this.GetMenu(arrDat)
       this.allMenu = response.data.data
       this.allMenu.splice(0, 1)
       this.showMenu()
@@ -169,6 +173,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions( // 语法糖
+          ['GetMenu'] // 相当于this.$store.dispatch('GetMenu'),提交这个方法
+    ),
     showMenu(){
       if(sessionStorage.getItem('acTi')){
         this.activeIndex=sessionStorage.getItem('acTi')

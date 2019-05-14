@@ -840,7 +840,7 @@ export default {
     exportJoom() {
       if (this.joom!='') {
         let objStr1 = {
-          id: this.wishForm.infoId,
+          id: [this.wishForm.infoId],
           account: this.joom
         };
         APIPlatExportJoom(objStr1).then(res => {

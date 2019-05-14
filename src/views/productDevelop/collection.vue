@@ -15,6 +15,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import {mapActions, mapGetters} from 'vuex'
 import { getMenu } from "../../api/login";
 export default {
   data() {
@@ -78,14 +79,16 @@ export default {
       }
     }
   },
+  computed: {
+      ...mapGetters(['menu'])
+  },
   mounted() {
     const fatName = sessionStorage.getItem("judgeCollection");
     if (fatName) {
       this.activeName = fatName;
     }
-    getMenu().then(response => {
-      const res = response.data.data;
-      const menu = res.filter(e => e.name === "产品中心");
+    setTimeout(()=>{
+      const menu = this.menu.filter(e => e.name === "产品中心");
       let arr = menu[0].children;
       for (let i = 0; i < arr.length; i++) {
         if (arr[i].name == "数据采集") {
@@ -129,7 +132,7 @@ export default {
         //   });
         }
       }
-    });
+    },500)
   }
 };
 </script>
