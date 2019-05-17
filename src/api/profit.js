@@ -585,6 +585,12 @@ export function getEbayVirtualStore(param) {
     data
   })
 }
+export function getExpressExpired() {
+  return request({
+    url: 'tiny-tool/express-expired',
+    method: 'get'
+  })
+}
 
 
 

@@ -139,7 +139,14 @@
         </el-table-column>
         <el-table-column prop="img" fixed label="图片" header-align="center" width="90">
           <template slot-scope="scope">
-            <img :src="scope.row.img" style="width: 70px;height: 60px">
+            <el-tooltip placement="top" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
+              <div slot="content"><img :src="scope.row.img" style="width: 180px;height: 180px;"></div>
+              <img :src="scope.row.img" style="width: 70px;height: 60px">
+            </el-tooltip>
+            <!-- <div style="position:relative;cursor:pointer" class="imgChover">
+              <img :src="scope.row.img" style="width: 70px;height: 60px">
+              <img :src="scope.row.img" style="width: 180px;height: 180px;position:absolute;z-index:999;top:0;right:77px;" class="imgHover">
+            </div> -->
           </template>
         </el-table-column>
         <el-table-column label="是否备货" header-align="center">
@@ -859,6 +866,7 @@ import { getMenu } from "../../api/login";
 export default {
   data() {
     return {
+      toolTipClass: 'page-login-toolTipClass',
       dialogFormVisible1:false,
       wtgpz:null,
       wtgid:null,
@@ -3092,4 +3100,18 @@ export default {
   color: #337ab7;
   text-decoration: none;
 }
+.imgHover{
+  display: block;
+  border: #ccc solid 1px;
+}
+.imgChover:hover .imgHover{
+  display: block;
+}
 </style>
+<style>
+.page-login-toolTipClass{
+  padding: 2px;
+  background: #eee !important;
+}
+</style>
+

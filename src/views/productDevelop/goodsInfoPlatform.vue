@@ -9,14 +9,14 @@
     <!--:key="index">-->
     <!--</el-tab-pane>-->
     <!--</el-tabs>-->
-     <el-col :span="24" style="padding:10px 20px;">
+     <el-col :span="24" style="padding:10px 0;padding-left:10px;">
       <el-select
         placeholder="--请选择账号--"
         clearable
         multiple
         collapse-tags
         v-model="joom"
-        style="float: left;width:160px;"
+        style="float: left;width:155px;"
       >
         <el-button plain type="info" @click="selectalld1">全选</el-button>
         <el-button plain type="info" @click="noselectd1">取消</el-button>
@@ -25,10 +25,14 @@
       <el-input
               placeholder="请选择产品或填写商品编码(多个用逗号隔开)"
               v-model="joomName"
-              style="width:350px;margin-left:10px;float: left"
+              style="width:320px;margin-left:10px;float: left"
               clearable
       ></el-input>
       <span class="exportAccount" @click="exportJoom">导出Joom模板</span>
+      <span class="signPerfectWish" @click='keepPerfect("wish")'>标记Wish完善</span>
+      <span class="signPerfectEbay" @click='keepPerfect("ebay")'>标记eBay完善</span>
+      <span class="signPerfectJoom" @click='keepPerfect("joom")'>标记Joom完善</span>
+      <span class="signPerfectTotal" @click='keepPerfect("total")'>标记全部完善</span>
     </el-col>
     <div>
       <!-- 平台信息列表 -->
@@ -470,7 +474,8 @@ import {
   APIDeleteVariant,
   APIPicturePreview,
   APIFinishPicture,
-  APIPlatExportJoom
+  APIPlatExportJoom,
+  APIFinishPlat
 } from "../../api/product";
 import {
   getAttributeInfoStoreName,
@@ -1761,6 +1766,38 @@ export default {
       });
       window.open(Logistics.href);
     },
+    //完善
+    keepPerfect(n) {
+      if (this.sels.length!=0) {
+        let dataObj = {
+          id: null,
+          plat: []
+        };
+        dataObj.id = this.sels.map(e => e.id);
+        if (n == "wish") {
+          dataObj.plat = ["wish"];
+        } else if(n=="ebay") {
+          dataObj.plat = ["ebay"];
+        } else if(n=="joom") {
+          dataObj.plat = ["joom"];
+        }else{
+          dataObj.plat = ["wish","ebay","joom"];
+        }
+        APIFinishPlat(dataObj).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "保存成功",
+              type: "success"
+            });
+            this.getPlat();
+          } else {
+            this.$message.error(res.data.message);
+          }
+        });
+      } else {
+        this.$message.error("请选择产品");
+      }
+    },
     //平台信息获取数据
     getPlat() {
       APIPlatList(this.plat).then(res => {
@@ -2450,5 +2487,49 @@ export default {
   font-size: 13px;
   cursor: pointer;
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
+}
+.signPerfectWish{
+  padding: 0 10px;
+  display: block;
+  float: left;
+  line-height: 40px;
+  background: #00c0ef;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+.signPerfectEbay{
+  padding: 0 10px;
+  display: block;
+  float: left;
+  line-height: 40px;
+  background: #367fa9;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+.signPerfectJoom{
+  padding: 0 10px;
+  display: block;
+  float: left;
+  line-height: 40px;
+  background: #008d4c;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+.signPerfectTotal{
+  padding: 0 10px;
+  display: block;
+  float: left;
+  line-height: 40px;
+  background: #e08e0b;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 5px;
 }
 </style>

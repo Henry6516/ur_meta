@@ -38,6 +38,7 @@ import risk from '../views/tinytool/risk.vue'
 import edition from '../views/tinytool/edition.vue'
 import logistics from '../views/tinytool/logistics.vue'
 import modify from '../views/tinytool/modify.vue'
+import prescription from '../views/tinytool/prescription.vue'
 // 设置中心
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
@@ -354,6 +355,11 @@ const routes = [
         path: '/v1/tiny-tool/ebay-virtual-store',
         component: modify,
         name: 'eBay海外仓修改在线数量'
+      },
+      {
+        path: '/v1/tiny-tool/express-expired',
+        component: prescription,
+        name: '物流时效'
       }
     ]
   },

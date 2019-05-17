@@ -15,7 +15,7 @@
     </el-tabs>
     <div v-show="show.sale">
       <el-col :span="24" style="padding:10px 20px;">
-        <el-button type="success">批量标记推广完成</el-button>
+        <el-button type="success" @click="markAll">批量标记推广完成</el-button>
       </el-col>
       <!-- 销售列表 -->
       <el-table :data="platData" @selection-change="selsChange" :height="tableHeight">
@@ -605,6 +605,9 @@
       ></el-pagination>
     </div>
     <div v-show="show.stockUp">
+      <el-col :span="24" style="padding:10px 20px;">
+        <el-button @click="exportExcel" type="primary">导出表格</el-button>
+      </el-col>
       <el-col :span="24" style="padding: 0;">
         <h3
           class="toolbar essential"
@@ -665,6 +668,9 @@
       </el-table>
     </div>
     <div v-show="show.nostockUp">
+      <el-col :span="24" style="padding:10px 20px;">
+        <el-button @click="noexportExcel" type="primary">导出表格</el-button>
+      </el-col>
       <el-col :span="24" style="padding: 0;">
         <h3
           class="toolbar essential"
@@ -732,7 +738,8 @@ import {
   APIPlat,
   APIFormWish,
   APIStock,
-  APInoStock
+  APInoStock,
+  APIFormExtend
 } from "../../api/product";
 import {
   getAttributeInfoStoreName,
@@ -826,7 +833,7 @@ export default {
         page: 1
       },
       //备货
-      tableHeightstock: window.innerHeight - 170,
+      tableHeightstock: window.innerHeight - 230,
       stockdata: [],
       skuTotal: 0,
       //不备货
@@ -877,6 +884,44 @@ export default {
     //销售
     selsChange(sels) {
       this.sels = sels;
+    },
+    mark(index, row) {
+      let arrMark = [row.id];
+      let obj = {
+        id: arrMark
+      };
+      APIFormExtend(obj).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "成功",
+            type: "success"
+          });
+          this.getPlat();
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
+    markAll() {
+      if(this.sels.length!=0){
+        let finish = {
+        id: null
+        };
+        finish.id = this.sels.map(e => e.id);
+        APIFormExtend(finish).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "成功",
+              type: "success"
+            });
+            this.getPlat();
+          } else {
+            this.$message.error(res.data.message);
+          }
+        });
+      }else{
+        this.$message.error('请选择产品');
+      }
     },
     handleSizeChangePlat(val) {
       this.plat.pageSize = val;
@@ -1590,9 +1635,9 @@ export default {
     getPlat() {
       APIProduct(this.plat).then(res => {
         this.platData = res.data.data.items;
-        this.platData.forEach((item,index)=>{
-          item.extendStatus=item.extendStatus?item.extendStatus:'未推广'
-        })
+        this.platData.forEach((item, index) => {
+          item.extendStatus = item.extendStatus ? item.extendStatus : "未推广";
+        });
         this.totalPlat = res.data.data._meta.totalCount;
         this.plat.pageSize = res.data.data._meta.perPage;
         this.plat.page = res.data.data._meta.currentPage;
@@ -1973,6 +2018,36 @@ export default {
       }
     },
     //备货
+    exportExcel() {
+      const th = [
+        "开发员",
+        "备货产品款数",
+        "出单产品款数",
+        "出单率(%)",
+        "旺款数量",
+        "旺款率(%)",
+        "爆款数量",
+        "爆款率(%)",
+        "本月可用备货款数",
+        "下月可用备货款数"
+      ];
+      const filterVal = [
+        "developer",
+        "number",
+        "orderNum",
+        "orderRate",
+        "hotStyleNum",
+        "hotRate",
+        "exuStyleNum",
+        "exuRate",
+        "stockNumThisMonth",
+        "stockNumLastMonth"
+      ];
+      const Filename = "备货产品表现";
+      const data = this.stockdata.map(v => filterVal.map(k => v[k]));
+      const [fileName, fileType, sheetName] = [Filename, "xls"];
+      this.$toExcel({ th, data, fileName, fileType, sheetName });
+    },
     getStock() {
       APIStock().then(res => {
         this.stockdata = res.data.data;
@@ -1980,6 +2055,36 @@ export default {
       });
     },
     //不备货
+    noexportExcel() {
+      const th = [
+        "开发员",
+        "备货产品款数",
+        "出单产品款数",
+        "出单率(%)",
+        "旺款数量",
+        "旺款率(%)",
+        "爆款数量",
+        "爆款率(%)",
+        "本月可用备货款数",
+        "下月可用备货款数"
+      ];
+      const filterVal = [
+        "developer",
+        "number",
+        "orderNum",
+        "orderRate",
+        "hotStyleNum",
+        "hotRate",
+        "exuStyleNum",
+        "exuRate",
+        "stockNumThisMonth",
+        "stockNumLastMonth"
+      ];
+      const Filename = "不备货产品表现";
+      const data = this.nostockdata.map(v => filterVal.map(k => v[k]));
+      const [fileName, fileType, sheetName] = [Filename, "xls"];
+      this.$toExcel({ th, data, fileName, fileType, sheetName });
+    },
     getnoStock() {
       APInoStock().then(res => {
         this.nostockdata = res.data.data;

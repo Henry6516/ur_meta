@@ -1095,7 +1095,7 @@ export function APILogDelete(param) {
 export function APIProduct(param) {
   const data = { condition: param }
   return request({
-    url: '/oa-data/product?page=' + param.page,
+    url: '/oa-data/sales?page=' + param.page,
     method: 'post',
     data
   })
@@ -1118,6 +1118,14 @@ export function APInoStock() {
   return request({
     url: '/oa-data/nonstock',
     method: 'get'
+  })
+}
+export function APIFormExtend(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/extend',
+    method: 'post',
+    data
   })
 }
 //export function APIDelivery(param) {
