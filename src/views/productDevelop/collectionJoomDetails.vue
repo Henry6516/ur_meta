@@ -156,7 +156,7 @@
       </h3>
     </el-col>
     <el-col style="margin-top:5px;">
-      <el-table :data="tableData" border style="width:98%;margin-left:1%;" max-height="300">
+      <el-table :data="tableData" border style="width:98%;margin-left:1%;" max-height="1300">
         <!-- <el-table-column type="selection" width="30" align="center" header-align="center"></el-table-column> -->
         <el-table-column type="index" width="50" align="center" header-align="center"></el-table-column>
         <el-table-column label="操作" width="50" header-align="center" align="center">
@@ -215,7 +215,7 @@
             <el-input size="small" v-model="scope.row.shippingTime"></el-input>
           </template>
         </el-table-column>
-        <el-table-column label="主图" prop="varMainImage" header-align="center" min-width="100">
+        <el-table-column label="主图" prop="varMainImage" header-align="center">
           <template slot-scope="scope">
             <el-input size="small" v-model="scope.row.varMainImage"></el-input>
           </template>

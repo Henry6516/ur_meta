@@ -5,7 +5,7 @@
                  @tab-click="handleClick" class="toolbar">
             <el-tab-pane v-for="(item, index) in this.allMenu"
                          :label="item.name"
-                         :name="item.name"
+                         :name="item.route"
                          :key="index">
             </el-tab-pane>
         </el-tabs>
@@ -308,7 +308,7 @@
         return {
           tableHeight: window.innerHeight - 275,
           allMenu: [],
-          activeName: 'Wish账号字典',
+          activeName: '',
           date: [],
           totalWish: 0,
           dialogPicture: false,
@@ -346,36 +346,36 @@
              this.dialogPictureWish = true
           },
           handleClick(tab, event) {
-              if (tab.label === 'Wish账号字典') {
+              if (tab.name === '/v1/basic-info/wish-suffix') {
                   this.show['wish'] = true
               } else {
                   this.show['wish'] = false
               }
-              if (tab.label === 'eBay账号字典') {
+              if (tab.name === '/v1/basic-info/ebay-suffix') {
                   this.show['ebay'] = true
               } else {
                   this.show['ebay'] = false
               }
-              if (tab.label === 'Joom账号字典') {
+              if (tab.name === '/v1/basic-info/joom-suffix') {
                   this.show['joom'] = true
               } else {
                   this.show['joom'] = false
               }
-              if (tab.label === 'payPal账号字典') {
+              if (tab.name === '/v1/basic-info/paypal') {
                   this.show['pay'] = true
               } else {
                   this.show['pay'] = false
               }
-              if (tab.label === 'eBay运输方式') {
+              if (tab.name === '/v1/basic-info/shipping-service') {
                   this.show['ys'] = true
               } else {
                   this.show['ys'] = false
               }
-              if (tab.label === 'Joom对比Wish价格') {
+              if (tab.name === '/v1/basic-info/joom-wish') {
                   this.show['jw'] = true
               } else {
                   this.show['jw'] = false
-              } if (tab.label === '开发采购美工对应关系') {
+              } if (tab.name === '/v1/basic-info/sys-rules') {
                   this.show['kf'] = true
               } else {
                   this.show['kf'] = false
@@ -672,6 +672,7 @@
               this.allMenu = arr[i].tabs
             }
           }
+          this.activeName=this.allMenu[0].route
         })
         this.getDateWish()
       }

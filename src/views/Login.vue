@@ -34,7 +34,10 @@ export default {
     if(sessionStorage.getItem('aIndex')){
         sessionStorage.removeItem('acTi')
         sessionStorage.removeItem('aIndex')
-      }
+    }
+    if(sessionStorage.getItem('ifmenu')){
+        sessionStorage.removeItem('ifmenu')
+    }
     this.getCookie()
   },
   methods: {

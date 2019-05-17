@@ -9,7 +9,7 @@
       <el-tab-pane
         v-for="(item, index) in this.allMenu"
         :label="item.name"
-        :name="item.name"
+        :name="item.route"
         :key="index"
       ></el-tab-pane>
     </el-tabs>
@@ -1412,23 +1412,23 @@ export default {
           this.allMenu = arr[i].tabs;
         }
       }
-      if (this.allMenu[0].name == "产品推荐") {
+      if (this.allMenu[0].route == "/v1/oa-goods/list") {
         this.show["product"] = true;
-        this.activeName='产品推荐'
+        this.activeName=this.allMenu[0].route
         this.getData();
       } else {
         this.show["product"] = false;
       }
-      if (this.allMenu[0].name == "正向开发") {
+      if (this.allMenu[0].route == "/v1/forward-develop/list") {
         this.show["forward"] = true;
-        this.activeName='正向开发'
+        this.activeName=this.allMenu[0].route
         this.getForward();
       } else {
         this.show["forward"] = false;
       }
-      if (this.allMenu[0].name == "逆向开发") {
+      if (this.allMenu[0].route == "/v1/backward-develop/list") {
         this.show["reverse"] = true;
-        this.activeName='逆向开发'
+        this.activeName=this.allMenu[0].route
         this.getReverse();
       } else {
         this.show["reverse"] = false;
@@ -1473,19 +1473,19 @@ export default {
       }
     },
     handleClick(tab, event) {
-      if (tab.label === "产品推荐") {
+      if (tab.name === "/v1/oa-goods/list") {
         this.show["product"] = true;
         this.getData();
       } else {
         this.show["product"] = false;
       }
-      if (tab.label === "正向开发") {
+      if (tab.name === "/v1/forward-develop/list") {
         this.show["forward"] = true;
         this.getForward();
       } else {
         this.show["forward"] = false;
       }
-      if (tab.label === "逆向开发") {
+      if (tab.name === "/v1/backward-develop/list") {
         this.show["reverse"] = true;
         this.getReverse();
       } else {
@@ -3274,7 +3274,7 @@ export default {
       return year + "-" + this.formatTen(month) + "-" + this.formatTen(day);
     },
     filter() {
-      if (this.activeName === "产品推荐") {
+      if (this.activeName === "/v1/oa-goods/list") {
         if (this.time1 !== null && this.time1.length !== 0) {
           this.condition.createDate = [
             this.formatDate(this.time1[0]),
@@ -3292,7 +3292,7 @@ export default {
           this.condition.updateDate = [];
         }
         this.getData();
-      } else if (this.activeName === "正向开发") {
+      } else if (this.activeName === "/v1/forward-develop/list") {
         if (this.time1 !== null && this.time1.length !== 0) {
           this.condition1.createDate = [
             this.formatDate(this.time1[0]),

@@ -79,6 +79,9 @@ import collection from '../views/productDevelop/collection.vue'
 import collectionJoom from '../views/productDevelop/collectionJoom.vue'
 import joomId from '../views/productDevelop/collectionJoomDetails.vue'
 import joomRelation from '../views/productDevelop/joomRelation.vue'
+//报表中心
+import reportForm from '../views/productDevelop/reportForm.vue'
+import formEdit from '../views/productDevelop/formEdit.vue'
 
 const routes = [
   {
@@ -503,6 +506,16 @@ const routes = [
         path: '/payment/:id',
         component: paymentId,
         name: 'payment'
+      },
+      {
+        path: '/v1/oa-data/product',
+        component: reportForm,
+        name: '报表中心'
+      },
+      {
+        path: '/form/:id',
+        component: formEdit,
+        name: 'formTable'
       }
     ]
   },

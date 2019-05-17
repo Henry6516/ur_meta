@@ -4,7 +4,7 @@
       <el-tab-pane
         v-for="(item, index) in this.allMenu"
         :label="item.name"
-        :name="item.name"
+        :name="item.route"
         :key="index"
       ></el-tab-pane>
     </el-tabs>
@@ -27,9 +27,9 @@ export default {
   },
   methods: {
    handleClick(tab, event) {
-      if (tab.label === "Joom采集") {
+      if (tab.name === "/v1/oa-data-mine/joom") {
         this.showis=true
-        sessionStorage.setItem("judgeCollection", "Joom采集");
+        sessionStorage.setItem("judgeCollection", "/v1/oa-data-mine/joom");
         this.$router.push({
          path: `/v1/oa-data-mine/collectionJoom`
         });
@@ -41,37 +41,37 @@ export default {
   watch: {
     "$route.path": function(newVal, oldVal) {
       if (newVal == "/v1/oa-data-mine/index") {
-        if (this.allMenu[0].name == "Joom采集") {
-          this.activeName = "Joom采集";
-          sessionStorage.setItem("judgeCollection", "Joom采集");
+        if (this.allMenu[0].route == "/v1/oa-data-mine/joom") {
+          this.activeName = this.allMenu[0].route;
+          sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
           this.$router.push({
             path: `/v1/oa-data-mine/collectionJoom`
           });
         }
-        if (this.allMenu[0].name == "Wish采集") {
-          this.activeName = "Wish采集";
-          sessionStorage.setItem("judgeCollection", "Wish采集");
+        if (this.allMenu[0].route == "/v1/oa-data-mine/wish") {
+          this.activeName = this.allMenu[0].route;
+          sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
           this.$router.push({
             path: `/v1/oa-data-mine/collectionWish`
           });
         }
-        if (this.allMenu[0].name == "Ebay采集") {
-          this.activeName = "Ebay采集";
-          sessionStorage.setItem("judgeCollection", "Ebay采集");
+        if (this.allMenu[0].route == "/v1/oa-data-mine/ebay") {
+          this.activeName = this.allMenu[0].route;
+          sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
           this.$router.push({
             path: `/v1/oa-data-mine/collectionEbay`
           });
         }
-        if (this.allMenu[0].name == "Amazone采集") {
-          this.activeName = "Amazone采集";
-          sessionStorage.setItem("judgeCollection", "Amazone采集");
+        if (this.allMenu[0].route == "/v1/oa-data-mine/amazone") {
+          this.activeName = this.allMenu[0].route;
+          sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
           this.$router.push({
             path: `/v1/oa-data-mine/collectionAmazone`
           });
         }
-         if (this.allMenu[0].name == "Aliexpress采集") {
-          this.activeName = "Aliexpress采集";
-          sessionStorage.setItem("judgeCollection", "Aliexpress采集");
+         if (this.allMenu[0].route == "/v1/oa-data-mine/aliexpress") {
+          this.activeName = this.allMenu[0].route;
+          sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
           this.$router.push({
             path: `/v1/oa-data-mine/collectionAliexpress`
           });
@@ -79,16 +79,14 @@ export default {
       }
     }
   },
-  computed: {
-      ...mapGetters(['menu'])
-  },
   mounted() {
     const fatName = sessionStorage.getItem("judgeCollection");
     if (fatName) {
       this.activeName = fatName;
     }
-    setTimeout(()=>{
-      const menu = this.menu.filter(e => e.name === "产品中心");
+    getMenu().then(response => {
+      const res = response.data.data;
+      const menu = res.filter(e => e.name === "产品中心");
       let arr = menu[0].children;
       for (let i = 0; i < arr.length; i++) {
         if (arr[i].name == "数据采集") {
@@ -96,43 +94,43 @@ export default {
         }
       }
       if (!sessionStorage.getItem("judgeCollection")) {
-        if (this.allMenu[0].name == "Joom采集") {
-          this.activeName = "Joom采集";
-          sessionStorage.setItem("judgeCollection", "Joom采集");
+        if (this.allMenu[0].route == "/v1/oa-data-mine/joom") {
+          this.activeName = this.allMenu[0].route;
+          sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
           this.$router.push({
             path: `/v1/oa-data-mine/collectionJoom`
           });
         }
-        if (this.allMenu[0].name == "Wish采集") {
-          this.activeName = "Wish采集";
-          sessionStorage.setItem("judgeCollection", "Wish采集");
+        if (this.allMenu[0].route == "/v1/oa-data-mine/wish") {
+          this.activeName = this.allMenu[0].route;
+          sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
         //   this.$router.push({
         //     path: `/v1/oa-goodsinfo/goodsInfoPicture`
         //   });
         }
-        if (this.allMenu[0].name == "Ebay采集") {
-          this.activeName = "Ebay采集";
-          sessionStorage.setItem("judgeCollection", "Ebay采集");
+        if (this.allMenu[0].route == "/v1/oa-data-mine/ebay") {
+          this.activeName = this.allMenu[0].route;
+          sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
         //   this.$router.push({
         //     path: `/v1/oa-goodsinfo/goodsInfoPlatform`
         //   });
         }
-        if (this.allMenu[0].name == "Amazone采集") {
-          this.activeName = "Amazone采集";
-          sessionStorage.setItem("judgeCollection", "Amazone采集");
+        if (this.allMenu[0].route == "/v1/oa-data-mine/amazone") {
+          this.activeName = this.allMenu[0].route;
+          sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
         //   this.$router.push({
         //     path: `/v1/oa-goodsinfo/goodsInfoPlatform`
         //   });
         }
-        if (this.allMenu[0].name == "Aliexpress采集") {
-          this.activeName = "Aliexpress采集";
-          sessionStorage.setItem("judgeCollection", "Aliexpress采集");
+        if (this.allMenu[0].route == "/v1/oa-data-mine/aliexpress") {
+          this.activeName = this.allMenu[0].route;
+          sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
         //   this.$router.push({
         //     path: `/v1/oa-goodsinfo/goodsInfoPlatform`
         //   });
         }
       }
-    },500)
+    });
   }
 };
 </script>

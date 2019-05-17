@@ -31,6 +31,7 @@
         </el-table>
         <h4>根据售价获取毛利率</h4>
         <el-table :data="tableData2" style="width:100%">
+          <el-table-column prop="transport" label="物流方式"></el-table-column>
           <el-table-column prop="price" label="售价（£）"></el-table-column>
           <el-table-column prop="eFee" label="eBay交易费（£）"></el-table-column>
           <el-table-column prop="pFee" label="PayPal交易费（£）"></el-table-column>
@@ -40,6 +41,7 @@
         </el-table>
         <h4>根据毛利率获取售价</h4>
         <el-table :data="tableData3" style="width:100%">
+          <el-table-column prop="transport" label="物流方式"></el-table-column>
           <el-table-column prop="rate" label="毛利率（%）"></el-table-column>
           <el-table-column prop="eFee" label="eBay交易费（£）"></el-table-column>
           <el-table-column prop="pFee" label="PayPal交易费（£）"></el-table-column>
@@ -79,9 +81,9 @@ export default {
       getUkfic(this.condition).then(response => {
         this.listLoading = false
         this.tableData1 = [response.data.data.detail]
-        this.tableData2 = [response.data.data.rate]
-        this.tableData3 = [response.data.data.price]
-        this.tableData4 = [response.data.data.transport]
+        this.tableData2 = response.data.data.rate
+        this.tableData3 = response.data.data.price
+        this.tableData4 = response.data.data.transport
       })
     }
   }

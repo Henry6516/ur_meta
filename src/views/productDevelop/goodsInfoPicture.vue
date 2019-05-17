@@ -58,6 +58,9 @@
                                      :render-header="renderHeaderPic"
                                      width='150'
                                      align="center">
+                    <template slot-scope="scope">
+                    <a :class="scope.row.stockUp=='是'?'redCu':'redblack'">{{scope.row.goodsCode}}</a>
+                    </template>                 
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="是否备货"
@@ -88,6 +91,14 @@
                         <template slot-scope="scope">
                             <a :class="!scope.row.goodsName?'clasRed':''">{{scope.row.goodsName?scope.row.goodsName:"未设置"}}</a>
                         </template>
+                    </el-table-column>
+                </el-table-column>
+                <el-table-column label="开发员"
+                                 header-align="center">
+                    <el-table-column prop="developer"
+                                     :render-header="renderHeaderPic"
+                                     width='150'
+                                     align="center">
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="供应商链接1"
@@ -154,14 +165,6 @@
                         <template slot-scope="scope">
                             <a :href="scope.row.origin3" target="_blank" class="classa" :class="!scope.row.origin3?'clasRed':''">{{!scope.row.origin3?'未设置':scope.row.origin3 | cutOut}}</a>
                         </template>
-                    </el-table-column>
-                </el-table-column>
-                <el-table-column label="开发员"
-                                 header-align="center">
-                    <el-table-column prop="developer"
-                                     :render-header="renderHeaderPic"
-                                     width='150'
-                                     align="center">
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="开发时间"
@@ -1029,13 +1032,13 @@
             },
             picEdit(index, row) {
                 sessionStorage.setItem('judge', "图片信息")
-                // this.$router.push({
-                //     path: `/table/${row.id}`
-                // })
-                let Logistics=this.$router.resolve({
-                   path: `/table/${row.id}`
-                })     
-                 window.open(Logistics.href);
+                this.$router.push({
+                    path: `/table/${row.id}`
+                })
+                // let Logistics=this.$router.resolve({
+                //    path: `/table/${row.id}`
+                // })     
+                //  window.open(Logistics.href);
             },
             //图片信息获取数据
             getPic() {
@@ -1169,7 +1172,34 @@
                                 })
                             ]
                     )
-                } else if ($index === 4) {
+                }  else if ($index === 4) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '40px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
+                                        value: this.picture.developer,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.picture.developer = value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.filter()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                } else if ($index === 5) {
                     return h(
                             'div',
                             {
@@ -1196,7 +1226,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 5) {
+                } else if ($index === 6) {
                     return h(
                             'div',
                             {
@@ -1223,7 +1253,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 6) {
+                } else if ($index === 7) {
                     return h(
                             'div',
                             {
@@ -1250,7 +1280,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 7) {
+                } else if ($index === 8) {
                     return h(
                             'div',
                             {
@@ -1277,7 +1307,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 8) {
+                } else if ($index === 9) {
                     return h(
                             'div',
                             {
@@ -1304,7 +1334,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 9) {
+                } else if ($index === 10) {
                     return h(
                             'div',
                             {
@@ -1322,33 +1352,6 @@
                                     on: {
                                         input: value => {
                                             this.picture.origin3 = value
-                                            this.$emit('input', value)
-                                        },
-                                        change: value => {
-                                            this.filter()
-                                        }
-                                    }
-                                })
-                            ]
-                    )
-                }  else if ($index === 10) {
-                    return h(
-                            'div',
-                            {
-                                style: {
-                                    height: '40px'
-                                }
-                            },
-                            [
-                                h('el-input', {
-                                    props: {
-                                        value: this.picture.developer,
-                                        size: 'mini',
-                                        clearable: true
-                                    },
-                                    on: {
-                                        input: value => {
-                                            this.picture.developer = value
                                             this.$emit('input', value)
                                         },
                                         change: value => {
@@ -2129,4 +2132,11 @@
       border: rgba(3, 82, 38, 0.2) solid 1px;
       background: rgba(33, 170, 95, 0.1);
     }
+    .redCu {
+      color: red;
+      font-weight: bold;
+    }
+.redblack {
+  color: #606266;
+}
 </style>

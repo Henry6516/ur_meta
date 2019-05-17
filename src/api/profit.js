@@ -166,6 +166,14 @@ export function getSalestrend(param) {
     data
   })
 }
+export function getProfitReport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/profit-trend',
+    method: 'post',
+    data
+  })
+}
 export function getArtist(param) {
   const data = { condition: param }
   return request({

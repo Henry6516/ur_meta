@@ -212,6 +212,12 @@
                v-loading="listLoading"
                element-loading-text="正在加载中..."
                ref="skuchart"></sku-chart>
+    <profit v-if="pro"
+               style="max-height:800px;overflow:auto"
+               :options="options"
+               v-loading="listLoading"
+               element-loading-text="正在加载中..."
+               ref="prochart"></profit>           
   </div>
 </template>
 
@@ -223,6 +229,7 @@ import {
   getMember,
   getAccount,
   getSalestrend,
+  getProfitReport,
   APIOrderCount,
   APISkuCount
 } from '../../api/profit'
@@ -230,17 +237,20 @@ import { getMonthDate } from '../../api/tools'
 import { getMenu } from '../../api/login'
 import Chart from '../../component/order/Orderchart'
 import SkuChart from '../../component/sku/Skuchart'
+import profit from '../../component/profit/profit'
 
 export default {
   components: {
     Chart,
-    SkuChart
+    SkuChart,
+    profit
   },
   data() {
     return {
       sale: true,
       order: false,
       count: false,
+      pro:false,
       allMenu: [],
       activeName: '销售额走势',
       allMember: [],
@@ -352,16 +362,25 @@ export default {
         this.sale = true
         this.order = false
         this.count = false
+        this.pro = false
         this.onSubmit(this.condition)
       } else if (tab.label === '订单量走势') {
         this.sale = false
         this.order = true
         this.count = false
+        this.pro = false
         this.onSubmit(this.condition)
-      } else {
+      } else if (tab.label === '销售数量走势')  {
         this.sale = false
         this.order = false
         this.count = true
+        this.pro = false
+        this.onSubmit(this.condition)
+      }else{
+        this.pro = true
+        this.sale = false
+        this.order = false
+        this.count = false
         this.onSubmit(this.condition)
       }
     },
@@ -574,7 +593,7 @@ export default {
             })
             this.options.title.text = '订单量走势(单)'
             this.options.yAxis[0].axisLabel.formatter = '{value} 单'
-          } else {
+          } else if (this.activeName === '销售数量走势')  {
             APISkuCount(myform).then(response => {
               this.listLoading = false
               const ret = response.data.data
@@ -612,7 +631,45 @@ export default {
             })
             this.options.title.text = '销售数量走势(个)'
             this.options.yAxis[0].axisLabel.formatter = '{value} 个'
-          }
+          }else{
+           getProfitReport(myform).then(response => {
+              this.listLoading = false
+              const ret = response.data.data
+              const lineName = []
+              const series = []
+              ret.forEach(element => {
+                if (lineName.indexOf(element.title) < 0) {
+                  lineName.push(element.title)
+                }
+              })
+              const date = []
+              lineName.forEach(name => {
+                const sery = {
+                  type: 'bar',
+                  stack: '总量',
+                  areaStyle: { normal: {} }
+                }
+                const amt = []
+                ret.map(element => {
+                  if (element.title === name) {
+                    amt.push(Number(element.totalamt))
+                    if (date.indexOf(element.ordertime) < 0) {
+                      date.push(element.ordertime)
+                    }
+                  }
+                })
+                sery['data'] = amt
+                sery['name'] = name
+                series.push(sery)
+              })
+              this.options.legend.data = lineName
+              this.options.xAxis[0].data = date
+              this.options.series = series
+              this.$refs.prochart.drawAreaStack(this.options)
+            })
+            this.options.title.text = '利润走势(￥)'
+            this.options.yAxis[0].axisLabel.formatter = '{value} ￥'
+        }
         }
       })
     }

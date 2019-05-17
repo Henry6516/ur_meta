@@ -1091,6 +1091,35 @@ export function APILogDelete(param) {
     data
   })
 }
+//报表中心
+export function APIProduct(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/product?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APIFormWish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/wish?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APIStock() {
+  return request({
+    url: '/oa-data/stock',
+    method: 'get'
+  })
+}
+export function APInoStock() {
+  return request({
+    url: '/oa-data/nonstock',
+    method: 'get'
+  })
+}
 //export function APIDelivery(param) {
 //  const data = { condition: param }
 //  return request({

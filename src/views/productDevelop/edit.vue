@@ -722,6 +722,7 @@
                    style="width:350px;margin: 5px 0;margin-top: 8px;padding: 15px 0">保存</el-button>
       </el-col>
     </el-col>
+    <div :class="mask?'zhezhao':''"></div>
   </section>
 </template>
 <script type="text/ecmascript-6">
@@ -732,6 +733,7 @@ export default {
   data() {
     return {
       tableData: [],
+      mask:false,
       btn: '',
       rows: 1,
       rowss: 1,
@@ -808,6 +810,7 @@ export default {
       this.sels = sels
     },
     passAll() {
+        this.mask=true
         let arrI=[]
         arrI.push(this.editForm.id)
         let dataTe = {
@@ -815,11 +818,13 @@ export default {
         }
         APIAttributeToShopElf(dataTe).then(res => {
           if (res.data.code === 200) {
+            this.mask=false
             this.$message({
               message: '成功',
               type: 'success'
             })
           } else {
+            this.mask=false
             this.$message.error(res.data.message)
           }
         })
@@ -1535,6 +1540,16 @@ section {
   font-size: 13px;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
+}
+.zhezhao{
+  width: 200%;
+  background: #000;
+  height: 100%;
+  position: fixed;
+  opacity: 0.4;
+  top: 0;
+  left: -20rem;
+  z-index: 999;
 }
 @media screen and (max-width: 1500px){
    .font13{

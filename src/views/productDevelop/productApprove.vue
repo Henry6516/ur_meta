@@ -9,7 +9,7 @@
       <el-tab-pane
         v-for="(item, index) in this.allMenu"
         :label="item.name"
-        :name="item.name"
+        :name="item.route"
         :key="index"
       ></el-tab-pane>
     </el-tabs>
@@ -312,6 +312,19 @@
             width="150"
             align="center"
           ></el-table-column>
+        </el-table-column>
+        <el-table-column label="是否采集" header-align="center">
+          <el-table-column
+            prop="mineId"
+            :formatter="empty"
+            :render-header="renderHeader1"
+            width="150"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <a>{{scope.row.mineId >1?'采集':'非采集'}}</a>
+            </template>
+          </el-table-column>
         </el-table-column>
         <el-table-column label="主类目" header-align="center">
           <el-table-column prop="cate" :render-header="renderHeader1" width="150" align="center"></el-table-column>
@@ -991,23 +1004,23 @@ export default {
           this.allMenu = arr[i].tabs;
         }
       }
-      if (this.allMenu[0].name == "待审批列表") {
+      if (this.allMenu[0].route == "/v1/check/check-list") {
         this.show["wait"] = true;
-        this.activeName = "待审批列表";
+        this.activeName = this.allMenu[0].route;
         this.getData();
       } else {
         this.show["wait"] = false;
       }
-      if (this.allMenu[0].name == "已审批列表") {
+      if (this.allMenu[0].route == "/v1/check/pass-list") {
         this.show["pass"] = true;
-        this.activeName = "已审批列表";
+        this.activeName = this.allMenu[0].route;;
         this.getPass();
       } else {
         this.show["pass"] = false;
       }
-      if (this.allMenu[0].name == "未通过列表") {
+      if (this.allMenu[0].route == "/v1/check/failed-list") {
         this.show["unPass"] = true;
-        this.activeName = "未通过列表";
+        this.activeName = this.allMenu[0].route;;
         this.getFailed();
       } else {
         this.show["unPass"] = false;
@@ -1183,19 +1196,19 @@ export default {
       }
     },
     handleClick(tab, event) {
-      if (tab.label === "待审批列表") {
+      if (tab.name === "/v1/check/check-list") {
         this.show["wait"] = true;
         this.getData();
       } else {
         this.show["wait"] = false;
       }
-      if (tab.label === "已审批列表") {
+      if (tab.name === "/v1/check/pass-list") {
         this.show["pass"] = true;
         this.getPass();
       } else {
         this.show["pass"] = false;
       }
-      if (tab.label === "未通过列表") {
+      if (tab.name === "/v1/check/failed-list") {
         this.show["unPass"] = true;
         this.getFailed();
       } else {
@@ -1379,6 +1392,38 @@ export default {
           ]
         );
       } else if ($index === 1) {
+        let filters = [{ text: "是", value: "是" }, { text: "否", value: "否" }];
+        return h(
+          "el-select",
+          {
+            props: {
+              placeholder: "请选择",
+              value: this.condition1.mineId,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.condition1.mineId = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.filter();
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item.text,
+                  label: item.value
+                }
+              });
+            })
+          ]
+        );
+      }  else if ($index === 2) {
         let filters = this.category;
         return h(
           "el-select",
@@ -1411,7 +1456,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 2) {
+      } else if ($index === 3) {
         return h(
           "div",
           {
@@ -1438,7 +1483,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 3) {
+      } else if ($index === 4) {
         return h(
           "div",
           {
@@ -1465,7 +1510,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 4) {
+      } else if ($index === 5) {
         return h(
           "div",
           {
@@ -1492,7 +1537,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 5) {
+      } else if ($index === 6) {
         return h(
           "div",
           {
@@ -1519,7 +1564,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 6) {
+      } else if ($index === 7) {
         return h(
           "div",
           {
@@ -1546,7 +1591,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 7) {
+      } else if ($index === 8) {
         return h(
           "div",
           {
@@ -1573,7 +1618,7 @@ export default {
             })
           ]
         );
-      } else if($index === 8) {
+      } else if($index === 9) {
         return h(
           "div",
           {
@@ -1600,7 +1645,7 @@ export default {
             })
           ]
         );
-      }else if ($index === 9) {
+      }else if ($index === 10) {
         return h(
           "div",
           {
@@ -1627,7 +1672,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 10) {
+      } else if ($index === 11) {
         return h("el-date-picker", {
           props: {
             value: this.time1,
@@ -1648,7 +1693,7 @@ export default {
             }
           }
         });
-      } else if ($index === 11) {
+      } else if ($index === 12) {
         return h("el-date-picker", {
           props: {
             value: this.time2,
@@ -1669,7 +1714,7 @@ export default {
             }
           }
         });
-      } else if ($index === 12) {
+      } else if ($index === 13) {
         return h(
           "div",
           {
@@ -1696,7 +1741,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 13) {
+      } else if ($index === 14) {
         return h(
           "div",
           {
@@ -1723,7 +1768,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 14) {
+      } else if ($index === 15) {
         return h(
           "div",
           {
@@ -1750,7 +1795,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 15) {
+      } else if ($index === 16) {
         return h(
           "div",
           {
@@ -1777,7 +1822,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 16) {
+      } else if ($index === 17) {
         return h(
           "div",
           {
@@ -1804,7 +1849,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 17) {
+      } else if ($index === 18) {
         return h(
           "div",
           {
@@ -2428,7 +2473,7 @@ export default {
       return year + "-" + this.formatTen(month) + "-" + this.formatTen(day);
     },
     filter() {
-      if (this.activeName === "待审批列表") {
+      if (this.activeName === "/v1/check/check-list") {
         if (this.time1 !== null && this.time1.length !== 0) {
           this.condition.createDate = [
             this.formatDate(this.time1[0]),
@@ -2446,7 +2491,7 @@ export default {
           this.condition.updateDate = [];
         }
         this.getData();
-      } else if (this.activeName === "已审批列表") {
+      } else if (this.activeName === "/v1/check/pass-list") {
         if (this.time1 !== null && this.time1.length !== 0) {
           this.condition1.createDate = [
             this.formatDate(this.time1[0]),

@@ -70,6 +70,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <div :class="mask?'zhezhao':''"></div>
   </section>
 </template>
 <script type="text/ecmascript-6">
@@ -84,6 +85,7 @@ export default {
   data() {
     return {
       tableData: [],
+      mask:false,
       allMenu:[],
       condition: {
         id: 0
@@ -144,13 +146,16 @@ export default {
     },
     //上传
     upload() {
+      this.mask=true
       APIPictureToFtp(this.condition).then(res => {
         if (res.data.code == 200) {
+          this.mask=false
           this.$message({
             message: '保存成功!',
             type: 'success'
           })
         } else {
+          this.mask=false
           this.$message.error(res.data.message)
         }
       })
@@ -194,6 +199,16 @@ export default {
 }
 .adClass:hover{
   color: #409EFF;
+}
+.zhezhao{
+  width: 200%;
+  background: #000;
+  height: 100%;
+  position: fixed;
+  opacity: 0.4;
+  top: 0;
+  left: -20rem;
+  z-index: 999;
 }
 </style>
 
