@@ -110,7 +110,11 @@
                 target="_blank"
                 style="display: block; width: 70px;height: 60px"
               >
+               <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
+                <div slot="content"><img :src="scope.row.mainImage" style="width: 180px;height: 180px;"></div>
                 <img :src="scope.row.mainImage" style="width: 70px;height: 60px">
+              </el-tooltip>
+                <!-- <img :src="scope.row.mainImage" style="width: 70px;height: 60px"> -->
                 </a>
               </template>
             </el-table-column>
