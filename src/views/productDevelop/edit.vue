@@ -1234,6 +1234,9 @@ export default {
             message: '保存成功',
             type: 'success'
           })
+          setTimeout(()=>{
+            location.reload()
+          },1000)
         } else {
           this.$message.error(res.data.message)
         }
@@ -1341,6 +1344,9 @@ export default {
             message: '保存成功',
             type: 'success'
           })
+           setTimeout(()=>{
+            location.reload()
+          },1000)
         } else {
           this.$message.error(res.data.message)
         }

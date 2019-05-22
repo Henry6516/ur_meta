@@ -244,18 +244,21 @@ export function DeveloperTarget(param) {
     data
   })
 }
+
 export function ProsTarget(param) {
   return request({
     url: 'site/pros?plat=' + param,
     method: 'get'
   })
 }
+
 export function ProsTargetPm(param) {
   return request({
     url: 'site/sales-ranking?plat=' + param,
     method: 'get'
   })
 }
+
 export function Risk(param) {
   var data = { condition: param }
   return request({
@@ -264,6 +267,7 @@ export function Risk(param) {
     data
   })
 }
+
 export function BlackList(param) {
   return request({
     url:
@@ -274,12 +278,14 @@ export function BlackList(param) {
     method: 'get'
   })
 }
+
 export function delBlackList(param) {
   return request({
     url: '/tiny-tool/blacklist?id=' + param,
     method: 'delete'
   })
 }
+
 export function postBlacklist(param) {
   const data = { data: param }
   return request({
@@ -288,6 +294,7 @@ export function postBlacklist(param) {
     data
   })
 }
+
 export function postHandleOrder(param) {
   const data = { data: param }
   return request({
@@ -296,12 +303,14 @@ export function postHandleOrder(param) {
     data
   })
 }
+
 export function news(data) {
   return request({
     url: '/news/index?page=' + data.page + '&pageSize=' + data.pageSize,
     method: 'get'
   })
 }
+
 export function newsCreate(param) {
   const data = param
   return request({
@@ -323,6 +332,7 @@ export function newsCreate(param) {
     }
   })
 }
+
 export function newsEdit(data) {
   return request({
     url: 'news/update?id=' + data.id,
@@ -330,12 +340,14 @@ export function newsEdit(data) {
     data
   })
 }
+
 export function deleteNews(id) {
   return request({
     url: 'news/delete?id=' + id,
     method: 'delete'
   })
 }
+
 export function newsTop(param) {
   const data = param
   return request({
@@ -357,50 +369,57 @@ export function newsTop(param) {
     }
   })
 }
+
 export function getAmt(param) {
   const data = { condition: param }
   return request({
     url: 'site/amt',
     method: 'post',
-    data,
+    data
   })
 }
+
 export function getZzAmt(param) {
   const data = { condition: param }
   return request({
     url: 'site/zz-amt',
     method: 'post',
-    data,
+    data
   })
 }
+
 export function getDepartAmt(param) {
   const data = { condition: param }
   return request({
     url: 'site/depart-amt',
     method: 'post',
-    data,
+    data
   })
 }
+
 export function getDevAmt(param) {
   const data = { condition: param }
   return request({
     url: 'site/dev-amt',
     method: 'post',
-    data,
+    data
   })
 }
+
 export function APIHeadDpart() {
   return request({
     url: '/site/head-depart',
     method: 'get'
   })
 }
+
 export function APIAllDpart() {
   return request({
     url: '/site/all-depart',
     method: 'get'
   })
 }
+
 export function APIBranchDpart() {
   return request({
     url: '/site/branch-depart',

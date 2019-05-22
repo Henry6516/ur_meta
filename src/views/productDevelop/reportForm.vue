@@ -49,7 +49,7 @@
         <el-table-column prop="picUrl" fixed label="主图" header-align="center" width="90">
           <template slot-scope="scope">
             <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
-                <div slot="content"><img :src="scope.row.picUrl" style="width: 180px;height: 180px;"></div>
+                <div slot="content"><img :src="scope.row.picUrl" style="width: 300px;height: 300px;"></div>
                 <img :src="scope.row.picUrl" style="width: 70px;height: 60px">
             </el-tooltip>
             <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
@@ -472,7 +472,7 @@
         <el-table-column prop="picUrl" fixed label="主图" header-align="center" width="90">
           <template slot-scope="scope">
             <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
-                <div slot="content"><img :src="scope.row.picUrl" style="width: 180px;height: 180px;"></div>
+                <div slot="content"><img :src="scope.row.picUrl" style="width: 300px;height: 300px;"></div>
                 <img :src="scope.row.picUrl" style="width: 70px;height: 60px">
             </el-tooltip>
             <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
@@ -1643,6 +1643,19 @@ export default {
     getPlat() {
       APIProduct(this.plat).then(res => {
         this.platData = res.data.data.items;
+        for(let i=0;i<this.platData.length;i++){
+          var strData=this.platData[i].picUrl
+          var replaceStr;
+          var reg=/([\s\S]+)(.(jpg_)?\d{2}x\d+)([\s\S]+)/g
+          var result=reg.exec(strData);
+          if(result){
+            if(result[1].charAt(result[1].length-1)=='.'){
+              result[1] = result[1].substring(0, result[1].length - 1); 
+            }
+           replaceStr=result[1]+result[result.length-1]
+           this.platData[i].picUrl=replaceStr
+          }
+        }
         this.platData.forEach((item, index) => {
           item.extendStatus = item.extendStatus ? item.extendStatus : "未推广";
         });
@@ -1655,6 +1668,19 @@ export default {
     getwish() {
       APIFormWish(this.platWish).then(res => {
         this.platDataWish = res.data.data.items;
+        for(let i=0;i<this.platDataWish.length;i++){
+          var strData=this.platDataWish[i].picUrl
+          var replaceStr;
+          var reg=/([\s\S]+)(.(jpg_)?\d{2}x\d+)([\s\S]+)/g
+          var result=reg.exec(strData);
+          if(result){
+            if(result[1].charAt(result[1].length-1)=='.'){
+              result[1] = result[1].substring(0, result[1].length - 1); 
+            }
+           replaceStr=result[1]+result[result.length-1]
+           this.platDataWish[i].picUrl=replaceStr
+          }
+        }
         this.totalWish = res.data.data._meta.totalCount;
         this.platWish.pageSize = res.data.data._meta.perPage;
         this.platWish.page = res.data.data._meta.currentPage;

@@ -10,6 +10,7 @@ import artist from '../views/reports/artist.vue'
 import account from '../views/reports/account.vue'
 import trending from '../views/reports/trending.vue'
 import introduce from '../views/reports/introduce.vue'
+import limit from '../views/reports/limit.vue'
 // 数据中心
 import stock from '../views/data/stock.vue'
 import pcost from '../views/data/pcost.vue'
@@ -32,6 +33,7 @@ import goods from '../views/tinytool/goods.vue'
 import uk from '../views/tinytool/uk.vue'
 import au from '../views/tinytool/au.vue'
 import ukfic from '../views/tinytool/ukfic.vue'
+import ukfic2 from '../views/tinytool/ukfic2.vue'
 import order from '../views/tinytool/order.vue'
 import paypal from '../views/tinytool/paypal.vue'
 import risk from '../views/tinytool/risk.vue'
@@ -43,7 +45,7 @@ import prescription from '../views/tinytool/prescription.vue'
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
 import exchange from '../views/settings/exchange.vue'
-//仓库工具
+// 仓库工具
 import picking from '../views/warehouse/picking.vue'
 import splitcargo from '../views/warehouse/splitCargo.vue'
 // 反馈中心
@@ -75,12 +77,12 @@ import ordermanage from '../views/productDevelop/ordermanage.vue'
 import ord1 from '../views/productDevelop/ord1.vue'
 import ord2 from '../views/productDevelop/ord2.vue'
 import paymentDetail from '../views/productDevelop/paymentDetail.vue'
-//数据采集
+// 数据采集
 import collection from '../views/productDevelop/collection.vue'
 import collectionJoom from '../views/productDevelop/collectionJoom.vue'
 import joomId from '../views/productDevelop/collectionJoomDetails.vue'
 import joomRelation from '../views/productDevelop/joomRelation.vue'
-//报表中心
+// 报表中心
 import reportForm from '../views/productDevelop/reportForm.vue'
 import formEdit from '../views/productDevelop/formEdit.vue'
 
@@ -126,6 +128,11 @@ const routes = [
         path: '/v1/report/introduce',
         component: introduce,
         name: '推荐人毛利报表'
+      },
+      {
+        path: '/v1/report/dev-limit',
+        component: limit,
+        name: '开发款数限制'
       },
       {
         path: '/v1/report/account',
@@ -315,6 +322,11 @@ const routes = [
         path: '/v1/tiny-tool/uk-fic',
         component: ukfic,
         name: 'UK虚拟仓定价器'
+      },
+      {
+        path: '/v1/tiny-tool/uk-fic2',
+        component: ukfic2,
+        name: '欧洲虚拟仓定价器'
       },
       {
         path: '/v1/tiny-tool/uk',

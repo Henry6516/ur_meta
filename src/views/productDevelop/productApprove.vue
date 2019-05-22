@@ -140,7 +140,7 @@
         <el-table-column prop="img" fixed label="图片" header-align="center" width="90">
           <template slot-scope="scope">
             <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
-              <div slot="content"><img :src="scope.row.img" style="width: 180px;height: 180px;"></div>
+              <div slot="content"><img :src="scope.row.img" style="width: 300px;height: 300px;"></div>
               <img :src="scope.row.img" style="width: 70px;height: 60px">
             </el-tooltip>
             <!-- <div style="position:relative;cursor:pointer" class="imgChover">
@@ -309,7 +309,7 @@
         <el-table-column prop="img" fixed label="图片" header-align="center" width="90">
           <template slot-scope="scope">
             <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
-              <div slot="content"><img :src="scope.row.img" style="width: 180px;height: 180px;"></div>
+              <div slot="content"><img :src="scope.row.img" style="width: 300px;height: 300px;"></div>
               <img :src="scope.row.img" style="width: 70px;height: 60px">
             </el-tooltip>
             <!-- <img :src="scope.row.img" style="width: 70px;height: 60px"> -->
@@ -605,7 +605,7 @@
         <el-table-column prop="img" fixed label="图片" header-align="center" width="90">
           <template slot-scope="scope">
             <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
-              <div slot="content"><img :src="scope.row.img" style="width: 180px;height: 180px;"></div>
+              <div slot="content"><img :src="scope.row.img" style="width: 300px;height: 300px;"></div>
               <img :src="scope.row.img" style="width: 70px;height: 60px">
             </el-tooltip>
             <!-- <img :src="scope.row.img" style="width: 70px;height: 60px"> -->
@@ -1897,6 +1897,19 @@ export default {
     getPass() {
       checkPassList(this.condition1).then(res => {
         this.tableData1 = res.data.data.items;
+        for(let i=0;i<this.tableData1.length;i++){
+          var strData=this.tableData1[i].img
+          var replaceStr;
+          var reg=/([\s\S]+)(.(jpg_)?\d{2}x\d+)([\s\S]+)/g
+          var result=reg.exec(strData);
+          if(result){
+            if(result[1].charAt(result[1].length-1)=='.'){
+              result[1] = result[1].substring(0, result[1].length - 1); 
+            }
+           replaceStr=result[1]+result[result.length-1]
+           this.tableData1[i].img=replaceStr
+          }
+        }
         this.total1 = res.data.data._meta.totalCount;
         this.condition1.page = res.data.data._meta.currentPage;
         this.condition1.pageSize = res.data.data._meta.perPage;
@@ -2467,6 +2480,19 @@ export default {
     getFailed() {
       checkFailedList(this.condition2).then(res => {
         this.tableData2 = res.data.data.items;
+        for(let i=0;i<this.tableData2.length;i++){
+          var strData=this.tableData2[i].img
+          var replaceStr;
+          var reg=/([\s\S]+)(.(jpg_)?\d{2}x\d+)([\s\S]+)/g
+          var result=reg.exec(strData);
+          if(result){
+            if(result[1].charAt(result[1].length-1)=='.'){
+              result[1] = result[1].substring(0, result[1].length - 1); 
+            }
+           replaceStr=result[1]+result[result.length-1]
+           this.tableData2[i].img=replaceStr
+          }
+        }
         this.total2 = res.data.data._meta.totalCount;
         this.condition2.page = res.data.data._meta.currentPage;
         this.condition2.pageSize = res.data.data._meta.perPage;
@@ -3071,6 +3097,19 @@ export default {
     getData() {
       checkList(this.condition).then(res => {
         this.tableData = res.data.data.items;
+        for(let i=0;i<this.tableData.length;i++){
+          var strData=this.tableData[i].img
+          var replaceStr;
+          var reg=/([\s\S]+)(.(jpg_)?\d{2}x\d+)([\s\S]+)/g
+          var result=reg.exec(strData);
+          if(result){
+            if(result[1].charAt(result[1].length-1)=='.'){
+              result[1] = result[1].substring(0, result[1].length - 1); 
+            }
+           replaceStr=result[1]+result[result.length-1]
+           this.tableData[i].img=replaceStr
+          }
+        }
         this.total = res.data.data._meta.totalCount;
         this.condition.page = res.data.data._meta.currentPage;
         this.condition.pageSize = res.data.data._meta.perPage;

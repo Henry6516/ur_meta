@@ -12,7 +12,7 @@ const user = {
     admin: '',
     introduction: '',
     roles: [],
-    menu:[],
+    menu: [],
     setting: {
       articlePlatform: []
     }
@@ -71,7 +71,7 @@ const user = {
         })
       })
     },
-    GetMenu({commit}, data){
+    GetMenu({ commit }, data) {
       commit('SET_MENU', data)
     },
     // 获取用户信息

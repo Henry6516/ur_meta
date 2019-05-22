@@ -1091,7 +1091,7 @@ export function APILogDelete(param) {
     data
   })
 }
-//报表中心
+// 报表中心
 export function APIProduct(param) {
   const data = { condition: param }
   return request({
@@ -1128,13 +1128,3 @@ export function APIFormExtend(param) {
     data
   })
 }
-//export function APIDelivery(param) {
-//  const data = { condition: param }
-//  return request({
-//    url: '/supplier-order/delivery',
-//    method: 'post',
-//    data
-//  })
-//}
-
-

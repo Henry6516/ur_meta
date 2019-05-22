@@ -1,610 +1,538 @@
 <template>
   <!-- <div>销售毛利润报表</div>     -->
   <div class="toolbar">
-    <div class='demo-block demo-box demo-zh-CN demo-transition'
-         @mouseover='changeActive'
-         @mouseout='removeActive'>
-      <transition name='el-fade-in-linear'>
-        <el-form :model='condition'
-                 :inline='true'
-                 ref='condition'
-                 label-width='10rem'
-                 class='demo-form-inline'
-                 v-show='show'>
-          <el-form-item label='部门'
-                        class='input'>
-            <el-select size="small"
-                       v-model='condition.department'
-                       multiple
-                       collapse-tags
-                       placeholder='部门'
-                       @change='choosed'>
-              <el-button plain
-                         type="info"
-                         @click="selectalld">全选</el-button>
-              <el-button plain
-                         type="info"
-                         @click="noselectd">取消</el-button>
-              <el-option v-for='(item,index) in department'
-                         :index='index'
-                         :key='item.id'
-                         :label='item.department'
-                         :value='item.department'></el-option>
+    <div
+      class="demo-block demo-box demo-zh-CN demo-transition"
+      @mouseover="changeActive"
+      @mouseout="removeActive"
+    >
+      <transition name="el-fade-in-linear">
+        <el-form
+          :model="condition"
+          :inline="true"
+          ref="condition"
+          label-width="10rem"
+          class="demo-form-inline"
+          v-show="show"
+        >
+          <el-form-item label="部门" class="input">
+            <el-select
+              size="small"
+              v-model="condition.department"
+              multiple
+              collapse-tags
+              placeholder="部门"
+              @change="choosed"
+            >
+              <el-button plain type="info" @click="selectalld">全选</el-button>
+              <el-button plain type="info" @click="noselectd">取消</el-button>
+              <el-option
+                v-for="(item,index) in department"
+                :index="index"
+                :key="item.id"
+                :label="item.department"
+                :value="item.department"
+              ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label='二级部门'
-                        class='input'>
-            <el-select size="small"
-                       v-model='condition.secDepartment'
-                       multiple
-                       collapse-tags
-                       placeholder='二级部门'
-                       @change='secChoosed'>
-              <el-button plain
-                         type="info"
-                         @click="selectallSec">全选</el-button>
-              <el-button plain
-                         type="info"
-                         @click="noselectSec">取消</el-button>
-              <el-option v-for='(item,index) in secDepartment'
-                         :index='index'
-                         :key='item.id'
-                         :label='item.department'
-                         :value='item.department'></el-option>
+          <el-form-item label="二级部门" class="input">
+            <el-select
+              size="small"
+              v-model="condition.secDepartment"
+              multiple
+              collapse-tags
+              placeholder="二级部门"
+              @change="secChoosed"
+            >
+              <el-button plain type="info" @click="selectallSec">全选</el-button>
+              <el-button plain type="info" @click="noselectSec">取消</el-button>
+              <el-option
+                v-for="(item,index) in secDepartment"
+                :index="index"
+                :key="item.id"
+                :label="item.department"
+                :value="item.department"
+              ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label='平台'
-                        class='input'>
-            <el-select size="small"
-                       v-model='condition.plat'
-                       clearable
-                       multiple
-                       collapse-tags
-                       placeholder='平台'>
-              <el-option v-for='(item,index) in plat'
-                         :index='index'
-                         :key='item.plat'
-                         :label='item.plat'
-                         :value='item.plat'></el-option>
+          <el-form-item label="平台" class="input">
+            <el-select
+              size="small"
+              v-model="condition.plat"
+              clearable
+              multiple
+              collapse-tags
+              placeholder="平台"
+            >
+              <el-option
+                v-for="(item,index) in plat"
+                :index="index"
+                :key="item.plat"
+                :label="item.plat"
+                :value="item.plat"
+              ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label='销售员'
-                        class='input'>
-            <el-select size="small"
-                       v-model='condition.member'
-                       filterable
-                       multiple
-                       collapse-tags
-                       placeholder='销售员'>
-              <el-button plain
-                         type="info"
-                         @click="selectallm">全选</el-button>
-              <el-button plain
-                         type="info"
-                         @click="noselectm">取消</el-button>
-              <el-option v-for='(item,index) in member'
-                         :index='index'
-                         :key='item.username'
-                         :label='item.username'
-                         :value='item.username'></el-option>
+          <el-form-item label="销售员" class="input">
+            <el-select
+              size="small"
+              v-model="condition.member"
+              filterable
+              multiple
+              collapse-tags
+              placeholder="销售员"
+            >
+              <el-button plain type="info" @click="selectallm">全选</el-button>
+              <el-button plain type="info" @click="noselectm">取消</el-button>
+              <el-option
+                v-for="(item,index) in member"
+                :index="index"
+                :key="item.username"
+                :label="item.username"
+                :value="item.username"
+              ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="账号"
-                        class="input">
-            <el-select size="small"
-                       v-model="condition.account"
-                       filterable
-                       multiple
-                       collapse-tags
-                       placeholder="账号">
-              <el-button plain
-                         type="info"
-                         @click="selectall">全选</el-button>
-              <el-button plain
-                         type="info"
-                         @click="noselect">取消</el-button>
-              <el-option v-for="(item,index) in account"
-                         :index="index"
-                         :key="item.id"
-                         :label="item.store"
-                         :value="item.store">
-              </el-option>
+          <el-form-item label="账号" class="input">
+            <el-select
+              size="small"
+              v-model="condition.account"
+              filterable
+              multiple
+              collapse-tags
+              placeholder="账号"
+            >
+              <el-button plain type="info" @click="selectall">全选</el-button>
+              <el-button plain type="info" @click="noselect">取消</el-button>
+              <el-option
+                v-for="(item,index) in account"
+                :index="index"
+                :key="item.id"
+                :label="item.store"
+                :value="item.store"
+              ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label='出货仓库'
-                        class='input'>
-            <el-select size="small"
-                       v-model='condition.store'
-                       filterable
-                       multiple
-                       collapse-tags
-                       placeholder='请选择'>
-              <el-button plain
-                         type="info"
-                         @click="selectalls">全选</el-button>
-              <el-button plain
-                         type="info"
-                         @click="noselects">取消</el-button>
-              <el-option v-for='item in store'
-                         :key='item'
-                         :value='item'>
-              </el-option>
+          <el-form-item label="出货仓库" class="input">
+            <el-select
+              size="small"
+              v-model="condition.store"
+              filterable
+              multiple
+              collapse-tags
+              placeholder="请选择"
+            >
+              <el-button plain type="info" @click="selectalls">全选</el-button>
+              <el-button plain type="info" @click="noselects">取消</el-button>
+              <el-option v-for="item in store" :key="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label='时间类型'
-                        class='input'
-                        prop='dateType'>
-            <el-radio-group v-model='condition.dateType'>
-              <el-radio border
-                        v-for='(item,index) in dateType'
-                        :index='index'
-                        :key='item.id'
-                        :label='item.id'
-                        :value='item.id'
-                        style="width:8.55rem">{{item.type}}</el-radio>
+          <el-form-item label="时间类型" class="input" prop="dateType">
+            <el-radio-group v-model="condition.dateType">
+              <el-radio
+                border
+                v-for="(item,index) in dateType"
+                :index="index"
+                :key="item.id"
+                :label="item.id"
+                :value="item.id"
+                style="width:8.55rem"
+              >{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label='日期'
-                        class='input'
-                        prop='dateRange'
-                        :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
-            <el-date-picker size="small"
-                            v-model='condition.dateRange'
-                            type='daterange'
-                            value-format='yyyy-MM-dd'
-                            align='right'
-                            unlink-panels
-                            range-separator='至'
-                            start-placeholder='开始日期'
-                            end-placeholder='结束日期'
-                            :picker-options='pickerOptions2'
-                            style="width:18rem;">
-            </el-date-picker>
+          <el-form-item
+            label="日期"
+            class="input"
+            prop="dateRange"
+            :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]"
+          >
+            <el-date-picker
+              size="small"
+              v-model="condition.dateRange"
+              type="daterange"
+              value-format="yyyy-MM-dd"
+              align="right"
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions2"
+              style="width:18rem;"
+            ></el-date-picker>
           </el-form-item>
           <el-form-item style="margin-left:6rem">
-            <el-button size="small"
-                       type='primary'
-                       class='input'
-                       @click='onSubmit(condition)'>查询</el-button>
+            <el-button size="small" type="primary" class="input" @click="onSubmit(condition)">查询</el-button>
           </el-form-item>
         </el-form>
       </transition>
-      <div class='demo-block-control'
-           @click='handleChange'
-           style='left:0rem'>
+      <div class="demo-block-control" @click="handleChange" style="left:0rem">
         <transition>
-          <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}"
-             class='transition-i'>
-          </i>
+          <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}" class="transition-i"></i>
         </transition>
         <transition>
-          <span v-show='show1'
-                class='transition-span'>{{text}}</span>
+          <span v-show="show1" class="transition-span">{{text}}</span>
         </transition>
       </div>
     </div>
     <el-row>
       <el-col :span="19">
-        <el-tabs v-model="activeName"
-                 type="card"
-                 @tab-click="handleClick">
-          <el-tab-pane v-for="(item, index) in this.allMenu"
-                       :label="item.name"
-                       :name="item.name"
-                       :key="index">
-          </el-tab-pane>
+        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+          <el-tab-pane
+            v-for="(item, index) in this.allMenu"
+            :label="item.name"
+            :name="item.name"
+            :key="index"
+          ></el-tab-pane>
         </el-tabs>
       </el-col>
-      <el-col :span='2'>
-        <el-input clearable
-                  placeholder='search'
-                  v-model='searchValue'
-                  @change='handleSearch'></el-input>
+      <el-col :span="2">
+        <el-input clearable placeholder="search" v-model="searchValue" @change="handleSearch"></el-input>
       </el-col>
-      <el-col :span='2'>
-        <el-button style='float:left'
-                   type='default'
-                   @click='exportExcel'>导出Excel</el-button>
+      <el-col :span="2">
+        <el-button style="float:left" type="default" @click="exportExcel">导出Excel</el-button>
       </el-col>
     </el-row>
     <!-- 毛利润报表 -->
-    <el-table :data="tableData"
-              id="sale-table"
-              v-loading="listLoading"
-              element-loading-text="正在加载中..."
-              @sort-change="sortNumber"
-              show-summary
-              :summary-method="getSummaries"
-              :height="tableHeight"
-              :max-height="tableHeight"
-              v-show="showTable.sell"
-              style="width: 100%;zoom:0.53;">
-      <el-table-column min-width="100"
-                       prop="pingtai"
-                       label="平台"
-                       :formatter="empty"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column min-width="100"
-                       prop="suffix"
-                       label="账号"
-                       :formatter="empty"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column min-width="120"
-                       prop="salesman"
-                       label="销售员"
-                       :formatter="empty"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column min-width="130"
-                       prop="salemoney"
-                       label="成交价$"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="160"
-                       prop="salemoneyzn"
-                       label="成交价￥"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="190"
-                       prop="ebayFeeebay"
-                       label="eBay成交费$"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="200"
-                       prop="ebayfeeznebay"
-                       label="eBay成交费￥"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="170"
-                       prop="ppFee"
-                       label="PP成交费$"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="180"
-                       prop="ppFeezn"
-                       label="PP成交费￥"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="170"
-                       prop="costmoney"
-                       label="商品成本￥"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="170"
-                       prop="expressFare"
-                       label="运费成本￥"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="170"
-                       prop="inpackagemoney"
-                       label="包装成本￥"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="140"
-                       prop="storename"
-                       label="发货仓库"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="170"
-                       prop="refund"
-                       label="退款金额￥"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="140"
-                       prop="refundrate"
-                       label="退款率%"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="170"
-                       prop="diefeeZn"
-                       label="死库处理￥"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="170"
-                       prop="insertionFee"
-                       label="店铺杂费￥"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="170"
-                       prop="saleOpeFeeZn"
-                       label="运营杂费￥"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="140"
-                       prop="grossprofit"
-                       label="毛利￥"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column min-width="140"
-                       prop="grossprofitRate"
-                       label="毛利率%"
-                       :formatter="empty"
-                       sortable="custom"
-                       align="center"></el-table-column>
+    <el-table
+      :data="tableData"
+      id="sale-table"
+      v-loading="listLoading"
+      element-loading-text="正在加载中..."
+      @sort-change="sortNumber"
+      show-summary
+      :summary-method="getSummaries"
+      :height="tableHeight"
+      :max-height="tableHeight"
+      v-show="showTable.sell"
+      style="width: 100%;zoom:0.53;"
+    >
+      <el-table-column
+        min-width="100"
+        prop="pingtai"
+        label="平台"
+        :formatter="empty"
+        sortable
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="100"
+        prop="suffix"
+        label="账号"
+        :formatter="empty"
+        sortable
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="120"
+        prop="salesman"
+        label="销售员"
+        :formatter="empty"
+        sortable
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="130"
+        prop="salemoney"
+        label="成交价$"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="160"
+        prop="salemoneyzn"
+        label="成交价￥"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="190"
+        prop="ebayFeeebay"
+        label="eBay成交费$"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="200"
+        prop="ebayfeeznebay"
+        label="eBay成交费￥"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="170"
+        prop="ppFee"
+        label="PP成交费$"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="180"
+        prop="ppFeezn"
+        label="PP成交费￥"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="170"
+        prop="costmoney"
+        label="商品成本￥"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="170"
+        prop="expressFare"
+        label="运费成本￥"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="170"
+        prop="inpackagemoney"
+        label="包装成本￥"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="140"
+        prop="storename"
+        label="发货仓库"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="170"
+        prop="refund"
+        label="退款金额￥"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="140"
+        prop="refundrate"
+        label="退款率%"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="170"
+        prop="diefeeZn"
+        label="死库处理￥"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="170"
+        prop="insertionFee"
+        label="店铺杂费￥"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="170"
+        prop="saleOpeFeeZn"
+        label="运营杂费￥"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="140"
+        prop="grossprofit"
+        label="毛利￥"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="140"
+        prop="grossprofitRate"
+        label="毛利率%"
+        :formatter="empty"
+        sortable="custom"
+        align="center"
+      ></el-table-column>
     </el-table>
     <!-- 退款订单明细 -->
-    <el-table :data="tableData1"
-              @sort-change="sortNumber"
-              max-height="670"
-              v-show="showTable.order">
-      <el-table-column prop="suffix"
-                       label="账号"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="salesman"
-                       label="销售员"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="goodsName"
-                       label="商品名称"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="goodsCode"
-                       label="商品编码"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="goodsSku"
-                       label="商品SKU"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="tradeId"
-                       label="订单编号"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="orderId"
-                       label="店铺单号"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="mergeBillId"
-                       label="合并单号"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="storeName"
-                       label="仓库"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="refund"
-                       label="退款$"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column prop="refundZn"
-                       label="退款￥"
-                       sortable="custom"
-                       :formatter="empty"
-                       align="center"></el-table-column>
-      <el-table-column prop="orderCountry"
-                       label="国家"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="expressWay"
-                       label="物流方式"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="platform"
-                       label="平台"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="orderTime"
-                       label="交易时间"
-                       align="center"></el-table-column>
-      <el-table-column prop="refundTime"
-                       label="退款时间"
-                       align="center"></el-table-column>
+    <el-table
+      :data="tableData1"
+      @sort-change="sortNumber"
+      max-height="670"
+      v-show="showTable.order"
+    >
+      <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
+      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
+      <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+      <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
+      <el-table-column prop="goodsSku" label="商品SKU" sortable align="center"></el-table-column>
+      <el-table-column prop="tradeId" label="订单编号" sortable align="center"></el-table-column>
+      <el-table-column prop="orderId" label="店铺单号" sortable align="center"></el-table-column>
+      <el-table-column prop="mergeBillId" label="合并单号" sortable align="center"></el-table-column>
+      <el-table-column prop="storeName" label="仓库" sortable align="center"></el-table-column>
+      <el-table-column prop="refund" label="退款$" sortable="custom" align="center"></el-table-column>
+      <el-table-column
+        prop="refundZn"
+        label="退款￥"
+        sortable="custom"
+        :formatter="empty"
+        align="center"
+      ></el-table-column>
+      <el-table-column prop="orderCountry" label="国家" sortable align="center"></el-table-column>
+      <el-table-column prop="expressWay" label="物流方式" sortable align="center"></el-table-column>
+      <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
+      <el-table-column prop="orderTime" label="交易时间" align="center"></el-table-column>
+      <el-table-column prop="refundTime" label="退款时间" align="center"></el-table-column>
     </el-table>
-    <div class="block toolbar"
-         v-show="showTable.order">
-      <el-pagination background
-                     @size-change='handleSizeChange'
-                     @current-change='handleCurrentChange'
-                     :current-page="this.condition.page"
-                     :page-size="this.condition.pageSize"
-                     :page-sizes="[10,20,30,40]"
-                     layout="total,sizes,prev,pager,next,jumper"
-                     :total="this.total">
-      </el-pagination>
+    <div class="block toolbar" v-show="showTable.order">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="this.condition.page"
+        :page-size="this.condition.pageSize"
+        :page-sizes="[10,20,30,40]"
+        layout="total,sizes,prev,pager,next,jumper"
+        :total="this.total"
+      ></el-pagination>
     </div>
     <!-- 退款产品明细 -->
-    <el-table :data="tableData2"
-              @sort-change="sortNumber"
-              max-height="670"
-              v-show="showTable.goods">
-      <el-table-column prop="suffix"
-                       label="账号"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="goodsName"
-                       label="商品名称"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="goodsCode"
-                       label="商品编码"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="goodsSku"
-                       label="商品SKU"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="times"
-                       label="退款次数"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column prop="salesman"
-                       label="销售员"
-                       sortable
-                       align="center"></el-table-column>
+    <el-table
+      :data="tableData2"
+      @sort-change="sortNumber"
+      max-height="670"
+      v-show="showTable.goods"
+    >
+      <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
+      <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+      <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
+      <el-table-column prop="goodsSku" label="商品SKU" sortable align="center"></el-table-column>
+      <el-table-column prop="times" label="退款次数" sortable="custom" align="center"></el-table-column>
+      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
     </el-table>
-    <div class="block toolbar"
-         v-show="showTable.goods">
-      <el-pagination background
-                     @size-change='handleSizeChangeGoods'
-                     @current-change='handleCurrentChangeGoods'
-                     :current-page="this.goods.page"
-                     :page-size="this.goods.pageSize"
-                     :page-sizes="[10,20,30,40]"
-                     layout="total,sizes,prev,pager,next,jumper"
-                     :total="this.total2">
-      </el-pagination>
+    <div class="block toolbar" v-show="showTable.goods">
+      <el-pagination
+        background
+        @size-change="handleSizeChangeGoods"
+        @current-change="handleCurrentChangeGoods"
+        :current-page="this.goods.page"
+        :page-size="this.goods.pageSize"
+        :page-sizes="[10,20,30,40]"
+        layout="total,sizes,prev,pager,next,jumper"
+        :total="this.total2"
+      ></el-pagination>
+    </div>
+    <div v-show="showTable.report">
+      <el-col :span="12">
+        <el-card>
+          <div ref="ordPlatform" :style="{width: '100%', height: '400px'}"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
+          <div ref="ordAccount" :style="{width: '100%', height: '400px'}"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
+          <div ref="ordProduct" :style="{width: '100%', height: '400px'}"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
+          <div ref="ordLogistics" :style="{width: '100%', height: '400px'}"></div>
+        </el-card>
+      </el-col>
     </div>
     <!-- 死库明细 -->
-    <el-table :data="tableData3"
-              @sort-change="sortNumber"
-              max-height="670"
-              v-show="showTable.dead">
-      <el-table-column prop="importDate"
-                       label="导入时间"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="type"
-                       label="清仓类型"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="plat"
-                       label="平台"
-                       sortable
-                       align="center"></el-table-column>                                          
-      <el-table-column prop="suffix"
-                       label="账号"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="salesman"
-                       label="销售员"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="storeName"
-                       label="出货仓库"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="goodsCode"
-                       label="商品编码"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="goodsName"
-                       label="商品名称"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="sku"
-                       label="sku"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="createDate"
-                       label="开发时间"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="lastPurchaseDate"
-                       label="最后采购时间"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="checkNumber"
-                       label="盘点数量"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="preCheckPrice"
-                       label="盘点前单价"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="deadPrice"
-                       label="盘少单价（死库）"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="aftCheckPrice"
-                       label="盘后单价"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="suffixSalesNumber"
-                       label="账号销量"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="totalNumber"
-                       label="总销量"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="amount"
-                       label="库存金额"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="aveAmount"
-                       label="分摊金额"
-                       sortable
-                       align="center"></el-table-column>
+    <el-table :data="tableData3" @sort-change="sortNumber" max-height="670" v-show="showTable.dead">
+      <el-table-column prop="importDate" label="导入时间" sortable align="center"></el-table-column>
+      <el-table-column prop="type" label="清仓类型" sortable align="center"></el-table-column>
+      <el-table-column prop="plat" label="平台" sortable align="center"></el-table-column>
+      <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
+      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
+      <el-table-column prop="storeName" label="出货仓库" sortable align="center"></el-table-column>
+      <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
+      <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
+      <el-table-column prop="sku" label="sku" sortable align="center"></el-table-column>
+      <el-table-column prop="createDate" label="开发时间" sortable align="center"></el-table-column>
+      <el-table-column prop="lastPurchaseDate" label="最后采购时间" sortable align="center"></el-table-column>
+      <el-table-column prop="checkNumber" label="盘点数量" sortable align="center"></el-table-column>
+      <el-table-column prop="preCheckPrice" label="盘点前单价" sortable align="center"></el-table-column>
+      <el-table-column prop="deadPrice" label="盘少单价（死库）" sortable align="center"></el-table-column>
+      <el-table-column prop="aftCheckPrice" label="盘后单价" sortable align="center"></el-table-column>
+      <el-table-column prop="suffixSalesNumber" label="账号销量" sortable align="center"></el-table-column>
+      <el-table-column prop="totalNumber" label="总销量" sortable align="center"></el-table-column>
+      <el-table-column prop="amount" label="库存金额" sortable align="center"></el-table-column>
+      <el-table-column prop="aveAmount" label="分摊金额" sortable align="center"></el-table-column>
     </el-table>
-    <div class="block toolbar"
-         v-show="showTable.dead" style="overflow:hidden">
+    <div class="block toolbar" v-show="showTable.dead" style="overflow:hidden">
       <div style="float:left;margin-top:5px;">
-      <el-pagination background
-                     @size-change='handleSizeChangeDead'
-                     @current-change='handleCurrentChangeDead'
-                     :current-page="this.dead.page"
-                     :page-size="this.dead.pageSize"
-                     :page-sizes="[10,20,30,40]"
-                     layout="total,sizes,prev,pager,next,jumper"
-                     :total="this.total3">
-      </el-pagination>
+        <el-pagination
+          background
+          @size-change="handleSizeChangeDead"
+          @current-change="handleCurrentChangeDead"
+          :current-page="this.dead.page"
+          :page-size="this.dead.pageSize"
+          :page-sizes="[10,20,30,40]"
+          layout="total,sizes,prev,pager,next,jumper"
+          :total="this.total3"
+        ></el-pagination>
       </div>
       <div style="float:right">
-        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;">分摊金额合计:<span style="color:red">{{totalPrice}}</span></p>
-        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">当前页分摊金额:<span style="color:red">{{currentPrice}}</span></p>
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;">
+          分摊金额合计:
+          <span style="color:red">{{totalPrice}}</span>
+        </p>
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">
+          当前页分摊金额:
+          <span style="color:red">{{currentPrice}}</span>
+        </p>
       </div>
     </div>
     <!-- 杂费明细 -->
-    <el-table :data="tableData4"
-              @sort-change="sortNumber"
-              max-height="670"
-              v-show="showTable.extra">
-      <el-table-column prop="suffix"
-                       label="账号"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="saleOpeFeeZn"
-                       label="杂费"
-                       sortable="custom"
-                       align="center"></el-table-column>
-      <el-table-column prop="comment"
-                       label="备注"
-                       align="center"></el-table-column>
-      <el-table-column prop="dateTime"
-                       label="时间"
-                       sortable
-                       align="center"></el-table-column>
-      <el-table-column prop="salesman"
-                       label="销售员"
-                       sortable
-                       align="center"></el-table-column>
+    <el-table
+      :data="tableData4"
+      @sort-change="sortNumber"
+      max-height="670"
+      v-show="showTable.extra"
+    >
+      <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
+      <el-table-column prop="saleOpeFeeZn" label="杂费" sortable="custom" align="center"></el-table-column>
+      <el-table-column prop="comment" label="备注" align="center"></el-table-column>
+      <el-table-column prop="dateTime" label="时间" sortable align="center"></el-table-column>
+      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
     </el-table>
-    <div class="block toolbar"
-         v-show="showTable.extra">
-      <el-pagination background
-                     @size-change='handleSizeChangeExtra'
-                     @current-change='handleCurrentChangeExtra'
-                     :current-page="this.extra.page"
-                     :page-size="this.extra.pageSize"
-                     :page-sizes="[10,20,30,40]"
-                     layout="total,sizes,prev,pager,next,jumper"
-                     :total="this.total4">
-      </el-pagination>
+    <div class="block toolbar" v-show="showTable.extra">
+      <el-pagination
+        background
+        @size-change="handleSizeChangeExtra"
+        @current-change="handleCurrentChangeExtra"
+        :current-page="this.extra.page"
+        :page-size="this.extra.pageSize"
+        :page-sizes="[10,20,30,40]"
+        layout="total,sizes,prev,pager,next,jumper"
+        :total="this.total4"
+      ></el-pagination>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-import {APIReportExport} from '../../api/product'
+import { APIReportExport } from "../../api/product";
 import {
   getSection,
   getSecDepartment,
@@ -615,34 +543,180 @@ import {
   getSales,
   getRefund,
   getDeadFee,
-  getExtraFee
-} from '../../api/profit'
-import { isAdmin } from '../../api/api'
+  getExtraFee,
+  getRefundAnalysisPlat,
+  getRefundAnalysisSuffix,
+  getRefundAnalysisExpress,
+  getRefundAnalysisGoods
+} from "../../api/profit";
+import { isAdmin } from "../../api/api";
 import {
   compareUp,
   compareDown,
   getMonthDate,
   getDateRangeType
-} from '../../api/tools'
-import { getMenu } from '../../api/login'
-import FileSaver from 'file-saver'
-import XLSX from 'xlsx'
+} from "../../api/tools";
+import { getMenu } from "../../api/login";
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
 export default {
   data() {
-    const vue = this
+    const vue = this;
     return {
+      options: {
+        title: {
+          text: "平台退款金额占比",
+          subtext: "",
+          top:15,
+          x: "center"
+        },
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+          orient: "vertical",
+          left: "right",
+          top:8,
+          data: [String]
+        },
+        series: [
+          {
+            name: "平台退款分析",
+            type: "pie",
+            radius: "55%",
+            center: ["50%", "60%"],
+            data: [Object],
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
+              }
+            }
+          }
+        ]
+      },
+      options1: {
+        title: {
+          text: "账号退款金额占比",
+          subtext: "",
+          top:15,
+          x: "center"
+        },
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+          type: "scroll",
+          orient: "vertical",
+          left: "right",
+          top:8,
+          data: [String],
+          selected: {}
+        },
+        series: [
+          {
+            name: "账号退款分析",
+            type: "pie",
+            radius: "55%",
+            center: ["50%", "60%"],
+            data: [Object],
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
+              }
+            }
+          }
+        ]
+      },
+      options2: {
+        title: {
+          text: "产品退款次数占比",
+          subtext: "",
+          top:15,
+          x: "center"
+        },
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+          type: "scroll",
+          orient: "vertical",
+          left: "right",
+          top:8,
+          data: [String],
+          selected: {}
+        },
+        series: [
+          {
+            name: "产品退款分析",
+            type: "pie",
+            radius: "55%",
+            center: ["50%", "60%"],
+            data: [Object],
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
+              }
+            }
+          }
+        ]
+      },
+      options3: {
+        title: {
+          text: "物流退款次数占比",
+          subtext: "",
+          top:15,
+          x: "center"
+        },
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+          type: "scroll",
+          orient: "vertical",
+          left: "right",
+          top:8,
+          data: [String],
+          selected: {}
+        },
+        series: [
+          {
+            name: "物流退款分析",
+            type: "pie",
+            radius: "55%",
+            center: ["50%", "60%"],
+            data: [Object],
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
+              }
+            }
+          }
+        ]
+      },
       kefu: [],
-      totalPrice:0,
-      currentPrice:0,
+      totalPrice: 0,
+      currentPrice: 0,
       total: null,
       total2: null,
       total3: null,
       total4: null,
-      activeName: '毛利润报表',
+      activeName: "毛利润报表",
       tableHeight: 0,
       allMember: [],
       isA: true,
-      text: '显示输入框',
+      text: "显示输入框",
       show: true,
       show1: false,
       showTable: {
@@ -668,7 +742,7 @@ export default {
       searchTable2: [],
       searchTable3: [],
       searchTable4: [],
-      searchValue: '',
+      searchValue: "",
       listLoading: false,
       department: [],
       allSecDep: [],
@@ -676,7 +750,7 @@ export default {
       plat: [],
       member: [],
       store: [],
-      dateType: [{ id: 1, type: '发货时间' }, { id: 0, type: '交易时间' }],
+      dateType: [{ id: 1, type: "发货时间" }, { id: 0, type: "交易时间" }],
       dateRange: [],
       account: [],
       condition: {
@@ -692,7 +766,7 @@ export default {
         page: 1,
         pageSize: 10,
         suffix: [],
-        type: 'order'
+        type: "order"
       },
       goods: {
         department: [],
@@ -704,7 +778,7 @@ export default {
         dateRangeType: 3,
         page: 1,
         pageSize: 10,
-        type: 'goods'
+        type: "goods"
       },
       order: {},
       dead: {
@@ -727,200 +801,201 @@ export default {
       },
       pickerOptions2: {
         onPick(maxDate, minDate) {
-          vue.condition.dateRangeType = 3
+          vue.condition.dateRangeType = 3;
         },
         shortcuts: [
           {
-            text: '本月',
+            text: "本月",
             onClick(vm) {
-              const date = getMonthDate('thisMonth')
-              vm.$emit('pick', [date['start'], date['end']])
+              const date = getMonthDate("thisMonth");
+              vm.$emit("pick", [date["start"], date["end"]]);
               vue.condition.dateRangeType = getDateRangeType(
-                date['start'],
-                date['end']
-              )
+                date["start"],
+                date["end"]
+              );
             }
           },
           {
-            text: '上个月',
+            text: "上个月",
             onClick(picker) {
-              const date = getMonthDate('previousMonth')
-              vue.condition.dateRangeType = 2
-              picker.$emit('pick', [date['start'], date['end']])
+              const date = getMonthDate("previousMonth");
+              vue.condition.dateRangeType = 2;
+              picker.$emit("pick", [date["start"], date["end"]]);
             }
           },
           {
-            text: '最近一个月',
+            text: "最近一个月",
             onClick(picker) {
-              const date = getMonthDate('lastMonth')
-              vue.condition.dateRangeType = 1
-              picker.$emit('pick', [date['start'], date['end']])
+              const date = getMonthDate("lastMonth");
+              vue.condition.dateRangeType = 1;
+              picker.$emit("pick", [date["start"], date["end"]]);
             }
           }
         ]
       }
-    }
+    };
   },
   methods: {
     handleSizeChange(val) {
-      this.condition.pageSize = val
-      this.getData()
+      this.condition.pageSize = val;
+      this.getData();
     },
     handleCurrentChange(val) {
-      this.condition.page = val
-      this.getData()
+      this.condition.page = val;
+      this.getData();
     },
     handleSizeChangeGoods(val) {
-      this.goods.pageSize = val
-      this.getGoods()
+      this.goods.pageSize = val;
+      this.getGoods();
     },
     handleCurrentChangeGoods(val) {
-      this.goods.page = val
-      this.getGoods()
+      this.goods.page = val;
+      this.getGoods();
     },
     handleSizeChangeDead(val) {
-      this.dead.pageSize = val
-      this.getDead()
+      this.dead.pageSize = val;
+      this.getDead();
     },
     handleCurrentChangeDead(val) {
-      this.dead.page = val
-      this.getDead()
+      this.dead.page = val;
+      this.getDead();
     },
     handleSizeChangeExtra(val) {
-      this.extra.pageSize = val
-      this.getExtra()
+      this.extra.pageSize = val;
+      this.getExtra();
     },
     handleCurrentChangeExtra(val) {
-      this.extra.page = val
-      this.getExtra()
+      this.extra.page = val;
+      this.getExtra();
     },
     handleClick(tab, event) {
-      if (tab.label === '退款订单明细') {
-        this.showTable['sell'] = false
-        this.showTable['order'] = true
-        this.showTable['goods'] = false
-        this.showTable['report'] = false
-        this.showTable['dead'] = false
-        this.showTable['extra'] = false
-        this.getData()
-      } else if (tab.label === '退款产品明细') {
-        this.showTable['sell'] = false
-        this.showTable['order'] = false
-        this.showTable['goods'] = true
-        this.showTable['report'] = false
-        this.showTable['dead'] = false
-        this.showTable['extra'] = false
-        this.getGoods()
-      } else if (tab.label === '退款分析报告') {
-        this.showTable['sell'] = false
-        this.showTable['order'] = false
-        this.showTable['goods'] = false
-        this.showTable['report'] = true
-        this.showTable['dead'] = false
-        this.showTable['extra'] = false
-      } else if (tab.label === '死库明细') {
-        this.showTable['sell'] = false
-        this.showTable['order'] = false
-        this.showTable['goods'] = false
-        this.showTable['report'] = false
-        this.showTable['dead'] = true
-        this.showTable['extra'] = false
-        this.getDead()
-      } else if (tab.label === '杂费明细') {
-        this.showTable['sell'] = false
-        this.showTable['order'] = false
-        this.showTable['goods'] = false
-        this.showTable['report'] = false
-        this.showTable['dead'] = false
-        this.showTable['extra'] = true
-        this.getExtra()
+      if (tab.label === "退款订单明细") {
+        this.showTable["sell"] = false;
+        this.showTable["order"] = true;
+        this.showTable["goods"] = false;
+        this.showTable["report"] = false;
+        this.showTable["dead"] = false;
+        this.showTable["extra"] = false;
+        this.getData();
+      } else if (tab.label === "退款产品明细") {
+        this.showTable["sell"] = false;
+        this.showTable["order"] = false;
+        this.showTable["goods"] = true;
+        this.showTable["report"] = false;
+        this.showTable["dead"] = false;
+        this.showTable["extra"] = false;
+        this.getGoods();
+      } else if (tab.label === "退款分析报告") {
+        this.showTable["sell"] = false;
+        this.showTable["order"] = false;
+        this.showTable["goods"] = false;
+        this.showTable["report"] = true;
+        this.showTable["dead"] = false;
+        this.showTable["extra"] = false;
+        this.onSubmit(this.condition);
+      } else if (tab.label === "死库明细") {
+        this.showTable["sell"] = false;
+        this.showTable["order"] = false;
+        this.showTable["goods"] = false;
+        this.showTable["report"] = false;
+        this.showTable["dead"] = true;
+        this.showTable["extra"] = false;
+        this.getDead();
+      } else if (tab.label === "杂费明细") {
+        this.showTable["sell"] = false;
+        this.showTable["order"] = false;
+        this.showTable["goods"] = false;
+        this.showTable["report"] = false;
+        this.showTable["dead"] = false;
+        this.showTable["extra"] = true;
+        this.getExtra();
       } else {
-        this.showTable['sell'] = true
-        this.showTable['order'] = false
-        this.showTable['goods'] = false
-        this.showTable['report'] = false
-        this.showTable['dead'] = false
-        this.showTable['extra'] = false
-        this.onSubmit(this.condition)
+        this.showTable["sell"] = true;
+        this.showTable["order"] = false;
+        this.showTable["goods"] = false;
+        this.showTable["report"] = false;
+        this.showTable["dead"] = false;
+        this.showTable["extra"] = false;
+        this.onSubmit(this.condition);
       }
     },
     selectalls() {
-      const allValues = []
+      const allValues = [];
       for (const item of this.store) {
-        allValues.push(item)
+        allValues.push(item);
       }
-      this.condition.store = allValues
+      this.condition.store = allValues;
     },
     noselects() {
-      this.condition.store = []
+      this.condition.store = [];
     },
     selectallm() {
-      const allValues = []
+      const allValues = [];
       for (const item of this.member) {
-        allValues.push(item.username)
+        allValues.push(item.username);
       }
-      this.condition.member = allValues
+      this.condition.member = allValues;
     },
     noselectm() {
-      this.condition.member = []
+      this.condition.member = [];
     },
     selectalld() {
-      const allValues = []
+      const allValues = [];
       for (const item of this.department) {
-        allValues.push(item.department)
+        allValues.push(item.department);
       }
-      this.condition.department = allValues
-      this.member = this.allMember
+      this.condition.department = allValues;
+      this.member = this.allMember;
     },
     noselectd() {
-      this.condition.department = []
-      this.member = this.allMember
+      this.condition.department = [];
+      this.member = this.allMember;
     },
     selectallSec() {
-      const allValues = []
+      const allValues = [];
       for (const item of this.secDepartment) {
-        allValues.push(item.department)
+        allValues.push(item.department);
       }
-      this.condition.secDepartment = allValues
-      this.member = this.allMember
+      this.condition.secDepartment = allValues;
+      this.member = this.allMember;
     },
     noselectSec() {
-      this.condition.secDepartment = []
-      this.member = this.allMember
+      this.condition.secDepartment = [];
+      this.member = this.allMember;
     },
     selectall() {
-      const allValues = []
+      const allValues = [];
       for (const item of this.account) {
-        allValues.push(item.store)
+        allValues.push(item.store);
       }
-      this.condition.account = allValues
+      this.condition.account = allValues;
     },
     noselect() {
-      this.condition.account = []
+      this.condition.account = [];
     },
     choosed() {
-      let res = []
-      const val = this.condition.department
+      let res = [];
+      const val = this.condition.department;
 
       // 二级部门处理
-      const allDepartments = this.department
-      const allDepartmentsMap = {}
+      const allDepartments = this.department;
+      const allDepartmentsMap = {};
       for (let i = 0; i < allDepartments.length; i++) {
-        allDepartmentsMap[allDepartments[i].id] = allDepartments[i].department
+        allDepartmentsMap[allDepartments[i].id] = allDepartments[i].department;
       }
 
       // 人员处理
-      res = this.allMember
-      let per = []
-      const secDep = []
-      this.member = []
-      this.condition.member = []
+      res = this.allMember;
+      let per = [];
+      const secDep = [];
+      this.member = [];
+      this.condition.member = [];
       if (val.length !== 0) {
         for (let i = 0; i < val.length; i++) {
           // 部门
           for (let k = 0; k < this.allSecDep.length; k++) {
             if (allDepartmentsMap[this.allSecDep[k].parent] === val[i]) {
-              secDep.push(this.allSecDep[k])
+              secDep.push(this.allSecDep[k]);
             }
           }
 
@@ -928,164 +1003,164 @@ export default {
           per = res.filter(
             ele =>
               (ele.department === val[i] || ele.parent_department === val[i]) &&
-              ele.position === '销售'
-          )
-          this.member = this.member.concat(per)
+              ele.position === "销售"
+          );
+          this.member = this.member.concat(per);
         }
-        this.secDepartment = secDep
+        this.secDepartment = secDep;
       } else {
-        this.member = res
-        this.secDepartment = this.allSecDep
+        this.member = res;
+        this.secDepartment = this.allSecDep;
       }
     },
     secChoosed() {
       // 值变化之后人员要处理
-      let res = []
-      const val = this.condition.secDepartment
+      let res = [];
+      const val = this.condition.secDepartment;
       // 人员处理
-      res = this.allMember
-      let per = []
-      this.member = []
-      this.condition.member = []
+      res = this.allMember;
+      let per = [];
+      this.member = [];
+      this.condition.member = [];
       if (val.length !== 0) {
         for (let i = 0; i < val.length; i++) {
           // 人员
           per = res.filter(
-            ele => ele.department === val[i] && ele.position === '销售'
-          )
-          this.member = this.member.concat(per)
+            ele => ele.department === val[i] && ele.position === "销售"
+          );
+          this.member = this.member.concat(per);
         }
       } else {
-        this.member = res
+        this.member = res;
       }
     },
     handleChange() {
-      this.show = !this.show
-      this.isA = !this.isA
+      this.show = !this.show;
+      this.isA = !this.isA;
       if (this.show === false) {
-        this.text = '显示输入框'
-        const height = document.getElementById('app').clientHeight
-        this.tableHeight = height + 585 + 'px'
+        this.text = "显示输入框";
+        const height = document.getElementById("app").clientHeight;
+        this.tableHeight = height + 585 + "px";
       } else if (this.show === true) {
-        this.text = '隐藏输入框'
-        const height = document.getElementById('app').clientHeight
-        this.tableHeight = height + 362 + 'px'
+        this.text = "隐藏输入框";
+        const height = document.getElementById("app").clientHeight;
+        this.tableHeight = height + 362 + "px";
       }
     },
     changeActive() {
-      this.show1 = true
+      this.show1 = true;
     },
     removeActive() {
-      this.show1 = false
+      this.show1 = false;
     },
     myForm(form) {
-      const myform = JSON.parse(JSON.stringify(form))
+      const myform = JSON.parse(JSON.stringify(form));
       if (myform.member.length !== 0) {
         if (isAdmin() === false) {
-          myform.member = this.condition.member
+          myform.member = this.condition.member;
         }
       }
       // 根据选定的部门，处理人员
       if (myform.member.length === 0) {
         if (isAdmin() === false) {
-          const name = this.$store.getters.name
-          const res = this.allMember
-          const kes = this.kefu
+          const name = this.$store.getters.name;
+          const res = this.allMember;
+          const kes = this.kefu;
           if (kes.length > 0) {
             myform.member = res.map(m => {
-              return m.username
-            })
+              return m.username;
+            });
           } else {
             myform.member = res.map(m => {
-              return m.username
-            })
+              return m.username;
+            });
           }
         }
         if (myform.department.length !== 0) {
           if (myform.secDepartment.length === 0) {
-            const val = form.department
-            const res = this.allMember
+            const val = form.department;
+            const res = this.allMember;
             for (let i = 0; i < val.length; i++) {
               const per = res.filter(
-                ele => ele.department === val[i] && ele.position === '销售'
-              )
-              this.member.concat(per)
+                ele => ele.department === val[i] && ele.position === "销售"
+              );
+              this.member.concat(per);
             }
             myform.member = this.member.map(m => {
-              return m.username
-            })
+              return m.username;
+            });
           }
           if (myform.secDepartment.length !== 0) {
-            const val = form.secDepartment
-            const res = this.allMember
+            const val = form.secDepartment;
+            const res = this.allMember;
             for (let i = 0; i < val.length; i++) {
               const per = res.filter(
-                ele => ele.department === val[i] && ele.position === '销售'
-              )
-              this.member.concat(per)
+                ele => ele.department === val[i] && ele.position === "销售"
+              );
+              this.member.concat(per);
             }
             myform.member = this.member.map(m => {
-              return m.username
-            })
+              return m.username;
+            });
           }
         } else {
           if (myform.secDepartment.length !== 0) {
-            const val = form.secDepartment
-            const res = this.allMember
+            const val = form.secDepartment;
+            const res = this.allMember;
             for (let i = 0; i < val.length; i++) {
               const per = res.filter(
-                ele => ele.department === val[i] && ele.position === '销售'
-              )
-              this.member.concat(per)
+                ele => ele.department === val[i] && ele.position === "销售"
+              );
+              this.member.concat(per);
             }
             myform.member = this.member.map(m => {
-              return m.username
-            })
+              return m.username;
+            });
           }
         }
       }
-      return myform
+      return myform;
     },
     onSubmit(form) {
-      if(this.activeName === '退款订单明细'){
-         this.getData()
-      }else if(this.activeName === '退款产品明细'){
-        this.getGoods()
-      }else if(this.activeName === '退款分析报告'){
-
-      }else if(this.activeName === '死库明细'){
-        this.getDead()
-      }else if(this.activeName === '杂费明细'){
-        this.getExtra()
-      }else {
-        const height = document.documentElement.clientHeight
-        this.tableHeight = height + 360
-        this.showTable['sell'] = true
-        this.showTable['order'] = false
-        this.showTable['goods'] = false
-        this.showTable['report'] = false
-        this.showTable['dead'] = false
-        this.showTable['extra'] = false
-        this.activeName = '毛利润报表'
+      if (this.activeName === "退款订单明细") {
+        this.getData();
+      } else if (this.activeName === "退款产品明细") {
+        this.getGoods();
+      } else if (this.activeName === "退款分析报告") {
+        this.analysis(form);
+      } else if (this.activeName === "死库明细") {
+        this.getDead();
+      } else if (this.activeName === "杂费明细") {
+        this.getExtra();
+      } else {
+        const height = document.documentElement.clientHeight;
+        this.tableHeight = height + 360;
+        this.showTable["sell"] = true;
+        this.showTable["order"] = false;
+        this.showTable["goods"] = false;
+        this.showTable["report"] = false;
+        this.showTable["dead"] = false;
+        this.showTable["extra"] = false;
+        this.activeName = "毛利润报表";
         this.$refs.condition.validate(valid => {
           if (valid) {
-            const myform = this.myForm(form)
-            this.listLoading = true
+            const myform = this.myForm(form);
+            this.listLoading = true;
             getSales(myform).then(response => {
-              this.listLoading = false
-            this.tableData = this.searchTable = response.data.data
-          })
+              this.listLoading = false;
+              this.tableData = this.searchTable = response.data.data;
+            });
           } else {
-            return false
+            return false;
           }
-        })
+        });
       }
     },
     // 搜索
     handleSearch() {
-      const searchValue = this.searchValue && this.searchValue.toLowerCase()
-      if (this.activeName === '毛利润报表') {
-        const data = this.searchTable
+      const searchValue = this.searchValue && this.searchValue.toLowerCase();
+      if (this.activeName === "毛利润报表") {
+        const data = this.searchTable;
         if (searchValue) {
           this.tableData = data.filter(function(row) {
             return Object.keys(row).some(function(key) {
@@ -1093,14 +1168,14 @@ export default {
                 String(row[key])
                   .toLowerCase()
                   .indexOf(searchValue) > -1
-              )
-            })
-          })
+              );
+            });
+          });
         } else {
-          this.tableData = data
+          this.tableData = data;
         }
-      } else if (this.activeName === '退款订单明细') {
-        const data = this.searchTable1
+      } else if (this.activeName === "退款订单明细") {
+        const data = this.searchTable1;
         if (searchValue) {
           this.tableData1 = data.filter(function(row) {
             return Object.keys(row).some(function(key) {
@@ -1108,14 +1183,14 @@ export default {
                 String(row[key])
                   .toLowerCase()
                   .indexOf(searchValue) > -1
-              )
-            })
-          })
+              );
+            });
+          });
         } else {
-          this.tableData1 = data
+          this.tableData1 = data;
         }
-      } else if (this.activeName === '退款产品明细') {
-        const data = this.searchTable2
+      } else if (this.activeName === "退款产品明细") {
+        const data = this.searchTable2;
         if (searchValue) {
           this.tableData2 = data.filter(function(row) {
             return Object.keys(row).some(function(key) {
@@ -1123,14 +1198,14 @@ export default {
                 String(row[key])
                   .toLowerCase()
                   .indexOf(searchValue) > -1
-              )
-            })
-          })
+              );
+            });
+          });
         } else {
-          this.tableData2 = data
+          this.tableData2 = data;
         }
-      } else if (this.activeName === '死库明细') {
-        const data = this.searchTable3
+      } else if (this.activeName === "死库明细") {
+        const data = this.searchTable3;
         if (searchValue) {
           this.tableData3 = data.filter(function(row) {
             return Object.keys(row).some(function(key) {
@@ -1138,14 +1213,14 @@ export default {
                 String(row[key])
                   .toLowerCase()
                   .indexOf(searchValue) > -1
-              )
-            })
-          })
+              );
+            });
+          });
         } else {
-          this.tableData3 = data
+          this.tableData3 = data;
         }
-      } else if (this.activeName === '杂费明细') {
-        const data = this.searchTable4
+      } else if (this.activeName === "杂费明细") {
+        const data = this.searchTable4;
         if (searchValue) {
           this.tableData4 = data.filter(function(row) {
             return Object.keys(row).some(function(key) {
@@ -1153,258 +1228,260 @@ export default {
                 String(row[key])
                   .toLowerCase()
                   .indexOf(searchValue) > -1
-              )
-            })
-          })
+              );
+            });
+          });
         } else {
-          this.tableData4 = data
+          this.tableData4 = data;
         }
       }
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      if (this.activeName === '毛利润报表') {
-        const data = this.tableData
-        if (column.order === 'descending') {
-          this.tableData = data.sort(compareDown(data, column.prop))
+      if (this.activeName === "毛利润报表") {
+        const data = this.tableData;
+        if (column.order === "descending") {
+          this.tableData = data.sort(compareDown(data, column.prop));
         } else {
-          this.tableData = data.sort(compareUp(data, column.prop))
+          this.tableData = data.sort(compareUp(data, column.prop));
         }
-      } else if (this.activeName === '退款订单明细') {
-        const data = this.tableData1
-        if (column.order === 'descending') {
-          this.tableData1 = data.sort(compareDown(data, column.prop))
+      } else if (this.activeName === "退款订单明细") {
+        const data = this.tableData1;
+        if (column.order === "descending") {
+          this.tableData1 = data.sort(compareDown(data, column.prop));
         } else {
-          this.tableData1 = data.sort(compareUp(data, column.prop))
+          this.tableData1 = data.sort(compareUp(data, column.prop));
         }
-      } else if (this.activeName === '退款产品明细') {
-        const data = this.tableData2
-        if (column.order === 'descending') {
-          this.tableData2 = data.sort(compareDown(data, column.prop))
+      } else if (this.activeName === "退款产品明细") {
+        const data = this.tableData2;
+        if (column.order === "descending") {
+          this.tableData2 = data.sort(compareDown(data, column.prop));
         } else {
-          this.tableData2 = data.sort(compareUp(data, column.prop))
+          this.tableData2 = data.sort(compareUp(data, column.prop));
         }
-      } else if (this.activeName === '死库明细') {
-        const data = this.tableData3
-        if (column.order === 'descending') {
-          this.tableData3 = data.sort(compareDown(data, column.prop))
+      } else if (this.activeName === "死库明细") {
+        const data = this.tableData3;
+        if (column.order === "descending") {
+          this.tableData3 = data.sort(compareDown(data, column.prop));
         } else {
-          this.tableData3 = data.sort(compareUp(data, column.prop))
+          this.tableData3 = data.sort(compareUp(data, column.prop));
         }
-      } else if (this.activeName === '杂费明细') {
-        const data = this.tableData4
-        if (column.order === 'descending') {
-          this.tableData4 = data.sort(compareDown(data, column.prop))
+      } else if (this.activeName === "杂费明细") {
+        const data = this.tableData4;
+        if (column.order === "descending") {
+          this.tableData4 = data.sort(compareDown(data, column.prop));
         } else {
-          this.tableData4 = data.sort(compareUp(data, column.prop))
+          this.tableData4 = data.sort(compareUp(data, column.prop));
         }
       }
     },
     // 小数和空值格式化
     empty(row, column, cellValue, index) {
-      row.salemoneyzn = Math.round(row.salemoneyzn * 100) / 100
-      row.ebayfeeznebay = Math.round(row.ebayfeeznebay * 100) / 100
-      row.ppFeezn = Math.round(row.ppFeezn * 100) / 100
-      row.grossprofit = Math.round(row.grossprofit * 100) / 100
-      row.refundZn = Math.round(row.refundZn * 100) / 100
+      row.salemoneyzn = Math.round(row.salemoneyzn * 100) / 100;
+      row.ebayfeeznebay = Math.round(row.ebayfeeznebay * 100) / 100;
+      row.ppFeezn = Math.round(row.ppFeezn * 100) / 100;
+      row.grossprofit = Math.round(row.grossprofit * 100) / 100;
+      row.refundZn = Math.round(row.refundZn * 100) / 100;
       if (!isNaN(cellValue)) {
-        return Number(cellValue)
+        return Number(cellValue);
       } else {
-        return cellValue
+        return cellValue;
       }
     },
     // 导出
     exportExcel() {
       /* generate workbook object from table */
-      if (this.activeName === '毛利润报表') {
+      if (this.activeName === "毛利润报表") {
         var wb = XLSX.utils.table_to_book(
-          document.querySelector('#sale-table'),
+          document.querySelector("#sale-table"),
           {
             raw: true
           }
-        )
-        var lastRow = wb.Sheets.Sheet1['!ref'].match(/\d+$/)[0]
+        );
+        var lastRow = wb.Sheets.Sheet1["!ref"].match(/\d+$/)[0];
         for (var ele in wb.Sheets.Sheet1) {
-          var rowNumber = ele.replace(/[^0-9]+/g, '')
+          var rowNumber = ele.replace(/[^0-9]+/g, "");
           if (rowNumber === lastRow) {
-            delete wb.Sheets.Sheet1[ele]
-            continue
+            delete wb.Sheets.Sheet1[ele];
+            continue;
           }
-          const row = wb.Sheets.Sheet1[ele]
+          const row = wb.Sheets.Sheet1[ele];
           try {
-            if (!isNaN(row['v']) && row['v'] !== '') {
-              row['t'] = 'n'
-              row['v'] = Number(row['v'])
+            if (!isNaN(row["v"]) && row["v"] !== "") {
+              row["t"] = "n";
+              row["v"] = Number(row["v"]);
             }
           } catch (err) {
-            console.log(err)
+            console.log(err);
           }
         }
         /* get binary string as output */
-        const filename = '销售毛利润报表'
+        const filename = "销售毛利润报表";
         var wbout = XLSX.write(wb, {
-          bookType: 'xls',
+          bookType: "xls",
           bookSST: true,
-          type: 'array'
-        })
+          type: "array"
+        });
         try {
           FileSaver.saveAs(
-            new Blob([wbout], { type: 'application/octet-stream' }),
-            filename + '.xls'
-          )
+            new Blob([wbout], { type: "application/octet-stream" }),
+            filename + ".xls"
+          );
         } catch (e) {
-          if (typeof console !== 'undefined') console.log(e, wbout)
+          if (typeof console !== "undefined") console.log(e, wbout);
         }
-      } else if (this.activeName === '退款订单明细') {
-        console.log(this.condition.member)
-        let arrTk={}
-        arrTk.department=this.condition.department
-        arrTk.secDepartment=this.condition.secDepartment
-        arrTk.plat=this.condition.plat
-        arrTk.member=this.condition.member
-        arrTk.dateRange=this.condition.dateRange
-        arrTk.account=this.condition.account
-        arrTk.dateRangeType=this.condition.dateType
-        arrTk.role=this.condition.role
-        arrTk.storename=this.condition.store
-        arrTk.pageSize=1000000
-        arrTk.type='order'
-        const myform = this.myForm(arrTk)
+      } else if (this.activeName === "退款订单明细") {
+        console.log(this.condition.member);
+        let arrTk = {};
+        arrTk.department = this.condition.department;
+        arrTk.secDepartment = this.condition.secDepartment;
+        arrTk.plat = this.condition.plat;
+        arrTk.member = this.condition.member;
+        arrTk.dateRange = this.condition.dateRange;
+        arrTk.account = this.condition.account;
+        arrTk.dateRangeType = this.condition.dateType;
+        arrTk.role = this.condition.role;
+        arrTk.storename = this.condition.store;
+        arrTk.pageSize = 1000000;
+        arrTk.type = "order";
+        const myform = this.myForm(arrTk);
         APIReportExport(myform).then(res => {
           const blob = new Blob([res.data], {
-            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
-          })
-          const downloadElement = document.createElement('a')
-          const objectUrl = window.URL.createObjectURL(blob)
-          downloadElement.href = objectUrl
-          const date = new Date()
-          const year = date.getFullYear()
-          let month = date.getMonth() + 1
-          let strDate = date.getDate()
-          let hour = date.getHours()
-          let minute = date.getMinutes()
-          let second = date.getSeconds()
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          const date = new Date();
+          const year = date.getFullYear();
+          let month = date.getMonth() + 1;
+          let strDate = date.getDate();
+          let hour = date.getHours();
+          let minute = date.getMinutes();
+          let second = date.getSeconds();
           if (month >= 1 && month <= 9) {
-            month = '0' + month
+            month = "0" + month;
           }
           if (strDate >= 0 && strDate <= 9) {
-            strDate = '0' + strDate
+            strDate = "0" + strDate;
           }
           if (hour >= 0 && hour <= 9) {
-            hour = '0' + hour
+            hour = "0" + hour;
           }
           if (minute >= 0 && minute <= 9) {
-            minute = '0' + minute
+            minute = "0" + minute;
           }
           if (second >= 0 && second <= 9) {
-            second = '0' + second
+            second = "0" + second;
           }
           const filename =
-                  '退款订单明细_' + year + month + strDate + hour + minute + second
-          downloadElement.download = filename + '.xls'
-          document.body.appendChild(downloadElement)
-          downloadElement.click()
-          document.body.removeChild(downloadElement)
-        })
-//        this.order = Object.assign({}, this.condition)
-//        this.order.pageSize = this.total
-//        getRefund(this.order).then(res => {
-//          this.allDataOrder = res.data.data.items
-//          const Filename = '退款订单明细'
-//          const data = this.allDataOrder.map(v => filterVal.map(k => v[k]))
-//          const [fileName, fileType, sheetName] = [Filename, 'xls']
-//          this.$toExcel({ th, data, fileName, fileType, sheetName })
-//        })
-//        const th = [
-//          '账号',
-//          '退款月份',
-//          '销售员',
-//          '商品名称',
-//          '商品编码',
-//          '商品SKU',
-//          '订单编号',
-//          '店铺单号',
-//          '合并单号',
-//          '仓库',
-//          '退款$',
-//          '退款￥',
-//          '国家',
-//          '物流方式',
-//          '平台',
-//          '交易时间',
-//          '退款时间',
-//          '退款时间-交易时间(天)'
-//        ]
-//        const filterVal = [
-//          'suffix',
-//          'refMonth',
-//          'salesman',
-//          'goodsName',
-//          'goodsCode',
-//          'goodsSku',
-//          'tradeId',
-//          'orderId',
-//          'mergeBillId',
-//          'storeName',
-//          'refund',
-//          'refundZn',
-//          'orderCountry',
-//          'expressWay',
-//          'platform',
-//          'orderTime',
-//          'refundTime',
-//          'dateDelta'
-//        ]
-      } else if (this.activeName === '退款产品明细') {
-        let arrTk={}
-        arrTk.department=this.condition.department
-        arrTk.secDepartment=this.condition.secDepartment
-        arrTk.plat=this.condition.plat
-        arrTk.member=this.condition.member
-        arrTk.dateRange=this.condition.dateRange
-        arrTk.account=this.condition.account
-        arrTk.dateRangeType=this.condition.dateType
-        arrTk.role=this.condition.role
-        arrTk.storename=this.condition.store
-        arrTk.pageSize=1000000
-        arrTk.type='goods'
-        const myform = this.myForm(arrTk)
+            "退款订单明细_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename + ".xls";
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        });
+        //        this.order = Object.assign({}, this.condition)
+        //        this.order.pageSize = this.total
+        //        getRefund(this.order).then(res => {
+        //          this.allDataOrder = res.data.data.items
+        //          const Filename = '退款订单明细'
+        //          const data = this.allDataOrder.map(v => filterVal.map(k => v[k]))
+        //          const [fileName, fileType, sheetName] = [Filename, 'xls']
+        //          this.$toExcel({ th, data, fileName, fileType, sheetName })
+        //        })
+        //        const th = [
+        //          '账号',
+        //          '退款月份',
+        //          '销售员',
+        //          '商品名称',
+        //          '商品编码',
+        //          '商品SKU',
+        //          '订单编号',
+        //          '店铺单号',
+        //          '合并单号',
+        //          '仓库',
+        //          '退款$',
+        //          '退款￥',
+        //          '国家',
+        //          '物流方式',
+        //          '平台',
+        //          '交易时间',
+        //          '退款时间',
+        //          '退款时间-交易时间(天)'
+        //        ]
+        //        const filterVal = [
+        //          'suffix',
+        //          'refMonth',
+        //          'salesman',
+        //          'goodsName',
+        //          'goodsCode',
+        //          'goodsSku',
+        //          'tradeId',
+        //          'orderId',
+        //          'mergeBillId',
+        //          'storeName',
+        //          'refund',
+        //          'refundZn',
+        //          'orderCountry',
+        //          'expressWay',
+        //          'platform',
+        //          'orderTime',
+        //          'refundTime',
+        //          'dateDelta'
+        //        ]
+      } else if (this.activeName === "退款产品明细") {
+        let arrTk = {};
+        arrTk.department = this.condition.department;
+        arrTk.secDepartment = this.condition.secDepartment;
+        arrTk.plat = this.condition.plat;
+        arrTk.member = this.condition.member;
+        arrTk.dateRange = this.condition.dateRange;
+        arrTk.account = this.condition.account;
+        arrTk.dateRangeType = this.condition.dateType;
+        arrTk.role = this.condition.role;
+        arrTk.storename = this.condition.store;
+        arrTk.pageSize = 1000000;
+        arrTk.type = "goods";
+        const myform = this.myForm(arrTk);
         APIReportExport(myform).then(res => {
           const blob = new Blob([res.data], {
-            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
-          })
-          const downloadElement = document.createElement('a')
-          const objectUrl = window.URL.createObjectURL(blob)
-          downloadElement.href = objectUrl
-          const date = new Date()
-          const year = date.getFullYear()
-          let month = date.getMonth() + 1
-          let strDate = date.getDate()
-          let hour = date.getHours()
-          let minute = date.getMinutes()
-          let second = date.getSeconds()
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          const date = new Date();
+          const year = date.getFullYear();
+          let month = date.getMonth() + 1;
+          let strDate = date.getDate();
+          let hour = date.getHours();
+          let minute = date.getMinutes();
+          let second = date.getSeconds();
           if (month >= 1 && month <= 9) {
-            month = '0' + month
+            month = "0" + month;
           }
           if (strDate >= 0 && strDate <= 9) {
-            strDate = '0' + strDate
+            strDate = "0" + strDate;
           }
           if (hour >= 0 && hour <= 9) {
-            hour = '0' + hour
+            hour = "0" + hour;
           }
           if (minute >= 0 && minute <= 9) {
-            minute = '0' + minute
+            minute = "0" + minute;
           }
           if (second >= 0 && second <= 9) {
-            second = '0' + second
+            second = "0" + second;
           }
           const filename =
-                  '退款产品明细_' + year + month + strDate + hour + minute + second
-          downloadElement.download = filename + '.xls'
-          document.body.appendChild(downloadElement)
-          downloadElement.click()
-          document.body.removeChild(downloadElement)
-        })
+            "退款产品明细_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename + ".xls";
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        });
         // this.order = Object.assign({}, this.goods)
         // this.order.type=order
         // this.order.pageSize = this.total2
@@ -1415,72 +1492,73 @@ export default {
         //   const [fileName, fileType, sheetName] = [Filename, 'xls']
         //   this.$toExcel({ th, data, fileName, fileType, sheetName })
         // })
-//        const th = [
-//          '账号',
-//          '商品名称',
-//          '商品编码',
-//          '商品SKU',
-//          '退款次数',
-//          '销售员'
-//        ]
-//        const filterVal = [
-//          'suffix',
-//          'goodsName',
-//          'goodsCode',
-//          'goodsSku',
-//          'times',
-//          'salesman'
-//        ]
-      } else if (this.activeName === '死库明细') {
-        let arrTk={}
-        arrTk.department=this.condition.department
-        arrTk.secDepartment=this.condition.secDepartment
-        arrTk.plat=this.condition.plat
-        arrTk.member=this.condition.member
-        arrTk.dateRange=this.condition.dateRange
-        arrTk.account=this.condition.account
-        arrTk.dateRangeType=this.condition.dateType
-        arrTk.role=this.condition.role
-        arrTk.storename=this.condition.store
-        arrTk.pageSize=1000000
-        arrTk.type='salesDeadFee'
-        const myform = this.myForm(arrTk)
+        //        const th = [
+        //          '账号',
+        //          '商品名称',
+        //          '商品编码',
+        //          '商品SKU',
+        //          '退款次数',
+        //          '销售员'
+        //        ]
+        //        const filterVal = [
+        //          'suffix',
+        //          'goodsName',
+        //          'goodsCode',
+        //          'goodsSku',
+        //          'times',
+        //          'salesman'
+        //        ]
+      } else if (this.activeName === "死库明细") {
+        let arrTk = {};
+        arrTk.department = this.condition.department;
+        arrTk.secDepartment = this.condition.secDepartment;
+        arrTk.plat = this.condition.plat;
+        arrTk.member = this.condition.member;
+        arrTk.dateRange = this.condition.dateRange;
+        arrTk.account = this.condition.account;
+        arrTk.dateRangeType = this.condition.dateType;
+        arrTk.role = this.condition.role;
+        arrTk.storename = this.condition.store;
+        arrTk.pageSize = 1000000;
+        arrTk.type = "salesDeadFee";
+        const myform = this.myForm(arrTk);
         APIReportExport(myform).then(res => {
           const blob = new Blob([res.data], {
-            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
-          })
-          const downloadElement = document.createElement('a')
-          const objectUrl = window.URL.createObjectURL(blob)
-          downloadElement.href = objectUrl
-          const date = new Date()
-          const year = date.getFullYear()
-          let month = date.getMonth() + 1
-          let strDate = date.getDate()
-          let hour = date.getHours()
-          let minute = date.getMinutes()
-          let second = date.getSeconds()
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          const date = new Date();
+          const year = date.getFullYear();
+          let month = date.getMonth() + 1;
+          let strDate = date.getDate();
+          let hour = date.getHours();
+          let minute = date.getMinutes();
+          let second = date.getSeconds();
           if (month >= 1 && month <= 9) {
-            month = '0' + month
+            month = "0" + month;
           }
           if (strDate >= 0 && strDate <= 9) {
-            strDate = '0' + strDate
+            strDate = "0" + strDate;
           }
           if (hour >= 0 && hour <= 9) {
-            hour = '0' + hour
+            hour = "0" + hour;
           }
           if (minute >= 0 && minute <= 9) {
-            minute = '0' + minute
+            minute = "0" + minute;
           }
           if (second >= 0 && second <= 9) {
-            second = '0' + second
+            second = "0" + second;
           }
           const filename =
-                  '司库明细_' + year + month + strDate + hour + minute + second
-          downloadElement.download = filename + '.xls'
-          document.body.appendChild(downloadElement)
-          downloadElement.click()
-          document.body.removeChild(downloadElement)
-        })
+            "司库明细_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename + ".xls";
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        });
         // this.order = Object.assign({}, this.dead)
         // this.order.pageSize = this.total3
         // getDeadFee(this.order).then(res => {
@@ -1498,56 +1576,57 @@ export default {
         //   'dateTime',
         //   'salesman'
         // ]
-      } else if (this.activeName === '杂费明细') {
-        let arrTk={}
-        arrTk.department=this.condition.department
-        arrTk.secDepartment=this.condition.secDepartment
-        arrTk.plat=this.condition.plat
-        arrTk.member=this.condition.member
-        arrTk.dateRange=this.condition.dateRange
-        arrTk.account=this.condition.account
-        arrTk.dateRangeType=this.condition.dateType
-        arrTk.role=this.condition.role
-        arrTk.storename=this.condition.store
-        arrTk.pageSize=1000000
-        arrTk.type='extra'
-        const myform = this.myForm(arrTk)
+      } else if (this.activeName === "杂费明细") {
+        let arrTk = {};
+        arrTk.department = this.condition.department;
+        arrTk.secDepartment = this.condition.secDepartment;
+        arrTk.plat = this.condition.plat;
+        arrTk.member = this.condition.member;
+        arrTk.dateRange = this.condition.dateRange;
+        arrTk.account = this.condition.account;
+        arrTk.dateRangeType = this.condition.dateType;
+        arrTk.role = this.condition.role;
+        arrTk.storename = this.condition.store;
+        arrTk.pageSize = 1000000;
+        arrTk.type = "extra";
+        const myform = this.myForm(arrTk);
         APIReportExport(myform).then(res => {
           const blob = new Blob([res.data], {
-            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
-          })
-          const downloadElement = document.createElement('a')
-          const objectUrl = window.URL.createObjectURL(blob)
-          downloadElement.href = objectUrl
-          const date = new Date()
-          const year = date.getFullYear()
-          let month = date.getMonth() + 1
-          let strDate = date.getDate()
-          let hour = date.getHours()
-          let minute = date.getMinutes()
-          let second = date.getSeconds()
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          const date = new Date();
+          const year = date.getFullYear();
+          let month = date.getMonth() + 1;
+          let strDate = date.getDate();
+          let hour = date.getHours();
+          let minute = date.getMinutes();
+          let second = date.getSeconds();
           if (month >= 1 && month <= 9) {
-            month = '0' + month
+            month = "0" + month;
           }
           if (strDate >= 0 && strDate <= 9) {
-            strDate = '0' + strDate
+            strDate = "0" + strDate;
           }
           if (hour >= 0 && hour <= 9) {
-            hour = '0' + hour
+            hour = "0" + hour;
           }
           if (minute >= 0 && minute <= 9) {
-            minute = '0' + minute
+            minute = "0" + minute;
           }
           if (second >= 0 && second <= 9) {
-            second = '0' + second
+            second = "0" + second;
           }
           const filename =
-                  '杂费明细_' + year + month + strDate + hour + minute + second
-          downloadElement.download = filename + '.xls'
-          document.body.appendChild(downloadElement)
-          downloadElement.click()
-          document.body.removeChild(downloadElement)
-        })
+            "杂费明细_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename + ".xls";
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        });
         // this.order = Object.assign({}, this.extra)
         // this.order.pageSize = this.total4
         // getExtraFee(this.order).then(res => {
@@ -1564,154 +1643,213 @@ export default {
     },
     // 合计
     getSummaries(param) {
-      const { columns, data } = param
-      const sums = []
-      const fileds = columns.map(item => item.property)
+      const { columns, data } = param;
+      const sums = [];
+      const fileds = columns.map(item => item.property);
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = '合计'
-          return
+          sums[index] = "合计";
+          return;
         }
         const values = data.map(item =>
-          Number(item[column.property] ? item[column.property] : 'unkonwn')
-        )
+          Number(item[column.property] ? item[column.property] : "unkonwn")
+        );
         if (!values.every(value => isNaN(value))) {
           sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr)
+            const value = Number(curr);
             if (!isNaN(value)) {
-              return prev + curr
+              return prev + curr;
             } else {
-              return prev
+              return prev;
             }
-          }, 0)
-          sums[index] = Math.round(sums[index] * 100) / 100
+          }, 0);
+          sums[index] = Math.round(sums[index] * 100) / 100;
         } else {
-          sums[index] = 'N/A'
+          sums[index] = "N/A";
         }
-      })
+      });
       // 退款率和利润率核算
-      sums[fileds.indexOf('refundrate')] =
+      sums[fileds.indexOf("refundrate")] =
         Math.round(
-          (sums[fileds.indexOf('refund')] * 10000) /
-            sums[fileds.indexOf('salemoneyzn')]
-        ) / 100
-      sums[fileds.indexOf('grossprofitRate')] =
+          (sums[fileds.indexOf("refund")] * 10000) /
+            sums[fileds.indexOf("salemoneyzn")]
+        ) / 100;
+      sums[fileds.indexOf("grossprofitRate")] =
         Math.round(
-          (sums[fileds.indexOf('grossprofit')] * 10000) /
-            sums[fileds.indexOf('salemoneyzn')]
-        ) / 100
-      return sums
+          (sums[fileds.indexOf("grossprofit")] * 10000) /
+            sums[fileds.indexOf("salemoneyzn")]
+        ) / 100;
+      return sums;
     },
     // 折叠导航栏
     collapse: function() {
-      this.collapsed = !this.collapsed
+      this.collapsed = !this.collapsed;
     },
     showMenu(i, status) {
       this.$refs.menuCollapsed.getElementsByClassName(
-        'submenu-hook-' + i
-      )[0].style.display = status ? 'block' : 'none'
+        "submenu-hook-" + i
+      )[0].style.display = status ? "block" : "none";
     },
     getData() {
-      const myform = this.myForm(this.condition)
+      const myform = this.myForm(this.condition);
       getRefund(myform).then(res => {
-        this.searchTable1 = this.tableData1 = res.data.data.items
-        this.total = res.data.data._meta.totalCount
-        this.condition.page = res.data.data._meta.currentPage
-        this.condition.pageSize = res.data.data._meta.perPage
-      })
+        this.searchTable1 = this.tableData1 = res.data.data.items;
+        this.total = res.data.data._meta.totalCount;
+        this.condition.page = res.data.data._meta.currentPage;
+        this.condition.pageSize = res.data.data._meta.perPage;
+      });
+    },
+    analysis(from) {
+      getRefundAnalysisPlat(from).then(res => {
+        const orderpie = res.data.data.item;
+        let arry = [];
+        for (let i = 0; i < orderpie.length; i++) {
+          arry.push(orderpie[i].name);
+        }
+        this.options.legend.data = arry;
+        this.options.series[0].data = orderpie;
+        let ordPlatform = this.$echarts.init(this.$refs.ordPlatform);
+        ordPlatform.setOption(this.options);
+      });
+      getRefundAnalysisSuffix(from).then(res => {
+        const orderpie = res.data.data.item;
+        let arry = [];
+        let selected = {};
+        for (let i = 0; i < orderpie.length; i++) {
+          arry.push(orderpie[i].name);
+          selected[orderpie[i].name] = i < 10;
+        }
+        this.options1.legend.data = arry;
+        this.options1.series[0].data = orderpie;
+        this.options1.legend.selected = selected;
+        let ordAccount = this.$echarts.init(this.$refs.ordAccount);
+        ordAccount.setOption(this.options1);
+      });
+      getRefundAnalysisExpress(from).then(res => {
+        const orderpie = res.data.data.item;
+        let arry = [];
+        let selected = {};
+        for (let i = 0; i < orderpie.length; i++) {
+          arry.push(orderpie[i].name);
+          selected[orderpie[i].name] = i < 10;
+        }
+        this.options3.legend.data = arry;
+        this.options3.series[0].data = orderpie;
+        this.options3.legend.selected = selected;
+        let ordLogistics = this.$echarts.init(this.$refs.ordLogistics);
+        ordLogistics.setOption(this.options3);
+      });
+      let objary = Object.assign({}, from)
+      objary.type='goods'
+      getRefundAnalysisGoods(objary).then(res => {
+        const orderpie = res.data.data.item;
+        let arry = [];
+        var selected = {};
+        for (let i = 0; i < orderpie.length; i++) {
+          arry.push(orderpie[i].name);
+          selected[orderpie[i].name] = i < 10;
+        }
+        this.options2.legend.data = arry;
+        this.options2.series[0].data = orderpie;
+        this.options2.legend.selected = selected;
+        let ordProduct = this.$echarts.init(this.$refs.ordProduct);
+        ordProduct.setOption(this.options2);
+      });
     },
     getGoods() {
-      this.goods.dateRange = this.condition.dateRange
-      this.goods.account = this.condition.account
-      this.goods.member = this.condition.member
-      this.goods.dateRangeType = this.condition.dateRangeType
-      this.goods.department = this.condition.department
-      this.goods.secDepartment = this.condition.secDepartment
-      this.goods.plat = this.condition.plat
-      const myform = this.myForm(this.goods)
+      this.goods.dateRange = this.condition.dateRange;
+      this.goods.account = this.condition.account;
+      this.goods.member = this.condition.member;
+      this.goods.dateRangeType = this.condition.dateRangeType;
+      this.goods.department = this.condition.department;
+      this.goods.secDepartment = this.condition.secDepartment;
+      this.goods.plat = this.condition.plat;
+      const myform = this.myForm(this.goods);
       getRefund(myform).then(res => {
-        this.searchTable2 = this.tableData2 = res.data.data.items
-        this.total2 = res.data.data._meta.totalCount
-        this.goods.page = res.data.data._meta.currentPage
-        this.goods.pageSize = res.data.data._meta.perPage
-      })
+        this.searchTable2 = this.tableData2 = res.data.data.items;
+        this.total2 = res.data.data._meta.totalCount;
+        this.goods.page = res.data.data._meta.currentPage;
+        this.goods.pageSize = res.data.data._meta.perPage;
+      });
     },
     getDead() {
-      this.dead.plat = this.condition.plat
-      this.dead.storename = this.condition.store
-      this.dead.account = this.condition.account
-      this.dead.member = this.condition.member
-      this.dead.dateRange = this.condition.dateRange
-      this.dead.department = this.condition.department
-      this.dead.secDepartment = this.condition.secDepartment
-      const myform = this.myForm(this.dead)
+      this.dead.plat = this.condition.plat;
+      this.dead.storename = this.condition.store;
+      this.dead.account = this.condition.account;
+      this.dead.member = this.condition.member;
+      this.dead.dateRange = this.condition.dateRange;
+      this.dead.department = this.condition.department;
+      this.dead.secDepartment = this.condition.secDepartment;
+      const myform = this.myForm(this.dead);
       getDeadFee(myform).then(res => {
-        this.searchTable3 = this.tableData3 = res.data.data.items
-        this.total3 = res.data.data._meta.totalCount
-        this.dead.page = res.data.data._meta.currentPage
-        this.dead.pageSize = res.data.data._meta.perPage
-        let strNum=0;
-        for(let i=0;i<this.tableData3.length;i++){
-            strNum=strNum+Number(this.tableData3[i].aveAmount)
+        this.searchTable3 = this.tableData3 = res.data.data.items;
+        this.total3 = res.data.data._meta.totalCount;
+        this.dead.page = res.data.data._meta.currentPage;
+        this.dead.pageSize = res.data.data._meta.perPage;
+        let strNum = 0;
+        for (let i = 0; i < this.tableData3.length; i++) {
+          strNum = strNum + Number(this.tableData3[i].aveAmount);
         }
-        this.totalPrice=res.data.data.extra.totalAveAmount
-        this.currentPrice=strNum
-      })
+        this.totalPrice = res.data.data.extra.totalAveAmount;
+        this.currentPrice = strNum;
+      });
     },
     getExtra() {
-      this.extra.plat = this.condition.plat
-      this.extra.storename = this.condition.store
-      this.extra.account = this.condition.account
-      this.extra.member = this.condition.member
-      this.extra.dateRange = this.condition.dateRange
-      this.extra.department = this.condition.department
-      this.extra.secDepartment = this.condition.secDepartment
-      const myform = this.myForm(this.extra)
+      this.extra.plat = this.condition.plat;
+      this.extra.storename = this.condition.store;
+      this.extra.account = this.condition.account;
+      this.extra.member = this.condition.member;
+      this.extra.dateRange = this.condition.dateRange;
+      this.extra.department = this.condition.department;
+      this.extra.secDepartment = this.condition.secDepartment;
+      const myform = this.myForm(this.extra);
       getExtraFee(myform).then(res => {
-        this.searchTable4 = this.tableData4 = res.data.data.items
-        this.total4 = res.data.data._meta.totalCount
-        this.extra.page = res.data.data._meta.currentPage
-        this.extra.pageSize = res.data.data._meta.perPage
-      })
+        this.searchTable4 = this.tableData4 = res.data.data.items;
+        this.total4 = res.data.data._meta.totalCount;
+        this.extra.page = res.data.data._meta.currentPage;
+        this.extra.pageSize = res.data.data._meta.perPage;
+      });
     }
   },
   mounted() {
     // 权限
     getMenu().then(response => {
-      const res = response.data.data
-      const menu = res.filter(e => e.name === '毛利润报表')
+      const res = response.data.data;
+      const menu = res.filter(e => e.name === "毛利润报表");
       for (let i = 0; i < menu.length; i++) {
         for (let j = 0; j < menu[i].children.length; j++) {
           if (menu[i].children[j].tabs.length) {
-            this.allMenu = menu[i].children[j].tabs
+            this.allMenu = menu[i].children[j].tabs;
           }
         }
       }
-    })
+    });
     getSection().then(response => {
-      const res = response.data.data
-      this.department = res.filter(ele => ele.department && ele.type === '业务')
-    })
+      const res = response.data.data;
+      this.department = res.filter(
+        ele => ele.department && ele.type === "业务"
+      );
+    });
     getSecDepartment().then(reseponse => {
-      const res = reseponse.data.data
-      this.secDepartment = this.allSecDep = res
-    })
+      const res = reseponse.data.data;
+      this.secDepartment = this.allSecDep = res;
+    });
     getPlatform().then(response => {
-      this.plat = response.data.data
-    })
+      this.plat = response.data.data;
+    });
     getMember().then(response => {
-      const res = response.data.data
-      this.allMember = this.member = res.filter(ele => ele.position === '销售')
-      this.kefu = res.filter(ele => ele.position === 'eBay客服')
-    })
+      const res = response.data.data;
+      this.allMember = this.member = res.filter(ele => ele.position === "销售");
+      this.kefu = res.filter(ele => ele.position === "eBay客服");
+    });
     getStore().then(response => {
-      this.store = response.data.data
-    })
+      this.store = response.data.data;
+    });
     getAccount().then(response => {
-      this.account = response.data.data
-    })
+      this.account = response.data.data;
+    });
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
