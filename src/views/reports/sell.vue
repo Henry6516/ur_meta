@@ -565,7 +565,7 @@ export default {
     return {
       options: {
         title: {
-          text: "平台退款金额占比",
+          text: "平台退款金额占比(￥)",
           subtext: "",
           top:15,
           x: "center"
@@ -599,7 +599,7 @@ export default {
       },
       options1: {
         title: {
-          text: "账号退款金额占比",
+          text: "账号退款金额占比(￥)",
           subtext: "",
           top:15,
           x: "center"
