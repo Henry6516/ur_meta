@@ -11,6 +11,7 @@ import account from '../views/reports/account.vue'
 import trending from '../views/reports/trending.vue'
 import introduce from '../views/reports/introduce.vue'
 import limit from '../views/reports/limit.vue'
+import profit from '../views/reports/profit.vue'
 // 数据中心
 import stock from '../views/data/stock.vue'
 import pcost from '../views/data/pcost.vue'
@@ -133,6 +134,11 @@ const routes = [
         path: '/v1/report/dev-limit',
         component: limit,
         name: '开发款数限制'
+      },
+      {
+        path: '/v1/report/dev-goods-profit',
+        component: profit,
+        name: '开发产品利润表'
       },
       {
         path: '/v1/report/account',

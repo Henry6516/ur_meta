@@ -151,6 +151,24 @@ export function getDevLimit(param) {
   })
 }
 
+export function getDevGoodsProfit(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/dev-goods-profit',
+    method: 'post',
+    data
+  })
+}
+
+export function getProfitDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/dev-goods-profit-detail',
+    method: 'post',
+    data
+  })
+}
+
 export function getPossess(param) {
   const data = { condition: param }
   return request({

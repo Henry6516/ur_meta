@@ -659,6 +659,14 @@
             align="center"
           ></el-table-column>
         </el-table-column>
+        <el-table-column label="审批备注" header-align="center">
+          <el-table-column
+            prop="approvalNote"
+            :render-header="renderHeader2"
+            width="150"
+            align="center"
+          ></el-table-column>
+        </el-table-column>
         <el-table-column label="推荐人" header-align="center">
           <el-table-column
             prop="introducer"
@@ -686,14 +694,6 @@
               <a class="clasRed">{{scope.row.checkStatus}}</a>
             </template>
           </el-table-column>
-        </el-table-column>
-        <el-table-column label="审批备注" header-align="center">
-          <el-table-column
-            prop="approvalNote"
-            :render-header="renderHeader2"
-            width="150"
-            align="center"
-          ></el-table-column>
         </el-table-column>
         <el-table-column label="创建时间" header-align="center">
           <el-table-column
@@ -1056,20 +1056,24 @@ export default {
   },
   methods: {
     addRess(){
-      this.unPassForm.nid = this.wtgid;
-      this.unPassForm.approvalNote=this.wtgpz
-          checkFailed(this.unPassForm).then(res => {
-            if (res.data.code == 200) {
-               this.$message({
-                message: "成功",
-                type: "success"
-              });
-              this.dialogFormVisible1=false
-              this.getData();
-            } else {
-              this.$message.error(res.data.message);
-            }
-      });
+      if(this.wtgpz){
+        this.unPassForm.nid = this.wtgid;
+        this.unPassForm.approvalNote=this.wtgpz
+            checkFailed(this.unPassForm).then(res => {
+              if (res.data.code == 200) {
+                this.$message({
+                  message: "成功",
+                  type: "success"
+                });
+                this.dialogFormVisible1=false
+                this.getData();
+              } else {
+                this.$message.error(res.data.message);
+              }
+        });
+      }else{
+        this.$message.error('请输入不通过理由');
+      }
     },
     getSubcate() {
       if (this.editForm.cate !== "") {
@@ -2174,6 +2178,33 @@ export default {
           [
             h("el-input", {
               props: {
+                value: this.condition2.approvalNote,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition2.approvalNote = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.filter();
+                }
+              }
+            })
+          ]
+        );
+      }  else if ($index === 8) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
                 value: this.condition2.introducer,
                 size: "mini",
                 clearable: true
@@ -2190,7 +2221,7 @@ export default {
             })
           ]
         );
-      } else if($index === 8) {
+      } else if($index === 9) {
         return h(
           "div",
           {
@@ -2217,7 +2248,7 @@ export default {
             })
           ]
         );
-      }else if ($index === 9) {
+      }else if ($index === 10) {
         return h(
           "div",
           {
@@ -2244,34 +2275,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 10) {
-        return h(
-          "div",
-          {
-            style: {
-              height: "40px"
-            }
-          },
-          [
-            h("el-input", {
-              props: {
-                value: this.condition2.approvalNote,
-                size: "mini",
-                clearable: true
-              },
-              on: {
-                input: value => {
-                  this.condition2.approvalNote = value;
-                  this.$emit("input", value);
-                },
-                change: value => {
-                  this.filter();
-                }
-              }
-            })
-          ]
-        );
-      } else if ($index === 11) {
+      }else if ($index === 11) {
         return h("el-date-picker", {
           props: {
             value: this.time1,

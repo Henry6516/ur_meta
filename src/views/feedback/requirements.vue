@@ -70,7 +70,7 @@
           <el-table-column prop="creator" :render-header="renderHeader" align="center"></el-table-column>
         </el-table-column>
         <el-table-column
-          label="名称(可按紧急程度排序)"
+          label="名称"
           prop="priority"
           sortable="impotant"
           header-align="center"
@@ -78,7 +78,7 @@
           <el-table-column prop="name" :render-header="renderHeader" align="center">
             <template slot-scope="scope">
               <span class="link-type">{{ scope.row.name }}</span>
-              <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
+              <!-- <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag> -->
             </template>
           </el-table-column>
         </el-table-column>
@@ -346,7 +346,7 @@
           <el-table-column prop="name" :render-header="renderHeader2" align="center">
             <template slot-scope="scope">
               <span class="link-type">{{ scope.row.name }}</span>
-              <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
+              <!-- <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag> -->
             </template>
           </el-table-column>
         </el-table-column>
@@ -615,7 +615,7 @@
           <el-table-column prop="name" :render-header="renderHeader1" align="center">
             <template slot-scope="scope">
               <span class="link-type">{{ scope.row.name }}</span>
-              <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
+              <!-- <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag> -->
             </template>
           </el-table-column>
         </el-table-column>
@@ -874,7 +874,7 @@
           <el-table-column prop="name" :render-header="renderHeader3" align="center">
             <template slot-scope="scope">
               <span class="link-type">{{ scope.row.name }}</span>
-              <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag>
+              <!-- <el-tag :type="tags[scope.row.priority]['type']">{{ tags[scope.row.priority]['name']}}</el-tag> -->
             </template>
           </el-table-column>
         </el-table-column>
