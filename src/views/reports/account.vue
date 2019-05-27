@@ -237,14 +237,15 @@
     <el-col class="toolbar"
             v-show="total>0">
       <div class="pagination-container">
-        <el-pagination :current-page="currentPage"
-                       :page-sizes="[this.total,100,200,500,1000]"
-                       :page-size="pageSize"
-                       :total="total"
+        <el-pagination :current-page="this.condition.start"
+                       :page-sizes="[20,100,200,500,1000]"
+                       :page-size="this.condition.limit"
                        background
                        layout="total, sizes, slot, prev, pager, next, jumper"
                        @current-change="handleCurrentChange"
-                       @size-change="handleSizeChange">
+                       @size-change="handleSizeChange"
+                       :total="this.total"
+                       >
           <span>
             <el-button type="text"
                        @click="showAll">显示全部</el-button>
@@ -299,7 +300,7 @@ export default {
         dateRange: [],
         account: [],
         start: 1,
-        limit: 100000
+        limit: 20
       },
       pickerOptions2: {
         shortcuts: [
@@ -333,26 +334,30 @@ export default {
       this.handleSizeChange(this.total)
     },
     handleCurrentChange(val) {
-      this.currentPage = val
-      this.condition.start = (this.currentPage - 1) * this.pageSize + 1
-      this.condition.limit = this.pageSize
-      this.listLoading = true
-      getaccount(this.condition).then(response => {
-        this.listLoading = false
-        this.tableData = this.searchTable = response.data.data.items
-        this.total = Number(response.data.data.totalCount)
-      })
+      // this.currentPage = val
+      // this.condition.start = (this.currentPage - 1) * this.pageSize + 1
+      // this.condition.limit = this.pageSize
+      // this.listLoading = true
+      // getaccount(this.condition).then(response => {
+      //   this.listLoading = false
+      //   this.tableData = this.searchTable = response.data.data.items
+      //   this.total = Number(response.data.data.totalCount)
+      // })
+      this.condition.start = val;
+      this.onSubmit(this.condition)
     },
     handleSizeChange(val) {
-      this.pageSize = val
-      this.currentPage = 1
-      this.condition.limit = this.pageSize * this.currentPage
-      this.listLoading = true
-      getaccount(this.condition).then(response => {
-        this.listLoading = false
-        this.tableData = this.searchTable = response.data.data.items
-        this.total = Number(response.data.data.totalCount)
-      })
+      // this.pageSize = val
+      // this.currentPage = 1
+      // this.condition.limit = this.pageSize * this.currentPage
+      // this.listLoading = true
+      // getaccount(this.condition).then(response => {
+      //   this.listLoading = false
+      //   this.tableData = this.searchTable = response.data.data.items
+      //   this.total = Number(response.data.data.totalCount)
+      // })
+      this.condition.limit = val;
+      this.onSubmit(this.condition)
     },
     selectalls() {
       const allValues = []
@@ -458,12 +463,15 @@ export default {
             })
           }
           this.listLoading = true
-          this.currentPage = 1
-          this.condition.start = 0
+          // this.currentPage = 1
+          // this.condition.start = 0
           getaccount(myform).then(response => {
             this.listLoading = false
             this.tableData = this.searchTable = response.data.data.items
-            this.total = Number(response.data.data.totalCount)
+             this.total = response.data.data._meta.totalCount;
+             this.condition.start = response.data.data._meta.currentPage;
+             this.condition.limit = response.data.data._meta.perPage;
+             console.log(this.total)
           })
         } else {
           return false

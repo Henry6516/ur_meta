@@ -11,7 +11,7 @@
           :model="condition"
           :inline="true"
           ref="condition"
-          label-width="6.8rem"
+          label-width="5.8rem"
           class="demo-form-inline"
           v-show="show"
         >
@@ -21,6 +21,7 @@
               v-model="formInline.region"
               multiple
               collapse-tags
+              style="width:170px;"
               placeholder="部门"
               @change="choosed"
             >
@@ -40,6 +41,7 @@
               size="small"
               v-model="condition.developer"
               filterable
+              style="width:170px;"
               multiple
               collapse-tags
               placeholder="开发员"
@@ -52,6 +54,24 @@
                 :key="item.username"
                 :label="item.username"
                 :value="item.username"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="产品状态" class="input">
+            <el-select
+              size="small"
+              v-model="condition.product"
+              style="width:180px;"
+              multiple
+              collapse-tags
+              placeholder="产品状态"
+            >
+              <el-option
+                v-for="(item,index) in goodsState"
+                :index="index"
+                :key="item"
+                :label="item"
+                :value="item"
               ></el-option>
             </el-select>
           </el-form-item>
@@ -79,6 +99,7 @@
               value-format="yyyy-MM-dd"
               type="daterange"
               align="right"
+              style="width:250px;"
               unlink-panels
               range-separator="至"
               start-placeholder="开始日期"
@@ -234,7 +255,8 @@ import {
   getDevGoodsProfit,
   getOtherDeadFee,
   getSection,
-  getProfitDetail
+  getProfitDetail,
+  getPlatGoodsStatus
 } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 import { isAdmin } from "../../api/api";
@@ -248,6 +270,7 @@ export default {
       showis1: true,
       showis2: false,
       viewForm: [],
+      goodsState:[],
       tableData1: [],
       dead: {
         dateType: [],
@@ -285,7 +308,8 @@ export default {
       condition: {
         developer: [],
         dateType: 1,
-        dateRange: []
+        dateRange: [],
+        product:[]
       },
       tableMap: {
         first: {
@@ -325,8 +349,8 @@ export default {
     };
   },
   methods: {
-      exportExcelMx(){
-           const th = [
+    exportExcelMx() {
+      const th = [
         "销售员",
         "产品编码",
         "销量",
@@ -350,7 +374,7 @@ export default {
       const data = this.viewForm.map(v => filterVal.map(k => v[k]));
       const [fileName, fileType, sheetName] = [Filename, "xls"];
       this.$toExcel({ th, data, fileName, fileType, sheetName });
-      },
+    },
     exportExcel() {
       const th = [
         "开发员",
@@ -586,6 +610,9 @@ export default {
       this.department = res.filter(
         ele => ele.department && ele.type === "业务"
       );
+    });
+    getPlatGoodsStatus().then(response => {
+      this.goodsState = response.data.data;
     });
     getMember().then(response => {
       const res = response.data.data;
