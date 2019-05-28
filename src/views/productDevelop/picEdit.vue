@@ -31,6 +31,7 @@
         <!--</template>-->
       <!--</el-table-column>-->
       <el-table-column prop="sku"
+       header-align="center"
                        label="SKU">
         <template slot-scope="scope">
           <el-input size="small"
@@ -39,13 +40,27 @@
         </template>
       </el-table-column>
       <el-table-column prop="linkUrl"
+                        header-align="center" 
                        label="图片库地址">
         <template slot-scope="scope">
           <el-input size="small"
                     v-model="scope.row.linkUrl"></el-input>
         </template>
       </el-table-column>
+      <el-table-column prop="linkUrl"
+                       width="100" 
+                        header-align="center"
+                       label="图片">
+        <template slot-scope="scope">
+          <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
+                            <div slot="content"><img :src="scope.row.linkUrl" style="width: 300px;height: 300px;"></div>
+                            <img :src="scope.row.linkUrl" style="width: 70px;height: 60px">
+                        </el-tooltip>
+          <!-- <img :src="scope.row.linkUrl" style="width:50px;height:50px;display: block;margin: auto"> -->
+        </template>
+      </el-table-column>
       <el-table-column prop="property1"
+       header-align="center"
                        label="款式1">
         <template slot-scope="scope">
           <el-input size="small"
@@ -54,6 +69,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="property2"
+       header-align="center"
                        label="款式2">
         <template slot-scope="scope">
           <el-input size="small"
@@ -62,6 +78,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="property3"
+       header-align="center"
                        label="款式3">
         <template slot-scope="scope">
           <el-input size="small"

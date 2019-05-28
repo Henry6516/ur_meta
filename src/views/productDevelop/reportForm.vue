@@ -645,10 +645,10 @@
         <el-table-column label="备货产品款数" header-align="right" align="right" prop="number"></el-table-column>
         <el-table-column label="出单产品款数" header-align="right" align="right" prop="orderNum"></el-table-column>
         <el-table-column label="出单率(%)" header-align="right" align="right" prop="orderRate"></el-table-column>
-        <el-table-column label="旺款数量" header-align="right" align="right" prop="hotStyleNum"></el-table-column>
-        <el-table-column label="旺款率(%)" header-align="right" align="right" prop="hotRate"></el-table-column>
-        <el-table-column label="爆款数量" header-align="right" align="right" prop="exuStyleNum"></el-table-column>
-        <el-table-column label="爆款率(%)" header-align="right" align="right" prop="exuRate"></el-table-column>
+        <el-table-column label="旺款数量" header-align="right" align="right" prop="exuStyleNum"></el-table-column>
+        <el-table-column label="旺款率(%)" header-align="right" align="right" prop="exuRate"></el-table-column>
+        <el-table-column label="爆款数量" header-align="right" align="right" prop="hotStyleNum"></el-table-column>
+        <el-table-column label="爆款率(%)" header-align="right" align="right" prop="hotRate"></el-table-column>
         <el-table-column
           label="本月可用备货款数"
           header-align="right"
@@ -708,10 +708,10 @@
         <el-table-column label="不备货产品款数" header-align="right" align="right" prop="number"></el-table-column>
         <el-table-column label="出单产品款数" header-align="right" align="right" prop="orderNum"></el-table-column>
         <el-table-column label="出单率(%)" header-align="right" align="right" prop="orderRate"></el-table-column>
-        <el-table-column label="旺款数量" header-align="right" align="right" prop="hotStyleNum"></el-table-column>
-        <el-table-column label="旺款率(%)" header-align="right" align="right" prop="hotRate"></el-table-column>
-        <el-table-column label="爆款数量" header-align="right" align="right" prop="exuStyleNum"></el-table-column>
-        <el-table-column label="爆款率(%)" header-align="right" align="right" prop="exuRate"></el-table-column>
+        <el-table-column label="旺款数量" header-align="right" align="right" prop="exuStyleNum"></el-table-column>
+        <el-table-column label="旺款率(%)" header-align="right" align="right" prop="exuRate"></el-table-column>
+        <el-table-column label="爆款数量" header-align="right" align="right" prop="hotStyleNum"></el-table-column>
+        <el-table-column label="爆款率(%)" header-align="right" align="right" prop="hotRate"></el-table-column>
         <el-table-column
           label="本月可用不备货款数"
           header-align="right"
@@ -2070,10 +2070,10 @@ export default {
         "number",
         "orderNum",
         "orderRate",
-        "hotStyleNum",
-        "hotRate",
         "exuStyleNum",
         "exuRate",
+        "hotStyleNum",
+        "hotRate",
         "stockNumThisMonth",
         "stockNumLastMonth"
       ];
@@ -2107,10 +2107,10 @@ export default {
         "number",
         "orderNum",
         "orderRate",
-        "hotStyleNum",
-        "hotRate",
         "exuStyleNum",
         "exuRate",
+        "hotStyleNum",
+        "hotRate",
         "stockNumThisMonth",
         "stockNumLastMonth"
       ];

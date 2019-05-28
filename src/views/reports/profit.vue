@@ -60,7 +60,7 @@
           <el-form-item label="产品状态" class="input">
             <el-select
               size="small"
-              v-model="condition.product"
+              v-model="condition.goodsStatus"
               style="width:180px;"
               multiple
               collapse-tags
@@ -122,19 +122,25 @@
       </div>
     </div>
     <el-col :span="24" style="padding:10px 20px;">
-      <el-button @click="exportExcel" type="primary">导出表格</el-button>
+      <el-button @click="exportExcel(condition)" type="primary">导出表格</el-button>
     </el-col>
     <el-dialog title="查看明细" :visible.sync="dialogTableVisible">
       <el-table :data="viewForm">
         <el-table-column property="saleMen" label="销售员"></el-table-column>
         <el-table-column property="goodsCode" label="产品编码"></el-table-column>
         <el-table-column property="sold" label="销量"></el-table-column>
-        <el-table-column property="amt" label="销售额"></el-table-column>
-        <el-table-column property="profit" label="总利润"></el-table-column>
-        <el-table-column property="rate" label="利润率"></el-table-column>
+        <el-table-column property="amt" label="销售额(￥)">
+          <template slot-scope="scope">{{scope.row.amt | cutOut}}</template>
+        </el-table-column>
+        <el-table-column property="profit" label="总利润(￥)">
+          <template slot-scope="scope">{{scope.row.profit | cutOut}}</template>
+        </el-table-column>
+        <el-table-column property="rate" label="利润率(%)">
+          <template slot-scope="scope">{{(scope.row.rate*10000/100).toFixed(2)}}</template>
+        </el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="dialogTableVisible = false">取 消</el-button>
         <el-button type="primary" @click="exportExcelMx()">导出明细</el-button>
       </div>
     </el-dialog>
@@ -146,6 +152,7 @@
       @sort-change="sortNumber"
       show-summary
       :summary-method="getSummaries"
+      height="740"
       style="width: 100%;zoom:0.9;font-size:12px;"
     >
       <el-table-column prop="developer" width="60" label="开发员" :formatter="empty"></el-table-column>
@@ -246,6 +253,18 @@
         sortable="custom"
       ></el-table-column>
     </el-table>
+    <div class="toolbar">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="this.condition.page"
+        :page-sizes="[10, 20, 30, 40]"
+        :page-size="this.condition.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="this.total"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
@@ -258,6 +277,7 @@ import {
   getProfitDetail,
   getPlatGoodsStatus
 } from "../../api/profit";
+import { APIDevExportProfit } from "../../api/product";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 import { isAdmin } from "../../api/api";
 
@@ -270,7 +290,7 @@ export default {
       showis1: true,
       showis2: false,
       viewForm: [],
-      goodsState:[],
+      goodsState: [],
       tableData1: [],
       dead: {
         dateType: [],
@@ -298,6 +318,7 @@ export default {
       searchValue: "",
       listLoading: false,
       department: [],
+      total: 0,
       res: [],
       member: [],
       dateRange: [],
@@ -309,7 +330,11 @@ export default {
         developer: [],
         dateType: 1,
         dateRange: [],
-        product:[]
+        goodsStatus: [],
+        page: 1,
+        pageSize: 20,
+        sortField: null,
+        sortOrder: null
       },
       tableMap: {
         first: {
@@ -348,7 +373,21 @@ export default {
       }
     };
   },
+  filters: {
+    cutOut: function(value) {
+      value = Number(value).toFixed(2);
+      return value;
+    }
+  },
   methods: {
+    handleCurrentChange(val) {
+      this.condition.page = val;
+      this.onSubmit(this.condition);
+    },
+    handleSizeChange(val) {
+      this.condition.pageSize = val;
+      this.onSubmit(this.condition);
+    },
     exportExcelMx() {
       const th = [
         "销售员",
@@ -375,55 +414,59 @@ export default {
       const [fileName, fileType, sheetName] = [Filename, "xls"];
       this.$toExcel({ th, data, fileName, fileType, sheetName });
     },
-    exportExcel() {
-      const th = [
-        "开发员",
-        "产品编码",
-        "开发日期",
-        "产品状态",
-        "销量",
-        "销售额",
-        "总利润",
-        "利润率",
-        "eBay销量",
-        "eBay利润",
-        "Wish销量",
-        "Wish利润",
-        "SMT销量",
-        "SMT利润",
-        "Joom销量",
-        "Joom利润",
-        "Amazon销量",
-        "Amazon利润",
-        "时间类型",
-        "订单时间"
-      ];
-      const filterVal = [
-        "developer",
-        "goodsCode",
-        "devDate",
-        "goodsStatus",
-        "sold",
-        "amt",
-        "profit",
-        "rate",
-        "ebaySold",
-        "ebayProfit",
-        "wishSold",
-        "wishProfit",
-        "smtSold",
-        "smtProfit",
-        "joomSold",
-        "joomProfit",
-        "amazonSold",
-        "amazonProfit",
-        "dateFlag",
-        "orderTime"
-      ];
-      const Filename = "开发产品利润表";
-      const data = this.tableData.map(v => filterVal.map(k => v[k]));
-      const [fileName, fileType, sheetName] = [Filename, "xls"];
-      this.$toExcel({ th, data, fileName, fileType, sheetName });
+    exportExcel(myform) {
+      let obj = {
+        developer: myform.developer,
+        goodsStatus: myform.goodsStatus,
+        dateRange: myform.dateRange,
+        developer: myform.developer,
+        dateType: myform.dateType,
+        pageSize: 100000
+      };
+      if (obj.developer.length == 0 && this.formInline.region.length === 0) {
+        obj.developer = this.member.map(m => {
+          return m.username;
+        });
+      } else if (
+        this.formInline.region.length !== 0 &&
+        obj.developer.length === 0
+      ) {
+        const val = this.formInline.region;
+        const res = this.allMember;
+        for (let i = 0; i < val.length; i++) {
+          const per = res.filter(
+            ele =>
+              (ele.department === val[i] || ele.parent_department === val[i]) &&
+              ele.position === "开发"
+          );
+          this.member.concat(per);
+        }
+        obj.developer = this.member.map(m => {
+          return m.username;
+        });
+      }
+      if (obj.goodsStatus.length == 0) {
+        obj.goodsStatus = this.goodsState;
+      }
+      APIDevExportProfit(obj).then(res => {
+        const blob = new Blob([res.data], {
+          type:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        var file = res.headers["content-disposition"]
+          .split(";")[1]
+          .split("filename=")[1];
+        var filename = JSON.parse(file);
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        // const filename =
+        //   "Wish_" + year + month + strDate + hour + minute + second;
+        downloadElement.download = filename;
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+      });
     },
     view1(index, row) {
       this.dialogTableVisible = true;
@@ -503,10 +546,17 @@ export default {
       let ret;
       this.$refs.condition.validate(valid => {
         if (valid) {
+          this.listLoading = true;
           if (myform.developer.length > 0) {
+            if (myform.goodsStatus.length == 0) {
+              myform.goodsStatus = this.goodsState;
+            }
             getDevGoodsProfit(myform).then(response => {
               this.listLoading = false;
-              this.tableData = response.data.data;
+              this.tableData = response.data.data.items;
+              this.total = response.data.data._meta.totalCount;
+              this.condition.page = response.data.data._meta.currentPage;
+              this.condition.pageSize = response.data.data._meta.perPage;
             });
           } else if (
             myform.developer.length == 0 &&
@@ -515,9 +565,15 @@ export default {
             myform.developer = this.member.map(m => {
               return m.username;
             });
+            if (myform.goodsStatus.length == 0) {
+              myform.goodsStatus = this.goodsState;
+            }
             getDevGoodsProfit(myform).then(response => {
               this.listLoading = false;
-              this.tableData = response.data.data;
+              this.tableData = response.data.data.items;
+              this.total = response.data.data._meta.totalCount;
+              this.condition.page = response.data.data._meta.currentPage;
+              this.condition.pageSize = response.data.data._meta.perPage;
             });
           } else if (
             this.formInline.region.length !== 0 &&
@@ -537,9 +593,15 @@ export default {
             myform.developer = this.member.map(m => {
               return m.username;
             });
+            if (myform.goodsStatus.length == 0) {
+              myform.goodsStatus = this.goodsState;
+            }
             getDevGoodsProfit(myform).then(response => {
               this.listLoading = false;
-              this.tableData = response.data.data;
+              this.tableData = response.data.data.items;
+              this.total = response.data.data._meta.totalCount;
+              this.condition.page = response.data.data._meta.currentPage;
+              this.condition.pageSize = response.data.data._meta.perPage;
             });
           }
         }
@@ -588,19 +650,20 @@ export default {
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      const data = this.tableData;
-      if (column.order === "descending") {
-        this.tableData = data.sort(compareDown(data, column.prop));
-      } else {
-        this.tableData = data.sort(compareUp(data, column.prop));
+      if(order==null){
+        this.condition.sortField=null;
+        this.condition.sortOrder=null;
+        this.onSubmit(this.condition);
       }
-    },
-    sortNumber1(column, prop, order) {
-      const data = this.tableData1;
-      if (column.order === "descending") {
-        this.tableData1 = data.sort(compareDown(data, column.prop));
-      } else {
-        this.tableData1 = data.sort(compareUp(data, column.prop));
+      if (column.order == "ascending") {
+        this.condition.sortOrder = "ASC";
+        this.condition.sortField = column.prop;
+        this.onSubmit(this.condition);
+      }
+      if (column.order == "descending") {
+        this.condition.sortOrder = "DESC";
+        this.condition.sortField = column.prop;
+        this.onSubmit(this.condition);
       }
     }
   },

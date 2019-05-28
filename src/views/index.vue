@@ -1433,7 +1433,7 @@
               <div class="text01" v-for="(item, index) in logList" :key="index">
                 <span class="blueround"></span>
                 <p class="titlep" :class="index==0?'clasRed':''">{{item.title}}</p>
-                <a class="titlea">{{item.createdDate | cutOut}}</a>
+                <span class="titlea">{{item.createdDate | cutOut}}</span>
                 <p class="cp">{{item.details}}</p>
               </div>
             </div>
@@ -2327,6 +2327,7 @@ export default {
   top: 0;
   font-size: 16px;
   color: #303133;
+  text-decoration: none
 }
 @media screen and (max-width: 1600px) {
   .blueround {

@@ -746,6 +746,15 @@ export function APIPlatExportWish(param) {
     responseType: 'arraybuffer'
   })
 }
+export function APIDevExportProfit(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/export-dev-goods-profit',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
 export function APIPlatExportEbay(param) {
   const data = { condition: param }
   return request({

@@ -100,6 +100,9 @@
         </transition>
       </div>
     </div>
+    <el-col :span="24" style="padding:10px 20px;">
+      <el-button @click="exportExcel" type="primary">导出表格</el-button>
+    </el-col>
     <el-table
       :data="tableData"
       id="sale-table"
@@ -110,7 +113,7 @@
       :summary-method="getSummaries"
       style="width: 100%"
     >
-      <el-table-column prop="developer" width="108" label="归属人" :formatter="empty" sortable></el-table-column>
+      <el-table-column prop="developer" width="108" label="开发员" :formatter="empty" sortable></el-table-column>
       <el-table-column
         width="185"
         prop="hasNumber"
@@ -140,13 +143,21 @@
         sortable="custom"
       ></el-table-column>
       <el-table-column
-        width="130"
+        width="120"
         prop="soldNumber"
         label="出单数"
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
-      <el-table-column width="130" prop="soldRate" label="出单率" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column
+        width="130"
+        prop="soldRate"
+        label="出单率(%)"
+        :formatter="empty"
+        sortable="custom"
+      >
+        <template slot-scope="scope">{{(scope.row.soldRate*10000/100).toFixed(2)}}</template>
+      </el-table-column>
       <el-table-column
         width="130"
         prop="monthSold"
@@ -157,31 +168,39 @@
       <el-table-column
         width="130"
         prop="monthAmt"
-        label="月销售额"
+        label="月销售额(￥)"
         :formatter="empty"
         sortable="custom"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">{{scope.row.monthAmt | cutOut}}</template>
+      </el-table-column>
       <el-table-column
         width="130"
         prop="monthProfit"
-        label="月利润"
+        label="月利润(￥)"
         :formatter="empty"
         sortable="custom"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">{{scope.row.monthProfit | cutOut}}</template>
+      </el-table-column>
       <el-table-column
         width="130"
         prop="profitRate"
-        label="利润率"
+        label="利润率(%)"
         :formatter="empty"
         sortable="custom"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">{{(scope.row.profitRate*10000/100).toFixed(2)}}</template>
+      </el-table-column>
       <el-table-column
-        width="150"
+        width="145"
         prop="avgProfit"
-        label="平均利润/款"
+        label="平均利润/款(￥)"
         :formatter="empty"
         sortable="custom"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">{{scope.row.avgProfit | cutOut}}</template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -279,7 +298,49 @@ export default {
       }
     };
   },
+  filters: {
+    cutOut: function(value) {
+      value = Number(value).toFixed(2);
+      return value;
+    }
+  },
   methods: {
+    exportExcel() {
+      if(this.tableData.length!=0){
+        const th = [
+        "开发员",
+        "已有商品数(非清仓)",
+        "最多可拥有商品数",
+        "需要砍商品数",
+        "还可开发商品数",
+        "出单数",
+        "出单率",
+        "月销量",
+        "月销售额",
+        "月利润",
+        "利润率",
+        "平均利润/款"
+      ];
+      const filterVal = [
+        "developer",
+        "hasNumber",
+        "maxNumber",
+        "reduceNumber",
+        "avaliableNumber",
+        "soldNumber",
+        "soldRate",
+        "monthSold",
+        "monthAmt",
+        "monthProfit",
+        "profitRate",
+        "avgProfit"
+      ];
+      const Filename = "开发款数限制表";
+      const data = this.tableData.map(v => filterVal.map(k => v[k]));
+      const [fileName, fileType, sheetName] = [Filename, "xls"];
+      this.$toExcel({ th, data, fileName, fileType, sheetName });
+      }
+    },
     selectalld() {
       const allValues = [];
       for (const item of this.department) {
@@ -347,6 +408,7 @@ export default {
       let ret;
       this.$refs.condition.validate(valid => {
         if (valid) {
+          this.listLoading = true;
           if (myform.developer.length > 0) {
             getDevLimit(myform).then(response => {
               this.listLoading = false;

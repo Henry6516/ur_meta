@@ -471,7 +471,6 @@ export default {
              this.total = response.data.data._meta.totalCount;
              this.condition.start = response.data.data._meta.currentPage;
              this.condition.limit = response.data.data._meta.perPage;
-             console.log(this.total)
           })
         } else {
           return false

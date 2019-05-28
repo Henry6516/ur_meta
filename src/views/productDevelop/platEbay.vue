@@ -118,7 +118,7 @@
               <a :href="wishForm.extraPage[index]" target="_blank">
                 <img
                   :src="wishForm.extraPage[index]"
-                  style="display: block;width: 98%;height: 90px"
+                  style="display: block;width: 90px;height: 90px"
                 >
               </a>
             </el-col>

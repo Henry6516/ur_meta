@@ -128,7 +128,6 @@ export default {
   filters: {
     cutOut: function(value) {
       value=Number(value)
-      console.log(value);
       if (value && Number.isInteger(value)) {
         return value + ".00";
       } else {

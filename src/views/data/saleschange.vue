@@ -3,7 +3,7 @@
     <el-form :model='condition'
              :inline='true'
              ref='condition'
-             label-width='150px'
+             label-width='8rem'
              class='demo-form-inline'>
       <el-form-item label="账号"
                     class="input">
@@ -92,7 +92,7 @@
         </el-date-picker>
         <span style="color: #f56c6c;width: 40px;float: right;">{{this.week}}</span>
       </el-form-item>
-      <el-form-item style="margin-left:60px;">
+      <el-form-item style="margin-left:10px;">
         <el-button size="small"
                    type='primary'
                    @click='onSubmit'>查询</el-button>

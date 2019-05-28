@@ -162,7 +162,7 @@
             </el-col>
             <el-col :span="3" style="margin-left: 15px">
               <a :href="url[index]" target="_blank">
-                <img :src="url[index]" style="display: block;width: 99%;height: 90px">
+                <img :src="url[index]" style="display: block;width: 90px;height: 90px">
               </a>
             </el-col>
           </el-col>
@@ -343,6 +343,7 @@
       border
       style="width:98%;margin-left:1%;margin-top:15px;"
       v-if="showattribute"
+      max-height="600"
     >
       <!-- <el-table-column type="selection" width="30" align="center" header-align="center"></el-table-column> -->
       <el-table-column type="index" width="50" align="center" header-align="center"></el-table-column>
