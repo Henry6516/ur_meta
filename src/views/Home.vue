@@ -518,6 +518,8 @@ export default {
     aside {
       flex: 0 0 20rem;
       width: 20rem;
+      // overflow-y: auto;
+      // overflow-x: hidden;
       .el-menu {
         height: 100%;
       }

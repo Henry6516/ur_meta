@@ -658,3 +658,28 @@ export function getExpressExpired() {
     method: 'get'
   })
 }
+export function getUkReplenish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/uk-replenish?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function getUkRealReplenish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/au-real-replenish?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function getAuRealReplenish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/uk-real-replenish?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+

@@ -755,6 +755,15 @@ export function APIDevExportProfit(param) {
     responseType: 'arraybuffer'
   })
 }
+export function APIExportReplenish(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/export-replenish',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
 export function APIPlatExportEbay(param) {
   const data = { condition: param }
   return request({

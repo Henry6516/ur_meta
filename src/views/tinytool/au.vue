@@ -1,18 +1,18 @@
 <template>
   <section class="toolbar">
     <el-row>
-    <el-form :inline="true" :model='condition' label-width="100px">
+    <el-form :inline="true" :model='condition' label-width="90px">
       <el-form-item prop="sku" label="SKU*">
-        <el-input size="small" v-model="condition.sku" placeholder="请填写产品SKU"></el-input>
+        <el-input size="small" v-model="condition.sku" placeholder="请填写产品SKU" style="width:150px"></el-input>
       </el-form-item>
       <el-form-item prop="num" label="SKU套装">
-        <el-input size="small" v-model="condition.num" placeholder="请填写套装数量"></el-input>
+        <el-input size="small" v-model="condition.num" placeholder="请填写套装数量" style="width:150px"></el-input>
       </el-form-item>
-      <el-form-item prop="price" label="售价（AU $）">
-        <el-input size="small" v-model="condition.price" placeholder="请填写预计售价"></el-input>
+      <el-form-item prop="price" label="售价(AU $)">
+        <el-input size="small" v-model="condition.price" placeholder="请填写预计售价" style="width:150px"></el-input>
       </el-form-item>
       <el-form-item prop="rate" label="毛利率">
-        <el-input size="small" v-model="condition.rate" placeholder="请填写预计毛利率（%）"></el-input>
+        <el-input size="small" v-model="condition.rate" placeholder="请填写预计毛利率(%)" style="width:160px"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="primary" @click="onSubmit">获取</el-button>

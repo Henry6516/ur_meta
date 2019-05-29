@@ -28,7 +28,7 @@
                     class='input'>
         <el-input size="small"
                   v-model='condition.goodsName'
-                  placeholder="商品名称关键字"
+                  placeholder="多个关键字用逗号隔开"
                   style="width:18rem">
         </el-input>
       </el-form-item>
