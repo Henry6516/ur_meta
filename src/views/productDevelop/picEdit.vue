@@ -15,11 +15,13 @@
     </el-col>
     <el-table :data="tableData">
       <el-table-column type="index"
+      align="center"
+                                 header-align="center"
                        width="50">
       </el-table-column>
-      <el-table-column type="selection"
+      <!-- <el-table-column type="selection"
                        width="55">
-      </el-table-column>
+      </el-table-column> -->
       <!--<el-table-column prop=""-->
                        <!--label="操作">-->
         <!--<template slot-scope="scope">-->
@@ -40,6 +42,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="linkUrl"
+      width="570"
                         header-align="center" 
                        label="图片库地址">
         <template slot-scope="scope">
