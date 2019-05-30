@@ -132,7 +132,7 @@ export default {
       const menu = res.filter(e => e.route === "/v1/tiny-tool/options");
       const arr = menu[0].children;
       for (let i = 0; i < arr.length; i++) {
-        if (arr[i].route == "/v1/tiny-tool/fix-price") {
+        if (arr[i].route == "/v1/tiny-tool/exception") {
           this.allMenu = arr[i].tabs;
         }
       }

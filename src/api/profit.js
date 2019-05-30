@@ -193,6 +193,30 @@ export function getSalestrend(param) {
     data
   })
 }
+export function getHistoryRank(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/history-rank',
+    method: 'post',
+    data
+  })
+}
+export function getHistorySalesProfit(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/history-sales-profit',
+    method: 'post',
+    data
+  })
+}
+export function getHistoryProfit(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/history-profit',
+    method: 'post',
+    data
+  })
+}
 export function getProfitReport(param) {
   const data = { condition: param }
   return request({

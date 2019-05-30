@@ -12,6 +12,7 @@ import trending from '../views/reports/trending.vue'
 import introduce from '../views/reports/introduce.vue'
 import limit from '../views/reports/limit.vue'
 import profit from '../views/reports/profit.vue'
+import history from '../views/reports/history.vue'
 // 数据中心
 import stock from '../views/data/stock.vue'
 import pcost from '../views/data/pcost.vue'
@@ -39,6 +40,7 @@ import order from '../views/tinytool/order.vue'
 import paypal from '../views/tinytool/paypal.vue'
 import risk from '../views/tinytool/risk.vue'
 import fixPrice from '../views/tinytool/fixPrice.vue'
+import unusual from '../views/tinytool/unusual.vue'
 import edition from '../views/tinytool/edition.vue'
 import logistics from '../views/tinytool/logistics.vue'
 import modify from '../views/tinytool/modify.vue'
@@ -147,6 +149,11 @@ const routes = [
         path: '/v1/report/account',
         component: account,
         name: '账号产品利润报表'
+      },
+      {
+        path: '/v1/report/history-sales-profit',
+        component: history,
+        name: '历史利润表'
       },
       {
         path: '/v1/report/sales-trend',
@@ -326,6 +333,11 @@ const routes = [
         path: '/v1/tiny-tool/fix-price',
         component: fixPrice,
         name: '海外仓定价器'
+      },
+      {
+        path: '/v1/tiny-tool/exception',
+        component: unusual,
+        name: '风险异常'
       },
       {
         path: '/v1/tiny-tool/fyndiqz-upload',
