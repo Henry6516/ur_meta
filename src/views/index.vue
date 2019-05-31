@@ -2219,6 +2219,7 @@ export default {
       const menu = res.filter(e => e.name === "主页");
       this.allMenu = menu[0].tabs[1].tabs;
       this.titleMenu = menu[0].tabs;
+      this.titleMenu.pop()
     });
     updateLog(this.logdata).then(res => {
       if (res.data.code == 200) {
