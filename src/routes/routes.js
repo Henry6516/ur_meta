@@ -39,8 +39,10 @@ import ukfic2 from '../views/tinytool/ukfic2.vue'
 import order from '../views/tinytool/order.vue'
 import paypal from '../views/tinytool/paypal.vue'
 import risk from '../views/tinytool/risk.vue'
+import risk1 from '../views/tinytool/risk1.vue'
 import fixPrice from '../views/tinytool/fixPrice.vue'
 import unusual from '../views/tinytool/unusual.vue'
+import flow from '../views/tinytool/flow.vue'
 import edition from '../views/tinytool/edition.vue'
 import logistics from '../views/tinytool/logistics.vue'
 import modify from '../views/tinytool/modify.vue'
@@ -340,6 +342,11 @@ const routes = [
         name: '风险异常'
       },
       {
+        path: '/v1/tiny-tool/logistics-tool',
+        component: flow,
+        name: '物流工具'
+      },
+      {
         path: '/v1/tiny-tool/fyndiqz-upload',
         component: fyndiqzUpload,
         name: '产品上传'
@@ -378,6 +385,11 @@ const routes = [
         path: '/v1/tiny-tool/risk-control',
         component: risk,
         name: '风险控制'
+      },
+      {
+        path: '/v1/tiny-tool/blacklist',
+        component: risk1,
+        name: '黑名单'
       },
       {
         path: '/v1/tiny-tool/exception-edition',
@@ -461,7 +473,7 @@ const routes = [
             path: '/plat/:id',
             component: platEdit,
             name: 'platTable'
-          },
+          }
         ]
       },
       {

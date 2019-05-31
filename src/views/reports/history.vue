@@ -107,7 +107,8 @@
               style="width:10rem;"
               placeholder="起始月"
               @change="settime"
-            ></el-date-picker>-
+            ></el-date-picker>
+            -
             <el-date-picker
               size="small"
               v-model="time2"
@@ -132,7 +133,7 @@
         </transition>
       </div>
     </div>
-    <el-table :data="tableData" v-show="tableData.length!=0" style="width:100%;margin-top:20px;" class="lrtable" max-height="900">
+    <el-table :data="tableData" v-show="tableData.length!=0" style="width:100%;margin-top:20px;" class="lrtable" max-height="700" :header-cell-style="getRowClass">
       <el-table-column prop="username" label="人员" width="80" align="center" fixed></el-table-column>
       <el-table-column prop="department" label="部门" align="center" fixed></el-table-column>
       <el-table-column prop="plat" label="平台" align="center" fixed></el-table-column>
@@ -335,6 +336,14 @@ export default {
     };
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      // if (rowIndex === 0 && columnIndex === 5) {
+      //   return "background: #66b1ff;color:#fff";
+      // }
+      // if (rowIndex === 0 && columnIndex === 4) {
+      //   return "background: #666;color:#fff";
+      // }
+    },
     settime(e) {
       this.condition.dateRange[0] = this.time1;
     },

@@ -8,17 +8,11 @@
         :key="index"
       ></el-tab-pane>
     </el-tabs>
-    <div v-show="show.edition">
-      <edition></edition>
+    <div v-show="show.logistics">
+      <logistics></logistics>
     </div>
-    <div v-show="show.paypal">
-      <paypal></paypal>
-    </div>
-    <div v-show="show.risk">
-      <risk></risk>
-    </div>
-    <div v-show="show.risk1">
-      <risk1></risk1>
+    <div v-show="show.prescription">
+      <prescription></prescription>
     </div>
   </section>
 </template>
@@ -32,26 +26,20 @@ import {
   APIUpdateWish
 } from "../../api/product";
 import { getMenu } from "../../api/login";
-import edition from "./edition.vue";
-import paypal from "./paypal.vue";
-import risk from "./risk.vue";
-import risk1 from "./risk1.vue";
+import logistics from "./logistics.vue";
+import prescription from "./prescription.vue";
 export default {
   components: {
-    edition,
-    paypal,
-    risk,
-    risk1
+    logistics,
+    prescription
   },
   data() {
     return {
       allMenu: [],
       activeName: "",
       show: {
-        edition: true,
-        paypal: false,
-        risk: false,
-        risk1:false
+        logistics: true,
+        prescription: false
       }
     };
   },
@@ -60,25 +48,15 @@ export default {
       this.dialogPictureWish = true;
     },
     handleClick(tab, event) {
-      if (tab.name === "/v1/tiny-tool/exception-edition") {
-        this.show["edition"] = true;
+      if (tab.name === "/v1/tiny-tool/express-tracking") {
+        this.show["logistics"] = true;
       } else {
-        this.show["edition"] = false;
+        this.show["logistics"] = false;
       }
-      if (tab.name === "/v1/tiny-tool/exception-pay-pal") {
-        this.show["paypal"] = true;
+      if (tab.name === "/v1/tiny-tool/express-expired") {
+        this.show["prescription"] = true;
       } else {
-        this.show["paypal"] = false;
-      }
-      if (tab.name === "/v1/tiny-tool/risky-order") {
-        this.show["risk"] = true;
-      } else {
-        this.show["risk"] = false;
-      }
-      if (tab.name === "/v1/tiny-tool/blacklist") {
-        this.show["risk1"] = true;
-      } else {
-        this.show["risk1"] = false;
+        this.show["prescription"] = false;
       }
     }
   },
@@ -88,7 +66,7 @@ export default {
       const menu = res.filter(e => e.route === "/v1/tiny-tool/options");
       const arr = menu[0].children;
       for (let i = 0; i < arr.length; i++) {
-        if (arr[i].route == "/v1/tiny-tool/exception") {
+        if (arr[i].route == "/v1/tiny-tool/logistics-tool") {
           this.allMenu = arr[i].tabs;
         }
       }
