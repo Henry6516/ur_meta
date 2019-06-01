@@ -54,13 +54,13 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="平台" class="input">
+          <el-form-item label="销售平台" class="input">
             <el-select
               size="small"
               v-model="condition.plat"
               multiple
               collapse-tags
-              placeholder="平台"
+              placeholder="销售平台"
               style="height: 3rem;"
             >
               <el-button plain type="info" @click="selectAll('plat')">全选</el-button>
@@ -68,9 +68,9 @@
               <el-option
                 v-for="(item,index) in plat"
                 :index="index"
-                :key="item.plat"
-                :label="item.plat"
-                :value="item.plat"
+                :key="item"
+                :label="item"
+                :value="item"
               ></el-option>
             </el-select>
           </el-form-item>
@@ -136,12 +136,12 @@
     <el-table :data="tableData" v-show="tableData.length!=0" style="width:100%;margin-top:20px;" class="lrtable" max-height="700" :header-cell-style="getRowClass">
       <el-table-column prop="username" label="人员" width="80" align="center" fixed></el-table-column>
       <el-table-column prop="department" label="部门" align="center" fixed></el-table-column>
-      <el-table-column prop="plat" label="平台" align="center" fixed></el-table-column>
+      <el-table-column prop="plat" label="销售平台" align="center" fixed></el-table-column>
       <el-table-column prop="hireDate" label="入职日期" align="center" fixed :formatter="formatter"></el-table-column>
       <el-table-column label="历史利润表" align="center">
         <el-table-column :label="item" align="center" v-for="(item,index) in list" :key="index">
           <template scope="scope">
-              <span :class="scope.row.historyProfit[index].lr==1?'redd':'red1'">{{scope.row.historyProfit[index].profit}}</span>
+              <span :class="scope.row.historyProfit[index].lr==1?'redd1':'red1'">{{scope.row.historyProfit[index].profit}}</span>
         </template>
         </el-table-column>
       </el-table-column>
@@ -153,6 +153,9 @@
         </el-table-column>
       </el-table-column>
     </el-table>
+    <div style="width:100%;background-color:#fff;">
+      <el-button v-show="tableData.length!=0" style="margin-left:15px;margin-top:20px;" type="primary" @click="dexz()">{{defaultay}}</el-button>
+    </div>
     <Myecharts
       style="max-height:800px;overflow:auto"
       :options="options"
@@ -160,6 +163,9 @@
       element-loading-text="正在加载中..."
       ref="myecharts"
     ></Myecharts>
+    <div style="width:100%;background-color:#fff;">
+      <el-button v-show="tableData.length!=0" style="margin-left:15px;margin-top:10px;" type="primary" @click="dexz1()">{{defaultay1}}</el-button>
+    </div>
     <Chart
       style="max-height:800px;overflow:auto"
       :options="options1"
@@ -183,7 +189,8 @@ import {
   APISkuCount,
   getHistoryRank,
   getHistoryProfit,
-  getHistorySalesProfit
+  getHistorySalesProfit,
+  getHistoryPlat
 } from "../../api/profit";
 import { getMonthDate } from "../../api/tools";
 import { getMenu } from "../../api/login";
@@ -202,6 +209,8 @@ export default {
       sale: true,
       order: false,
       count: false,
+      defaultay:'全不选',
+      defaultay1:'全不选',
       pro: false,
       time1: null,
       time2: null,
@@ -250,6 +259,7 @@ export default {
         xAxis: [
           {
             type: "category",
+            boundaryGap : false,
             data: [String]
           }
         ],
@@ -300,6 +310,7 @@ export default {
         xAxis: [
           {
             type: "category",
+            boundaryGap : false,
             data: [String]
           }
         ],
@@ -336,13 +347,55 @@ export default {
     };
   },
   methods: {
+    dexz(){
+      var selectAll = this.options.legend.data;
+      if(this.defaultay=='全不选'){
+        var val = false;
+        this.defaultay='全选'
+      }else{
+        var val = true;
+        this.defaultay='全不选'
+      }
+       var obj = {};
+       for (var key in selectAll) {
+        obj[selectAll[key]] = val;
+       }
+       this.options.legend.selected  = obj;
+       this.$refs.myecharts.drawAreaStack(this.options);
+    },
+    dexz1(){
+      var selectAll = this.options1.legend.data;
+      if(this.defaultay1=='全不选'){
+        var val = false;
+        this.defaultay1='全选'
+      }else{
+        var val = true;
+        this.defaultay1='全不选'
+      }
+       var obj = {};
+       for (var key in selectAll) {
+        obj[selectAll[key]] = val;
+       }
+       this.options1.legend.selected  = obj;
+       this.$refs.myechart.drawAreaStack(this.options1);
+    },
     getRowClass({ row, column, rowIndex, columnIndex }) {
-      // if (rowIndex === 0 && columnIndex === 5) {
-      //   return "background: #66b1ff;color:#fff";
-      // }
-      // if (rowIndex === 0 && columnIndex === 4) {
-      //   return "background: #666;color:#fff";
-      // }
+      const indexDel=this.list.length
+      if (rowIndex === 0 && columnIndex <= 3) {
+        return "background: rgb(21, 163, 89);color:#fff";
+      }
+      if (rowIndex === 0 && columnIndex === 5) {
+        return "background: rgb(230, 215, 55);color:#fff";
+      }
+      if (rowIndex === 0 && columnIndex === 4) {
+        return "background: #337ab7;color:#fff";
+      }
+      if (rowIndex === 1 && columnIndex >= indexDel) {
+        return "background: rgb(230, 215, 55);color:#fff";
+      }
+      if (rowIndex === 1 && columnIndex < indexDel) {
+        return "background: #337ab7;color:#fff";
+      }
     },
     settime(e) {
       this.condition.dateRange[0] = this.time1;
@@ -514,6 +567,9 @@ export default {
                 }
               }
             });
+            if(myform.plat.length==0){
+              myform.plat=this.plat
+            }
             getHistoryRank(myform).then(response => {
               this.listLoading = false;
               const ret = response.data.data;
@@ -527,9 +583,9 @@ export default {
               const date = [];
               lineName.forEach(name => {
                 const sery = {
-                  type: "bar",
-                  stack: "总量",
-                  areaStyle: { normal: {} }
+                  type: "line",
+                  smooth: true,
+                  stack: "总量"
                 };
                 const amt = [];
                 ret.map(element => {
@@ -564,9 +620,9 @@ export default {
               const date = [];
               lineName.forEach(name => {
                 const sery = {
-                  type: "bar",
-                  stack: "总量",
-                  areaStyle: { normal: {} }
+                  type: "line",
+                  smooth: true,
+                  stack: "总量"
                 };
                 const amt = [];
                 ret.map(element => {
@@ -616,7 +672,7 @@ export default {
       const res = reseponse.data.data;
       this.secDepartment = this.allSecDep = res;
     });
-    getPlatform().then(response => {
+    getHistoryPlat().then(response => {
       this.plat = response.data.data;
     });
   }
@@ -630,10 +686,18 @@ export default {
     margin-bottom: 0rem;
   }
 }
+.redd1{
+    color: rgb(247, 247, 64);
+    display: block;
+    width: 100%;
+    background: #f16363;
+    color: #fff;
+    padding: 10px 0;
+}
 .redd{
     display: block;
     width: 100%;
-    background: #f56c6c;
+    background: #f87c7c;
     color: #fff;
     padding: 10px 0;
 }

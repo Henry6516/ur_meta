@@ -147,6 +147,7 @@ export default {
     this.$store.dispatch('GetUserInfo').then(() => {
       this.sysUserName = this.$store.getters.name
       this.image = this.$store.getters.avatar
+      this.ValidateForm.email=this.$store.getters.email
     })
     const ifmenu = sessionStorage.getItem('ifmenu')
     if(!ifmenu){

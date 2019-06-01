@@ -456,6 +456,11 @@
           <div ref="ordLogistics" :style="{width: '100%', height: '400px'}"></div>
         </el-card>
       </el-col>
+      <el-col :span="24">
+        <el-card>
+          <div ref="ordRefund" :style="{width: '100%', height: '800px'}"></div>
+        </el-card>
+      </el-col>
     </div>
     <!-- 死库明细 -->
     <el-table :data="tableData3" @sort-change="sortNumber" max-height="670" v-show="showTable.dead">
@@ -533,6 +538,7 @@
 
 <script type="text/ecmascript-6">
 import { APIReportExport } from "../../api/product";
+import echarts from 'echarts'
 import {
   getSection,
   getSecDepartment,
@@ -547,7 +553,8 @@ import {
   getRefundAnalysisPlat,
   getRefundAnalysisSuffix,
   getRefundAnalysisExpress,
-  getRefundAnalysisGoods
+  getRefundAnalysisGoods,
+  getRefundExpressRate
 } from "../../api/profit";
 import { isAdmin } from "../../api/api";
 import {
@@ -567,7 +574,7 @@ export default {
         title: {
           text: "平台退款金额占比(￥)",
           subtext: "",
-          top:15,
+          top: 15,
           x: "center"
         },
         tooltip: {
@@ -577,7 +584,7 @@ export default {
         legend: {
           orient: "vertical",
           left: "right",
-          top:8,
+          top: 8,
           data: [String]
         },
         series: [
@@ -601,7 +608,7 @@ export default {
         title: {
           text: "账号退款金额占比(￥)",
           subtext: "",
-          top:15,
+          top: 15,
           x: "center"
         },
         tooltip: {
@@ -612,7 +619,7 @@ export default {
           type: "scroll",
           orient: "vertical",
           left: "right",
-          top:8,
+          top: 8,
           data: [String],
           selected: {}
         },
@@ -637,7 +644,7 @@ export default {
         title: {
           text: "产品退款次数占比",
           subtext: "",
-          top:15,
+          top: 15,
           x: "center"
         },
         tooltip: {
@@ -648,7 +655,7 @@ export default {
           type: "scroll",
           orient: "vertical",
           left: "right",
-          top:8,
+          top: 8,
           data: [String],
           selected: {}
         },
@@ -673,7 +680,7 @@ export default {
         title: {
           text: "物流退款次数占比",
           subtext: "",
-          top:15,
+          top: 15,
           x: "center"
         },
         tooltip: {
@@ -684,7 +691,7 @@ export default {
           type: "scroll",
           orient: "vertical",
           left: "right",
-          top:8,
+          top: 8,
           data: [String],
           selected: {}
         },
@@ -704,6 +711,44 @@ export default {
             }
           }
         ]
+      },
+      options4: {
+        backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [
+          {
+            offset: 0,
+            color: "#f7f8fa"
+          },
+          {
+            offset: 1,
+            color: "#cdd0d5"
+          }
+        ]),
+        title: {
+          text: "物流退款率",
+          x: "center"
+        },
+        legend: {
+          right: 10
+        },
+        xAxis: {
+          splitLine: {
+            lineStyle: {
+              type: "dashed"
+            }
+          }
+        },
+        yAxis: {
+          splitLine: {
+            lineStyle: {
+              type: "dashed"
+            }
+          },
+          scale: true
+        },
+        grid:{
+          left:55
+        },
+        series: []
       },
       kefu: [],
       totalPrice: 0,
@@ -1739,8 +1784,8 @@ export default {
         let ordLogistics = this.$echarts.init(this.$refs.ordLogistics);
         ordLogistics.setOption(this.options3);
       });
-      let objary = Object.assign({}, from)
-      objary.type='goods'
+      let objary = Object.assign({}, from);
+      objary.type = "goods";
       getRefundAnalysisGoods(objary).then(res => {
         const orderpie = res.data.data.item;
         let arry = [];
@@ -1754,6 +1799,56 @@ export default {
         this.options2.legend.selected = selected;
         let ordProduct = this.$echarts.init(this.$refs.ordProduct);
         ordProduct.setOption(this.options2);
+      });
+      let objVat = Object.assign({}, from);
+      if(objVat.account.length==0){
+        objVat.account=this.account
+      }
+      getRefundExpressRate(objVat).then(res => {
+        const ordArr = res.data.data;
+        var arr = [];
+        for (let i = 0; i < ordArr.length; i++) {
+          const ard = [];
+          ard.push(Number(ordArr[i].expressRate));
+          ard.push(Number(ordArr[i].totalCount));
+          ard.push(Number(ordArr[i].totalCount));
+          ard.push(ordArr[i].expressName);
+          arr.push(ard);
+        }
+        let obj = {
+          data: arr,
+          type: "scatter",
+          symbolSize: function(data) {
+            return Math.sqrt(data[1]) / 1;
+          },
+          label: {
+            emphasis: {
+              color:'#000',
+              show: true,
+              formatter: function(param) {
+                return param.data[3];
+              },
+              position: "top"
+            }
+          },
+          itemStyle: {
+            normal: {
+                shadowBlur: 10,
+                shadowColor: 'rgba(120, 36, 50, 0.5)',
+                shadowOffsetY: 5,
+                color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                    offset: 0,
+                    color: 'rgb(251, 118, 123)'
+                }, {
+                    offset: 1,
+                    color: 'rgb(204, 46, 72)'
+                }])
+            }
+        }
+        };
+        this.options4.series = [obj];
+        let ordRefund = this.$echarts.init(this.$refs.ordRefund);
+        ordRefund.setOption(this.options4);
       });
     },
     getGoods() {

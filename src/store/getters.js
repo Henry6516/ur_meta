@@ -9,6 +9,7 @@ const getters = {
   admin: state => state.user.admin,
   menu: state => state.user.menu,
   name: state => state.user.name,
+  email: state => state.user.email,
   introduction: state => state.user.introduction,
   status: state => state.user.status,
   roles: state => state.user.roles,

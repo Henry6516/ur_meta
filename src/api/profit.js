@@ -22,6 +22,12 @@ export function getPlatform() {
     method: 'get'
   })
 }
+export function getHistoryPlat() {
+  return request({
+    url: '/report/history-plat',
+    method: 'get'
+  })
+}
 // member 销售员 http://192.168.0.134:8089/v1/condition/member
 export function getMember() {
   return request({
@@ -519,6 +525,14 @@ export function getRefundAnalysisGoods(param) {
   const data = { condition: param }
   return request({
     url: '/report/refund-analysis-goods',
+    method: 'post',
+    data
+  })
+}
+export function getRefundExpressRate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/refund-express-rate',
     method: 'post',
     data
   })
