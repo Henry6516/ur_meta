@@ -266,6 +266,7 @@ export default {
         yAxis: [
           {
             type: "value",
+            inverse:true,
             axisLabel: {
               formatter: "{value} $"
             }
@@ -382,19 +383,19 @@ export default {
     getRowClass({ row, column, rowIndex, columnIndex }) {
       const indexDel=this.list.length
       if (rowIndex === 0 && columnIndex <= 3) {
-        return "background: rgb(21, 163, 89);color:#fff";
+        return "background: #67C23A;color:#fff";
       }
       if (rowIndex === 0 && columnIndex === 5) {
-        return "background: rgb(230, 215, 55);color:#fff";
+        return "background: #E6A23C;color:#fff";
       }
       if (rowIndex === 0 && columnIndex === 4) {
-        return "background: #337ab7;color:#fff";
+        return "background: #409EFF;color:#fff";
       }
       if (rowIndex === 1 && columnIndex >= indexDel) {
-        return "background: rgb(230, 215, 55);color:#fff";
+        return "background: #E6A23C;color:#fff";
       }
       if (rowIndex === 1 && columnIndex < indexDel) {
-        return "background: #337ab7;color:#fff";
+        return "background: #409EFF;color:#fff";
       }
     },
     settime(e) {
