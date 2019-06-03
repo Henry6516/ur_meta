@@ -133,7 +133,14 @@
         </transition>
       </div>
     </div>
-    <el-table :data="tableData" v-show="tableData.length!=0" style="width:100%;margin-top:20px;" class="lrtable" max-height="700" :header-cell-style="getRowClass">
+    <el-table
+      :data="tableData"
+      v-show="tableData.length!=0"
+      style="width:100%;margin-top:20px;"
+      class="lrtable"
+      max-height="700"
+      :header-cell-style="getRowClass"
+    >
       <el-table-column prop="username" label="人员" width="80" align="center" fixed></el-table-column>
       <el-table-column prop="department" label="部门" align="center" fixed></el-table-column>
       <el-table-column prop="plat" label="销售平台" align="center" fixed></el-table-column>
@@ -141,38 +148,56 @@
       <el-table-column label="历史利润表" align="center">
         <el-table-column :label="item" align="center" v-for="(item,index) in list" :key="index">
           <template scope="scope">
-              <span :class="scope.row.historyProfit[index].lr==1?'redd1':'red1'">{{scope.row.historyProfit[index].profit}}</span>
-        </template>
+            <span
+              :class="scope.row.historyProfit[index].lr==1?'redd1':'red1'"
+            >{{scope.row.historyProfit[index].profit}}</span>
+          </template>
         </el-table-column>
       </el-table-column>
       <el-table-column label="历史排名" align="center">
         <el-table-column :label="item" align="center" v-for="(item,index) in list" :key="index">
           <template scope="scope">
-              <span :class="scope.row.historyRank[index].rank>scope.row.departmentTotal/2?'redd':'red1'">{{scope.row.historyRank[index].rank}}/{{scope.row.departmentTotal}}</span>
-              </template>
+            <span
+              :class="scope.row.historyRank[index].rank>scope.row.departmentTotal/2?'redd':'red1'"
+            >{{scope.row.historyRank[index].rank}}/{{scope.row.departmentTotal}}</span>
+          </template>
         </el-table-column>
       </el-table-column>
     </el-table>
-    <div style="width:100%;background-color:#fff;">
-      <el-button v-show="tableData.length!=0" style="margin-left:15px;margin-top:20px;" type="primary" @click="dexz()">{{defaultay}}</el-button>
+    <div class="abcSs">
+      <button
+        v-show="tableData.length!=0"
+        style="margin-left:15px;margin-top:20px;"
+        type="primary"
+        @click="dexz()"
+      >{{defaultay}}</button>
     </div>
-    <Myecharts
-      style="max-height:800px;overflow:auto"
-      :options="options"
-      v-loading="listLoading"
-      element-loading-text="正在加载中..."
-      ref="myecharts"
-    ></Myecharts>
-    <div style="width:100%;background-color:#fff;">
-      <el-button v-show="tableData.length!=0" style="margin-left:15px;margin-top:10px;" type="primary" @click="dexz1()">{{defaultay1}}</el-button>
+    <div class="abcSp">
+      <Myecharts
+        style="max-height:800px;overflow:auto"
+        :options="options"
+        v-loading="listLoading"
+        element-loading-text="正在加载中..."
+        ref="myecharts"
+      ></Myecharts>
     </div>
-    <Chart
-      style="max-height:800px;overflow:auto"
-      :options="options1"
-      v-loading="listLoading"
-      element-loading-text="正在加载中..."
-      ref="myechart"
-    ></Chart>
+    <div class="abcSp">
+      <Chart
+        style="max-height:800px;overflow:auto"
+        :options="options1"
+        v-loading="listLoading"
+        element-loading-text="正在加载中..."
+        ref="myechart"
+      ></Chart>
+      <div class="abcSs1">
+        <button
+          v-show="tableData.length!=0"
+          style="margin-left:15px;margin-top:10px;"
+          type="primary"
+          @click="dexz1()"
+        >{{defaultay1}}</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -209,8 +234,8 @@ export default {
       sale: true,
       order: false,
       count: false,
-      defaultay:'全不选',
-      defaultay1:'全不选',
+      defaultay: "全不选",
+      defaultay1: "全不选",
       pro: false,
       time1: null,
       time2: null,
@@ -259,14 +284,14 @@ export default {
         xAxis: [
           {
             type: "category",
-            boundaryGap : false,
+            boundaryGap: false,
             data: [String]
           }
         ],
         yAxis: [
           {
             type: "value",
-            inverse:true,
+            inverse: true,
             axisLabel: {
               formatter: "{value} $"
             }
@@ -311,7 +336,7 @@ export default {
         xAxis: [
           {
             type: "category",
-            boundaryGap : false,
+            boundaryGap: false,
             data: [String]
           }
         ],
@@ -348,54 +373,54 @@ export default {
     };
   },
   methods: {
-    dexz(){
+    dexz() {
       var selectAll = this.options.legend.data;
-      if(this.defaultay=='全不选'){
+      if (this.defaultay == "全不选") {
         var val = false;
-        this.defaultay='全选'
-      }else{
+        this.defaultay = "全选";
+      } else {
         var val = true;
-        this.defaultay='全不选'
+        this.defaultay = "全不选";
       }
-       var obj = {};
-       for (var key in selectAll) {
+      var obj = {};
+      for (var key in selectAll) {
         obj[selectAll[key]] = val;
-       }
-       this.options.legend.selected  = obj;
-       this.$refs.myecharts.drawAreaStack(this.options);
+      }
+      this.options.legend.selected = obj;
+      this.$refs.myecharts.drawAreaStack(this.options);
     },
-    dexz1(){
+    dexz1() {
       var selectAll = this.options1.legend.data;
-      if(this.defaultay1=='全不选'){
+      if (this.defaultay1 == "全不选") {
         var val = false;
-        this.defaultay1='全选'
-      }else{
+        this.defaultay1 = "全选";
+      } else {
         var val = true;
-        this.defaultay1='全不选'
+        this.defaultay1 = "全不选";
       }
-       var obj = {};
-       for (var key in selectAll) {
+      var obj = {};
+      for (var key in selectAll) {
         obj[selectAll[key]] = val;
-       }
-       this.options1.legend.selected  = obj;
-       this.$refs.myechart.drawAreaStack(this.options1);
+      }
+      this.options1.legend.selected = obj;
+      this.$refs.myechart.drawAreaStack(this.options1);
     },
     getRowClass({ row, column, rowIndex, columnIndex }) {
-      const indexDel=this.list.length
+      const indexDel = this.list.length;
       if (rowIndex === 0 && columnIndex <= 3) {
-        return "background: #67C23A;color:#fff";
+        return "background: rgb(236, 245, 255);color:#666";
       }
       if (rowIndex === 0 && columnIndex === 5) {
-        return "background: #E6A23C;color:#fff";
+        return "background: #C0C4CC;color:#666";
       }
       if (rowIndex === 0 && columnIndex === 4) {
-        return "background: #409EFF;color:#fff";
+        return "background: rgb(248, 209, 158);color:#666";
       }
       if (rowIndex === 1 && columnIndex >= indexDel) {
-        return "background: #E6A23C;color:#fff";
+        return "background: #C0C4CC;color:#666";
       }
       if (rowIndex === 1 && columnIndex < indexDel) {
-        return "background: #409EFF;color:#fff";
+        return "background: rgb(248, 209, 158);color:#666";
       }
     },
     settime(e) {
@@ -522,7 +547,7 @@ export default {
             } else if (
               this.condition.department.length !== 0 &&
               this.condition.member.length === 0
-            ) {  
+            ) {
               const val = form.department;
               const res = this.allMember;
               for (let i = 0; i < val.length; i++) {
@@ -548,17 +573,24 @@ export default {
                 this.list.push(addDy[i].month);
               }
               for (let i = 0; i < this.tableData.length; i++) {
-                this.tableData[i].avgProfit=Number(this.tableData[i].avgProfit)
+                this.tableData[i].avgProfit = Number(
+                  this.tableData[i].avgProfit
+                );
               }
               for (let k = 0; k < this.tableData.length; k++) {
-              var lr = -1000000;    
+                var lr = -1000000;
                 for (
                   let j = 0;
                   j < this.tableData[k].historyProfit.length;
                   j++
                 ) {
-                  this.tableData[k].historyProfit[j].profit=Number(this.tableData[k].historyProfit[j].profit).toFixed(0)
-                  if (Number(this.tableData[k].historyProfit[j].profit) < Number(lr)) {
+                  this.tableData[k].historyProfit[j].profit = Number(
+                    this.tableData[k].historyProfit[j].profit
+                  ).toFixed(0);
+                  if (
+                    Number(this.tableData[k].historyProfit[j].profit) <
+                    Number(lr)
+                  ) {
                     this.tableData[k].historyProfit[j].lr = 1;
                     lr = this.tableData[k].historyProfit[j].profit;
                   } else {
@@ -568,8 +600,8 @@ export default {
                 }
               }
             });
-            if(myform.plat.length==0){
-              myform.plat=this.plat
+            if (myform.plat.length == 0) {
+              myform.plat = this.plat;
             }
             getHistoryRank(myform).then(response => {
               this.listLoading = false;
@@ -585,8 +617,7 @@ export default {
               lineName.forEach(name => {
                 const sery = {
                   type: "line",
-                  smooth: true,
-                  stack: "总量"
+                  smooth: true
                 };
                 const amt = [];
                 ret.map(element => {
@@ -622,8 +653,7 @@ export default {
               lineName.forEach(name => {
                 const sery = {
                   type: "line",
-                  smooth: true,
-                  stack: "总量"
+                  smooth: true
                 };
                 const amt = [];
                 ret.map(element => {
@@ -687,32 +717,67 @@ export default {
     margin-bottom: 0rem;
   }
 }
-.redd1{
-    color: rgb(247, 247, 64);
-    display: block;
-    width: 100%;
-    background: #f16363;
-    color: #fff;
-    padding: 10px 0;
+.redd1 {
+  color: rgb(247, 247, 64);
+  display: block;
+  width: 100%;
+  background: #f16363;
+  color: #fff;
+  padding: 10px 0;
 }
-.redd{
-    display: block;
-    width: 100%;
-    background: #f87c7c;
-    color: #fff;
-    padding: 10px 0;
+.redd {
+  display: block;
+  width: 100%;
+  background: #f87c7c;
+  color: #fff;
+  padding: 10px 0;
 }
-.red1{
-    padding: 10px 0;
-    display: block;
-    width: 100%;
+.red1 {
+  padding: 10px 0;
+  display: block;
+  width: 100%;
+}
+.abcSp {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #fff;
+}
+.abcSs {
+  position: absolute;
+  right: 220px;
+  margin-top: 19px;
+  z-index: 999;
+}
+.abcSs1 {
+  position: absolute;
+  right: 220px;
+  margin-top: 24px;
+  z-index: 999;
+}
+.abcSs span {
+  display: block;
+}
+@media screen and (max-width: 1361px) {
+  .abcSs {
+    position: absolute;
+    right: 20px;
+    margin-top: -10px;
+    z-index: 999;
+  }
+  .abcSs1 {
+    position: absolute;
+    right: 20px;
+    margin-top: -10px;
+    z-index: 999;
+  }
 }
 </style>
 <style>
-.lrtable td{
-    padding: 0;
+.lrtable td {
+  padding: 0;
 }
-.lrtable .cell{
-    padding: 0
+.lrtable .cell {
+  padding: 0;
 }
 </style>
