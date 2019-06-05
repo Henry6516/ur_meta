@@ -738,9 +738,13 @@
         </el-table-column>
       </el-table>
     </div>
+    <div v-show="show.limit">
+      <limit></limit>
+    </div>
   </section>
 </template>
 <script type="text/ecmascript-6">
+import limit from "../reports/limit.vue";
 import {
   APIProduct,
   APIPlat,
@@ -758,6 +762,9 @@ import {
 } from "../../api/profit";
 import { getMenu } from "../../api/login";
 export default {
+  components: {
+    limit
+  },
   data() {
     return {
       //销售
@@ -851,7 +858,8 @@ export default {
         sale: true,
         wish: false,
         stockUp: false,
-        nostockUp: false
+        nostockUp: false,
+        limit:false,
       }
     };
   },
@@ -887,6 +895,11 @@ export default {
         this.getnoStock();
       } else {
         this.show["nostockUp"] = false;
+      }
+      if (tab.name === "/v1/report/dev-limit") {
+        this.show["limit"] = true;
+      } else {
+        this.show["limit"] = false;
       }
     },
     //销售

@@ -703,6 +703,7 @@ export default {
         .catch(() => {});
     },
     viewPic(index, row) {
+      this.delist = [];
       let conId = {
         id: row.id
       };

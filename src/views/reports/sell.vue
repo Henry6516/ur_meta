@@ -383,10 +383,11 @@
       <el-table-column prop="orderId" label="店铺单号" sortable align="center"></el-table-column>
       <el-table-column prop="mergeBillId" label="合并单号" sortable align="center"></el-table-column>
       <el-table-column prop="storeName" label="仓库" sortable align="center"></el-table-column>
-      <el-table-column prop="refund" label="退款$" sortable="custom" align="center"></el-table-column>
+      <el-table-column prop="refund" label="退款$" sortable="custom" align="center" width="100"></el-table-column>
       <el-table-column
         prop="refundZn"
         label="退款￥"
+         width="100"
         sortable="custom"
         :formatter="empty"
         align="center"
@@ -397,7 +398,8 @@
       <el-table-column prop="orderTime" label="交易时间" align="center"></el-table-column>
       <el-table-column prop="refundTime" label="退款时间" align="center"></el-table-column>
     </el-table>
-    <div class="block toolbar" v-show="showTable.order">
+    <div class="block toolbar" v-show="showTable.order" style="overflow:hidden">
+      <div style="float:left;margin-top:1px;">
       <el-pagination
         background
         @size-change="handleSizeChange"
@@ -408,6 +410,19 @@
         layout="total,sizes,prev,pager,next,jumper"
         :total="this.total"
       ></el-pagination>
+      </div>
+       <div style="float:right">
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:8px;">
+          退款合计($):
+          <span style="color:red">{{tksj}}</span>
+        </p>
+        </div>
+        <div style="float:right">
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:8px;">
+          退款合计(￥):
+          <span style="color:red">{{tkjq}}</span>
+        </p>
+      </div>
     </div>
     <!-- 退款产品明细 -->
     <el-table
@@ -753,6 +768,8 @@ export default {
       kefu: [],
       totalPrice: 0,
       currentPrice: 0,
+      tksj:0,
+      tkjq:0,
       total: null,
       total2: null,
       total3: null,
@@ -1726,6 +1743,26 @@ export default {
         ) / 100;
       return sums;
     },
+    getSummaries1(param) {
+      const { columns, data } = param;
+      const sums = [];
+      const fileds = columns.map(item => item.property);
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = "合计";
+          return;
+        }
+        if (index === 9) {
+          sums[index] = this.tksj;
+          return;
+        }
+        if (index === 10) {
+          sums[index] = this.tkjq;
+          return;
+        }
+      });
+      return sums;
+    },
     // 折叠导航栏
     collapse: function() {
       this.collapsed = !this.collapsed;
@@ -1742,6 +1779,8 @@ export default {
         this.total = res.data.data._meta.totalCount;
         this.condition.page = res.data.data._meta.currentPage;
         this.condition.pageSize = res.data.data._meta.perPage;
+        this.tksj=res.data.data.extra.totalRefundUs;
+        this.tkjq=res.data.data.extra.totalRefundZn;
       });
     },
     analysis(from) {
