@@ -147,7 +147,7 @@
       <el-table-column prop="hireDate" label="入职日期" align="center" fixed :formatter="formatter"></el-table-column>
       <el-table-column label="历史利润表" align="center">
         <el-table-column :label="item" align="center" v-for="(item,index) in list" :key="index">
-          <template scope="scope">
+          <template slot-scope="scope">
             <span
               :class="scope.row.historyProfit[index].lr==1?'redd1':'red1'"
             >{{scope.row.historyProfit[index].profit}}</span>
@@ -156,7 +156,7 @@
       </el-table-column>
       <el-table-column label="历史排名" align="center">
         <el-table-column :label="item" align="center" v-for="(item,index) in list" :key="index">
-          <template scope="scope">
+          <template slot-scope="scope">
             <span
               :class="scope.row.historyRank[index].rank>scope.row.departmentTotal/2?'redd':'red1'"
             >{{scope.row.historyRank[index].rank}}/{{scope.row.departmentTotal}}</span>

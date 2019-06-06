@@ -387,7 +387,7 @@
       <el-table-column
         prop="refundZn"
         label="退款￥"
-         width="100"
+        width="100"
         sortable="custom"
         :formatter="empty"
         align="center"
@@ -400,24 +400,24 @@
     </el-table>
     <div class="block toolbar" v-show="showTable.order" style="overflow:hidden">
       <div style="float:left;margin-top:1px;">
-      <el-pagination
-        background
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="this.condition.page"
-        :page-size="this.condition.pageSize"
-        :page-sizes="[10,20,30,40]"
-        layout="total,sizes,prev,pager,next,jumper"
-        :total="this.total"
-      ></el-pagination>
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="this.condition.page"
+          :page-size="this.condition.pageSize"
+          :page-sizes="[10,20,30,40]"
+          layout="total,sizes,prev,pager,next,jumper"
+          :total="this.total"
+        ></el-pagination>
       </div>
-       <div style="float:right">
+      <div style="float:right">
         <p style="margin:0;font-size:14px;margin-right:18px;margin-top:8px;">
           退款合计($):
           <span style="color:red">{{tksj}}</span>
         </p>
-        </div>
-        <div style="float:right">
+      </div>
+      <div style="float:right">
         <p style="margin:0;font-size:14px;margin-right:18px;margin-top:8px;">
           退款合计(￥):
           <span style="color:red">{{tkjq}}</span>
@@ -553,7 +553,7 @@
 
 <script type="text/ecmascript-6">
 import { APIReportExport } from "../../api/product";
-import echarts from 'echarts'
+import echarts from "echarts";
 import {
   getSection,
   getSecDepartment,
@@ -727,49 +727,72 @@ export default {
           }
         ]
       },
-      options4: {
-        backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [
-          {
-            offset: 0,
-            color: "#f7f8fa"
-          },
-          {
-            offset: 1,
-            color: "#cdd0d5"
-          }
-        ]),
-        title: {
-          text: "物流退款率",
-          x: "center"
-        },
-        legend: {
-          right: 10
-        },
-        xAxis: {
-          splitLine: {
-            lineStyle: {
-              type: "dashed"
-            }
-          }
-        },
-        yAxis: {
-          splitLine: {
-            lineStyle: {
-              type: "dashed"
-            }
-          },
-          scale: true
-        },
-        grid:{
-          left:55
-        },
-        series: []
-      },
+      // options4: {
+      //   backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [
+      //     {
+      //       offset: 0,
+      //       color: "#f7f8fa"
+      //     },
+      //     {
+      //       offset: 1,
+      //       color: "#cdd0d5"
+      //     }
+      //   ]),
+      //   title: {
+      //     text: "物流退款率",
+      //     x: "center"
+      //   },
+      //   legend: {
+      //     right: 10
+      //   },
+      //   xAxis: {
+      //     splitLine: {
+      //       lineStyle: {
+      //         type: "dashed"
+      //       }
+      //     }
+      //   },
+      //   yAxis: {
+      //     splitLine: {
+      //       lineStyle: {
+      //         type: "dashed"
+      //       }
+      //     },
+      //     scale: true
+      //   },
+      //   grid:{
+      //     left:55
+      //   },
+      //   series: []
+      // },
+      // options4: {
+      //   title: {
+      //     text: "物流退款率"
+      //   },
+      //   tooltip: {
+      //     trigger: "item",
+      //     formatter: ""
+      //   },
+      //   series: [
+      //     {
+      //       name: "物流退款率",
+      //       type: "wordCloud",
+      //       size: ["80%", "80%"],
+      //       textRotation: [0, 45, 90, -45],
+      //       textPadding: 0,
+      //       autoSize: {
+      //         enable: true,
+      //         minSize: 14
+      //       },
+      //       data: []
+      //     }
+      //   ]
+      // },
       kefu: [],
       totalPrice: 0,
       currentPrice: 0,
-      tksj:0,
-      tkjq:0,
+      tksj: 0,
+      tkjq: 0,
       total: null,
       total2: null,
       total3: null,
@@ -1393,7 +1416,6 @@ export default {
           if (typeof console !== "undefined") console.log(e, wbout);
         }
       } else if (this.activeName === "退款订单明细") {
-        console.log(this.condition.member);
         let arrTk = {};
         arrTk.department = this.condition.department;
         arrTk.secDepartment = this.condition.secDepartment;
@@ -1779,8 +1801,8 @@ export default {
         this.total = res.data.data._meta.totalCount;
         this.condition.page = res.data.data._meta.currentPage;
         this.condition.pageSize = res.data.data._meta.perPage;
-        this.tksj=res.data.data.extra.totalRefundUs;
-        this.tkjq=res.data.data.extra.totalRefundZn;
+        this.tksj = res.data.data.extra.totalRefundUs;
+        this.tkjq = res.data.data.extra.totalRefundZn;
       });
     },
     analysis(from) {
@@ -1840,54 +1862,88 @@ export default {
         ordProduct.setOption(this.options2);
       });
       let objVat = Object.assign({}, from);
-      if(objVat.account.length==0){
-        objVat.account=this.account
+      if (objVat.account.length == 0) {
+        objVat.account = this.account.map(m => {
+          return m.store;
+        });
       }
       getRefundExpressRate(objVat).then(res => {
+        function createRandomItemStyle() {
+          return {
+            normal: {
+              color:
+                "rgb(" +
+                [
+                  Math.round(Math.random() * 160),
+                  Math.round(Math.random() * 160),
+                  Math.round(Math.random() * 160)
+                ].join(",") +
+                ")"
+            }
+          };
+        }
         const ordArr = res.data.data;
         var arr = [];
-        for (let i = 0; i < ordArr.length; i++) {
-          const ard = [];
-          ard.push(Number(ordArr[i].expressRate));
-          ard.push(Number(ordArr[i].totalCount));
-          ard.push(Number(ordArr[i].totalCount));
-          ard.push(ordArr[i].expressName);
-          arr.push(ard);
-        }
-        let obj = {
-          data: arr,
-          type: "scatter",
-          symbolSize: function(data) {
-            return Math.sqrt(data[1]) / 1;
+        var options4 = {
+          title: {
+            text: "物流退款率"
           },
-          label: {
-            emphasis: {
-              color:'#000',
-              show: true,
-              formatter: function(param) {
-                return param.data[3];
+          tooltip: {
+            trigger: "item",
+            formatter: function(params) {
+              var res = params.name + "<br/>";
+              var myseries = ordArr;
+              res =
+                params.data.name +
+                "：发货总量:" +
+                params.data.value1 +
+                "：退款比例:" +
+                params.data.value2;
+              return res;
+            }
+          },
+          series: [
+            {
+              name: "物流退款率",
+              type: "wordCloud",
+              size: ["80%", "80%"],
+              textRotation: [0, 45, 90, -45],
+              textPadding: 0,
+              autoSize: {
+                enable: true,
+                minSize: 14
               },
-              position: "top"
+              textStyle: {
+                normal: {
+                  color: function() {
+                    return (
+                      "rgb(" +
+                      [
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160)
+                      ].join(",") +
+                      ")"
+                    );
+                  }
+                }
+              },
+              data: []
             }
-          },
-          itemStyle: {
-            normal: {
-                shadowBlur: 10,
-                shadowColor: 'rgba(120, 36, 50, 0.5)',
-                shadowOffsetY: 5,
-                color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
-                    offset: 0,
-                    color: 'rgb(251, 118, 123)'
-                }, {
-                    offset: 1,
-                    color: 'rgb(204, 46, 72)'
-                }])
-            }
-        }
+          ]
         };
-        this.options4.series = [obj];
+        for (let i = 0; i < ordArr.length; i++) {
+          let obj = {
+            name: ordArr[i].expressName,
+            value: ordArr[i].totalCount * ordArr[i].expressRate,
+            value1: ordArr[i].totalCount,
+            value2: ordArr[i].expressRate
+          };
+          arr.push(obj);
+        }
+        options4.series[0].data = arr;
         let ordRefund = this.$echarts.init(this.$refs.ordRefund);
-        ordRefund.setOption(this.options4);
+        ordRefund.setOption(options4);
       });
     },
     getGoods() {

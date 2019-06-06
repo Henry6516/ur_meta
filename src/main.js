@@ -21,6 +21,8 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import './assets/icon/iconfont.css'
 import echarts from 'echarts'
+import 'echarts-wordcloud/dist/echarts-wordcloud'
+import 'echarts-wordcloud/dist/echarts-wordcloud.min'
 
 Vue.use(VueQuillEditor)
 Vue.use(VueHighlightJS)
