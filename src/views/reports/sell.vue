@@ -453,27 +453,32 @@
     <div v-show="showTable.report">
       <el-col :span="12">
         <el-card>
-          <div ref="ordPlatform" :style="{width: '100%', height: '400px'}"></div>
+          <div ref="ordPlatform" :style="{width: '100%', height: '400px'}" v-loading="listLoading1"></div>
         </el-card>
       </el-col>
       <el-col :span="12">
         <el-card>
-          <div ref="ordAccount" :style="{width: '100%', height: '400px'}"></div>
+          <div ref="ordAccount" :style="{width: '100%', height: '400px'}" v-loading="listLoading2"></div>
         </el-card>
       </el-col>
       <el-col :span="12">
         <el-card>
-          <div ref="ordProduct" :style="{width: '100%', height: '400px'}"></div>
+          <div ref="ordProduct" :style="{width: '100%', height: '400px'}" v-loading="listLoading3"></div>
         </el-card>
       </el-col>
       <el-col :span="12">
         <el-card>
-          <div ref="ordLogistics" :style="{width: '100%', height: '400px'}"></div>
+          <div ref="ordLogistics" :style="{width: '100%', height: '400px'}" v-loading="listLoading4"></div>
         </el-card>
       </el-col>
       <el-col :span="24">
         <el-card>
-          <div ref="ordRefund" :style="{width: '100%', height: '800px'}"></div>
+          <div ref="ordRefund" id="myChart1" :style="{width: '100%', height: '400px'}" v-loading="listLoading5"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="24">
+        <el-card>
+          <div ref="ordNumber" id="myChart2" :style="{width: '100%', height: '400px'}" v-loading="listLoading6"></div>
         </el-card>
       </el-col>
     </div>
@@ -569,7 +574,8 @@ import {
   getRefundAnalysisSuffix,
   getRefundAnalysisExpress,
   getRefundAnalysisGoods,
-  getRefundExpressRate
+  getRefundExpressRate,
+  getRefundSuffixRate
 } from "../../api/profit";
 import { isAdmin } from "../../api/api";
 import {
@@ -788,9 +794,17 @@ export default {
       //     }
       //   ]
       // },
+      listLoading1:false,
+      listLoading2:false,
+      listLoading3:false,
+      listLoading4:false,
+      listLoading5:false,
+      listLoading6:false,
       kefu: [],
       totalPrice: 0,
       currentPrice: 0,
+      autoHeight: 0,
+      autoHeight1: 0,
       tksj: 0,
       tkjq: 0,
       total: null,
@@ -1806,6 +1820,12 @@ export default {
       });
     },
     analysis(from) {
+      this.listLoading1=true
+      this.listLoading2=true
+      this.listLoading3=true
+      this.listLoading4=true
+      this.listLoading5=true
+      this.listLoading6=true
       getRefundAnalysisPlat(from).then(res => {
         const orderpie = res.data.data.item;
         let arry = [];
@@ -1816,6 +1836,7 @@ export default {
         this.options.series[0].data = orderpie;
         let ordPlatform = this.$echarts.init(this.$refs.ordPlatform);
         ordPlatform.setOption(this.options);
+        this.listLoading1=false
       });
       getRefundAnalysisSuffix(from).then(res => {
         const orderpie = res.data.data.item;
@@ -1830,6 +1851,7 @@ export default {
         this.options1.legend.selected = selected;
         let ordAccount = this.$echarts.init(this.$refs.ordAccount);
         ordAccount.setOption(this.options1);
+        this.listLoading2=false
       });
       getRefundAnalysisExpress(from).then(res => {
         const orderpie = res.data.data.item;
@@ -1844,6 +1866,7 @@ export default {
         this.options3.legend.selected = selected;
         let ordLogistics = this.$echarts.init(this.$refs.ordLogistics);
         ordLogistics.setOption(this.options3);
+        this.listLoading3=false
       });
       let objary = Object.assign({}, from);
       objary.type = "goods";
@@ -1860,6 +1883,7 @@ export default {
         this.options2.legend.selected = selected;
         let ordProduct = this.$echarts.init(this.$refs.ordProduct);
         ordProduct.setOption(this.options2);
+        this.listLoading4=false
       });
       let objVat = Object.assign({}, from);
       if (objVat.account.length == 0) {
@@ -1868,82 +1892,266 @@ export default {
         });
       }
       getRefundExpressRate(objVat).then(res => {
-        function createRandomItemStyle() {
-          return {
-            normal: {
-              color:
-                "rgb(" +
-                [
-                  Math.round(Math.random() * 160),
-                  Math.round(Math.random() * 160),
-                  Math.round(Math.random() * 160)
-                ].join(",") +
-                ")"
-            }
-          };
-        }
-        const ordArr = res.data.data;
-        var arr = [];
-        var options4 = {
-          title: {
-            text: "物流退款率"
-          },
-          tooltip: {
-            trigger: "item",
-            formatter: function(params) {
-              var res = params.name + "<br/>";
-              var myseries = ordArr;
-              res =
-                params.data.name +
-                "：发货总量:" +
-                params.data.value1 +
-                "：退款比例:" +
-                params.data.value2;
-              return res;
-            }
-          },
-          series: [
-            {
-              name: "物流退款率",
-              type: "wordCloud",
-              size: ["80%", "80%"],
-              textRotation: [0, 45, 90, -45],
-              textPadding: 0,
-              autoSize: {
-                enable: true,
-                minSize: 14
-              },
-              textStyle: {
-                normal: {
-                  color: function() {
-                    return (
-                      "rgb(" +
-                      [
-                        Math.round(Math.random() * 160),
-                        Math.round(Math.random() * 160),
-                        Math.round(Math.random() * 160)
-                      ].join(",") +
-                      ")"
-                    );
-                  }
-                }
-              },
+        // function createRandomItemStyle() {
+        //   return {
+        //     normal: {
+        //       color:
+        //         "rgb(" +
+        //         [
+        //           Math.round(Math.random() * 160),
+        //           Math.round(Math.random() * 160),
+        //           Math.round(Math.random() * 160)
+        //         ].join(",") +
+        //         ")"
+        //     }
+        //   };
+        // }
+        // const ordArr = res.data.data;
+        // var arr = [];
+        // var options4 = {
+        //   title: {
+        //     text: "物流退款率"
+        //   },
+        //   tooltip: {
+        //     trigger: "item",
+        //     formatter: function(params) {
+        //       var res = params.name + "<br/>";
+        //       var myseries = ordArr;
+        //       res =
+        //         params.data.name +
+        //         "：发货总量:" +
+        //         params.data.value1 +
+        //         "：退款比例:" +
+        //         params.data.value2;
+        //       return res;
+        //     }
+        //   },
+        //   series: [
+        //     {
+        //       name: "物流退款率",
+        //       type: "wordCloud",
+        //       size: ["80%", "80%"],
+        //       textRotation: [0, 45, 90, -45],
+        //       textPadding: 0,
+        //       autoSize: {
+        //         enable: true,
+        //         minSize: 14
+        //       },
+        //       textStyle: {
+        //         normal: {
+        //           color: function() {
+        //             return (
+        //               "rgb(" +
+        //               [
+        //                 Math.round(Math.random() * 160),
+        //                 Math.round(Math.random() * 160),
+        //                 Math.round(Math.random() * 160)
+        //               ].join(",") +
+        //               ")"
+        //             );
+        //           }
+        //         }
+        //       },
+        //       data: []
+        //     }
+        //   ]
+        // };
+        // for (let i = 0; i < ordArr.length; i++) {
+        //   let obj = {
+        //     name: ordArr[i].expressName,
+        //     value: ordArr[i].totalCount * ordArr[i].expressRate,
+        //     value1: ordArr[i].totalCount,
+        //     value2: ordArr[i].expressRate
+        //   };
+        //   arr.push(obj);
+        // }
+        // options4.series[0].data = arr;
+        // let ordRefund = this.$echarts.init(this.$refs.ordRefund);
+        // ordRefund.setOption(options4);
+        if (res.data.code == 200) {
+          const ordArr = res.data.data;
+          var arr = [];
+          var ary = [];
+          var options4 = {
+            title: {
+              text: "物流退款率",
+              top:"10"
+            },
+            tooltip: {
+              trigger: "item",
+              formatter: function(params) {
+                var res = params.name + "<br/>";
+                var myseries = ordArr;
+                res =
+                  params.data.name +
+                  "，发货总量：" +
+                  params.data.value1 +
+                  "，退款总量：" +
+                  params.data.value3+
+                  "，退款比例(%)：" +
+                  params.data.value2;
+                return res;
+              }
+            },
+            toolbox: {
+              show: true,
+              orient: "vertical",
+              top: "center",
+              feature: {
+                dataView: { readOnly: false },
+                restore: {},
+                saveAsImage: {}
+              }
+            },
+            legend: {
+              type: "scroll",
+              orient: "vertical",
+              left: "left",
+              top: 40,
               data: []
-            }
-          ]
-        };
-        for (let i = 0; i < ordArr.length; i++) {
-          let obj = {
-            name: ordArr[i].expressName,
-            value: ordArr[i].totalCount * ordArr[i].expressRate,
-            value1: ordArr[i].totalCount,
-            value2: ordArr[i].expressRate
+            },
+            calculable: true,
+            series: [
+              {
+                type: "funnel",
+                width: "85%",
+                top: "15",
+                left: "14%",
+                height: "96%",
+                funnelAlign: "left",
+                center: ["75%", "25%"], // for pie
+                data: []
+              }
+            ]
           };
-          arr.push(obj);
+          for (let i = 0; i < ordArr.length; i++) {
+            let obj = {
+              name: ordArr[i].expressName,
+              value: ordArr[i].refundCount,
+              value1: ordArr[i].totalCount,
+              value2: (ordArr[i].expressRate*100).toFixed(2),
+              value3: ordArr[i].refundCount,
+            };
+            arr.push(obj);
+            ary.push(ordArr[i].expressName);
+          }
+          options4.series[0].data = arr;
+          options4.legend.data = arr;
+          let ordRefund = this.$echarts.init(this.$refs.ordRefund);
+          ordRefund.setOption(options4);
+          let chartName = this.$echarts.init(
+            document.getElementById("myChart1")
+          );
+          this.autoHeight = ordArr.length * 35 + 50; // counst.length为柱状图的条数，即数据长度。35为我给每个柱状图的高度，50为柱状图x轴内容的高度(大概的)。
+          chartName.getDom().style.height = this.autoHeight + "px";
+          chartName.getDom().childNodes[0].style.height =
+            this.autoHeight + "px";
+          chartName
+            .getDom()
+            .childNodes[0].childNodes[0].setAttribute(
+              "height",
+              this.autoHeight
+            );
+          chartName.getDom().childNodes[0].childNodes[0].style.height =
+            this.autoHeight + "px";
+          chartName.resize();
+          this.listLoading5=false
+        } else {
+          this.$message.error(res.data.message);
         }
-        options4.series[0].data = arr;
-        let ordRefund = this.$echarts.init(this.$refs.ordRefund);
-        ordRefund.setOption(options4);
+      });
+      getRefundSuffixRate(objVat).then(res => {
+        if (res.data.code == 200) {
+          const ordArr1 = res.data.data;
+          var arr = [];
+          var ary = [];
+          var options5 = {
+            title: {
+              text: "账号退款率",
+              top:"1"
+            },
+            tooltip: {
+              trigger: "item",
+              formatter: function(params) {
+                var res = params.name + "<br/>";
+                var myseries = ordArr1;
+                res =
+                  params.data.name +
+                  "，发货总额($)：" +
+                  params.data.value1 +
+                  "，退款总额($)：" +
+                  params.data.value3+
+                  "，退款比例(%)：" +
+                  params.data.value2;
+                return res;
+              }
+            },
+            toolbox: {
+              show: true,
+              orient: "vertical",
+              top: "center",
+              feature: {
+                dataView: { readOnly: false },
+                restore: {},
+                saveAsImage: {}
+              }
+            },
+            legend: {
+              type: "scroll",
+              orient: "vertical",
+              left: "left",
+              top: 40,
+              data: []
+            },
+            calculable: true,
+            series: [
+              {
+                type: "funnel",
+                width: "85%",
+                top: "1",
+                left: "14%",
+                height: "99%",
+                funnelAlign: "left",
+                center: ["75%", "25%"], // for pie
+                data: []
+              }
+            ]
+          };
+          for (let i = 0; i < ordArr1.length; i++) {
+            let obj = {
+              name: ordArr1[i].suffix,
+              value: ordArr1[i].refundCount,
+              value1: ordArr1[i].totalCount,
+              value2: (ordArr1[i].suffixRate*100).toFixed(2),
+              value3: ordArr1[i].refundCount,
+            };
+            arr.push(obj);
+            ary.push(ordArr1[i].suffix);
+          }
+          options5.series[0].data = arr;
+          options5.legend.data = arr;
+          let ordRefund = this.$echarts.init(this.$refs.ordNumber);
+          ordRefund.setOption(options5);
+          let chartName = this.$echarts.init(
+            document.getElementById("myChart2")
+          );
+          this.autoHeight1 = ordArr1.length * 35 + 50; // counst.length为柱状图的条数，即数据长度。35为我给每个柱状图的高度，50为柱状图x轴内容的高度(大概的)。
+          chartName.getDom().style.height = this.autoHeight1 + "px";
+          chartName.getDom().childNodes[0].style.height =
+            this.autoHeight1 + "px";
+          chartName
+            .getDom()
+            .childNodes[0].childNodes[0].setAttribute(
+              "height",
+              this.autoHeight1
+            );
+          chartName.getDom().childNodes[0].childNodes[0].style.height =
+            this.autoHeight1 + "px";
+          chartName.resize();
+          this.listLoading6=false
+        } else {
+          this.$message.error(res.data.message);
+        }
       });
     },
     getGoods() {

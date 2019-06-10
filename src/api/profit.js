@@ -537,6 +537,14 @@ export function getRefundExpressRate(param) {
     data
   })
 }
+export function getRefundSuffixRate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/refund-suffix-rate',
+    method: 'post',
+    data
+  })
+}
 export function getDeadFee(param) {
   const data = { condition: param }
   return request({
