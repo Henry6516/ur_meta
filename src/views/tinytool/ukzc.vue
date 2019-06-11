@@ -126,24 +126,24 @@
       <el-table-column prop="SKU" label="sku"></el-table-column>
       <el-table-column prop="SKUName" label="SKU名称"></el-table-column>
       <el-table-column prop="goodsCode" label="商品编码"></el-table-column>
-      <el-table-column prop="goodsstatus" label="状态"></el-table-column>
+      <el-table-column prop="goodsStatus" label="状态"></el-table-column>
       <el-table-column prop="price" label="价格" sortable="custom"></el-table-column>
       <el-table-column prop="weight" label="重量(g)" sortable="custom"></el-table-column>
       <el-table-column prop="purchaser" label="采购"></el-table-column>
-      <el-table-column prop="suppliername" label="供应商"></el-table-column>
+      <el-table-column prop="supplierName" label="供应商"></el-table-column>
       <el-table-column prop="saleNum3days" label="3天销量" sortable="custom"></el-table-column>
       <el-table-column prop="saleNum7days" label="7天销量" sortable="custom"></el-table-column>
       <el-table-column prop="saleNum15days" label="15天销量" sortable="custom"></el-table-column>
       <el-table-column prop="saleNum30days" label="30天销量" sortable="custom"></el-table-column>
       <el-table-column prop="trend" label="走势"></el-table-column>
       <el-table-column prop="saleNumDailyAve" label="日均销量" sortable="custom"></el-table-column>
-      <el-table-column prop="399hopeusenum" label="金皖399预计可用" sortable="custom"></el-table-column>
-      <el-table-column prop="auHopeusenum" label="万邑通AU预计可用库存" sortable="custom"></el-table-column>
-      <el-table-column prop="totalhopeusenum" label="预计可用库存" sortable="custom"></el-table-column>
-      <el-table-column prop="auHopeSaleDays" label="万邑通AU预计可用天数" sortable="custom"></el-table-column>
+      <el-table-column prop="399HopeUseNum" label="金皖399预计可用" sortable="custom"></el-table-column>
+      <el-table-column prop="uHopeUseNum" label="万邑通AU预计可用库存" sortable="custom"></el-table-column>
+      <el-table-column prop="totalHopeUseNum" label="预计可用库存" sortable="custom"></el-table-column>
+      <el-table-column prop="uHopeSaleDays" label="万邑通AU预计可用天数" sortable="custom"></el-table-column>
       <el-table-column prop="hopeSaleDays" label="预计可卖天数" sortable="custom"></el-table-column>
-      <el-table-column prop="purchnum" label="采购数量" sortable="custom"></el-table-column>
-      <el-table-column prop="shipnum" label="发货数量" sortable="custom"></el-table-column>
+      <el-table-column prop="purchaseNum" label="采购数量" sortable="custom"></el-table-column>
+      <el-table-column prop="shipNum" label="发货数量" sortable="custom"></el-table-column>
     </el-table>
     <div class="toolbar" style="overflow:hidden">
       <div style="float:left;">

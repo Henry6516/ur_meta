@@ -114,9 +114,9 @@
       <el-table-column prop="SKU" label="sku"></el-table-column>
       <el-table-column prop="SKUName" label="SKU名称"></el-table-column>
       <el-table-column prop="goodsCode" label="商品编码"></el-table-column>
-      <el-table-column prop="goodsstatus" label="状态"></el-table-column>
+      <el-table-column prop="goodsStatus" label="状态"></el-table-column>
       <el-table-column prop="purchaser" label="采购"></el-table-column>
-      <el-table-column prop="suppliername" label="供应商"></el-table-column>
+      <el-table-column prop="supplierName" label="供应商"></el-table-column>
       <el-table-column prop="saleNum3days" label="3天销量" sortable="custom"></el-table-column>
       <el-table-column prop="saleNum7days" label="7天销量" sortable="custom"></el-table-column>
       <el-table-column prop="saleNum15days" label="15天销量" sortable="custom"></el-table-column>

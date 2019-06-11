@@ -697,6 +697,15 @@ export function APIDeliveryTemplate(param) {
     responseType: 'arraybuffer'
   })
 }
+export function APIDownJoom(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/down-joom-tracking-template',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
 export function APIRrderAttribute(param) {
   const data = { condition: param }
   return request({

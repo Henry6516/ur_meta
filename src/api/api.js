@@ -44,7 +44,11 @@ export function uploadFile() {
   const url = '/upload/sales-dead-fee'
   return baseUrl + url
 }
-
+export function uploadJoom() {
+  const baseUrl = process.env.BASE_API
+  const url = '/tiny-tool/upload-joom-tracking'
+  return baseUrl + url
+}
 export function getHeaders() {
   const headers = {}
   headers.Authorization = 'Bearer ' + getMyToken()
