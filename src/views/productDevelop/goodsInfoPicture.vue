@@ -364,6 +364,7 @@
                     "isMagnetism": "",
                     "isCharged": "",
                     "isVar": "",
+                    'picStatus':'',    
                     origin1: "",
                     origin2: null,
                     origin3: "",

@@ -1066,6 +1066,14 @@ export function APISortLog(param) {
     data
   })
 }
+export function APITralog(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/joom-tracking-log?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
 export function APISortkMember() {
   return request({
     url: '/warehouse-tools/sort-member',
