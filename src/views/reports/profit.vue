@@ -170,7 +170,7 @@
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
-      <el-table-column width="100" prop="devDate" label="开发日期" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column width="100" prop="devDate" label="开发日期" sortable="custom" :formatter="formatter"></el-table-column>
       <el-table-column
         width="100"
         prop="goodsStatus"
@@ -179,9 +179,15 @@
         sortable="custom"
       ></el-table-column>
       <el-table-column width="75" prop="sold" label="销量" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column width="90" prop="amt" label="销售额" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column width="90" prop="profit" label="总利润" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column width="90" prop="rate" label="利润率" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column width="90" prop="amt" label="销售额" :formatter="empty" sortable="custom">
+        <template slot-scope="scope">{{scope.row.amt | cutOut1}}</template>
+      </el-table-column>
+      <el-table-column width="90" prop="profit" label="总利润" :formatter="empty" sortable="custom">
+        <template slot-scope="scope">{{scope.row.profit | cutOut1}}</template>
+      </el-table-column>
+      <el-table-column width="90" prop="rate" label="利润率" :formatter="empty" sortable="custom">
+        <template slot-scope="scope">{{scope.row.rate | cutOut1}}</template>
+      </el-table-column>
       <el-table-column
         width="105"
         prop="ebaySold"
@@ -195,7 +201,9 @@
         label="eBay利润"
         :formatter="empty"
         sortable="custom"
-      ></el-table-column>
+      >
+      <template slot-scope="scope">{{scope.row.ebayProfit | cutOut1}}</template>
+      </el-table-column>
       <el-table-column
         width="105"
         prop="wishSold"
@@ -209,7 +217,9 @@
         label="Wish利润"
         :formatter="empty"
         sortable="custom"
-      ></el-table-column>
+      >
+      <template slot-scope="scope">{{scope.row.wishProfit | cutOut1}}</template>
+      </el-table-column>
       <el-table-column
         width="103"
         prop="smtSold"
@@ -223,7 +233,9 @@
         label="SMT利润"
         :formatter="empty"
         sortable="custom"
-      ></el-table-column>
+      >
+      <template slot-scope="scope">{{scope.row.smtProfit | cutOut1}}</template>
+      </el-table-column>
       <el-table-column
         width="108"
         prop="joomSold"
@@ -237,7 +249,9 @@
         label="Joom利润"
         :formatter="empty"
         sortable="custom"
-      ></el-table-column>
+      >
+      <template slot-scope="scope">{{scope.row.joomProfit | cutOut1}}</template>
+      </el-table-column>
       <el-table-column
         width="124"
         prop="amazonSold"
@@ -251,7 +265,9 @@
         label="Amazon利润"
         :formatter="empty"
         sortable="custom"
-      ></el-table-column>
+      >
+      <template slot-scope="scope">{{scope.row.amazonProfit | cutOut1}}</template>
+      </el-table-column>
     </el-table>
     <div class="toolbar">
       <el-pagination
@@ -333,8 +349,7 @@ export default {
         goodsStatus: [],
         page: 1,
         pageSize: 20,
-        sortField: null,
-        sortOrder: null
+        sort: null
       },
       tableMap: {
         first: {
@@ -377,9 +392,20 @@ export default {
     cutOut: function(value) {
       value = Number(value).toFixed(2);
       return value;
+    },
+    cutOut1: function(value) {
+      if(value==0){
+       return 0;
+      }else{
+        value = Number(value).toFixed(2);
+      return value;
+      }
     }
   },
   methods: {
+    formatter(row, column) {
+      return row.devDate ? row.devDate.substring(0, 10) : "";
+    },
     handleCurrentChange(val) {
       this.condition.page = val;
       this.onSubmit(this.condition);
@@ -650,19 +676,16 @@ export default {
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      if(order==null){
-        this.condition.sortField=null;
-        this.condition.sortOrder=null;
+      if(column.order==null){
+        this.condition.sort=null;
         this.onSubmit(this.condition);
       }
       if (column.order == "ascending") {
-        this.condition.sortOrder = "ASC";
-        this.condition.sortField = column.prop;
+        this.condition.sort = column.prop;
         this.onSubmit(this.condition);
       }
       if (column.order == "descending") {
-        this.condition.sortOrder = "DESC";
-        this.condition.sortField = column.prop;
+        this.condition.sort ='-'+column.prop;
         this.onSubmit(this.condition);
       }
     }

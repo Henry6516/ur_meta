@@ -263,6 +263,19 @@ export function ProsTargetPm(param) {
   })
 }
 
+export function getZzTargetEbay() {
+  return request({
+    url: 'site/zz-target?plat=' + 'eBay',
+    method: 'get'
+  })
+}
+
+export function getZzTargetJoom() {
+  return request({
+    url: 'site/zz-target?plat=' + 'Joom',
+    method: 'get'
+  })
+}
 export function Risk(param) {
   var data = { condition: param }
   return request({

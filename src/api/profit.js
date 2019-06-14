@@ -160,7 +160,7 @@ export function getDevLimit(param) {
 export function getDevGoodsProfit(param) {
   const data = { condition: param }
   return request({
-    url: '/report/dev-goods-profit?page=' + param.page,
+    url: '/report/dev-goods-profit?page=' + param.page + '&sort=' + param.sort,
     method: 'post',
     data
   })
