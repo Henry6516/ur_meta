@@ -14,6 +14,9 @@
     <div v-show="show.perform">
       <perform></perform>
     </div>
+    <div v-show="show.inventory">
+      <inventory></inventory>
+    </div>
   </section>
 </template>
 
@@ -21,11 +24,13 @@
 import { getMenu } from "../../api/login";
 import pricetrend from "./pricetrend.vue";
 import perform from "./perform.vue";
+import inventory  from "./inventory.vue";
 
 export default {
   components: {
     pricetrend,
-    perform
+    perform,
+    inventory
   },
   data() {
     return {
@@ -33,11 +38,15 @@ export default {
       activeName: "",
       show: {
         pricetrend: true,
-        perform: false
+        perform: false,
+        inventory:false
       }
     };
   },
   methods: {
+    empty(row, column, cellValue, index) {
+      return cellValue || '--'
+    },
     handleClick(tab, event) {
       if (tab.name === "/v1/data-center/price-trend") {
         this.show["pricetrend"] = true;
@@ -48,6 +57,11 @@ export default {
         this.show["perform"] = true;
       } else {
         this.show["perform"] = false;
+      }
+      if (tab.name === "/v1/data-center/stock-status") {
+        this.show["inventory"] = true;
+      } else {
+        this.show["inventory"] = false;
       }
     }
   },

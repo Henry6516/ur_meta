@@ -728,4 +728,30 @@ export function getAuRealReplenish(param) {
     data
   })
 }
+export function getStackStatus(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/stock-status',
+    method: 'post',
+    data
+  })
+}
+
+export function getStockStatusDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/stock-status-detail',
+    method: 'post',
+    data
+  })
+}
+
+export function getStockDeveloperDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/stock-developer-detail',
+    method: 'post',
+    data
+  })
+}
 

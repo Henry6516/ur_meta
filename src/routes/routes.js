@@ -26,6 +26,7 @@ import productdoc from '../views/data/productdoc.vue'
 import saledoc from '../views/data/saledoc.vue'
 import logisticsdoc from '../views/data/logisticsdoc.vue'
 import shortagedoc from '../views/data/shortagedoc.vue'
+import inventory from '../views/data/inventory.vue'
 // 销售工具
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
@@ -195,6 +196,11 @@ const routes = [
         path: '/v1/data-center/product',
         component: productdoc,
         name: '产品'
+      },
+      {
+        path: '/v1/data-center/stock-status',
+        component: inventory,
+        name: '库存情况'
       },
       {
         path: '/v1/data-center/sales',

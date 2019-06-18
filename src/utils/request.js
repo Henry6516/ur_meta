@@ -41,7 +41,7 @@ service.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           Message({
-            message: error.message,
+            message: '登录超时，请重新登录',
             type: 'error',
             duration: 5 * 1000
           })
