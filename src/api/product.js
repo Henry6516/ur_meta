@@ -1074,6 +1074,14 @@ export function APITralog(param) {
     data
   })
 }
+export function APIExpressFare(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/joom-null-express-fare',
+    method: 'post',
+    data
+  })
+}
 export function APISortkMember() {
   return request({
     url: '/warehouse-tools/sort-member',

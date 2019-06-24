@@ -219,6 +219,9 @@ export default {
       if(sessionStorage.getItem('judge')){
         sessionStorage.removeItem('judge')
       }
+      if(sessionStorage.getItem('fixname')){
+        sessionStorage.removeItem('fixname')
+      }
       if(sessionStorage.getItem('judgeCollection')){
         sessionStorage.removeItem('judgeCollection')
       }
@@ -229,6 +232,9 @@ export default {
     handleSelect(index, indexPath) {
       if(sessionStorage.getItem('judge')){
         sessionStorage.removeItem('judge')
+      }
+      if(sessionStorage.getItem('fixname')){
+        sessionStorage.removeItem('fixname')
       }
       if(sessionStorage.getItem('judgeCollection')){
         sessionStorage.removeItem('judgeCollection')

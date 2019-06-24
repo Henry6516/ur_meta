@@ -446,9 +446,14 @@
         :current-page="this.goods.page"
         :page-size="this.goods.pageSize"
         :page-sizes="[10,20,30,40]"
-        layout="total,sizes,prev,pager,next,jumper"
+        layout="total,sizes,slot,prev,pager,next,jumper"
         :total="this.total2"
-      ></el-pagination>
+      >
+      <span>
+            <el-button type="text"
+                       @click="showAll">显示全部</el-button>
+      </span>
+      </el-pagination>
     </div>
     <div v-show="showTable.report">
       <el-col :span="12">
@@ -520,11 +525,11 @@
       <div style="float:right">
         <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;">
           分摊金额合计:
-          <span style="color:red">{{totalPrice}}</span>
+          <span style="color:red">{{totalPrice | cutOut}}</span>
         </p>
         <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">
           当前页分摊金额:
-          <span style="color:red">{{currentPrice}}</span>
+          <span style="color:red">{{currentPrice | cutOut}}</span>
         </p>
       </div>
     </div>
@@ -934,7 +939,17 @@ export default {
       }
     };
   },
+  filters: {
+    cutOut: function(value) {
+      value = Number(value).toFixed(2);
+      return value;
+    }
+  },
   methods: {
+    showAll() {
+      this.goods.pageSize = this.total2;
+      this.getGoods();
+    },
     handleSizeChange(val) {
       this.condition.pageSize = val;
       this.getData();

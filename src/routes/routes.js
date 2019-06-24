@@ -54,7 +54,9 @@ import modify from '../views/tinytool/modify.vue'
 import prescription from '../views/tinytool/prescription.vue'
 import ukxn from '../views/tinytool/ukxn.vue'
 import ukzc from '../views/tinytool/ukzc.vue'
+import auzc from '../views/tinytool/auzc.vue'
 import joomtool from '../views/tinytool/joomtool.vue'
+import bidding from '../views/tinytool/bidding.vue'
 // 设置中心
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
@@ -365,7 +367,59 @@ const routes = [
       {
         path: '/v1/tiny-tool/fix-price',
         component: fixPrice,
-        name: '海外仓定价器'
+        name: '海外仓定价器',
+        children: [
+          {
+            path: '/',
+            component: ukfic2,
+            name: '默认'
+          },
+          {
+            path: '/v1/tiny-tool/keyword-analysis',
+            component: bidding,
+            name: '竞品分析'
+          },
+          {
+            path: '/v1/tiny-tool/uk-fic',
+            component: ukfic,
+            name: 'UK虚拟仓定价器'
+          },
+          {
+            path: '/v1/tiny-tool/uk-fic2',
+            component: ukfic2,
+            name: '欧洲虚拟仓定价器'
+          },
+          {
+            path: '/v1/tiny-tool/uk',
+            component: uk,
+            name: 'UK真仓定价'
+          },
+          {
+            path: '/v1/tiny-tool/au',
+            component: au,
+            name: 'AU真仓定价'
+          },
+          {
+            path: '/v1/tiny-tool/ebay-virtual-store',
+            component: modify,
+            name: 'eBay海外仓修改在线数量'
+          },
+          {
+            path: '/v1/tiny-tool/uk-replenish',
+            component: ukxn,
+            name: 'uk虚拟仓补货'
+          },
+          {
+            path: '/v1/tiny-tool/au-real-replenish',
+            component: ukzc,
+            name: 'uk真仓补货'
+          },
+          {
+            path: '/v1/tiny-tool/uk-real-replenish',
+            component: auzc,
+            name: 'AU真仓补货'
+          }
+        ]
       },
       {
         path: '/v1/tiny-tool/exception',
@@ -383,29 +437,9 @@ const routes = [
         name: '产品上传'
       },
       {
-        path: '/v1/tiny-tool/uk-fic',
-        component: ukfic,
-        name: 'UK虚拟仓定价器'
-      },
-      {
         path: '/v1/tiny-tool/joom-tool',
         component: joomtool,
         name: 'JOOM小工具'
-      },
-      {
-        path: '/v1/tiny-tool/uk-fic2',
-        component: ukfic2,
-        name: '欧洲虚拟仓定价器'
-      },
-      {
-        path: '/v1/tiny-tool/uk',
-        component: uk,
-        name: 'UK真仓定价'
-      },
-      {
-        path: '/v1/tiny-tool/au',
-        component: au,
-        name: 'AU真仓定价'
       },
       {
         path: '/v1/tiny-tool/declared-value',
@@ -436,21 +470,6 @@ const routes = [
         path: '/v1/tiny-tool/express-tracking',
         component: logistics,
         name: '物流跟踪'
-      },
-      {
-        path: '/v1/tiny-tool/ebay-virtual-store',
-        component: modify,
-        name: 'eBay海外仓修改在线数量'
-      },
-      {
-        path: '/v1/tiny-tool/uk-replenish',
-        component: ukxn,
-        name: 'uk虚拟仓补货'
-      },
-      {
-        path: '/v1/tiny-tool/au-real-replenish',
-        component: ukzc,
-        name: 'uk真仓补货'
       },
       {
         path: '/v1/tiny-tool/express-expired',

@@ -11,7 +11,7 @@
           :model="condition"
           :inline="true"
           ref="condition"
-          label-width="6.8rem"
+          label-width="8rem"
           class="demo-form-inline"
           v-show="show"
         >
@@ -22,6 +22,7 @@
               multiple
               collapse-tags
               placeholder="部门"
+              style="width:220px"
               @change="choosed"
             >
               <el-button plain type="info" @click="selectalld">全选</el-button>
@@ -42,6 +43,7 @@
               filterable
               multiple
               collapse-tags
+              style="width:220px"
               placeholder="开发员"
             >
               <el-button plain type="info" @click="selectallm">全选</el-button>
@@ -55,10 +57,17 @@
               ></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="每款利润" class="input">
+            <el-input v-model="condition.minAvgNumber" size="small" style="width:220px"></el-input>
+          </el-form-item>
+          <el-form-item label="最低开发款数" class="input">
+            <el-input v-model="condition.minNumber" size="small" style="width:220px"></el-input>
+          </el-form-item>    
           <el-form-item label="时间类型" class="input" prop="dateType">
             <el-radio-group v-model="condition.dateType">
               <el-radio
                 border
+                style="width:105px"
                 v-for="(item,index) in dateType"
                 :index="index"
                 :key="item.id"
@@ -83,6 +92,7 @@
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
+              style="width:220px"
               :picker-options="pickerOptions2"
             ></el-date-picker>
           </el-form-item>
@@ -259,7 +269,9 @@ export default {
       condition: {
         developer: [],
         dateType: 1,
-        dateRange: []
+        dateRange: [],
+        minNumber:'200',
+        minAvgNumber:'300'
       },
       tableMap: {
         first: {

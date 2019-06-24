@@ -38,12 +38,11 @@
           </el-form-item>
           <el-form-item label="开发员" class="input">
             <el-select
-              size="small"
               v-model="condition.developer"
-              filterable
               style="width:170px;"
               multiple
               collapse-tags
+              size="small"
               placeholder="开发员"
             >
               <el-button plain type="info" @click="selectallm">全选</el-button>
@@ -75,6 +74,12 @@
               ></el-option>
             </el-select>
           </el-form-item>
+          <!-- <el-form-item label="标准利润" class="input">
+            <el-input v-model="condition.minAvgNumber" size="small" style="width:215px;"></el-input>
+          </el-form-item>
+          <el-form-item label="最低开发款数" class="input">
+            <el-input v-model="condition.minNumber" size="small" style="width:215px;"></el-input>
+          </el-form-item> -->
           <el-form-item label="时间类型" class="input" prop="dateType">
             <el-radio-group v-model="condition.dateType">
               <el-radio
@@ -99,7 +104,7 @@
               value-format="yyyy-MM-dd"
               type="daterange"
               align="right"
-              style="width:250px;"
+              style="width:215px;"
               unlink-panels
               range-separator="至"
               start-placeholder="开始日期"
@@ -125,17 +130,17 @@
       <el-button @click="exportExcel(condition)" type="primary">导出表格</el-button>
     </el-col>
     <el-dialog title="查看明细" :visible.sync="dialogTableVisible">
-      <el-table :data="viewForm">
+      <el-table :data="viewForm" @sort-change="sortNumber1">
         <el-table-column property="saleMen" label="销售员"></el-table-column>
         <el-table-column property="goodsCode" label="产品编码"></el-table-column>
-        <el-table-column property="sold" label="销量"></el-table-column>
-        <el-table-column property="amt" label="销售额(￥)">
+        <el-table-column property="sold" label="销量" sortable="custom"></el-table-column>
+        <el-table-column property="amt" label="销售额(￥)" sortable="custom">
           <template slot-scope="scope">{{scope.row.amt | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="profit" label="总利润(￥)">
+        <el-table-column property="profit" label="总利润(￥)" sortable="custom">
           <template slot-scope="scope">{{scope.row.profit | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="rate" label="利润率(%)">
+        <el-table-column property="rate" label="利润率(%)" sortable="custom">
           <template slot-scope="scope">{{(scope.row.rate*10000/100).toFixed(2)}}</template>
         </el-table-column>
       </el-table>
@@ -164,7 +169,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        width="100"
+        width="98"
         prop="goodsCode"
         label="产品编码"
         :formatter="empty"
@@ -172,14 +177,14 @@
       ></el-table-column>
       <el-table-column width="100" prop="devDate" label="开发日期" sortable="custom" :formatter="formatter"></el-table-column>
       <el-table-column
-        width="100"
+        width="98"
         prop="goodsStatus"
         label="产品状态"
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
       <el-table-column width="75" prop="sold" label="销量" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column width="90" prop="amt" label="销售额" :formatter="empty" sortable="custom">
+      <el-table-column width="92" prop="amt" label="销售额" :formatter="empty" sortable="custom">
         <template slot-scope="scope">{{scope.row.amt | cutOut1}}</template>
       </el-table-column>
       <el-table-column width="90" prop="profit" label="总利润" :formatter="empty" sortable="custom">
@@ -277,9 +282,14 @@
         :current-page="this.condition.page"
         :page-sizes="[10, 20, 30, 40]"
         :page-size="this.condition.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
+        layout="total, sizes,slot, prev, pager, next, jumper"
         :total="this.total"
-      ></el-pagination>
+      >
+      <span>
+            <el-button type="text"
+                       @click="showAll">显示全部</el-button>
+      </span>
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -349,7 +359,7 @@ export default {
         goodsStatus: [],
         page: 1,
         pageSize: 20,
-        sort: null
+        sort: '-profit'
       },
       tableMap: {
         first: {
@@ -403,6 +413,10 @@ export default {
     }
   },
   methods: {
+    showAll() {
+      this.condition.pageSize = this.total;
+      this.onSubmit(this.condition)
+    },
     formatter(row, column) {
       return row.devDate ? row.devDate.substring(0, 10) : "";
     },
@@ -649,6 +663,10 @@ export default {
           sums[index] = "合计";
           return;
         }
+        if(index === 1){
+          sums[index] = "N/A";
+          return;
+        }
         const values = data.map(item =>
           Number(item[column.property] ? item[column.property] : "unkonwn")
         );
@@ -687,6 +705,14 @@ export default {
       if (column.order == "descending") {
         this.condition.sort ='-'+column.prop;
         this.onSubmit(this.condition);
+      }
+    },
+    sortNumber1(column, prop, order) {
+      const data = this.viewForm
+      if (column.order === 'descending') {
+        this.viewForm = data.sort(compareDown(data, column.prop))
+      } else {
+        this.viewForm = data.sort(compareUp(data, column.prop))
       }
     }
   },
