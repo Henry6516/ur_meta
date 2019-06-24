@@ -152,10 +152,10 @@
                        label="销售额变化"
                        sortable="custom"
                        align="center"></el-table-column>
-      <el-table-column prop="createDate"
+      <!-- <el-table-column prop="createDate"
                        label="创建时间"
                        :formatter="empty"
-                       align="center"></el-table-column>
+                       align="center"></el-table-column> -->
     </el-table>
     <div class="toolbar">
       <el-pagination background
@@ -253,26 +253,26 @@ export default {
         '销售员',
         '商品编码',
         '商品名称',
-        '上上周销量',
-        '上上周销售额',
-        '上周销量',
-        '上周销售额',
+        '日期1销量',
+        '日期1销售额',
+        '日期2销量',
+        '日期2销售额',
         '销量变化',
         '销售额变化',
-        '创建时间'
+        // '创建时间'
       ]
       const filterVal = [
         'suffix',
         'username',
         'goodsCode',
         'goodsName',
-        'num',
-        'amt',
         'lastNum',
         'lastAmt',
+        'num',
+        'amt',
         'numDiff',
         'amtDiff',
-        'createDate'
+        // 'createDate'
       ]
       const form = Object.assign({}, this.condition)
       form.page = 1
