@@ -115,7 +115,7 @@
         <el-button type="primary" @click="exportExcelMx()">导出明细</el-button>
       </div> -->
     </el-dialog>
-    <el-dialog title="查看开发明细" :visible.sync="dialogTableVisibleKf" width="70%">
+    <el-dialog title="查看开发明细" :visible.sync="dialogTableVisibleKf" width="72%">
       <el-table :data="viewFormKf" @sort-change="sortNumberViewKf">
         <el-table-column property="storeName" label="仓库"></el-table-column>
         <el-table-column property="salerName" label="开发员"></el-table-column>

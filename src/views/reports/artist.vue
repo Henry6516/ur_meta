@@ -562,8 +562,8 @@
         </el-pagination>
         </div>
         <div style="float:right">
-          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:5px;">分摊死库合计:<span style="color:red">{{totalPrice}}</span></p>
-          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">当前页分摊死库:<span style="color:red">{{currentPrice}}</span></p>
+          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:5px;">分摊死库合计:<span style="color:red">{{totalPrice | cutOut}}</span></p>
+          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">当前页分摊死库:<span style="color:red">{{currentPrice | cutOut}}</span></p>
         </div>
       </div>
     </div>
@@ -682,6 +682,12 @@ export default {
           }
         ]
       }
+    }
+  },
+  filters: {
+    cutOut: function(value) {
+      value = Number(value).toFixed(2);
+      return value;
     }
   },
   methods: {

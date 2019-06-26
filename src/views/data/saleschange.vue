@@ -133,7 +133,7 @@
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="lastAmt"
-                       label="日期1销售额"
+                       label="日期1销售额(￥)"
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="num"
@@ -141,7 +141,7 @@
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="amt"
-                       label="日期2销售额"
+                       label="日期2销售额(￥)"
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="numDiff"
@@ -149,7 +149,7 @@
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="amtDiff"
-                       label="销售额变化"
+                       label="销售额变化(￥)"
                        sortable="custom"
                        align="center"></el-table-column>
       <!-- <el-table-column prop="createDate"

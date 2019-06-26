@@ -809,8 +809,8 @@
         </el-pagination>
          </div>
         <div style="float:right">
-          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:5px;">死库金额合计:<span style="color:red">{{totalPrice}}</span></p>
-          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">当前页死库金额:<span style="color:red">{{currentPrice}}</span></p>
+          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:5px;">死库金额合计:<span style="color:red">{{totalPrice | cutOut}}</span></p>
+          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">当前页死库金额:<span style="color:red">{{currentPrice | cutOut}}</span></p>
         </div>
       </div>
     </div>
@@ -943,6 +943,12 @@ export default {
           }
         ]
       }
+    }
+  },
+  filters: {
+    cutOut: function(value) {
+      value = Number(value).toFixed(2);
+      return value;
     }
   },
   methods: {
@@ -1150,13 +1156,17 @@ export default {
         this.show3 = true
         this.showis1=true
         this.showis2=false
-        this.onSubmit(this.condition)
+        if(this.tableData01.length==0){
+          this.onSubmit(this.condition)
+        }
       }else if(this.activeName === 'first'){
         this.show2 = true
         this.show3 = false
         this.showis1=true
         this.showis2=false
-        this.onSubmit(this.condition)
+        if(this.tableData02.length==0){
+          this.onSubmit(this.condition)
+        }
       }else {
         this.showis1=false
         this.showis2=true

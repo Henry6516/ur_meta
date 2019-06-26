@@ -46,11 +46,11 @@
                 <el-table-column prop="picUrl"
                                  fixed
                                  label="商品图片"
-                                 header-align="center" width="90">
+                                 header-align="center" width="80">
                     <template slot-scope="scope">
                         <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
                             <div slot="content"><img :src="scope.row.picUrl" style="width: 300px;height: 300px;"></div>
-                            <img :src="scope.row.picUrl" style="width: 70px;height: 60px">
+                            <img :src="scope.row.picUrl" style="width: 60px;height: 60px">
                         </el-tooltip>
                         <!-- <img :src='scope.row.picUrl'
                              style="width: 70px;height: 60px"> -->
@@ -207,7 +207,7 @@
                                   prop="goodsInfoPic.picUrl"
                                   class="item1">
                         <img :src='goodsInfoPic.picUrl'
-                             style="width: 150px;height: 100px;">
+                             style="width: 150px;height: 150px;">
                     </el-form-item>
                     <el-form-item label="图片地址"
                                   prop="picUrl"

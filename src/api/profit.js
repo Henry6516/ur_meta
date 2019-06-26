@@ -492,7 +492,7 @@ export function getEdition(param) {
 export function getRefund(param) {
   const data = { condition: param }
   return request({
-    url: '/report/refund',
+    url: '/report/refund?page=' + param.page,
     method: 'post',
     data
   })

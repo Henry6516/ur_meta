@@ -81,7 +81,7 @@
           style="width: 100%;overflow: hidden"
         >
           <el-form-item label="图片" prop="img" class="item1">
-             <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 150px;height: 130px;"></a>
+             <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 150px;height: 150px;"></a>
           </el-form-item>
           <el-form-item label="图片地址" prop="img" class="item">
             <span><a :href="viewForm.img" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.img}}</a></span>
@@ -197,11 +197,11 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="img" fixed label="图片" header-align="center" width="90">
+        <el-table-column prop="img" fixed label="图片" header-align="center" width="80">
           <template slot-scope="scope">
             <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
               <div slot="content"><img :src="scope.row.img" style="width: 300px;height: 300px;"></div>
-              <img :src="scope.row.img" style="width: 70px;height: 60px">
+              <img :src="scope.row.img" style="width: 60px;height: 60px">
             </el-tooltip>
             <!-- <img :src="scope.row.img" style="width: 70px;height: 60px"> -->
           </template>
@@ -418,7 +418,7 @@
           style="width: 100%;overflow: hidden"
         >
           <el-form-item label="图片" prop="img" class="item1">
-            <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 150px;height: 130px;"></a>
+            <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 150px;height: 150px;"></a>
           </el-form-item>
           <el-form-item label="图片地址" prop="img" class="item">
             <span><a :href="viewForm.img" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.img}}</a></span>
@@ -603,11 +603,11 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="img" fixed label="图片" header-align="center" width='90'>
+        <el-table-column prop="img" fixed label="图片" header-align="center" width='80'>
           <template slot-scope="scope">
             <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
               <div slot="content"><img :src="scope.row.img" style="width: 300px;height: 300px;"></div>
-              <img :src="scope.row.img" style="width: 70px;height: 60px">
+              <img :src="scope.row.img" style="width: 60px;height: 60px">
             </el-tooltip>
             <!-- <img :src="scope.row.img" style="width: 70px;height: 60px"> -->
           </template>
@@ -875,7 +875,7 @@
           style="width: 100%;overflow: hidden"
         >
           <el-form-item label="图片" prop="img" class="item1">
-            <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 150px;height: 130px;"></a>
+            <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 150px;height: 150px;"></a>
           </el-form-item>
           <el-form-item label="图片地址" prop="img" class="item">
             <span><a :href="viewForm.img" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.img}}</a></span>
@@ -958,7 +958,7 @@
           ref="editForm"
         >
           <el-form-item label="图片">
-            <img :src="editForm.img" style="width: 60px;height: 50px">
+            <img :src="editForm.img" style="width: 70px;height: 70px">
           </el-form-item>
           <el-form-item label="图片地址" prop="img">
             <el-input v-model="editForm.img"></el-input>
@@ -1056,11 +1056,11 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="img" fixed label="图片" header-align="center" width="90">
+        <el-table-column prop="img" fixed label="图片" header-align="center" width="80">
           <template slot-scope="scope">
             <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
               <div slot="content"><img :src="scope.row.img" style="width: 300px;height: 300px;"></div>
-              <img :src="scope.row.img" style="width: 70px;height: 60px">
+              <img :src="scope.row.img" style="width: 60px;height: 60px">
             </el-tooltip>
             <!-- <img :src="scope.row.img" style="width: 70px;height: 60px"> -->
           </template>

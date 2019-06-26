@@ -103,16 +103,16 @@
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column prop="picUrl" fixed label="商品图片" header-align="center" width="90">
+            <el-table-column prop="picUrl" fixed label="商品图片" header-align="center" width="80">
               <template slot-scope="scope">
                 <a
                 :href="'https://www.joom.com/en/products/'+scope.row.proId"
                 target="_blank"
-                style="display: block; width: 70px;height: 60px"
+                style="display: block; width: 60px;height: 60px"
               >
                <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
                 <div slot="content"><img :src="scope.row.mainImage" style="width: 300px;height: 300px;"></div>
-                <img :src="scope.row.mainImage" style="width: 70px;height: 60px">
+                <img :src="scope.row.mainImage" style="width: 60px;height: 60px">
               </el-tooltip>
                 <!-- <img :src="scope.row.mainImage" style="width: 70px;height: 60px"> -->
                 </a>

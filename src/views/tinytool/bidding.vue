@@ -34,8 +34,11 @@
           >编辑</el-button>
         </template>
       </el-table-column>
-      <el-table-column width="180" prop="keyword" label="关键词" :formatter="empty" header-align="center" align="center">
-        <el-table-column prop="keyword" :render-header="renderHeaderPicEbay" align="center" width="180"></el-table-column>
+      <el-table-column width="180" prop="keyword" label="关键词1" :formatter="empty" header-align="center" align="center">
+        <el-table-column prop="keyword" :render-header="renderHeaderPicEbay" align="center" width="180" :formatter="empty"></el-table-column>
+      </el-table-column>
+      <el-table-column width="180" prop="keyword2" label="关键词2" :formatter="empty" header-align="center" align="center">
+        <el-table-column prop="keyword2" :render-header="renderHeaderPicEbay" align="center" width="180" :formatter="empty"></el-table-column>
       </el-table-column>
       <el-table-column width="180" prop="goodsCode" label="商品编码" :formatter="empty" header-align="center" align="center">
         <el-table-column prop="goodsCode" :render-header="renderHeaderPicEbay" align="center" width="180"></el-table-column>
@@ -43,16 +46,29 @@
       <el-table-column width="180" prop="goodsName" label="商品名称" :formatter="empty" header-align="center" align="center">
         <el-table-column prop="goodsName" :render-header="renderHeaderPicEbay" align="center" width="180"></el-table-column>
       </el-table-column>
+      <el-table-column width="180" prop="developer" label="开发员" :formatter="empty" header-align="center" align="center">
+        <el-table-column prop="developer" :render-header="renderHeaderPicEbay" align="center" width="180"></el-table-column>
+      </el-table-column>
       <el-table-column width="120" prop="costPrice" label="平均单价(￥)" :formatter="empty" header-align="center" align="center"></el-table-column>
       <el-table-column min-width="100" prop="weight" label="重量(g)" :formatter="empty" header-align="center" align="center"></el-table-column>
-      <el-table-column min-width="400" prop="url" label="UK链接" :formatter="empty" header-align="center" align="center">
+      <el-table-column prop="ukUrl" label="关键词1UK链接" :formatter="empty" header-align="center" align="center" width="200">
         <template slot-scope="scope">
-          <a :href="scope.row.url" target="_blank">{{scope.row.url}}</a>
+          <a :href="scope.row.ukUrl" target="_blank">{{scope.row.ukUrl | cutOut}}</a>
         </template>
       </el-table-column>
-      <el-table-column min-width="400" prop="url" label="AU链接" :formatter="empty" header-align="center" align="center">
+      <el-table-column  prop="ukUrl2" label="关键词2UK链接" :formatter="empty" header-align="center" align="center" width="200">
         <template slot-scope="scope">
-          <a :href="scope.row.url2" target="_blank">{{scope.row.url2}}</a>
+          <a :href="scope.row.ukUrl2" target="_blank">{{scope.row.ukUrl2 | cutOut}}</a>
+        </template>
+      </el-table-column>
+      <el-table-column prop="auUrl" label="关键词1AU链接" :formatter="empty" header-align="center" align="center" width="200">
+        <template slot-scope="scope">
+          <a :href="scope.row.auUrl" target="_blank">{{scope.row.auUrl | cutOut}}</a>
+        </template>
+      </el-table-column>
+      <el-table-column prop="auUrl2" label="关键词2AU链接" :formatter="empty" header-align="center" align="center" width="200">
+        <template slot-scope="scope">
+          <a :href="scope.row.auUrl2" target="_blank">{{scope.row.auUrl2 | cutOut}}</a>
         </template>
       </el-table-column>
       <!-- <infinite-loading
@@ -76,10 +92,18 @@
         <el-col :span="24" class="cTop">
           <el-col :span="24" style="margin-bottom: 20px">
             <el-col :span="3">
-              <p class="basp">关键词</p>
+              <p class="basp">关键词1</p>
             </el-col>
             <el-col :span="20">
               <el-input v-model="con.keyword"></el-input>
+            </el-col>
+          </el-col>
+          <el-col :span="24" style="margin-bottom: 20px">
+            <el-col :span="3">
+              <p class="basp">关键词2</p>
+            </el-col>
+            <el-col :span="20">
+              <el-input v-model="con.keyword2"></el-input>
             </el-col>
           </el-col>
           <el-col :span="24" style="margin-bottom: 20px">
@@ -96,6 +120,16 @@
             </el-col>
             <el-col :span="20">
               <el-input v-model="con.goodsName"></el-input>
+            </el-col>
+          </el-col>
+          <el-col :span="24" style="margin-bottom: 20px">
+            <el-col :span="3">
+              <p class="basp">开发员</p>
+            </el-col>
+            <el-col :span="20">
+              <el-select v-model="con.developer" style="width:100%;">
+              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
+            </el-select>
             </el-col>
           </el-col>
           <el-col :span="24" style="margin-bottom: 20px">
@@ -126,10 +160,28 @@
         <el-col :span="24" class="cTop" style="margin-top:15px">
           <el-col :span="24" style="margin-bottom: 20px">
             <el-col :span="3">
-              <p class="basp">关键词</p>
+              <p class="basp">关键词1</p>
             </el-col>
             <el-col :span="20">
               <el-input v-model="conTj.keyword"></el-input>
+            </el-col>
+          </el-col>
+          <el-col :span="24" style="margin-bottom: 20px">
+            <el-col :span="3">
+              <p class="basp">关键词2</p>
+            </el-col>
+            <el-col :span="20">
+              <el-input v-model="conTj.keyword2"></el-input>
+            </el-col>
+          </el-col>
+          <el-col :span="24" style="margin-bottom: 20px">
+            <el-col :span="3">
+              <p class="basp">开发员</p>
+            </el-col>
+            <el-col :span="20">
+              <el-select v-model="conTj.developer" style="width:100%;">
+              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
+            </el-select>
             </el-col>
           </el-col>
           <el-col :span="24" style="margin-bottom: 20px">
@@ -189,11 +241,12 @@
             border
             :data="viweTable"
             :header-row-style="thClass"
-            v-show="viweTable.length!=0"
+            v-show="flagTd"
             v-loading="listLoading"
           >
             <el-table-column min-width="100" prop="goodsCode" label="商品编码" :formatter="empty" header-align="center" align="center"></el-table-column>
             <el-table-column min-width="100" prop="goodsName" label="商品名称" :formatter="empty" header-align="center" align="center"></el-table-column>
+            <el-table-column min-width="100" prop="developer" label="开发员" :formatter="empty" header-align="center" align="center"></el-table-column>
             <el-table-column min-width="100" prop="costPrice" label="平均单价(￥)" :formatter="empty" header-align="center" align="center"></el-table-column>
             <el-table-column min-width="100" prop="weight" label="重量(g)" :formatter="empty" header-align="center" align="center"></el-table-column>
             <el-table-column label="操作" width="95" header-align="center">
@@ -228,7 +281,8 @@
 import {
   getKeywordAnalysis,
   getKeywordInfo,
-  getKeywordList
+  getKeywordList,
+  getDeveloper
 } from "../../api/profit";
 import InfiniteLoading from "vue-infinite-loading";
 
@@ -241,12 +295,14 @@ export default {
       tableHeight: window.innerHeight - 200,
       tableData: [],
       viweTable: [],
+      developer:[],
       listLoading:false,
       addFormVisible: false,
       dialogPictureBjEbayYs: false,
       dialogPictureBjEbaytj: false,
       dialogPytj: false,
       flag: true,
+      flagTd:false,
       condition: {
         keyword: null,
         pageSize: 20,
@@ -254,31 +310,39 @@ export default {
         goodsCode: null,
         goodsName: null,
         costPrice: null,
-        weight: null
+        weight: null,
+        developer:null,
+        keyword2:null
       },
       total: 0,
       totalcob: 0,
       con: {
         id: null,
+        keyword2:null,
         keyword: null,
         goodsCode: null,
         goodsName: null,
         costPrice: null,
-        weight: null
+        weight: null,
+        developer:null
       },
       conTj: {
         keyword: null,
+        keyword2:null,
         goodsCode: null,
         goodsName: null,
         costPrice: null,
-        weight: null
+        weight: null,
+        developer:null
       },
       conTjob: {
         keyword: null,
+        keyword2:null,
         goodsCode: null,
         goodsName: null,
         costPrice: null,
-        weight: null
+        weight: null,
+        developer:null
       },
       cob: {
         goodsCode: null,
@@ -287,6 +351,11 @@ export default {
         pageSize: 10
       }
     };
+  },
+  filters: {
+    cutOut: function(value) {
+      return value ? value.substring(8, 34) : "";
+    }
   },
   methods: {
    renderHeaderPicEbay(h, { column, $index }) {
@@ -328,6 +397,33 @@ export default {
           [
             h("el-input", {
               props: {
+                value: this.condition.keyword2,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.keyword2 = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.onSubmit();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 2) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
                 value: this.condition.goodsCode,
                 size: "mini",
                 clearable: true
@@ -344,7 +440,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 2) {
+      } else if ($index === 3) {
         return h(
           "div",
           {
@@ -371,12 +467,40 @@ export default {
             })
           ]
         );
+      }else if ($index === 4) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.developer,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.developer = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.onSubmit();
+                }
+              }
+            })
+          ]
+        );
       }
     },
     pyAdd() {
       this.dialogPytj = true;
     },
     searchPy() {
+      this.flagTd=true
       this.listLoading=true
       getKeywordList(this.cob).then(response => {
         this.listLoading=false
@@ -409,6 +533,8 @@ export default {
     mark(index, row) {
       this.dialogPictureBjEbayYs = true;
       this.con.keyword = row.keyword;
+      this.con.keyword2 = row.keyword2;
+      this.con.developer = row.developer;
       this.con.id = row.id;
       this.con.goodsCode = row.goodsCode;
       this.con.goodsName = row.goodsName;
@@ -419,6 +545,7 @@ export default {
       this.conTjob.goodsCode = row.goodsCode;
       this.conTjob.goodsName = row.goodsName;
       this.conTjob.costPrice = row.costPrice;
+      this.conTjob.developer = row.developer;
       this.conTjob.weight = row.weight;
       getKeywordInfo(this.conTjob).then(response => {
         if (response.data.code === 200) {
@@ -502,6 +629,10 @@ export default {
   },
   mounted() {
     this.onSubmit();
+    getDeveloper().then(response => {
+      const possessMan = response.data.data;
+      this.developer = possessMan
+    });
   }
 };
 </script>

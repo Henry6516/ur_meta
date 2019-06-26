@@ -68,11 +68,11 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="picUrl" fixed label="商品图片" header-align="center" width="90">
+        <el-table-column prop="picUrl" fixed label="商品图片" header-align="center" width="80">
           <template slot-scope="scope">
             <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
               <div slot="content"><img :src="scope.row.picUrl" style="width: 300px;height: 300px;"></div>
-              <img :src="scope.row.picUrl" style="width: 70px;height: 60px">
+              <img :src="scope.row.picUrl" style="width: 60px;height: 60px">
             </el-tooltip>
             <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
           </template>
@@ -208,7 +208,7 @@
         >
           <el-form-item label="图片" prop="picUrl" class="item1">
             <a :href="goodsInfo.picUrl" target="_blank" style="cursor: pointer">
-              <img :src="goodsInfo.picUrl" style="width: 150px;height: 100px;">
+              <img :src="goodsInfo.picUrl" style="width: 150px;height: 150px;">
             </a>
           </el-form-item>
           <el-form-item label="图片地址" prop="picUrl" class="item">
@@ -376,7 +376,7 @@
         </el-table-column>
         <el-table-column prop="picUrl" fixed label="商品图片" header-align="center">
           <template slot-scope="scope">
-            <img :src="scope.row.picUrl" style="width: 60px;height: 50px">
+            <img :src="scope.row.picUrl" style="width: 70px;height: 70px">
           </template>
         </el-table-column>
         <el-table-column label="商品编码" header-align="center">
@@ -642,7 +642,7 @@
         </el-table-column>
         <el-table-column prop="picUrl" fixed label="主图" header-align="center">
           <template slot-scope="scope">
-            <img :src="scope.row.picUrl" style="width: 60px;height: 50px">
+            <img :src="scope.row.picUrl" style="width: 70px;height: 70px">
           </template>
         </el-table-column>
         <el-table-column label="商品编码" header-align="center">
