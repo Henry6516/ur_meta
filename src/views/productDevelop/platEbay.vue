@@ -195,7 +195,17 @@
           <!-- <el-button type="primary"
                                style="margin: 10px 0;margin-left: 17px"
           @click="outerVisible = true">设置多属性</el-button>-->
-          <el-button type="primary" style="margin: 10px 0;" @click='showAttribute1'><i :class="[showattribute1?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>设置多属性</el-button>
+          <el-row>
+      <el-col :span="24">
+         <el-button type="primary" style="margin: 10px 0;float:left;margin-top:0px;" @click='showAttribute1'><i :class="[showattribute1?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px;float:left"></i>设置多属性</el-button>
+        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordColor"></el-input>
+        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newColor"></el-input>
+        <el-button type="success" style="float:left;width:100px;margin-left:5px;" @click="replaceColor">替换颜色</el-button>
+        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordSize"></el-input>
+        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newSize"></el-input>
+        <el-button type="danger" style="float:left;width:100px;margin-left:5px;" @click="replaceSize">替换尺寸</el-button>
+    </el-col>
+    </el-row>
           <el-row v-if='showattribute1'>
             <el-col :span="24">
               <el-col :span="18" style="padding-top:8px">多属性设置</el-col>
@@ -882,6 +892,10 @@ import { APISaveEbayInfo } from "../../api/platebay";
 export default {
   data() {
     return {
+      ordColor:null,
+      newColor:null,
+      ordSize:null,
+      newSize:null,
       showattribute1:false,
       radio: "",
       columns: "",
@@ -954,6 +968,28 @@ export default {
     };
   },
   methods: {
+    replaceColor(){
+      for(var i=0;i<this.title.length;i++){
+        var ordDate=this.title[i].value
+        for(var k=0;k<ordDate.length;k++){
+          if(ordDate[k]==this.ordColor){
+            // this.title[j].value.splice(k, 1, this.ship);
+            ordDate.splice(k, 1, this.newColor);
+          }
+        }
+      }
+    },
+    replaceSize(){
+     for(var i=0;i<this.title.length;i++){
+        var ordDate=this.title[i].value
+        for(var k=0;k<ordDate.length;k++){
+          if(ordDate[k]==this.ordSize){
+            // this.title[j].value.splice(k, 1, this.ship);
+            ordDate.splice(k, 1, this.newSize);
+          }
+        }
+      }
+    },
     warehouseXz(e){
       this.accountNumber=[]
       for(let i=0;i<this.resAcc.length;i++){

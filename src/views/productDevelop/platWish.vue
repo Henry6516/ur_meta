@@ -335,9 +335,19 @@
       <h3 class="toolbar essential">多属性设置</h3>
     </el-col>
     <!-- <el-button @click="dialogVisible = true" style="margin-left:35px;" type="primary">多属性设置</el-button> -->
-    <el-button style="margin-left:17px;" type="primary" @click="showAttribute">
-      <i :class="[showattribute?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>多属性设置
-    </el-button>
+    <el-row>
+      <el-col :span="24">
+        <el-button style="margin-left:17px;float:left" type="primary" @click="showAttribute">
+          <i :class="[showattribute?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>多属性设置
+        </el-button>
+        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordColor"></el-input>
+        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newColor"></el-input>
+        <el-button type="success" style="float:left;width:100px;margin-left:5px;" @click="replaceColor">替换颜色</el-button>
+        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordSize"></el-input>
+        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newSize"></el-input>
+        <el-button type="danger" style="float:left;width:100px;margin-left:5px;" @click="replaceSize">替换尺寸</el-button>
+    </el-col>
+    </el-row>
     <el-table
       :data="tableData"
       border
@@ -761,6 +771,10 @@ export default {
   },
   data() {
     return {
+      ordColor:null,
+      newColor:null,
+      ordSize:null,
+      newSize:null,
       url: [],
       rows: 1,
       dialogTableVisible: false,
@@ -800,6 +814,20 @@ export default {
     };
   },
   methods: {
+    replaceColor(){
+      for(let i=0;i<this.tableData.length;i++){
+        if(this.ordColor==this.tableData[i].color){
+          this.tableData[i].color=this.newColor
+        }
+      }
+    },
+    replaceSize(){
+      for(let i=0;i<this.tableData.length;i++){
+        if(this.ordSize==this.tableData[i].size){
+          this.tableData[i].size=this.newSize
+        }
+      }
+    },
     selectalld1() {
       var ard1 = [];
       for (const item in this.joomArr) {

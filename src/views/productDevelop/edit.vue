@@ -511,8 +511,17 @@
             style="padding: 0;margin-left: 15px;">
       <h3 class="toolbar essential" style="margin-top: 15px;margin-bottom: 15px">SKU<span style="float:right;margin-right: 78px;font-size: 14px;margin-bottom: 15px;display: block">共{{skuTotal}}条<span style="margin-left: 15px">第1-{{skuTotal}}条数据</span></span>
       </h3>
+       <el-input style="float:left;width:100px;" placeholder="替换前" v-model="ordColor"></el-input>
+        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newColor"></el-input>
+        <el-button type="success" style="float:left;width:100px;margin-left:5px;" @click="replaceColor">替换款式1</el-button>
+        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordSize"></el-input>
+        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newSize"></el-input>
+        <el-button type="danger" style="float:left;width:100px;margin-left:5px;" @click="replaceSize">替换款式2</el-button>
+        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordpro"></el-input>
+        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newpro"></el-input>
+        <el-button type="warning" style="float:left;width:100px;margin-left:5px;" @click="replacePro">替换款式3</el-button>
     </el-col>
-    <el-col :span="24">
+    <el-col :span="24" style="margin-top:15px;">
     </el-col>
     <!--<el-select v-model="btn"-->
                <!--size="small"-->
@@ -736,6 +745,12 @@ import { getMenu } from '../../api/login'
 export default {
   data() {
     return {
+      ordColor:null,
+      newColor:null,
+      ordSize:null,
+      newSize:null,
+      ordpro:null,
+      newpro:null,
       tableData: [],
       mask:false,
       btn: '',
@@ -810,6 +825,27 @@ export default {
     }
   },
   methods: {
+    replaceColor(){
+      for(let i=0;i<this.tableData.length;i++){
+        if(this.ordColor==this.tableData[i].property1){
+          this.tableData[i].property1=this.newColor
+        }
+      }
+    },
+    replaceSize(){
+      for(let i=0;i<this.tableData.length;i++){
+        if(this.ordSize==this.tableData[i].property2){
+          this.tableData[i].property2=this.newSize
+        }
+      }
+    },
+    replacePro(){
+      for(let i=0;i<this.tableData.length;i++){
+        if(this.ordpro==this.tableData[i].property3){
+          this.tableData[i].property3=this.newpro
+        }
+      }
+    },
     selsChange(sels) {
       this.sels = sels
     },
