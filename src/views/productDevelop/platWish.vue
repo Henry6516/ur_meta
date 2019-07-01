@@ -202,6 +202,7 @@
       <!--<font size="3">下移动</font>-->
       <!--</el-button>-->
       <!--</el-col>-->
+      <el-row>
       <el-col :span="24" style="padding: 0;">
         <h3 class="toolbar essential">主信息</h3>
       </el-col>
@@ -330,12 +331,13 @@
           <el-input v-model="wishForm.shippingTime" style="width:100%"></el-input>
         </el-col>
       </el-col>
+      </el-row>
     </el-form>
     <el-col :span="24" style="padding: 0;margin-left: 15px">
       <h3 class="toolbar essential">多属性设置</h3>
     </el-col>
-    <!-- <el-button @click="dialogVisible = true" style="margin-left:35px;" type="primary">多属性设置</el-button> -->
     <el-row>
+    <!-- <el-button @click="dialogVisible = true" style="margin-left:35px;" type="primary">多属性设置</el-button> -->
       <el-col :span="24">
         <el-button style="margin-left:17px;float:left" type="primary" @click="showAttribute">
           <i :class="[showattribute?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>多属性设置
@@ -760,7 +762,8 @@ import {
   APIPlatExportWish,
   APIPlatExportJoom,
   APIDeleteVariant,
-  APIDeleteEbaySku
+  APIDeleteEbaySku,
+  APISaveFinishPlat
 } from "../../api/product";
 export default {
   props: {
@@ -843,25 +846,57 @@ export default {
     },
     keepPerfect() {
       if (this.tips) {
-        const data = {
-          id: this.wishForm.infoId,
-          plat: []
-        };
-        if (this.tips == "Wish") {
-          data.plat = ["wish"];
-        } else {
-          data.plat = ["joom"];
+      const md = JSON.stringify(this.mandatoryData);
+      const mr = JSON.stringify(this.randomData);
+      const data = {
+        id: this.wishForm.infoId,
+        basicInfo: {},
+        plat: [],
+        skuInfo: []
+      };
+      data.basicInfo = this.wishForm;
+      var url="";
+      for(var y=0;y<this.url.length;y++){
+        if(y==this.url.length - 1){
+          url+=this.url[y];
+        }else{
+         url+=(this.url[y]+ "\n");
         }
-        APIFinishPlat(data).then(res => {
-          if (res.data.code == 200) {
-            this.$message({
-              message: "保存成功",
-              type: "success"
-            });
-          } else {
-            this.$message.error(res.data.message);
-          }
-        });
+      }
+       if (this.tips == "Wish") {
+          data.plat = "wish";
+        } else {
+          data.plat = "joom";
+        }
+      data.basicInfo.extraImages = url;
+      data.basicInfo.id = this.condition.id;
+      data.basicInfo.requiredKeywords = md;
+      data.basicInfo.randomKeywords = mr;
+      data.skuInfo = this.tableData;
+      APISaveFinishPlat(data).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "保存成功",
+            type: "success"
+          });
+        } else {
+          this.$message.error("保存失败");
+        }
+      });
+        // const data = {
+        //   id: this.wishForm.infoId,
+        //   plat: []
+        // };
+        // APIFinishPlat(data).then(res => {
+        //   if (res.data.code == 200) {
+        //     this.$message({
+        //       message: "保存成功",
+        //       type: "success"
+        //     });
+        //   } else {
+        //     this.$message.error(res.data.message);
+        //   }
+        // });
       } else {
         this.$message.error("请选择要保存的模板");
       }

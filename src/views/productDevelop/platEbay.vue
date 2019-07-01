@@ -881,7 +881,8 @@ import {
   APIShippingEbay,
   APIFinishPlat,
   APIDeleteVariant,
-  APIDeleteEbaySku
+  APIDeleteEbaySku,
+  APISaveFinishPlat
 } from "../../api/product";
 import {
   getPlatEbayAccount,
@@ -1003,19 +1004,127 @@ export default {
         this.showattribute1 = !this.showattribute1;
     },
     keepWs() {
-      const data = {
-        id: this.wishForm.infoId,
-        plat: []
+      // const data = {
+      //   id: this.wishForm.infoId,
+      //   plat: []
+      // };
+      // data.plat = ["ebay"];
+      // APIFinishPlat(data).then(res => {
+      //   if (res.data.code == 200) {
+      //     this.$message({
+      //       message: "保存成功",
+      //       type: "success"
+      //     });
+      //   } else {
+      //     this.$message.error(res.data.message);
+      //   }
+      // });
+      for (var i = 0; i < this.title.length; i++) {
+        var obj = {};
+        obj.columns = [];
+        obj.pictureKey = this.radio;
+        for (var k = 0; k < this.title[i].value.length; k++) {
+          let strObj = {};
+          strObj[this.tite[k]] = this.title[i].value[k];
+          obj.columns.push(strObj);
+        }
+        this.tabDate[i].property = obj;
+      }
+      const md = JSON.stringify(this.mandatoryData);
+      const mr = JSON.stringify(this.randomData);
+      // const url = this.wishForm.extraPage.join("\\n");
+      var url="";
+      for(var y=0;y<this.wishForm.extraPage.length;y++){
+        if(y==this.wishForm.extraPage.length - 1){
+          url+=this.wishForm.extraPage[y];
+        }else{
+         url+=(this.wishForm.extraPage[y]+ "\n");
+        }
+      }
+      let objStr = {
+        specifics: this.tableData
       };
-      data.plat = ["ebay"];
-      APIFinishPlat(data).then(res => {
-        if (res.data.code == 200) {
+      var specificsData = JSON.stringify(objStr);
+      for(let n=0;n<this.ebaySite.length;n++){
+        if(this.wishForm.site==this.ebaySite[n].name){
+         this.wishForm.site=this.ebaySite[n].code
+        }
+      }
+      const data = {
+        id:this.wishForm.infoId,
+        plat:'ebay',
+        basicInfo: {
+          nid: this.wishForm.nid,
+          goodsId: this.wishForm.goodsId,
+          location: this.wishForm.location,
+          country: this.wishForm.country,
+          postCode: this.wishForm.postCode,
+          prepareDay: this.wishForm.prepareDay,
+          site: this.wishForm.site,
+          listedCate: this.wishForm.listedCate,
+          listedSubcate: this.wishForm.listedSubcate,
+          title: this.wishForm.title,
+          subTitle: this.wishForm.subTitle,
+          description: this.wishForm.description,
+          quantity: this.wishForm.quantity,
+          nowPrice: this.wishForm.nowPrice,
+          UPC: this.wishForm.UPC,
+          EAN: this.wishForm.EAN,
+          brand: this.wishForm.brand,
+          MPN: this.wishForm.MPN,
+          color: this.wishForm.color,
+          type: this.wishForm.type,
+          material: this.wishForm.material,
+          intendedUse: this.wishForm.intendedUse,
+          unit: this.wishForm.unit,
+          bundleListing: this.wishForm.bundleListing,
+          shape: this.wishForm.shape,
+          features: this.wishForm.features,
+          regionManufacture: this.wishForm.regionManufacture,
+          reserveField: this.wishForm.reserveField,
+          inShippingMethod1: this.wishForm.inShippingMethod1,
+          inFirstCost1: this.wishForm.inFirstCost1,
+          inSuccessorCost1: this.wishForm.inSuccessorCost1,
+          inShippingMethod2: this.wishForm.inShippingMethod2,
+          inFirstCost2: this.wishForm.inFirstCost2,
+          inSuccessorCost2: this.wishForm.inSuccessorCost2,
+          outShippingMethod1: this.wishForm.outShippingMethod1,
+          outFirstCost1: this.wishForm.outFirstCost1,
+          outSuccessorCost1: this.wishForm.outSuccessorCost1,
+          outShipToCountry1: this.wishForm.outShipToCountry1,
+          outShippingMethod2: this.wishForm.outShippingMethod2,
+          outFirstCost2: this.wishForm.outFirstCost2,
+          outSuccessorCost2: this.wishForm.outSuccessorCost2,
+          outShipToCountry2: this.wishForm.outShipToCountry2,
+          mainPage: this.wishForm.mainPage,
+          extraPage: url,
+          sku: this.wishForm.sku,
+          infoId: this.wishForm.infoId,
+          specifics: specificsData,
+          iBayTemplate: this.wishForm.iBayTemplate,
+          headKeywords: this.wishForm.headKeywords,
+          requiredKeywords: md,
+          randomKeywords: mr,
+          tailKeywords: this.wishForm.tailKeywords,
+          stockUp: this.wishForm.stockUp
+        },
+        skuInfo: []
+      };
+      // data.basicInfo = this.wishForm
+      data.skuInfo = this.tabDate;
+      APISaveFinishPlat(data).then(res => {
+        if (res.data.code === 200) {
           this.$message({
             message: "保存成功",
             type: "success"
           });
         } else {
           this.$message.error(res.data.message);
+        }
+        for(let s=0;s<this.ebaySite.length;s++){
+          if(this.wishForm.site==this.ebaySite[s].code){
+           this.wishForm.site=this.ebaySite[s].name
+           }
         }
       });
     },

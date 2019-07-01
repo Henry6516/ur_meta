@@ -1171,3 +1171,13 @@ export function APIFormExtend(param) {
     data
   })
 }
+
+export function APISaveFinishPlat(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/save-finish-plat',
+    method: 'post',
+    data
+  })
+}
+

@@ -745,12 +745,12 @@ import { getMenu } from '../../api/login'
 export default {
   data() {
     return {
-      ordColor:null,
-      newColor:null,
-      ordSize:null,
-      newSize:null,
-      ordpro:null,
-      newpro:null,
+      ordColor:'',
+      newColor:'',
+      ordSize:'',
+      newSize:'',
+      ordpro:'',
+      newpro:'',
       tableData: [],
       mask:false,
       btn: '',
