@@ -779,3 +779,13 @@ export function getKeywordList(param) {
     data
   })
 }
+
+export function getkeywordExport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/keyword-export',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}

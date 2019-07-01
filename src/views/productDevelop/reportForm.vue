@@ -644,11 +644,17 @@
         <el-table-column label="开发员" header-align="right" align="right" prop="developer"></el-table-column>
         <el-table-column label="备货产品款数" header-align="right" align="right" prop="number"></el-table-column>
         <el-table-column label="出单产品款数" header-align="right" align="right" prop="orderNum"></el-table-column>
-        <el-table-column label="出单率(%)" header-align="right" align="right" prop="orderRate"></el-table-column>
+        <el-table-column label="出单率(%)" header-align="right" align="right" prop="orderRate" >
+          <template slot-scope="scope">{{scope.row.orderRate | cutOut100}}</template>
+        </el-table-column>
         <el-table-column label="旺款数量" header-align="right" align="right" prop="exuStyleNum"></el-table-column>
-        <el-table-column label="旺款率(%)" header-align="right" align="right" prop="exuRate"></el-table-column>
+        <el-table-column label="旺款率(%)" header-align="right" align="right" prop="exuRate">
+          <template slot-scope="scope">{{scope.row.exuRate | cutOut100}}</template>
+        </el-table-column>
         <el-table-column label="爆款数量" header-align="right" align="right" prop="hotStyleNum"></el-table-column>
-        <el-table-column label="爆款率(%)" header-align="right" align="right" prop="hotRate"></el-table-column>
+        <el-table-column label="爆款率(%)" header-align="right" align="right" prop="hotRate">
+          <template slot-scope="scope">{{scope.row.hotRate | cutOut100}}</template>
+        </el-table-column>
         <el-table-column
           label="本月可用备货款数"
           header-align="right"
@@ -707,11 +713,17 @@
         <el-table-column label="开发员" header-align="right" align="right" prop="developer"></el-table-column>
         <el-table-column label="不备货产品款数" header-align="right" align="right" prop="number"></el-table-column>
         <el-table-column label="出单产品款数" header-align="right" align="right" prop="orderNum"></el-table-column>
-        <el-table-column label="出单率(%)" header-align="right" align="right" prop="orderRate"></el-table-column>
+        <el-table-column label="出单率(%)" header-align="right" align="right" prop="orderRate">
+          <template slot-scope="scope">{{scope.row.orderRate | cutOut100}}</template>
+        </el-table-column>
         <el-table-column label="旺款数量" header-align="right" align="right" prop="exuStyleNum"></el-table-column>
-        <el-table-column label="旺款率(%)" header-align="right" align="right" prop="exuRate"></el-table-column>
+        <el-table-column label="旺款率(%)" header-align="right" align="right" prop="exuRate">
+          <template slot-scope="scope">{{scope.row.exuRate | cutOut100}}</template>
+        </el-table-column>
         <el-table-column label="爆款数量" header-align="right" align="right" prop="hotStyleNum"></el-table-column>
-        <el-table-column label="爆款率(%)" header-align="right" align="right" prop="hotRate"></el-table-column>
+        <el-table-column label="爆款率(%)" header-align="right" align="right" prop="hotRate">
+          <template slot-scope="scope">{{scope.row.hotRate | cutOut100}}</template>
+        </el-table-column>
         <el-table-column
           label="本月可用不备货款数"
           header-align="right"
@@ -867,6 +879,11 @@ export default {
     cutOut: function(value) {
       if (!value) return "";
       value = value.substring(0, 21);
+      return value;
+    },
+    cutOut100: function(value) {
+      if (!value) return "";
+      value = (value*100).toFixed(0);
       return value;
     }
   },

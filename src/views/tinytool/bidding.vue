@@ -16,57 +16,169 @@
             size="small"
             clearable
           ></el-input>
-        </el-form-item> -->
+        </el-form-item>-->
         <el-form-item>
           <!-- <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button> -->
-          <el-button size="small" type="success" @click="add()" style="margin-left:20px;">添加</el-button>
-          <el-button size="small" type="success" @click="pyAdd()">普源添加</el-button>
+          <el-button size="small" type="danger" @click="add()" style="margin-left:20px;float:left">添加</el-button>
+          <el-button size="small" type="success" @click="pyAdd()" style="float:left">普源添加</el-button>
+          <el-button size="small" type="warning" @click="fhTemplate" style="float:left">下载</el-button>
+          <el-upload
+            class="upload-demo"
+            style="float:left;line-height:0;margin-left:10px;"
+            :action="action"
+            :headers="headers"
+            :show-file-list="false"
+            :onError="uploadError"
+            :on-success="uploadSuccess"
+          >
+            <el-button size="small" type="primary">点击上传</el-button>
+          </el-upload>
         </el-form-item>
       </el-form>
     </el-row>
     <el-table border :height="tableHeight" :data="tableData" :header-row-style="thClass">
       <el-table-column label="操作" width="95" header-align="center" align="center">
         <template slot-scope="scope">
-          <el-button
-            type="primary"
-            size="small"
-            @click="mark(scope.$index, scope.row)"
-          >编辑</el-button>
+          <el-button type="primary" size="small" @click="mark(scope.$index, scope.row)">编辑</el-button>
         </template>
       </el-table-column>
-      <el-table-column width="180" prop="keyword" label="关键词1" :formatter="empty" header-align="center" align="center">
-        <el-table-column prop="keyword" :render-header="renderHeaderPicEbay" align="center" width="180" :formatter="empty"></el-table-column>
+      <el-table-column
+        width="180"
+        prop="keyword"
+        label="关键词1"
+        :formatter="empty"
+        header-align="center"
+        align="center"
+      >
+        <el-table-column
+          prop="keyword"
+          :render-header="renderHeaderPicEbay"
+          align="center"
+          width="180"
+          :formatter="empty"
+        ></el-table-column>
       </el-table-column>
-      <el-table-column width="180" prop="keyword2" label="关键词2" :formatter="empty" header-align="center" align="center">
-        <el-table-column prop="keyword2" :render-header="renderHeaderPicEbay" align="center" width="180" :formatter="empty"></el-table-column>
+      <el-table-column
+        width="180"
+        prop="keyword2"
+        label="关键词2"
+        :formatter="empty"
+        header-align="center"
+        align="center"
+      >
+        <el-table-column
+          prop="keyword2"
+          :render-header="renderHeaderPicEbay"
+          align="center"
+          width="180"
+          :formatter="empty"
+        ></el-table-column>
       </el-table-column>
-      <el-table-column width="180" prop="goodsCode" label="商品编码" :formatter="empty" header-align="center" align="center">
-        <el-table-column prop="goodsCode" :render-header="renderHeaderPicEbay" align="center" width="180"></el-table-column>
+      <el-table-column
+        width="180"
+        prop="goodsCode"
+        label="商品编码"
+        :formatter="empty"
+        header-align="center"
+        align="center"
+      >
+        <el-table-column
+          prop="goodsCode"
+          :render-header="renderHeaderPicEbay"
+          align="center"
+          width="180"
+        ></el-table-column>
       </el-table-column>
-      <el-table-column width="180" prop="goodsName" label="商品名称" :formatter="empty" header-align="center" align="center">
-        <el-table-column prop="goodsName" :render-header="renderHeaderPicEbay" align="center" width="180"></el-table-column>
+      <el-table-column
+        width="180"
+        prop="goodsName"
+        label="商品名称"
+        :formatter="empty"
+        header-align="center"
+        align="center"
+      >
+        <el-table-column
+          prop="goodsName"
+          :render-header="renderHeaderPicEbay"
+          align="center"
+          width="180"
+        ></el-table-column>
       </el-table-column>
-      <el-table-column width="180" prop="developer" label="开发员" :formatter="empty" header-align="center" align="center">
-        <el-table-column prop="developer" :render-header="renderHeaderPicEbay" align="center" width="180"></el-table-column>
+      <el-table-column
+        width="180"
+        prop="developer"
+        label="开发员"
+        :formatter="empty"
+        header-align="center"
+        align="center"
+      >
+        <el-table-column
+          prop="developer"
+          :render-header="renderHeaderPicEbay"
+          align="center"
+          width="180"
+        ></el-table-column>
       </el-table-column>
-      <el-table-column width="120" prop="costPrice" label="平均单价(￥)" :formatter="empty" header-align="center" align="center"></el-table-column>
-      <el-table-column min-width="100" prop="weight" label="重量(g)" :formatter="empty" header-align="center" align="center"></el-table-column>
-      <el-table-column prop="ukUrl" label="关键词1UK链接" :formatter="empty" header-align="center" align="center" width="200">
+      <el-table-column
+        width="120"
+        prop="costPrice"
+        label="平均单价(￥)"
+        :formatter="empty"
+        header-align="center"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        min-width="100"
+        prop="weight"
+        label="重量(g)"
+        :formatter="empty"
+        header-align="center"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="ukUrl"
+        label="关键词1UK链接"
+        :formatter="empty"
+        header-align="center"
+        align="center"
+        width="200"
+      >
         <template slot-scope="scope">
           <a :href="scope.row.ukUrl" target="_blank">{{scope.row.ukUrl | cutOut}}</a>
         </template>
       </el-table-column>
-      <el-table-column  prop="ukUrl2" label="关键词2UK链接" :formatter="empty" header-align="center" align="center" width="200">
+      <el-table-column
+        prop="ukUrl2"
+        label="关键词2UK链接"
+        :formatter="empty"
+        header-align="center"
+        align="center"
+        width="200"
+      >
         <template slot-scope="scope">
           <a :href="scope.row.ukUrl2" target="_blank">{{scope.row.ukUrl2 | cutOut}}</a>
         </template>
       </el-table-column>
-      <el-table-column prop="auUrl" label="关键词1AU链接" :formatter="empty" header-align="center" align="center" width="200">
+      <el-table-column
+        prop="auUrl"
+        label="关键词1AU链接"
+        :formatter="empty"
+        header-align="center"
+        align="center"
+        width="200"
+      >
         <template slot-scope="scope">
           <a :href="scope.row.auUrl" target="_blank">{{scope.row.auUrl | cutOut}}</a>
         </template>
       </el-table-column>
-      <el-table-column prop="auUrl2" label="关键词2AU链接" :formatter="empty" header-align="center" align="center" width="200">
+      <el-table-column
+        prop="auUrl2"
+        label="关键词2AU链接"
+        :formatter="empty"
+        header-align="center"
+        align="center"
+        width="200"
+      >
         <template slot-scope="scope">
           <a :href="scope.row.auUrl2" target="_blank">{{scope.row.auUrl2 | cutOut}}</a>
         </template>
@@ -128,8 +240,8 @@
             </el-col>
             <el-col :span="20">
               <el-select v-model="con.developer" style="width:100%;">
-              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
-            </el-select>
+                <el-option v-for="item in developer" :value="item" :key="item"></el-option>
+              </el-select>
             </el-col>
           </el-col>
           <el-col :span="24" style="margin-bottom: 20px">
@@ -180,8 +292,8 @@
             </el-col>
             <el-col :span="20">
               <el-select v-model="conTj.developer" style="width:100%;">
-              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
-            </el-select>
+                <el-option v-for="item in developer" :value="item" :key="item"></el-option>
+              </el-select>
             </el-col>
           </el-col>
           <el-col :span="24" style="margin-bottom: 20px">
@@ -244,11 +356,46 @@
             v-show="flagTd"
             v-loading="listLoading"
           >
-            <el-table-column min-width="100" prop="goodsCode" label="商品编码" :formatter="empty" header-align="center" align="center"></el-table-column>
-            <el-table-column min-width="100" prop="goodsName" label="商品名称" :formatter="empty" header-align="center" align="center"></el-table-column>
-            <el-table-column min-width="100" prop="developer" label="开发员" :formatter="empty" header-align="center" align="center"></el-table-column>
-            <el-table-column min-width="100" prop="costPrice" label="平均单价(￥)" :formatter="empty" header-align="center" align="center"></el-table-column>
-            <el-table-column min-width="100" prop="weight" label="重量(g)" :formatter="empty" header-align="center" align="center"></el-table-column>
+            <el-table-column
+              min-width="100"
+              prop="goodsCode"
+              label="商品编码"
+              :formatter="empty"
+              header-align="center"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              min-width="100"
+              prop="goodsName"
+              label="商品名称"
+              :formatter="empty"
+              header-align="center"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              min-width="100"
+              prop="developer"
+              label="开发员"
+              :formatter="empty"
+              header-align="center"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              min-width="100"
+              prop="costPrice"
+              label="平均单价(￥)"
+              :formatter="empty"
+              header-align="center"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              min-width="100"
+              prop="weight"
+              label="重量(g)"
+              :formatter="empty"
+              header-align="center"
+              align="center"
+            ></el-table-column>
             <el-table-column label="操作" width="95" header-align="center">
               <template slot-scope="scope">
                 <el-button
@@ -282,8 +429,10 @@ import {
   getKeywordAnalysis,
   getKeywordInfo,
   getKeywordList,
-  getDeveloper
+  getDeveloper,
+  getkeywordExport
 } from "../../api/profit";
+import { uploadKeyword, getHeaders } from "../../api/api";
 import InfiniteLoading from "vue-infinite-loading";
 
 export default {
@@ -292,17 +441,26 @@ export default {
   },
   data() {
     return {
+      action: "upload",
+      headers: Object(),
       tableHeight: window.innerHeight - 200,
       tableData: [],
       viweTable: [],
-      developer:[],
-      listLoading:false,
+      developer: [],
+      listLoading: false,
       addFormVisible: false,
       dialogPictureBjEbayYs: false,
       dialogPictureBjEbaytj: false,
       dialogPytj: false,
       flag: true,
-      flagTd:false,
+      flagTd: false,
+      conkey: {
+        keyword: null,
+        developer: null,
+        keyword2: null,
+        goodsCode: null,
+        goodsName: null
+      },
       condition: {
         keyword: null,
         pageSize: 20,
@@ -311,38 +469,38 @@ export default {
         goodsName: null,
         costPrice: null,
         weight: null,
-        developer:null,
-        keyword2:null
+        developer: null,
+        keyword2: null
       },
       total: 0,
       totalcob: 0,
       con: {
         id: null,
-        keyword2:null,
+        keyword2: null,
         keyword: null,
         goodsCode: null,
         goodsName: null,
         costPrice: null,
         weight: null,
-        developer:null
+        developer: null
       },
       conTj: {
         keyword: null,
-        keyword2:null,
+        keyword2: null,
         goodsCode: null,
         goodsName: null,
         costPrice: null,
         weight: null,
-        developer:null
+        developer: null
       },
       conTjob: {
         keyword: null,
-        keyword2:null,
+        keyword2: null,
         goodsCode: null,
         goodsName: null,
         costPrice: null,
         weight: null,
-        developer:null
+        developer: null
       },
       cob: {
         goodsCode: null,
@@ -358,7 +516,58 @@ export default {
     }
   },
   methods: {
-   renderHeaderPicEbay(h, { column, $index }) {
+    uploadSuccess(response, file, fileList) {
+      if (response.code == 200) {
+        this.$message({
+          message: "上传成功",
+          type: "success"
+        });
+      } else {
+        this.$message.error(response.message);
+      }
+    },
+    uploadError(err, file, fileList) {
+      console.log(err);
+    },
+    fhTemplate() {
+      getkeywordExport(this.conkey).then(res => {
+        const blob = new Blob([res.data], {
+          type: "application/vnd.ms-excel;charset=UTF-8"
+        });
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        const date = new Date();
+        const year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let strDate = date.getDate();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+        if (month >= 1 && month <= 9) {
+          month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = "0" + strDate;
+        }
+        if (hour >= 0 && hour <= 9) {
+          hour = "0" + hour;
+        }
+        if (minute >= 0 && minute <= 9) {
+          minute = "0" + minute;
+        }
+        if (second >= 0 && second <= 9) {
+          second = "0" + second;
+        }
+        const filename =
+          "竞价分析" + year + month + strDate + hour + minute + second;
+        downloadElement.download = filename + ".xls";
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+      });
+    },
+    renderHeaderPicEbay(h, { column, $index }) {
       if ($index === 0) {
         return h(
           "div",
@@ -467,7 +676,7 @@ export default {
             })
           ]
         );
-      }else if ($index === 4) {
+      } else if ($index === 4) {
         return h(
           "div",
           {
@@ -500,10 +709,10 @@ export default {
       this.dialogPytj = true;
     },
     searchPy() {
-      this.flagTd=true
-      this.listLoading=true
+      this.flagTd = true;
+      this.listLoading = true;
       getKeywordList(this.cob).then(response => {
-        this.listLoading=false
+        this.listLoading = false;
         if (response.data.code === 200) {
           this.viweTable = response.data.data.items;
           this.totalcob = response.data.data._meta.totalCount;
@@ -541,7 +750,7 @@ export default {
       this.con.costPrice = row.costPrice;
       this.con.weight = row.weight;
     },
-    uadAdd(index, row){
+    uadAdd(index, row) {
       this.conTjob.goodsCode = row.goodsCode;
       this.conTjob.goodsName = row.goodsName;
       this.conTjob.costPrice = row.costPrice;
@@ -628,10 +837,12 @@ export default {
     }
   },
   mounted() {
+    this.action = uploadKeyword();
+    this.headers = getHeaders();
     this.onSubmit();
     getDeveloper().then(response => {
       const possessMan = response.data.data;
-      this.developer = possessMan
+      this.developer = possessMan;
     });
   }
 };
