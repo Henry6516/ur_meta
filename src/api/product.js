@@ -894,7 +894,7 @@ export function APIDeleteAttribute(param) {
   return request({
     url: '/oa-goodsinfo/attribute?id=' + param.id,
     method: 'delete',
-    data,
+    data
   })
 }
 export function APIMineList(param) {

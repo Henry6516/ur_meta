@@ -90,9 +90,9 @@
           <a
             :href="editForm.mainImage"
             target="_blank"
-            style="display: block; width: 95%;height: 205px"
+            style="display: block; width: 205px;height: 205px"
           >
-            <img :src="editForm.mainImage" style="display: block; width: 95%;height: 205px">
+            <img :src="editForm.mainImage" style="display: block; width: 205px;height: 205px">
           </a>
         </el-col>
         <el-col :span="17">
@@ -130,15 +130,15 @@
               <p class="sx" @click="topIndex(index)">
                 <i class="el-icon-arrow-up"></i>上移动
               </p>
-              <p class="sx" @click="delDz(index)">
+              <!-- <p class="sx" @click="delDz(index)">
                 <i class="el-icon-delete"></i>删除
-              </p>
+              </p> -->
               <p class="ss">#{{index+1}}</p>
             </el-col>
           </el-col>
           <el-col :span="3" style="margin-left: 15px">
             <a :href="url[index]" target="_blank">
-              <img :src="url[index]" style="display: block;width: 98%;height: 90px">
+              <img :src="url[index]" style="display: block;width: 90px;height: 90px">
             </a>
           </el-col>
         </el-col>
