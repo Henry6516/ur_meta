@@ -9,8 +9,8 @@
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column type="index" width="60"></el-table-column>
       <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
-      <el-table-column prop="creator" label="创建人"></el-table-column>
-      <el-table-column prop="type" label="类型"></el-table-column>
+      <el-table-column prop="creator" label="创建人" width="140"></el-table-column>
+      <el-table-column prop="type" label="类型" width="140"></el-table-column>
       <el-table-column prop="title" label="标题">
         <template slot-scope="scope">
           <span v-html="scope.row.title"></span>

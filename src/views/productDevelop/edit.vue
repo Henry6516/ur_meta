@@ -857,13 +857,35 @@ export default {
           id: arrI
         }
         APIAttributeToShopElf(dataTe).then(res => {
-          if (res.data.code === 200) {
+          if (res.data.code === 0) {
+            this.$confirm('该商品已导入过普源, 是否重新导入?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+               let arrIDa=[]
+                arrIDa.push(this.editForm.id)
+                let dataTeDa = {
+                  id: arrIDa,
+                  repeat:1
+                }
+                APIAttributeToShopElf(dataTeDa).then(res => {
+                  this.mask=false
+                  this.$message({
+                    message: res.data.message,
+                    type: 'success'
+                  })
+                }) 
+            }).catch(() => {
+              this.mask=false
+            });
+          }else if(res.data.code === 1){
             this.mask=false
             this.$message({
               message: '成功',
               type: 'success'
             })
-          } else {
+          }else {
             this.mask=false
             this.$message.error(res.data.message)
           }

@@ -326,7 +326,7 @@ export default {
           if(this.contenEbayYs.site==this.ebaySite[i].code){
               this.contenEbayYs.site=this.ebaySite[i].name
           }
-       }  
+          }  
         }
       });
     },
@@ -380,6 +380,11 @@ export default {
       APIShippingInfo(conId).then(res => {
         if (res.data.message == "success") {
           this.delistEbayYs = res.data.data;
+          for(let i=0;i<this.ebaySite.length;i++){
+          if(this.delistEbayYs.site==this.ebaySite[i].code){
+              this.delistEbayYs.site=this.ebaySite[i].name
+          }
+          }
         }
       });
     },

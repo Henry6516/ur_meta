@@ -137,7 +137,7 @@
                     background
                     layout="prev, pager, next" style="margin: 20px 0;margin-left: 10px;margin-bottom:0">
             </el-pagination>
-            <el-dialog title="Wish账号详情" :visible.sync="dialogPicture">
+            <el-dialog title="Wish账号详情" :visible.sync="dialogPicture" width="65%">
                <el-row>
                     <table style="width: 100%;margin: auto;border-collapse:collapse;">
                         <thead style="background: #409EFF;border:#409EFF solid 1px ">
@@ -166,7 +166,7 @@
                     </el-col>
                     <el-col :span="24" class="cTop">
                         <el-col :span="24" style="margin-bottom: 20px">
-                            <el-col :span="2">
+                            <el-col :span="3">
                                 <p class="basp">卖家账号</p>
                             </el-col>
                             <el-col :span="21">
@@ -174,7 +174,7 @@
                             </el-col>
                         </el-col>
                         <el-col :span="24" style="margin-bottom: 20px">
-                            <el-col :span="2">
+                            <el-col :span="3">
                             <p class="basp">运费比列</p>
                             </el-col>
                             <el-col :span="21">
@@ -182,7 +182,7 @@
                             </el-col>
                         </el-col>
                         <el-col :span="24" style="margin-bottom: 20px">
-                            <el-col :span="2">
+                            <el-col :span="3">
                             <p class="basp">主图名称</p>
                             </el-col>
                             <el-col :span="21">
@@ -192,7 +192,7 @@
                     </el-col>
                     <el-col :span="24" class="cTop">
                         <el-col :span="24" style="margin-bottom: 20px">
-                            <el-col :span="2">
+                            <el-col :span="3">
                             <p class="basp" style="margin-left: 15px">简称</p>
                             </el-col>
                             <el-col :span="21">
@@ -200,7 +200,7 @@
                             </el-col>
                         </el-col>
                         <el-col :span="24">
-                            <el-col :span="2">
+                            <el-col :span="3">
                             <p class="basp" style="margin-left: 15px">后缀</p>
                         </el-col>
                             <el-col :span="21">
@@ -336,6 +336,7 @@
             'suffix': null,
             'mainImg': null,
             'parentCategory': null,
+            'rate':null,
             'pageSize': 20,
             'page': 1
           }
@@ -454,6 +455,7 @@
                 this.condition.suffix = null
                 this.condition.mainImg = null
                 this.condition.parentCategory = null
+                this.condition.rate = null
                 this.condition.pageSize = 20
                 this.dialogPictureWish = false
                 this.getDateWish()
