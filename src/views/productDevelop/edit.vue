@@ -858,10 +858,10 @@ export default {
         }
         APIAttributeToShopElf(dataTe).then(res => {
           if (res.data.code === 0) {
-            this.$confirm('该商品已导入过普源, 是否重新导入?', '提示', {
+            this.$confirm('该商品已导入过普源, 是否重新导入?\n重复SKU以下普源信息不会被更新：产品名称 产品状态 款式 成本价 重量 售价', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
-              type: 'warning'
+              type: 'warning',
             }).then(() => {
                let arrIDa=[]
                 arrIDa.push(this.editForm.id)
