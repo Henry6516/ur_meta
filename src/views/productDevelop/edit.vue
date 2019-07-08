@@ -858,7 +858,7 @@ export default {
         }
         APIAttributeToShopElf(dataTe).then(res => {
           if (res.data.code === 0) {
-            this.$confirm('该商品已导入过普源, 是否重新导入?\n重复SKU以下普源信息不会被更新：产品名称 产品状态 款式 成本价 重量 售价', '提示', {
+            this.$confirm('该商品已导入过普源, 是否重新导入?\n重复SKU以下普源信息不会被更新：产品名称 产品状态 款式 成本价 重量 售价 网页URL 网页URL2 网页URL3 网页URL4 网页URL5 网页URL6 英文名称', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               type: 'warning',
