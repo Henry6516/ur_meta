@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-editor-container" style="height: 1010px;">
+  <div class="dashboard-editor-container" style="height: 970px;">
     <section>
       <div class="left-box">
         <el-card>

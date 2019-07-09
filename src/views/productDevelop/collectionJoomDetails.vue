@@ -609,6 +609,15 @@ export default {
             this.url.push(res.data.data.images[item]);
           }
           this.url.pop();
+          if (this.editForm.cat !== "") {
+            this.subCate = [];
+            const val = this.editForm.cat;
+            for (var key in this.subCae) {
+              if (this.subCae[key] == val) {
+                this.subCate.push(key);
+              }
+            }
+          }
         } else {
           this.$message.error(res.data.message);
         }
