@@ -185,7 +185,7 @@
           ></el-tab-pane>
         </el-tabs>
       </el-col>
-      <el-col :span="2">
+      <el-col :span="2" style="margin-left:3%">
         <el-input clearable placeholder="search" v-model="searchValue" @change="handleSearch"></el-input>
       </el-col>
       <el-col :span="2">
@@ -231,7 +231,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="130"
+        min-width="138"
         prop="salemoney"
         label="成交价$"
         :formatter="empty"
@@ -371,32 +371,37 @@
     <el-table
       :data="tableData1"
       @sort-change="sortNumber"
-      max-height="670"
+      height="645"
+      border
+      class="elTable"
       v-show="showTable.order"
+      :header-cell-style="getRowClass"
+      style="width: 100%;font-size:13px;"
+      v-loading="load1"
     >
-      <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
-      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
-      <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
-      <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
-      <el-table-column prop="goodsSku" label="商品SKU" sortable align="center"></el-table-column>
-      <el-table-column prop="tradeId" label="订单编号" sortable align="center"></el-table-column>
-      <el-table-column prop="orderId" label="店铺单号" sortable align="center"></el-table-column>
-      <el-table-column prop="mergeBillId" label="合并单号" sortable align="center"></el-table-column>
-      <el-table-column prop="storeName" label="仓库" sortable align="center"></el-table-column>
-      <el-table-column prop="refund" label="退款$" sortable="custom" align="center" width="100"></el-table-column>
+      <el-table-column prop="suffix" label="账号" sortable align="center" width="150" fixed></el-table-column>
+      <el-table-column prop="salesman" label="销售员" sortable align="center" width="100" fixed></el-table-column>
+      <el-table-column prop="goodsName" label="商品名称" sortable align="center" width="150" fixed></el-table-column>
+      <el-table-column prop="goodsCode" label="商品编码" sortable align="center" width="120"></el-table-column>
+      <el-table-column prop="goodsSku" label="商品SKU" sortable align="center" width="120"></el-table-column>
+      <el-table-column prop="tradeId" label="订单编号" sortable align="center" width="120"></el-table-column>
+      <el-table-column prop="orderId" label="店铺单号" sortable align="center" width="200"></el-table-column>
+      <el-table-column prop="mergeBillId" label="合并单号" sortable align="center" width="120"></el-table-column>
+      <el-table-column prop="storeName" label="仓库" sortable align="center" width="120"></el-table-column>
+      <el-table-column prop="refund" label="退款$" sortable="custom" align="center" width="120"></el-table-column>
       <el-table-column
         prop="refundZn"
         label="退款￥"
-        width="100"
+        width="120"
         sortable="custom"
         :formatter="empty"
         align="center"
       ></el-table-column>
-      <el-table-column prop="orderCountry" label="国家" sortable align="center"></el-table-column>
-      <el-table-column prop="expressWay" label="物流方式" sortable align="center"></el-table-column>
-      <el-table-column prop="platform" label="平台" sortable align="center"></el-table-column>
-      <el-table-column prop="orderTime" label="交易时间" align="center"></el-table-column>
-      <el-table-column prop="refundTime" label="退款时间" align="center"></el-table-column>
+      <el-table-column prop="orderCountry" label="国家" sortable align="center" width="120"></el-table-column>
+      <el-table-column prop="expressWay" label="物流方式" sortable align="center" width="180"></el-table-column>
+      <el-table-column prop="platform" label="平台" sortable align="center" width="120"></el-table-column>
+      <el-table-column prop="orderTime" label="交易时间" align="center" width="150"></el-table-column>
+      <el-table-column prop="refundTime" label="退款时间" align="center" width="150"></el-table-column>
     </el-table>
     <div class="block toolbar" v-show="showTable.order" style="overflow:hidden">
       <div style="float:left;margin-top:1px;">
@@ -428,8 +433,13 @@
     <el-table
       :data="tableData2"
       @sort-change="sortNumber"
-      max-height="670"
+      height="645"
       v-show="showTable.goods"
+      border
+      class="elTable"
+      :header-cell-style="getRowClass"
+      style="width: 100%;font-size:13px;"
+      v-loading="load2"
     >
       <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
       <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
@@ -488,29 +498,35 @@
       </el-col>
     </div>
     <!-- 死库明细 -->
-    <el-table :data="tableData3" @sort-change="sortNumber" max-height="670" v-show="showTable.dead">
-      <el-table-column prop="importDate" label="导入时间" sortable align="center"></el-table-column>
-      <el-table-column prop="type" label="清仓类型" sortable align="center"></el-table-column>
-      <el-table-column prop="plat" label="平台" sortable align="center"></el-table-column>
-      <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
-      <el-table-column prop="salesman" label="销售员" sortable align="center"></el-table-column>
-      <el-table-column prop="storeName" label="出货仓库" sortable align="center"></el-table-column>
-      <el-table-column prop="goodsCode" label="商品编码" sortable align="center"></el-table-column>
-      <el-table-column prop="goodsName" label="商品名称" sortable align="center"></el-table-column>
-      <el-table-column prop="sku" label="sku" sortable align="center"></el-table-column>
-      <el-table-column prop="createDate" label="开发时间" sortable align="center"></el-table-column>
-      <el-table-column prop="lastPurchaseDate" label="最后采购时间" sortable align="center"></el-table-column>
-      <el-table-column prop="checkNumber" label="盘点数量" sortable align="center"></el-table-column>
-      <el-table-column prop="preCheckPrice" label="盘点前单价" sortable align="center"></el-table-column>
-      <el-table-column prop="deadPrice" label="盘少单价（死库）" sortable align="center"></el-table-column>
-      <el-table-column prop="aftCheckPrice" label="盘后单价" sortable align="center"></el-table-column>
-      <el-table-column prop="suffixSalesNumber" label="账号销量" sortable align="center"></el-table-column>
-      <el-table-column prop="totalNumber" label="总销量" sortable align="center"></el-table-column>
-      <el-table-column prop="amount" label="库存金额" sortable align="center"></el-table-column>
-      <el-table-column prop="aveAmount" label="分摊金额" sortable align="center"></el-table-column>
+    <el-table :data="tableData3" @sort-change="sortNumber" height="645" v-show="showTable.dead" border class="elTable" :header-cell-style="getRowClass" style="width: 100%;font-size:13px;" v-loading="load3">
+      <el-table-column prop="plat" label="平台" sortable align="center" width="100" fixed></el-table-column>
+      <el-table-column prop="suffix" label="账号" sortable align="center" width="100" fixed></el-table-column>
+      <el-table-column prop="salesman" label="销售员" sortable align="center" width="100" fixed></el-table-column>
+      <el-table-column prop="importDate" label="导入时间" sortable align="center"  width="125">
+        <template slot-scope="scope">{{scope.row.importDate | cutOutDate}}</template>
+      </el-table-column>
+      <el-table-column prop="type" label="清仓类型" sortable align="center" width="125"></el-table-column>
+      <el-table-column prop="storeName" label="出货仓库" sortable align="center" width="100"></el-table-column>
+      <el-table-column prop="goodsCode" label="商品编码" sortable align="center" width="100"></el-table-column>
+      <el-table-column prop="goodsName" label="商品名称" sortable align="center" width="150"></el-table-column>
+      <el-table-column prop="sku" label="sku" sortable align="center" width="120"></el-table-column>
+      <el-table-column prop="createDate" label="开发时间" sortable align="center" width="125">
+        <template slot-scope="scope">{{scope.row.createDate | cutOutDate}}</template>
+      </el-table-column>
+      <el-table-column prop="lastPurchaseDate" label="最后采购时间" sortable align="center" width="125">
+        <template slot-scope="scope">{{scope.row.lastPurchaseDate | cutOutDate}}</template>
+      </el-table-column>
+      <el-table-column prop="checkNumber" label="盘点数量" sortable align="center" width="100"></el-table-column>
+      <el-table-column prop="preCheckPrice" label="盘点前单价" sortable align="center" width="120"></el-table-column>
+      <el-table-column prop="deadPrice" label="盘少单价（死库）" sortable align="center" width="150"></el-table-column>
+      <el-table-column prop="aftCheckPrice" label="盘后单价" sortable align="center" width="100"></el-table-column>
+      <el-table-column prop="suffixSalesNumber" label="账号销量" sortable align="center" width="100"></el-table-column>
+      <el-table-column prop="totalNumber" label="总销量" sortable align="center" width="100"></el-table-column>
+      <el-table-column prop="amount" label="库存金额" sortable align="center" width="100"></el-table-column>
+      <el-table-column prop="aveAmount" label="分摊金额" sortable align="center" width="100"></el-table-column>
     </el-table>
     <div class="block toolbar" v-show="showTable.dead" style="overflow:hidden">
-      <div style="float:left;margin-top:5px;">
+      <div style="float:left;margin-top:0px;">
         <el-pagination
           background
           @size-change="handleSizeChangeDead"
@@ -523,11 +539,13 @@
         ></el-pagination>
       </div>
       <div style="float:right">
-        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;">
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:4px;">
           分摊金额合计:
           <span style="color:red">{{totalPrice | cutOut}}</span>
         </p>
-        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">
+      </div>  
+      <div style="float:right">  
+        <p style="margin:0;font-size:14px;margin-right:18px;margin-top:4px;">
           当前页分摊金额:
           <span style="color:red">{{currentPrice | cutOut}}</span>
         </p>
@@ -537,8 +555,13 @@
     <el-table
       :data="tableData4"
       @sort-change="sortNumber"
-      max-height="670"
+      height="645"
       v-show="showTable.extra"
+      border 
+      class="elTable"
+      :header-cell-style="getRowClass" 
+      style="width: 100%;font-size:13px;" 
+      v-loading="load4"
     >
       <el-table-column prop="suffix" label="账号" sortable align="center"></el-table-column>
       <el-table-column prop="saleOpeFeeZn" label="杂费" sortable="custom" align="center"></el-table-column>
@@ -596,6 +619,10 @@ export default {
   data() {
     const vue = this;
     return {
+      load1:false,
+      load2:false,
+      load3:false,
+      load4:false,
       options: {
         title: {
           text: "平台退款金额占比(￥)",
@@ -868,7 +895,7 @@ export default {
         account: [],
         dateRangeType: 3,
         page: 1,
-        pageSize: 10,
+        pageSize: 20,
         suffix: [],
         type: "order"
       },
@@ -881,7 +908,7 @@ export default {
         account: [],
         dateRangeType: 3,
         page: 1,
-        pageSize: 10,
+        pageSize: 20,
         type: "goods"
       },
       order: {},
@@ -892,7 +919,7 @@ export default {
         member: [],
         dateRange: [],
         page: 1,
-        pageSize: 10
+        pageSize: 20
       },
       extra: {
         plat: [],
@@ -901,7 +928,7 @@ export default {
         member: [],
         dateRange: [],
         page: 1,
-        pageSize: 10
+        pageSize: 20
       },
       pickerOptions2: {
         onPick(maxDate, minDate) {
@@ -943,9 +970,20 @@ export default {
     cutOut: function(value) {
       value = Number(value).toFixed(2);
       return value;
-    }
+    },
+    cutOutDate(value){
+      value = value.substring(0, 16);
+      return value;
+    },
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     showAll() {
       this.goods.pageSize = this.total2;
       this.getGoods();
@@ -1824,8 +1862,10 @@ export default {
       )[0].style.display = status ? "block" : "none";
     },
     getData() {
+      this.load1=true
       const myform = this.myForm(this.condition);
       getRefund(myform).then(res => {
+        this.load1=false
         this.searchTable1 = this.tableData1 = res.data.data.items;
         this.total = res.data.data._meta.totalCount;
         this.condition.page = res.data.data._meta.currentPage;
@@ -2170,6 +2210,7 @@ export default {
       });
     },
     getGoods() {
+      this.load2=true
       this.goods.dateRange = this.condition.dateRange;
       this.goods.account = this.condition.account;
       this.goods.member = this.condition.member;
@@ -2179,6 +2220,7 @@ export default {
       this.goods.plat = this.condition.plat;
       const myform = this.myForm(this.goods);
       getRefund(myform).then(res => {
+        this.load2=false
         this.searchTable2 = this.tableData2 = res.data.data.items;
         this.total2 = res.data.data._meta.totalCount;
         this.goods.page = res.data.data._meta.currentPage;
@@ -2186,6 +2228,7 @@ export default {
       });
     },
     getDead() {
+      this.load3=true
       this.dead.plat = this.condition.plat;
       this.dead.storename = this.condition.store;
       this.dead.account = this.condition.account;
@@ -2195,6 +2238,7 @@ export default {
       this.dead.secDepartment = this.condition.secDepartment;
       const myform = this.myForm(this.dead);
       getDeadFee(myform).then(res => {
+        this.load3=false
         this.searchTable3 = this.tableData3 = res.data.data.items;
         this.total3 = res.data.data._meta.totalCount;
         this.dead.page = res.data.data._meta.currentPage;
@@ -2208,6 +2252,7 @@ export default {
       });
     },
     getExtra() {
+      this.load4=true
       this.extra.plat = this.condition.plat;
       this.extra.storename = this.condition.store;
       this.extra.account = this.condition.account;
@@ -2217,6 +2262,7 @@ export default {
       this.extra.secDepartment = this.condition.secDepartment;
       const myform = this.myForm(this.extra);
       getExtraFee(myform).then(res => {
+        this.load4=false
         this.searchTable4 = this.tableData4 = res.data.data.items;
         this.total4 = res.data.data._meta.totalCount;
         this.extra.page = res.data.data._meta.currentPage;

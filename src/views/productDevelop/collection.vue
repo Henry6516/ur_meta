@@ -33,6 +33,12 @@ export default {
         this.$router.push({
          path: `/v1/oa-data-mine/collectionJoom`
         });
+      }else if(tab.name === "/v1/oa-data-mine/joom-cate-mine-index"){
+        this.showis=true
+        sessionStorage.setItem("judgeCollection", "/v1/oa-data-mine/joom-cate-mine-index");
+        this.$router.push({
+         path: `/v1/oa-data-mine/joom-cate-mine-index`
+        });
       }else{
         this.showis=false
       }
@@ -99,6 +105,13 @@ export default {
           sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
           this.$router.push({
             path: `/v1/oa-data-mine/collectionJoom`
+          });
+        }
+        if (this.allMenu[0].route == "/v1/oa-data-mine/joom-cate-mine-index") {
+          this.activeName = this.allMenu[0].route;
+          sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
+          this.$router.push({
+            path: `/v1/oa-data-mine/joom-cate-mine-index`
           });
         }
         if (this.allMenu[0].route == "/v1/oa-data-mine/wish") {

@@ -2416,7 +2416,7 @@ export default {
   border-radius: 50%;
   background: #007aff;
   position: absolute;
-  left: -8.5%;
+  left: -8.8%;
   top: 16px;
   z-index: 999;
 }

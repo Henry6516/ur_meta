@@ -75,6 +75,7 @@
                             type="daterange"
                             align="right"
                             unlink-panels
+                            style="width:250px;"
                             range-separator="至"
                             start-placeholder="开始日期"
                             end-placeholder="结束日期"
@@ -232,8 +233,10 @@
                 :summary-method="getSummaries"
                 v-show="show2"
                 :height="tableHeight"
-                :max-height="tableHeight"
-                style="width: 100%;">
+                border 
+                class="elTable"
+                :header-cell-style="getRowClass" 
+                style="width: 100%;font-size:13px;">
         <el-table-column fixed
                          v-if="this.checked1"
                          min-width="115"
@@ -480,8 +483,10 @@
                 :summary-method="getSummaries"
                 v-show="show3"
                 :height="tableHeight"
-                :max-height="tableHeight"
-                style="width: 100%;">
+                border 
+                class="elTable"
+                :header-cell-style="getRowClass" 
+                style="width: 100%;font-size:13px;">
         <el-table-column fixed
                          v-if="this.checked1"
                          min-width="115"
@@ -723,21 +728,34 @@
     <div v-show="showis2">
       <el-table :data="tableData1"
                 @sort-change="sortNumber1"
-                max-height="670">
+                :height="tableHeightOb"
+                border 
+                class="elTable"
+                v-loading="load1"
+                :header-cell-style="getRowClass" 
+                style="width: 100%;font-size:13px;">
         <el-table-column prop="importDate"
                          label="导入时间"
                          sortable
-                         min-width="120"></el-table-column>
+                         header-align="center"
+                         align="center"
+                         width="125">
+                         <template slot-scope="scope">{{scope.row.importDate | cutOutDate}}</template>
+                         </el-table-column>
         <el-table-column prop="type"
                          label="清仓类型"
-                         min-width="100"
+                         width="120"
+                         align="center"
                          sortable></el-table-column>
         <el-table-column prop="developer"
                          label="开发1"
                          sortable
-                         min-width="100"></el-table-column>
+                         align="center"
+                         width="100"></el-table-column>
         <el-table-column prop="developer2"
+                         align="center" 
                          label="开发2"
+                         width="100"
                          sortable></el-table-column>
         <!-- <el-table-column prop="possessMan"
                          label="美工"
@@ -748,56 +766,71 @@
                          sortable></el-table-column> -->
         <el-table-column prop="storeName"
                          label="仓库"
-                         min-width="100"
+                         width="100"
+                         align="center"
                          sortable></el-table-column>               
         <el-table-column prop="goodsCode"
                          label="商品编码"
-                         min-width="100"
+                         width="100"
+                         align="center"
                          sortable></el-table-column>
         <el-table-column prop="sku"
                          label="SKU"
-                         min-width="100"
+                         width="110"
+                         align="center"
                          sortable></el-table-column>
         <el-table-column prop="goodsName"
                          label="商品名称"
-                         min-width="100"
+                         width="130"
+                         align="center"
                          sortable></el-table-column>
         <el-table-column prop="createDate"
                          label="商品创建时间"
-                         min-width="130"
-                         sortable></el-table-column>
+                         width="130"
+                         align="center"
+                         sortable>
+                         <template slot-scope="scope">{{scope.row.createDate | cutOutDate}}</template>
+                         </el-table-column>
         <el-table-column prop="createDate2"
                          label="时间辅助"
-                         min-width="100"
+                         width="100"
+                         align="center"
                          sortable></el-table-column>
         <el-table-column prop="lastPurchaseDate"
                          label="最后采购时间"
-                         min-width="130"
-                         sortable></el-table-column>
+                         width="130"
+                         align="center"
+                         sortable>
+                         <template slot-scope="scope">{{scope.row.lastPurchaseDate | cutOutDate}}</template>
+                         </el-table-column>
         <el-table-column prop="checkNumber"
                          label="盘点数量"
-                         min-width="100"
+                         width="100"
                          sortable="custom"
                          align="center"></el-table-column>
         <el-table-column prop="preCheckPrice"
                          label="盘前价格"
-                         min-width="100"
+                         width="100"
+                         align="center"
                          sortable="custom"></el-table-column>
         <el-table-column prop="deadPrice"
                          label="盘少价格（死库）"
                          sortable="custom"
-                         min-width="160"></el-table-column>
+                         align="center"
+                         width="160"></el-table-column>
         <el-table-column prop="aftCheckPrice"
                          label="盘后价格"
                          sortable="custom"
-                         min-width="100"></el-table-column>
+                         align="center"
+                         width="100"></el-table-column>
         <el-table-column prop="aveAmount"
                          label="分摊死库"
-                         min-width="105"
+                         width="105"
+                         align="center"
                          sortable></el-table-column>
       </el-table>
       <div class="block toolbar" style="overflow:hidden">
-         <div style="float:left;margin-top:5px;">
+         <div style="float:left;">
             <el-pagination background
                        @size-change='handleSizeChangeDead'
                        @current-change='handleCurrentChangeDead'
@@ -809,8 +842,10 @@
         </el-pagination>
          </div>
         <div style="float:right">
-          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:5px;">死库金额合计:<span style="color:red">{{totalPrice | cutOut}}</span></p>
-          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:3px;margin-bottom:5px;">当前页死库金额:<span style="color:red">{{currentPrice | cutOut}}</span></p>
+          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:7px;padding:0">死库金额合计:<span style="color:red">{{totalPrice | cutOut}}</span></p>
+        </div>
+        <div style="float:right">  
+          <p style="margin:0;font-size:14px;margin-right:18px;margin-top:7px;padding:0">当前页死库金额:<span style="color:red">{{currentPrice | cutOut}}</span></p>
         </div>
       </div>
     </div>
@@ -837,7 +872,7 @@ export default {
         role: 'developer',
         member: [],
         page: 1,
-        pageSize: 10
+        pageSize: 20
       },
       totalpur:0,
       checked1: true,
@@ -881,6 +916,7 @@ export default {
       checked39: true,
       checked40: true,
       tableHeight: 0,
+      tableHeightOb:0,
       allMember: [],
       isA: true,
       text: '显示输入框',
@@ -895,6 +931,7 @@ export default {
       searchTableSecond: [],
       searchValue: '',
       listLoading: false,
+      load1:false,
       department: [],
       res: [],
       member: [],
@@ -949,9 +986,20 @@ export default {
     cutOut: function(value) {
       value = Number(value).toFixed(2);
       return value;
-    }
+    },
+    cutOutDate(value){
+      value = value.substring(0, 16);
+      return value;
+    },
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     handleSizeChangeDead(val) {
       this.dead.pageSize = val
       this.onSubmit1(this.condition)
@@ -1137,10 +1185,12 @@ export default {
         this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
         this.tableHeight = height - 145 + 'px'
+        this.tableHeightOb = height - 175 + 'px'
       } else if (this.show === true) {
         this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
         this.tableHeight = height - 225 + 'px'
+        this.tableHeightOb = height - 255 + 'px'
       }
     },
     changeActive() {
@@ -1174,11 +1224,12 @@ export default {
       }
     },
     onSubmit1(form) {
+      this.load1=true
       const myform = JSON.parse(JSON.stringify(form))
       this.dead.dateType=myform.dateType
       this.dead.dateRange=myform.dateRange
       const height = document.getElementById('app').clientHeight
-      this.tableHeight = height - 225 + 'px'
+      this.tableHeightOb = height - 255 + 'px'
       let admin = ''
           const username = sessionStorage.getItem('user')
           for (let i = 0; i < this.res.length; i++) {
@@ -1230,6 +1281,7 @@ export default {
             }
             this.totalPrice=response.data.data.extra.totalAveAmount
             this.currentPrice=strNum
+            this.load1=false
           })
     },
     onSubmit(form) {

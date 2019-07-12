@@ -1181,3 +1181,21 @@ export function APISaveFinishPlat(param) {
   })
 }
 
+export function APIEbayBalance(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/ebay-balance?page=' + param.page + '&sort=' + param.sort,
+    method: 'post',
+    data
+  })
+}
+
+export function APIExportEbayBalance(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/export-ebay-balance',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}

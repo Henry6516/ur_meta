@@ -789,3 +789,35 @@ export function getkeywordExport(param) {
     responseType: 'arraybuffer'
   })
 }
+
+export function getJoomCate() {
+  return request({
+    url: 'oa-data-mine/joom-cate',
+    method: 'get'
+  })
+}
+
+export function getSubscribeJoomCate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/subscribe-joom-cate',
+    method: 'post',
+    data
+  })
+}
+
+export function getSubscribeJoomList() {
+  return request({
+    url: 'oa-data-mine/subscribe-joom-list',
+    method: 'get'
+  })
+}
+
+export function APIJoomCateProduct(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/joom-cate-product?page=' + param.page,
+    method: 'post',
+    data
+  })
+}

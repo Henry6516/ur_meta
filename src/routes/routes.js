@@ -57,6 +57,7 @@ import ukzc from '../views/tinytool/ukzc.vue'
 import auzc from '../views/tinytool/auzc.vue'
 import joomtool from '../views/tinytool/joomtool.vue'
 import bidding from '../views/tinytool/bidding.vue'
+import ebayBalance from '../views/tinytool/ebayBalance.vue'
 // 设置中心
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
@@ -98,6 +99,8 @@ import collection from '../views/productDevelop/collection.vue'
 import collectionJoom from '../views/productDevelop/collectionJoom.vue'
 import joomId from '../views/productDevelop/collectionJoomDetails.vue'
 import joomRelation from '../views/productDevelop/joomRelation.vue'
+import joomSubscribe from '../views/productDevelop/joomSubscribe.vue'
+import joomSubscribeId from '../views/productDevelop/joomSubscribeId.vue'
 // 报表中心
 import reportForm from '../views/productDevelop/reportForm.vue'
 import formEdit from '../views/productDevelop/formEdit.vue'
@@ -447,6 +450,11 @@ const routes = [
         name: '修改订单申报价'
       },
       {
+        path: '/v1/tiny-tool/ebay-balance',
+        component: ebayBalance,
+        name: 'ebay账号余额'
+      },
+      {
         path: '/v1/tiny-tool/exception-pay-pal',
         component: paypal,
         name: '异常paypal列表'
@@ -542,9 +550,19 @@ const routes = [
             name: 'Joom'
           },
           {
+            path: '/v1/oa-data-mine/joom-cate-mine-index',
+            component: joomSubscribe,
+            name: 'Joom订阅'
+          },
+          {
             path: '/joom/:id',
             component: joomId,
             name: 'joomId'
+          },
+          {
+            path: '/joomSubscribeId/:id',
+            component: joomSubscribeId,
+            name: 'joomSubscribeId'
           },
           {
             path: '/joomRelation/:id',
