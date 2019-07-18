@@ -204,6 +204,9 @@
       :height="tableHeight"
       :max-height="tableHeight"
       v-show="showTable.sell"
+      border 
+      class="elTableee"
+      :header-cell-style="getRowClass" 
       style="width: 100%;zoom:0.53;"
     >
       <el-table-column
@@ -231,7 +234,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="138"
+        min-width="142"
         prop="salemoney"
         label="成交价$"
         :formatter="empty"
@@ -351,7 +354,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="140"
+        min-width="143"
         prop="grossprofit"
         label="毛利￥"
         :formatter="empty"
@@ -1192,11 +1195,11 @@ export default {
       if (this.show === false) {
         this.text = "显示输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 585 + "px";
+        this.tableHeight = height + 560 + "px";
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height + 362 + "px";
+        this.tableHeight = height + 340 + "px";
       }
     },
     changeActive() {
@@ -1286,7 +1289,7 @@ export default {
         this.getExtra();
       } else {
         const height = document.documentElement.clientHeight;
-        this.tableHeight = height + 360;
+        this.tableHeight = height + 340;
         this.showTable["sell"] = true;
         this.showTable["order"] = false;
         this.showTable["goods"] = false;

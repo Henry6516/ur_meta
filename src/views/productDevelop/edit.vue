@@ -699,13 +699,16 @@
                    <!--@click="transport">价格确定</el-button>-->
       </el-col>
     </el-row>
-     <div style="margin-top:15px;margin-left: 1%">
+     <div style="margin-top:15px;margin-left: 1%" class="pos">
       <el-button size="small"
                  type="success" @click="oneKey()">一键生成SKU</el-button>
       <el-button size="small"
-                 type="primary" @click="save1()">保存并完善</el-button>
-      <el-button size="small"
                  type="warning" @click="passAll">导入普源</el-button>
+      <span class="pob" v-show="titleTips">未导入的商品不能完善</span>           
+      <el-button size="small"
+                 type="primary" @click="save1()" :disabled="saveFlag" style="margin-left:12px;">
+                  <span @mouseover="saveFb" @mouseout="saveFbfalse" style="display:block;width:100%;">保存并完善</span>
+                 </el-button>
       <el-button size="small"
                  type="danger" @click="createOrder" :disabled="orderTrue">生成采购单</el-button>
       <!--<el-button size="small"-->
@@ -752,6 +755,7 @@ export default {
       ordpro:'',
       newpro:'',
       tableData: [],
+      titleTips:false,
       mask:false,
       btn: '',
       rows: 1,
@@ -767,6 +771,7 @@ export default {
       sjlength: 0,
       bxlength: 0,
       orderTrue:false,
+      saveFlag:false,
       jspt: false,
       cate: [],
       last: 0,
@@ -825,6 +830,16 @@ export default {
     }
   },
   methods: {
+    saveFb(){
+      if(this.saveFlag){
+        this.titleTips=true
+      }else{
+        this.titleTips=false
+      }
+    },
+    saveFbfalse(){
+      this.titleTips=false
+    },
     replaceColor(){
       for(let i=0;i<this.tableData.length;i++){
         if(this.ordColor==this.tableData[i].property1){
@@ -875,6 +890,7 @@ export default {
                     message: res.data.message,
                     type: 'success'
                   })
+                  this.saveFlag=false
                 }) 
             }).catch(() => {
               this.mask=false
@@ -885,6 +901,7 @@ export default {
               message: '成功',
               type: 'success'
             })
+            this.saveFlag=false
           }else {
             this.mask=false
             this.$message.error(res.data.message)
@@ -1450,6 +1467,7 @@ export default {
           this.editForm.storeName='义乌仓'
         }
         this.editForm.stockUp=='否'?this.orderTrue=true:this.orderTrue=false
+        this.editForm.achieveStatus=='待处理'?this.saveFlag=true:this.saveFlag=false
         this.editForm.requiredKeywords = JSON.parse(this.editForm.requiredKeywords)
         this.editForm.randomKeywords = JSON.parse(this.editForm.randomKeywords)
         if(this.editForm.dictionaryName){
@@ -1628,6 +1646,19 @@ section {
    .font13{
      font-size: 12px;
    }
+}
+.pos{
+  position: relative
+}
+.pob{
+  position: absolute;
+  left: 180px;
+  top: -35px;
+  display: block;
+  background: #000;
+  padding: 5px 10px;
+  border-radius: 1px;
+  color: #fff;
 }
 </style>
 

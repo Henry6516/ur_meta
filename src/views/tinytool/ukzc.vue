@@ -120,30 +120,33 @@
       element-loading-text="正在加载中..."
       @sort-change="sortNumber"
       :height="tableHeight"
-      style="width: 100%;zoom:0.9;font-size:12px;"
+      border 
+      class="elTable"
+      :header-cell-style="getRowClass" 
+      style="width: 100%;font-size:13px;"
     >
-      <el-table-column prop="salerName" label="开发员" width="70"></el-table-column>
-      <el-table-column prop="SKU" label="sku"></el-table-column>
-      <el-table-column prop="SKUName" label="SKU名称"></el-table-column>
-      <el-table-column prop="goodsCode" label="商品编码"></el-table-column>
-      <el-table-column prop="goodsStatus" label="状态"></el-table-column>
-      <el-table-column prop="price" label="价格" sortable="custom"></el-table-column>
-      <el-table-column prop="weight" label="重量(g)" sortable="custom"></el-table-column>
-      <el-table-column prop="purchaser" label="采购"></el-table-column>
-      <el-table-column prop="supplierName" label="供应商"></el-table-column>
-      <el-table-column prop="saleNum3days" label="3天销量" sortable="custom"></el-table-column>
-      <el-table-column prop="saleNum7days" label="7天销量" sortable="custom"></el-table-column>
-      <el-table-column prop="saleNum15days" label="15天销量" sortable="custom"></el-table-column>
-      <el-table-column prop="saleNum30days" label="30天销量" sortable="custom"></el-table-column>
-      <el-table-column prop="trend" label="走势"></el-table-column>
-      <el-table-column prop="saleNumDailyAve" label="日均销量" sortable="custom"></el-table-column>
-      <el-table-column prop="399HopeUseNum" label="金皖399预计可用" sortable="custom"></el-table-column>
-      <el-table-column prop="uHopeUseNum" label="万邑通AU预计可用库存" sortable="custom"></el-table-column>
-      <el-table-column prop="totalHopeUseNum" label="预计可用库存" sortable="custom"></el-table-column>
-      <el-table-column prop="uHopeSaleDays" label="万邑通AU预计可用天数" sortable="custom"></el-table-column>
-      <el-table-column prop="hopeSaleDays" label="预计可卖天数" sortable="custom"></el-table-column>
-      <el-table-column prop="purchaseNum" label="采购数量" sortable="custom"></el-table-column>
-      <el-table-column prop="shipNum" label="发货数量" sortable="custom"></el-table-column>
+      <el-table-column prop="salerName" label="开发员" width="100" fixed align="center"></el-table-column>
+      <el-table-column prop="SKU" label="sku" width="100" fixed align="center"></el-table-column>
+      <el-table-column prop="SKUName" label="SKU名称" width="120" fixed align="center"></el-table-column>
+      <el-table-column prop="goodsCode" label="商品编码" width="100" fixed align="center"></el-table-column>
+      <el-table-column prop="goodsStatus" label="状态" width="100" align="center"></el-table-column>
+      <el-table-column prop="price" label="价格" sortable="custom" width="100" align="center"></el-table-column>
+      <el-table-column prop="weight" label="重量(g)" sortable="custom" width="100" align="center"></el-table-column>
+      <el-table-column prop="purchaser" label="采购" width="100" align="center"></el-table-column>
+      <el-table-column prop="supplierName" label="供应商" width="140" align="center"></el-table-column>
+      <el-table-column prop="saleNum3days" label="3天销量" sortable="custom" width="100" align="center"></el-table-column>
+      <el-table-column prop="saleNum7days" label="7天销量" sortable="custom" width="100" align="center"></el-table-column>
+      <el-table-column prop="saleNum15days" label="15天销量" sortable="custom" width="100" align="center"></el-table-column>
+      <el-table-column prop="saleNum30days" label="30天销量" sortable="custom" width="100" align="center"></el-table-column>
+      <el-table-column prop="trend" label="走势" width="100" align="center"></el-table-column>
+      <el-table-column prop="saleNumDailyAve" label="日均销量" sortable="custom" width="100" align="center"></el-table-column>
+      <el-table-column prop="399HopeUseNum" label="金皖399预计可用" sortable="custom" width="145" align="center"></el-table-column>
+      <el-table-column prop="uHopeUseNum" label="万邑通AU预计可用库存" sortable="custom" width="185" align="center"></el-table-column>
+      <el-table-column prop="totalHopeUseNum" label="预计可用库存" sortable="custom" width="140" align="center"></el-table-column>
+      <el-table-column prop="uHopeSaleDays" label="万邑通AU预计可用天数" sortable="custom" width="185" align="center"></el-table-column>
+      <el-table-column prop="hopeSaleDays" label="预计可卖天数" sortable="custom" width="125" align="center"></el-table-column>
+      <el-table-column prop="purchaseNum" label="采购数量" sortable="custom" width="100" align="center"></el-table-column>
+      <el-table-column prop="shipNum" label="发货数量" sortable="custom" width="100" align="center"></el-table-column>
     </el-table>
     <div class="toolbar" style="overflow:hidden">
       <div style="float:left;">
@@ -182,7 +185,7 @@ import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
-      tableHeight:window.innerHeight -130,
+      tableHeight:window.innerHeight -210,
       tableData: [],
       goodsState: [],
       totalPrice1:0,
@@ -207,6 +210,13 @@ export default {
     };
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     exportExcel(from){
       from.type='auReal'
        APIExportReplenish(from).then(res => {

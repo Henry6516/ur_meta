@@ -1,11 +1,11 @@
 <template>
   <div class="toolbar" style="padding:10px">
     <el-row>
-      <el-col :span='2' :offset='21'>
-        <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch'></el-input>
+      <el-col :span='24' style="padding-bottom:5px;">
+        <el-input clearable placeholder='search' v-model='searchValue' @change='handleSearch' auto-complete="off"><i slot="prefix" class="el-icon-search" style="margin-top:13px;margin-left:5px;"></i></el-input>
       </el-col>
     </el-row>
-    <el-table border max-height=845 :data="tableData" :header-row-style="thClass">
+    <el-table border :height='tabheight' :data="tableData" :header-row-style="thClass">
       <el-table-column min-width="80" prop="NID" label="ID" :formatter="empty"></el-table-column>
       <el-table-column min-width="200" prop="DefaultExpress" label="物流公司" :formatter="empty"></el-table-column>
       <el-table-column min-width="300" prop="name" label="物流方式" :formatter="empty"></el-table-column>
@@ -23,6 +23,7 @@ import { getExpress } from '../../api/profit'
 export default {
   data() {
     return {
+      tabheight:window.innerHeight - 130,
       tableData: [],
       searchTable: [],
       searchValue: ''

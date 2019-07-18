@@ -191,8 +191,10 @@
               :summary-method="getSummaries"
               :height="tableHeight"
               :max-height="tableHeight"
-              v-show="show2"
-              style="width: 100%;">
+              border 
+              class="elTable"
+              :header-cell-style="getRowClass" 
+              style="width: 100%;font-size:13px;">
       <el-table-column prop="suffix"
                        label="账号"
                        :formatter="empty"
@@ -272,7 +274,7 @@ export default {
       currentPage: 1,
       pageSize: null,
       total: null,
-      tableHeight: 0,
+      tableHeight: window.innerHeight -290,
       allMember: [],
       isA: true,
       text: '显示输入框',
@@ -330,6 +332,13 @@ export default {
     }
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     showAll() {
       this.handleSizeChange(this.total)
     },
@@ -427,11 +436,11 @@ export default {
       if (this.show === false) {
         this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 180 + 'px'
+        this.tableHeight = height - 175 + 'px'
       } else if (this.show === true) {
         this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 300 + 'px'
+        this.tableHeight = height - 290 + 'px'
       }
     },
     changeActive() {
@@ -443,7 +452,7 @@ export default {
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form))
       const height = document.getElementById('app').clientHeight
-      this.tableHeight = height - 300 + 'px'
+      this.tableHeight = height - 290 + 'px'
       this.show2 = true
       this.$refs.condition.validate(valid => {
         if (valid) {

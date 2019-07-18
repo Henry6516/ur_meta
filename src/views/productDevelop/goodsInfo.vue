@@ -1540,8 +1540,8 @@ export default {
       } else if ($index === 2) {
         let filters = [
           { text: "待处理", value: "待处理" },
-          { text: "已完善", value: "已完善" },
-          { text: "已导入", value: "已导入" }
+          { text: "已导入", value: "已导入" },
+          { text: "已完善", value: "已完善" }
         ];
         return h(
           "el-select",

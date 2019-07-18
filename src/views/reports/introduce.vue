@@ -76,6 +76,7 @@
                             type="daterange"
                             align="right"
                             unlink-panels
+                            style="width:250px;"
                             range-separator="至"
                             start-placeholder="开始日期"
                             end-placeholder="结束日期"
@@ -219,8 +220,10 @@
               :summary-method="getSummaries"
               v-show="show2"
               :height="tableHeight"
-              :max-height="tableHeight"
-              style="width: 100%;">
+              border 
+              class="elTable"
+              :header-cell-style="getRowClass" 
+              style="width: 100%;font-size:13px;">
       <el-table-column fixed
                        v-if="this.checked1"
                        min-width="100"
@@ -558,6 +561,13 @@ export default {
     }
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     handleCheck1() {
       !this.checked1
     },

@@ -363,7 +363,7 @@ export function getIntroduce(param) {
 export function getBrand(param) {
   const data = { condition: param }
   return request({
-    url: '/tiny-tool/brand',
+    url: '/tiny-tool/brand?page=' + param.page,
     method: 'post',
     data
   })
@@ -819,5 +819,12 @@ export function APIJoomCateProduct(param) {
     url: '/oa-data-mine/joom-cate-product?page=' + param.page,
     method: 'post',
     data
+  })
+}
+
+export function getEbayBalanceConditon() {
+  return request({
+    url: '/tiny-tool/ebay-balance-condition',
+    method: 'get'
   })
 }

@@ -99,7 +99,7 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item class='input'
-                    style="margin-left:20.5rem">
+                    style="margin-left:1.5rem">
         <el-button size="small"
                    type="primary"
                    @click="onSubmit(condition)">搜索</el-button>

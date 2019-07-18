@@ -329,8 +329,8 @@ export default {
     return {
       totalPrice:0,
       currentPrice:0,
-      tableHeight: 0,
-      tableHeightOb:0,
+      tableHeight: window.innerHeight -220,
+      tableHeightOb:window.innerHeight -250,
       isA: true,
       text: '显示输入框',
       show: true,
