@@ -395,7 +395,7 @@ export function getPerform(param) {
 export function getPsales(param) {
   const data = { condition: param }
   return request({
-    url: '/perform/sales',
+    url: '/perform/sales?page=' + param.page,
     method: 'post',
     data
   })

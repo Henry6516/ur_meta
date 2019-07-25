@@ -1,34 +1,35 @@
 <template>
   <section>
     <!-- 新增 -->
-    <el-col :span="24" class="toolbar">
-      <el-button plain @click="handleAdd">新增</el-button>
+    <el-col :span="24" class="toolbarD">
+      <el-button type="primary" @click="handleAdd">新增</el-button>
     </el-col>
     <!-- 标题列表 -->
-    <el-table :data="logList" :loading="listLoading">
-      <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column type="index" width="60"></el-table-column>
-      <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140"></el-table-column>
-      <el-table-column prop="creator" label="创建人" width="140"></el-table-column>
-      <el-table-column prop="type" label="类型" width="140"></el-table-column>
-      <el-table-column prop="title" label="标题">
+    <el-col :span="24" class="toolbarrr">
+    <el-table :data="logList" :loading="listLoading" style="width:98%;margin-left:0.8%;" :height="tableHeight" class="elTableee" border :header-cell-style="getRowClass">
+      <el-table-column type="index" width="60" align="center"></el-table-column>
+      <el-table-column prop="createdDate" label="创建时间" :formatter="formatter" width="140" align="center"></el-table-column>
+      <el-table-column prop="creator" label="创建人" width="110" align="center"></el-table-column>
+      <el-table-column prop="type" label="类型" width="110" align="center"></el-table-column>
+      <el-table-column prop="title" label="标题" align="center">
         <template slot-scope="scope">
           <span v-html="scope.row.title"></span>
         </template>
       </el-table-column>
-      <el-table-column prop="details" label="详情">
+      <el-table-column prop="details" label="详情" align="center">
         <template slot-scope="scope">
           <span v-html="scope.row.details"></span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="220">
+      <el-table-column label="操作" width="220" align="center">
         <template slot-scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-     <div class="block toolbar">
+    </el-col>
+     <div class="block toolbar posb">
       <el-pagination background @size-change='handleSizeChange' @current-change='handleCurrentChange' :current-page="this.data.page" :page-size="this.data.pageSize" :page-sizes="[10,20,30,40]" layout="total,sizes,prev,pager,next,jumper" :total="this.totalCount">
       </el-pagination>
     </div>
@@ -77,6 +78,7 @@ import { updateLog, APILogSave,APILogInfo,APILogDelete } from "../../api/product
 export default {
   data() {
     return {
+      tableHeight: window.innerHeight - 175,
       data: {
         page: 1,
         pageSize: 10
@@ -104,6 +106,13 @@ export default {
     this.getData();
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     // 分页
     handleSizeChange(val) {
       this.data.pageSize = val;
@@ -187,8 +196,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.toolbar {
-  padding: 10px 40px;
+.toolbar{
+  padding: 15px 15px;
+}
+.posb{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 5px;
+}
+.toolbarD{
+  padding: 10px 15px;
+}
+.toolbarrr{
+  background: #eee;
+  padding-top: 12px;
 }
 </style>
 

@@ -1,5 +1,5 @@
 <template>
-  <el-form :inline="true" :rules="rules" ref="form" :model="condition" class="toolbar" label-width="150px">
+  <el-form :inline="true" :rules="rules" ref="form" :model="condition" class="toolbar" label-width="100px">
     <el-form-item label="订单编号" prop="order_id">
       <el-input size="small" v-model="condition.order_id" placeholder="多个订单用逗号隔开"></el-input>
     </el-form-item>
@@ -58,6 +58,7 @@ export default {
 <style lang="scss" scoped>
 .toolbar{
   padding: 10px;
+  padding-bottom: 1px;
 }
 </style>
 

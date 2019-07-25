@@ -3,13 +3,14 @@
     <el-form :model="condition"
              :inline="true"
              class="toolbar"
-             label-width="100px">
+             label-width="60px">
       <el-form-item label="日期">
         <el-date-picker @change="time"
                         size="small"
                         v-model="date"
                         type="daterange"
                         value-format="yyyy-MM-dd"
+                        style="width:250px;"
                         range-separator="至"
                         start-placeholder="开始日期"
                         end-placeholder="结束日期"></el-date-picker>
@@ -19,22 +20,26 @@
                    type="primary"
                    @click="onSubmit">查询</el-button>
       </el-form-item>
-    </el-form>
     <el-table :data="this.tableData"
-              height="830"
+              :height="tabheight"
               v-loading="loading"
-              element-loading-text="正在加载中...">
+              element-loading-text="正在加载中..."
+              class="elTableee"
+              :header-cell-style="getRowClass" 
+              border
+              style="width:98%;;margin-left:0.8%;">
       <el-table-column label="修改人"
-                       prop="editor"></el-table-column>
+                       prop="editor" align="center"></el-table-column>
       <el-table-column label="订单编号"
-                       prop="tradeNid"></el-table-column>
+                       prop="tradeNid" align="center"></el-table-column>
       <el-table-column label="收货人"
-                       prop="shipToName"></el-table-column>
+                       prop="shipToName" align="center"></el-table-column>
       <el-table-column label="邮编"
-                       prop="shipToZip"></el-table-column>
+                       prop="shipToZip" align="center"></el-table-column>
       <el-table-column label="修改时间"
-                       prop="createdTime"></el-table-column>
+                       prop="createdTime" align="center"></el-table-column>
     </el-table>
+   </el-form> 
   </section>
 </template>
 
@@ -43,6 +48,7 @@ import { getEdition } from '../../api/profit'
 export default {
   data() {
     return {
+      tabheight:window.innerHeight -165,
       loading: false,
       date: [],
       tableData: [],
@@ -53,6 +59,13 @@ export default {
     }
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     time() {
       if (this.date !== null) {
         this.condition.beginDate = this.date[0]

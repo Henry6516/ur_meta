@@ -13,7 +13,7 @@
       <el-form :model="condition"
                :inline="true"
                class="toolbar"
-               label-width="100px">
+               label-width="60px">
         <el-form-item label="时间">
           <el-date-picker size="small"
                           v-model="date"
@@ -21,6 +21,7 @@
                           type="daterange"
                           value-format="yyyy-MM-dd"
                           range-separator="至"
+                          style="width:250px;"
                           start-placeholder="开始日期"
                           end-placeholder="结束日期"></el-date-picker>
         </el-form-item>
@@ -32,38 +33,43 @@
       </el-form>
       <el-table :data="this.tableData"
                 v-loading="loading"
-                element-loading-text="正在加载中...">
+                element-loading-text="正在加载中..."
+                :height="tabheight"
+                border 
+                class="elTableee"
+                :header-cell-style="getRowClass" 
+                style="width: 100%;font-size:13px;">
         <el-table-column label="订单编号"
-                         prop="tradeNid"></el-table-column>
+                         prop="tradeNid" align="center" width="100"></el-table-column>
         <el-table-column label="交易时间"
-                         prop="orderTime"></el-table-column>
+                         prop="orderTime" :formatter="formatter" align="center" width="130"></el-table-column>
         <el-table-column label="账号简称"
-                         prop="suffix"></el-table-column>
+                         prop="suffix" align="center" width="120"></el-table-column>
         <el-table-column label="买家ID"
-                         prop="buyerId"></el-table-column>
+                         prop="buyerId" align="center" width="140"></el-table-column>
         <el-table-column label="收货人"
-                         prop="shipToName"></el-table-column>
+                         prop="shipToName" align="center" width="150"></el-table-column>
         <el-table-column label="收货地址"
-                         prop="shipToStreet"></el-table-column>
+                         prop="shipToStreet" align="center" width="140"></el-table-column>
         <el-table-column label="收货地址2"
-                         prop="shipToStreet2"></el-table-column>
+                         prop="shipToStreet2" align="center" width="140"></el-table-column>
         <el-table-column label="城市"
-                         prop="shipToCity"></el-table-column>
+                         prop="shipToCity" align="center" width="100"></el-table-column>
         <el-table-column label="邮编"
-                         prop="shipToZip"></el-table-column>
+                         prop="shipToZip" align="center" width="100"></el-table-column>
         <el-table-column label="国家"
-                         prop="shipToCountryCode"></el-table-column>
+                         prop="shipToCountryCode" align="center" width="100"></el-table-column>
         <el-table-column label="电话"
-                         prop="shipToPhoneNum"></el-table-column>
+                         prop="shipToPhoneNum" align="center" width="100"></el-table-column>
         <el-table-column label="处理人"
-                         prop="processor"></el-table-column>
+                         prop="processor" align="center" width="100"></el-table-column>
         <el-table-column label="处理状态"
-                         prop="completeStatus">
+                         prop="completeStatus" align="center" width="100">
           <template slot-scope="scope">
             <el-tag :type="tags[scope.row.completeStatus]['type']">{{ scope.row.completeStatus }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="操作" align="center" width="155">
           <template slot-scope="scope">
             <el-button :type="tags[scope.row.completeStatus]['type']"
                        round
@@ -267,6 +273,7 @@ import { getMenu } from '../../api/login'
 export default {
   data() {
     return {
+      tabheight:window.innerHeight -215,
       tags: {
         待处理: { type: 'danger' },
         已完成: { type: 'success' }
@@ -311,7 +318,7 @@ export default {
       condition: {
         beginDate: '',
         endDate: '',
-        pageSize: 10,
+        pageSize: 20,
         currentPage: 1
       },
       page: {
@@ -345,6 +352,16 @@ export default {
     this.getOrder(this.activeName)
   },
   methods: {
+    formatter(row, column) {
+      return row.orderTime ? row.orderTime.substring(0, 16) : ''
+    },
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     time() {
       if (this.date !== null) {
         this.condition.beginDate = this.date[0]
@@ -576,7 +593,7 @@ export default {
 
 <style lang="scss" scoped>
 .toolbar {
-  padding-top: 5px;
+  padding-top: 10px;
   padding-bottom: 5px;
 }
 </style>

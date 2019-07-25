@@ -3,7 +3,9 @@
     <el-form :model="condition"
              :inline="true"
              ref="condition"
-             label-width="110px">
+             label-width="90px"
+             style="padding-top:12px;padding-bottom:2px;"
+             >
       <el-form-item label="部门"
                     class="input">
         <el-select size="small"
@@ -134,7 +136,7 @@
                         style="width:18rem;">
         </el-date-picker>
       </el-form-item>
-      <el-form-item style="margin-left:60px">
+      <el-form-item style="margin-left:40px">
         <el-button size="small"
                    type="primary"
                    @click="onSubmit(condition)">查询</el-button>
@@ -142,39 +144,68 @@
     </el-form>
     <el-table :data="tableData"
               @sort-change="sortNumber"
+              :height="tableHeight"
+              border 
+              class="elTableee"
+              :header-cell-style="getRowClass"
               v-loading="listLoading"
               element-loading-text="正在加载中...">
       <el-table-column label="平台"
+                       width="110"
+                       align="center"       
                        prop="platform"></el-table-column>
       <el-table-column label="销售员"
                        prop="username"
+                       width="110"
+                       align="center" 
                        sortable="custom"></el-table-column>
       <el-table-column label="部门"
                        prop="department"
+                       width="120"
+                       align="center"
                        sortable="custom"></el-table-column>
       <el-table-column label="二级部门"
                        prop="secDepartment"
+                       width="170"
+                       align="center" 
                        sortable="custom"></el-table-column>
       <el-table-column label="订单编号"
                        prop="trendId"
+                       width="125"
+                       align="center"
                        sortable="custom"></el-table-column>
       <el-table-column label="账号"
                        prop="suffix"
+                       width="200"
+                       align="center"
                        sortable="custom"></el-table-column>
       <el-table-column label="毛利"
                        prop="profit"
+                       width="120"
+                       align="center"
                        sortable="custom"></el-table-column>
       <el-table-column label="订单总重量(克)"
+                       width="140"
+                       align="center"
                        prop="orderWeight"></el-table-column>
       <el-table-column label="SKU总重量(克)"
+                       width="140"
+                       align="center"
                        prop="skuWeight"></el-table-column>
       <el-table-column label="重量差异"
+                       width="140"
+                       align="center"
                        prop="weightDiff"
                        sortable="custom"></el-table-column>
       <el-table-column label="发货时间"
+                       width="160"
+                       align="center"
+                       :formatter="formatter"
                        prop="orderCloseDate"
                        sortable="custom"></el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" 
+                       width="138"
+                       align="center">
         <template slot-scope="scope">
           <el-button size="mini"
                      type="success"
@@ -210,6 +241,7 @@ import { isAdmin } from '../../api/api'
 export default {
   data() {
     return {
+      tableHeight: window.innerHeight - 250,
       total: null,
       tableData: [],
       listLoading: false,
@@ -230,7 +262,7 @@ export default {
         department: [],
         secDepartment: [],
         page: 1,
-        pageSize: 10,
+        pageSize: 20,
         sort: ''
       },
       Id: {
@@ -264,6 +296,16 @@ export default {
     }
   },
   methods: {
+    formatter(row, column) {
+      return row.orderCloseDate ? row.orderCloseDate.substring(0, 16) : "";
+    },
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     // 排序
     sortNumber(column, prop, order) {
       if (column.order === 'descending') {

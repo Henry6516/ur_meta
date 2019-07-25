@@ -4,6 +4,7 @@
              :inline="true"
              ref="condition"
              class="toolbar"
+             style="padding-top:10px;"
              label-width="110px">
       <el-form-item label="部门"
                     class="input">
@@ -151,7 +152,7 @@
                         style="width:18rem;">
         </el-date-picker>
       </el-form-item>
-      <el-form-item style="margin-left:60px">
+      <el-form-item style="margin-left:1px">
         <el-button size="small"
                    type="primary"
                    @click="onSubmit">查询</el-button>
@@ -300,7 +301,8 @@ export default {
           }
         },
         legend: {
-          data: [String]
+          data: [String],
+          top: 5
         },
         toolbox: {
           show: true,
@@ -365,7 +367,8 @@ export default {
           }
         },
         legend: {
-          data: [String]
+          data: [String],
+          top: 5
         },
         toolbox: {
           show: true,
@@ -413,7 +416,8 @@ export default {
           }
         },
         legend: {
-          data: [String]
+          data: [String],
+          top: 5
         },
         toolbox: {
           show: true,
@@ -478,7 +482,8 @@ export default {
           }
         },
         legend: {
-          data: [String]
+          data: [String],
+          top: 5
         },
         toolbox: {
           show: true,

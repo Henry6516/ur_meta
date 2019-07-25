@@ -3,10 +3,10 @@
     <el-form :model='condition'
              :inline='true'
              ref='condition'
-             label-width='8rem'
-             class='demo-form-inline'>
+             style="padding:10px 0;padding-bottom:0"
+             class='demo-form-inline toolbar'>
       <el-form-item label="账号"
-                    class="input">
+                    class="input" style="margin-left:15px;padding-bottom:10px;">
         <el-select size="small"
                    v-model="condition.suffix"
                    filterable
@@ -33,6 +33,7 @@
                    v-model='condition.salesman'
                    filterable
                    multiple
+                   style="width:200px;"
                    collapse-tags
                    placeholder='销售员'>
           <el-button plain
@@ -48,20 +49,21 @@
                      :value='item.username'></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="商品编码"
-                    style="margin-left: 40px;">
+      <el-form-item label="商品编码">
         <el-input size="small"
+                  clearable
                   v-model="condition.goodsCode"
-                  style="width:215px;"></el-input>
+                  style="width:165px;"></el-input>
       </el-form-item>
-      <br>
       <el-form-item label="商品名称">
         <el-input size="small"
+                  clearable
                   v-model="condition.goodsName"
-                  style="width: 215px;"></el-input>
+                  style="width: 165px;"></el-input>
       </el-form-item>
       <el-form-item label='日期1'
                     prop='lastDateRange'
+                    class="abd"
                     :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
         <el-date-picker size="small"
                         v-model='condition.lastDateRange'
@@ -74,10 +76,11 @@
                         end-placeholder='结束日期'
                         style="width: 215px;">
         </el-date-picker>
-        <div style="color: #f56c6c;width: 40px;float: right;">{{this.lastWeek}}</div>
+        <div style="color: #f56c6c;width: 40px;float: right;" class="cbd">{{this.lastWeek}}</div>
       </el-form-item>
       <el-form-item label='日期2'
                     prop='dateRange'
+                    class="abd abd1"
                     :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
         <el-date-picker size="small"
                         v-model='condition.dateRange'
@@ -90,15 +93,21 @@
                         end-placeholder='结束日期'
                         style="width: 215px;">
         </el-date-picker>
-        <span style="color: #f56c6c;width: 40px;float: right;">{{this.week}}</span>
+        <span style="color: #f56c6c;width: 40px;float: right;" class="cbd">{{this.week}}</span>
       </el-form-item>
-      <el-form-item style="margin-left:10px;">
-        <el-button size="small"
+      <!-- <el-form-item style="margin-left:15px;">
+        <el-button
                    type='primary'
                    @click='onSubmit'>查询</el-button>
       </el-form-item>
+      <el-form-item>
+        <el-button
+                   type='primary'
+                   @click='exportExcel'>导出Excel
+                   </el-button>
+      </el-form-item> -->
     </el-form>
-    <el-row class="toolbar">
+    <!-- <el-row class="toolbar">
       <el-col :span='2'
               :offset="21">
         <el-button style='float:left'
@@ -106,49 +115,69 @@
                    @click='exportExcel'>导出Excel
         </el-button>
       </el-col>
-    </el-row>
+    </el-row> -->
+    <el-col :span="23" style="padding:8px;margin-left:7px;">
+      <el-button type='primary' size="small"
+                   @click='onSubmit'>查询</el-button>
+      <el-button type='success' size="small"
+                   @click='exportExcel'>导出Excel
+                   </el-button>
+    </el-col>
     <el-table :data="tableData"
               v-loading="listLoading"
               element-loading-text="正在加载中..."
               @sort-change="sortNumber"
-              max-height="770"
+              :height="tableHeight"
+              border 
+              class="elTableee"
+              :header-cell-style="getRowClass"
               style="width:100%">
       <el-table-column prop="suffix"
+                       width="220" 
                        label="账号简称"
                        sortable
                        align="center"></el-table-column>
       <el-table-column prop="username"
                        label="销售员"
+                       width="150" 
                        sortable
                        align="center"></el-table-column>
       <el-table-column prop="goodsCode"
+                       width="150"  
                        label="商品编码"
                        sortable
                        align="center"></el-table-column>
       <el-table-column prop="goodsName"
+                       width="220"   
                        label="商品名称"
                        align="center"></el-table-column>
       <el-table-column prop="lastNum"
                        label="日期1销量"
+                       width="150"
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="lastAmt"
+                       width="170" 
                        label="日期1销售额(￥)"
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="num"
                        label="日期2销量"
+                       width="150"
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="amt"
                        label="日期2销售额(￥)"
                        sortable="custom"
+                       width="170"
                        align="center"></el-table-column>
       <el-table-column prop="numDiff"
                        label="销量变化"
+                       width="130"
                        sortable="custom"
                        align="center"></el-table-column>
       <el-table-column prop="amtDiff"
+                       width="160" 
                        label="销售额变化(￥)"
                        sortable="custom"
                        align="center"></el-table-column>
@@ -181,6 +210,7 @@ import { getSalesChange, getAccount, getMember } from '../../api/profit'
 export default {
   data() {
     return {
+      tableHeight: window.innerHeight - 243,
       lastWeek: null,
       week: null,
       listLoading: false,
@@ -213,6 +243,13 @@ export default {
     })
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     showAll() {
       this.handleSizeChange(this.total)
     },
@@ -336,10 +373,22 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   .el-form-item {
     margin-bottom: 0rem;
   }
+}
+.abd{
+  position: relative;
+}
+.cbd{
+  position: absolute;
+  right: -42px;
+  top: 0;
+}
+.abd1{
+  margin-left: 30px;
+  padding-bottom:10px;
 }
 </style>
 

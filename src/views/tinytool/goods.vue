@@ -3,6 +3,7 @@
     <el-form :model='condition'
              :inline='true'
              label-width='8.5rem'
+             style="padding:10px 0 0 8px;"
              class='demo-form-inline toolbar'>
       <el-form-item label='美工1'
                     class='input'>
@@ -108,13 +109,14 @@
     <div v-loading="listLoading"
          element-loading-text="正在加载中...">
       <el-row>
-        <el-col :span="4"
+        <div 
                 class="mix"
                 v-for="item in this.tableData"
                 :key="item.rowId">
           <div class="mix-inner">
             <a :href="item.LinkUrl"
                target="_blank"
+               class="a100"
                style="text-decoration:none;">
               <img :src=item.BmpFileName
                    :alt='item.GoodsName+item.GoodsSKUStatus'>
@@ -130,13 +132,12 @@
             </p>
             <font color="black">&nbsp;{{item.GoodsName}}&nbsp;&nbsp;&nbsp;{{item.GoodsSKUStatus}}</font>
           </div>
-        </el-col>
+        </div>
       </el-row>
       <el-col :span="24"
-              class="toolbar"
+              class="toolbar posbottom"
               v-show="total>0">
-        <div class="pagination-container"
-             align="right">
+        <div class="pagination-container">
           <el-pagination background
                          @size-change="handleSizeChange"
                          @current-change="handleCurrentChange"
@@ -311,37 +312,48 @@ export default {
 <style lang="scss" scoped>
 .el-form {
   .el-form-item {
-    margin: 0.1rem;
   }
 }
 .el-row {
   max-height: 65rem;
   overflow: auto;
+  margin-bottom: 30px;
   .mix:hover {
     border-radius: 1rem;
-    border: 0.2rem solid #03c4eb;
+    border: 1px solid #03c4eb;
   }
   .mix {
     background: #fff;
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border: #ffffff solid 1px;
     display: inline-block;
-    height: 26rem;
-    margin: 1rem;
+    height: 28rem;
+    width: 18.8%;
+    margin-left: 0.9%;
     position: relative;
     transition: all 0.2s ease-in-out;
     margin-top: 1.5rem;
     text-align: center;
     overflow: hidden;
-    width: 20rem;
     .mix-inner {
       position: relative;
       width: 100%;
       img {
         max-width: 100%;
+        margin-top: 10px;
         height: 17rem;
       }
     }
   }
+}
+.posbottom{
+  position: fixed;
+  bottom: 0;
+}
+.a100{
+  display: block;
+  width: 100%;
+  height: 17rem;
 }
 </style>

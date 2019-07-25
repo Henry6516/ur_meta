@@ -4,7 +4,8 @@
       <el-form :model="condition"
                :inline="true"
                ref="condition"
-               label-width="110px">
+               label-width="95px"
+               style="padding-top:12px;padding-bottom:3px;">
         <el-form-item label="部门"
                       class="input">
           <el-select size="small"
@@ -138,7 +139,7 @@
                           style="width:18rem;">
           </el-date-picker>
         </el-form-item>
-        <el-form-item style="margin-left:60px">
+        <el-form-item style="margin-left:50px">
           <el-button size="small"
                      type="primary"
                      @click="onSubmit">查询</el-button>
@@ -154,7 +155,7 @@
                        name="first">
             <el-row v-loading="listLoading"
                     element-loading-text="正在加载中...">
-              <el-col :span="12">
+              <el-col :span="11" style="margin-left:15px;margin-top:10px;">
                 <div ref="delaypie"
                      :style="{width: '100%', height: '400px', marginTop:'10px'}">
                 </div>
@@ -162,7 +163,7 @@
                      :style="{width: '100%', height: '400px', marginTop:'10px'}">
                 </div>
               </el-col>
-              <el-col :span="12">
+              <el-col :span="11" style="margin-left:15px;margin-top:10px;">
                 <div ref="shipBar"
                      :style="{width: '100%', height: '400px', marginTop:'10px'}">
                 </div>
@@ -178,16 +179,17 @@
                       v-loading="listLoading"
                       element-loading-text="正在加载中..."
                       style="width: 100%"
-                      height="750">
+                      :height="tableHeight"
+                      class="elTableee" border :header-cell-style="getRowClass">
               <el-table-column label="商品编码"
-                               prop="goodsCode"></el-table-column>
+                               prop="goodsCode" align="center"></el-table-column>
               <el-table-column label="商品名称"
-                               prop="goodsName"></el-table-column>
+                               prop="goodsName" align="center"></el-table-column>
               <el-table-column label="数量"
-                               prop="number"></el-table-column>
+                               prop="number" align="center"></el-table-column>
               <el-table-column label="百分比"
                                :formatter="empty"
-                               prop="rate"></el-table-column>
+                               prop="rate" align="center"></el-table-column>
             </el-table>
           </el-tab-pane>
         </el-tabs>
@@ -208,6 +210,7 @@ import { APIDelay, APIDelayDetail } from '../../api/data'
 export default {
   data() {
     return {
+      tableHeight:window.innerHeight -261,
       activeName: 'first',
       tableData: [],
       listLoading: false,
@@ -440,6 +443,13 @@ export default {
     }
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     empty(row, column, cellValue, index) {
       if (cellValue == null || cellValue == '') {
         return ''

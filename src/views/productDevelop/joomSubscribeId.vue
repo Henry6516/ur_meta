@@ -135,7 +135,7 @@ export default {
   methods: {
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
-        return "color:#337ab7";
+        return "color:#337ab7;background:#f5f7fa";
       } else {
         return "";
       }

@@ -283,6 +283,9 @@
         <div v-show="show.pay">
             <basicInformationPay></basicInformationPay>
         </div>
+        <div v-show="show.shopify">
+            <basicInformationeShopify></basicInformationeShopify>
+        </div>
     </section>
 </template>
 
@@ -295,6 +298,7 @@
     import basicInformationJoomYs from './basicInformationJoomYs.vue'
     import basicInformationJw from './basicInformationJw.vue'
     import basicInformationPay from './basicInformationPay.vue'
+    import basicInformationeShopify from './basicInformationeShopify.vue'
     export default {
         components: {
             basicInformationArt:basicInformationArt,
@@ -302,7 +306,8 @@
             basicInformationJoom:basicInformationJoom,
             basicInformationJoomYs:basicInformationJoomYs,
             basicInformationJw:basicInformationJw,
-            basicInformationPay:basicInformationPay
+            basicInformationPay:basicInformationPay,
+            basicInformationeShopify:basicInformationeShopify
         },
       data() {
         return {
@@ -326,7 +331,8 @@
                 ys: false,
                 jw: false,
                 kf: false,
-                pay:false
+                pay:false,
+                shopify:false
             },
           Suffix: null,
           contenWish: [],
@@ -380,6 +386,10 @@
                   this.show['kf'] = true
               } else {
                   this.show['kf'] = false
+              }if (tab.name === '/v1/basic-info/shopify-list') {
+                  this.show['shopify'] = true
+              } else {
+                  this.show['shopify'] = false
               }
 
           },
@@ -712,6 +722,9 @@
     }
     .elTableee td{
       padding: 12px 0 !important;
+    }
+    .elTableeee td{
+      padding: 8px 0 !important;
     }
     // .el-input__inner{
     //   padding: 0 10px;

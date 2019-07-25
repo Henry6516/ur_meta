@@ -14,14 +14,13 @@
       </el-alert>
     </el-col>
     <el-row>
-      <el-col :span='2'
-              :offset='19'>
+      <el-col :span='2' style="margin-top:10px;">
         <el-input clearable
                   placeholder='search'
                   v-model='searchValue'
                   @change='handleSearch'></el-input>
       </el-col>
-      <el-col :span='2'>
+      <el-col :span='2' style="margin-top:10px;">
         <el-button style='float:left'
                    type='default'
                    @click='exportExcel'>导出Excel</el-button>
@@ -321,7 +320,7 @@ export default {
     }
   },
   mounted() {
-    this.tableHeight = document.documentElement.scrollHeight - 90
+    this.tableHeight = document.documentElement.scrollHeight - 140
     this.getData()
   }
 }

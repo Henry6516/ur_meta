@@ -3,8 +3,8 @@
     <el-form :model='form'
              :inline='true'
              ref='condition'
-             label-width='15rem'
-             class='demo-form-inline'>
+             label-width='6rem'
+             class='demo-form-inline toolbar'>
       <el-form-item label='日期'
                     class='input'
                     prop="dateRange"
@@ -14,6 +14,7 @@
                         type='daterange'
                         value-format='yyyy-MM-dd'
                         align='right'
+                        style="width:250px;"
                         unlink-panels
                         range-separator='至'
                         start-placeholder='开始日期'
@@ -34,10 +35,23 @@
         <el-button size="small"
                    type="primary"
                    @click="onSubmit(condition)"
-                   style="margin-left:60px">查询</el-button>
+                   style="margin-left:1px">查询</el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-input clearable
+                  size="small"
+                  placeholder='search'
+                  v-model='searchValue'
+                  @change='handleSearch'></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button 
+                   size="small" 
+                   type='default'
+                   @click='exportExcel'>导出Excel</el-button>
       </el-form-item>
     </el-form>
-    <el-row class="toolbar">
+    <!-- <el-row class="toolbar">
       <el-col :span='2'
               :offset='19'>
         <el-input clearable
@@ -50,17 +64,20 @@
                    type='default'
                    @click='exportExcel'>导出Excel</el-button>
       </el-col>
-    </el-row>
+    </el-row> -->
     <div v-loading="listLoading"
          element-loading-text="正在加载中...">
       <el-table id="sale-table"
                 :header-row-style="rowheader"
-                max-height="795"
+                :height="tableHeight"
                 :data="tableData"
                 @sort-change="sortNumber"
                 show-summary
                 :summary-method="getSummaries"
                 style="width: 100%;"
+                border 
+                class="elTableee"
+                :header-cell-style="getRowClass"
                 v-show="this.tableData.length>0">
         <el-table-column prop="wlCompany"
                          label="物流公司"
@@ -183,6 +200,7 @@ import { compareUp, compareDown } from '../../api/tools'
 export default {
   data() {
     return {
+      tableHeight: window.innerHeight - 165,
       form: {
         dateRange: []
       },
@@ -253,6 +271,13 @@ export default {
     }
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     onSubmit() {
       this.$refs.condition.validate(valid => {
         if (valid) {

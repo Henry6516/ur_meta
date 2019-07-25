@@ -5,6 +5,7 @@
         <el-select
           v-model="joomId"
           placeholder="--类目ID--"
+          clearable
           style="float: left;margin-right:10px;width:98%;"
         >
           <el-option v-for="(item, key) in joomCate" :key="item.key" :label="item" :value="item"></el-option>
@@ -17,18 +18,19 @@
     <el-table
       :data="tableDate"
       border
-      class="elTableForm"
+      class="elTable"
+      :height="tableHeight"
       :header-cell-style="getRowClass"
       style="width: 98%;margin:auto;margin-top:5px;"
     >
       <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
-      <el-table-column label="操作" fixed header-align="center" width="108">
+      <el-table-column label="操作" fixed align="center" width="108">
         <template slot-scope="scope">
           <el-tooltip content="查看">
             <i
               class="el-icon-view"
               @click="viewPic(scope.$index, scope.row)"
-              style="color: #409EFF;cursor:pointer;margin-left:35px;"
+              style="color: #409EFF;cursor:pointer;"
             ></i>
           </el-tooltip>
         </template>
@@ -50,6 +52,7 @@ import {
 export default {
   data() {
     return {
+      tableHeight: window.innerHeight - 173,
       joomId: null,
       joomCate: [],
       tableDate: []
@@ -75,7 +78,7 @@ export default {
     },
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
-        return "color:#337ab7";
+        return "color:#337ab7;background:#f5f7fa";
       } else {
         return "";
       }

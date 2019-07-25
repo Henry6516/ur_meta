@@ -5,7 +5,7 @@
       class="toolbar"
       style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:15px;padding-top: 12px"
     >
-      <el-col :span="15" class="leftmedia">
+      <el-col :span="18" class="leftmedia">
         <el-button
           type="primary"
           @click="update"
@@ -48,6 +48,19 @@
         <el-option v-for="(item, key) in joomArr" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
         <span class="exportAccount" @click="exportJoom">导出Joom模板</span>
+        <el-select
+          placeholder="--请选择账号--"
+          clearable
+          multiple
+          collapse-tags
+          v-model="shopify"
+          style="float: left;width:160px;margin-left:10px;"
+        >
+        <el-button plain type="info" @click="selectalld2">全选</el-button>
+        <el-button plain type="info" @click="noselectd2">取消</el-button>
+        <el-option v-for="(item, key) in shopifyArr" :key="item.key" :label="item" :value="item"></el-option>
+        </el-select>
+        <span class="exportAccount" @click="exportShopify">导出shopify模板</span>
       </el-col>
     </el-col>
     <el-col :span="24" style="padding: 0;margin-left: 15px">
@@ -759,7 +772,9 @@ import {
   APISaveWishInfo,
   APIFinishPlat,
   APIJoomName,
+  APIShopifyName,
   APIPlatExportWish,
+  APIPlatExportShopify,
   APIPlatExportJoom,
   APIDeleteVariant,
   APIDeleteEbaySku,
@@ -790,6 +805,7 @@ export default {
       price: null,
       ship: null,
       joomArr: [],
+      shopifyArr:[],
       addPhoto: "",
       advicePrice: null,
       joomPrice: null,
@@ -799,6 +815,7 @@ export default {
       setVisible: false,
       select: "",
       joom: null,
+      shopify:null,
       wishForm: {},
       last: 0,
       tableData: [],
@@ -840,6 +857,16 @@ export default {
     },
     noselectd1() {
       this.joom = [];
+    },
+    selectalld2() {
+      var ard1 = [];
+      for (const item in this.shopifyArr) {
+        ard1.push(this.shopifyArr[item]);
+      }
+      this.shopify = ard1;
+    },
+    noselectd2() {
+      this.shopify = [];
     },
     showAttribute() {
       this.showattribute = !this.showattribute;
@@ -948,6 +975,37 @@ export default {
         downloadElement.click();
         document.body.removeChild(downloadElement);
       });
+    },
+    exportShopify() {
+      let objStr={}
+      if (this.shopify!='') {
+        objStr = {
+          id: [this.wishForm.infoId],
+          account: this.shopify
+        };
+      }else{
+        objStr = {
+          id: [this.wishForm.infoId],
+          account: this.shopifyArr
+        };
+      }
+      APIPlatExportShopify(objStr).then(res => {
+          const blob = new Blob([res.data], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+          var filename=JSON.parse(file)
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          // const filename =
+          //   "Wish_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename;
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        }); 
     },
     top(e) {
       this.foremost = e.length;
@@ -1338,6 +1396,9 @@ export default {
     APIJoomName().then(response => {
       this.joomArr = response.data.data;
     });
+    APIShopifyName().then(response => {
+      this.shopifyArr = response.data.data;
+    });
   }
 };
 </script>
@@ -1459,7 +1520,7 @@ export default {
   line-height: 38px;
   border-left: none;
   background: #fff;
-  padding: 0 14px;
+  padding: 0 10px;
   font-size: 13px;
   cursor: pointer;
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
@@ -1478,11 +1539,11 @@ export default {
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
 }
 .leftmedia{
-  margin-left: 21%;
+  margin-left: 17%;
 }
 @media screen and (max-width: 1600px){
    .leftmedia{
-     margin-left: 18%;
+     margin-left: 3.5%;
    }
 }
 @media screen and (max-width: 1350px){

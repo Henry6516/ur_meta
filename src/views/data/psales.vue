@@ -3,12 +3,12 @@
     <el-form :model='condition'
              :inline='true'
              ref='condition'
-             label-width='8rem'
-             class='demo-form-inline'>
-      <el-form-item label="平台">
+             class='demo-form-inline toolbar'>
+      <el-form-item label="平台" style="margin-left:20px;">
         <el-select size="small"
                    v-model="condition.plat"
                    clearable
+                   style="width:140px;"
                    @change='platform'>
           <el-option v-for="item in plat"
                      :key="item.plat"
@@ -34,6 +34,7 @@
       </el-form-item>
       <el-form-item label="业绩归属人1">
         <el-select size="small"
+                   style="width:140px;" 
                    v-model="condition.saler"
                    clearable>
           <el-option v-for="(item,index) in saler"
@@ -47,8 +48,22 @@
                    type="primary"
                    @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
+      <el-form-item>
+        <el-input clearable
+                  size="small"
+                  placeholder='search'
+                  style="width:160px;"
+                  v-model='searchValue'
+                  @change='handleSearch'></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button size="small"
+                   type='default'
+                   @click='exportExcel'
+                   :loading="downloadLoading">导出Excel</el-button>
+      </el-form-item>
     </el-form>
-    <el-row class="toolbar">
+    <!-- <el-row class="toolbar">
       <el-col :span='2'
               :offset='19'>
         <el-input clearable
@@ -62,92 +77,115 @@
                    @click='exportExcel'
                    :loading="downloadLoading">导出Excel</el-button>
       </el-col>
-    </el-row>
+    </el-row> -->
     <div>
       <el-table v-loading="listLoading"
                 element-loading-text="正在加载中..."
-                max-height="760"
+                :height="tableHeight"
                 :data="this.tableData"
-                @sort-change=" sortNumber"
+                @sort-change="sortNumber"
                 v-show="show"
-                style="width: 100%;">
-        <el-table-column min-width="100"
-                         prop="GoodsCode"
+                border 
+                class="elTable"
+                :header-cell-style="getRowClass"
+                style="width: 100%;font-size:13px;zoom:0.97">
+        <el-table-column width="100"
+                         prop="goodsCode"
                          label="商品编码"
+                         align="center"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="100"
-                         prop="GoodsName"
+        <el-table-column width="120"
+                         prop="goodsName"
                          label="商品名称"
+                         align="center"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="100"
-                         prop="GoodsSKUStatus"
+        <el-table-column width="100"
+                         prop="goodsSKUStatus"
                          label="商品状态"
+                         align="center"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="80"
-                         prop="CategoryName"
+        <el-table-column width="80"
+                         prop="categoryName"
                          label="类目"
+                         align="center"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="80"
-                         prop="SalerName"
+        <el-table-column width="80"
+                         prop="salerName"
                          label="归属1"
+                         align="center"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="80"
-                         prop="SalerName2"
+        <el-table-column width="80"
+                         prop="salerName2"
                          label="归属2"
+                         align="center"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="100"
-                         prop="CreateDate"
+        <el-table-column width="100"
+                         prop="createDate"
                          label="创建日期"
+                         align="center"
                          :formatter="empty"
-                         sortable></el-table-column>
-        <el-table-column min-width="110"
+                         sortable>
+                         <template slot-scope="scope">
+                           {{scope.row.createDate | cutOut}}
+                         </template>
+                         </el-table-column>
+        <el-table-column width="110"
                          prop="jinyitian"
+                         align="center"
                          label="近1天销量"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="110"
+        <el-table-column width="110"
                          prop="shangyitian"
+                         align="center"
                          label="上1天销量"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="130"
+        <el-table-column width="130"
                          prop="changeOneDay"
+                         align="center"
                          label="1天销量变化"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="110"
+        <el-table-column width="110"
                          prop="jinwutian"
+                         align="center"
                          label="近5天销量"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="110"
+        <el-table-column width="110"
                          prop="shangwutian"
+                         align="center"
                          label="上5天销量"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="130"
+        <el-table-column width="130"
                          prop="changeFiveDay"
+                         align="center"
                          label="5天销量变化"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="120"
+        <el-table-column width="120"
                          prop="jinshitian"
+                         align="center"
                          label="近10天销量"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="120"
+        <el-table-column width="120"
                          prop="shangshitian"
+                         align="center"
                          label="上10天销量"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column min-width="130"
+        <el-table-column width="130"
                          prop="changeTenDay"
+                         align="center"
                          label="10天销量变化"
                          :formatter="empty"
                          sortable></el-table-column>
@@ -156,16 +194,15 @@
     <el-col :span="24"
             class="toolbar"
             v-show="total>0">
-      <div class="pagination-container"
-           align="right">
+      <div class="pagination-container">
         <el-pagination background
                        @size-change="handleSizeChange"
                        @current-change="handleCurrentChange"
-                       :current-page="currentPage"
+                       :current-page="this.condition.page"
                        :page-sizes="[100, 200, 500,1000,this.total]"
-                       :page-size="pageSize"
+                       :page-size="this.condition.pageSize"
                        layout="total, sizes, prev, pager, next, jumper"
-                       :total="total">
+                       :total="this.total">
         </el-pagination>
       </div>
     </el-col>
@@ -180,6 +217,7 @@ import { compareUp, compareDown } from '../../api/tools'
 export default {
   data() {
     return {
+      tableHeight: window.innerHeight - 175,
       downloadLoading: false,
       allData: [],
       allSuffix: [],
@@ -198,12 +236,25 @@ export default {
         plat: '',
         suffix: [],
         saler: '',
-        start: 1,
-        limit: 100
+        page: 1,
+        pageSize: 100
       }
     }
   },
+  filters: {
+    cutOut: function(value) {
+      value = value.substring(0, 11);
+      return value;
+    },
+  },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     // 全选
     selectall() {
       const allValues = []
@@ -225,38 +276,25 @@ export default {
       }
     },
     handleSizeChange(val) {
-      this.pageSize = val
-      this.currentPage = 1
-      this.condition.limit = this.pageSize * this.currentPage
-      this.listLoading = true
-      getPsales(this.condition).then(response => {
-        this.listLoading = false
-        this.tableData = response.data.data.items
-        this.total = Number(response.data.data.totalCount)
-      })
+      this.condition.pageSize = val
+      this.getData()
     },
     handleCurrentChange(val) {
-      this.currentPage = val
-      this.condition.start = (this.currentPage - 1) * this.pageSize + 1
-      this.condition.limit = this.pageSize
-      this.listLoading = true
-      getPsales(this.condition).then(response => {
-        this.listLoading = false
-        this.tableData = response.data.data.items
-        this.total = Number(response.data.data.totalCount)
-      })
+      this.condition.page = val
+      this.getData()
     },
     onSubmit() {
-      this.show = true
+      this.getData()
+    },
+    getData(){
       this.listLoading = true
-      this.pageSize = 100
-      this.currentPage = 1
-      this.condition.start = 0
-      this.condition.limit = 100
+      this.show=true
       getPsales(this.condition).then(response => {
         this.listLoading = false
         this.tableData = response.data.data.items
-        this.total = Number(response.data.data.totalCount)
+        this.total = response.data.data._meta.totalCount;
+        this.condition.page = response.data.data._meta.currentPage;
+        this.condition.pageSize = response.data.data._meta.perPage;
       })
     },
     // 导出

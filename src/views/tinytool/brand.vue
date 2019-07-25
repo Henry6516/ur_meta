@@ -3,7 +3,7 @@
     <el-form :model='condition'
              :inline='true'
              ref='condition'
-             label-width='8rem'
+             label-width='5rem'
              class='demo-form-inline toolbar'>
       <el-form-item label="品牌"
                     prop="brand">
@@ -167,7 +167,7 @@ export default {
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     display: inline-block;
-    height: 13.35rem;
+    height: 13.3rem;
     margin-left: 0.9%;
     position: relative;
     transition: all 0.2s ease-in-out;

@@ -101,16 +101,16 @@
           </el-form-item>
         </el-form>
       </transition>
-      <div class="demo-block-control" @click="handleChange" style="left:0rem;">
+      <!-- <div class="demo-block-control" @click="handleChange" style="left:0rem;">
         <transition>
           <i :class="{'el-icon-caret-bottom':isA,'el-icon-caret-top':!isA}" class="transition-i"></i>
         </transition>
         <transition>
           <span v-show="show1" class="transition-span">{{text}}</span>
         </transition>
-      </div>
+      </div> -->
     </div>
-    <el-col :span="24" style="padding:10px 20px;">
+    <el-col :span="24" style="padding:10px 20px;background:#fff">
       <el-button @click="exportExcel" type="primary">导出表格</el-button>
     </el-col>
     <el-table
@@ -122,11 +122,15 @@
       show-summary
       :summary-method="getSummaries"
       style="width: 100%"
+      border 
+      class="elTableee"
+      :header-cell-style="getRowClass" 
     >
-      <el-table-column prop="developer" width="108" label="开发员" :formatter="empty" sortable></el-table-column>
+      <el-table-column prop="developer" width="112" label="开发员" :formatter="empty" sortable align="center"></el-table-column>
       <el-table-column
         width="185"
         prop="hasNumber"
+        align="center"
         label="已有商品数(非清仓)"
         :formatter="empty"
         sortable="custom"
@@ -135,6 +139,7 @@
         width="180"
         prop="maxNumber"
         label="最多可拥有商品数"
+        align="center"
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
@@ -142,6 +147,7 @@
         width="130"
         prop="reduceNumber"
         label="需要砍商品数"
+        align="center"
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
@@ -149,12 +155,14 @@
         width="145"
         prop="avaliableNumber"
         label="还可开发商品数"
+        align="center"
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
       <el-table-column
         width="120"
         prop="soldNumber"
+        align="center"
         label="出单数"
         :formatter="empty"
         sortable="custom"
@@ -163,6 +171,7 @@
         width="130"
         prop="soldRate"
         label="出单率(%)"
+        align="center"
         :formatter="empty"
         sortable="custom"
       >
@@ -172,12 +181,14 @@
         width="130"
         prop="monthSold"
         label="月销量"
+        align="center"
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
       <el-table-column
         width="130"
         prop="monthAmt"
+        align="center"
         label="月销售额(￥)"
         :formatter="empty"
         sortable="custom"
@@ -188,6 +199,7 @@
         width="130"
         prop="monthProfit"
         label="月利润(￥)"
+        align="center"
         :formatter="empty"
         sortable="custom"
       >
@@ -196,6 +208,7 @@
       <el-table-column
         width="130"
         prop="profitRate"
+        align="center"
         label="利润率(%)"
         :formatter="empty"
         sortable="custom"
@@ -205,6 +218,7 @@
       <el-table-column
         width="145"
         prop="avgProfit"
+        align="center"
         label="平均利润/款(￥)"
         :formatter="empty"
         sortable="custom"
@@ -317,6 +331,13 @@ export default {
     }
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     exportExcel() {
       if(this.tableData.length!=0){
         const th = [

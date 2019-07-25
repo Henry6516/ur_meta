@@ -10,7 +10,7 @@
     </el-tabs>
     <div v-show="userShow">
       <!--需求工具条-->
-      <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
+      <el-col :span="24" class="toolbar" style="padding-bottom: 0px;padding-left:15px;">
         <el-form :inline="true" :model="condition">
           <el-form-item>
             <el-input size="small" v-model="condition.name" placeholder="名称"></el-input>
@@ -276,7 +276,7 @@
     </div>
     <div v-show="auditShow">
       <!--审核工具条-->
-      <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
+      <el-col :span="24" class="toolbar" style="padding-bottom: 0px;padding-left:15px;">
         <el-form :inline="true" :model="examine">
           <el-form-item>
             <el-input size="small" v-model="examine.name" placeholder="名称"></el-input>
@@ -553,7 +553,7 @@
     </div>
     <div v-show="dealShow">
       <!--处理工具条-->
-      <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
+      <el-col :span="24" class="toolbar" style="padding-bottom: 0px;padding-left:15px;">
         <el-form :inline="true" :model="deal">
           <el-form-item>
             <el-input size="small" v-model="deal.name" placeholder="名称"></el-input>
@@ -813,7 +813,7 @@
       </el-col>
     </div>
     <div v-show="finishShow">
-      <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
+      <el-col :span="24" class="toolbar" style="padding-bottom: 0px;padding-left:15px;">
         <el-form :inline="true" :model="deal">
           <el-form-item>
             <el-input size="small" v-model="deal.name" placeholder="名称"></el-input>
