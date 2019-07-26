@@ -102,24 +102,24 @@
     </el-table>
     <el-dialog title="查看状态明细" :visible.sync="dialogTableVisible" width="72%">
       <el-table :data="viewForm" @sort-change="sortNumberView" class="elTableee" border :header-cell-style="getRowClass" max-height="600">
-        <el-table-column property="storeName" label="仓库" align="center"></el-table-column>
-        <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center"></el-table-column>
-        <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center">
+        <el-table-column property="storeName" label="仓库" align="center" width="130" fixed></el-table-column>
+        <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center" width="135"></el-table-column>
+        <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center" width="135">
             <template slot-scope="scope">{{scope.row['costmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="notInStore" label="在途数量" sortable="custom" align="center"></el-table-column>
-        <el-table-column property="notInCostmoney" label="在途金额" sortable="custom" align="center">
+        <el-table-column property="notInStore" label="在途数量" sortable="custom" align="center" width="135"></el-table-column>
+        <el-table-column property="notInCostmoney" label="在途金额" sortable="custom" align="center" width="135">
             <template slot-scope="scope">{{scope.row['notInCostmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="hopeUseNum" label="总库存数量" sortable="custom" align="center"></el-table-column>
-        <el-table-column property="totalCostmoney" label="总库存金额" sortable="custom" align="center">
+        <el-table-column property="hopeUseNum" label="总库存数量" sortable="custom" align="center" width="135"></el-table-column>
+        <el-table-column property="totalCostmoney" label="总库存金额" sortable="custom" align="center" width="135">
             <template slot-scope="scope">{{scope.row['totalCostmoney'] | cutOut}}</template>
         </el-table-column>
         <el-table-column property="30DayCostmoney" label="近30天出库金额" sortable="custom" width="150" align="center">
             <template slot-scope="scope">{{scope.row['30DayCostmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="sellDays" label="库存周转(天)" sortable="custom" align="center"></el-table-column>
-        <el-table-column property="goodsStatus" label="状态" align="center"></el-table-column>
+        <el-table-column property="sellDays" label="库存周转(天)" sortable="custom" align="center" width="135"></el-table-column>
+        <el-table-column property="goodsStatus" label="状态" align="center" width="116"></el-table-column>
       </el-table>
       <!-- <div slot="footer" class="dialog-footer">
         <el-button @click="dialogTableVisible = false">取 消</el-button>
@@ -128,24 +128,24 @@
     </el-dialog>
     <el-dialog title="查看开发明细" :visible.sync="dialogTableVisibleKf" width="72%">
       <el-table :data="viewFormKf" @sort-change="sortNumberViewKf" class="elTableee" border :header-cell-style="getRowClass" max-height="600">
-        <el-table-column property="storeName" label="仓库" align="center"></el-table-column>
-        <el-table-column property="salerName" label="开发员" align="center"></el-table-column>
-        <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center"></el-table-column>
-        <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center">
+        <el-table-column property="storeName" label="仓库" align="center" width="110" fixed></el-table-column>
+        <el-table-column property="salerName" label="开发员" align="center" width="135" fixed></el-table-column>
+        <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center" width="135"></el-table-column>
+        <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center" width="135">
           <template slot-scope="scope">{{scope.row['costmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="notInStore" label="在途数量" sortable="custom" align="center"></el-table-column>
-        <el-table-column property="notInCostmoney" label="在途金额" sortable="custom" align="center">
+        <el-table-column property="notInStore" label="在途数量" sortable="custom" align="center" width="135"></el-table-column>
+        <el-table-column property="notInCostmoney" label="在途金额" sortable="custom" align="center" width="135">
           <template slot-scope="scope">{{scope.row['notInCostmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="hopeUseNum" label="总库存数量" sortable="custom" align="center"></el-table-column>
-        <el-table-column property="totalCostmoney" label="总库存金额" sortable="custom" align="center">
+        <el-table-column property="hopeUseNum" label="总库存数量" sortable="custom" align="center" width="135"></el-table-column>
+        <el-table-column property="totalCostmoney" label="总库存金额" sortable="custom" align="center" width="135">
           <template slot-scope="scope">{{scope.row['totalCostmoney'] | cutOut}}</template>
         </el-table-column>
         <el-table-column property="30DayCostmoney" label="近30天出库金额" sortable="custom" width="150" align="center">
           <template slot-scope="scope">{{scope.row['30DayCostmoney'] | cutOut}}</template>
         </el-table-column>
-        <el-table-column property="sellDays" label="库存周转(天)" sortable="custom" align="center"></el-table-column>
+        <el-table-column property="sellDays" label="库存周转(天)" sortable="custom" align="center" width="135"></el-table-column>
       </el-table>
       <!-- <div slot="footer" class="dialog-footer">
         <el-button @click="dialogTableVisibleKf = false">取 消</el-button>
