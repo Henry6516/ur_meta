@@ -11,10 +11,10 @@
     <!--</el-tabs>-->
     <div v-show="show.status">
       <!-- <div v-show="show.wait"> -->
-      <el-col :span="24" style="padding:10px 20px;">
-        <el-button plain @click="passAll">批量导入普源</el-button>
-        <el-button plain @click="codeAll">重新生成商品编码</el-button>
-        <el-button plain @click="markAll">标记已完善</el-button>
+      <el-col :span="24" style="padding:10px 15px;">
+        <el-button type="success" @click="passAll">批量导入普源</el-button>
+        <el-button type="primary" @click="codeAll">重新生成商品编码</el-button>
+        <el-button type="warning" @click="markAll">标记已完善</el-button>
       </el-col>
       <!-- 属性信息列表 -->
       <el-table
