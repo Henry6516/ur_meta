@@ -17,187 +17,211 @@
         <el-button type="warning" @click="markAll">标记已完善</el-button>
       </el-col>
       <!-- 属性信息列表 -->
-      <el-table
-        :data="tableData"
-        :cell-style="cellStyle"
-        @selection-change="selsChange"
-        style="width: 100%;border: none;"
-        :height="tableHeight"
-      >
-        <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
-        <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
-        <el-table-column label="操作" fixed header-align="center" width="110">
-          <template slot-scope="scope">
-            <el-tooltip content="查看">
-              <i
-                class="el-icon-view"
-                @click="view(scope.$index, scope.row)"
-                style="color: #409EFF;cursor:pointer;"
-              ></i>
-            </el-tooltip>
-            <el-tooltip content="更新">
-              <!--<router-link :to="'/'+scope.row.id"-->
-              <!--style="color: #409EFF">-->
-              <i
-                class="el-icon-edit"
-                style="color: #409EFF;cursor:pointer;"
-                @click="upte(scope.$index, scope.row)"
-              ></i>
-              <!--</router-link>-->
-            </el-tooltip>
-            <el-tooltip content="导入普源">
-              <i
-                class="el-icon-printer"
-                style="color: #409EFF;cursor:pointer;"
-                @click="passPy(scope.$index,scope.row)"
-              ></i>
-            </el-tooltip>
-            <el-tooltip content="标记已完善">
-              <i
-                class="el-icon-star-on"
-                @click="mark(scope.$index,scope.row)"
-                style="color: #409EFF;cursor:pointer;"
-              ></i>
-            </el-tooltip>
-            <el-tooltip content="删除">
-              <i
-                class="el-icon-delete"
-                @click="del(scope.$index, scope.row)"
-                style="color: #409EFF;cursor:pointer;"
-              ></i>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column prop="picUrl" fixed label="商品图片" header-align="center" width="80">
-          <template slot-scope="scope">
-            <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
-              <div slot="content"><img :src="scope.row.picUrl" style="width: 300px;height: 300px;"></div>
-              <img :src="scope.row.picUrl" style="width: 60px;height: 60px">
-            </el-tooltip>
-            <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
-          </template>
-        </el-table-column>
-        <el-table-column label="商品编码" header-align="center">
-          <el-table-column
-            prop="goodsCode"
-            :render-header="renderHeader"
-            width="150"
-            align="center"
-          >
+      <div class="infoTable">
+        <el-table
+          :data="tableData"
+          :cell-style="cellStyle"
+          @selection-change="selsChange"
+          style="width: 100%;border: none;"
+          :height="tableHeight"
+        >
+          <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
+          <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
+          <el-table-column label="操作" fixed header-align="center" width="110">
             <template slot-scope="scope">
-              <a :class="scope.row.stockUp=='是'?'redCu':'redblack'">{{scope.row.goodsCode}}</a>
+              <el-tooltip content="查看">
+                <i
+                  class="el-icon-view"
+                  @click="view(scope.$index, scope.row)"
+                  style="color: #409EFF;cursor:pointer;"
+                ></i>
+              </el-tooltip>
+              <el-tooltip content="更新">
+                <!--<router-link :to="'/'+scope.row.id"-->
+                <!--style="color: #409EFF">-->
+                <i
+                  class="el-icon-edit"
+                  style="color: #409EFF;cursor:pointer;"
+                  @click="upte(scope.$index, scope.row)"
+                ></i>
+                <!--</router-link>-->
+              </el-tooltip>
+              <el-tooltip content="导入普源">
+                <i
+                  class="el-icon-printer"
+                  style="color: #409EFF;cursor:pointer;"
+                  @click="passPy(scope.$index,scope.row)"
+                ></i>
+              </el-tooltip>
+              <el-tooltip content="标记已完善">
+                <i
+                  class="el-icon-star-on"
+                  @click="mark(scope.$index,scope.row)"
+                  style="color: #409EFF;cursor:pointer;"
+                ></i>
+              </el-tooltip>
+              <el-tooltip content="删除">
+                <i
+                  class="el-icon-delete"
+                  @click="del(scope.$index, scope.row)"
+                  style="color: #409EFF;cursor:pointer;"
+                ></i>
+              </el-tooltip>
             </template>
           </el-table-column>
-        </el-table-column>
-        <el-table-column label="是否备货" header-align="center">
-          <el-table-column prop="stockUp" :render-header="renderHeader" width="150" align="center"></el-table-column>
-        </el-table-column>
-        <el-table-column label="属性状态" header-align="center">
-          <el-table-column
-            prop="achieveStatus"
-            :render-header="renderHeader"
-            width="150"
-            align="center"
-          >
+          <el-table-column prop="picUrl" fixed label="商品图片" header-align="center" width="80">
             <template slot-scope="scope">
-              <a
-                :class="scope.row.achieveStatus=='待处理'?'clasRed1':'clasGreen1'"
-              >{{scope.row.achieveStatus}}</a>
+              <el-tooltip
+                placement="right"
+                :open-delay="10"
+                class="exxHover"
+                popper-class="page-login-toolTipClass"
+              >
+                <div slot="content">
+                  <img :src="scope.row.picUrl" style="width: 300px;height: 300px;" />
+                </div>
+                <img :src="scope.row.picUrl" style="width: 60px;height: 60px" />
+              </el-tooltip>
+              <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
             </template>
           </el-table-column>
-        </el-table-column>
-        <el-table-column label="商品名称" header-align="center">
-          <el-table-column
-            prop="goodsName"
-            :render-header="renderHeader"
-            width="150"
-            align="center"
-          >
-            <template slot-scope="scope">
-              <a
-                :class="!scope.row.goodsName?'clasRed':''"
-              >{{scope.row.goodsName?scope.row.goodsName:"未设置"}}</a>
-            </template>
+          <el-table-column label="商品编码" header-align="center">
+            <el-table-column
+              prop="goodsCode"
+              :render-header="renderHeader"
+              width="125"
+              align="center"
+            >
+              <template slot-scope="scope">
+                <a :class="scope.row.stockUp=='是'?'redCu':'redblack'">{{scope.row.goodsCode}}</a>
+              </template>
+            </el-table-column>
           </el-table-column>
-        </el-table-column>
-        <el-table-column label="开发员" header-align="center">
-          <el-table-column
-            prop="developer"
-            :render-header="renderHeader"
-            width="150"
-            align="center"
-          ></el-table-column>
-        </el-table-column>
-        <el-table-column label="开发时间" header-align="center">
-          <el-table-column
-            prop="devDatetime"
-            :render-header="renderHeader"
-            width="230"
-            align="center"
-          ></el-table-column>
-        </el-table-column>
-        <el-table-column label="更新时间" header-align="center">
-          <el-table-column
-            prop="updateTime"
-            :render-header="renderHeader"
-            width="200"
-            align="center"
-          ></el-table-column>
-        </el-table-column>
-        <el-table-column label="中文申报名" header-align="center">
-          <el-table-column
-            prop="aliasCnName"
-            :render-header="renderHeader"
-            width="150"
-            align="center"
-          >
-            <template slot-scope="scope">
-              <a
-                :class="!scope.row.aliasCnName?'clasRed':''"
-              >{{scope.row.aliasCnName?scope.row.aliasCnName:"未设置"}}</a>
-            </template>
+          <el-table-column label="是否备货" header-align="center">
+            <el-table-column
+              prop="stockUp"
+              :render-header="renderHeader"
+              width="108"
+              align="center"
+            ></el-table-column>
           </el-table-column>
-        </el-table-column>
-        <el-table-column label="英文申报名" header-align="center">
-          <el-table-column
-            prop="aliasEnName"
-            :render-header="renderHeader"
-            width="150"
-            align="center"
-          >
-            <template slot-scope="scope">
-              <a
-                :class="!scope.row.aliasEnName?'clasRed':''"
-              >{{scope.row.aliasEnName?scope.row.aliasEnName:"未设置"}}</a>
-            </template>
+          <el-table-column label="属性状态" header-align="center">
+            <el-table-column
+              prop="achieveStatus"
+              :render-header="renderHeader"
+              width="115"
+              align="center"
+            >
+              <template slot-scope="scope">
+                <a
+                  :class="scope.row.achieveStatus=='待处理'?'clasRed1':'clasGreen1'"
+                >{{scope.row.achieveStatus}}</a>
+              </template>
+            </el-table-column>
           </el-table-column>
-        </el-table-column>
-        <el-table-column label="是否液体" header-align="center">
-          <el-table-column prop="isLiquid" :render-header="renderHeader" width="150" align="center"></el-table-column>
-        </el-table-column>
-        <el-table-column label="是否粉末" header-align="center">
-          <el-table-column prop="isPowder" :render-header="renderHeader" width="150" align="center"></el-table-column>
-        </el-table-column>
-        <el-table-column label="是否带磁" header-align="center">
-          <el-table-column
-            prop="isMagnetism"
-            :render-header="renderHeader"
-            width="150"
-            align="center"
-          ></el-table-column>
-        </el-table-column>
-        <el-table-column label="是否带电" header-align="center">
-          <el-table-column
-            prop="isCharged"
-            :render-header="renderHeader"
-            width="150"
-            align="center"
-          ></el-table-column>
-        </el-table-column>
-        <el-table-column label="是否多属性" header-align="center">
-          <el-table-column prop="isVar" :render-header="renderHeader" width="150" align="center"></el-table-column>
-        </el-table-column>
-      </el-table>
+          <el-table-column label="商品名称" header-align="center">
+            <el-table-column
+              prop="goodsName"
+              :render-header="renderHeader"
+              width="140"
+              align="center"
+            >
+              <template slot-scope="scope">
+                <a
+                  :class="!scope.row.goodsName?'clasRed':''"
+                >{{scope.row.goodsName?scope.row.goodsName:"未设置"}}</a>
+              </template>
+            </el-table-column>
+          </el-table-column>
+          <el-table-column label="开发员" header-align="center">
+            <el-table-column
+              prop="developer"
+              :render-header="renderHeader"
+              width="110"
+              align="center"
+            ></el-table-column>
+          </el-table-column>
+          <el-table-column label="开发时间" header-align="center">
+            <el-table-column
+              prop="devDatetime"
+              :render-header="renderHeader"
+              width="160"
+              align="center"
+            ></el-table-column>
+          </el-table-column>
+          <el-table-column label="更新时间" header-align="center">
+            <el-table-column
+              prop="updateTime"
+              :render-header="renderHeader"
+              width="160"
+              align="center"
+            ></el-table-column>
+          </el-table-column>
+          <el-table-column label="中文申报名" header-align="center">
+            <el-table-column
+              prop="aliasCnName"
+              :render-header="renderHeader"
+              width="110"
+              align="center"
+            >
+              <template slot-scope="scope">
+                <a
+                  :class="!scope.row.aliasCnName?'clasRed':''"
+                >{{scope.row.aliasCnName?scope.row.aliasCnName:"未设置"}}</a>
+              </template>
+            </el-table-column>
+          </el-table-column>
+          <el-table-column label="英文申报名" header-align="center">
+            <el-table-column
+              prop="aliasEnName"
+              :render-header="renderHeader"
+              width="110"
+              align="center"
+            >
+              <template slot-scope="scope">
+                <a
+                  :class="!scope.row.aliasEnName?'clasRed':''"
+                >{{scope.row.aliasEnName?scope.row.aliasEnName:"未设置"}}</a>
+              </template>
+            </el-table-column>
+          </el-table-column>
+          <el-table-column label="是否液体" header-align="center">
+            <el-table-column
+              prop="isLiquid"
+              :render-header="renderHeader"
+              width="108"
+              align="center"
+            ></el-table-column>
+          </el-table-column>
+          <el-table-column label="是否粉末" header-align="center">
+            <el-table-column
+              prop="isPowder"
+              :render-header="renderHeader"
+              width="108"
+              align="center"
+            ></el-table-column>
+          </el-table-column>
+          <el-table-column label="是否带磁" header-align="center">
+            <el-table-column
+              prop="isMagnetism"
+              :render-header="renderHeader"
+              width="108"
+              align="center"
+            ></el-table-column>
+          </el-table-column>
+          <el-table-column label="是否带电" header-align="center">
+            <el-table-column
+              prop="isCharged"
+              :render-header="renderHeader"
+              width="108"
+              align="center"
+            ></el-table-column>
+          </el-table-column>
+          <el-table-column label="是否多属性" header-align="center">
+            <el-table-column prop="isVar" :render-header="renderHeader" width="108" align="center"></el-table-column>
+          </el-table-column>
+        </el-table>
+      </div>
       <!-- 属性信息查看对话框 -->
       <el-dialog title="查看" :visible.sync="dialogVisible" width="70%" class="dig70">
         <el-form
@@ -208,7 +232,7 @@
         >
           <el-form-item label="图片" prop="picUrl" class="item1">
             <a :href="goodsInfo.picUrl" target="_blank" style="cursor: pointer">
-              <img :src="goodsInfo.picUrl" style="width: 150px;height: 150px;">
+              <img :src="goodsInfo.picUrl" style="width: 150px;height: 150px;" />
             </a>
           </el-form-item>
           <el-form-item label="图片地址" prop="picUrl" class="item">
@@ -376,7 +400,7 @@
         </el-table-column>
         <el-table-column prop="picUrl" fixed label="商品图片" header-align="center">
           <template slot-scope="scope">
-            <img :src="scope.row.picUrl" style="width: 70px;height: 70px">
+            <img :src="scope.row.picUrl" style="width: 70px;height: 70px" />
           </template>
         </el-table-column>
         <el-table-column label="商品编码" header-align="center">
@@ -555,7 +579,7 @@
       <el-dialog title="查看" :visible.sync="dialogPicture">
         <el-form label-position="left" label-width="110px" ref="picForm">
           <el-form-item label="图片" prop="goodsInfoPic.picUrl" class="item1">
-            <img :src="goodsInfoPic.picUrl" style="width: 150px;height: 100px;">
+            <img :src="goodsInfoPic.picUrl" style="width: 150px;height: 100px;" />
           </el-form-item>
           <el-form-item label="图片地址" prop="picUrl" class="item">
             <span>
@@ -642,7 +666,7 @@
         </el-table-column>
         <el-table-column prop="picUrl" fixed label="主图" header-align="center">
           <template slot-scope="scope">
-            <img :src="scope.row.picUrl" style="width: 70px;height: 70px">
+            <img :src="scope.row.picUrl" style="width: 70px;height: 70px" />
           </template>
         </el-table-column>
         <el-table-column label="商品编码" header-align="center">
@@ -1323,31 +1347,43 @@ export default {
     markAll() {
       if (this.sels.length != 0) {
         for (let i = 0; i < this.sels.length; i++) {
-          if (this.sels[i].goodsName == null || this.sels[i].goodsName=='') {
+          if (this.sels[i].goodsName == null || this.sels[i].goodsName == "") {
             this.$message.error("未完善商品名称,不可标记");
             return;
           }
-          if (this.sels[i].aliasCnName == null || this.sels[i].aliasCnName=='') {
+          if (
+            this.sels[i].aliasCnName == null ||
+            this.sels[i].aliasCnName == ""
+          ) {
             this.$message.error("未完善中文申报名,不可标记");
             return;
           }
-          if (this.sels[i].aliasEnName == null || this.sels[i].aliasEnName=='') {
+          if (
+            this.sels[i].aliasEnName == null ||
+            this.sels[i].aliasEnName == ""
+          ) {
             this.$message.error("未完善英文申报名,不可标记");
             return;
           }
-          if (this.sels[i].supplierName == null || this.sels[i].supplierName=='') {
+          if (
+            this.sels[i].supplierName == null ||
+            this.sels[i].supplierName == ""
+          ) {
             this.$message.error("未完善供应商名称,不可标记");
             return;
           }
-          if (this.sels[i].packName == null || this.sels[i].packName=='') {
+          if (this.sels[i].packName == null || this.sels[i].packName == "") {
             this.$message.error("未完善包装规格,不可标记");
             return;
           }
-          if (this.sels[i].storeName == null || this.sels[i].storeName=='') {
+          if (this.sels[i].storeName == null || this.sels[i].storeName == "") {
             this.$message.error("未完善仓库,不可标记");
             return;
           }
-          if (this.sels[i].description == null || this.sels[i].description=='') {
+          if (
+            this.sels[i].description == null ||
+            this.sels[i].description == ""
+          ) {
             this.$message.error("未完善描述,不可标记");
             return;
           }
@@ -1455,17 +1491,17 @@ export default {
     getData() {
       APIGoodsInfo(this.condition).then(res => {
         this.tableData = res.data.data.items;
-        for(let i=0;i<this.tableData.length;i++){
-          var strData=this.tableData[i].picUrl
+        for (let i = 0; i < this.tableData.length; i++) {
+          var strData = this.tableData[i].picUrl;
           var replaceStr;
-          var reg=/([\s\S]+)(.(jpg_)?\d{2}x\d+)([\s\S]+)/g
-          var result=reg.exec(strData);
-          if(result){
-            if(result[1].charAt(result[1].length-1)=='.'){
-              result[1] = result[1].substring(0, result[1].length - 1); 
+          var reg = /([\s\S]+)(.(jpg_)?\d{2}x\d+)([\s\S]+)/g;
+          var result = reg.exec(strData);
+          if (result) {
+            if (result[1].charAt(result[1].length - 1) == ".") {
+              result[1] = result[1].substring(0, result[1].length - 1);
             }
-           replaceStr=result[1]+result[result.length-1]
-           this.tableData[i].picUrl=replaceStr
+            replaceStr = result[1] + result[result.length - 1];
+            this.tableData[i].picUrl = replaceStr;
           }
         }
         this.total = res.data.data._meta.totalCount;
@@ -1486,7 +1522,7 @@ export default {
           [
             h("el-input", {
               props: {
-                value: "",
+                value: this.condition.goodsCode,
                 size: "mini",
                 clearable: true
               },
@@ -1635,7 +1671,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "180px",
+            width: "145px",
             padding: "2px"
           },
           on: {
@@ -1656,7 +1692,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "180px",
+            width: "145px",
             padding: "2px"
           },
           on: {
@@ -1905,9 +1941,9 @@ export default {
       // this.$router.push({
       //   path: `/${row.id}`
       // });
-      let Logistics=this.$router.resolve({
-                   path: `/${row.id}`
-                })     
+      let Logistics = this.$router.resolve({
+        path: `/${row.id}`
+      });
       window.open(Logistics.href);
     },
     formatTen(num) {
@@ -3087,6 +3123,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-button {
+  margin-left: 0;
+  margin-right: 5px;
+}
 .clasRed {
   color: #c55 !important;
 }
@@ -3108,7 +3148,7 @@ export default {
   color: #f56c6c;
   border: rgba(245, 108, 108, 0.2) solid 1px;
   background: rgba(245, 108, 108, 0.1);
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;
@@ -3117,11 +3157,17 @@ export default {
 .clasGreen1 {
   color: #0e9a00;
   border-radius: 5px;
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;
   border: rgba(3, 82, 38, 0.2) solid 1px;
   background: rgba(33, 170, 95, 0.1);
+}
+</style>
+<style>
+.infoTable .el-table th div {
+  padding-left: 4px !important;
+  padding-right: 4px !important;
 }
 </style>

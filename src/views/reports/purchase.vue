@@ -126,65 +126,78 @@
         <el-table-column min-width="90"
                          prop="purchaser"
                          label="采购员"
+                          align="center"
                          :formatter="empty"
                          sortable></el-table-column>
         <el-table-column min-width="100"
                          prop="salemoneyrmbus"
                          label="成交价$"
+                          align="center"
                          :formatter="empty"
                          sortable="custom"></el-table-column>
         <el-table-column min-width="100"
                          prop="salemoneyrmbzn"
                          label="成交价￥"
+                          align="center"
                          :formatter="empty"
                          sortable="custom"></el-table-column>
         <el-table-column min-width="130"
                          prop="ppebayus"
+                          align="center"
                          label="交易费汇总$"
                          :formatter="empty"
                          sortable="custom"></el-table-column>
         <el-table-column min-width="130"
                          prop="ppebayzn"
+                          align="center"
                          label="交易费汇总￥"
                          :formatter="empty"
                          sortable="custom"></el-table-column>
         <el-table-column min-width="115"
                          prop="costmoneyrmb"
                          label="商品成本￥"
+                          align="center"
                          :formatter="empty"
                          sortable="custom"></el-table-column>
         <el-table-column min-width="115"
                          prop="expressfarermb"
                          label="运费成本￥"
+                          align="center"
                          :formatter="empty"
                          sortable="custom"></el-table-column>
         <el-table-column min-width="115"
                          prop="inpackagefeermb"
                          label="包装成本￥"
+                          align="center"
                          :formatter="empty"
                          sortable="custom"></el-table-column>
         <el-table-column min-width="115"
                          prop="devofflinefee"
                          label="死库处理￥"
+                          align="center"
                          :formatter="empty"
                          sortable="custom"></el-table-column>
         <el-table-column min-width="120"
                          prop="devopefee"
                          label="运营杂费￥"
+                          align="center"
                          :formatter="empty"
                          sortable="custom"></el-table-column>
         <el-table-column min-width="100"
                          prop="netprofit"
+                          align="center"
                          label="毛利￥"
                          :formatter="empty"
                          sortable="custom"></el-table-column>
         <el-table-column min-width="100"
                          prop="netrate"
+                          align="center"
                          label="毛利率%"
                          :formatter="empty"
                          sortable="custom"></el-table-column>
         <el-table-column min-width="120"
                          prop="totalamount"
+                          align="center"
                          label="采购差额￥"
                          :formatter="empty"
                          sortable="custom"></el-table-column>
@@ -405,7 +418,7 @@ export default {
   methods: {
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
-        return "color:#337ab7;background:#f5f7fa";
+        return "color:#3c8dbc;background:#f5f7fa";
       } else {
         return "";
       }

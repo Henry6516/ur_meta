@@ -58,7 +58,7 @@
       </el-form-item>
       <el-form-item>
         <el-button size="small"
-                   type='default'
+                   type='success'
                    @click='exportExcel'
                    :loading="downloadLoading">导出Excel</el-button>
       </el-form-item>

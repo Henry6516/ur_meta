@@ -8,7 +8,7 @@
     <el-col :span="24" style="margin-top: 0px;background: #fff;border-bottom: #ccc solid 1px;padding-left: 15px">
       <el-button type="primary"
                  @click="save">保存当前数据</el-button>
-      <el-button type="primary"
+      <el-button type="success"
                  @click="preserve">保存并完善</el-button>
       <el-button type="warning"
                  @click="upload">上传到FTP</el-button>

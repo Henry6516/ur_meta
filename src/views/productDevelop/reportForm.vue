@@ -14,10 +14,11 @@
       ></el-tab-pane>
     </el-tabs>
     <div v-show="show.sale">
-      <el-col :span="24" style="padding:10px 20px;">
+      <el-col :span="24" style="padding:10px 15px;">
         <el-button type="success" @click="markAll">批量标记推广完成</el-button>
       </el-col>
       <!-- 销售列表 -->
+      <div class="infoTable">
       <el-table :data="platData" @selection-change="selsChange" :height="tableHeight">
         <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
@@ -59,7 +60,7 @@
           <el-table-column
             prop="goodsCode"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="125"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -67,7 +68,7 @@
           <el-table-column
             prop="extendStatus"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="108"
             align="center"
           >
             <template slot-scope="scope">
@@ -81,7 +82,7 @@
           <el-table-column
             prop="mapPersons"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="120"
             align="center"
           >
             <template slot-scope="scope">
@@ -95,7 +96,7 @@
           <el-table-column
             prop="storeName"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="108"
             align="center"
           >
             <template slot-scope="scope">
@@ -109,7 +110,7 @@
           <el-table-column
             prop="stockUp"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="108"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -117,7 +118,7 @@
           <el-table-column
             prop="wishPublish"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="108"
             align="center"
           >
             <template slot-scope="scope">
@@ -128,7 +129,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="完成状况" header-align="center">
-          <el-table-column prop="completeStatus" :render-header="renderHeaderPlat" width="180">
+          <el-table-column prop="completeStatus" :render-header="renderHeaderPlat" width="130">
             <template slot-scope="scope">
               <a
                 :class="!scope.row.completeStatus?'clasRed':''"
@@ -138,7 +139,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="禁售平台" header-align="center">
-          <el-table-column prop="dictionaryName" :render-header="renderHeaderPlat" width="220">
+          <el-table-column prop="dictionaryName" :render-header="renderHeaderPlat" width="160">
             <template slot-scope="scope">
               <a
                 :class="!scope.row.dictionaryName?'clasRed':''"
@@ -151,7 +152,7 @@
           <el-table-column
             prop="goodsName"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="140"
             align="center"
           >
             <template slot-scope="scope">
@@ -162,13 +163,13 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="主类目" header-align="center">
-          <el-table-column prop="cate" :render-header="renderHeaderPlat" width="150" align="center"></el-table-column>
+          <el-table-column prop="cate" :render-header="renderHeaderPlat" width="120" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="子类目" header-align="center">
           <el-table-column
             prop="subCate"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="120"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -190,7 +191,7 @@
           <el-table-column
             prop="introducer"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="110"
             align="center"
           >
             <template slot-scope="scope">
@@ -204,7 +205,7 @@
           <el-table-column
             prop="developer"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -212,7 +213,7 @@
           <el-table-column
             prop="purchaser"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -220,12 +221,12 @@
           <el-table-column
             prop="possessMan1"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
         <el-table-column label="是否采集数据" header-align="center">
-          <el-table-column prop :render-header="renderHeaderPlat" width="150" align="center">
+          <el-table-column prop :render-header="renderHeaderPlat" width="108" align="center">
             <template slot-scope="scope">
               <a>{{scope.row.mid >1?'采集':'非采集'}}</a>
             </template>
@@ -235,7 +236,7 @@
           <el-table-column
             prop="devDatetime"
             :render-header="renderHeaderPlat"
-            width="220"
+            width="160"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -243,7 +244,7 @@
           <el-table-column
             prop="updateTime"
             :render-header="renderHeaderPlat"
-            width="220"
+            width="160"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -251,7 +252,7 @@
           <el-table-column
             prop="isVar"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="108"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -259,7 +260,7 @@
           <el-table-column
             prop="goodsStatus"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="120"
             align="center"
           >
             <template slot-scope="scope">
@@ -273,7 +274,7 @@
           <el-table-column
             prop="stockDays"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="108"
             align="center"
           >
             <template slot-scope="scope">
@@ -284,6 +285,7 @@
           </el-table-column>
         </el-table-column>
       </el-table>
+      </div>
       <el-pagination
         background
         @size-change="handleSizeChangePlat"
@@ -456,6 +458,7 @@
     </div>
     <div v-show="show.wish">
       <!-- wish列表 -->
+      <div class="infoTable">
       <el-table :data="platDataWish" @selection-change="selsChange" :height="tableHeightWish">
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
         <el-table-column label="操作" fixed header-align="center" width="58">
@@ -482,7 +485,7 @@
           <el-table-column
             prop="goodsCode"
             :render-header="renderHeaderWish"
-            width="150"
+            width="125"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -490,7 +493,7 @@
           <el-table-column
             prop="wishPublish"
             :render-header="renderHeaderWish"
-            width="150"
+            width="115"
             align="center"
           >
             <template slot-scope="scope">
@@ -501,7 +504,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="禁售平台" header-align="center">
-          <el-table-column prop="dictionaryName" :render-header="renderHeaderWish" width="220">
+          <el-table-column prop="dictionaryName" :render-header="renderHeaderWish" width="160">
             <template slot-scope="scope">
               <a
                 :class="!scope.row.dictionaryName?'clasRed':''"
@@ -514,7 +517,7 @@
           <el-table-column
             prop="goodsName"
             :render-header="renderHeaderWish"
-            width="150"
+            width="175"
             align="center"
           >
             <template slot-scope="scope">
@@ -528,7 +531,7 @@
           <el-table-column
             prop="developer"
             :render-header="renderHeaderWish"
-            width="150"
+            width="130"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -536,7 +539,7 @@
           <el-table-column
             prop="purchaser"
             :render-header="renderHeaderWish"
-            width="150"
+            width="130"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -544,7 +547,7 @@
           <el-table-column
             prop="possessMan1"
             :render-header="renderHeaderWish"
-            width="150"
+            width="130"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -552,7 +555,7 @@
           <el-table-column
             prop="devDatetime"
             :render-header="renderHeaderWish"
-            width="220"
+            width="180"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -560,7 +563,7 @@
           <el-table-column
             prop="number"
             :render-header="renderHeaderWish"
-            width="120"
+            width="130"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -568,7 +571,7 @@
           <el-table-column
             prop="isVar"
             :render-header="renderHeaderWish"
-            width="150"
+            width="130"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -576,7 +579,7 @@
           <el-table-column
             prop="goodsStatus"
             :render-header="renderHeaderWish"
-            width="150"
+            width="130"
             align="center"
           >
             <template slot-scope="scope">
@@ -590,7 +593,7 @@
           <el-table-column
             prop="stockDays"
             :render-header="renderHeaderWish"
-            width="150"
+            width="130"
             align="center"
           >
             <template slot-scope="scope">
@@ -601,6 +604,7 @@
           </el-table-column>
         </el-table-column>
       </el-table>
+      </div>
       <el-pagination
         background
         @size-change="handleSizeChangeWish"
@@ -641,18 +645,18 @@
         style="width: 98%;margin:auto;margin-top:5px;"
       >
         <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
-        <el-table-column label="开发员" header-align="right" align="right" prop="developer"></el-table-column>
-        <el-table-column label="备货产品款数" header-align="right" align="right" prop="number"></el-table-column>
-        <el-table-column label="出单产品款数" header-align="right" align="right" prop="orderNum"></el-table-column>
-        <el-table-column label="出单率(%)" header-align="right" align="right" prop="orderRate" >
+        <el-table-column label="开发员" header-align="center" align="center" prop="developer"></el-table-column>
+        <el-table-column label="备货产品款数" header-align="center" align="center" prop="number"></el-table-column>
+        <el-table-column label="出单产品款数" header-align="center" align="center" prop="orderNum"></el-table-column>
+        <el-table-column label="出单率(%)" header-align="center" align="center" prop="orderRate" >
           <template slot-scope="scope">{{scope.row.orderRate | cutOut100}}</template>
         </el-table-column>
-        <el-table-column label="旺款数量" header-align="right" align="right" prop="exuStyleNum"></el-table-column>
-        <el-table-column label="旺款率(%)" header-align="right" align="right" prop="exuRate">
+        <el-table-column label="旺款数量" header-align="center" align="center" prop="exuStyleNum"></el-table-column>
+        <el-table-column label="旺款率(%)" header-align="center" align="center" prop="exuRate">
           <template slot-scope="scope">{{scope.row.exuRate | cutOut100}}</template>
         </el-table-column>
-        <el-table-column label="爆款数量" header-align="right" align="right" prop="hotStyleNum"></el-table-column>
-        <el-table-column label="爆款率(%)" header-align="right" align="right" prop="hotRate">
+        <el-table-column label="爆款数量" header-align="center" align="center" prop="hotStyleNum"></el-table-column>
+        <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotRate">
           <template slot-scope="scope">{{scope.row.hotRate | cutOut100}}</template>
         </el-table-column>
         <el-table-column
@@ -753,10 +757,18 @@
     <div v-show="show.limit">
       <limit></limit>
     </div>
+    <div v-show="show.saleProduct">
+      <saleProduct></saleProduct>
+    </div>
+    <div v-show="show.productStock">
+      <productStock></productStock>
+    </div>
   </section>
 </template>
 <script type="text/ecmascript-6">
 import limit from "../reports/limit.vue";
+import saleProduct from "./saleProduct.vue";
+import productStock from "./productStock.vue";
 import {
   APIProduct,
   APIPlat,
@@ -775,7 +787,9 @@ import {
 import { getMenu } from "../../api/login";
 export default {
   components: {
-    limit
+    limit,
+    saleProduct,
+    productStock
   },
   data() {
     return {
@@ -867,11 +881,13 @@ export default {
       nostockdata: [],
       noskuTotal: 0,
       show: {
-        sale: true,
+        sale: false,
         wish: false,
         stockUp: false,
         nostockUp: false,
         limit:false,
+        saleProduct:false,
+        productStock:false,
       }
     };
   },
@@ -917,6 +933,16 @@ export default {
         this.show["limit"] = true;
       } else {
         this.show["limit"] = false;
+      }
+      if (tab.name === "/v1/oa-data/sales-perform") {
+        this.show["saleProduct"] = true;
+      } else {
+        this.show["saleProduct"] = false;
+      }
+      if (tab.name === "/v1/oa-data/stock-perform") {
+        this.show["productStock"] = true;
+      } else {
+        this.show["productStock"] = false;
       }
     },
     //销售
@@ -1540,7 +1566,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "200px",
+            width: "145px",
             padding: "2px"
           },
           on: {
@@ -1561,7 +1587,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "200px",
+            width: "145px",
             padding: "2px"
           },
           on: {
@@ -1945,7 +1971,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "200px",
+            width: "145px",
             padding: "2px"
           },
           on: {
@@ -2230,6 +2256,27 @@ export default {
       } else {
         this.show["nostockUp"] = false;
       }
+      if (this.allMenu[0].route === "/v1/report/dev-limit") {
+        this.show["limit"] = true;
+        this.activeName = this.allMenu[0].route;
+        this.getnoStock();
+      } else {
+        this.show["limit"] = false;
+      }
+      if (this.allMenu[0].route === "/v1/oa-data/sales-perform") {
+        this.show["saleProduct"] = true;
+        this.activeName = this.allMenu[0].route;
+        this.getnoStock();
+      } else {
+        this.show["saleProduct"] = false;
+      }
+      if (this.allMenu[0].route === "/v1/oa-data/stock-perform") {
+        this.show["productStock"] = true;
+        this.activeName = this.allMenu[0].route;
+        this.getnoStock();
+      } else {
+        this.show["productStock"] = false;
+      }
       //销售
       this.getPlat();
       getAttributeInfoStoreName().then(response => {
@@ -2267,7 +2314,7 @@ export default {
   color: #f56c6c;
   border: rgba(245, 108, 108, 0.2) solid 1px;
   background: rgba(245, 108, 108, 0.1);
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;
@@ -2276,7 +2323,7 @@ export default {
 .clasGreen1 {
   color: #0e9a00;
   border-radius: 5px;
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;

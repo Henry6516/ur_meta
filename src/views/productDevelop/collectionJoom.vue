@@ -61,6 +61,7 @@
           </el-col>
         </el-col>
         <el-col :span="24">
+          <div class="infoTable">
           <el-table :data="pictureData" @selection-change="selsChange" :height="tableHeight">
             <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
             <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
@@ -122,7 +123,7 @@
               <el-table-column
                 prop="proId"
                 :render-header="renderHeaderPic"
-                width="330"
+                width="240"
                 align="center"
               ></el-table-column>
             </el-table-column>
@@ -130,7 +131,7 @@
               <el-table-column
                 prop="platForm"
                 :render-header="renderHeaderPic"
-                width="150"
+                width="100"
                 align="center"
               ></el-table-column>
             </el-table-column>
@@ -138,7 +139,7 @@
               <el-table-column
                 prop="progress"
                 :render-header="renderHeaderPic"
-                width="160"
+                width="108"
                 align="center"
               >
                 <template slot-scope="scope">
@@ -152,7 +153,7 @@
               <el-table-column
                 prop="creator"
                 :render-header="renderHeaderPic"
-                width="150"
+                width="110"
                 align="center"
               ></el-table-column>
             </el-table-column>
@@ -160,7 +161,7 @@
               <el-table-column
                 prop="createTime"
                 :render-header="renderHeaderPic"
-                width="220"
+                width="160"
                 align="center"
               ></el-table-column>
             </el-table-column>
@@ -168,7 +169,7 @@
               <el-table-column
                 prop="updateTime"
                 :render-header="renderHeaderPic"
-                width="220"
+                width="160"
                 align="center"
               ></el-table-column>
             </el-table-column>
@@ -176,7 +177,7 @@
               <el-table-column
                 prop="detailStatus"
                 :render-header="renderHeaderPic"
-                width="150"
+                width="108"
                 align="center"
               >
                 <template slot-scope="scope">
@@ -190,7 +191,7 @@
               <el-table-column
                 prop="devStatus"
                 :render-header="renderHeaderPic"
-                width="150"
+                width="108"
                 align="center"
               >
                 <template slot-scope="scope">
@@ -204,7 +205,7 @@
               <el-table-column
                 prop="cat"
                 :render-header="renderHeaderPic"
-                width="150"
+                width="120"
                 align="center"
               ></el-table-column>
             </el-table-column>
@@ -212,7 +213,7 @@
               <el-table-column
                 prop="subCat"
                 :render-header="renderHeaderPic"
-                width="150"
+                width="120"
                 align="center"
               ></el-table-column>
             </el-table-column>
@@ -220,7 +221,7 @@
               <el-table-column
                 prop="goodsCode"
                 :render-header="renderHeaderPic"
-                width="150"
+                width="130"
                 align="center"
               ></el-table-column>
             </el-table-column>
@@ -228,11 +229,12 @@
               <el-table-column
                 prop="pyGoodsCode"
                 :render-header="renderHeaderPic"
-                width="150"
+                width="130"
                 align="center"
               ></el-table-column>
             </el-table-column>
           </el-table>
+          </div>
         </el-col>
       </el-row>
       <el-pagination
@@ -1213,7 +1215,7 @@ export default {
   color: #f56c6c;
   border: rgba(245, 108, 108, 0.2) solid 1px;
   background: rgba(245, 108, 108, 0.1);
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;
@@ -1222,7 +1224,7 @@ export default {
 .clasGreen1 {
   color: #0e9a00;
   border-radius: 5px;
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;
@@ -1233,7 +1235,7 @@ export default {
   color: #e6a23c;
   background-color: rgba(230, 162, 60, 0.1);
   border: rgba(214, 132, 8, 0.2) solid 1px;
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;
@@ -1243,7 +1245,7 @@ export default {
   color: #409eff;
   background-color: rgba(64, 158, 255, 0.1);
   border: 1px solid rgba(64, 158, 255, 0.2);
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;

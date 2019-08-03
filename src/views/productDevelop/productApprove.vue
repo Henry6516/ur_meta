@@ -15,9 +15,9 @@
     </el-tabs>
     <div v-show="show.wait">
       <el-col :span="24" style="padding:10px 15px;">
-        <el-button type="success" @click="passAll">批量通过</el-button>
-        <el-button type="danger" @click="unPassAll">批量未通过</el-button>
-        <el-button type="warning" @click="cancelAll">批量作废</el-button>
+        <el-button type="success" @click="passAll" class="mr5">批量通过</el-button>
+        <el-button type="danger" @click="unPassAll" class="mr5">批量未通过</el-button>
+        <el-button type="warning" @click="cancelAll" class="mr5">批量作废</el-button>
       </el-col>
       <el-dialog title="未通过备注" :visible.sync="dialogFormVisible1">
         <el-input v-model="wtgpz"></el-input>
@@ -110,6 +110,7 @@
         </el-form>
       </el-dialog>
       <!-- 列表 -->
+      <div class="infoTable">
       <el-table :data="tableData" @selection-change="selsChange" :height="tableHeight">
         <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
@@ -154,7 +155,7 @@
             prop="stockUp"
             :formatter="empty"
             :render-header="renderHeader"
-            width="150"
+            width="108"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -163,7 +164,7 @@
             prop="mineId"
             :formatter="empty"
             :render-header="renderHeader"
-            width="150"
+            width="108"
             align="center"
           >
             <template slot-scope="scope">
@@ -172,16 +173,16 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="主类目" header-align="center">
-          <el-table-column prop="cate" :render-header="renderHeader" width="150" align="center"></el-table-column>
+          <el-table-column prop="cate" :render-header="renderHeader" width="120" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="子类目" header-align="center">
-          <el-table-column prop="subCate" :render-header="renderHeader" width="150" align="center"></el-table-column>
+          <el-table-column prop="subCate" :render-header="renderHeader" width="120" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="产品状态" header-align="center">
           <el-table-column
             prop="checkStatus"
             :render-header="renderHeader"
-            width="150"
+            width="108"
             align="center"
           >
             <template slot-scope="scope">
@@ -190,7 +191,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="供应商链接1" header-align="center">
-          <el-table-column prop="vendor1" :render-header="renderHeader" width="170" align="center">
+          <el-table-column prop="vendor1" :render-header="renderHeader" width="165" align="center">
             <template slot-scope="scope">
               <a
                 :href="scope.row.vendor1"
@@ -201,7 +202,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="平台参考链接1" header-align="center">
-          <el-table-column prop="origin1" :render-header="renderHeader" width="170" align="center">
+          <el-table-column prop="origin1" :render-header="renderHeader" width="165" align="center">
             <template slot-scope="scope">
               <a
                 :href="scope.row.origin1"
@@ -212,13 +213,13 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="开发编号" header-align="center">
-          <el-table-column prop="devNum" :render-header="renderHeader" width="150" align="center"></el-table-column>
+          <el-table-column prop="devNum" :render-header="renderHeader" width="130" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="开发员" header-align="center">
           <el-table-column
             prop="developer"
             :render-header="renderHeader"
-            width="150"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -226,7 +227,7 @@
           <el-table-column
             prop="introducer"
             :render-header="renderHeader"
-            width="150"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -234,7 +235,7 @@
           <el-table-column
             prop="introReason"
             :render-header="renderHeader"
-            width="150"
+            width="125"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -242,7 +243,7 @@
           <el-table-column
             prop="createDate"
             :render-header="renderHeader"
-            width="200"
+            width="160"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -250,7 +251,7 @@
           <el-table-column
             prop="updateDate"
             :render-header="renderHeader"
-            width="200"
+            width="160"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -258,7 +259,7 @@
           <el-table-column
             prop="salePrice"
             :render-header="renderHeader"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -266,28 +267,29 @@
           <el-table-column
             prop="hopeWeight"
             :render-header="renderHeader"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
         <el-table-column label="预估成本(￥)" header-align="center">
-          <el-table-column prop="hopeCost" :render-header="renderHeader" width="200" align="center"></el-table-column>
+          <el-table-column prop="hopeCost" :render-header="renderHeader" width="110" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="预估利润率(%)" header-align="center">
-          <el-table-column prop="hopeRate" :render-header="renderHeader" width="200" align="center"></el-table-column>
+          <el-table-column prop="hopeRate" :render-header="renderHeader" width="110" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="预估月销量" header-align="center">
-          <el-table-column prop="hopeSale" :render-header="renderHeader" width="200" align="center"></el-table-column>
+          <el-table-column prop="hopeSale" :render-header="renderHeader" width="110" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="预估月毛利($)" header-align="center">
           <el-table-column
             prop="hopeMonthProfit"
             :render-header="renderHeader"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
       </el-table>
+      </div>
       <div class="toolbar">
         <el-pagination
           background
@@ -303,8 +305,9 @@
     </div>
     <div v-show="show.pass">
       <!-- 列表 -->
+      <div class="infoTable">
       <el-table :data="tableData1" @selection-change="selsChange" :height="tableHeight1">
-        <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
+        <!-- <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column> -->
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
         <el-table-column prop="img" fixed label="图片" header-align="center" width="80">
           <template slot-scope="scope">
@@ -320,7 +323,7 @@
             prop="stockUp"
             :formatter="empty"
             :render-header="renderHeader1"
-            width="150"
+            width="108"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -329,7 +332,7 @@
             prop="mineId"
             :formatter="empty"
             :render-header="renderHeader1"
-            width="150"
+            width="108"
             align="center"
           >
             <template slot-scope="scope">
@@ -338,13 +341,13 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="主类目" header-align="center">
-          <el-table-column prop="cate" :render-header="renderHeader1" width="150" align="center"></el-table-column>
+          <el-table-column prop="cate" :render-header="renderHeader1" width="120" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="子类目" header-align="center">
-          <el-table-column prop="subCate" :render-header="renderHeader1" width="150" align="center"></el-table-column>
+          <el-table-column prop="subCate" :render-header="renderHeader1" width="120" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="供应商链接1" header-align="center">
-          <el-table-column prop="vendor1" :render-header="renderHeader1" width="170" align="center">
+          <el-table-column prop="vendor1" :render-header="renderHeader1" width="165" align="center">
             <template slot-scope="scope">
               <a
                 :href="scope.row.vendor1"
@@ -355,7 +358,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="平台参考链接1" header-align="center">
-          <el-table-column prop="origin1" :render-header="renderHeader1" width="170" align="center">
+          <el-table-column prop="origin1" :render-header="renderHeader1" width="165" align="center">
             <template slot-scope="scope">
               <a
                 :href="scope.row.origin1"
@@ -366,13 +369,13 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="开发编号" header-align="center">
-          <el-table-column prop="devNum" :render-header="renderHeader1" width="150" align="center"></el-table-column>
+          <el-table-column prop="devNum" :render-header="renderHeader1" width="130" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="开发员" header-align="center">
           <el-table-column
             prop="developer"
             :render-header="renderHeader1"
-            width="150"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -380,7 +383,7 @@
           <el-table-column
             prop="introducer"
             :render-header="renderHeader1"
-            width="150"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -388,7 +391,7 @@
           <el-table-column
             prop="checkStatus"
             :render-header="renderHeader1"
-            width="150"
+            width="108"
             align="center"
           >
             <template slot-scope="scope">
@@ -400,7 +403,7 @@
           <el-table-column
             prop="approvalNote"
             :render-header="renderHeader1"
-            width="150"
+            width="135"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -408,7 +411,7 @@
           <el-table-column
             prop="createDate"
             :render-header="renderHeader1"
-            width="200"
+            width="160"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -416,7 +419,7 @@
           <el-table-column
             prop="updateDate"
             :render-header="renderHeader1"
-            width="200"
+            width="160"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -424,7 +427,7 @@
           <el-table-column
             prop="salePrice"
             :render-header="renderHeader1"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -432,7 +435,7 @@
           <el-table-column
             prop="hopeWeight"
             :render-header="renderHeader1"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -440,7 +443,7 @@
           <el-table-column
             prop="hopeCost"
             :render-header="renderHeader1"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -448,7 +451,7 @@
           <el-table-column
             prop="hopeRate"
             :render-header="renderHeader1"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -456,7 +459,7 @@
           <el-table-column
             prop="hopeSale"
             :render-header="renderHeader1"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -464,11 +467,12 @@
           <el-table-column
             prop="hopeMonthProfit"
             :render-header="renderHeader1"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
       </el-table>
+      </div>
       <div class="toolbar">
         <el-pagination
           background
@@ -570,8 +574,9 @@
         </el-form>
       </el-dialog>
       <!-- 列表 -->
+      <div class="infoTable">
       <el-table :data="tableData2" @selection-change="selsChange" :height="tableHeight2">
-        <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
+        <!-- <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column> -->
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
         <el-table-column label="操作" fixed header-align="center" width="105">
           <template slot-scope="scope">
@@ -616,18 +621,18 @@
             prop="stockUp"
             :formatter="empty"
             :render-header="renderHeader2"
-            width="150"
+            width="108"
             align="center"
           ></el-table-column>
         </el-table-column>
         <el-table-column label="主类目" header-align="center">
-          <el-table-column prop="cate" :render-header="renderHeader2" width="150" align="center"></el-table-column>
+          <el-table-column prop="cate" :render-header="renderHeader2" width="120" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="子类目" header-align="center">
-          <el-table-column prop="subCate" :render-header="renderHeader2" width="150" align="center"></el-table-column>
+          <el-table-column prop="subCate" :render-header="renderHeader2" width="120" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="供应商链接1" header-align="center">
-          <el-table-column prop="vendor1" :render-header="renderHeader2" width="170" align="center">
+          <el-table-column prop="vendor1" :render-header="renderHeader2" width="165" align="center">
             <template slot-scope="scope">
               <a
                 :href="scope.row.vendor1"
@@ -638,7 +643,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="平台参考链接1" header-align="center">
-          <el-table-column prop="origin1" :render-header="renderHeader2" width="170" align="center">
+          <el-table-column prop="origin1" :render-header="renderHeader2" width="165" align="center">
             <template slot-scope="scope">
               <a
                 :href="scope.row.origin1"
@@ -649,13 +654,13 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="开发编号" header-align="center">
-          <el-table-column prop="devNum" :render-header="renderHeader2" width="150" align="center"></el-table-column>
+          <el-table-column prop="devNum" :render-header="renderHeader2" width="130" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="开发员" header-align="center">
           <el-table-column
             prop="developer"
             :render-header="renderHeader2"
-            width="150"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -663,7 +668,7 @@
           <el-table-column
             prop="approvalNote"
             :render-header="renderHeader2"
-            width="150"
+            width="135"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -671,7 +676,7 @@
           <el-table-column
             prop="introducer"
             :render-header="renderHeader2"
-            width="150"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -679,7 +684,7 @@
           <el-table-column
             prop="introReason"
             :render-header="renderHeader2"
-            width="150"
+            width="125"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -687,7 +692,7 @@
           <el-table-column
             prop="checkStatus"
             :render-header="renderHeader2"
-            width="150"
+            width="108"
             align="center"
           >
             <template slot-scope="scope">
@@ -699,7 +704,7 @@
           <el-table-column
             prop="createDate"
             :render-header="renderHeader2"
-            width="200"
+            width="160"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -707,7 +712,7 @@
           <el-table-column
             prop="updateDate"
             :render-header="renderHeader2"
-            width="200"
+            width="160"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -715,7 +720,7 @@
           <el-table-column
             prop="salePrice"
             :render-header="renderHeader2"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -723,7 +728,7 @@
           <el-table-column
             prop="hopeWeight"
             :render-header="renderHeader2"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -731,7 +736,7 @@
           <el-table-column
             prop="hopeCost"
             :render-header="renderHeader2"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -739,7 +744,7 @@
           <el-table-column
             prop="hopeRate"
             :render-header="renderHeader2"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -747,7 +752,7 @@
           <el-table-column
             prop="hopeSale"
             :render-header="renderHeader2"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -755,11 +760,12 @@
           <el-table-column
             prop="hopeMonthProfit"
             :render-header="renderHeader2"
-            width="200"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
       </el-table>
+      </div>
       <el-dialog title="更新" :visible.sync="dialogVisibleEdit2">
         <el-form
           :model="editForm"
@@ -1700,7 +1706,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "180px",
+            width: "145px",
             padding: "2px"
           },
           on: {
@@ -1721,7 +1727,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "180px",
+            width: "145px",
             padding: "2px"
           },
           on: {
@@ -2283,7 +2289,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "180px",
+            width: "145px",
             padding: "2px"
           },
           on: {
@@ -2304,7 +2310,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "180px",
+            width: "145px",
             padding: "2px"
           },
           on: {
@@ -2900,7 +2906,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "180px",
+            width: "145px",
             padding: "2px"
           },
           on: {
@@ -2921,7 +2927,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "180px",
+            width: "145px",
             padding: "2px"
           },
           on: {
@@ -3131,7 +3137,7 @@ export default {
   color: #f56c6c;
   border: rgba(245, 108, 108, 0.2) solid 1px;
   background: rgba(245, 108, 108, 0.1);
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;
@@ -3140,7 +3146,7 @@ export default {
 .clasGreen {
   color: #0e9a00;
   border-radius: 5px;
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;
@@ -3157,6 +3163,9 @@ export default {
 }
 .imgChover:hover .imgHover{
   display: block;
+}
+.mr5{
+  margin-right: 5px;
 }
 </style>
 <style>

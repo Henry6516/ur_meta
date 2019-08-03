@@ -58,6 +58,7 @@ import auzc from '../views/tinytool/auzc.vue'
 import joomtool from '../views/tinytool/joomtool.vue'
 import bidding from '../views/tinytool/bidding.vue'
 import ebayBalance from '../views/tinytool/ebayBalance.vue'
+import ukxnhw from '../views/tinytool/ukxnhw.vue'
 // 设置中心
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
@@ -411,6 +412,11 @@ const routes = [
             path: '/v1/tiny-tool/uk-replenish',
             component: ukxn,
             name: 'uk虚拟仓补货'
+          },
+          {
+            path: '/v1/tiny-tool/uk-virtual-replenish',
+            component: ukxnhw,
+            name: 'uk虚拟仓海外仓补货'
           },
           {
             path: '/v1/tiny-tool/au-real-replenish',

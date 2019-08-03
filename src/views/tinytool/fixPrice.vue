@@ -145,6 +145,12 @@ export default {
           path: `/v1/tiny-tool/ebay-virtual-store`
         });
       }
+      if (tab.name === "/v1/tiny-tool/uk-virtual-replenish") {
+        sessionStorage.setItem("fixname", "/v1/tiny-tool/uk-virtual-replenish");
+        this.$router.push({
+          path: `/v1/tiny-tool/uk-virtual-replenish`
+        });
+      }
     }
   },
   mounted() {

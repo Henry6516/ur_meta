@@ -9,14 +9,14 @@
                          <!--:key="index">-->
             <!--</el-tab-pane>-->
         <!--</el-tabs>-->
-        <div>
+        <div class="infoTable">
             <!-- 图片信息列表 -->
             <el-table :data="pictureData"
                       @selection-change="selsChange" :height="tableHeight">
-                <el-table-column type="selection"
+                <!-- <el-table-column type="selection"
                                  fixed
                                  align="center"
-                                 header-align="center"></el-table-column>
+                                 header-align="center"></el-table-column> -->
                 <el-table-column type="index"
                                  fixed
                                  align="center"
@@ -60,7 +60,7 @@
                                  header-align="center">
                     <el-table-column prop="goodsCode"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='125'
                                      align="center">
                     <template slot-scope="scope">
                     <a :class="scope.row.stockUp=='是'?'redCu':'redblack'">{{scope.row.goodsCode}}</a>
@@ -71,7 +71,7 @@
                                  header-align="center">
                     <el-table-column prop="stockUp"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='108'
                                      align="center">
                     </el-table-column>
                 </el-table-column>
@@ -79,7 +79,7 @@
                                  header-align="center">
                     <el-table-column prop="picStatus"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='115'
                                      align="center">
                         <template slot-scope="scope">
                             <a :class="scope.row.picStatus=='待处理'?'clasRed1':'clasGreen1'">{{scope.row.picStatus}}</a>
@@ -90,7 +90,7 @@
                                  header-align="center">
                     <el-table-column prop="goodsName"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='140'
                                      align="center">
                         <template slot-scope="scope">
                             <a :class="!scope.row.goodsName?'clasRed':''">{{scope.row.goodsName?scope.row.goodsName:"未设置"}}</a>
@@ -101,7 +101,7 @@
                                  header-align="center">
                     <el-table-column prop="developer"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='110'
                                      align="center">
                     </el-table-column>
                 </el-table-column>
@@ -109,7 +109,7 @@
                                  header-align="center">
                     <el-table-column prop="vendor1"
                                      :render-header="renderHeaderPic"
-                                     width='170'
+                                     width='165'
                                      align="center">
                         <template slot-scope="scope">
                             <a :href="scope.row.vendor1" target="_blank" class="classa" :class="!scope.row.vendor1?'clasRed':''">{{!scope.row.vendor1?'未设置':scope.row.vendor1 | cutOut}}</a>
@@ -120,7 +120,7 @@
                                  header-align="center">
                     <el-table-column prop="oaGoods.vendor2"
                                      :render-header="renderHeaderPic"
-                                     width='170'
+                                     width='165'
                                      align="center">
                         <template slot-scope="scope">
                             <a :href="scope.row.vendor2" target="_blank" class="classa" :class="!scope.row.vendor2?'clasRed':''">{{!scope.row.vendor2?'未设置':scope.row.vendor2 | cutOut}}</a>
@@ -131,7 +131,7 @@
                                  header-align="center">
                     <el-table-column prop="oaGoods.vendor3"
                                      :render-header="renderHeaderPic"
-                                     width='170'
+                                     width='165'
                                      align="center">
                         <template slot-scope="scope">
                             <a :href="scope.row.vendor3" target="_blank" class="classa" :class="!scope.row.vendor3?'clasRed':''">{{!scope.row.vendor3?'未设置':scope.row.vendor3 | cutOut}}</a>
@@ -142,7 +142,7 @@
                                  header-align="center">
                     <el-table-column prop="oaGoods.origin1"
                                      :render-header="renderHeaderPic"
-                                     width='170'
+                                     width='165'
                                      align="center">
                         <template slot-scope="scope">
                             <a :href="scope.row.origin1" target="_blank" class="classa" :class="!scope.row.origin1?'clasRed':''">{{!scope.row.origin1?'未设置':scope.row.origin1 | cutOut}}</a>
@@ -153,7 +153,7 @@
                                  header-align="center">
                     <el-table-column prop="oaGoods.origin2"
                                      :render-header="renderHeaderPic"
-                                     width='170'
+                                     width='165'
                                      align="center">
                         <template slot-scope="scope">
                             <a :href="scope.row.origin2" target="_blank" class="classa" :class="!scope.row.origin2?'clasRed':''">{{!scope.row.origin2?'未设置':scope.row.origin2 | cutOut}}</a>
@@ -164,7 +164,7 @@
                                  header-align="center">
                     <el-table-column prop="oaGoods.origin3"
                                      :render-header="renderHeaderPic"
-                                     width='170'
+                                     width='165'
                                      align="center">
                         <template slot-scope="scope">
                             <a :href="scope.row.origin3" target="_blank" class="classa" :class="!scope.row.origin3?'clasRed':''">{{!scope.row.origin3?'未设置':scope.row.origin3 | cutOut}}</a>
@@ -175,7 +175,7 @@
                                  header-align="center">
                     <el-table-column prop="devDatetime"
                                      :render-header="renderHeaderPic"
-                                     width='200'
+                                     width='160'
                                      align="center">
                     </el-table-column>
                 </el-table-column>
@@ -183,7 +183,7 @@
                                  header-align="center">
                     <el-table-column prop="possessMan1"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='110'
                                      align="center">
                     </el-table-column>
                 </el-table-column>
@@ -191,7 +191,7 @@
                                  header-align="center">
                     <el-table-column prop="isVar"
                                      :render-header="renderHeaderPic"
-                                     width='150'
+                                     width='108'
                                      align="center">
                     </el-table-column>
                 </el-table-column>
@@ -1387,7 +1387,7 @@
                             type:'daterange',
                         },
                         style:{
-                            width:'180px',
+                            width:'145px',
                             padding:'2px',
                         },
                         on:{
@@ -2134,7 +2134,7 @@
       color: #f56c6c;
       border: rgba(245, 108, 108, 0.2) solid 1px;
       background: rgba(245, 108, 108, 0.1);
-      width: 65%;
+      width: 85%;
       margin: auto;
       line-height: 32px;
       display: block;
@@ -2143,7 +2143,7 @@
     .clasGreen1 {
       color: #0e9a00;
       border-radius: 5px;
-      width: 65%;
+      width: 85%;
       margin: auto;
       line-height: 32px;
       display: block;

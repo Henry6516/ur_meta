@@ -197,42 +197,52 @@
               style="width: 100%;font-size:13px;">
       <el-table-column prop="suffix"
                        label="账号"
+                        align="center"
                        :formatter="empty"
                        sortable></el-table-column>
       <el-table-column prop="pingtai"
                        label="平台"
+                        align="center"
                        :formatter="empty"
                        sortable></el-table-column>
       <el-table-column prop="salesman"
                        label="销售员"
+                        align="center"
                        :formatter="empty"
                        sortable></el-table-column>
       <el-table-column prop="GoodsCode"
                        label="商品编码"
+                        align="center"
                        :formatter="empty"
                        sortable="custom"></el-table-column>
       <el-table-column prop="GoodsName"
                        label="商品名称"
+                        align="center"
                        :formatter="empty"
                        sortable="custom"></el-table-column>
       <el-table-column prop="SalerName"
                        label="开发员"
+                        align="center"
                        :formatter="empty"
                        sortable="custom"></el-table-column>
       <el-table-column prop="SKUQty"
                        label="销量"
+                        align="center"
                        :formatter="empty"
                        sortable="custom"></el-table-column>
       <el-table-column prop="SaleMoneyRmb"
                        label="销售额"
+                        align="center"
                        :formatter="empty"
                        sortable="custom"></el-table-column>
       <el-table-column prop="ProfitRmb"
                        label="利润￥"
+                        align="center"
                        :formatter="empty"
                        sortable="custom"></el-table-column>
       <el-table-column prop="rate"
                        label="利润率%"
+                        align="center"
                        :formatter="empty"
                        sortable="custom"></el-table-column>
     </el-table>
@@ -334,7 +344,7 @@ export default {
   methods: {
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
-        return "color:#337ab7;background:#f5f7fa";
+        return "color:#3c8dbc;background:#f5f7fa";
       } else {
         return "";
       }

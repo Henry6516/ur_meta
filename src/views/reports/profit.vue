@@ -166,42 +166,45 @@
       :header-cell-style="getRowClass" 
       style="width: 100%;font-size:12px;zoom:0.88">
     >
-      <el-table-column prop="developer" width="75" label="开发员" :formatter="empty"></el-table-column>
-      <el-table-column width="55" prop="sold" label="查看" :formatter="empty">
+      <el-table-column prop="developer" width="75" label="开发员" :formatter="empty" align="center"></el-table-column>
+      <el-table-column width="55" prop="sold" label="查看" :formatter="empty" align="center">
         <template slot-scope="scope">
-          <el-button type="text" @click="view1(scope.$index, scope.row)" style="margin-left:8px;">
+          <span type="text" @click="view1(scope.$index, scope.row)">
             <i class="iconfont icon-yulan"></i>
-          </el-button>
+          </span>
         </template>
       </el-table-column>
       <el-table-column
         width="105"
         prop="goodsCode"
         label="产品编码"
+         align="center"
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
-      <el-table-column width="100" prop="devDate" label="开发日期" sortable="custom" :formatter="formatter"></el-table-column>
+      <el-table-column width="100" prop="devDate" label="开发日期" sortable="custom" :formatter="formatter" align="center"></el-table-column>
       <el-table-column
         width="100"
         prop="goodsStatus"
+         align="center"
         label="产品状态"
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
-      <el-table-column width="75" prop="sold" label="销量" :formatter="empty" sortable="custom"></el-table-column>
-      <el-table-column width="95" prop="amt" label="销售额" :formatter="empty" sortable="custom">
+      <el-table-column width="75" prop="sold" label="销量" :formatter="empty" sortable="custom" align="center"></el-table-column>
+      <el-table-column width="95" prop="amt" label="销售额" :formatter="empty" sortable="custom" align="center">
         <template slot-scope="scope">{{scope.row.amt | cutOut1}}</template>
       </el-table-column>
-      <el-table-column width="90" prop="profit" label="总利润" :formatter="empty" sortable="custom">
+      <el-table-column width="90" prop="profit" label="总利润" :formatter="empty" sortable="custom" align="center">
         <template slot-scope="scope">{{scope.row.profit | cutOut1}}</template>
       </el-table-column>
-      <el-table-column width="90" prop="rate" label="利润率" :formatter="empty" sortable="custom">
+      <el-table-column width="90" prop="rate" label="利润率" :formatter="empty" sortable="custom" align="center">
         <template slot-scope="scope">{{scope.row.rate | cutOut1}}</template>
       </el-table-column>
       <el-table-column
         width="108"
         prop="ebaySold"
+         align="center"
         label="eBay销量"
         :formatter="empty"
         sortable="custom"
@@ -209,6 +212,7 @@
       <el-table-column
         width="108"
         prop="ebayProfit"
+         align="center"
         label="eBay利润"
         :formatter="empty"
         sortable="custom"
@@ -218,6 +222,7 @@
       <el-table-column
         width="108"
         prop="wishSold"
+         align="center"
         label="Wish销量"
         :formatter="empty"
         sortable="custom"
@@ -225,6 +230,7 @@
       <el-table-column
         width="108"
         prop="wishProfit"
+         align="center"
         label="Wish利润"
         :formatter="empty"
         sortable="custom"
@@ -235,12 +241,14 @@
         width="108"
         prop="smtSold"
         label="SMT销量"
+         align="center"
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
       <el-table-column
         width="105"
         prop="smtProfit"
+         align="center"
         label="SMT利润"
         :formatter="empty"
         sortable="custom"
@@ -250,6 +258,7 @@
       <el-table-column
         width="110"
         prop="joomSold"
+         align="center"
         label="Joom销量"
         :formatter="empty"
         sortable="custom"
@@ -257,6 +266,7 @@
       <el-table-column
         width="110"
         prop="joomProfit"
+         align="center"
         label="Joom利润"
         :formatter="empty"
         sortable="custom"
@@ -266,6 +276,7 @@
       <el-table-column
         width="128"
         prop="amazonSold"
+         align="center"
         label="Amazon销量"
         :formatter="empty"
         sortable="custom"
@@ -273,6 +284,7 @@
       <el-table-column
         width="128"
         prop="amazonProfit"
+         align="center"
         label="Amazon利润"
         :formatter="empty"
         sortable="custom"
@@ -422,7 +434,7 @@ export default {
   methods: {
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
-        return "color:#337ab7;background:#f5f7fa";
+        return "color:#3c8dbc;background:#f5f7fa";
       } else {
         return "";
       }
@@ -582,7 +594,6 @@ export default {
         this.text = "显示输入框";
         const height = document.getElementById("app").clientHeight;
         this.tabheight=window.innerHeight -25
-        console.log(this.tabheight)
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         const height = document.getElementById("app").clientHeight;

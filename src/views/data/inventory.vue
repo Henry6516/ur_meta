@@ -87,16 +87,16 @@
       ></el-table-column>
       <el-table-column label="状态明细" :formatter="empty" width="110" align="center">
         <template slot-scope="scope">
-          <el-button type="text" @click="view1(scope.$index, scope.row)">
+          <span type="text" @click="view1(scope.$index, scope.row)" style="cursor: pointer;">
             <i class="iconfont icon-yulan"></i>
-          </el-button>
+          </span>
         </template>
       </el-table-column>
        <el-table-column label="开发明细" :formatter="empty" width="110" align="center">
         <template slot-scope="scope">
-          <el-button type="text" @click="view2(scope.$index, scope.row)">
+          <span type="text" @click="view2(scope.$index, scope.row)" style="cursor: pointer;">
             <i class="iconfont icon-yulan"></i>
-          </el-button>
+          </span>
         </template>
       </el-table-column>
     </el-table>
@@ -126,9 +126,9 @@
         <el-button type="primary" @click="exportExcelMx()">导出明细</el-button>
       </div> -->
     </el-dialog>
-    <el-dialog title="查看开发明细" :visible.sync="dialogTableVisibleKf" width="72%">
+    <el-dialog title="查看开发明细" :visible.sync="dialogTableVisibleKf" width="73%">
       <el-table :data="viewFormKf" @sort-change="sortNumberViewKf" class="elTableee" border :header-cell-style="getRowClass" max-height="600">
-        <el-table-column property="storeName" label="仓库" align="center" width="110" fixed></el-table-column>
+        <el-table-column property="storeName" label="仓库" align="center" width="130" fixed></el-table-column>
         <el-table-column property="salerName" label="开发员" align="center" width="135" fixed></el-table-column>
         <el-table-column property="useNum" label="可用库存数量" sortable="custom" align="center" width="135"></el-table-column>
         <el-table-column property="costmoney" label="可用库存金额" sortable="custom" align="center" width="135">

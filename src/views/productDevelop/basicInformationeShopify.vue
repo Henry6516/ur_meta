@@ -11,7 +11,7 @@
       <el-row class="content1">
         <el-col :span="24" class="font14">第1-10条，共{{total}}条数据.</el-col>
         <el-col :span="24" style="margin-top: 20px">
-          <el-table :data="date" border class="elTable" style="width: 98.5%">
+          <el-table :data="date" border class="elTable" style="width: 98.5%" :max-height="tableHeight">
             <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
             <el-table-column label="操作" fixed align="center" width="80">
               <template slot-scope="scope">
@@ -229,6 +229,7 @@ import { getMenu } from "../../api/login";
 export default {
   data() {
     return {
+      tableHeight: window.innerHeight - 275,
       allMenu: [],
       activeName: "Joom账号字典",
       date: [],
@@ -647,6 +648,6 @@ export default {
   font-size: 14px;
 }
 .elTable td {
-  padding: 16px 0 !important;
+  padding: 8px 0 !important;
 }
 </style>

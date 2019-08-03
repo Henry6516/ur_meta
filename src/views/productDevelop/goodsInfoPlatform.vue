@@ -34,7 +34,7 @@
       <span class="signPerfectJoom" @click='keepPerfect("joom")'>标记Joom完善</span>
       <span class="signPerfectTotal" @click='keepPerfect("total")'>标记全部完善</span>
     </el-col>
-    <div>
+    <div class="infoTable">
       <!-- 平台信息列表 -->
       <el-table :data="platData" @selection-change="selsChange" :height="tableHeight">
         <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
@@ -74,7 +74,7 @@
           <el-table-column
             prop="goodsCode"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="125"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -82,7 +82,7 @@
           <el-table-column
             prop="mapPersons"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="125"
             align="center"
           >
             <template slot-scope="scope">
@@ -96,7 +96,7 @@
           <el-table-column
             prop="storeName"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="108"
             align="center"
           >
             <template slot-scope="scope">
@@ -110,7 +110,7 @@
           <el-table-column
             prop="stockUp"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="108"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -118,7 +118,7 @@
           <el-table-column
             prop="wishPublish"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="108"
             align="center"
           >
             <template slot-scope="scope">
@@ -129,7 +129,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="完成状况" header-align="center">
-          <el-table-column prop="completeStatus" :render-header="renderHeaderPlat" width="180">
+          <el-table-column prop="completeStatus" :render-header="renderHeaderPlat" width="130">
             <template slot-scope="scope">
               <a
                 :class="!scope.row.completeStatus?'clasRed':''"
@@ -142,7 +142,7 @@
           <el-table-column
             prop="dictionaryName"
             :render-header="renderHeaderPlat"
-            width="220"
+            width="160"
           >
             <template slot-scope="scope">
               <a
@@ -155,7 +155,7 @@
           <el-table-column
             prop="goodsName"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="140"
             align="center"
           >
             <template slot-scope="scope">
@@ -166,13 +166,13 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="主类目" header-align="center">
-          <el-table-column prop="cate" :render-header="renderHeaderPlat" width="150" align="center"></el-table-column>
+          <el-table-column prop="cate" :render-header="renderHeaderPlat" width="120" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="子类目" header-align="center">
           <el-table-column
             prop="subCate"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="120"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -194,7 +194,7 @@
           <el-table-column
             prop="introducer"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="110"
             align="center"
           >
             <template slot-scope="scope">
@@ -208,7 +208,7 @@
           <el-table-column
             prop="developer"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -216,7 +216,7 @@
           <el-table-column
             prop="purchaser"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -224,12 +224,12 @@
           <el-table-column
             prop="possessMan1"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="110"
             align="center"
           ></el-table-column>
         </el-table-column>
         <el-table-column label="是否采集数据" header-align="center">
-          <el-table-column prop :render-header="renderHeaderPlat" width="150" align="center">
+          <el-table-column prop :render-header="renderHeaderPlat" width="108" align="center">
             <template slot-scope="scope">
               <a>{{scope.row.mid >1?'采集':'非采集'}}</a>
             </template>
@@ -239,7 +239,7 @@
           <el-table-column
             prop="devDatetime"
             :render-header="renderHeaderPlat"
-            width="220"
+            width="160"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -247,7 +247,7 @@
           <el-table-column
             prop="updateTime"
             :render-header="renderHeaderPlat"
-            width="220"
+            width="160"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -255,7 +255,7 @@
           <el-table-column
             prop="isVar"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="108"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -263,7 +263,7 @@
           <el-table-column
             prop="goodsStatus"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="120"
             align="center"
           >
             <template slot-scope="scope">
@@ -277,7 +277,7 @@
           <el-table-column
             prop="stockDays"
             :render-header="renderHeaderPlat"
-            width="150"
+            width="110"
             align="center"
           >
             <template slot-scope="scope">
@@ -2311,7 +2311,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "200px",
+            width: "145px",
             padding: "2px"
           },
           on: {
@@ -2332,7 +2332,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "200px",
+            width: "145px",
             padding: "2px"
           },
           on: {

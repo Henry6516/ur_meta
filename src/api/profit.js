@@ -712,6 +712,14 @@ export function getUkReplenish(param) {
     data
   })
 }
+export function getUkVirtual(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/uk-virtual-replenish?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
 export function getUkRealReplenish(param) {
   const data = { condition: param }
   return request({
@@ -816,7 +824,7 @@ export function getSubscribeJoomList() {
 export function APIJoomCateProduct(param) {
   const data = { condition: param }
   return request({
-    url: '/oa-data-mine/joom-cate-product?page=' + param.page,
+    url: '/oa-data-mine/joom-cate-product?page=' + param.page + '&sort=' + param.sort,
     method: 'post',
     data
   })
