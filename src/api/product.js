@@ -1261,3 +1261,21 @@ export function APIExportEbayBalance(param) {
     responseType: 'arraybuffer'
   })
 }
+
+export function getProductPerform(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/product-perform?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+
+export function getDevPerform(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/dev-perform',
+    method: 'post',
+    data
+  })
+}

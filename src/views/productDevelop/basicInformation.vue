@@ -726,6 +726,9 @@
     .elTableeee td{
       padding: 8px 0 !important;
     }
+    .elTablTab td{
+      padding: 10px 0 !important;
+    }
     // .el-input__inner{
     //   padding: 0 10px;
     // }

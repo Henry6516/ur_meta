@@ -162,9 +162,9 @@
       :summary-method="getSummaries"
       :height="tabheight"
       border 
-      class="elTableee"
+      class="elTablTab"
       :header-cell-style="getRowClass" 
-      style="width: 100%;font-size:12px;zoom:0.88">
+      style="width: 100%;font-size:12px;zoom:0.89">
     >
       <el-table-column prop="developer" width="75" label="开发员" :formatter="empty" align="center"></el-table-column>
       <el-table-column width="55" prop="sold" label="查看" :formatter="empty" align="center">
@@ -334,7 +334,7 @@ export default {
       showis1: true,
       showis2: false,
       viewForm: [],
-      tabheight:window.innerHeight -110,
+      tabheight:window.innerHeight -120,
       goodsState: [],
       tableData1: [],
       dead: {
@@ -593,11 +593,11 @@ export default {
       if (this.show === false) {
         this.text = "显示输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tabheight=window.innerHeight -25
+        this.tabheight=window.innerHeight -35
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tabheight=window.innerHeight -110
+        this.tabheight=window.innerHeight -120
       }
     },
     changeActive() {

@@ -763,12 +763,20 @@
     <div v-show="show.productStock">
       <productStock></productStock>
     </div>
+    <div v-show="show.productShow">
+      <productShow></productShow>
+    </div>
+    <div v-show="show.developShow">
+      <developShow></developShow>
+    </div>
   </section>
 </template>
 <script type="text/ecmascript-6">
 import limit from "../reports/limit.vue";
 import saleProduct from "./saleProduct.vue";
 import productStock from "./productStock.vue";
+import productShow from "./productShow.vue";
+import developShow from "./developShow.vue";
 import {
   APIProduct,
   APIPlat,
@@ -789,7 +797,9 @@ export default {
   components: {
     limit,
     saleProduct,
-    productStock
+    productStock,
+    productShow,
+    developShow
   },
   data() {
     return {
@@ -888,6 +898,8 @@ export default {
         limit:false,
         saleProduct:false,
         productStock:false,
+        productShow:false,
+        developShow:false
       }
     };
   },
@@ -943,6 +955,16 @@ export default {
         this.show["productStock"] = true;
       } else {
         this.show["productStock"] = false;
+      }
+      if (tab.name === "/v1/oa-data/product-perform") {
+        this.show["productShow"] = true;
+      } else {
+        this.show["productShow"] = false;
+      }
+      if (tab.name === "/v1/oa-data/dev-perform") {
+        this.show["developShow"] = true;
+      } else {
+        this.show["developShow"] = false;
       }
     },
     //销售
@@ -2259,23 +2281,32 @@ export default {
       if (this.allMenu[0].route === "/v1/report/dev-limit") {
         this.show["limit"] = true;
         this.activeName = this.allMenu[0].route;
-        this.getnoStock();
       } else {
         this.show["limit"] = false;
       }
       if (this.allMenu[0].route === "/v1/oa-data/sales-perform") {
         this.show["saleProduct"] = true;
         this.activeName = this.allMenu[0].route;
-        this.getnoStock();
       } else {
         this.show["saleProduct"] = false;
       }
       if (this.allMenu[0].route === "/v1/oa-data/stock-perform") {
         this.show["productStock"] = true;
         this.activeName = this.allMenu[0].route;
-        this.getnoStock();
       } else {
         this.show["productStock"] = false;
+      }
+      if (this.allMenu[0].route === "/v1/oa-data/product-perform") {
+        this.show["productShow"] = true;
+        this.activeName = this.allMenu[0].route;
+      } else {
+        this.show["productShow"] = false;
+      }
+      if (this.allMenu[0].route === "/v1/oa-data/dev-perform") {
+        this.show["developShow"] = true;
+        this.activeName = this.allMenu[0].route;
+      } else {
+        this.show["developShow"] = false;
       }
       //销售
       this.getPlat();
