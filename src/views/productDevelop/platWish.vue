@@ -5,7 +5,7 @@
       class="toolbar"
       style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:15px;padding-top: 12px"
     >
-      <el-col :span="18" class="leftmedia">
+      <el-col :span="19" class="leftmedia">
         <el-button
           type="primary"
           @click="update"
@@ -60,7 +60,21 @@
         <el-button plain type="info" @click="noselectd2">取消</el-button>
         <el-option v-for="(item, key) in shopifyArr" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
-        <span class="exportAccount" @click="exportShopify">导出shopify模板</span>
+        <span class="exportAccount" @click="exportShopify" style="margin-right:10px;">导出shopify模板</span>
+        <el-select
+          placeholder="--请选择账号--"
+          clearable
+          multiple
+          collapse-tags
+          v-model="vova"
+          class="top1600"
+          style="float: left;width:245px;"
+        >
+        <el-button plain type="info" @click="selectalld3">全选</el-button>
+        <el-button plain type="info" @click="noselectd3">取消</el-button>
+        <el-option v-for="(item, key) in vovaArr" :key="item.key" :label="item" :value="item"></el-option>
+        </el-select>
+        <span class="exportAccount top1600" @click="exportVova">导出vova模板</span>
       </el-col>
     </el-col>
     <el-col :span="24" style="padding: 0;margin-left: 15px">
@@ -349,6 +363,7 @@
     <el-col :span="24" style="padding: 0;margin-left: 15px">
       <h3 class="toolbar essential">多属性设置</h3>
     </el-col>
+    <div class="ptom60">
     <el-row>
     <!-- <el-button @click="dialogVisible = true" style="margin-left:35px;" type="primary">多属性设置</el-button> -->
       <el-col :span="24">
@@ -539,6 +554,7 @@
         <span class="xzz1" @click="setTime">时间确定</span>
       </div>
     </el-row>
+    </div>
     <!-- 多属性设置对话框 -->
     <el-dialog title="多属性" :visible.sync="dialogVisible" width="90%">
       <el-table :data="tableData" border>
@@ -737,6 +753,7 @@
           <span class="xzz1" @click="setTime">运输时间</span>
         </el-col>
       </el-row>
+      <div class="bgk"></div>
     </el-dialog>
     <!-- 批量设置对话框 -->
     <el-dialog title="批量增加必选关键词" :visible.sync="dialogTableVisible">
@@ -773,8 +790,10 @@ import {
   APIFinishPlat,
   APIJoomName,
   APIShopifyName,
+  APIVovaName,
   APIPlatExportWish,
   APIPlatExportShopify,
+  APIPlatExportVova,
   APIPlatExportJoom,
   APIDeleteVariant,
   APIDeleteEbaySku,
@@ -804,6 +823,8 @@ export default {
       showattribute: false,
       price: null,
       ship: null,
+      vova:null,
+      vovaArr:[],
       joomArr: [],
       shopifyArr:[],
       addPhoto: "",
@@ -867,6 +888,16 @@ export default {
     },
     noselectd2() {
       this.shopify = [];
+    },
+    selectalld3() {
+      var ard1 = [];
+      for (const item in this.vovaArr) {
+        ard1.push(this.vovaArr[item]);
+      }
+      this.vova = ard1;
+    },
+    noselectd3() {
+      this.vova = [];
     },
     showAttribute() {
       this.showattribute = !this.showattribute;
@@ -990,6 +1021,37 @@ export default {
         };
       }
       APIPlatExportShopify(objStr).then(res => {
+          const blob = new Blob([res.data], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+          var filename=JSON.parse(file)
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          // const filename =
+          //   "Wish_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename;
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        }); 
+    },
+    exportVova() {
+      let objStr={}
+      if (this.vova!='') {
+        objStr = {
+          id: [this.wishForm.infoId],
+          account: this.vova
+        };
+      }else{
+        objStr = {
+          id: [this.wishForm.infoId],
+          account: this.vovaArr
+        };
+      }
+      APIPlatExportVova(objStr).then(res => {
           const blob = new Blob([res.data], {
             type:
               "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
@@ -1399,10 +1461,16 @@ export default {
     APIShopifyName().then(response => {
       this.shopifyArr = response.data.data;
     });
+    APIVovaName().then(response => {
+      this.vovaArr = response.data.data;
+    });
   }
 };
 </script>
 <style lang="scss" scoped>
+section {
+  padding-bottom: 40px;
+}
 .image {
   width: 100px;
   height: 90px;
@@ -1539,11 +1607,17 @@ export default {
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
 }
 .leftmedia{
-  margin-left: 17%;
+  margin-left: 9.8%;
 }
 @media screen and (max-width: 1600px){
    .leftmedia{
      margin-left: 3.5%;
+   }
+   .top1600{
+     margin-top: 10px;
+   }
+   .ptom60{
+     padding-bottom: 50px;
    }
 }
 @media screen and (max-width: 1350px){

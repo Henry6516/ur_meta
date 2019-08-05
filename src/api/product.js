@@ -784,6 +784,12 @@ export function APIShopifyName() {
     method: 'get'
   })
 }
+export function APIVovaName() {
+  return request({
+    url: '/oa-goodsinfo/vova-accounts',
+    method: 'get'
+  })
+}
 export function APIPlatExportWish(param) {
   const data = { condition: param }
   return request({
@@ -797,6 +803,15 @@ export function APIPlatExportShopify(param) {
   const data = { condition: param }
   return request({
     url: '/oa-goodsinfo/plat-export-shopify',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
+export function APIPlatExportVova(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat-export-vova',
     method: 'post',
     data,
     responseType: 'arraybuffer'
