@@ -53,7 +53,7 @@
             >查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button size="small" type="primary" @click="exportExcel(condition)">导出</el-button>
+            <el-button size="small" type="success" @click="exportExcel(condition)">导出</el-button>
           </el-form-item>
         </el-form>
       </transition>
@@ -158,7 +158,7 @@ export default {
       }
     },
     exportExcel(from) {
-      from.type = "uk";
+      from.type = "uk2";
       APIExportReplenish(from).then(res => {
         const blob = new Blob([res.data], {
           type:
@@ -203,7 +203,6 @@ export default {
         this.total = response.data.data._meta.totalCount;
         this.condition.page = response.data.data._meta.currentPage;
         this.condition.pageSize = response.data.data._meta.perPage;
-        this.totalPrice = response.data.data.extra.totalPurCost;
       });
     }
   },
