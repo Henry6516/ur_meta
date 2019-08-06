@@ -3,8 +3,8 @@
     <div>
       <el-col :span="24" class="toolbar tabe" style="padding:15px 25px;">
         <div class="floet">
-          <!-- <div class="floet01">
-            <span>开发员</span>
+          <div class="floet01">
+            <span>主类目</span>
             <el-select
               v-model="condition.saler"
               placeholder="请选择"
@@ -14,7 +14,7 @@
             >
               <el-option v-for="item in developer" :value="item" :key="item"></el-option>
             </el-select>
-          </div> -->
+          </div>
           <div class="floet01">
             <span style="color:red">订单时间</span>
             <el-date-picker
