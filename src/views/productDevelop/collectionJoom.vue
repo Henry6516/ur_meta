@@ -857,7 +857,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "200px"
+            width: "150px"
           },
           on: {
             input: value => {
@@ -877,7 +877,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "200px"
+            width: "150px"
           },
           on: {
             input: value => {

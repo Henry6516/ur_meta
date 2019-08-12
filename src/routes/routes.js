@@ -95,6 +95,15 @@ import ordermanage from '../views/productDevelop/ordermanage.vue'
 import ord1 from '../views/productDevelop/ord1.vue'
 import ord2 from '../views/productDevelop/ord2.vue'
 import paymentDetail from '../views/productDevelop/paymentDetail.vue'
+import developShow from '../views/productDevelop/developShow.vue'
+import categoryShow from '../views/productDevelop/categoryShow.vue'
+import sale from '../views/productDevelop/sale.vue'
+import wishShow from '../views/productDevelop/wishShow.vue'
+import stockUp from '../views/productDevelop/stockUp.vue'
+import nostockUp from '../views/productDevelop/nostockUp.vue'
+import limite from '../views/productDevelop/limite.vue'
+import productStock from '../views/productDevelop/productStock.vue'
+import productShow from '../views/productDevelop/productShow.vue'
 // 数据采集
 import collection from '../views/productDevelop/collection.vue'
 import collectionJoom from '../views/productDevelop/collectionJoom.vue'
@@ -148,11 +157,6 @@ const routes = [
         path: '/v1/report/introduce',
         component: introduce,
         name: '推荐人毛利报表'
-      },
-      {
-        path: '/v1/report/dev-limit',
-        component: limit,
-        name: '开发款数限制'
       },
       {
         path: '/v1/report/dev-goods-profit',
@@ -655,7 +659,49 @@ const routes = [
       {
         path: '/v1/oa-data/product',
         component: reportForm,
-        name: '报表中心'
+        name: '报表中心',
+        children: [
+          {
+            path: '/v1/oa-data/dev-perform',
+            component: developShow,
+            name: '开发表现'
+          },
+          {
+            path: '/v1/oa-data/cat-perform',
+            component: categoryShow,
+            name: '类目表现'
+          },
+          {
+            path: '/v1/oa-data/sales',
+            component: sale,
+            name: '销售产品列表'
+          },
+          {
+            path: '/v1/oa-data/wish',
+            component: wishShow,
+            name: 'wish待刊登'
+          },
+          {
+            path: '/v1/report/dev-limit',
+            component: limite,
+            name: '开发款数限制'
+          },
+          {
+            path: '/v1/oa-data/stock',
+            component: stockUp,
+            name: '备货产品表现'
+          },
+          {
+            path: '/v1/oa-data/product-perform',
+            component: productShow,
+            name: '产品表现'
+          },
+          {
+            path: '/v1/oa-data/nonstock',
+            component: nostockUp,
+            name: '不备货产品表现'
+          }
+        ]
       },
       {
         path: '/form/:id',
