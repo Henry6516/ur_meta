@@ -9,7 +9,7 @@
     <!--:key="index">-->
     <!--</el-tab-pane>-->
     <!--</el-tabs>-->
-     <el-col :span="24" style="padding:10px 0;padding-left:10px;">
+    <el-col :span="24" style="padding:10px 0;padding-left:10px;">
       <el-select
         placeholder="--请选择账号--"
         clearable
@@ -23,16 +23,29 @@
         <el-option v-for="(item, key) in joomArr" :key="item.key" :label="item" :value="item"></el-option>
       </el-select>
       <el-input
-              placeholder="请选择产品或填写商品编码(多个用逗号隔开)"
-              v-model="joomName"
-              style="width:320px;margin-left:10px;float: left"
-              clearable
+        placeholder="请填写商品编码(多个用逗号隔开)"
+        v-model="joomName"
+        style="width:250px;margin-left:10px;float: left"
+        clearable
       ></el-input>
       <span class="exportAccount" @click="exportJoom">导出Joom模板</span>
-      <span class="signPerfectWish" @click='keepPerfect("wish")'>标记Wish完善</span>
-      <span class="signPerfectEbay" @click='keepPerfect("ebay")'>标记eBay完善</span>
-      <span class="signPerfectJoom" @click='keepPerfect("joom")'>标记Joom完善</span>
-      <span class="signPerfectTotal" @click='keepPerfect("total")'>标记全部完善</span>
+      <el-select
+        placeholder="--请选择账号--"
+        clearable
+        multiple
+        collapse-tags
+        v-model="vova"
+        style="float: left;width:252px;margin-left:10px;"
+      >
+        <el-button plain type="info" @click="selectalld3">全选</el-button>
+        <el-button plain type="info" @click="noselectd3">取消</el-button>
+        <el-option v-for="(item, key) in vovaArr" :key="item.key" :label="item" :value="item"></el-option>
+      </el-select>
+      <span class="exportAccount" @click="exportVova">导出vova模板</span>
+      <span class="signPerfectWish" @click="keepPerfect('wish')">标记Wish完善</span>
+      <span class="signPerfectEbay" @click="keepPerfect('ebay')">标记eBay完善</span>
+      <span class="signPerfectJoom" @click="keepPerfect('joom')">标记Joom完善</span>
+      <span class="signPerfectTotal" @click="keepPerfect('total')">标记全部完善</span>
     </el-col>
     <div class="infoTable">
       <!-- 平台信息列表 -->
@@ -63,9 +76,16 @@
         </el-table-column>
         <el-table-column prop="picUrl" fixed label="主图" header-align="center" width="80">
           <template slot-scope="scope">
-             <el-tooltip placement="right" :open-delay='10' class="exxHover" popper-class="page-login-toolTipClass">
-              <div slot="content"><img :src="scope.row.picUrl" style="width: 300px;height: 300px;"></div>
-              <img :src="scope.row.picUrl" style="width: 60px;height: 60px">
+            <el-tooltip
+              placement="right"
+              :open-delay="10"
+              class="exxHover"
+              popper-class="page-login-toolTipClass"
+            >
+              <div slot="content">
+                <img :src="scope.row.picUrl" style="width: 300px;height: 300px;" />
+              </div>
+              <img :src="scope.row.picUrl" style="width: 60px;height: 60px" />
             </el-tooltip>
             <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
           </template>
@@ -139,14 +159,11 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="禁售平台" header-align="center">
-          <el-table-column
-            prop="dictionaryName"
-            :render-header="renderHeaderPlat"
-            width="160"
-          >
+          <el-table-column prop="dictionaryName" :render-header="renderHeaderPlat" width="160">
             <template slot-scope="scope">
               <a
-                :class="!scope.row.dictionaryName?'clasRed':''" style="text-align:center;display:block;width:100%;"
+                :class="!scope.row.dictionaryName?'clasRed':''"
+                style="text-align:center;display:block;width:100%;"
               >{{scope.row.dictionaryName?scope.row.dictionaryName:'未设置'}}</a>
             </template>
           </el-table-column>
@@ -479,7 +496,9 @@ import {
   APIPicturePreview,
   APIFinishPicture,
   APIPlatExportJoom,
-  APIFinishPlat
+  APIPlatExportVova,
+  APIFinishPlat,
+  APIVovaName
 } from "../../api/product";
 import {
   getAttributeInfoStoreName,
@@ -499,15 +518,17 @@ export default {
       total: null,
       totalPic: null,
       totalPlat: null,
-      violation:[],
+      violation: [],
+      vovaArr: [],
+      vova: null,
       activeName: "属性信息",
       sels: [],
       time1: "",
       time2: "",
-      joom:null,
+      joom: null,
       allMenu: [],
-      joomArr:[],
-      joomName:'',
+      joomArr: [],
+      joomName: "",
       repertory: [],
       productState: [],
       mainCategory: [],
@@ -620,6 +641,16 @@ export default {
     }
   },
   methods: {
+    selectalld3() {
+      var ard1 = [];
+      for (const item in this.vovaArr) {
+        ard1.push(this.vovaArr[item]);
+      }
+      this.vova = ard1;
+    },
+    noselectd3() {
+      this.vova = [];
+    },
     //            handleClick(tab, event) {
     //                if (tab.label === '属性信息') {
     //                    sessionStorage.setItem('judge', "属性信息")
@@ -656,56 +687,153 @@ export default {
     //                }
     //            },
     //属性信息分页
-    exportJoom(){
-     if (this.joom.length!=0) {
-        let joomAry=[]
-        for(let i=0;i<this.sels.length;i++){
-              joomAry.push(this.sels[i].goodsCode)
+    exportJoom() {
+      if (this.joom.length != 0) {
+        let joomAry = [];
+        for (let i = 0; i < this.sels.length; i++) {
+          joomAry.push(this.sels[i].goodsCode);
         }
-        if (this.joomName.length>0 && this.joomName.indexOf("，") > -1) {
+        if (this.joomName.length > 0 && this.joomName.indexOf("，") > -1) {
           let joomId = this.joomName.split("，");
-          for(let k=0;k<joomId.length;k++){
-              joomAry.push(joomId[k])
+          for (let k = 0; k < joomId.length; k++) {
+            joomAry.push(joomId[k]);
           }
-        }else if(this.joomName.length>0 && this.joomName.indexOf(",") > -1){
+        } else if (
+          this.joomName.length > 0 &&
+          this.joomName.indexOf(",") > -1
+        ) {
           let joomNum = this.joomName.split(",");
-          for(let j=0;j<joomNum.length;j++){
-              joomAry.push(joomNum[j])
+          for (let j = 0; j < joomNum.length; j++) {
+            joomAry.push(joomNum[j]);
           }
-        }else{
-          joomAry.push(this.joomName)
+        } else {
+          joomAry.push(this.joomName);
         }
-        if(joomAry.length==0 || joomAry[0]==''){
-            this.$message.error("请选择产品或填写商品编号");
-          }else{
-             for(let n=0;n<joomAry.length;n++){
-                 if(joomAry[n]==''){
-                    joomAry.splice(n,1);
-                 }
-             }
-        let objStr1 = {
-          id: joomAry,
-          account: this.joom
-        };
-        APIPlatExportJoom(objStr1).then(res => {
-          const blob = new Blob([res.data], {
-            type: "data:text/csv;charset=utf-8"
+        if (joomAry.length == 0 || joomAry[0] == "") {
+          this.$message.error("请选择产品或填写商品编号");
+        } else {
+          for (let n = 0; n < joomAry.length; n++) {
+            if (joomAry[n] == "") {
+              joomAry.splice(n, 1);
+            }
+          }
+          let objStr1 = {
+            id: joomAry,
+            account: this.joom
+          };
+          APIPlatExportJoom(objStr1).then(res => {
+            const blob = new Blob([res.data], {
+              type: "data:text/csv;charset=utf-8"
+            });
+            var file = res.headers["content-disposition"]
+              .split(";")[1]
+              .split("filename=")[1];
+            var filename = JSON.parse(file);
+            const downloadElement = document.createElement("a");
+            const objectUrl = window.URL.createObjectURL(blob);
+            downloadElement.href = objectUrl;
+            // const filename =
+            //   "joom_" + year + month + strDate + hour + minute + second;
+            downloadElement.download = filename;
+            document.body.appendChild(downloadElement);
+            downloadElement.click();
+            document.body.removeChild(downloadElement);
           });
-          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
-          var filename=JSON.parse(file)
+        }
+      } else {
+        this.$message.error("未选择账号");
+      }
+    },
+    exportVova() {
+      let vovaAry = [];
+      for (let i = 0; i < this.sels.length; i++) {
+        vovaAry.push(this.sels[i].id);
+      }
+      if (vovaAry.length != 0) {
+        let objStr = {};
+        if (this.vova != "") {
+          objStr = {
+            id: vovaAry,
+            account: this.vova
+          };
+        } else {
+          objStr = {
+            id: vovaAry,
+            account: this.vovaArr
+          };
+        }
+        APIPlatExportVova(objStr).then(res => {
+          const blob = new Blob([res.data], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          var file = res.headers["content-disposition"]
+            .split(";")[1]
+            .split("filename=")[1];
+          var filename = JSON.parse(file);
           const downloadElement = document.createElement("a");
           const objectUrl = window.URL.createObjectURL(blob);
           downloadElement.href = objectUrl;
           // const filename =
-          //   "joom_" + year + month + strDate + hour + minute + second;
+          //   "Wish_" + year + month + strDate + hour + minute + second;
           downloadElement.download = filename;
           document.body.appendChild(downloadElement);
           downloadElement.click();
           document.body.removeChild(downloadElement);
-        }); 
-        }           
+        });
       } else {
-        this.$message.error("未选择账号");
+        let objStr = {};
+        let joomAry = [];
+        if (this.joomName.length != 0) {
+          if (this.joomName.length > 0 && this.joomName.indexOf("，") > -1) {
+            let joomId = this.joomName.split("，");
+            for (let k = 0; k < joomId.length; k++) {
+              joomAry.push(joomId[k]);
+            }
+          } else if (
+            this.joomName.length > 0 &&
+            this.joomName.indexOf(",") > -1
+          ) {
+            let joomNum = this.joomName.split(",");
+            for (let j = 0; j < joomNum.length; j++) {
+              joomAry.push(joomNum[j]);
+            }
+          } else {
+            joomAry.push(this.joomName);
+          }
+          if (this.vova != "") {
+            objStr = {
+              id: joomAry,
+              account: this.vova
+            };
+          } else {
+            objStr = {
+              id: joomAry,
+              account: this.vovaArr
+            };
+          }
+          APIPlatExportVova(objStr).then(res => {
+              const blob = new Blob([res.data], {
+                type:
+                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+              });
+              var file = res.headers["content-disposition"]
+                .split(";")[1]
+                .split("filename=")[1];
+              var filename = JSON.parse(file);
+              const downloadElement = document.createElement("a");
+              const objectUrl = window.URL.createObjectURL(blob);
+              downloadElement.href = objectUrl;
+              // const filename =
+              //   "Wish_" + year + month + strDate + hour + minute + second;
+              downloadElement.download = filename;
+              document.body.appendChild(downloadElement);
+              downloadElement.click();
+              document.body.removeChild(downloadElement);
+            });
+        } else {
+          this.$message.error("请选择产品或填写商品编码");
+        }
       }
     },
     selectalld1() {
@@ -1772,7 +1900,7 @@ export default {
     },
     //完善
     keepPerfect(n) {
-      if (this.sels.length!=0) {
+      if (this.sels.length != 0) {
         let dataObj = {
           id: null,
           plat: []
@@ -1780,12 +1908,12 @@ export default {
         dataObj.id = this.sels.map(e => e.id);
         if (n == "wish") {
           dataObj.plat = ["wish"];
-        } else if(n=="ebay") {
+        } else if (n == "ebay") {
           dataObj.plat = ["ebay"];
-        } else if(n=="joom") {
+        } else if (n == "joom") {
           dataObj.plat = ["joom"];
-        }else{
-          dataObj.plat = ["wish","ebay","joom"];
+        } else {
+          dataObj.plat = ["wish", "ebay", "joom"];
         }
         APIFinishPlat(dataObj).then(res => {
           if (res.data.code == 200) {
@@ -1806,17 +1934,17 @@ export default {
     getPlat() {
       APIPlatList(this.plat).then(res => {
         this.platData = res.data.data.items;
-        for(let i=0;i<this.platData.length;i++){
-          var strData=this.platData[i].picUrl
+        for (let i = 0; i < this.platData.length; i++) {
+          var strData = this.platData[i].picUrl;
           var replaceStr;
-          var reg=/([\s\S]+)(.(jpg_)?\d{2}x\d+)([\s\S]+)/g
-          var result=reg.exec(strData);
-          if(result){
-            if(result[1].charAt(result[1].length-1)=='.'){
-              result[1] = result[1].substring(0, result[1].length - 1); 
+          var reg = /([\s\S]+)(.(jpg_)?\d{2}x\d+)([\s\S]+)/g;
+          var result = reg.exec(strData);
+          if (result) {
+            if (result[1].charAt(result[1].length - 1) == ".") {
+              result[1] = result[1].substring(0, result[1].length - 1);
             }
-           replaceStr=result[1]+result[result.length-1]
-           this.platData[i].picUrl=replaceStr
+            replaceStr = result[1] + result[result.length - 1];
+            this.platData[i].picUrl = replaceStr;
           }
         }
         this.totalPlat = res.data.data._meta.totalCount;
@@ -2475,8 +2603,11 @@ export default {
       this.joomArr = response.data.data;
     });
     getForbidPlat().then(response => {
-      this.violation = response.data.data
-    })
+      this.violation = response.data.data;
+    });
+    APIVovaName().then(response => {
+      this.vovaArr = response.data.data;
+    });
   }
 };
 </script>
@@ -2505,7 +2636,7 @@ export default {
   cursor: pointer;
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
 }
-.signPerfectWish{
+.signPerfectWish {
   padding: 0 10px;
   display: block;
   float: left;
@@ -2516,7 +2647,7 @@ export default {
   margin-left: 10px;
   border-radius: 5px;
 }
-.signPerfectEbay{
+.signPerfectEbay {
   padding: 0 10px;
   display: block;
   float: left;
@@ -2527,7 +2658,7 @@ export default {
   margin-left: 10px;
   border-radius: 5px;
 }
-.signPerfectJoom{
+.signPerfectJoom {
   padding: 0 10px;
   display: block;
   float: left;
@@ -2538,7 +2669,7 @@ export default {
   margin-left: 10px;
   border-radius: 5px;
 }
-.signPerfectTotal{
+.signPerfectTotal {
   padding: 0 10px;
   display: block;
   float: left;
