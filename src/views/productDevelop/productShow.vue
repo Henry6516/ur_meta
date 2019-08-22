@@ -10,6 +10,7 @@
               placeholder="请选择"
               size="small"
               class="m10"
+              clearable
               style="width:110px;"
             >
               <el-option v-for="item in developer" :value="item" :key="item"></el-option>
@@ -33,6 +34,7 @@
             <span style="color:red">订单时间</span>
             <el-date-picker
               size="small"
+              clearable
               v-model="condition.orderDate"
               value-format="yyyy-MM-dd"
               type="daterange"
@@ -49,6 +51,7 @@
             <span>开发时间</span>
             <el-date-picker
               size="small"
+              clearable
               v-model="condition.devDate"
               value-format="yyyy-MM-dd"
               type="daterange"

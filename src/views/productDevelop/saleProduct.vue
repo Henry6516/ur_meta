@@ -9,7 +9,8 @@
               v-model="condition.value"
               placeholder="请选择"
               size="small"
-              style="width:150px;margin-left:10px;"
+              clearable
+              style="width:100px;margin-left:10px;"
             >
               <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
             </el-select>
@@ -17,22 +18,35 @@
           <div class="floet01">
             <span>销售员</span>
             <el-select
-              v-model="condition.value"
-              placeholder="请选择"
               size="small"
-              style="width:150px;margin-left:10px;"
+              v-model="condition.saler"
+              filterable
+              multiple
+              style="width:150px;"
+              collapse-tags
+              placeholder="销售员"
             >
-              <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
+              <el-button plain type="info" @click="selectallm">全选</el-button>
+              <el-button plain type="info" @click="noselectm">取消</el-button>
+              <el-option
+                v-for="(item,index) in member"
+                :index="index"
+                :key="item.username"
+                :label="item.username"
+                :value="item.username"
+              ></el-option>
             </el-select>
           </div>
           <div class="floet01">
             <span>开发时间</span>
             <el-date-picker
               size="small"
-              v-model="condition.createDate"
+              v-model="condition.devDate"
               value-format="yyyy-MM-dd"
               type="daterange"
+              clearable
               align="right"
+              disabled
               unlink-panels
               range-separator="至"
               start-placeholder="开始日期"
@@ -42,38 +56,39 @@
             ></el-date-picker>
           </div>
           <div class="floet01">
-            <el-button size="small" type="primary">查询</el-button>
+            <el-button size="small" type="primary" @click="getData">查询</el-button>
           </div>
           <div class="floet01">
-            <el-button size="small" type="success">导出表格</el-button>
+            <el-button size="small" type="success" @click="exportExcel">导出表格</el-button>
           </div>
         </div>
       </el-col>
       <el-col :span="24">
       <el-table
-        :data="nostockdata"
+        :data="tableData"
         border
         class="elTableForm"
         :summary-method="getSummaries"
         :header-cell-style="getRowClass"
         show-summary
+        v-loading="listLoading"
         :height="tableHeightstock"
         style="width: 98%;margin:auto;margin-top:15px;"
       >
         <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
-        <el-table-column label="销售员" header-align="center" align="center" prop="developer"></el-table-column>
+        <el-table-column label="销售员" header-align="center" align="center" prop="salerName"></el-table-column>
         <el-table-column label="销售产品款数" header-align="center" align="center" prop="number"></el-table-column>
         <el-table-column label="出单产品款数" header-align="center" align="center" prop="orderNum"></el-table-column>
         <el-table-column label="出单率(%)" header-align="center" align="center" prop="orderRate">
-          <template slot-scope="scope">{{scope.row.orderRate | cutOut100}}</template>
+          <template slot-scope="scope">{{scope.row.orderRate}}</template>
         </el-table-column>
-        <el-table-column label="旺款数量" header-align="center" align="center" prop="exuStyleNum"></el-table-column>
-        <el-table-column label="旺款率(%)" header-align="center" align="center" prop="exuRate">
-          <template slot-scope="scope">{{scope.row.exuRate | cutOut100}}</template>
+        <el-table-column label="爆款数" header-align="center" align="center" prop="hotStyleNum"></el-table-column>
+        <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotStyleRate">
+          <template slot-scope="scope">{{scope.row.hotStyleRate}}</template>
         </el-table-column>
-        <el-table-column label="爆款数量" header-align="center" align="center" prop="hotStyleNum"></el-table-column>
-        <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotRate">
-          <template slot-scope="scope">{{scope.row.hotRate | cutOut100}}</template>
+        <el-table-column label="旺款数" header-align="center" align="center" prop="exuStyleNum"></el-table-column>
+        <el-table-column label="旺款率(%)" header-align="center" align="center" prop="exuStyleRate">
+          <template slot-scope="scope">{{scope.row.exuStyleRate}}</template>
         </el-table-column>
       </el-table>
       </el-col>
@@ -83,19 +98,25 @@
 <script type="text/ecmascript-6">
 import limit from "../reports/limit.vue";
 import {
-  APInoStock,
+  APISalesPerform,
 } from "../../api/product";
-import { compareUp, compareDown, getMonthDate } from "../../api/tools";
+import {
+  getMember
+} from "../../api/profit";
+import { compareUp, compareDown, getMonthDate,GetDateStr } from "../../api/tools";
 export default {
   data() {
     return {
       tableHeightstock: window.innerHeight - 180,
       options: ["备货", "不备货"],
+      member:[],
+      listLoading:false,
       condition: {
-        value: null,
-        createDate: []
+        isStock:null,
+        saler: [],
+        devDate: []
       },
-      nostockdata: [],
+      tableData: [],
       pickerOptions2: {
         shortcuts: [
           {
@@ -136,6 +157,44 @@ export default {
     }
   },
   methods: {
+    exportExcel() {
+      if(this.tableData.length!=0){
+        const th = [
+        "销售员",
+        "销售产品款数",
+        "出单产品款数",
+        "出单率(%)",
+        "爆款数",
+        "爆款率(%)",
+        "旺款数",
+        "旺款率(%)"
+      ];
+      const filterVal = [
+        "salerName",
+        "number",
+        "orderNum",
+        "orderRate",
+        "hotStyleNum",
+        "hotStyleRate",
+        "exuStyleNum",
+        "exuStyleRate"
+      ];
+      const Filename = "销售产品表现";
+      const data = this.tableData.map(v => filterVal.map(k => v[k]));
+      const [fileName, fileType, sheetName] = [Filename, "xls"];
+      this.$toExcel({ th, data, fileName, fileType, sheetName });
+      }
+    },
+    selectallm() {
+      const allValues = [];
+      for (const item of this.member) {
+        allValues.push(item.username);
+      }
+      this.condition.saler = allValues;
+    },
+    noselectm() {
+      this.condition.saler = [];
+    },
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
         return "color:#337ab7";
@@ -168,15 +227,24 @@ export default {
 
       return sums;
     },
-    getnoStock() {
-      APInoStock().then(res => {
-        this.nostockdata = res.data.data;
-        this.noskuTotal = this.nostockdata.length;
+    getData() {
+      this.listLoading=true
+      APISalesPerform(this.condition).then(res => {
+        this.tableData = res.data.data;
+        this.listLoading=false
       });
     }
   },
   mounted() {
-    this.getnoStock();
+    getMember().then(response => {
+      const res = response.data.data;
+      this.member = res.filter(ele => ele.position === "销售");
+    });
+    this.condition.devDate = [
+      GetDateStr(-75),
+      GetDateStr(-15)
+    ];
+    this.getData();
   }
 };
 </script>

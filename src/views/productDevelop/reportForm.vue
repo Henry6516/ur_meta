@@ -87,6 +87,24 @@ export default {
         });
       } else {
       }
+      if (tab.name === "/v1/oa-data/global-market") {
+        this.$router.push({
+          path: `/v1/oa-data/global-market`
+        });
+      } else {
+      }
+      if (tab.name === "/v1/oa-data/stock-perform") {
+        this.$router.push({
+          path: `/v1/oa-data/stock-perform`
+        });
+      } else {
+      }
+      if (tab.name === "/v1/oa-data/dev-data") {
+        this.$router.push({
+          path: `/v1/oa-data/dev-data`
+        });
+      } else {
+      }
     }
   },
   mounted() {
@@ -154,10 +172,28 @@ export default {
           path: `/v1/oa-data/dev-perform`
         });
       }
+      if (this.allMenu[0].route === "/v1/oa-data/global-market") {
+        this.activeName = this.allMenu[0].route;
+        this.$router.push({
+          path: `/v1/oa-data/global-market`
+        });
+      }
       if (this.allMenu[0].route === "/v1/oa-data/cat-perform") {
         this.activeName = this.allMenu[0].route;
         this.$router.push({
           path: `/v1/oa-data/cat-perform`
+        });
+      }
+      if (this.allMenu[0].route === "/v1/oa-data/stock-perform") {
+        this.activeName = this.allMenu[0].route;
+        this.$router.push({
+          path: `/v1/oa-data/stock-perform`
+        });
+      }
+      if (this.allMenu[0].route === "/v1/oa-data/dev-data") {
+        this.activeName = this.allMenu[0].route;
+        this.$router.push({
+          path: `/v1/oa-data/dev-data`
         });
       }
     });

@@ -21,6 +21,7 @@
               size="small"
               v-model="condition.orderDate"
               value-format="yyyy-MM-dd"
+              clearable
               type="daterange"
               align="right"
               unlink-panels
@@ -38,6 +39,7 @@
               v-model="condition.devDate"
               value-format="yyyy-MM-dd"
               type="daterange"
+              clearable
               align="right"
               unlink-panels
               range-separator="至"

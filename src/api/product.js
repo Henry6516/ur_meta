@@ -1279,3 +1279,58 @@ export function getDevPerform(param) {
     data
   })
 }
+
+export function APIStockPerform(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/stock-perform?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+
+export function APIGlobalMarket(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/global-market',
+    method: 'post',
+    data
+  })
+}
+
+export function APICatPerform(param) {
+  const data = { }
+  return request({
+    url: '/oa-data/cat-perform',
+    method: 'post',
+    data
+  })
+}
+
+export function APIDataCat(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/cat',
+    method: 'post',
+    data
+  })
+}
+
+export function APISalesPerform(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/sales-perform',
+    method: 'post',
+    data
+  })
+}
+
+export function APIDevData(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/dev-data',
+    method: 'post',
+    data
+  })
+}
+

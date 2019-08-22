@@ -218,7 +218,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        width="165"
+        width="180"
         prop="suffix"
         label="账号"
         fixed
@@ -308,7 +308,7 @@
         align="center"
       ></el-table-column>
       <el-table-column
-        min-width="100"
+        min-width="110"
         prop="storename"
         label="发货仓库"
         :formatter="empty"

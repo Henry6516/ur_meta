@@ -1394,7 +1394,7 @@ export default {
       },
       claimForm: {
         nid: null,
-        devStatus: ""
+        devStatus: "正向认领"
       },
       rules: {
         img: [{ required: true, message: "图片不能为空", trigger: "blur" }],

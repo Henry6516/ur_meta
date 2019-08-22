@@ -6,26 +6,28 @@
           <div class="floet01">
             <span>开发员</span>
             <el-select
-              v-model="condition.value"
+              v-model="condition.salerName"
               placeholder="请选择"
+              clearable
               size="small"
               style="width:150px;margin-left:10px;"
             >
-              <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
+              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
             </el-select>
           </div>
           <div class="floet01">
             <span>商品编码</span>
-            <el-input placeholder="请输入商品编码" size="small" style="width:180px;margin-left:10px;"></el-input>
+            <el-input placeholder="请输入商品编码" size="small" style="width:180px;margin-left:10px;" v-model="condition.goodsCode" clearable></el-input>
           </div>
           <div class="floet01">
             <span>开发时间</span>
             <el-date-picker
               size="small"
-              v-model="condition.createDate"
+              v-model="condition.devDate"
               value-format="yyyy-MM-dd"
               type="daterange"
               align="right"
+              clearable
               unlink-panels
               range-separator="至"
               start-placeholder="开始日期"
@@ -35,7 +37,7 @@
             ></el-date-picker>
           </div>
           <div class="floet01">
-            <el-button size="small" type="primary">查询</el-button>
+            <el-button size="small" type="primary" @click="getData()">查询</el-button>
           </div>
           <div class="floet01">
             <el-button size="small" type="success">导出表格</el-button>
@@ -50,37 +52,61 @@
           :summary-method="getSummaries"
           :header-cell-style="getRowClass"
           show-summary
+          v-loading="listLoading"
           :height="tableHeightstock"
           style="width: 98%;margin:auto;margin-top:15px;"
         >
           <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
-          <el-table-column label="开发员" header-align="center" align="center" prop="exuStyleNum"></el-table-column>
-          <el-table-column label="商品编码" header-align="center" align="center" prop="developer"></el-table-column>
-          <el-table-column label="商品名称" header-align="center" align="center" prop="number"></el-table-column>
-          <el-table-column label="开发日期" header-align="center" align="center" prop="orderNum"></el-table-column>
-          <el-table-column label="产品状态" header-align="center" align="center" prop="orderRate"></el-table-column>
-          <el-table-column label="库存数量" header-align="center" align="center" prop="exuRate"></el-table-column>
-          <el-table-column label="库存金额(￥)" header-align="center" align="center" prop="hotStyleNum"></el-table-column>
-          <el-table-column label="5天销量" header-align="center" align="center" prop="hotRate"></el-table-column>
-          <el-table-column label="10天销量" header-align="center" align="center" prop="hotRate"></el-table-column>
-          <el-table-column label="20天销量" header-align="center" align="center" prop="hotRate"></el-table-column>
+          <el-table-column label="开发员" header-align="center" align="center" prop="developer"></el-table-column>
+          <el-table-column label="商品编码" header-align="center" align="center" prop="goodsCode"></el-table-column>
+          <el-table-column label="商品名称" header-align="center" align="center" prop="goodsName"></el-table-column>
+          <el-table-column label="开发日期" header-align="center" align="center" prop="devDateTime"></el-table-column>
+          <el-table-column label="产品状态" header-align="center" align="center" prop="goodsStatus"></el-table-column>
+          <el-table-column label="库存数量" header-align="center" align="center" prop="number"></el-table-column>
+          <el-table-column label="库存金额(￥)" header-align="center" align="center" prop="money">
+            <template slot-scope="scope">
+              {{scope.row.money | cutOutMonye}}
+            </template>
+          </el-table-column>
+          <el-table-column label="5天销量" header-align="center" align="center" prop="sellCount1"></el-table-column>
+          <el-table-column label="10天销量" header-align="center" align="center" prop="sellCount2"></el-table-column>
+          <el-table-column label="20天销量" header-align="center" align="center" prop="sellCount3"></el-table-column>
         </el-table>
+        <div class="toolbar">
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="this.condition.page"
+          :page-sizes="[10, 20, 30, 40]"
+          :page-size="this.condition.pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="this.total"
+        ></el-pagination>
+      </div>
       </el-col>
     </div>
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { APInoStock } from "../../api/product";
+import { APIStockPerform } from "../../api/product";
+import { getDeveloper } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
-      tableHeightstock: window.innerHeight - 180,
+      tableHeightstock: window.innerHeight - 210,
       options: ["备货", "不备货"],
+      listLoading:false,
+      developer:[],
       condition: {
-        value: null,
-        createDate: []
+        salerName:null,
+        goodsCode:null,
+        pageSize:20,
+        page:1,
+        devDate: []
       },
+      total:null,
       nostockdata: [],
       pickerOptions2: {
         shortcuts: [
@@ -110,18 +136,21 @@ export default {
     };
   },
   filters: {
-    cutOut: function(value) {
+    cutOutMonye: function(value) {
       if (!value) return "";
-      value = value.substring(0, 21);
-      return value;
-    },
-    cutOut100: function(value) {
-      if (!value) return "";
-      value = (value * 100).toFixed(0);
+      value = Number(value).toFixed(2);
       return value;
     }
   },
   methods: {
+    handleSizeChange(val) {
+      this.condition.pageSize = val;
+      this.getData();
+    },
+    handleCurrentChange(val) {
+      this.condition.page = val;
+      this.getData();
+    },
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
         return "color:#337ab7";
@@ -150,19 +179,30 @@ export default {
         } else {
           sums[index] = "N/A";
         }
+        let arr=sums
+        if(index === 7){
+          sums[index] = Number(arr[7]).toFixed(2);
+        }
       });
 
       return sums;
     },
-    getnoStock() {
-      APInoStock().then(res => {
-        this.nostockdata = res.data.data;
-        this.noskuTotal = this.nostockdata.length;
+    getData() {
+      this.listLoading=true
+      APIStockPerform(this.condition).then(res => {
+        this.nostockdata = res.data.data.items;
+        this.condition.page = res.data.data._meta.currentPage;
+        this.condition.pageSize = res.data.data._meta.perPage;
+        this.total = res.data.data._meta.totalCount;
+        this.listLoading=false
       });
     }
   },
   mounted() {
-    this.getnoStock();
+    getDeveloper().then(response => {
+      this.developer = response.data.data;
+    });
+    this.getData();
   }
 };
 </script>
