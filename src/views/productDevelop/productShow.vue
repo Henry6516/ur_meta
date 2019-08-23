@@ -68,7 +68,7 @@
             <el-button size="small" type="primary" @click="getdata()">查询</el-button>
           </div>
           <div class="floet01">
-            <el-button size="small" type="success">导出</el-button>
+            <el-button size="small" type="success" @click="exportExcel">导出</el-button>
           </div>
         </div>
       </el-col>
@@ -117,9 +117,9 @@
   </section>
 </template>
 <script type="text/ecmascript-6">
-import { getProductPerform } from "../../api/product";
+import { getProductPerform,APIProductPerformExport } from "../../api/product";
 import { getDeveloper } from "../../api/profit";
-import { compareUp, compareDown, getMonthDate } from "../../api/tools";
+import { compareUp, compareDown, getMonthDate,getNextDate } from "../../api/tools";
 export default {
   data() {
     return {
@@ -178,6 +178,27 @@ export default {
     }
   },
   methods: {
+    exportExcel(){
+      APIProductPerformExport(this.condition).then(res => {
+        const blob = new Blob([res.data], {
+          type:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        var file = res.headers["content-disposition"]
+          .split(";")[1]
+          .split("filename=")[1];
+        var filename = JSON.parse(file);
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        // const filename =
+        //   "Wish_" + year + month + strDate + hour + minute + second;
+        downloadElement.download = filename;
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+      });
+    },
     handleSizeChange(val) {
       this.condition.pageSize = val;
       this.getdata(this.condition);
@@ -230,9 +251,11 @@ export default {
     }
   },
   mounted() {
+    var startData = getMonthDate("lastMonth").start;
+    var endData = getMonthDate("lastMonth").end;
     this.condition.orderDate = [
-      getMonthDate("lastMonth").start,
-      getMonthDate("lastMonth").end
+      getNextDate(startData, -1),
+      getNextDate(endData, -1)
     ];
     getDeveloper().then(response => {
       const possessMan = response.data.data;

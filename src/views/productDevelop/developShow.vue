@@ -14,7 +14,19 @@
             >
               <el-option v-for="item in developer" :value="item" :key="item"></el-option>
             </el-select>
-          </div> -->
+          </div>-->
+          <div class="floet01">
+            <span>交易类型</span>
+            <el-select
+              v-model="condition.dateFlag"
+              placeholder="请选择"
+              size="small"
+              clearable
+              style="width:150px;margin-left:10px;"
+            >
+              <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
+            </el-select>
+          </div>
           <div class="floet01">
             <span style="color:red">订单时间</span>
             <el-date-picker
@@ -72,12 +84,13 @@
 <script type="text/ecmascript-6">
 import { getDevPerform } from "../../api/product";
 import { getDeveloper } from "../../api/profit";
-import { compareUp, compareDown, getMonthDate } from "../../api/tools";
+import { compareUp, compareDown, getMonthDate,getNextDate } from "../../api/tools";
 export default {
   data() {
     return {
       tableHeightstock: window.innerHeight - 214,
       options: [],
+      options: ["交易时间", "发货时间"],
       total: null,
       developer: [],
       sty: {
@@ -87,13 +100,13 @@ export default {
       listLoading: false,
       dateType: [{ id: 0, type: "交易时间" }, { id: 1, type: "发货时间" }],
       condition: {
-        dateFlag: 0,
+        dateFlag: "交易时间",
         orderDate: [],
         devDate: []
       },
       options1: {
         title: {
-          top:20,  
+          top: 20,
           text: "各开发产品款数",
           x: "center"
         },
@@ -108,8 +121,8 @@ export default {
           data: []
         },
         toolbox: {
-          top:10,
-          right:10, 
+          top: 10,
+          right: 10,
           show: true,
           feature: {
             mark: { show: true },
@@ -127,14 +140,14 @@ export default {
           {
             name: "各开发产品款数",
             type: "pie",
-            radius : '60%',
+            radius: "60%",
             data: []
           }
         ]
       },
       options2: {
         title: {
-          top:20,  
+          top: 20,
           text: "各开发销售额($)",
           x: "center"
         },
@@ -149,8 +162,8 @@ export default {
           data: []
         },
         toolbox: {
-          top:10,
-          right:10,
+          top: 10,
+          right: 10,
           show: true,
           feature: {
             mark: { show: true },
@@ -168,8 +181,8 @@ export default {
           {
             name: "各开发销售额($)",
             type: "pie",
-            radius : '60%',
-            data:[] 
+            radius: "60%",
+            data: []
           }
         ]
       },
@@ -202,34 +215,40 @@ export default {
   },
   methods: {
     getdata() {
+      this.condition.dateFlag == "交易时间"
+        ? (this.condition.dateFlag = 0)
+        : (this.condition.dateFlag = 1);
       this.listLoading = true;
       getDevPerform(this.condition).then(response => {
+        this.condition.dateFlag == 0
+          ? (this.condition.dateFlag = "交易时间")
+          : (this.condition.dateFlag = "发货时间");
         this.listLoading = false;
-        var dataArr1=response.data.data.devData
-        var arr1Name=[]
-        var arr1Data=[]
-        for(let i=0;i<dataArr1.length;i++){
-            arr1Name.push(dataArr1[i].salerName)
-            var obj={
-                value:dataArr1[i].num,
-                name:dataArr1[i].salerName
-            }
-            arr1Data.push(obj)
+        var dataArr1 = response.data.data.devData;
+        var arr1Name = [];
+        var arr1Data = [];
+        for (let i = 0; i < dataArr1.length; i++) {
+          arr1Name.push(dataArr1[i].salerName);
+          var obj = {
+            value: dataArr1[i].num,
+            name: dataArr1[i].salerName
+          };
+          arr1Data.push(obj);
         }
         this.options1.legend.data = arr1Name;
         this.options1.series[0].data = arr1Data;
         let or1 = this.$echarts.init(this.$refs.or1);
         or1.setOption(this.options1);
-        var dataArr2=response.data.data.orderData
-        var arr2Name=[]
-        var arr2Data=[]
-        for(let i=0;i<dataArr2.length;i++){
-            arr2Name.push(dataArr2[i].salerName)
-            var obj={
-                value:dataArr2[i].amt,
-                name:dataArr2[i].salerName
-            }
-            arr2Data.push(obj)
+        var dataArr2 = response.data.data.orderData;
+        var arr2Name = [];
+        var arr2Data = [];
+        for (let i = 0; i < dataArr2.length; i++) {
+          arr2Name.push(dataArr2[i].salerName);
+          var obj = {
+            value: dataArr2[i].amt,
+            name: dataArr2[i].salerName
+          };
+          arr2Data.push(obj);
         }
         this.options2.legend.data = arr2Name;
         this.options2.series[0].data = arr2Data;
@@ -239,9 +258,11 @@ export default {
     }
   },
   mounted() {
+    var startData = getMonthDate("lastMonth").start;
+    var endData = getMonthDate("lastMonth").end;
     this.condition.orderDate = [
-      getMonthDate("lastMonth").start,
-      getMonthDate("lastMonth").end
+      getNextDate(startData, -1),
+      getNextDate(endData, -1)
     ];
     getDeveloper().then(response => {
       const possessMan = response.data.data;

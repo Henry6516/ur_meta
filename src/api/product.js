@@ -1334,3 +1334,22 @@ export function APIDevData(param) {
   })
 }
 
+export function APIProductPerformExport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/product-perform-export',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
+
+export function APIStockPerformExport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/stock-perform-export',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}

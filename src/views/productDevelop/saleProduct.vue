@@ -6,7 +6,7 @@
           <div class="floet01">
             <span>是否是备货产品</span>
             <el-select
-              v-model="condition.value"
+              v-model="condition.isStock"
               placeholder="请选择"
               size="small"
               clearable
@@ -108,7 +108,7 @@ export default {
   data() {
     return {
       tableHeightstock: window.innerHeight - 180,
-      options: ["备货", "不备货"],
+      options: ["是", "否"],
       member:[],
       listLoading:false,
       condition: {
@@ -222,6 +222,16 @@ export default {
           }, 0);
         } else {
           sums[index] = "N/A";
+        }
+        let arr=sums
+        if(index==4){
+            sums[index] = (arr[3]/arr[2]*100).toFixed(2);
+        }
+        if(index==6){
+            sums[index] = (arr[5]/arr[2]*100).toFixed(2);
+        }
+        if(index==8){
+            sums[index] = (arr[7]/arr[2]*100).toFixed(2);
         }
       });
 

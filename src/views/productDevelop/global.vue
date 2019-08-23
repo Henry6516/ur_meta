@@ -84,7 +84,7 @@
 <script type="text/ecmascript-6">
 import { APIGlobalMarket } from "../../api/product";
 import { getPlatform,getAccount } from "../../api/profit";
-import { compareUp, compareDown, getMonthDate } from "../../api/tools";
+import { compareUp, compareDown, getMonthDate,getNextDate } from "../../api/tools";
 export default {
   data() {
     return {
@@ -260,9 +260,11 @@ export default {
     getAccount().then(response => {
       this.account = response.data.data;
     });
+    var startData = getMonthDate("lastMonth").start;
+    var endData = getMonthDate("lastMonth").end;
     this.condition.orderDate = [
-      getMonthDate("lastMonth").start,
-      getMonthDate("lastMonth").end
+      getNextDate(startData, -1),
+      getNextDate(endData, -1)
     ];
     this.getdata();
   }
