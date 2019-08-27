@@ -21,6 +21,9 @@
               </p>
             </div>
           </div>
+          <div class="tabs-container tab-index-pan tswj" v-show="showTitle.wj">
+            
+          </div>
           <div class="tabs-container tab-index-pan" v-show="showTitle.pming">
             <el-tabs
               v-model="activeTabName"
@@ -1635,7 +1638,8 @@ export default {
         zengzhang: false,
         sale: false,
         pming: true,
-        zz: false
+        zz: false,
+        wj:false,
       },
       pmShow: {
         pmYW: true,
@@ -2233,6 +2237,13 @@ export default {
       } else {
         this.showTitle["zz"] = false;
       }
+      if (n === "旺季目标") {
+        this.showTitle["wj"] = true;
+        this.activeTitle = "旺季目标";
+        this.indexTabactive = index;
+      } else {
+        this.showTitle["wj"] = false;
+      }
     },
     dateFormatter(date) {
       return date.substring(0, 10);
@@ -2621,8 +2632,170 @@ h2:hover {
   margin-right: 5px;
 }
 .index_active {
-  background: #409eff;
+  background: #3c8dbc;
   color: #ffffff;
+}
+.tswj{
+  height: 848px;
+  overflow-y: auto;
+  background: linear-gradient(54deg, #2a6496, #3c8dbc);
+}
+.tabNo{
+  width: 80%;
+  float: left;
+}
+.tabY{
+  width: 20%;
+  float: left;
+}
+.tabNoBlock{
+  width: 100%;
+  background: #fff;
+  height: 6px;
+  margin-top: 65px; 
+  position: relative;
+  padding-left: -25px;
+}
+.no10{
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #909399;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+  left: 10%;
+  top:-25px;
+  margin-left: -25px;
+}
+.no20{
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #909399;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+  left: 20%;
+  top:-25px;
+  margin-left: -25px;
+}
+.no30{
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #f56c6c;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+  left: 30%;
+  top:-25px;
+  margin-left: -25px;
+}
+.no40{
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #f56c6c;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+  left: 40%;
+  top:-25px;
+  margin-left: -25px;
+}
+.no50{
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #f56c6c;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+  left: 50%;
+  top:-25px;
+  margin-left: -25px;
+}
+.no60{
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #e6a23c;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+  left: 60%;
+  top:-25px;
+  margin-left: -25px;
+}
+.no70{
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #e6a23c;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+  left: 70%;
+  top:-25px;
+  margin-left: -25px;
+}
+.no80{
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #409eff;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+  left: 80%;
+  top:-25px;
+  margin-left: -25px;
+}
+.no90{
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #e6a23c;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+  left: 90%;
+  top:-25px;
+  margin-left: -25px;
+}
+.no100{
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #67c23a;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+  left: 100%;
+  z-index: 999;
+  top:-25px;
+  margin-left: -25px;
 }
 </style>
 <style>

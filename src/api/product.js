@@ -1353,3 +1353,12 @@ export function APIStockPerformExport(param) {
     responseType: 'arraybuffer'
   })
 }
+
+export function APIPickStatistics(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/pick-statistics',
+    method: 'post',
+    data
+  })
+}

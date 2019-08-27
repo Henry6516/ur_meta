@@ -66,6 +66,7 @@ import exchange from '../views/settings/exchange.vue'
 // 仓库工具
 import picking from '../views/warehouse/picking.vue'
 import splitcargo from '../views/warehouse/splitCargo.vue'
+import pickStatistics from '../views/warehouse/pickStatistics.vue'
 // 反馈中心
 import requirements from '../views/feedback/requirements.vue'
 import news from '../views/feedback/news.vue'
@@ -323,6 +324,11 @@ const routes = [
         path: '/v1/warehouse-tools/pick-tools',
         component: picking,
         name: '拣货单'
+      },
+      {
+        path: '/v1/warehouse-tools/pick-statistics',
+        component: pickStatistics,
+        name: '拣货统计'
       },
       {
         path: '/v1/warehouse-tools/sort-tools',
