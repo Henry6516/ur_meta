@@ -15,14 +15,136 @@
                 @click="handleTitle(item.name,index)"
               >
                 <i
-                  :class="index==0?'el-icon-rank':index==1?'el-icon-tickets':index==2?'el-icon-document':index==3?'el-icon-date':''"
+                  :class="index==0?'el-icon-rank':index==1?'el-icon-tickets':index==2?'el-icon-document':index==3?'el-icon-date':'el-icon-tickets'"
                 ></i>
                 {{item.name}}
               </p>
             </div>
           </div>
           <div class="tabs-container tab-index-pan tswj" v-show="showTitle.wj">
-            
+            <div class="bigDemo">
+              <div class="rightDemo">
+                <span class="span20">10%</span>
+                <div class="indexbImg b0"></div>
+                <div class="indexbImg b1" @click="zoomIn"></div>
+                <div class="indexbImg b2" @click="four"></div>
+                <div class="indexbImg b3" @click="three"></div>
+                <div class="indexbImg b4" @click="two"></div>
+                <div class="indexbImg b5" @click="one"></div>
+                <div class="indexbImg b6"></div>
+                <div class="indexbImg b7"></div>
+                <div class="indexbImg b8"></div>
+                <div class="indexbImg b9"></div>
+                <div class="indexbImg b10"></div>
+                <div class="indexbImg1 b11"></div>
+                <div class="indexbImg1 b12"></div>
+                <div class="indexbImg1 b13"></div>
+                <div class="indexbImg1 b14"></div>
+                <div class="indexbImg1 b15"></div>
+                <div class="indexbImg1 b16"></div>
+                <div class="indexbImg1 b17"></div>
+                <div class="indexbImg1 b18"></div>
+                <div class="indexbImg1 b19"></div>
+                <div class="indexbImg1 b20"></div>
+              </div>
+              <div class="leftDemo">
+                <span class="span40">30%</span>
+                <div class="indexbImg1 b21"></div>
+                <div class="indexbImg1 b22"></div>
+                <div class="indexbImg1 b23"></div>
+                <div class="indexbImg1 b24"></div>
+                <div class="indexbImg1 b25"></div>
+                <div class="indexbImg1 b26"></div>
+                <div class="indexbImg1 b27"></div>
+                <div class="indexbImg1 b28"></div>
+                <div class="indexbImg1 b29"></div>
+                <div class="indexbImg1 b30"></div>
+                <div class="indexbImg b31"></div>
+                <div class="indexbImg b32"></div>
+                <div class="indexbImg b33"></div>
+                <div class="indexbImg b34"></div>
+                <div class="indexbImg b35"></div>
+                <div class="indexbImg b36"></div>
+                <div class="indexbImg b37"></div>
+                <div class="indexbImg b38"></div>
+                <div class="indexbImg b39"></div>
+                <div class="indexbImg b40"></div>
+              </div>
+              <div class="rightDemo">
+                <span class="span60">50%</span>
+                <div class="indexbImg b41"></div>
+                <div class="indexbImg b42"></div>
+                <div class="indexbImg b43"></div>
+                <div class="indexbImg b44"></div>
+                <div class="indexbImg b45"></div>
+                <div class="indexbImg b46"></div>
+                <div class="indexbImg b47"></div>
+                <div class="indexbImg b48"></div>
+                <div class="indexbImg b49"></div>
+                <div class="indexbImg b50"></div>
+                <div class="indexbImg1 b51"></div>
+                <div class="indexbImg1 b52"></div>
+                <div class="indexbImg1 b53"></div>
+                <div class="indexbImg1 b54"></div>
+                <div class="indexbImg1 b55"></div>
+                <div class="indexbImg1 b56"></div>
+                <div class="indexbImg1 b57"></div>
+                <div class="indexbImg1 b58"></div>
+                <div class="indexbImg1 b59"></div>
+                <div class="indexbImg1 b60"></div>
+              </div>
+              <div class="leftDemo">
+                <span class="span80">70%</span>
+                <div class="indexbImg1 b61"></div>
+                <div class="indexbImg1 b62"></div>
+                <div class="indexbImg1 b63"></div>
+                <div class="indexbImg1 b64"></div>
+                <div class="indexbImg1 b65"></div>
+                <div class="indexbImg1 b66"></div>
+                <div class="indexbImg1 b67"></div>
+                <div class="indexbImg1 b68"></div>
+                <div class="indexbImg1 b69"></div>
+                <div class="indexbImg1 b70"></div>
+                <div class="indexbImg b71"></div>
+                <div class="indexbImg b72"></div>
+                <div class="indexbImg b73"></div>
+                <div class="indexbImg b74"></div>
+                <div class="indexbImg b75"></div>
+                <div class="indexbImg b76"></div>
+                <div class="indexbImg b77"></div>
+                <div class="indexbImg b78"></div>
+                <div class="indexbImg b79"></div>
+                <div class="indexbImg b80"></div>
+              </div>
+              <div class="rightDemo">
+                <span class="span100">100%</span>
+                <div class="indexbImg b81"></div>
+                <div class="indexbImg b82"></div>
+                <div class="indexbImg b83"></div>
+                <div class="indexbImg b84"></div>
+                <div class="indexbImg b85"></div>
+                <div class="indexbImg b86"></div>
+                <div class="indexbImg b87"></div>
+                <div class="indexbImg b88"></div>
+                <div class="indexbImg b89"></div>
+                <div class="indexbImg b90"></div>
+                <div class="indexbImg1 b91"></div>
+                <div class="indexbImg1 b92"></div>
+                <div class="indexbImg1 b93"></div>
+                <div class="indexbImg1 b94"></div>
+                <div class="indexbImg1 b95"></div>
+                <div class="indexbImg1 b96"></div>
+                <div class="indexbImg1 b97"></div>
+                <div class="indexbImg1 b98"></div>
+                <div class="indexbImg1 b99"></div>
+                <div class="indexbImg1 b100"></div>
+              </div>
+              <div class="leftDemo"></div>
+              <span class="start"></span>
+              <span class="end">
+                <img src="../assets/qizi.png" style="width: 50px;height: 50px;" />
+              </span>
+            </div>
           </div>
           <div class="tabs-container tab-index-pan" v-show="showTitle.pming">
             <el-tabs
@@ -51,17 +173,17 @@
                       src="../assets/j1.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==1"
-                    >
+                    />
                     <img
                       src="../assets/j2.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==2"
-                    >
+                    />
                     <img
                       src="../assets/j3.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==3"
-                    >
+                    />
                     <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                   </template>
                 </el-table-column>
@@ -76,12 +198,12 @@
                         :src="scope.row.img"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img!=null"
-                      >
+                      />
                       <img
                         src="../assets/header.png"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img==null"
-                      >
+                      />
                     </div>
                   </template>
                 </el-table-column>
@@ -172,17 +294,17 @@
                       src="../assets/j1.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==1"
-                    >
+                    />
                     <img
                       src="../assets/j2.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==2"
-                    >
+                    />
                     <img
                       src="../assets/j3.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==3"
-                    >
+                    />
                     <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                   </template>
                 </el-table-column>
@@ -197,12 +319,12 @@
                         :src="scope.row.img"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img!=null"
-                      >
+                      />
                       <img
                         src="../assets/header.png"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img==null"
-                      >
+                      />
                     </div>
                   </template>
                 </el-table-column>
@@ -293,17 +415,17 @@
                       src="../assets/j1.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==1"
-                    >
+                    />
                     <img
                       src="../assets/j2.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==2"
-                    >
+                    />
                     <img
                       src="../assets/j3.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==3"
-                    >
+                    />
                     <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                   </template>
                 </el-table-column>
@@ -318,12 +440,12 @@
                         :src="scope.row.img"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img!=null"
-                      >
+                      />
                       <img
                         src="../assets/header.png"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img==null"
-                      >
+                      />
                     </div>
                   </template>
                 </el-table-column>
@@ -414,17 +536,17 @@
                       src="../assets/j1.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==1"
-                    >
+                    />
                     <img
                       src="../assets/j2.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==2"
-                    >
+                    />
                     <img
                       src="../assets/j3.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==3"
-                    >
+                    />
                     <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                   </template>
                 </el-table-column>
@@ -439,12 +561,12 @@
                         :src="scope.row.img"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img!=null"
-                      >
+                      />
                       <img
                         src="../assets/header.png"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img==null"
-                      >
+                      />
                     </div>
                   </template>
                 </el-table-column>
@@ -535,17 +657,17 @@
                       src="../assets/j1.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==1"
-                    >
+                    />
                     <img
                       src="../assets/j2.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==2"
-                    >
+                    />
                     <img
                       src="../assets/j3.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==3"
-                    >
+                    />
                     <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                   </template>
                 </el-table-column>
@@ -560,12 +682,12 @@
                         :src="scope.row.img"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img!=null"
-                      >
+                      />
                       <img
                         src="../assets/header.png"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img==null"
-                      >
+                      />
                     </div>
                   </template>
                 </el-table-column>
@@ -656,17 +778,17 @@
                       src="../assets/j1.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==1"
-                    >
+                    />
                     <img
                       src="../assets/j2.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==2"
-                    >
+                    />
                     <img
                       src="../assets/j3.png"
                       style="width: 31px;height: 38px;"
                       v-if="scope.row.order==3"
-                    >
+                    />
                     <span v-if="scope.row.order>3">{{scope.row.order}}</span>
                   </template>
                 </el-table-column>
@@ -681,12 +803,12 @@
                         :src="scope.row.img"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img!=null"
-                      >
+                      />
                       <img
                         src="../assets/header.png"
                         style="width: 60px;height: 60px;border-radius:50%;"
                         v-if="scope.row.img==null"
-                      >
+                      />
                     </div>
                   </template>
                 </el-table-column>
@@ -890,7 +1012,7 @@
                 <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                 <el-table-column prop="img" label="图片" align="center">
                   <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;">
+                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
                   </template>
                 </el-table-column>
                 <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
@@ -918,7 +1040,7 @@
                 <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                 <el-table-column prop="img" label="图片" sortable align="center">
                   <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;">
+                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
                   </template>
                 </el-table-column>
                 <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
@@ -946,7 +1068,7 @@
                 <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                 <el-table-column prop="img" label="图片" sortable align="center">
                   <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;">
+                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
                   </template>
                 </el-table-column>
                 <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
@@ -974,7 +1096,7 @@
                 <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                 <el-table-column prop="img" label="图片" sortable align="center">
                   <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;">
+                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
                   </template>
                 </el-table-column>
                 <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
@@ -1002,7 +1124,7 @@
                 <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                 <el-table-column prop="img" label="图片" sortable align="center">
                   <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;">
+                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
                   </template>
                 </el-table-column>
                 <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
@@ -1030,7 +1152,7 @@
                 <el-table-column prop="cate" label="子类目" sortable align="center"></el-table-column>
                 <el-table-column prop="img" label="图片" sortable align="center">
                   <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 120px;height: 120px;">
+                    <img :src="scope.row.img" style="width: 120px;height: 120px;" />
                   </template>
                 </el-table-column>
                 <el-table-column prop="salesNum" label="月销量" sortable="custom" align="center"></el-table-column>
@@ -1427,7 +1549,7 @@
         </el-card>
       </div>
       <el-card class="box-card">
-        <div slot="header" class="clearfix-list">
+        <!-- <div slot="header" class="clearfix-list">
           <h2>公告栏</h2>
         </div>
         <ul>
@@ -1464,7 +1586,25 @@
           @click="loadMore"
           class="more"
           v-text="this.page>=this.newsData.page?'加载更多':'已无更多'"
-        ></el-button>
+        ></el-button>-->
+        <div class="cardCase">
+          <div class="cardLeft">
+            <span>1000000</span>
+            <img src="../assets/jj.png" />
+          </div>
+          <div class="cardRight">
+            <div class="luck-user-title">
+              <span>奖金名单</span>
+            </div>
+            <div class="cardText">
+              <div class="cardText01" v-for="(item,index) in 70" :key="index">
+                <img src="../assets/header.png" style="width: 40px;height: 40px;border-radius:50%;" />
+                <span>测试</span>
+                <p>20000</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </el-card>
       <el-card class="box-card1">
         <div slot="header" class="clearfix-list">
@@ -1497,6 +1637,232 @@
         <img src="../assets/1.5.jpg"
              style="height:400px;width:95%;padding:15px;">
       </el-card>-->
+      <!-- <transition style="height:600px;" enter-active-class="animated fadeInRightBig">
+      <div class="zhezhao" v-show="flagShow"></div>
+      </transition>-->
+      <transition
+        style="height:600px;"
+        enter-active-class="animated jackInTheBox"
+        leave-active-class="animated zoomOutDown"
+      >
+        <div class="digWhite" v-show="flagShow">
+          <img
+            src="../assets/close.png"
+            @click="closeIndex()"
+            class="closeIndex"
+            style="width: 34px;height: 35px;"
+          />
+          <div class="CaseBox" v-show="flagShow">
+            <transition
+              style="height:600px;"
+              enter-active-class="animated fadeInDownBig"
+              leave-active-class="animated zoomOutDown"
+              v-for="(item, index) in 70"
+              :key="index"
+            >
+              <div class="testCase tabCase" v-show="flagShow">
+                <div class="tleft">
+                  <img
+                    src="../assets/header.png"
+                    style="width: 70px;height: 70px;border-radius:50%;"
+                  />
+                  <p class="namep">测试</p>
+                </div>
+                <div class="tright">
+                  <p class="pred">
+                    <span>完成度 ：</span>101%
+                  </p>
+                  <p>
+                    <span>已完成 ：</span>2000000
+                  </p>
+                  <p>
+                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>1000000
+                  </p>
+                  <p class="pred">
+                    <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                  </p>
+                </div>
+              </div>
+            </transition>
+          </div>
+        </div>
+      </transition>
+      <transition
+        style="height:600px;"
+        enter-active-class="animated jackInTheBox"
+        leave-active-class="animated zoomOutDown"
+      >
+        <div class="digWhiteFour" v-show="flagShowFour">
+          <img
+            src="../assets/close.png"
+            @click="closeIndexFour()"
+            class="closeIndexFour"
+            style="width: 34px;height: 35px;"
+          />
+          <transition
+            style="height:600px;"
+            enter-active-class="animated fadeInDownBig"
+            leave-active-class="animated zoomOutDown"
+            v-for="(item, index) in 4"
+            :key="index"
+          >
+            <div class="testCase tabCase" v-show="flagShowFour">
+              <div class="tleftFour">
+                <img src="../assets/header.png" style="width: 70px;height: 70px;border-radius:50%;" />
+                <p class="namepFour">测试</p>
+              </div>
+              <div class="trightFour">
+                <p class="pred">
+                  <span>完成度 ：</span>101%
+                </p>
+                <p>
+                  <span>已完成 ：</span>2000000
+                </p>
+                <p>
+                  <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>101%
+                </p>
+                <p class="pred">
+                  <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                </p>
+              </div>
+            </div>
+          </transition>
+        </div>
+      </transition>
+      <transition
+        style="height:600px;"
+        enter-active-class="animated jackInTheBox"
+        leave-active-class="animated zoomOutDown"
+      >
+        <div class="digWhiteThree" v-show="flagShowThree">
+          <img
+            src="../assets/close.png"
+            @click="closeIndexThree()"
+            class="closeIndexThree"
+            style="width: 34px;height: 35px;"
+          />
+          <transition
+            style="height:600px;"
+            enter-active-class="animated fadeInDownBig"
+            leave-active-class="animated zoomOutDown"
+            v-for="(item, index) in 3"
+            :key="index"
+          >
+            <div class="testCaseThree tabCase" v-show="flagShowThree">
+              <div class="tleftThree">
+                <img src="../assets/header.png" style="width: 80px;height: 80px;border-radius:50%;" />
+                <p class="namepThree">测试</p>
+              </div>
+              <div class="trightThree">
+                <p class="pred">
+                  <span>完成度 ：</span>101%
+                </p>
+                <p>
+                  <span>已完成 ：</span>2000000
+                </p>
+                <p>
+                  <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>101%
+                </p>
+                <p class="pred">
+                  <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                </p>
+              </div>
+            </div>
+          </transition>
+        </div>
+      </transition>
+      <transition
+        style="height:600px;"
+        enter-active-class="animated jackInTheBox"
+        leave-active-class="animated zoomOutDown"
+      >
+        <div class="digWhiteTwo" v-show="flagShowTwo">
+          <img
+            src="../assets/close.png"
+            @click="closeIndexTwo()"
+            class="closeIndexTwo"
+            style="width: 34px;height: 35px;"
+          />
+          <transition
+            style="height:600px;"
+            enter-active-class="animated fadeInDownBig"
+            leave-active-class="animated zoomOutDown"
+            v-for="(item, index) in 2"
+            :key="index"
+          >
+            <div class="testCaseTwo tabCase" v-show="flagShowTwo">
+              <div class="tleftTwo">
+                <img src="../assets/header.png" style="width: 80px;height: 80px;border-radius:50%;" />
+                <p class="namepTwo">测试</p>
+              </div>
+              <div class="trightTwo">
+                <p class="pred">
+                  <span>完成度 ：</span>101%
+                </p>
+                <p>
+                  <span>已完成 ：</span>2000000
+                </p>
+                <p>
+                  <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>101%
+                </p>
+                <p class="pred">
+                  <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                </p>
+              </div>
+            </div>
+          </transition>
+        </div>
+      </transition>
+      <transition
+        style="height:600px;"
+        enter-active-class="animated jackInTheBox"
+        leave-active-class="animated zoomOutDown"
+      >
+        <div class="digWhiteOne" v-show="flagShowOne">
+          <img
+            src="../assets/close.png"
+            @click="closeIndexOne()"
+            class="closeIndexOne"
+            style="width: 34px;height:34px;"
+          />
+          <transition
+            style="height:600px;"
+            enter-active-class="animated jackInTheBox"
+            leave-active-class="animated zoomOutDown"
+            v-for="(item, index) in 1"
+            :key="index"
+          >
+            <div class="testCaseOne" v-show="flagShowOne">
+              <div class="tleftOne">
+                <img
+                  src="../assets/header.png"
+                  style="width: 100px;height: 100px;border-radius:50%;"
+                />
+                <p class="namepOne">测试</p>
+              </div>
+              <div class="trightOne">
+                <div class="p01">
+                  <p class="pred">
+                    <span>完成度 ：</span>101%
+                  </p>
+                  <p>
+                    <span>已完成 ：</span>2000000
+                  </p>
+                </div>
+                <div class="p01">
+                  <p>
+                    <span>目&nbsp;&nbsp;&nbsp;&nbsp;标 ：</span>2000000
+                  </p>
+                  <p class="pred">
+                    <span>奖&nbsp;&nbsp;&nbsp;&nbsp;金 ：</span>30000元
+                  </p>
+                </div>
+              </div>
+              <div style="height:5px;width:100%"></div>
+            </div>
+          </transition>
+        </div>
+      </transition>
       <el-dialog :visible.sync="dialogVisible">
         <el-form :model="newsDetailList" label-width="80px" ref="detailForm">
           <el-form-item label="标题：" prop="title">
@@ -1538,6 +1904,7 @@ import { getMenu } from "../api/login";
 export default {
   data() {
     return {
+      objArr: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       activeTabNamebk: "eBay-义乌仓",
       indexTabactive: 0,
       titleMenuTab: [
@@ -1550,6 +1917,11 @@ export default {
       ],
       activeTabName: "eBay-义乌仓",
       activeTabzz: "郑州eBay平台",
+      flagShow: false,
+      flagShowFour: false,
+      flagShowThree: false,
+      flagShowTwo: false,
+      flagShowOne: false,
       page: null,
       dialogVisible: false,
       data: {
@@ -1575,9 +1947,9 @@ export default {
       shbm: [],
       sybm: [],
       zzbm: [],
-      tabzz:{
-        ebay:true,
-        joom:false
+      tabzz: {
+        ebay: true,
+        joom: false
       },
       shanghaiTable: [],
       zhengzhouTable: [],
@@ -1590,8 +1962,8 @@ export default {
       saleDevelop: [],
       saleZz: [],
       titleMenuzz: [],
-      zzEbay:[],
-      zzJoom:[],
+      zzEbay: [],
+      zzJoom: [],
       activeName: "上海销售",
       activeTitle: "销售排名",
       activePlat: "eBay-义乌仓",
@@ -1639,7 +2011,7 @@ export default {
         sale: false,
         pming: true,
         zz: false,
-        wj:false,
+        wj: false
       },
       pmShow: {
         pmYW: true,
@@ -1660,16 +2032,46 @@ export default {
     };
   },
   methods: {
-    handclickzz(tab, event){
+    four() {
+      this.flagShowFour = true;
+    },
+    closeIndexFour() {
+      this.flagShowFour = false;
+    },
+    zoomIn() {
+      this.flagShow = true;
+    },
+    closeIndex() {
+      this.flagShow = false;
+    },
+    three() {
+      this.flagShowThree = true;
+    },
+    closeIndexThree() {
+      this.flagShowThree = false;
+    },
+    two() {
+      this.flagShowTwo = true;
+    },
+    closeIndexTwo() {
+      this.flagShowTwo = false;
+    },
+    one() {
+      this.flagShowOne = true;
+    },
+    closeIndexOne() {
+      this.flagShowOne = false;
+    },
+    handclickzz(tab, event) {
       if (tab.label === "郑州eBay平台") {
-        this.tabzz['ebay'] = true;
+        this.tabzz["ebay"] = true;
       } else {
-        this.tabzz['ebay'] = false;
+        this.tabzz["ebay"] = false;
       }
       if (tab.label === "郑州Joom平台") {
-        this.tabzz['joom'] = true;
+        this.tabzz["joom"] = true;
       } else {
-        this.tabzz['joom'] = false;
+        this.tabzz["joom"] = false;
       }
     },
     sortNumberPX(column, prop, order) {
@@ -2530,10 +2932,12 @@ export default {
 }
 .box-card {
   width: 30%;
-  height: 390px;
+  height: 410px;
   overflow-y: scroll;
   float: right;
   margin-top: 1.5%;
+  background: url(../assets/jjbg.jpg) no-repeat center;
+  background-size: 100% 100%;
   .post-left-box {
     position: relative;
     float: left;
@@ -2574,7 +2978,7 @@ export default {
 }
 .box-card1 {
   width: 30%;
-  height: 515px;
+  height: 495px;
   float: right;
   margin-top: 10px;
   overflow-y: scroll;
@@ -2635,167 +3039,1381 @@ h2:hover {
   background: #3c8dbc;
   color: #ffffff;
 }
-.tswj{
+.tswj {
   height: 848px;
   overflow-y: auto;
-  background: linear-gradient(54deg, #2a6496, #3c8dbc);
+  background: #494a5f;
 }
-.tabNo{
+.tabNo {
   width: 80%;
   float: left;
 }
-.tabY{
+.tabY {
   width: 20%;
   float: left;
 }
-.tabNoBlock{
+.tabNoBlock {
   width: 100%;
   background: #fff;
   height: 6px;
-  margin-top: 65px; 
+  margin-top: 65px;
   position: relative;
   padding-left: -25px;
 }
-.no10{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #909399;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
-  position: absolute;
-  left: 10%;
-  top:-25px;
-  margin-left: -25px;
+.leftDemo,
+.rightDemo {
+  position: relative;
+  width: 507.5px;
+  height: 85px;
+  border: 30px solid;
 }
-.no20{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #909399;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
-  position: absolute;
-  left: 20%;
-  top:-25px;
-  margin-left: -25px;
+.leftDemo {
+  border-right: 0;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  z-index: 1;
 }
-.no30{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #f56c6c;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
-  position: absolute;
-  left: 30%;
-  top:-25px;
-  margin-left: -25px;
+.rightDemo {
+  left: 485px;
+  width: 460px;
+  border-left: 0;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
 }
-.no40{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #f56c6c;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
+.leftDemo:before,
+.rightDemo:before {
+  content: "";
   position: absolute;
-  left: 40%;
-  top:-25px;
-  margin-left: -25px;
+  display: block;
+  width: 507.5px;
+  height: 85px;
+  top: -15px;
+  border: 15px solid;
 }
-.no50{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #f56c6c;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
-  position: absolute;
-  left: 50%;
-  top:-25px;
-  margin-left: -25px;
+.leftDemo:before {
+  border-right: 0;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  left: -15px;
 }
-.no60{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #e6a23c;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
-  position: absolute;
-  left: 60%;
-  top:-25px;
-  margin-left: -25px;
+.rightDemo:before {
+  width: 460px;
+  border-left: 0;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
 }
-.no70{
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #e6a23c;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
-  position: absolute;
-  left: 70%;
-  top:-25px;
-  margin-left: -25px;
+.bigDemo {
+  width: 980px;
+  margin: 0 auto;
+  margin-top: 75px;
+  position: relative;
+  height: 670px;
 }
-.no80{
+.start {
   display: block;
-  width: 50px;
-  height: 50px;
+  width: 25px;
+  height: 25px;
+  background: #e7e7e7;
+  border: #303334 solid 10px;
   border-radius: 50%;
-  background: #409eff;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
   position: absolute;
-  left: 80%;
-  top:-25px;
-  margin-left: -25px;
+  top: -8px;
+  left: 450px;
+  text-align: center;
+  line-height: 25px;
 }
-.no90{
+.end {
   display: block;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+  background: #fff;
   border-radius: 50%;
-  background: #e6a23c;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
   position: absolute;
+  bottom: 65px;
+  text-align: center;
+  line-height: 25px;
+  right: 480px;
+  z-index: 10;
+  color: red;
+  animation: myfirst 2s infinite;
+}
+.end img {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+}
+@keyframes myfirst {
+  0%,
+  100% {
+    transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+  }
+}
+.span20 {
+  display: block;
+  color: #65c7d0;
+  font-size: 50px;
+  font-weight: 600;
+  position: absolute;
+  right: 40px;
+  top: 14px;
+}
+.span40 {
+  display: block;
+  color: #ea3c14;
+  font-size: 50px;
+  font-weight: 600;
+  position: absolute;
+  left: 40px;
+  top: 14px;
+}
+.span60 {
+  display: block;
+  color: #0071bd;
+  font-size: 50px;
+  font-weight: 600;
+  position: absolute;
+  right: 40px;
+  top: 14px;
+}
+.span80 {
+  display: block;
+  color: #f99324;
+  font-size: 50px;
+  font-weight: 600;
+  position: absolute;
+  left: 40px;
+  top: 14px;
+}
+.span100 {
+  color: #8cc63e;
+  display: block;
+  font-size: 50px;
+  font-weight: 600;
+  position: absolute;
+  left: -60px;
+  top: 14px;
+}
+.rightDemo:nth-child(1) {
+  border-color: #46b2bc;
+  top: 0;
+}
+.rightDemo:nth-child(1):before {
+  border-color: #65c7d0;
+}
+.leftDemo:nth-child(2) {
+  top: -30.5px;
+  width: 460px;
+  border-color: red;
+}
+.leftDemo:nth-child(2):before {
+  width: 460px;
+  border-color: #f7502b;
+}
+.rightDemo:nth-child(3) {
+  left: 485.5px;
+  z-index: 2;
+  width: 460px;
+  top: -61px;
+  border-color: #0071bd;
+}
+.rightDemo:nth-child(3):before {
+  border-color: rgb(22, 138, 216);
+  width: 460px;
+}
+.leftDemo:nth-child(4) {
+  width: 475px;
+  top: -91px;
+  border-color: #f99324;
+}
+.leftDemo:nth-child(4):before {
+  width: 475px;
+  border-color: #fbb03b;
+}
+.rightDemo:nth-child(5) {
+  left: 485.5px;
+  z-index: 2;
+  width: 460px;
+  top: -122px;
+  border-color: #6caf29;
+}
+.rightDemo:nth-child(5):before {
+  border-color: #8cc63e;
+  width: 460px;
+}
+.leftDemo:nth-child(6) {
+  width: 875px;
+  top: -152px;
+  border-color: #3c8dbc;
+}
+.leftDemo:nth-child(6):before {
+  width: 875px;
+  border-color: #4ca8dd;
+}
+.indexbImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: 100%;
+  background: url(../assets/sc.png) no-repeat center;
+  margin-left: -20px;
+  cursor: pointer;
+}
+.indexbImg1 {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: 100%;
+  background: url(../assets/sc1.png) no-repeat center;
+  margin-left: -20px;
+  cursor: pointer;
+}
+.indexbImg:hover {
+  -webkit-animation: icon-bounce 0.5s alternate;
+  -moz-animation: icon-bounce 0.5s alternate;
+  -o-animation: icon-bounce 0.5s alternate;
+  animation: icon-bounce 0.5s alternate;
+}
+.indexbImg1:hover {
+  -webkit-animation: icon-bounce 0.5s alternate;
+  -moz-animation: icon-bounce 0.5s alternate;
+  -o-animation: icon-bounce 0.5s alternate;
+  animation: icon-bounce 0.5s alternate;
+}
+@keyframes icon-bounce {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  50% {
+    transform: translate(0px, -10px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+.indexbImg img {
+  display: block;
+  width: 45px;
+  height: 45px;
+}
+.b0 {
+  position: absolute;
+  top: -35px;
+  left: 5%;
+  z-index: 101;
+}
+.b1 {
+  position: absolute;
+  top: -35px;
+  left: 15%;
+  z-index: 101;
+}
+.b2 {
+  position: absolute;
+  top: -35px;
+  left: 25%;
+  z-index: 101;
+}
+.b3 {
+  position: absolute;
+  top: -35px;
+  left: 35%;
+  z-index: 101;
+}
+.b4 {
+  position: absolute;
+  top: -35px;
+  left: 45%;
+  z-index: 101;
+}
+.b5 {
+  position: absolute;
+  top: -35px;
+  left: 55%;
+  z-index: 101;
+}
+.b6 {
+  position: absolute;
+  top: -35px;
+  left: 65%;
+  z-index: 101;
+}
+.b7 {
+  position: absolute;
+  top: -35px;
+  left: 75%;
+  z-index: 101;
+}
+.b8 {
+  position: absolute;
+  top: -35px;
+  left: 85%;
+  z-index: 101;
+}
+.b9 {
+  position: absolute;
+  top: -32px;
+  left: 95%;
+  z-index: 101;
+}
+.b10 {
+  position: absolute;
+  top: -0px;
+  right: -25px;
+  z-index: 101;
+}
+.b11 {
+  position: absolute;
+  top: 60px;
+  right: -27px;
+  z-index: 101;
+}
+.b12 {
+  position: absolute;
+  bottom: -35px;
   left: 90%;
-  top:-25px;
-  margin-left: -25px;
+  z-index: 101;
 }
-.no100{
-  display: block;
-  width: 50px;
-  height: 50px;
+.b13 {
+  position: absolute;
+  bottom: -35px;
+  left: 80%;
+  z-index: 101;
+}
+.b14 {
+  position: absolute;
+  bottom: -35px;
+  left: 70%;
+  z-index: 101;
+}
+.b15 {
+  position: absolute;
+  bottom: -35px;
+  left: 60%;
+  z-index: 101;
+}
+.b16 {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  z-index: 101;
+}
+.b17 {
+  position: absolute;
+  bottom: -35px;
+  left: 40%;
+  z-index: 101;
+}
+.b18 {
+  position: absolute;
+  bottom: -35px;
+  left: 30%;
+  z-index: 101;
+}
+.b19 {
+  position: absolute;
+  bottom: -35px;
+  left: 20%;
+  z-index: 101;
+}
+.b20 {
+  position: absolute;
+  bottom: -35px;
+  left: 10%;
+  z-index: 101;
+}
+.b21 {
+  position: absolute;
+  top: -35px;
+  left: 90%;
+  z-index: 101;
+}
+.b22 {
+  position: absolute;
+  top: -35px;
+  left: 80%;
+  z-index: 101;
+}
+.b23 {
+  position: absolute;
+  top: -35px;
+  left: 70%;
+  z-index: 101;
+}
+.b24 {
+  position: absolute;
+  top: -35px;
+  left: 60%;
+  z-index: 101;
+}
+.b25 {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  z-index: 101;
+}
+.b26 {
+  position: absolute;
+  top: -35px;
+  left: 40%;
+  z-index: 101;
+}
+.b27 {
+  position: absolute;
+  top: -35px;
+  left: 30%;
+  z-index: 101;
+}
+.b28 {
+  position: absolute;
+  top: -35px;
+  left: 20%;
+  z-index: 101;
+}
+.b29 {
+  position: absolute;
+  top: -35px;
+  left: 10%;
+  z-index: 101;
+}
+.b30 {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  z-index: 101;
+}
+.b31 {
+  position: absolute;
+  top: 60px;
+  left: -5px;
+  z-index: 101;
+}
+.b32 {
+  position: absolute;
+  bottom: -35px;
+  left: 10%;
+  z-index: 101;
+}
+.b33 {
+  position: absolute;
+  bottom: -35px;
+  left: 20%;
+  z-index: 101;
+}
+.b34 {
+  position: absolute;
+  bottom: -35px;
+  left: 30%;
+  z-index: 101;
+}
+.b35 {
+  position: absolute;
+  bottom: -35px;
+  left: 40%;
+  z-index: 101;
+}
+.b36 {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  z-index: 101;
+}
+.b37 {
+  position: absolute;
+  bottom: -35px;
+  left: 60%;
+  z-index: 101;
+}
+.b38 {
+  position: absolute;
+  bottom: -35px;
+  left: 70%;
+  z-index: 101;
+}
+.b39 {
+  position: absolute;
+  bottom: -35px;
+  left: 80%;
+  z-index: 101;
+}
+.b40 {
+  position: absolute;
+  bottom: -35px;
+  left: 90%;
+  z-index: 101;
+}
+.b41 {
+  position: absolute;
+  top: -35px;
+  left: 10%;
+  z-index: 101;
+}
+.b42 {
+  position: absolute;
+  top: -35px;
+  left: 20%;
+  z-index: 101;
+}
+.b43 {
+  position: absolute;
+  top: -35px;
+  left: 30%;
+  z-index: 101;
+}
+.b44 {
+  position: absolute;
+  top: -35px;
+  left: 40%;
+  z-index: 101;
+}
+.b45 {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  z-index: 101;
+}
+.b46 {
+  position: absolute;
+  top: -35px;
+  left: 60%;
+  z-index: 101;
+}
+.b47 {
+  position: absolute;
+  top: -35px;
+  left: 70%;
+  z-index: 101;
+}
+.b48 {
+  position: absolute;
+  top: -35px;
+  left: 80%;
+  z-index: 101;
+}
+.b49 {
+  position: absolute;
+  top: -35px;
+  left: 90%;
+  z-index: 101;
+}
+.b50 {
+  position: absolute;
+  top: -5px;
+  right: -25px;
+  z-index: 101;
+}
+.b51 {
+  position: absolute;
+  top: 60px;
+  right: -27px;
+  z-index: 101;
+}
+.b52 {
+  position: absolute;
+  bottom: -35px;
+  left: 90%;
+  z-index: 101;
+}
+.b53 {
+  position: absolute;
+  bottom: -35px;
+  left: 80%;
+  z-index: 101;
+}
+.b54 {
+  position: absolute;
+  bottom: -35px;
+  left: 70%;
+  z-index: 101;
+}
+.b55 {
+  position: absolute;
+  bottom: -35px;
+  left: 60%;
+  z-index: 101;
+}
+.b56 {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  z-index: 101;
+}
+.b57 {
+  position: absolute;
+  bottom: -35px;
+  left: 40%;
+  z-index: 101;
+}
+.b58 {
+  position: absolute;
+  bottom: -35px;
+  left: 30%;
+  z-index: 101;
+}
+.b59 {
+  position: absolute;
+  bottom: -35px;
+  left: 20%;
+  z-index: 101;
+}
+.b60 {
+  position: absolute;
+  bottom: -35px;
+  left: 10%;
+  z-index: 101;
+}
+.b61 {
+  position: absolute;
+  top: -35px;
+  left: 90%;
+  z-index: 101;
+}
+.b62 {
+  position: absolute;
+  top: -35px;
+  left: 80%;
+  z-index: 101;
+}
+.b63 {
+  position: absolute;
+  top: -35px;
+  left: 70%;
+  z-index: 101;
+}
+.b64 {
+  position: absolute;
+  top: -35px;
+  left: 60%;
+  z-index: 101;
+}
+.b65 {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  z-index: 101;
+}
+.b66 {
+  position: absolute;
+  top: -35px;
+  left: 40%;
+  z-index: 101;
+}
+.b67 {
+  position: absolute;
+  top: -35px;
+  left: 30%;
+  z-index: 101;
+}
+.b68 {
+  position: absolute;
+  top: -35px;
+  left: 20%;
+  z-index: 101;
+}
+.b69 {
+  position: absolute;
+  top: -35px;
+  left: 10%;
+  z-index: 101;
+}
+.b70 {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  z-index: 101;
+}
+.b71 {
+  position: absolute;
+  top: 60px;
+  left: -5px;
+  z-index: 101;
+}
+.b72 {
+  position: absolute;
+  bottom: -35px;
+  left: 10%;
+  z-index: 101;
+}
+.b73 {
+  position: absolute;
+  bottom: -35px;
+  left: 20%;
+  z-index: 101;
+}
+.b74 {
+  position: absolute;
+  bottom: -35px;
+  left: 30%;
+  z-index: 101;
+}
+.b75 {
+  position: absolute;
+  bottom: -35px;
+  left: 40%;
+  z-index: 101;
+}
+.b76 {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  z-index: 101;
+}
+.b77 {
+  position: absolute;
+  bottom: -35px;
+  left: 60%;
+  z-index: 101;
+}
+.b78 {
+  position: absolute;
+  bottom: -35px;
+  left: 70%;
+  z-index: 101;
+}
+.b79 {
+  position: absolute;
+  bottom: -35px;
+  left: 80%;
+  z-index: 101;
+}
+.b80 {
+  position: absolute;
+  bottom: -35px;
+  left: 90%;
+  z-index: 101;
+}
+.b81 {
+  position: absolute;
+  top: -35px;
+  left: 10%;
+  z-index: 101;
+}
+.b82 {
+  position: absolute;
+  top: -35px;
+  left: 20%;
+  z-index: 101;
+}
+.b83 {
+  position: absolute;
+  top: -35px;
+  left: 30%;
+  z-index: 101;
+}
+.b84 {
+  position: absolute;
+  top: -35px;
+  left: 40%;
+  z-index: 101;
+}
+.b85 {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  z-index: 101;
+}
+.b86 {
+  position: absolute;
+  top: -35px;
+  left: 60%;
+  z-index: 101;
+}
+.b87 {
+  position: absolute;
+  top: -35px;
+  left: 70%;
+  z-index: 101;
+}
+.b88 {
+  position: absolute;
+  top: -35px;
+  left: 80%;
+  z-index: 101;
+}
+.b89 {
+  position: absolute;
+  top: -35px;
+  left: 90%;
+  z-index: 101;
+}
+.b90 {
+  position: absolute;
+  top: -5px;
+  right: -25px;
+  z-index: 101;
+}
+.b91 {
+  position: absolute;
+  top: 60px;
+  right: -27px;
+  z-index: 101;
+}
+.b92 {
+  position: absolute;
+  bottom: -35px;
+  left: 91%;
+  z-index: 101;
+}
+.b93 {
+  position: absolute;
+  bottom: -35px;
+  left: 79%;
+  z-index: 101;
+}
+.b94 {
+  position: absolute;
+  bottom: -35px;
+  left: 69%;
+  z-index: 101;
+}
+.b95 {
+  position: absolute;
+  bottom: -35px;
+  left: 59%;
+  z-index: 101;
+}
+.b96 {
+  position: absolute;
+  bottom: -35px;
+  left: 49%;
+  z-index: 101;
+}
+.b97 {
+  position: absolute;
+  bottom: -35px;
+  left: 39%;
+  z-index: 101;
+}
+.b98 {
+  position: absolute;
+  bottom: -35px;
+  left: 29%;
+  z-index: 101;
+}
+.b99 {
+  position: absolute;
+  bottom: -35px;
+  left: 19%;
+  z-index: 101;
+}
+.b100 {
+  position: absolute;
+  bottom: -35px;
+  left: 8%;
+  z-index: 101;
+}
+// 全部
+.digWhite {
+  width: 1300px;
+  height: 500px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -600px;
+  margin-top: -250px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 2px 10px 1px rgba(60, 141, 188, 0.2);
+  z-index: 999;
+  border-radius: 15px;
+}
+.closeIndex {
+  position: absolute;
+  right: -10px;
+  top: -8px;
+  cursor: pointer;
+}
+.CaseBox {
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  height: 500px;
+}
+.testCase {
+  width: 22%;
+  float: left;
+  margin: 0 1.3% 0 1.7%;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  box-shadow: 1px 8px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.tleft {
+  float: left;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  background: #67c23a;
+  margin: 20px;
+  box-shadow: 4px 13px 30px 5px rgba(60, 141, 188, 0.2);
+}
+.tright {
+  float: left;
+  padding: 0 20px;
+  margin: 15px;
+  padding-left: 23px;
+  margin-left: 0;
+  box-shadow: 4px 13px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.tright p {
+  font-size: 13px;
+}
+.tright span {
+  display: block;
+  float: left;
+  width: 60px;
+  text-align: justify;
+}
+.namep {
+  width: 100%;
+  font-size: 13px;
+  text-align: center;
+  background: #f5af19;
+  line-height: 28px;
+  color: #fff;
+  border-radius: 20px;
+  letter-spacing: 3px;
+}
+.zhezhao {
+  width: 200%;
+  background: #000;
+  height: 100%;
+  position: fixed;
+  opacity: 0.3;
+  top: 0;
+  left: -20rem;
+  z-index: 10;
+}
+.animated {
+  animation-duration: 1.5s;
+}
+//四个
+.digWhiteFour {
+  width: 1300px;
+  height: 265px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -600px;
+  margin-top: -133px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 2px 10px 1px rgba(60, 141, 188, 0.2);
+  z-index: 999;
+  border-radius: 15px;
+}
+.closeIndexFour {
+  position: absolute;
+  right: -10px;
+  top: -8px;
+  cursor: pointer;
+}
+.CaseBoxFour {
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.testCaseFour {
+  width: 22%;
+  float: left;
+  margin: 0 1.3% 0 1.7%;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  box-shadow: 1px 8px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.tleftFour {
+  float: left;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin: 20px;
+  box-shadow: 4px 13px 30px 5px rgba(60, 141, 188, 0.2);
+}
+.trightFour {
+  float: left;
+  padding: 0 20px;
+  margin: 15px;
+  padding-left: 23px;
+  margin-left: 0;
+  box-shadow: 4px 13px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.trightFour p {
+  font-size: 13px;
+}
+.tright span {
+  display: block;
+  float: left;
+  width: 60px;
+  text-align: justify;
+}
+.namepFour {
+  width: 100%;
+  font-size: 13px;
+  text-align: center;
+  background: #f5af19;
+  line-height: 28px;
+  color: #fff;
+  border-radius: 20px;
+  letter-spacing: 3px;
+}
+//三个
+.digWhiteThree {
+  width: 1100px;
+  height: 265px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -600px;
+  margin-top: -133px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 2px 10px 1px rgba(60, 141, 188, 0.2);
+  z-index: 999;
+  border-radius: 15px;
+}
+.closeIndexThree {
+  position: absolute;
+  right: -10px;
+  top: -8px;
+  cursor: pointer;
+}
+.CaseBoxThree {
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.testCaseThree {
+  width: 30%;
+  float: left;
+  margin: 0 1.3% 0 1.7%;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  box-shadow: 1px 8px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.tleftThree {
+  float: left;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 20px;
+  box-shadow: 4px 13px 30px 5px rgba(60, 141, 188, 0.2);
+}
+.trightThree {
+  float: left;
+  padding: 0 30px;
+  margin: 15px;
+  padding-left: 33px;
+  margin-left: 0;
+  box-shadow: 4px 13px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.trightThree p {
+  font-size: 14px;
+}
+.trightThree span {
+  display: block;
+  float: left;
+  width: 70px;
+  text-align: justify;
+}
+.namepThree {
+  width: 100%;
+  font-size: 13px;
+  text-align: center;
+  background: #f5af19;
+  line-height: 28px;
+  color: #fff;
+  border-radius: 20px;
+  letter-spacing: 3px;
+}
+//两个
+.digWhiteTwo {
+  width: 750px;
+  height: 265px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -375px;
+  margin-top: -133px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 2px 10px 1px rgba(60, 141, 188, 0.2);
+  z-index: 999;
+  border-radius: 15px;
+}
+.closeIndexTwo {
+  position: absolute;
+  right: -10px;
+  top: -8px;
+  cursor: pointer;
+}
+.CaseBoxTwo {
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.testCaseTwo {
+  width: 45%;
+  float: left;
+  margin: 0 2.5%;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  box-shadow: 1px 8px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.tleftTwo {
+  float: left;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 20px;
+  box-shadow: 4px 13px 30px 5px rgba(60, 141, 188, 0.2);
+}
+.trightTwo {
+  float: left;
+  padding: 0 30px;
+  margin: 15px;
+  padding-left: 33px;
+  margin-left: 0;
+  box-shadow: 4px 13px 30px 1px rgba(60, 141, 188, 0.2);
+}
+.trightTwo p {
+  font-size: 14px;
+}
+.trightTwo span {
+  display: block;
+  float: left;
+  width: 70px;
+  text-align: justify;
+}
+.namepTwo {
+  width: 100%;
+  font-size: 13px;
+  text-align: center;
+  background: #f5af19;
+  line-height: 28px;
+  color: #fff;
+  border-radius: 20px;
+  letter-spacing: 3px;
+}
+//1条
+.digWhiteOne {
+  width: 345px;
+  height: 325px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -172px;
+  margin-top: -160px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 2px 10px 1px rgba(60, 141, 188, 0.2);
+  z-index: 999;
+  border-radius: 15px;
+}
+.closeIndexOne {
+  position: absolute;
+  right: -10px;
+  top: -8px;
+  cursor: pointer;
+}
+.CaseBoxOne {
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.testCaseOne {
+  width: 90%;
+  margin: 0 5%;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  box-shadow: 1px 8px 30px 1px rgba(60, 141, 188, 0.2);
+  padding-top: 15px;
+}
+.tleftOne {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: auto;
+  box-shadow: 4px 13px 30px 5px rgba(60, 141, 188, 0.2);
+}
+.trightOne {
+  width: 93%;
+  margin: auto;
+  overflow: hidden;
+  box-shadow: 4px 13px 30px 1px rgba(60, 141, 188, 0.2);
+  margin-top: 55px;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+.trightOne p {
+  font-size: 14px;
+  margin: 0;
+  line-height: 25px;
+  padding: 5px 10px;
+  padding-top: 10px;
+}
+.trightOne span {
+  display: block;
+  float: left;
+  width: 70px;
+  text-align: justify;
+}
+.p01 {
+  overflow: hidden;
+}
+.p01 p:first-child {
+  float: left;
+}
+.p01 p:last-child {
+  float: right;
+}
+.namepOne {
+  width: 100%;
+  font-size: 13px;
+  text-align: center;
+  background: #f5af19;
+  line-height: 28px;
+  color: #fff;
+  border-radius: 20px;
+  letter-spacing: 3px;
+}
+.pred {
+  color: red;
+  font-weight: bold;
+}
+.pred span {
+  color: #000;
+  font-weight: normal;
+}
+.tabCase {
+  transition: All 0.3s ease-in-out;
+  -webkit-transition: All 0.3s ease-in-out;
+  -moz-transition: All 0.3s ease-in-out;
+  -o-transition: All 0.3s ease-in-out;
+}
+.tabCase:hover {
+  transform: translate(0, -20px);
+  -webkit-transform: translate(0, -20px);
+  -moz-transform: translate(0, -20px);
+  -o-transform: translate(0, -20px);
+  -ms-transform: translate(0, -20px);
+}
+//奖金池
+.cardCase {
+  width: 95%;
+  margin: auto;
+  background: rgba(0, 0, 0, 0.3);
+  height: 380px;
+  margin-top: 15px;
+  overflow: hidden;
+}
+.cardLeft {
+  float: left;
+  width: 150px;
+  border: #f5ad18 4px solid;
+  height: 150px;
+  border-radius: 12px;
+  margin-left: 58px;
+  margin-top: 110px;
+  background: rgba(60, 141, 188, 0.1);
+}
+.cardLeft span {
+  display: block;
+  font-size: 30px;
   color: #fff;
   text-align: center;
-  line-height: 50px;
+  padding: 20px 0;
+  margin-top: 5px;
+}
+.cardLeft img {
+  display: block;
+  margin: auto;
+  width: 63px;
+  height: 53px;
+}
+.cardRight {
+  float: right;
+  width: 50%;
+  margin-right: 20px;
+  height: 355px;
+  margin-top: 19px;
+  background: rgba(255, 255, 255, 0.2);
+  position: relative;
+}
+.luck-user-title {
   position: absolute;
-  left: 100%;
-  z-index: 999;
-  top:-25px;
-  margin-left: -25px;
+  width: 90%;
+  display: block;
+  text-align: center;
+  line-height: 50px;
+  left: 5%;
+  font-size: 18px;
+  color: #f5b43a;
+  font-weight: bold;
+}
+.luck-user-title::before {
+  width: 100%;
+  position: absolute;
+  content: "";
+  top: 100%;
+  left: 0;
+  background: -webkit-linear-gradient(
+    left,
+    rgba(248, 215, 59, 0),
+    #f0d03a,
+    rgba(248, 215, 59, 0)
+  );
+  height: 1px;
+}
+.cardText::-webkit-scrollbar {
+  width: 6px;
+  height: 10px;
+}
+.cardText::-webkit-scrollbar-thumb {
+  background-color: #dcdfe6;
+  height: 50px;
+  outline-offset: -2px;
+  outline: 2px solid #eee;
+  -webkit-border-radius: 40px;
+  border: 2px solid #eee;
+}
+.cardText {
+  width: 100%;
+  margin: auto;
+  margin-top: 62px;
+  overflow: hidden;
+  color: #fff;
+  height: 285px;
+  overflow-y: auto;
+}
+.cardText01 {
+  overflow: hidden;
+  padding: 7px 0;
+}
+.cardText img {
+  float: left;
+  margin-left:8%;
+}
+.cardText span {
+  display: block;
+  float: left;
+  line-height: 45px;
+  margin-left: 15px;
+}
+.cardText p {
+  float: right;
+  margin-right: 10px;
+}
+@media (max-width: 1500px) {
+  .cardLeft {
+    margin-left: 10px;
+  }
 }
 </style>
 <style>

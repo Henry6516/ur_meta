@@ -717,9 +717,11 @@ export default {
               joomAry.splice(n, 1);
             }
           }
-          let objStr1 = {
+          var joomAcount=this.joom
+          for(var i=0;i<joomAcount.length;i++){
+            let objStr1 = {
             id: joomAry,
-            account: this.joom
+            account: [joomAcount[i]]
           };
           APIPlatExportJoom(objStr1).then(res => {
             const blob = new Blob([res.data], {
@@ -739,6 +741,7 @@ export default {
             downloadElement.click();
             document.body.removeChild(downloadElement);
           });
+          }
         }
       } else {
         this.$message.error("未选择账号");

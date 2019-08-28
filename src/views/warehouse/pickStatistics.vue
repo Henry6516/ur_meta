@@ -25,7 +25,12 @@
       </div>
     </el-col>
     <el-col :span="24" style="margin-top:1px;">
-      <el-col :span="24">
+      <el-col :span="12">
+        <el-card>
+          <div ref="or1" :style="sty" v-loading="listLoading"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
         <el-card>
           <div ref="or2" :style="sty" v-loading="listLoading"></div>
         </el-card>
@@ -47,9 +52,60 @@ export default {
   data() {
     return {
       listLoading: false,
+      options1: {
+        title: {
+          text: "单品拣货统计",
+          top:10
+        },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross",
+            label: {
+              backgroundColor: "#6a7985"
+            }
+          }
+        },
+        legend: {
+          type: "scroll",
+          width: "100%",
+          data: [String]
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: "category",
+            data: [String]
+          }
+        ],
+        yAxis: [
+          {
+            type: "value",
+            axisLabel: {
+              formatter: "{value} $"
+            }
+          }
+        ],
+        series: [Object]
+      },
       options2: {
         title: {
-          text: "拣货统计"
+          text: "多品拣货统计",
+          top:10
         },
         tooltip: {
           trigger: "axis",
@@ -138,9 +194,16 @@ export default {
         var saledata = response.data.data;
         var name = [];
         var data = [];
+        var name1 = [];
+        var data1 = [];
         for (var i = 0; i < saledata.length; i++) {
-          name.push(saledata[i].picker);
-          data.push(saledata[i].salesNum);
+          if (saledata[i].type == "single") {
+            name.push(saledata[i].picker);
+            data.push(saledata[i].salesNum);
+          } else {
+            name1.push(saledata[i].picker);
+            data1.push(saledata[i].salesNum);
+          }
         }
         var sery = [
           {
@@ -148,10 +211,22 @@ export default {
             type: "bar"
           }
         ];
-        this.options2.legend.data = name;
-        console.log(this.options2.legend.data);
-        this.options2.xAxis[0].data = name;
-        this.options2.series = sery;
+        var sery1 = [
+          {
+            data: data1,
+            type: "bar"
+          }
+        ];
+        
+        this.options1.legend.data = name;
+        this.options1.xAxis[0].data = name;
+        this.options1.series = sery;
+        this.options1.yAxis[0].axisLabel.formatter = "{value}";
+        let or1 = this.$echarts.init(this.$refs.or1);
+        or1.setOption(this.options1);
+        this.options2.legend.data = name1;
+        this.options2.xAxis[0].data = name1;
+        this.options2.series = sery1;
         this.options2.yAxis[0].axisLabel.formatter = "{value}";
         let or2 = this.$echarts.init(this.$refs.or2);
         or2.setOption(this.options2);

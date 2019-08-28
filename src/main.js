@@ -23,7 +23,9 @@ import './assets/icon/iconfont.css'
 import echarts from 'echarts'
 import 'echarts-wordcloud/dist/echarts-wordcloud'
 import 'echarts-wordcloud/dist/echarts-wordcloud.min'
+import animate from 'animate.css'
 
+Vue.use(animate)
 Vue.use(VueQuillEditor)
 Vue.use(VueHighlightJS)
 Vue.use(Myechart)
