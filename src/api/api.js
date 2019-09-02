@@ -451,3 +451,38 @@ export function APIBranchDpart() {
     method: 'get'
   })
 }
+
+export function APISiteIndex() {
+  return request({
+    url: '/site/index',
+    method: 'get'
+  })
+}
+
+export function APISiteSales() {
+  return request({
+    url: '/site/sales',
+    method: 'get'
+  })
+}
+
+export function getSiteIndexXs() {
+  return request({
+    url: '/site/index?role=' + 'sales',
+    method: 'get'
+  })
+}
+
+export function getSiteIndexKf() {
+  return request({
+    url: '/site/index?role=' + 'dev',
+    method: 'get'
+  })
+}
+
+export function getSiteIndexBM() {
+  return request({
+    url: '/site/index?role=' + 'depart',
+    method: 'get'
+  })
+}

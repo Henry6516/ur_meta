@@ -961,26 +961,29 @@ export default {
     },
     exportJoom() {
       if (this.joom!='') {
-        let objStr1 = {
-          id: [this.wishForm.infoId],
-          account: this.joom
-        };
-        APIPlatExportJoom(objStr1).then(res => {
-          const blob = new Blob([res.data], {
-            type: "data:text/csv;charset=utf-8"
+        var arrID=this.joom
+        for(var i=0;i<arrID.length;i++){
+          let objStr1 = {
+            id: [this.wishForm.infoId],
+            account: [arrID[i]]
+          };
+          APIPlatExportJoom(objStr1).then(res => {
+            const blob = new Blob([res.data], {
+              type: "data:text/csv;charset=utf-8"
+            });
+            var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+            var filename=JSON.parse(file)
+            const downloadElement = document.createElement("a");
+            const objectUrl = window.URL.createObjectURL(blob);
+            downloadElement.href = objectUrl;
+            // const filename =
+            //   "joom_" + year + month + strDate + hour + minute + second;
+            downloadElement.download = filename;
+            document.body.appendChild(downloadElement);
+            downloadElement.click();
+            document.body.removeChild(downloadElement);
           });
-          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
-          var filename=JSON.parse(file)
-          const downloadElement = document.createElement("a");
-          const objectUrl = window.URL.createObjectURL(blob);
-          downloadElement.href = objectUrl;
-          // const filename =
-          //   "joom_" + year + month + strDate + hour + minute + second;
-          downloadElement.download = filename;
-          document.body.appendChild(downloadElement);
-          downloadElement.click();
-          document.body.removeChild(downloadElement);
-        });
+        }
       } else {
         this.$message.error("请选择账号");
       }

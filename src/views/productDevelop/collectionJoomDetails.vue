@@ -75,10 +75,11 @@
       <el-col :span="1" class="titCenter top15" style="text-align: center;margin-left:23px;">描述</el-col>
       <el-col :span="22">
         <el-input
-                    type="textarea"
-                    :rows="14"
-                    v-model="editForm.description"
-                    style="width:98%;margin-left:10px;;margin-top:15px;"></el-input>
+          type="textarea"
+          :rows="14"
+          v-model="editForm.description"
+          style="width:98%;margin-left:10px;;margin-top:15px;"
+        ></el-input>
       </el-col>
     </el-col>
     <el-col :span="24" style="padding: 0;">
@@ -92,7 +93,7 @@
             target="_blank"
             style="display: block; width: 205px;height: 205px"
           >
-            <img :src="editForm.mainImage" style="display: block; width: 205px;height: 205px">
+            <img :src="editForm.mainImage" style="display: block; width: 205px;height: 205px" />
           </a>
         </el-col>
         <el-col :span="17">
@@ -132,13 +133,13 @@
               </p>
               <!-- <p class="sx" @click="delDz(index)">
                 <i class="el-icon-delete"></i>删除
-              </p> -->
+              </p>-->
               <p class="ss">#{{index+1}}</p>
             </el-col>
           </el-col>
           <el-col :span="3" style="margin-left: 15px">
             <a :href="url[index]" target="_blank">
-              <img :src="url[index]" style="display: block;width: 90px;height: 90px">
+              <img :src="url[index]" style="display: block;width: 90px;height: 90px" />
             </a>
           </el-col>
         </el-col>
@@ -156,7 +157,7 @@
       </h3>
     </el-col>
     <el-col style="margin-top:5px;">
-      <el-table :data="tableData" border style="width:98%;margin-left:1%;" max-height="1300">
+      <el-table :data="tableData" border style="width:98%;margin-left:1%;" max-height="1300"  v-loading="listLoading">
         <!-- <el-table-column type="selection" width="30" align="center" header-align="center"></el-table-column> -->
         <el-table-column type="index" width="50" align="center" header-align="center"></el-table-column>
         <el-table-column label="操作" width="50" header-align="center" align="center">
@@ -225,7 +226,7 @@
             <img
               :src="scope.row.varMainImage"
               style="width:50px;height:50px;display: block;margin: auto"
-            >
+            />
           </template>
         </el-table-column>
       </el-table>
@@ -301,7 +302,13 @@
 
 <script type="text/ecmascript-6">
 import { getMenu } from "../../api/login";
-import { APIMineInfo, APIMineSave,APIDeleteDetail,APISaveAndFinish,APIMineExport } from "../../api/product";
+import {
+  APIMineInfo,
+  APIMineSave,
+  APIDeleteDetail,
+  APISaveAndFinish,
+  APIMineExport
+} from "../../api/product";
 import {
   getAttributeInfoSpecialAttribute,
   getAttributeInfoCat,
@@ -318,6 +325,7 @@ export default {
       disabled: true,
       skuTotal: 0,
       shoIS: false,
+      listLoading:false,
       stock: null,
       price: null,
       sign: "=",
@@ -336,51 +344,51 @@ export default {
     };
   },
   methods: {
-    exportJoom(){
-      const arrId=[]
-      arrId.push(this.condition.id)
-       let objStr1 = {
-          id: arrId
-        };
-        APIMineExport(objStr1).then(res => {
-          const blob = new Blob([res.data], {
-            type: "data:text/csv;charset=utf-8"
-          });
-          const downloadElement = document.createElement("a");
-          const objectUrl = window.URL.createObjectURL(blob);
-          downloadElement.href = objectUrl;
-          const date = new Date();
-          const year = date.getFullYear();
-          let month = date.getMonth() + 1;
-          let strDate = date.getDate();
-          let hour = date.getHours();
-          let minute = date.getMinutes();
-          let second = date.getSeconds();
-          if (month >= 1 && month <= 9) {
-            month = "0" + month;
-          }
-          if (strDate >= 0 && strDate <= 9) {
-            strDate = "0" + strDate;
-          }
-          if (hour >= 0 && hour <= 9) {
-            hour = "0" + hour;
-          }
-          if (minute >= 0 && minute <= 9) {
-            minute = "0" + minute;
-          }
-          if (second >= 0 && second <= 9) {
-            second = "0" + second;
-          }
-          const filename =
-            "joom_" + year + month + strDate + hour + minute + second;
-          downloadElement.download = filename + ".csv";
-          document.body.appendChild(downloadElement);
-          downloadElement.click();
-          document.body.removeChild(downloadElement);
+    exportJoom() {
+      const arrId = [];
+      arrId.push(this.condition.id);
+      let objStr1 = {
+        id: arrId
+      };
+      APIMineExport(objStr1).then(res => {
+        const blob = new Blob([res.data], {
+          type: "data:text/csv;charset=utf-8"
         });
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        const date = new Date();
+        const year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let strDate = date.getDate();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+        if (month >= 1 && month <= 9) {
+          month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = "0" + strDate;
+        }
+        if (hour >= 0 && hour <= 9) {
+          hour = "0" + hour;
+        }
+        if (minute >= 0 && minute <= 9) {
+          minute = "0" + minute;
+        }
+        if (second >= 0 && second <= 9) {
+          second = "0" + second;
+        }
+        const filename =
+          "joom_" + year + month + strDate + hour + minute + second;
+        downloadElement.download = filename + ".csv";
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+      });
     },
-    keepWs(){
-       let imgStr = {
+    keepWs() {
+      let imgStr = {
         extraImage1: this.url[0],
         extraImage2: this.url[1],
         extraImage3: this.url[2],
@@ -404,9 +412,17 @@ export default {
             message: "保存成功",
             type: "success"
           });
-          setTimeout(()=>{
-            location.reload()
-          },1000)
+          this.listLoading=true
+          setTimeout(() => {
+            APIMineInfo(this.condition).then(res => {
+              if (res.data.code == 200) {
+                this.tableData = res.data.data.detailsInfo;
+                this.listLoading=false
+              } else {
+                this.$message.error(res.data.message);
+              }
+            });
+          }, 10);
         } else {
           this.$message.error(res.data.message);
         }
@@ -437,9 +453,17 @@ export default {
             message: "保存成功",
             type: "success"
           });
-          setTimeout(()=>{
-            location.reload()
-          },1000)
+          this.listLoading=true
+          setTimeout(() => {
+            APIMineInfo(this.condition).then(res => {
+              if (res.data.code == 200) {
+                this.tableData = res.data.data.detailsInfo;
+                this.listLoading=false
+              } else {
+                this.$message.error(res.data.message);
+              }
+            });
+          }, 10);
         } else {
           this.$message.error(res.data.message);
         }
