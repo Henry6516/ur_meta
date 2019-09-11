@@ -5,7 +5,7 @@
       class="toolbar"
       style="position:fixed;bottom:0px;text-align:center;z-index:10;padding-bottom:15px;padding-top: 12px"
     >
-      <el-col :span="19" class="leftmedia">
+      <el-col :span="24" class="leftmedia">
         <el-button
           type="primary"
           @click="update"
@@ -20,7 +20,7 @@
         <!--</el-dropdown-menu>-->
         <!--</el-dropdown>-->
         <span class="exportAccount1" style @click="keepPerfect">
-          <i class="el-icon-document" style="margin-right:5px;"></i>保存完善模板
+          <i class="el-icon-document" style="margin-right:5px;"></i>保存完善
         </span>
         <el-select
           v-model="tips"
@@ -34,7 +34,7 @@
           type="success"
           style="float: left;margin-right: 10px"
           @click="exportWish"
-        >导出Wish模板</el-button>
+        >导出Wish</el-button>
         <el-select
           placeholder="--请选择账号--"
           clearable
@@ -47,34 +47,35 @@
         <el-button plain type="info" @click="noselectd1">取消</el-button>
         <el-option v-for="(item, key) in joomArr" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
-        <span class="exportAccount" @click="exportJoom">导出Joom模板</span>
+        <span class="exportAccount" @click="exportJoom">导出Joom</span>
         <el-select
           placeholder="--请选择账号--"
           clearable
           multiple
           collapse-tags
           v-model="shopify"
+          class="clshopify"
           style="float: left;width:160px;margin-left:10px;"
         >
         <el-button plain type="info" @click="selectalld2">全选</el-button>
         <el-button plain type="info" @click="noselectd2">取消</el-button>
         <el-option v-for="(item, key) in shopifyArr" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
-        <span class="exportAccount" @click="exportShopify" style="margin-right:10px;">导出shopify模板</span>
+        <span class="exportAccount" @click="exportShopify" style="margin-right:10px;">导出shopify</span>
         <el-select
           placeholder="--请选择账号--"
           clearable
           multiple
           collapse-tags
           v-model="vova"
-          class="top1600"
+          class="top1600 top1601"
           style="float: left;width:245px;"
         >
         <el-button plain type="info" @click="selectalld3">全选</el-button>
         <el-button plain type="info" @click="noselectd3">取消</el-button>
         <el-option v-for="(item, key) in vovaArr" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
-        <span class="exportAccount top1600" @click="exportVova">导出vova模板</span>
+        <span class="exportAccount top1600" @click="exportVova">导出vova</span>
       </el-col>
     </el-col>
     <el-col :span="24" style="padding: 0;margin-left: 15px">
@@ -376,6 +377,8 @@
         <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordSize"></el-input>
         <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newSize"></el-input>
         <el-button type="danger" style="float:left;width:100px;margin-left:5px;" @click="replaceSize">替换尺寸</el-button>
+        <el-button type="warning" style="float:left;width:100px;margin-left:10px;" @click="clearColor">清空颜色</el-button>
+        <el-button type="warning" style="float:left;width:100px;margin-left:10px;" @click="clearSize">清空尺寸</el-button>
     </el-col>
     </el-row>
     <el-table
@@ -383,11 +386,11 @@
       border
       style="width:98%;margin-left:1%;margin-top:15px;"
       v-if="showattribute"
-      max-height="600"
+      max-height="550"
     >
       <!-- <el-table-column type="selection" width="30" align="center" header-align="center"></el-table-column> -->
-      <el-table-column type="index" width="50" align="center" header-align="center"></el-table-column>
-      <el-table-column label="操作" width="50" header-align="center" align="center">
+      <el-table-column type="index" width="50" align="center" header-align="center" fixed></el-table-column>
+      <el-table-column label="操作" width="50" header-align="center" align="center" fixed>
         <template slot-scope="scope">
           <el-tooltip content="删除">
             <i
@@ -398,42 +401,42 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="SKU" prop="sku" header-align="center">
+      <el-table-column label="SKU" prop="sku" header-align="center" align="center" min-width="140" fixed>
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.sku"></el-input>
         </template>
       </el-table-column>
-      <el-table-column label="颜色" prop="color" header-align="center">
+      <el-table-column label="颜色" prop="color" header-align="center" align="center" min-width="100">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.color"></el-input>
         </template>
       </el-table-column>
-      <el-table-column label="尺寸" prop="size" header-align="center">
+      <el-table-column label="尺寸" prop="size" header-align="center" align="center" min-width="80">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.size"></el-input>
         </template>
       </el-table-column>
-      <el-table-column label="数量" prop="inventory" header-align="center">
+      <el-table-column label="数量" prop="inventory" header-align="center" align="center" min-width="100">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.inventory"></el-input>
         </template>
       </el-table-column>
-      <el-table-column label="价格(USD)" prop="price" header-align="center">
+      <el-table-column label="价格(USD)" prop="price" header-align="center" align="center" min-width="100">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.price"></el-input>
         </template>
       </el-table-column>
-      <el-table-column label="运费(USD)" prop="shipping" header-align="center">
+      <el-table-column label="运费(USD)" prop="shipping" header-align="center" align="center" min-width="100">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.shipping"></el-input>
         </template>
       </el-table-column>
-      <el-table-column label="建议零售价(USD)" prop="msrp" min-width="110" header-align="center">
+      <el-table-column label="建议零售价(USD)" prop="msrp" min-width="130" align="center" header-align="center">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.msrp"></el-input>
         </template>
       </el-table-column>
-      <el-table-column label="Joom零售价(USD)" prop="joomPrice" min-width="110" header-align="center">
+      <el-table-column label="Joom零售价(USD)" prop="joomPrice" min-width="140" align="center" header-align="center">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.joomPrice"></el-input>
         </template>
@@ -441,63 +444,68 @@
       <el-table-column
         label="Joom运费(USD)"
         prop="joomShipping"
-        min-width="110"
+        min-width="130"
+        align="center"
         header-align="center"
       >
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.joomShipping"></el-input>
         </template>
       </el-table-column>
-      <el-table-column label="运输时间" prop="shippingTime" header-align="center">
+      <el-table-column label="运输时间" prop="shippingTime" header-align="center" align="center" min-width="90">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.shippingTime"></el-input>
         </template>
       </el-table-column>
-      <el-table-column label="主图" prop="linkUrl" header-align="center">
+      <el-table-column label="主图" prop="linkUrl" header-align="center" min-width="100" align="center">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.linkUrl"></el-input>
         </template>
       </el-table-column>
-      <el-table-column label="图片" prop="linkUrl" header-align="center">
+      <el-table-column label="图片" prop="linkUrl" header-align="center" width="70">
         <template slot-scope="scope">
           <img :src="scope.row.linkUrl" style="width:50px;height:50px;display: block;margin: auto">
         </template>
       </el-table-column>
     </el-table>
     <el-row style="margin-left:1%;" v-if="showattribute">
-      <div style="width:120px;overflow:hidden;float:left;margin-top:15px;">
+      <div style="width:135px;overflow:hidden;float:left;margin-top:15px;" class="rd1">
         <input
           placeholder="行数"
           v-model="rows"
+          class="rn1"
           style="width:53%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz" @click="addClomun">新增行</span>
       </div>
-      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;" class="rd2">
         <input
           placeholder="数量"
           v-model="num"
+          class="rn2"
           style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setNum">数量确定</span>
       </div>
-      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;" class="rd2">
         <input
           placeholder="价格"
           v-model="price"
+          class="rn2"
           style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setPrice">价格确定</span>
       </div>
-      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;" class="rd2">
         <input
           placeholder="运费"
           v-model="ship"
+          class="rn2"
           style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setShip">运费确定</span>
       </div>
-      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;" class="rd2">
         <!--<el-input v-model="advicePrice"-->
         <!--size="small"-->
         <!--placeholder="建议零售价"-->
@@ -507,11 +515,12 @@
         <input
           placeholder="建议零售价"
           v-model="advicePrice"
+          class="rn2"
           style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setAdvice">零售确定</span>
       </div>
-      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;" class="rd2">
         <!--<el-input v-model="joomPrice"-->
         <!--size="small"-->
         <!--placeholder="Joom零售价"-->
@@ -521,11 +530,12 @@
         <input
           placeholder="Joom零售价"
           v-model="joomPrice"
+          class="rn3"
           style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setJoom">Joom确定</span>
       </div>
-      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;" class="rd2">
         <!--<el-input v-model="transport"-->
         <!--size="small"-->
         <!--placeholder="Joom运费"-->
@@ -535,11 +545,12 @@
         <input
           placeholder="Joom运费"
           v-model="transport"
+          class="rn3"
           style="width:50%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setTransport">Joom运费</span>
       </div>
-      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;">
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;" class="rd2">
         <!--<el-input v-model="time"-->
         <!--size="small"-->
         <!--placeholder="运输时间"-->
@@ -549,6 +560,7 @@
         <input
           placeholder="运输时间"
           v-model="time"
+          class="rn2"
           style="width:55%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setTime">时间确定</span>
@@ -855,6 +867,16 @@ export default {
     };
   },
   methods: {
+    clearColor(){
+      for(let i=0;i<this.tableData.length;i++){
+          this.tableData[i].color=null
+      }
+    },
+    clearSize(){
+      for(let i=0;i<this.tableData.length;i++){
+          this.tableData[i].size=null
+      }
+    },
     replaceColor(){
       for(let i=0;i<this.tableData.length;i++){
         if(this.ordColor==this.tableData[i].color){
@@ -1563,7 +1585,7 @@ section {
   line-height: 30px;
   border: #ccc solid 1px;
   cursor: pointer;
-  padding: 0 3px;
+  padding: 0 5px;
   font-size: 13px;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -1614,13 +1636,31 @@ section {
 }
 @media screen and (max-width: 1600px){
    .leftmedia{
-     margin-left: 3.5%;
+     margin-left: 20px;
    }
-   .top1600{
-     margin-top: 10px;
+  //  .ptom60{
+  //    padding-bottom: 50px;
+  //  }
+   .rd1{
+     width: 105px !important;
    }
-   .ptom60{
-     padding-bottom: 50px;
+   .rn1{
+     width: 43% !important;
+   }
+   .rd2{
+     width: 143px !important;
+   }
+   .rn2{
+     width: 45% !important;
+   }
+   .rn3{
+     width: 42% !important;
+   }
+   .clshopify{
+     width: 115px !important;
+   }
+   .top1601{
+     width: 185px !important;
    }
 }
 @media screen and (max-width: 1350px){
@@ -1640,7 +1680,7 @@ section {
 }
 @media screen and (max-width: 1300px){
    .leftmedia{
-     margin-left: 12%;
+     margin-left: 1px;
    }
 }
 </style>

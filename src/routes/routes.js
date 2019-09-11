@@ -67,6 +67,8 @@ import exchange from '../views/settings/exchange.vue'
 import picking from '../views/warehouse/picking.vue'
 import splitcargo from '../views/warehouse/splitCargo.vue'
 import pickStatistics from '../views/warehouse/pickStatistics.vue'
+import pickStatisticsTable from '../views/warehouse/pickStatisticsTable.vue'
+import skupick from '../views/warehouse/skupick.vue'
 // 反馈中心
 import requirements from '../views/feedback/requirements.vue'
 import news from '../views/feedback/news.vue'
@@ -118,6 +120,10 @@ import joomSubscribeId from '../views/productDevelop/joomSubscribeId.vue'
 // 报表中心
 import reportForm from '../views/productDevelop/reportForm.vue'
 import formEdit from '../views/productDevelop/formEdit.vue'
+// 产品引擎
+import proRecommend from '../views/analysis/proRecommend.vue'
+import proAnalysis from '../views/analysis/proAnalysis.vue'
+import mySubscribe from '../views/analysis/mySubscribe.vue'
 
 const routes = [
   {
@@ -315,6 +321,29 @@ const routes = [
     ]
   },
   {
+    path: '/v1/products-engine/index',
+    component: Home,
+    name: '产品引擎',
+    iconCls: 'el-icon-message',
+    children: [
+      {
+        path: '/v1/products-engine/recommend',
+        component: proRecommend,
+        name: '商品推荐'
+      },
+      {
+        path: '/v1/products-engine/watch',
+        component: mySubscribe,
+        name: '我的订阅'
+      },
+      {
+        path: '/v1/products-engine/analysis',
+        component: proAnalysis,
+        name: '商品分析'
+      }
+    ]
+  },
+  {
     path: '/v1/warehouse-tools/index',
     component: Home,
     name: '仓库工具',
@@ -329,6 +358,16 @@ const routes = [
         path: '/v1/warehouse-tools/pick-statistics',
         component: pickStatistics,
         name: '拣货统计'
+      },
+      {
+        path: '/v1/warehouse-tools/ware-statistics',
+        component: pickStatisticsTable,
+        name: '拣货统计报表'
+      },
+      {
+        path: '/v1/warehouse-tools/ware-sku',
+        component: skupick,
+        name: '仓位SKU对应表'
       },
       {
         path: '/v1/warehouse-tools/sort-tools',

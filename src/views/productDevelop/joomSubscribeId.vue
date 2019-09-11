@@ -10,7 +10,7 @@
             style="width:100%;margin-top:0px;margin:auto;"
             :height="tableHeight"
           >
-            <el-table-column type="index" width="50" align="center" header-align="center" fixed></el-table-column>
+            <el-table-column type="index" width="40" align="center" header-align="center" fixed></el-table-column>
             <el-table-column label="商品图片" prop="mainImage" header-align="center" width="80" fixed>
               <template slot-scope="scope">
                 <a
@@ -40,7 +40,7 @@
                 prop="productName"
                 :render-header="renderHeader"
                 align="center"
-                width="252"
+                width="202"
               >
                 <template slot-scope="scope">
                   <a
@@ -51,13 +51,28 @@
                 </template>
               </el-table-column>
             </el-table-column>
+            <el-table-column
+              label="产品ID"
+              prop="productId"
+              header-align="center"
+              align="center"
+              width="150"
+              sortable="custom"
+            >
+              <el-table-column
+                prop="storeId"
+                :render-header="renderHeader"
+                align="center"
+                width="150"
+              ></el-table-column>
+            </el-table-column>
             <el-table-column label="类目名称" prop="cateName" header-align="center">
               <el-table-column
                 label="类目名称"
                 prop="cateName"
                 :render-header="renderHeader"
                 align="center"
-                width="235"
+                width="180"
               >
                 <template slot-scope="scope">
                   <a
@@ -89,14 +104,14 @@
               prop="rating"
               header-align="center"
               align="center"
-              width="147"
+              width="140"
               sortable="custom"
             >
               <el-table-column
                 prop="rating"
                 :render-header="renderHeader"
                 align="center"
-                width="147"
+                width="140"
               ></el-table-column>
             </el-table-column>
             <el-table-column
@@ -104,7 +119,7 @@
               prop="storeId"
               header-align="center"
               align="center"
-              width="190"
+              width="185"
               sortable="custom"
             >
               <el-table-column
@@ -127,7 +142,9 @@
                 :render-header="renderHeader"
                 align="center"
                 width="150"
-              ></el-table-column>
+              >
+              <template slot-scope="scope">{{scope.row.taskCreatedTime | cutOutDate}}</template>
+              </el-table-column>
             </el-table-column>
             <el-table-column
               label="更新时间"
@@ -135,14 +152,16 @@
               prop="taskUpdatedTime"
               header-align="center"
               align="center"
-              width="150"
+              width="140"
             >
               <el-table-column
                 prop="taskUpdatedTime"
                 :render-header="renderHeader"
                 align="center"
-                width="150"
-              ></el-table-column>
+                width="140"
+              >
+              <template slot-scope="scope">{{scope.row.taskUpdatedTime | cutOutDate}}</template>
+              </el-table-column>
             </el-table-column>
             <el-table-column
               label="上架时间"
@@ -150,14 +169,16 @@
               prop="proCreatedDate"
               header-align="center"
               align="center"
-              width="155"
+              width="145"
             >
               <el-table-column
                 prop="proCreatedDate"
                 :render-header="renderHeader"
                 align="center"
-                width="155"
-              ></el-table-column>
+                width="145"
+              >
+              <template slot-scope="scope">{{scope.row.proCreatedDate | cutOutDate}}</template>
+              </el-table-column>
             </el-table-column>
             <el-table-column
               label="评论数"
@@ -165,13 +186,13 @@
               prop="reviewsCount"
               header-align="center"
               align="center"
-              width="147"
+              width="140"
             >
               <el-table-column
                 prop="reviewsCount"
                 :render-header="renderHeader"
                 align="center"
-                width="147"
+                width="140"
               ></el-table-column>
             </el-table-column>
           </el-table>
@@ -222,6 +243,12 @@ export default {
         page: 1
       }
     };
+  },
+  filters: {
+    cutOutDate(value){
+      if(value) value = value.substring(0, 16);
+      return value;
+    },
   },
   methods: {
     formatTen(num) {
@@ -301,6 +328,25 @@ export default {
         return h("div", [
           h("el-input", {
             props: {
+              value: this.condition.productId,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.condition.productId = value;
+                this.$emit("input", value);
+              },
+              change: value => {
+                this.filter();
+              }
+            }
+          })
+        ]);
+      } else if ($index === 2) {
+        return h("div", [
+          h("el-input", {
+            props: {
               value: this.condition.cateName,
               size: "mini",
               clearable: true
@@ -316,7 +362,7 @@ export default {
             }
           })
         ]);
-      } else if ($index === 2) {
+      } else if ($index === 3) {
         return h("div", [
           h("el-input", {
             style: {
@@ -359,7 +405,7 @@ export default {
             }
           })
         ]);
-      } else if ($index === 3) {
+      } else if ($index === 4) {
         return h("div", [
           h("el-input", {
             style: {
@@ -401,11 +447,11 @@ export default {
             }
           })
         ]);
-      } else if ($index === 4) {
+      } else if ($index === 5) {
         return h("div", [
           h("el-input", {
             style: {
-              width: "45%",
+              width: "95%",
             },
             props: {
               value: this.condition.storeId,
@@ -423,7 +469,7 @@ export default {
             }
           })
         ]);
-      } else if ($index === 5) {
+      } else if ($index === 6) {
         return h("el-date-picker", {
           props: {
             value: this.time1,
@@ -444,7 +490,7 @@ export default {
             }
           }
         });
-      } else if ($index === 6) {
+      } else if ($index === 7) {
         return h("el-date-picker", {
           props: {
             value: this.time2,
@@ -465,7 +511,7 @@ export default {
             }
           }
         });
-      } else if ($index === 7) {
+      } else if ($index === 8) {
         return h("el-date-picker", {
           props: {
             value: this.time3,
@@ -486,7 +532,7 @@ export default {
             }
           }
         });
-      } else if ($index === 8) {
+      } else if ($index === 9) {
         return h("div", [
           h("el-input", {
             style: {

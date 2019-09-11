@@ -1362,3 +1362,31 @@ export function APIPickStatistics(param) {
     data
   })
 }
+
+export function APIWarehouseTools(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/ware-statistics?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+
+export function APIWareSku(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/ware-sku?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+
+export function APIWareSkuExport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/ware-sku-export',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}

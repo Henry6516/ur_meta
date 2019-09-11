@@ -14,7 +14,7 @@
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>-->
-      <el-col :span="15" class="menuCon">
+      <el-col :span="16" class="menuCon">
         <el-menu
           :default-active="activeIndex"
           @select="handleSelect"
@@ -34,7 +34,7 @@
             :key="generateIndex(-1,position)"
           >
             <template slot="title">
-              <font class="typeface"><i class="ishowHome" :class='position==0?"el-icon-goods":position==1?"el-icon-tickets":position==2?"el-icon-share":position==3?"el-icon-rank":position==4?"el-icon-news":position==5?"el-icon-rank":position==6?"el-icon-setting":"el-icon-edit-outline"' style="color:#fff;margin-right:8px;margin-top:-2px;"></i>{{item.name}}</font>
+              <font class="typeface"><i class="ishowHome" :class='position==0?"el-icon-goods":position==1?"el-icon-tickets":position==2?"el-icon-share":position==3?"el-icon-rank":position==4?"el-icon-news":position==5?"el-icon-rank":position==6?"el-icon-setting":position==7?"el-icon-edit-outline":"el-icon-document"' style="color:#fff;margin-right:8px;margin-top:-2px;"></i>{{item.name}}</font>
             </template>
             <el-menu-item
               v-for="(child,index) in item.children"

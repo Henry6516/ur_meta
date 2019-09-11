@@ -16,6 +16,7 @@
         multiple
         collapse-tags
         v-model="joom"
+        class="none1600"
         style="float: left;width:155px;"
       >
         <el-button plain type="info" @click="selectalld1">全选</el-button>
@@ -25,6 +26,7 @@
       <el-input
         placeholder="请填写商品编码(多个用逗号隔开)"
         v-model="joomName"
+        class="none16001"
         style="width:250px;margin-left:10px;float: left"
         clearable
       ></el-input>
@@ -35,6 +37,7 @@
         multiple
         collapse-tags
         v-model="vova"
+        class="none16002"
         style="float: left;width:252px;margin-left:10px;"
       >
         <el-button plain type="info" @click="selectalld3">全选</el-button>
@@ -2682,5 +2685,18 @@ export default {
   cursor: pointer;
   margin-left: 10px;
   border-radius: 5px;
+}
+@media (max-width: 1600px) {
+  .none1600{
+    width: 154px !important;
+  }
+  .none16001{
+    width: 130px !important;
+    margin-left: 5px !important;
+  }
+  .none16002{
+    width: 135px !important;
+    margin-left: 5px !important;
+  }
 }
 </style>
