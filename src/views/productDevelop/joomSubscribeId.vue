@@ -60,7 +60,7 @@
               sortable="custom"
             >
               <el-table-column
-                prop="storeId"
+                prop="productId"
                 :render-header="renderHeader"
                 align="center"
                 width="150"
