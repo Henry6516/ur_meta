@@ -720,30 +720,30 @@ export default {
               joomAry.splice(n, 1);
             }
           }
-          var joomAcount=this.joom
-          for(var i=0;i<joomAcount.length;i++){
+          var joomAcount = this.joom;
+          for (var i = 0; i < joomAcount.length; i++) {
             let objStr1 = {
-            id: joomAry,
-            account: [joomAcount[i]]
-          };
-          APIPlatExportJoom(objStr1).then(res => {
-            const blob = new Blob([res.data], {
-              type: "data:text/csv;charset=utf-8"
+              id: joomAry,
+              account: [joomAcount[i]]
+            };
+            APIPlatExportJoom(objStr1).then(res => {
+              const blob = new Blob([res.data], {
+                type: "data:text/csv;charset=utf-8"
+              });
+              var file = res.headers["content-disposition"]
+                .split(";")[1]
+                .split("filename=")[1];
+              var filename = JSON.parse(file);
+              const downloadElement = document.createElement("a");
+              const objectUrl = window.URL.createObjectURL(blob);
+              downloadElement.href = objectUrl;
+              // const filename =
+              //   "joom_" + year + month + strDate + hour + minute + second;
+              downloadElement.download = filename;
+              document.body.appendChild(downloadElement);
+              downloadElement.click();
+              document.body.removeChild(downloadElement);
             });
-            var file = res.headers["content-disposition"]
-              .split(";")[1]
-              .split("filename=")[1];
-            var filename = JSON.parse(file);
-            const downloadElement = document.createElement("a");
-            const objectUrl = window.URL.createObjectURL(blob);
-            downloadElement.href = objectUrl;
-            // const filename =
-            //   "joom_" + year + month + strDate + hour + minute + second;
-            downloadElement.download = filename;
-            document.body.appendChild(downloadElement);
-            downloadElement.click();
-            document.body.removeChild(downloadElement);
-          });
           }
         }
       } else {
@@ -758,35 +758,60 @@ export default {
       if (vovaAry.length != 0) {
         let objStr = {};
         if (this.vova != "") {
-          objStr = {
-            id: vovaAry,
-            account: this.vova
-          };
+          var strObj = this.vova;
+          for (var i = 0; i < strObj.length; i++) {
+            objStr = {
+              id: vovaAry,
+              account: [strObj[i]]
+            };
+            APIPlatExportVova(objStr).then(res => {
+              const blob = new Blob([res.data], {
+                type:
+                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+              });
+              var file = res.headers["content-disposition"]
+                .split(";")[1]
+                .split("filename=")[1];
+              var filename = JSON.parse(file);
+              const downloadElement = document.createElement("a");
+              const objectUrl = window.URL.createObjectURL(blob);
+              downloadElement.href = objectUrl;
+              // const filename =
+              //   "Wish_" + year + month + strDate + hour + minute + second;
+              downloadElement.download = filename;
+              document.body.appendChild(downloadElement);
+              downloadElement.click();
+              document.body.removeChild(downloadElement);
+            });
+          }
         } else {
-          objStr = {
-            id: vovaAry,
-            account: this.vovaArr
-          };
+          var strObj = this.vovaArr;
+          for (var i = 0; i < strObj.length; i++) {
+            objStr = {
+              id: vovaAry,
+              account: [strObj[i]]
+            };
+            APIPlatExportVova(objStr).then(res => {
+              const blob = new Blob([res.data], {
+                type:
+                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+              });
+              var file = res.headers["content-disposition"]
+                .split(";")[1]
+                .split("filename=")[1];
+              var filename = JSON.parse(file);
+              const downloadElement = document.createElement("a");
+              const objectUrl = window.URL.createObjectURL(blob);
+              downloadElement.href = objectUrl;
+              // const filename =
+              //   "Wish_" + year + month + strDate + hour + minute + second;
+              downloadElement.download = filename;
+              document.body.appendChild(downloadElement);
+              downloadElement.click();
+              document.body.removeChild(downloadElement);
+            });
+          }
         }
-        APIPlatExportVova(objStr).then(res => {
-          const blob = new Blob([res.data], {
-            type:
-              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
-          });
-          var file = res.headers["content-disposition"]
-            .split(";")[1]
-            .split("filename=")[1];
-          var filename = JSON.parse(file);
-          const downloadElement = document.createElement("a");
-          const objectUrl = window.URL.createObjectURL(blob);
-          downloadElement.href = objectUrl;
-          // const filename =
-          //   "Wish_" + year + month + strDate + hour + minute + second;
-          downloadElement.download = filename;
-          document.body.appendChild(downloadElement);
-          downloadElement.click();
-          document.body.removeChild(downloadElement);
-        });
       } else {
         let objStr = {};
         let joomAry = [];
@@ -808,35 +833,60 @@ export default {
             joomAry.push(this.joomName);
           }
           if (this.vova != "") {
-            objStr = {
-              id: joomAry,
-              account: this.vova
-            };
-          } else {
-            objStr = {
-              id: joomAry,
-              account: this.vovaArr
-            };
-          }
-          APIPlatExportVova(objStr).then(res => {
-              const blob = new Blob([res.data], {
-                type:
-                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+            var strObj = this.vova;
+            for (var i = 0; i < strObj.length; i++) {
+              objStr = {
+                id: joomAry,
+                account: [strObj[i]]
+              };
+              APIPlatExportVova(objStr).then(res => {
+                const blob = new Blob([res.data], {
+                  type:
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+                });
+                var file = res.headers["content-disposition"]
+                  .split(";")[1]
+                  .split("filename=")[1];
+                var filename = JSON.parse(file);
+                const downloadElement = document.createElement("a");
+                const objectUrl = window.URL.createObjectURL(blob);
+                downloadElement.href = objectUrl;
+                // const filename =
+                //   "Wish_" + year + month + strDate + hour + minute + second;
+                downloadElement.download = filename;
+                document.body.appendChild(downloadElement);
+                downloadElement.click();
+                document.body.removeChild(downloadElement);
               });
-              var file = res.headers["content-disposition"]
-                .split(";")[1]
-                .split("filename=")[1];
-              var filename = JSON.parse(file);
-              const downloadElement = document.createElement("a");
-              const objectUrl = window.URL.createObjectURL(blob);
-              downloadElement.href = objectUrl;
-              // const filename =
-              //   "Wish_" + year + month + strDate + hour + minute + second;
-              downloadElement.download = filename;
-              document.body.appendChild(downloadElement);
-              downloadElement.click();
-              document.body.removeChild(downloadElement);
-            });
+            }
+          } else {
+            var strObj = this.vovaArr;
+            for (var i = 0; i < strObj.length; i++) {
+              objStr = {
+                id: joomAry,
+                account: [strObj[i]]
+              };
+              APIPlatExportVova(objStr).then(res => {
+                const blob = new Blob([res.data], {
+                  type:
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+                });
+                var file = res.headers["content-disposition"]
+                  .split(";")[1]
+                  .split("filename=")[1];
+                var filename = JSON.parse(file);
+                const downloadElement = document.createElement("a");
+                const objectUrl = window.URL.createObjectURL(blob);
+                downloadElement.href = objectUrl;
+                // const filename =
+                //   "Wish_" + year + month + strDate + hour + minute + second;
+                downloadElement.download = filename;
+                document.body.appendChild(downloadElement);
+                downloadElement.click();
+                document.body.removeChild(downloadElement);
+              });
+            }
+          }
         } else {
           this.$message.error("请选择产品或填写商品编码");
         }
@@ -2687,14 +2737,14 @@ export default {
   border-radius: 5px;
 }
 @media (max-width: 1600px) {
-  .none1600{
+  .none1600 {
     width: 154px !important;
   }
-  .none16001{
+  .none16001 {
     width: 130px !important;
     margin-left: 5px !important;
   }
-  .none16002{
+  .none16002 {
     width: 135px !important;
     margin-left: 5px !important;
   }

@@ -69,7 +69,7 @@
           collapse-tags
           v-model="vova"
           class="top1600 top1601"
-          style="float: left;width:245px;"
+          style="float: left;width:250px;"
         >
         <el-button plain type="info" @click="selectalld3">全选</el-button>
         <el-button plain type="info" @click="noselectd3">取消</el-button>
@@ -1066,17 +1066,13 @@ export default {
     exportVova() {
       let objStr={}
       if (this.vova!='') {
-        objStr = {
-          id: [this.wishForm.infoId],
-          account: this.vova
-        };
-      }else{
-        objStr = {
-          id: [this.wishForm.infoId],
-          account: this.vovaArr
-        };
-      }
-      APIPlatExportVova(objStr).then(res => {
+        var strObj=this.vova
+        for(var i=0;i<strObj.length;i++){
+          objStr = {
+            id: [this.wishForm.infoId],
+            account: [strObj[i]]
+          };
+          APIPlatExportVova(objStr).then(res => {
           const blob = new Blob([res.data], {
             type:
               "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
@@ -1093,6 +1089,33 @@ export default {
           downloadElement.click();
           document.body.removeChild(downloadElement);
         }); 
+        }
+      }else{
+        var strObj=this.vovaArr
+        for(var i=0;i<strObj.length;i++){
+          objStr = {
+            id: [this.wishForm.infoId],
+            account: [strObj[i]]
+          };
+          APIPlatExportVova(objStr).then(res => {
+          const blob = new Blob([res.data], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+          var filename=JSON.parse(file)
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          // const filename =
+          //   "Wish_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename;
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        }); 
+        }
+      }
     },
     top(e) {
       this.foremost = e.length;
