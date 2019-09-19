@@ -1390,3 +1390,13 @@ export function APIWareSkuExport(param) {
     responseType: 'arraybuffer'
   })
 }
+
+export function APIAccountExport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/account-export',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
