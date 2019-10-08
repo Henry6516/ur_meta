@@ -1400,3 +1400,12 @@ export function APIAccountExport(param) {
     responseType: 'arraybuffer'
   })
 }
+
+export function APIPlatEbayToIbay(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat-ebay-to-ibay',
+    method: 'post',
+    data
+  })
+}

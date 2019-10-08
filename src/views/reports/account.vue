@@ -11,7 +11,7 @@
           :model="condition"
           :inline="true"
           ref="condition"
-          label-width="10rem"
+          label-width="8rem"
           class="demo-form-inline"
           v-show="show"
         >
@@ -87,6 +87,9 @@
               ></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="商品名称">
+            <el-input size="small" v-model="condition.goodsName" style="width:18rem;"></el-input>
+          </el-form-item>
           <el-form-item label="出货仓库" class="input">
             <el-select
               size="small"
@@ -139,7 +142,7 @@
             ></el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button size="small" type="primary" class="input" @click="onSubmit(condition)">查询</el-button>
+            <el-button size="small" type="primary" class="input" @click="onSubmit(condition)" style="margin-left:25px;">查询</el-button>
           </el-form-item>
         </el-form>
       </transition>
@@ -279,6 +282,7 @@ export default {
         member: [],
         store: [],
         sku: "",
+        goodsName: "",
         dateType: 1,
         dateRange: [],
         account: [],

@@ -157,7 +157,7 @@
       </h3>
     </el-col>
     <el-col style="margin-top:5px;">
-      <el-table :data="tableData" border style="width:98%;margin-left:1%;" max-height="1300"  v-loading="listLoading">
+      <el-table :data="tableData" border style="width:98%;margin-left:1%;" max-height="620"  v-loading="listLoading">
         <!-- <el-table-column type="selection" width="30" align="center" header-align="center"></el-table-column> -->
         <el-table-column type="index" width="50" align="center" header-align="center"></el-table-column>
         <el-table-column label="操作" width="50" header-align="center" align="center">
