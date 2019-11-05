@@ -358,21 +358,21 @@
       <el-col :span="6">
         <span style="color:red;line-height:40px;">*</span>
         <span style="color:#606266;margin-right:5px;">刊登分类</span>
-        <el-input size="small" style="width:245px;" v-model="wishForm.listedCate"></el-input>  
+        <el-input size="small" style="width:245px;" v-model="wishForm.listedCate" class="aArial"></el-input>  
       </el-col>
       <el-col :span="6">
         <el-form-item label="刊登分类2">
-          <el-input size="small" style="width:245px;" v-model="wishForm.listedSubcate"></el-input>
+          <el-input size="small" style="width:245px;" v-model="wishForm.listedSubcate" class="aArial"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="6">
         <el-form-item label="标题">
-          <el-input size="small" style="width:245px;" v-model="wishForm.title"></el-input>
+          <el-input size="small" style="width:245px;" v-model="wishForm.title" class="aArial"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="6">
         <el-form-item label="子标题">
-          <el-input size="small" style="width:245px;" v-model="wishForm.subTitle"></el-input>
+          <el-input size="small" style="width:245px;" v-model="wishForm.subTitle" class="aArial"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="24">
@@ -389,6 +389,7 @@
           <el-input
             v-model="wishForm.headKeywords"
             style="width:96%"
+            class="aArial"
             placeholder="--一个关键词--"
             @input="top1($event)"
           ></el-input>
@@ -409,15 +410,15 @@
         <el-col :span="23">
           <div style="margin-left: 70px;">
             必填
-            <el-input style="width:31%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
-            <el-input style="width:31%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
-            <el-input style="width:31%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[0]" @blur="mandatory()" class="aArial"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[1]" @blur="mandatory()" class="aArial"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[2]" @blur="mandatory()" class="aArial"></el-input>
           </div>
           <div style="margin-left: 70px;margin-top: 5px">
             选填
-            <el-input style="width:31%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
-            <el-input style="width:31%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
-            <el-input style="width:31%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[3]" @blur="mandatory()" class="aArial"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[4]" @blur="mandatory()" class="aArial"></el-input>
+            <el-input style="width:31%" v-model="mandatoryData[5]" @blur="mandatory()" class="aArial"></el-input>
           </div>
         </el-col>
       </el-col>
@@ -436,19 +437,19 @@
         <el-col :span="23">
           <div style="margin-left: 70px">
             必填
-            <el-input style="width:18.5%" v-model="randomData[0]" @blur="random()"></el-input>
-            <el-input style="width:18.5%" v-model="randomData[1]" @blur="random()"></el-input>
-            <el-input style="width:18.5%" v-model="randomData[2]" @blur="random()"></el-input>
-            <el-input style="width:18.5%" v-model="randomData[3]" @blur="random()"></el-input>
-            <el-input style="width:18.5%" v-model="randomData[4]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[0]" @blur="random()" class="aArial"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[1]" @blur="random()" class="aArial"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[2]" @blur="random()" class="aArial"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[3]" @blur="random()" class="aArial"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[4]" @blur="random()" class="aArial"></el-input>
           </div>
           <div style="margin-left: 70px;margin-top: 5px">
             选填
-            <el-input style="width:18.5%" v-model="randomData[5]" @blur="random()"></el-input>
-            <el-input style="width:18.5%" v-model="randomData[6]" @blur="random()"></el-input>
-            <el-input style="width:18.5%" v-model="randomData[7]" @blur="random()"></el-input>
-            <el-input style="width:18.5%" v-model="randomData[8]" @blur="random()"></el-input>
-            <el-input style="width:18.5%" v-model="randomData[9]" @blur="random()"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[5]" @blur="random()" class="aArial"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[6]" @blur="random()" class="aArial"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[7]" @blur="random()" class="aArial"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[8]" @blur="random()" class="aArial"></el-input>
+            <el-input style="width:18.5%" v-model="randomData[9]" @blur="random()" class="aArial"></el-input>
           </div>
         </el-col>
       </el-col>
@@ -478,6 +479,7 @@
             size="small"
             v-model="wishForm.description"
             type="textarea"
+            class="aArial"
             :rows="14"
             style="width:96%;margin-left: 27px"
           ></el-input>
@@ -487,19 +489,19 @@
         <el-col :span="8">
           <el-col :span="4" style="text-align: right;margin-top: 13px;padding-right: 10px">数量</el-col>
           <el-col :span="20">
-            <el-input style="width:100%;" v-model="wishForm.quantity"></el-input>
+            <el-input style="width:100%;" v-model="wishForm.quantity" class="aArial"></el-input>
           </el-col>
         </el-col>
         <el-col :span="8">
-          <el-col :span="4" style="text-align: right;margin-top: 13px;padding-right: 10px">UPC</el-col>
+          <el-col :span="4" style="text-align: right;margin-top: 13px;padding-right: 10px" class="aArial">UPC</el-col>
           <el-col :span="20">
-            <el-input style="width:100%;" v-model="wishForm.UPC"></el-input>
+            <el-input style="width:100%;" v-model="wishForm.UPC" class="aArial"></el-input>
           </el-col>
         </el-col>
         <el-col :span="8">
           <el-col :span="4" style="text-align: right;margin-top: 13px;padding-right: 10px">EAN</el-col>
           <el-col :span="19">
-            <el-input style="width:100%;" v-model="wishForm.EAN"></el-input>
+            <el-input style="width:100%;" v-model="wishForm.EAN" class="aArial"></el-input>
           </el-col>
         </el-col>
         <!--<el-form-item label="数量">-->

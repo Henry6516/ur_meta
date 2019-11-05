@@ -242,7 +242,7 @@ export function getArtist(param) {
 export function getaccount(param) {
   const data = { condition: param }
   return request({
-    url: '/report/account',
+    url: '/report/account?sort=' + param.sort,
     method: 'post',
     data
   })
@@ -763,6 +763,15 @@ export function getStockDeveloperDetail(param) {
   })
 }
 
+export function getStockDepartDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/stock-depart-detail',
+    method: 'post',
+    data
+  })
+}
+
 export function getKeywordAnalysis(param) {
   const data = { condition: param }
   return request({
@@ -836,3 +845,70 @@ export function getEbayBalanceConditon() {
     method: 'get'
   })
 }
+
+export function getJoomSubscribed() {
+  return request({
+    url: 'oa-data-mine/joom-store-subscribed',
+    method: 'get'
+  })
+}
+
+export function getSubscribeJoomStore(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/subscribe-joom-store',
+    method: 'post',
+    data
+  })
+}
+
+export function APIJoomStoreProduct(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data-mine/joom-store-product?page=' + param.page + '&sort=' + param.sort,
+    method: 'post',
+    data
+  })
+}
+
+export function getStockDepart(param) {
+  const data = { condition: param }
+  return request({
+    url: 'data-center/stock-depart-detail',
+    method: 'post',
+    data
+  })
+}
+
+export function getStockDepartStatusDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/stock-depart-status-detail',
+    method: 'post',
+    data
+  })
+}
+
+export function getStockDepartDeveloperDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/data-center/stock-depart-developer-detail',
+    method: 'post',
+    data
+  })
+}
+
+export function getEbayXp(param) {
+  return request({
+    url: '/products-engine/recommend?plat=ebay&type=new&marketplace=' + param.marketplace + '&page=' + param.page + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
+    method: 'get'
+  })
+}
+
+export function getEbayRx(param) {
+  return request({
+    url: '/products-engine/recommend?plat=ebay&type=hot&marketplace=' + param.marketplace + '&page=' + param.page + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
+    method: 'get'
+  })
+}
+

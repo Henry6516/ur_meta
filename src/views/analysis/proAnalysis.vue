@@ -1,216 +1,1231 @@
 <template>
   <section>
     <div>
-      <el-tabs v-model="activeName" type="card" style="background-color:#fff">
+      <el-tabs
+        v-model="activeName"
+        type="card"
+        style="background-color:#fff"
+        @tab-click="handleClick"
+      >
         <el-tab-pane
           v-for="(item, index) in this.allMenu"
           :label="item.name"
-          :name="item.route"
+          :name="item.name"
           :key="index"
         ></el-tab-pane>
       </el-tabs>
-      <div class="tabPlat">
-        <a class="platActive">Wish</a>
-        <a>Ebay</a>
-        <a>Joom</a>
-        <div class="tabRight">
-          <div class="tr01">
-            <span class="trActive"></span>
-            <P>美国</P>
+      <div v-show="show.xp">
+        <div class="tabPlat">
+          <a
+            :class="platActive==index?'platActive':''"
+            v-for="(item, index) in this.allMenuAll"
+            :key="index"
+            @click="cut(item,index)"
+          >{{item}}</a>
+          <div class="tabRight">
+            <div v-show="xp.ebay">
+              <div class="tr01">
+                <span class="trActive"></span>
+                <P>美国</P>
+              </div>
+              <div class="tr01">
+                <span></span>
+                <P>英国</P>
+              </div>
+              <div class="tr01">
+                <span></span>
+                <P>澳大利亚</P>
+              </div>
+              <div class="tr01">
+                <span></span>
+                <P>德国</P>
+              </div>
+            </div>
+            <div v-show="xp.amazon">
+              <div class="tr01">
+                <span class="trActive"></span>
+                <P>美国</P>
+              </div>
+            </div>
           </div>
-          <div class="tr01">
-            <span></span>
-            <P>英国</P>
+        </div>
+        <div v-show="xp.wish">
+          <div class="floet">
+            <div class="floet01">
+              <span>店铺名称</span>
+              <el-input
+                placeholder="店铺名称"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.sku"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>商品售价</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.location"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.location"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>总销量</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>产品 ID</span>
+              <el-input
+                placeholder="产品 ID"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.person"
+                clearable
+              ></el-input>
+            </div>
+            <!-- <div class="floet01">
+            <span>发货地</span>
+            <el-input
+              placeholder="发货地"
+              size="small"
+              class="winput"
+              style="margin-left:2px;"
+              v-model="condition.person"
+              clearable
+            ></el-input>
+            </div>-->
+            <div class="floet01">
+              <span>商品关键字</span>
+              <el-input
+                placeholder="商品关键字"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.person"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>评论数</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>上架时间</span>
+              <el-date-picker
+                size="small"
+                v-model="condition.changeTime"
+                value-format="yyyy-MM-dd"
+                type="daterange"
+                align="right"
+                clearable
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                style="width:230px;margin-left:2px;"
+                :picker-options="pickerOptions2"
+              ></el-date-picker>
+            </div>
+            <div class="floet01">
+              <el-button size="small" type="primary" @click="getData()">查询</el-button>
+            </div>
           </div>
-          <div class="tr01">
-            <span></span>
-            <P>澳大利亚</P>
-          </div>
-        </div>
-      </div>
-      <div class="floet">
-        <div class="floet01">
-          <span>店铺名称</span>
-          <el-input
-            placeholder="店铺名称"
-            size="small"
-            class="winput"
-            style="margin-left:2px;"
-            v-model="condition.sku"
-            clearable
-          ></el-input>
-        </div>
-        <div class="floet01">
-          <span>商品售价</span>
-          <el-input
-            placeholder="商品售价"
-            size="small"
-            class="winput"
-            style="margin-left:2px;"
-            v-model="condition.location"
-            clearable
-          ></el-input>
-        </div>
-        <div class="floet01">
-          <span>总销量</span>
-          <el-input
-            placeholder="总销量"
-            size="small"
-            class="winput"
-            style="margin-left:2px;"
-            v-model="condition.store	"
-            clearable
-          ></el-input>
-        </div>
-        <div class="floet01">
-          <span>产品 ID</span>
-          <el-input
-            placeholder="产品 ID"
-            size="small"
-            class="winput"
-            style="margin-left:2px;"
-            v-model="condition.person"
-            clearable
-          ></el-input>
-        </div>
-        <div class="floet01">
-          <span>发货地</span>
-          <el-input
-            placeholder="发货地"
-            size="small"
-            class="winput"
-            style="margin-left:2px;"
-            v-model="condition.person"
-            clearable
-          ></el-input>
-        </div>
-        <div class="floet01">
-          <span>商品关键字</span>
-          <el-input
-            placeholder="商品关键字"
-            size="small"
-            class="winput"
-            style="margin-left:2px;"
-            v-model="condition.person"
-            clearable
-          ></el-input>
-        </div>
-        <div class="floet01">
-          <span>上架时间</span>
-          <el-date-picker
-            size="small"
-            v-model="condition.changeTime"
-            value-format="yyyy-MM-dd"
-            type="daterange"
-            align="right"
-            clearable
-            unlink-panels
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            style="width:200px;margin-left:10px;"
-            :picker-options="pickerOptions2"
-          ></el-date-picker>
-        </div>
-        <div class="floet01">
-          <el-button size="small" type="primary" @click="getData()">查询</el-button>
-        </div>
-        <!-- <div class="floet01">
-            <el-button size="small" type="success" @click="exportExcel">导出表格</el-button>
-        </div>-->
-      </div>
-      <div class="proBox">
-        <el-col :span="24">
-          <el-table
-            :data="nostockdata"
-            border
-            class="elTableForm"
-            :header-cell-style="getRowClass"
-            v-loading="listLoading"
-            :height="tableHeightstock"
-            style="width: 98%;margin:auto;margin-top:15px;"
-          >
-            <el-table-column prop="picUrl" fixed label="主图" header-align="center" width="80">
-              <template slot-scope="scope">
-                <el-tooltip
-                  placement="right"
-                  :open-delay="10"
-                  class="exxHover"
-                  popper-class="page-login-toolTipClass"
+          <div class="proBox">
+            <el-col :span="24">
+              <el-table
+                :data="nostockdata"
+                border
+                class="elTableForm"
+                :header-cell-style="getRowClass"
+                v-loading="listLoading"
+                :height="tableHeightstock"
+                style="width: 98%;margin:auto;margin-top:15px;"
+              >
+                <el-table-column prop="picUrl" fixed label="主图" header-align="center" width="80">
+                  <template slot-scope="scope">
+                    <el-tooltip
+                      placement="right"
+                      :open-delay="10"
+                      class="exxHover"
+                      popper-class="page-login-toolTipClass"
+                    >
+                      <div slot="content">
+                        <img
+                          src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg"
+                          style="width: 300px;height: 300px;"
+                        />
+                      </div>
+                      <img
+                        src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg"
+                        style="width: 60px;height: 60px"
+                      />
+                    </el-tooltip>
+                    <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
+                  </template>
+                </el-table-column>
+                <el-table-column label="操作" header-align="center" prop="sku" min-width="180">
+                  <template slot-scope="scope">
+                    <span class="ljkf">开发</span>
+                    <span class="ljkf">订阅产品</span>
+                    <span class="ljkf">订阅店铺</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品标题" header-align="center" prop="sku" min-width="180">
+                  <template slot-scope="scope">
+                    <span>Tempered Glass Screen Protector 3-Pack for iPhone X XS Max XR 6 6S 7 8 Plus 5 SE</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品分类" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>PC Laptops & Netbooks</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="售价" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>23.33</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="总销量" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="销量" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="销售额" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="交易增幅" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="店铺名称" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>reebok</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="操作时间"
+                  header-align="center"
+                  align="center"
+                  prop="changeTime"
+                  :formatter="formatter"
                 >
-                  <div slot="content">
-                    <img
-                      src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg"
-                      style="width: 300px;height: 300px;"
-                    />
-                  </div>
-                  <img
-                    src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg"
-                    style="width: 60px;height: 60px"
-                  />
-                </el-tooltip>
-                <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
-              </template>
-            </el-table-column>
-            <el-table-column label="操作" header-align="center" prop="sku" min-width="60">
-              <template slot-scope="scope">
-                <span class="ljkf">立即开发</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="商品标题" header-align="center" prop="sku" min-width="300">
-              <template slot-scope="scope">
-                <span>Tempered Glass Screen Protector 3-Pack for iPhone X XS Max XR 6 6S 7 8 Plus 5 SE</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="商品分类" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>PC Laptops & Netbooks</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="售价" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>23.33</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="总销量" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>2,195</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="销量" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>2,195</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="销售额" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>2,195</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="交易增幅" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>2,195</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="店铺名称" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>reebok</span>
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="操作时间"
-              header-align="center"
-              align="center"
-              prop="changeTime"
-              :formatter="formatter"
-            >
-              <template slot-scope="scope">
-                <span>2019-05-16</span>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-col>
+                  <template slot-scope="scope">
+                    <span>2019-05-16</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-col>
+          </div>
+        </div>
+        <div v-show="xp.ebay">
+          <div class="floet">
+            <div class="floet01">
+              <span>店铺名称</span>
+              <el-input
+                placeholder="店铺名称"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.sku"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>商品售价</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.location"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.location"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>总销量</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>产品 ID</span>
+              <el-input
+                placeholder="产品 ID"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.person"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>发货地</span>
+              <el-input
+                placeholder="发货地"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.person"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>评论数</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>上架时间</span>
+              <el-date-picker
+                size="small"
+                v-model="condition.changeTime"
+                value-format="yyyy-MM-dd"
+                type="daterange"
+                align="right"
+                clearable
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                style="width:230px;margin-left:2px;"
+                :picker-options="pickerOptions2"
+              ></el-date-picker>
+            </div>
+            <div class="floet01">
+              <span>商品关键字</span>
+              <el-input
+                placeholder="商品关键字"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.person"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>分类</span>
+              <el-input
+                placeholder="一级分类"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="二级分类"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <el-button size="small" type="primary" @click="getData()">查询</el-button>
+            </div>
+            <!-- <div class="floet01">
+            <el-button size="small" type="success" @click="exportExcel">导出表格</el-button>
+            </div>-->
+          </div>
+          <div class="proBox">
+            <el-col :span="24">
+              <el-table
+                :data="nostockdata"
+                border
+                class="elTableForm"
+                :header-cell-style="getRowClass"
+                v-loading="listLoading"
+                style="width: 98%;margin:auto;margin-top:15px;"
+              >
+                <el-table-column prop="picUrl" fixed label="主图" header-align="center" width="80">
+                  <template slot-scope="scope">
+                    <el-tooltip
+                      placement="right"
+                      :open-delay="10"
+                      class="exxHover"
+                      popper-class="page-login-toolTipClass"
+                    >
+                      <div slot="content">
+                        <img
+                          src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg"
+                          style="width: 300px;height: 300px;"
+                        />
+                      </div>
+                      <img
+                        src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg"
+                        style="width: 60px;height: 60px"
+                      />
+                    </el-tooltip>
+                    <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
+                  </template>
+                </el-table-column>
+                <el-table-column label="操作" header-align="center" prop="sku" min-width="180">
+                  <template slot-scope="scope">
+                    <span class="ljkf">开发</span>
+                    <span class="ljkf">订阅产品</span>
+                    <span class="ljkf">订阅店铺</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品标题" header-align="center" prop="sku" min-width="180">
+                  <template slot-scope="scope">
+                    <span>Tempered Glass Screen Protector 3-Pack for iPhone X XS Max XR 6 6S 7 8 Plus 5 SE</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品分类" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>PC Laptops & Netbooks</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="售价" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>23.33</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="总销量" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="销量" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="销售额" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="交易增幅" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="店铺名称" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>reebok</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="操作时间"
+                  header-align="center"
+                  align="center"
+                  prop="changeTime"
+                  :formatter="formatter"
+                >
+                  <template slot-scope="scope">
+                    <span>2019-05-16</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-col>
+          </div>
+        </div>
+        <div v-show="xp.joom">
+          <div class="floet">
+            <div class="floet01">
+              <span>商品售价</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.location"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.location"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>产品 ID</span>
+              <el-input
+                placeholder="产品 ID"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.person"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>评论数</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>前七天评论数</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>商品评分</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>上架时间</span>
+              <el-date-picker
+                size="small"
+                v-model="condition.changeTime"
+                value-format="yyyy-MM-dd"
+                type="daterange"
+                align="right"
+                clearable
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                style="width:242px;margin-left:2px;"
+                :picker-options="pickerOptions2"
+              ></el-date-picker>
+            </div>
+            <div class="floet01">
+              <span>商品关键字</span>
+              <el-input
+                placeholder="商品关键字"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.person"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <el-button size="small" type="primary" @click="getData()">查询</el-button>
+            </div>
+            <!-- <div class="floet01">
+            <el-button size="small" type="success" @click="exportExcel">导出表格</el-button>
+            </div>-->
+          </div>
+          <div class="proBox">
+            <el-col :span="24">
+              <el-table
+                :data="nostockdata"
+                border
+                class="elTableForm"
+                :header-cell-style="getRowClass"
+                v-loading="listLoading"
+                style="width: 98%;margin:auto;margin-top:15px;"
+              >
+                <el-table-column prop="picUrl" fixed label="主图" header-align="center" width="80">
+                  <template slot-scope="scope">
+                    <el-tooltip
+                      placement="right"
+                      :open-delay="10"
+                      class="exxHover"
+                      popper-class="page-login-toolTipClass"
+                    >
+                      <div slot="content">
+                        <img
+                          src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg"
+                          style="width: 300px;height: 300px;"
+                        />
+                      </div>
+                      <img
+                        src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg"
+                        style="width: 60px;height: 60px"
+                      />
+                    </el-tooltip>
+                    <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
+                  </template>
+                </el-table-column>
+                <el-table-column label="操作" header-align="center" prop="sku" min-width="180">
+                  <template slot-scope="scope">
+                    <span class="ljkf">开发</span>
+                    <span class="ljkf">订阅产品</span>
+                    <span class="ljkf">订阅店铺</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品标题" header-align="center" prop="sku" min-width="180">
+                  <template slot-scope="scope">
+                    <span>Tempered Glass Screen Protector 3-Pack for iPhone X XS Max XR 6 6S 7 8 Plus 5 SE</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品分类" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>PC Laptops & Netbooks</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="售价" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>23.33</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="总销量" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="销量" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="销售额" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="交易增幅" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="店铺名称" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>reebok</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="操作时间"
+                  header-align="center"
+                  align="center"
+                  prop="changeTime"
+                  :formatter="formatter"
+                >
+                  <template slot-scope="scope">
+                    <span>2019-05-16</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-col>
+          </div>
+        </div>
+        <div v-show="xp.amazon">
+          <div class="floet">
+            <div class="floet01">
+              <span>商品售价</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.location"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.location"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>评论数</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>跟卖人数</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>商品评分</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>BSR品类</span>
+              <el-input
+                placeholder="请输入关键词"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.person"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>BSR排名</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>A S I N</span>
+              <el-input
+                placeholder="请输入ASIN"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.person"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>商品关键字</span>
+              <el-input
+                placeholder="商品关键字"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.person"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <el-button size="small" type="primary" @click="getData()">查询</el-button>
+            </div>
+            <!-- <div class="floet01">
+            <el-button size="small" type="success" @click="exportExcel">导出表格</el-button>
+            </div>-->
+          </div>
+          <div class="proBox">
+            <el-col :span="24">
+              <el-table
+                :data="nostockdata"
+                border
+                class="elTableForm"
+                :header-cell-style="getRowClass"
+                v-loading="listLoading"
+                style="width: 98%;margin:auto;margin-top:15px;"
+              >
+                <el-table-column prop="picUrl" fixed label="主图" header-align="center" width="80">
+                  <template slot-scope="scope">
+                    <el-tooltip
+                      placement="right"
+                      :open-delay="10"
+                      class="exxHover"
+                      popper-class="page-login-toolTipClass"
+                    >
+                      <div slot="content">
+                        <img
+                          src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg"
+                          style="width: 300px;height: 300px;"
+                        />
+                      </div>
+                      <img
+                        src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg"
+                        style="width: 60px;height: 60px"
+                      />
+                    </el-tooltip>
+                    <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
+                  </template>
+                </el-table-column>
+                <el-table-column label="操作" header-align="center" prop="sku" min-width="180">
+                  <template slot-scope="scope">
+                    <span class="ljkf">开发</span>
+                    <span class="ljkf">订阅产品</span>
+                    <span class="ljkf">订阅店铺</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品标题" header-align="center" prop="sku" min-width="180">
+                  <template slot-scope="scope">
+                    <span>Tempered Glass Screen Protector 3-Pack for iPhone X XS Max XR 6 6S 7 8 Plus 5 SE</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品分类" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>PC Laptops & Netbooks</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="售价" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>23.33</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="总销量" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="销量" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="销售额" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="交易增幅" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="店铺名称" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>reebok</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="操作时间"
+                  header-align="center"
+                  align="center"
+                  prop="changeTime"
+                  :formatter="formatter"
+                >
+                  <template slot-scope="scope">
+                    <span>2019-05-16</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-col>
+          </div>          
+        </div>
+        <div v-show="xp.aliexpress">
+          <div class="floet">
+            <div class="floet01">
+              <span>店铺名称</span>
+              <el-input
+                placeholder="店铺名称"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.person"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>商品售价</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.location"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.location"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>平台收藏数</span>
+              <el-input
+                placeholder="一级分类"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="二级分类"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>评论数</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>近6个月订单</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>商品评分</span>
+              <el-input
+                placeholder="最小值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="最大值"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>分类</span>
+              <el-input
+                placeholder="一级分类"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+              <el-input
+                placeholder="二级分类"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.store"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>产品 ID</span>
+              <el-input
+                placeholder="产品 ID"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.person"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <span>采集时间</span>
+              <el-date-picker
+                size="small"
+                v-model="condition.changeTime"
+                value-format="yyyy-MM-dd"
+                type="daterange"
+                align="right"
+                clearable
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                style="width:242px;margin-left:2px;"
+                :picker-options="pickerOptions2"
+              ></el-date-picker>
+            </div>
+            <div class="floet01">
+              <span>商品关键字</span>
+              <el-input
+                placeholder="商品关键字"
+                size="small"
+                class="winput"
+                style="margin-left:2px;"
+                v-model="condition.person"
+                clearable
+              ></el-input>
+            </div>
+            <div class="floet01">
+              <el-button size="small" type="primary" @click="getData()">查询</el-button>
+            </div>
+            <!-- <div class="floet01">
+            <el-button size="small" type="success" @click="exportExcel">导出表格</el-button>
+            </div>-->
+          </div>
+          <div class="proBox">
+            <el-col :span="24">
+              <el-table
+                :data="nostockdata"
+                border
+                class="elTableForm"
+                :header-cell-style="getRowClass"
+                v-loading="listLoading"
+                style="width: 98%;margin:auto;margin-top:15px;"
+              >
+                <el-table-column prop="picUrl" fixed label="主图" header-align="center" width="80">
+                  <template slot-scope="scope">
+                    <el-tooltip
+                      placement="right"
+                      :open-delay="10"
+                      class="exxHover"
+                      popper-class="page-login-toolTipClass"
+                    >
+                      <div slot="content">
+                        <img
+                          src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg"
+                          style="width: 300px;height: 300px;"
+                        />
+                      </div>
+                      <img
+                        src="https://cbu01.alicdn.com/img/ibank/2018/967/507/9906705769_508626403.jpg"
+                        style="width: 60px;height: 60px"
+                      />
+                    </el-tooltip>
+                    <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
+                  </template>
+                </el-table-column>
+                <el-table-column label="操作" header-align="center" prop="sku" min-width="180">
+                  <template slot-scope="scope">
+                    <span class="ljkf">开发</span>
+                    <span class="ljkf">订阅产品</span>
+                    <span class="ljkf">订阅店铺</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品标题" header-align="center" prop="sku" min-width="180">
+                  <template slot-scope="scope">
+                    <span>Tempered Glass Screen Protector 3-Pack for iPhone X XS Max XR 6 6S 7 8 Plus 5 SE</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品分类" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>PC Laptops & Netbooks</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="售价" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>23.33</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="总销量" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="销量" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="销售额" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="交易增幅" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>2,195</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="店铺名称" header-align="center" align="center" prop="sku">
+                  <template slot-scope="scope">
+                    <span>reebok</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="操作时间"
+                  header-align="center"
+                  align="center"
+                  prop="changeTime"
+                  :formatter="formatter"
+                >
+                  <template slot-scope="scope">
+                    <span>2019-05-16</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-col>
+          </div>          
+        </div>
       </div>
+      <div v-show="show.rx">2</div>
     </div>
   </section>
 </template>
@@ -221,12 +1236,27 @@ export default {
   data() {
     return {
       tableHeightstock: window.innerHeight - 160,
+      allMenuAll: ["Wish", "Ebay", "Joom", "Amazon", "Aliexpress"],
+      activeNameAll: "Wish",
+      xp: {
+        ebay: false,
+        wish: true,
+        aliexpress: false,
+        Joom: false,
+        amazon: false
+      },
       allMenu: [],
       listLoading: false,
-      activeName: "/v1/products-engine/analysis-new-products",
+      // activeName: "/v1/products-engine/analysis-new-products",
+      activeName: "新品分析",
       developer: [],
       purchaser: [],
+      platActive: 0,
       goodsState: [],
+      show: {
+        xp: true,
+        rx: false
+      },
       condition: {
         sku: null,
         location: null,
@@ -273,6 +1303,46 @@ export default {
     }
   },
   methods: {
+    cut(n, b) {
+      this.platActive = b;
+      if (n == "Wish") {
+        this.xp.wish = true;
+      } else {
+        this.xp.wish = false;
+      }
+      if (n == "Ebay") {
+        this.xp.ebay = true;
+      } else {
+        this.xp.ebay = false;
+      }
+      if (n == "Joom") {
+        this.xp.joom = true;
+      } else {
+        this.xp.joom = false;
+      }
+      if (n == "Amazon") {
+        this.xp.amazon = true;
+      } else {
+        this.xp.amazon = false;
+      }
+      if (n == "Aliexpress") {
+        this.xp.aliexpress = true;
+      } else {
+        this.xp.aliexpress = false;
+      }
+    },
+    handleClick(tab, event) {
+      if (tab.name === "新品分析") {
+        this.show.xp = true;
+      } else {
+        this.show.xp = false;
+      }
+      if (tab.name === "热销分析") {
+        this.show.rx = true;
+      } else {
+        this.show.rx = false;
+      }
+    },
     formatter(row, column) {
       return row.changeTime ? row.changeTime.substring(0, 16) : "";
     },
@@ -418,15 +1488,17 @@ export default {
   width: 98%;
   margin: auto;
   background: #f2f2f2;
-  padding: 15px 0;
+  padding-bottom: 15px;
+  padding-top: 5px;
 }
 .floet01 {
   float: left;
   margin-left: 8px;
   margin-right: 10px;
+  padding-top: 10px;
 }
 .winput {
-  width: 140px;
+  width: 130px;
 }
 .proBox {
   width: 100%;
@@ -527,31 +1599,31 @@ export default {
   padding: 0 20px;
   cursor: pointer;
 }
-.tabRight{
-    float: right;
-    overflow: hidden;
-    margin-right: 10px;
+.tabRight {
+  float: right;
+  overflow: hidden;
+  margin-right: 10px;
 }
-.tr01{
-    float: left;
-    margin: 0 15px;
-    cursor: pointer;
+.tr01 {
+  float: left;
+  margin: 0 15px;
+  cursor: pointer;
 }
-.tr01 span{
-    display: block;
-    width: 12px;
-    height: 12px;
-    border: #ccc solid 1px;
-    border-radius: 50%;
-    float: left;
-    margin-right: 10px;
-    margin-top: 14px;
+.tr01 span {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: #ccc solid 1px;
+  border-radius: 50%;
+  float: left;
+  margin-right: 10px;
+  margin-top: 14px;
 }
-.tr01 p{
-    float: left;
-    margin: 0;
-    padding: 0;
-    line-height: 42px;
+.tr01 p {
+  float: left;
+  margin: 0;
+  padding: 0;
+  line-height: 42px;
 }
 .platActive {
   background-color: #fff;
@@ -563,10 +1635,17 @@ export default {
   text-align: center;
   color: #fff;
   line-height: 35px;
+  cursor: pointer;
+  float: left;
+  width: 35%;
+  margin: 0 1.5%;
 }
-.trActive{
-    background: #66b1ff;
-    border: #66b1ff solid 1px !important;
+.ljkf:first-child {
+  width: 21% !important;
+}
+.trActive {
+  background: #66b1ff;
+  border: #66b1ff solid 1px !important;
 }
 @media (max-width: 1400px) {
   .floet01 {

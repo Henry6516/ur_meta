@@ -1409,3 +1409,198 @@ export function APIPlatEbayToIbay(param) {
     data
   })
 }
+
+export function APRecommendWish() {
+  return request({
+    url: '/products-engine/recommend?plat=wish',
+    method: 'get'
+  })
+}
+
+export function APRecommendEbay() {
+  return request({
+    url: '/products-engine/recommend?plat=ebay',
+    method: 'get'
+  })
+}
+
+export function APRecommendJoom() {
+  return request({
+    url: '/products-engine/recommend?plat=joom',
+    method: 'get'
+  })
+}
+
+export function forwardCreateEngine(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goods/dev-create',
+    method: 'post',
+    data
+  })
+}
+
+export function APRengineRule() {
+  return request({
+    url: '/products-engine/rule',
+    method: 'get'
+  })
+}
+
+export function ebaySaveRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/save-rule',
+    method: 'post',
+    data
+  })
+}
+
+export function ebaySaveRuleDelete(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/delete-rule',
+    method: 'post',
+    data
+  })
+}
+
+export function APRengineRuleHot() {
+  return request({
+    url: '/products-engine/rule?type=hot',
+    method: 'get'
+  })
+}
+
+export function ebaySaveRuleHot(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/save-rule?type=hot',
+    method: 'post',
+    data
+  })
+}
+
+export function ebaySaveRuleDeleteHot(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/delete-rule?type=hot',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayXpAccept(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/accept?plat=ebay&type=new',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayRxAccept(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/accept?plat=ebay&type=hot',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayXpRefuse(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/refuse?plat=ebay&type=new',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayRxRefuse(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/refuse?plat=ebay&type=hot',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayDevCatRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/dev-cat',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayCatRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/ebay-cat',
+    method: 'post',
+    data
+  })
+}
+
+export function ebaySaveDevCat(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/save-dev-cat',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayDeleteDevCat(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/delete-dev-cat',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayRunRuleNew(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/run-rule?type=new',
+    method: 'post',
+    data
+  })
+}
+
+export function ebayRunRuleHot(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/run-rule?type=hot',
+    method: 'post',
+    data
+  })
+}
+
+export function getAllotRule() {
+  return request({
+    url: '/products-engine/allot-rule',
+    method: 'get'
+  })
+}
+
+export function saveAllotRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/save-allot-rule',
+    method: 'post',
+    data
+  })
+}
+
+export function DeleteAllotRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/delete-allot-rule',
+    method: 'post',
+    data
+  })
+}

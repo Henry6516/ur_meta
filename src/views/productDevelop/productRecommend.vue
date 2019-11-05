@@ -13,6 +13,9 @@
         :key="index"
       ></el-tab-pane>
     </el-tabs>
+    <div v-show="show.recpro">
+      <ebayRecommend></ebayRecommend>
+    </div>
     <div v-show="show.product">
       <el-col :span="24" style="padding:10px 15px;">
         <el-button type="success" @click="showCp" class="mr5">新增产品</el-button>
@@ -1231,6 +1234,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import ebayRecommend from "./ebayRecommend.vue";
 import {
   goodsList,
   goodsCreate,
@@ -1257,6 +1261,9 @@ import {
 import { getMenu } from "../../api/login";
 
 export default {
+  components: {
+    ebayRecommend
+  },
   data() {
     return {
       tableHeight:window.innerHeight -195,
@@ -1278,7 +1285,8 @@ export default {
       show: {
         product: false,
         forward: false,
-        reverse: false
+        reverse: false,
+        recpro:false,
       },
       condition: {
         cate: "",
@@ -1430,6 +1438,12 @@ export default {
           this.allMenu = arr[i].tabs;
         }
       }
+      if (this.allMenu[0].route == "/v1/oa-goods/ai-recommend") {
+        this.show["recpro"] = true;
+        this.activeName=this.allMenu[0].route
+      } else {
+        this.show["recpro"] = false;
+      }
       if (this.allMenu[0].route == "/v1/oa-goods/list") {
         this.show["product"] = true;
         this.activeName=this.allMenu[0].route
@@ -1491,6 +1505,11 @@ export default {
       }
     },
     handleClick(tab, event) {
+      if (tab.name === "/v1/oa-goods/ai-recommend") {
+        this.show["recpro"] = true;
+      } else {
+        this.show["recpro"] = false;
+      }
       if (tab.name === "/v1/oa-goods/list") {
         this.show["product"] = true;
         this.getData();

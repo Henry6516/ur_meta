@@ -93,11 +93,12 @@
             <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
           </template>
         </el-table-column>
-        <el-table-column label="商品编码" header-align="center">
+        <el-table-column label="商品编码" fixed header-align="center">
           <el-table-column
             prop="goodsCode"
+            fixed
+            width="100"
             :render-header="renderHeaderPlat"
-            width="125"
             align="center"
           ></el-table-column>
         </el-table-column>

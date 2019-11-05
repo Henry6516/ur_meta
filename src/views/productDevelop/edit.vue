@@ -321,6 +321,7 @@
             <el-input
                     v-model="editForm.wishTags"
                     style="width: 100%"
+                    class="aArial"
                     placeholder="--tags关键词不能超过10个，逗号分隔--"></el-input>
           </el-col>
         </el-col>
@@ -340,6 +341,7 @@
             <el-input
                       v-model="editForm.headKeywords"
                       style="width: 96%"
+                      class="aArial"
                       placeholder="--一个关键词--"
                       @input="top($event)"
             ></el-input>
@@ -361,20 +363,20 @@
           <el-col :span="23">
             <div style="margin-left: 70px">
               必填
-              <el-input
+              <el-input class="aArial"
                         style="width:31.1%" v-model="mandatoryData[0]" @blur="mandatory()"></el-input>
-              <el-input
+              <el-input class="aArial"
                         style="width:31.1%" v-model="mandatoryData[1]" @blur="mandatory()"></el-input>
-              <el-input
+              <el-input class="aArial"
                         style="width:31.1%" v-model="mandatoryData[2]" @blur="mandatory()"></el-input>
             </div>
             <div style="margin-left: 70px;margin-top: 5px">
               选填
-              <el-input
+              <el-input class="aArial"
                         style="width:31.1%" v-model="mandatoryData[3]" @blur="mandatory()"></el-input>
-              <el-input
+              <el-input class="aArial"
                         style="width:31.1%" v-model="mandatoryData[4]" @blur="mandatory()"></el-input>
-              <el-input
+              <el-input class="aArial"
                         style="width:31.1%" v-model="mandatoryData[5]" @blur="mandatory()"></el-input>
 
             </div>
@@ -396,28 +398,28 @@
           <el-col :span="23">
             <div style="margin-left: 70px">
               必填
-              <el-input
+              <el-input class="aArial"
                         style="width:18.5%" v-model="randomData[0]" @blur="random()"></el-input>
-              <el-input
+              <el-input class="aArial"
                         style="width:18.5%" v-model="randomData[1]" @blur="random()"></el-input>
-              <el-input
+              <el-input class="aArial"
                         style="width:18.5%" v-model="randomData[2]" @blur="random()"></el-input>
-              <el-input
+              <el-input class="aArial"
                         style="width:18.5%" v-model="randomData[3]" @blur="random()"></el-input>
-              <el-input
+              <el-input class="aArial"
                         style="width:18.5%" v-model="randomData[4]" @blur="random()"></el-input>
             </div>
             <div style="margin-left: 70px;margin-top: 5px">
               选填
-              <el-input
+              <el-input class="aArial"
                         style="width:18.5%" v-model="randomData[5]" @blur="random()"></el-input>
-              <el-input
+              <el-input class="aArial"
                         style="width:18.5%" v-model="randomData[6]" @blur="random()"></el-input>
-              <el-input
+              <el-input class="aArial"
                         style="width:18.5%" v-model="randomData[7]" @blur="random()"></el-input>
-              <el-input
+              <el-input class="aArial"
                         style="width:18.5%" v-model="randomData[8]" @blur="random()"></el-input>
-              <el-input
+              <el-input class="aArial"
                         style="width:18.5%" v-model="randomData[9]" @blur="random()"></el-input>
 
             </div>
@@ -439,6 +441,7 @@
             <el-input
                       v-model="editForm.tailKeywords"
                       style="width: 96%"
+                      class="aArial"
                       placeholder="--最多一个关键词--"
                       @input="bottm($event)"
             ></el-input>
@@ -453,7 +456,8 @@
                     type="textarea"
                     :rows="14"
                     v-model="editForm.description"
-                    style="width:96%;margin-left: 27px"></el-input>
+                    class="aArial"
+                    style="width:96%;margin-left: 27px;font-family:Arial;"></el-input>
           </el-col>
         </el-col>
       </el-row>

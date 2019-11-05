@@ -579,4 +579,13 @@ export default {
 .elTable td {
   padding: 8px 0 !important;
 }
+.aArial{
+  font-family: Arial !important;
+}
+.aArial .el-textarea__inner{
+  font-family: Arial !important;
+}
+.aArial .el-input__inner{
+  font-family: Arial !important;
+}
 </style>

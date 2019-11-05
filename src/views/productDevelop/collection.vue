@@ -39,6 +39,12 @@ export default {
         this.$router.push({
          path: `/v1/oa-data-mine/joom-cate-mine-index`
         });
+      }else if(tab.name === "/v1/oa-data-mine/joom-store-mine-index"){
+        this.showis=true
+        sessionStorage.setItem("judgeCollection", "/v1/oa-data-mine/joom-store-mine-index");
+        this.$router.push({
+         path: `/v1/oa-data-mine/joom-store-mine-index`
+        });
       }else{
         this.showis=false
       }
@@ -114,12 +120,12 @@ export default {
             path: `/v1/oa-data-mine/joom-cate-mine-index`
           });
         }
-        if (this.allMenu[0].route == "/v1/oa-data-mine/wish") {
+        if (this.allMenu[0].route == "/v1/oa-data-mine/joom-store-mine-index") {
           this.activeName = this.allMenu[0].route;
           sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
-        //   this.$router.push({
-        //     path: `/v1/oa-goodsinfo/goodsInfoPicture`
-        //   });
+          this.$router.push({
+            path: `/v1/oa-data-mine/joom-store-mine-index`
+          });
         }
         if (this.allMenu[0].route == "/v1/oa-data-mine/ebay") {
           this.activeName = this.allMenu[0].route;

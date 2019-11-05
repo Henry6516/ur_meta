@@ -96,10 +96,14 @@
               style="width:100%">
       <el-table-column prop="out"
                        label="出库费（£）"></el-table-column>
+      <el-table-column prop="outRmb"
+                       label="出库费（￥）"></el-table-column>                 
       <el-table-column prop="name"
                        label="物流方式"></el-table-column>
       <el-table-column prop="cost"
                        label="物流费（£）"></el-table-column>
+      <el-table-column prop="costRmb"
+                       label="物流费（￥）"></el-table-column>
     </el-table>
   </section>
 </template>

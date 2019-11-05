@@ -1,81 +1,288 @@
 <template>
   <section>
     <div>
-      <el-tabs v-model="activeName" type="card" style="background-color:#fff">
+      <el-tabs
+        v-model="activeNameAll"
+        type="card"
+        style="background-color:#fff"
+        @tab-click="handleClick"
+      >
         <el-tab-pane
-          v-for="(item, index) in this.allMenu"
-          :label="item.name"
-          :name="item.route"
+          v-for="(item, index) in this.allMenuAll"
+          :label="item"
+          :name="item"
           :key="index"
         ></el-tab-pane>
       </el-tabs>
-      <div class="myCat">
-
-      </div>
-      <div class="proBox">
-        <el-col :span="24">
-          <el-table
-            :data="nostockdata"
-            border
-            class="elTableForm"
-            :header-cell-style="getRowClass"
-            v-loading="listLoading"
-            :height="tableHeightstock"
-            style="width: 98%;margin:auto;margin-top:15px;"
-          >
-            <el-table-column label="商品标题" header-align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>Tempered</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="商品分类" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>PC Laptops & Netbooks</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="售价" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>23.33</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="总销量" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>2,195</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="销量" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>2,195</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="销售额" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>2,195</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="交易增幅" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>2,195</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="店铺名称" header-align="center" align="center" prop="sku">
-              <template slot-scope="scope">
-                <span>reebok</span>
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="操作时间"
-              header-align="center"
-              align="center"
-              prop="changeTime"
-              :formatter="formatter"
+      <div v-show="show.wish">
+        <div class="myCat">
+          <div class="tabPlat">
+            <a
+              :class="platActive==index?'platActive':''"
+              v-for="(item, index) in this.allMenu"
+              :key="index"
+            >{{item.name}}</a>
+            <div class="tabRight">
+              <div class="tr01">
+                <span class="trActive"></span>
+                <P>美国</P>
+              </div>
+              <div class="tr01">
+                <span></span>
+                <P>英国</P>
+              </div>
+              <div class="tr01">
+                <span></span>
+                <P>澳大利亚</P>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="proBox">
+          <el-col :span="24">
+            <el-table
+              :data="nostockdata"
+              border
+              class="elTableForm"
+              :header-cell-style="getRowClass"
+              v-loading="listLoading"
+              :height="tableHeightstock"
+              style="width: 98%;margin:auto;margin-top:5px;"
             >
-              <template slot-scope="scope">
-                <span>2019-05-16</span>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-col>
+              <el-table-column label="商品标题" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>Tempered</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="商品分类" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>PC Laptops & Netbooks</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="售价" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>23.33</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="总销量" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>2,195</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="销量" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>2,195</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="销售额" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>2,195</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="交易增幅" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>2,195</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="店铺名称" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>reebok</span>
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="操作时间"
+                header-align="center"
+                align="center"
+                prop="changeTime"
+                :formatter="formatter"
+              >
+                <template slot-scope="scope">
+                  <span>2019-05-16</span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-col>
+        </div>
+      </div>
+      <div v-show="show.ebay">
+        <div class="myCat">
+          <div class="tabPlat">
+            <a
+              :class="platActive==index?'platActive':''"
+              v-for="(item, index) in this.allMenu"
+              :key="index"
+            >{{item.name}}</a>
+            <div class="tabRight">
+              <div class="tr01">
+                <span class="trActive"></span>
+                <P>美国</P>
+              </div>
+              <div class="tr01">
+                <span></span>
+                <P>英国</P>
+              </div>
+              <div class="tr01">
+                <span></span>
+                <P>澳大利亚</P>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="proBox">
+          <el-col :span="24">
+            <el-table
+              :data="nostockdata"
+              border
+              class="elTableForm"
+              :header-cell-style="getRowClass"
+              v-loading="listLoading"
+              :height="tableHeightstock"
+              style="width: 98%;margin:auto;margin-top:5px;"
+            >
+              <el-table-column label="商品标题" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>Tempered</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="商品分类" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>PC Laptops & Netbooks</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="售价" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>23.33</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="总销量" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>2,195</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="销量" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>2,195</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="销售额" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>2,195</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="交易增幅" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>2,195</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="店铺名称" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>reebok</span>
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="操作时间"
+                header-align="center"
+                align="center"
+                prop="changeTime"
+                :formatter="formatter"
+              >
+                <template slot-scope="scope">
+                  <span>2019-05-16</span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-col>
+        </div>
+      </div>
+      <div v-show="show.joom">
+        <div class="myCat">
+          <div class="tabPlat">
+            <a
+              :class="platActive==index?'platActive':''"
+              v-for="(item, index) in this.allMenu"
+              :key="index"
+            >{{item.name}}</a>
+            <div class="tabRight">
+              <div class="tr01">
+                <span class="trActive"></span>
+                <P>美国</P>
+              </div>
+              <div class="tr01">
+                <span></span>
+                <P>英国</P>
+              </div>
+              <div class="tr01">
+                <span></span>
+                <P>澳大利亚</P>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="proBox">
+          <el-col :span="24">
+            <el-table
+              :data="nostockdata"
+              border
+              class="elTableForm"
+              :header-cell-style="getRowClass"
+              v-loading="listLoading"
+              :height="tableHeightstock"
+              style="width: 98%;margin:auto;margin-top:5px;"
+            >
+              <el-table-column label="商品标题" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>Tempered</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="商品分类" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>PC Laptops & Netbooks</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="售价" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>23.33</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="总销量" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>2,195</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="销量" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>2,195</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="销售额" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>2,195</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="交易增幅" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>2,195</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="店铺名称" header-align="center" align="center" prop="sku">
+                <template slot-scope="scope">
+                  <span>reebok</span>
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="操作时间"
+                header-align="center"
+                align="center"
+                prop="changeTime"
+                :formatter="formatter"
+              >
+                <template slot-scope="scope">
+                  <span>2019-05-16</span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-col>
+        </div>
       </div>
     </div>
   </section>
@@ -87,12 +294,20 @@ export default {
   data() {
     return {
       tableHeightstock: window.innerHeight - 160,
-      allMenu: [],
+      allMenuAll: ["Wish", "Ebay", "Joom", "Amazon", "Aliexpress"],
+      activeNameAll: "Wish",
       listLoading: false,
+      platActive: 0,
+      allMenu: [],
       activeName: "/v1/products-engine/watch-category",
       developer: [],
       purchaser: [],
       goodsState: [],
+      show: {
+        wish: true,
+        ebay: false,
+        joom: false
+      },
       condition: {
         sku: null,
         location: null,
@@ -139,6 +354,23 @@ export default {
     }
   },
   methods: {
+    handleClick(tab, event) {
+      if (tab.name === "Wish") {
+        this.show["wish"] = true;
+      } else {
+        this.show["wish"] = false;
+      }
+      if (tab.name === "Ebay") {
+        this.show["ebay"] = true;
+      } else {
+        this.show["ebay"] = false;
+      }
+      if (tab.name === "Joom") {
+        this.show["joom"] = true;
+      } else {
+        this.show["joom"] = false;
+      }
+    },
     formatter(row, column) {
       return row.changeTime ? row.changeTime.substring(0, 16) : "";
     },
@@ -393,31 +625,31 @@ export default {
   padding: 0 20px;
   cursor: pointer;
 }
-.tabRight{
-    float: right;
-    overflow: hidden;
-    margin-right: 10px;
+.tabRight {
+  float: right;
+  overflow: hidden;
+  margin-right: 10px;
 }
-.tr01{
-    float: left;
-    margin: 0 15px;
-    cursor: pointer;
+.tr01 {
+  float: left;
+  margin: 0 15px;
+  cursor: pointer;
 }
-.tr01 span{
-    display: block;
-    width: 12px;
-    height: 12px;
-    border: #ccc solid 1px;
-    border-radius: 50%;
-    float: left;
-    margin-right: 10px;
-    margin-top: 14px;
+.tr01 span {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: #ccc solid 1px;
+  border-radius: 50%;
+  float: left;
+  margin-right: 10px;
+  margin-top: 14px;
 }
-.tr01 p{
-    float: left;
-    margin: 0;
-    padding: 0;
-    line-height: 42px;
+.tr01 p {
+  float: left;
+  margin: 0;
+  padding: 0;
+  line-height: 42px;
 }
 .platActive {
   background-color: #fff;
@@ -430,9 +662,9 @@ export default {
   color: #fff;
   line-height: 35px;
 }
-.trActive{
-    background: #66b1ff;
-    border: #66b1ff solid 1px !important;
+.trActive {
+  background: #66b1ff;
+  border: #66b1ff solid 1px !important;
 }
 @media (max-width: 1400px) {
   .floet01 {

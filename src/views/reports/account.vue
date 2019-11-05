@@ -87,9 +87,6 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="商品名称">
-            <el-input size="small" v-model="condition.goodsName" style="width:18rem;"></el-input>
-          </el-form-item>
           <el-form-item label="出货仓库" class="input">
             <el-select
               size="small"
@@ -103,6 +100,9 @@
               <el-button plain type="info" @click="noselects">取消</el-button>
               <el-option v-for="item in store" :key="item" :value="item"></el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="商品名称">
+            <el-input size="small" v-model="condition.goodsName" style="width:18rem;"></el-input>
           </el-form-item>
 
           <el-form-item label="商品编码">
@@ -142,7 +142,7 @@
             ></el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button size="small" type="primary" class="input" @click="onSubmit(condition)" style="margin-left:25px;">查询</el-button>
+            <el-button size="small" type="primary" class="input" @click="onTop(condition)" style="margin-left:25px;">查询</el-button>
           </el-form-item>
         </el-form>
       </transition>
@@ -170,61 +170,69 @@
       v-loading="listLoading"
       element-loading-text="正在加载中..."
       @sort-change="sortNumber"
-      show-summary
+      :show-summary="showSum"
       :summary-method="getSummaries"
       :height="tableHeight"
       :max-height="tableHeight"
+      ref="table"
       border
       class="elTable"
       :header-cell-style="getRowClass"
       style="width: 100%;font-size:13px;"
     >
-      <el-table-column prop="suffix" label="账号" align="center" :formatter="empty" sortable></el-table-column>
-      <el-table-column prop="pingtai" label="平台" align="center" :formatter="empty" sortable></el-table-column>
-      <el-table-column prop="salesman" label="销售员" align="center" :formatter="empty" sortable></el-table-column>
+      <el-table-column prop="suffix" label="账号" align="center"></el-table-column>
+      <el-table-column prop="pingtai" label="平台" align="center" sortable></el-table-column>
+      <el-table-column prop="salesman" label="销售员" align="center" sortable></el-table-column>
       <el-table-column
         prop="GoodsCode"
         label="商品编码"
         align="center"
-        :formatter="empty"
         sortable="custom"
       ></el-table-column>
       <el-table-column
         prop="GoodsName"
         label="商品名称"
         align="center"
-        :formatter="empty"
         sortable="custom"
       ></el-table-column>
       <el-table-column
         prop="SalerName"
         label="开发员"
         align="center"
-        :formatter="empty"
         sortable="custom"
       ></el-table-column>
-      <el-table-column prop="SKUQty" label="销量" align="center" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column prop="SKUQty" label="销量" align="center" sortable="custom"></el-table-column>
       <el-table-column
         prop="SaleMoneyRmb"
         label="销售额"
         align="center"
-        :formatter="empty"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
+        prop="refund"
+        label="退款￥"
+        align="center"
         sortable="custom"
       ></el-table-column>
       <el-table-column
         prop="ProfitRmb"
         label="利润￥"
         align="center"
-        :formatter="empty"
         sortable="custom"
       ></el-table-column>
-      <el-table-column prop="rate" label="利润率%" align="center" :formatter="empty" sortable="custom"></el-table-column>
+      <el-table-column prop="rate" label="利润率%" align="center" sortable="custom"></el-table-column>
+      <el-table-column
+        prop="refundRate"
+        label="退款利润占比%"
+        align="center"
+        sortable="custom"
+      ></el-table-column>
     </el-table>
     <el-col class="toolbar" v-show="total>0">
       <div class="pagination-container">
         <el-pagination
           :current-page="this.condition.start"
-          :page-sizes="[20,100,200,500,1000]"
+          :page-sizes="[50,100,200,500,1000]"
           :page-size="this.condition.limit"
           background
           layout="total, sizes, slot, prev, pager, next, jumper"
@@ -255,6 +263,14 @@ import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
+      totalQty:null,
+      totalSaleMoney:null,
+      totalRefund:null,
+      totalProfitRmb:null,
+      totalRate:null,
+      totalRefundRate:null,
+      showSum:true,
+      flagShowAll:false,
       currentPage: 1,
       pageSize: null,
       total: null,
@@ -284,10 +300,11 @@ export default {
         sku: "",
         goodsName: "",
         dateType: 1,
+        sort:null,
         dateRange: [],
         account: [],
         start: 1,
-        limit: 20
+        limit: 50
       },
       pickerOptions2: {
         shortcuts: [
@@ -325,7 +342,16 @@ export default {
       }
     },
     showAll() {
-      this.handleSizeChange(this.total);
+      this.flagShowAll=true
+      this.condition.start=1
+      this.tableData=[]
+      this.onSubmit(this.condition);
+    },
+    onTop(form){
+      this.flagShowAll=false
+      form.start = 1 
+      form.limit = 50;
+      this.onSubmit(form);
     },
     handleCurrentChange(val) {
       // this.currentPage = val
@@ -337,6 +363,7 @@ export default {
       //   this.tableData = this.searchTable = response.data.data.items
       //   this.total = Number(response.data.data.totalCount)
       // })
+      this.flagShowAll=false
       this.condition.start = val;
       this.onSubmit(this.condition);
     },
@@ -350,8 +377,15 @@ export default {
       //   this.tableData = this.searchTable = response.data.data.items
       //   this.total = Number(response.data.data.totalCount)
       // })
+      if(this.flagShowAll){
+        this.flagShowAll=false
+        this.condition.start = 1 
+        this.condition.limit = val;
+        this.onSubmit(this.condition);
+      }else{
       this.condition.limit = val;
       this.onSubmit(this.condition);
+      }
     },
     selectalls() {
       const allValues = [];
@@ -463,9 +497,62 @@ export default {
           getaccount(myform).then(response => {
             this.listLoading = false;
             this.tableData = this.searchTable = response.data.data.items;
-            this.total = response.data.data._meta.totalCount;
+            this.totalProfitRmb=response.data.data.extra.totalProfitRmb
+            this.totalQty=response.data.data.extra.totalQty
+            this.totalRate=response.data.data.extra.totalRate
+            this.totalRefund=response.data.data.extra.totalRefund
+            this.totalRefundRate=response.data.data.extra.totalRefundRate
+            this.totalSaleMoney=response.data.data.extra.totalSaleMoney
+            if(this.flagShowAll){
+              this.condition.limit=response.data.data._meta.totalCount;
+            }else{
+              this.total = response.data.data._meta.totalCount;
             this.condition.start = response.data.data._meta.currentPage;
             this.condition.limit = response.data.data._meta.perPage;
+            }
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+    onSubmit1(form) {
+      const myform = JSON.parse(JSON.stringify(form));
+      const height = document.getElementById("app").clientHeight;
+      this.tableHeight = height - 290 + "px";
+      this.show2 = true;
+      this.$refs.condition.validate(valid => {
+        if (valid) {
+          if (myform.member.length === 0 && myform.department.lenght !== 0) {
+            const val = form.department;
+            const res = this.allMember;
+            for (let i = 0; i < val.length; i++) {
+              const per = res.filter(
+                ele =>
+                  (ele.department === val[i] ||
+                    ele.parent_department === val[i]) &&
+                  ele.position === "销售"
+              );
+              this.member.concat(per);
+            }
+            myform.member = this.member.map(m => {
+              return m.username;
+            });
+          }
+          // this.currentPage = 1
+          // this.condition.start = 0
+          this.condition.start++
+          myform.start++
+          myform.limit=50
+          getaccount(myform).then(response => {
+            this.condition.limit=response.data.data._meta.totalCount;
+            this.tableData=this.tableData.concat(response.data.data.items)
+            this.totalProfitRmb=response.data.data.extra.totalProfitRmb
+            this.totalQty=response.data.data.extra.totalQty
+            this.totalRate=response.data.data.extra.totalRate
+            this.totalRefund=response.data.data.extra.totalRefund
+            this.totalRefundRate=response.data.data.extra.totalRefundRate
+            this.totalSaleMoney=response.data.data.extra.totalSaleMoney
           });
         } else {
           return false;
@@ -492,12 +579,45 @@ export default {
     },
     // 数字排序
     sortNumber(column, prop, order) {
-      const data = this.tableData;
-      if (column.order === "descending") {
-        this.tableData = data.sort(compareDown(data, column.prop));
-      } else {
-        this.tableData = data.sort(compareUp(data, column.prop));
+      if(this.flagShowAll){
+        if(column.order==null){
+          this.condition.start=1
+          this.condition.limit=50
+          this.condition.sort=null;
+          this.onSubmit(this.condition);
+        }
+        if (column.order == "ascending") {
+          this.condition.start=1
+          this.condition.limit=50
+          this.condition.sort = column.prop;
+          this.onSubmit(this.condition);
+        }
+        if (column.order == "descending") {
+          this.condition.start=1
+          this.condition.limit=50
+          this.condition.sort ='-'+column.prop;
+          this.onSubmit(this.condition);
+        }
+      }else{
+        if(column.order==null){
+          this.condition.sort=null;
+          this.onSubmit(this.condition);
+        }
+        if (column.order == "ascending") {
+          this.condition.sort = column.prop;
+          this.onSubmit(this.condition);
+        }
+        if (column.order == "descending") {
+          this.condition.sort ='-'+column.prop;
+          this.onSubmit(this.condition);
+        }
       }
+      // const data = this.tableData;
+      // if (column.order === "descending") {
+      //   this.tableData = data.sort(compareDown(data, column.prop));
+      // } else {
+      //   this.tableData = data.sort(compareUp(data, column.prop));
+      // }
     },
     // 小数和空值格式化
     empty(row, column, cellValue, index) {
@@ -507,12 +627,13 @@ export default {
       if (cellValue === "0") {
         return cellValue;
       } else {
+        // return cellValue || "--";
         return cellValue || "--";
       }
     },
     // 导出
     exportExcel(form) {
-      console.log(form)
+      this.listLoading = true;
       const myform = JSON.parse(JSON.stringify(form));
       if (myform.member.length === 0 && myform.department.lenght !== 0) {
         const val = form.department;
@@ -530,6 +651,7 @@ export default {
         });
       }
       APIAccountExport(myform).then(res => {
+        this.listLoading = false;
         const blob = new Blob([res.data], {
           type:
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
@@ -551,38 +673,96 @@ export default {
     },
     // 合计
     getSummaries(param) {
-      const { columns, data } = param;
-      const sums = [];
-      const fileds = columns.map(item => item.property);
-      columns.forEach((column, index) => {
-        if (index === 0) {
-          sums[index] = "合计";
-          return;
-        }
-        const values = data.map(item =>
-          Number(item[column.property] ? item[column.property] : "unkonwn")
-        );
-        if (!values.every(value => isNaN(value))) {
-          sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr);
-            if (!isNaN(value)) {
-              return prev + curr;
-            } else {
-              return prev;
-            }
-          }, 0);
-          sums[index] = Math.round(sums[index] * 100) / 100;
-        } else {
-          sums[index] = "N/A";
-        }
-      });
-      // 退款率和利润率核算
-      sums[fileds.indexOf("rate")] =
-        Math.round(
-          (sums[fileds.indexOf("ProfitRmb")] * 10000) /
-            sums[fileds.indexOf("SaleMoneyRmb")]
-        ) / 100;
-      return sums;
+      if(this.flagShowAll){
+        const { columns, data } = param;
+        const sums = [];
+        const fileds = columns.map(item => item.property);
+        columns.forEach((column, index) => {
+          if (index === 0) {
+            sums[index] = "合计";
+            return;
+          }
+          const values = data.map(item =>
+            Number(item[column.property] ? item[column.property] : "unkonwn")
+          );
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] = Math.round(sums[index] * 100) / 100;
+          } else {
+            sums[index] = "N/A";
+          }
+          let arr=sums
+          if(index==6){
+              sums[index] = this.totalQty;
+          }
+          if(index==7){
+              sums[index] = this.totalSaleMoney;
+          }
+          if(index==8){
+              sums[index] = this.totalRefund;
+          }
+          if(index==9){
+              sums[index] = this.totalProfitRmb;
+          }
+          if(index==10){
+              sums[index] = this.totalRate;
+          }
+          if(index==11){
+              sums[index] = this.totalRefundRate;
+          }
+        });
+        // 退款率和利润率核算
+        sums[fileds.indexOf("rate")] =
+          Math.round(
+            (sums[fileds.indexOf("ProfitRmb")] * 10000) /
+              sums[fileds.indexOf("SaleMoneyRmb")]
+          ) / 100;
+        return sums;        
+      }else{
+        const { columns, data } = param;
+        const sums = [];
+        const fileds = columns.map(item => item.property);
+        columns.forEach((column, index) => {
+          if (index === 0) {
+            sums[index] = "合计";
+            return;
+          }
+          const values = data.map(item =>
+            Number(item[column.property] ? item[column.property] : "unkonwn")
+          );
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] = Math.round(sums[index] * 100) / 100;
+          } else {
+            sums[index] = "N/A";
+          }
+          let arr=sums
+          if(index==11){
+              sums[index] = ((arr[8]/arr[9])*100).toFixed(2);
+          }
+        });
+        // 退款率和利润率核算
+        sums[fileds.indexOf("rate")] =
+          Math.round(
+            (sums[fileds.indexOf("ProfitRmb")] * 10000) /
+              sums[fileds.indexOf("SaleMoneyRmb")]
+          ) / 100;
+        return sums;        
+      }
     }
   },
   mounted() {
@@ -605,6 +785,21 @@ export default {
     getAccount().then(response => {
       this.account = response.data.data;
     });
+    this.dom = this.$refs.table.bodyWrapper
+        this.dom.addEventListener('scroll', () => {
+            // 滚动距离
+            let scrollTop = this.dom.scrollTop
+            // 变量windowHeight是可视区的高度
+            let windowHeight = this.dom.clientHeight || this.dom.clientHeight
+            // 变量scrollHeight是滚动条的总高度
+            let scrollHeight = this.dom.scrollHeight || this.dom.scrollHeight
+            if (scrollTop + windowHeight === scrollHeight) {
+                // 获取到的不是全部数据 当滚动到底部 继续获取新的数据
+                if(this.flagShowAll){                 
+                this.onSubmit1(this.condition)
+                }
+            }
+        })
   }
 };
 </script>

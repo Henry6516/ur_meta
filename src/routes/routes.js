@@ -27,6 +27,7 @@ import saledoc from '../views/data/saledoc.vue'
 import logisticsdoc from '../views/data/logisticsdoc.vue'
 import shortagedoc from '../views/data/shortagedoc.vue'
 import inventory from '../views/data/inventory.vue'
+import departInventory from '../views/data/departInventory.vue'
 // 销售工具
 import ebay from '../views/tool/ebay.vue'
 import ebaysku from '../views/tool/ebaysku.vue'
@@ -117,6 +118,8 @@ import joomId from '../views/productDevelop/collectionJoomDetails.vue'
 import joomRelation from '../views/productDevelop/joomRelation.vue'
 import joomSubscribe from '../views/productDevelop/joomSubscribe.vue'
 import joomSubscribeId from '../views/productDevelop/joomSubscribeId.vue'
+import joomSubscribeShop from '../views/productDevelop/joomSubscribeShop.vue'
+import joomSubscribeIdShop from '../views/productDevelop/joomSubscribeIdShop.vue'
 // 报表中心
 import reportForm from '../views/productDevelop/reportForm.vue'
 import formEdit from '../views/productDevelop/formEdit.vue'
@@ -124,6 +127,9 @@ import formEdit from '../views/productDevelop/formEdit.vue'
 import proRecommend from '../views/analysis/proRecommend.vue'
 import proAnalysis from '../views/analysis/proAnalysis.vue'
 import mySubscribe from '../views/analysis/mySubscribe.vue'
+import pushRules from '../views/analysis/pushRules.vue'
+import ebayRule from '../views/analysis/ebayRule.vue'
+import distributionRule from '../views/analysis/distributionRule.vue'
 
 const routes = [
   {
@@ -221,6 +227,11 @@ const routes = [
         path: '/v1/data-center/stock-status',
         component: inventory,
         name: '库存情况'
+      },
+      {
+        path: '/v1/data-center/stock-depart-detail',
+        component: departInventory,
+        name: '部门库存情况'
       },
       {
         path: '/v1/data-center/sales',
@@ -337,9 +348,24 @@ const routes = [
         name: '我的订阅'
       },
       {
+        path: '/v1/products-engine/rule',
+        component: pushRules,
+        name: '规则推送'
+      },
+      {
+        path: '/v1/products-engine/dev-cat',
+        component: ebayRule,
+        name: 'ebay规则'
+      },
+      {
         path: '/v1/products-engine/analysis',
         component: proAnalysis,
         name: '商品分析'
+      },
+      {
+        path: '/v1/products-engine/dispatch-rule',
+        component: distributionRule,
+        name: '分配规则'
       }
     ]
   },
@@ -613,6 +639,11 @@ const routes = [
             name: 'Joom订阅'
           },
           {
+            path: '/v1/oa-data-mine/joom-store-mine-index',
+            component: joomSubscribeShop,
+            name: 'Joom店铺订阅'
+          },
+          {
             path: '/joom/:id',
             component: joomId,
             name: 'joomId'
@@ -621,6 +652,11 @@ const routes = [
             path: '/joomSubscribeId/:id',
             component: joomSubscribeId,
             name: 'joomSubscribeId'
+          },
+          {
+            path: '/joomSubscribeIdShop/:id',
+            component: joomSubscribeIdShop,
+            name: 'joomSubscribeIdShop'
           },
           {
             path: '/joomRelation/:id',

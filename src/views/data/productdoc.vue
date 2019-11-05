@@ -17,6 +17,9 @@
     <div v-show="show.inventory">
       <inventory></inventory>
     </div>
+    <div v-show="show.departInventory">
+      <departInventory></departInventory>
+    </div>
   </section>
 </template>
 
@@ -25,12 +28,14 @@ import { getMenu } from "../../api/login";
 import pricetrend from "./pricetrend.vue";
 import perform from "./perform.vue";
 import inventory  from "./inventory.vue";
+import departInventory  from "./departInventory.vue";
 
 export default {
   components: {
     pricetrend,
     perform,
-    inventory
+    inventory,
+    departInventory
   },
   data() {
     return {
@@ -39,7 +44,8 @@ export default {
       show: {
         pricetrend: true,
         perform: false,
-        inventory:false
+        inventory:false,
+        departInventory:false
       }
     };
   },
@@ -62,6 +68,11 @@ export default {
         this.show["inventory"] = true;
       } else {
         this.show["inventory"] = false;
+      }
+      if (tab.name === "/v1/data-center/stock-depart-detail") {
+        this.show["departInventory"] = true;
+      } else {
+        this.show["departInventory"] = false;
       }
     }
   },

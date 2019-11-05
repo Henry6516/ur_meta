@@ -1063,20 +1063,25 @@ export default {
   methods: {
     addRess(){
       if(this.wtgpz){
-        this.unPassForm.nid = this.wtgid;
-        this.unPassForm.approvalNote=this.wtgpz
-            checkFailed(this.unPassForm).then(res => {
-              if (res.data.code == 200) {
-                this.$message({
-                  message: "成功",
-                  type: "success"
-                });
-                this.dialogFormVisible1=false
-                this.getData();
-              } else {
-                this.$message.error(res.data.message);
-              }
-        });
+        var tri=this.wtgpz.trim()
+        if(tri==''){
+          this.$message.error('请输入不通过理由不能为空格');
+        }else{
+          this.unPassForm.nid = this.wtgid;
+          this.unPassForm.approvalNote=this.wtgpz
+              checkFailed(this.unPassForm).then(res => {
+                if (res.data.code == 200) {
+                  this.$message({
+                    message: "成功",
+                    type: "success"
+                  });
+                  this.dialogFormVisible1=false
+                  this.getData();
+                } else {
+                  this.$message.error(res.data.message);
+                }
+          });
+        }
       }else{
         this.$message.error('请输入不通过理由');
       }

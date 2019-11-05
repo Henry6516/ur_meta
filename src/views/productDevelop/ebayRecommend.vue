@@ -1,14 +1,14 @@
 <template>
   <section>
     <div>
-      <el-tabs
+      <!-- <el-tabs
         v-model="activeName"
         type="card"
         style="background-color:#fff"
         @tab-click="handleClick"
       >
         <el-tab-pane v-for="(item, index) in this.allMenu" :label="item" :name="item" :key="index"></el-tab-pane>
-      </el-tabs>
+      </el-tabs> -->
       <div v-show="show.wish">
         <div class="proBox">
           <div class="proCase01" v-for="(item,index) in nostockdata" :key="index">
@@ -1073,6 +1073,7 @@ export default {
           this.ebayXp();
         } else {
           this.$message.error(res.data.message);
+          this.ebayXp();
         }
       });
     },
@@ -1089,6 +1090,7 @@ export default {
           this.ebayRx();
         } else {
           this.$message.error(res.data.message);
+          this.ebayRx();
         }
       });
     },
