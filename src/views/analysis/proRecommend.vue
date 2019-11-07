@@ -90,12 +90,12 @@
                   </div>
                   <img :src="scope.row.mainImage" style="width: 60px;height: 60px" />
                 </el-tooltip>
-                <a class="ebayBlocka ebayBlocka1" @click="submissionEbayXp(scope.row._id.oid)">
+                <!-- <a class="ebayBlocka ebayBlocka1" @click="submissionEbayXp(scope.row._id.oid)">
                   <i class="el-icon-star-off" style="margin-right:3px;"></i>认领
                 </a>
                 <a class="ebayBlocka ebayBlocka2" @click="refuseEbayXp(scope.row._id.oid)">
                   <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
-                </a>
+                </a> -->
                 <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
               </template>
             </el-table-column>
@@ -222,12 +222,12 @@
                   </div>
                   <img :src="scope.row.mainImage" style="width: 60px;height: 60px" />
                 </el-tooltip>
-                <a class="ebayBlocka ebayBlocka1" @click="submissionEbayRx(scope.row._id.oid)">
+                <!-- <a class="ebayBlocka ebayBlocka1" @click="submissionEbayRx(scope.row._id.oid)">
                   <i class="el-icon-star-off" style="margin-right:3px;"></i>认领
                 </a>
                 <a class="ebayBlocka ebayBlocka2" @click="refuseEbayRx(scope.row._id.oid)">
                   <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
-                </a>
+                </a> -->
                 <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
               </template>
             </el-table-column>

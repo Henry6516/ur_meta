@@ -71,7 +71,7 @@
                   ></i>
                 </el-tooltip>
               </template>
-            </el-table-column>            
+            </el-table-column>
             <el-table-column property="ruleName" label="规则名称" align="center"></el-table-column>
             <el-table-column property="ruleMark" label="规则备注" align="center"></el-table-column>
             <el-table-column property="soldStart" label="销量大于" align="center" width="80"></el-table-column>
@@ -1420,34 +1420,38 @@ export default {
       });
     },
     addSaveEbayXp() {
-      if (this.addEbayXp.listedTime) {
-        for (let i = 0; i < this.addEbayXp.listedTime.length; i++) {
-          if (this.addEbayXp.listedTime[i] == "今天") {
-            this.addEbayXp.listedTime[i] = 0;
-          }
-          if (this.addEbayXp.listedTime[i] == "昨天") {
-            this.addEbayXp.listedTime[i] = 1;
-          }
-          if (this.addEbayXp.listedTime[i] == "前天") {
-            this.addEbayXp.listedTime[i] = 2;
+      if (this.addEbayXp.ruleName) {
+        if (this.addEbayXp.listedTime) {
+          for (let i = 0; i < this.addEbayXp.listedTime.length; i++) {
+            if (this.addEbayXp.listedTime[i] == "今天") {
+              this.addEbayXp.listedTime[i] = 0;
+            }
+            if (this.addEbayXp.listedTime[i] == "昨天") {
+              this.addEbayXp.listedTime[i] = 1;
+            }
+            if (this.addEbayXp.listedTime[i] == "前天") {
+              this.addEbayXp.listedTime[i] = 2;
+            }
           }
         }
-      }
-      if (this.addEbayXp.salesThreeDayFlag) {
-        this.addEbayXp.salesThreeDayFlag = 1;
+        if (this.addEbayXp.salesThreeDayFlag) {
+          this.addEbayXp.salesThreeDayFlag = 1;
+        } else {
+          this.addEbayXp.salesThreeDayFlag = 0;
+        }
+        ebaySaveRule(this.addEbayXp).then(res => {
+          if (res.data.data) {
+            this.$message({
+              message: "添加成功",
+              type: "success"
+            });
+            this.addEbaydisLoginxp = false;
+            this.getDataEbay();
+          }
+        });
       } else {
-        this.addEbayXp.salesThreeDayFlag = 0;
+        this.$message.error("请填写规则名称");
       }
-      ebaySaveRule(this.addEbayXp).then(res => {
-        if (res.data.data) {
-          this.$message({
-            message: "添加成功",
-            type: "success"
-          });
-          this.addEbaydisLoginxp = false;
-          this.getDataEbay();
-        }
-      });
     },
     saveEbayRx() {
       if (this.ebayRx.salesThreeDayFlag) {
@@ -1467,21 +1471,25 @@ export default {
       });
     },
     addSaveEbayRx() {
-      if (this.addEbayRx.salesThreeDayFlag) {
-        this.addEbayRx.salesThreeDayFlag = 1;
-      } else {
-        this.addEbayRx.salesThreeDayFlag = 0;
-      }
-      ebaySaveRuleHot(this.addEbayRx).then(res => {
-        if (res.data.data) {
-          this.$message({
-            message: "添加成功",
-            type: "success"
-          });
-          this.addEbaydisLoginrx = false;
-          this.getDataEbay();
+      if (this.addEbayRx.ruleName) {
+        if (this.addEbayRx.salesThreeDayFlag) {
+          this.addEbayRx.salesThreeDayFlag = 1;
+        } else {
+          this.addEbayRx.salesThreeDayFlag = 0;
         }
-      });
+        ebaySaveRuleHot(this.addEbayRx).then(res => {
+          if (res.data.data) {
+            this.$message({
+              message: "添加成功",
+              type: "success"
+            });
+            this.addEbaydisLoginrx = false;
+            this.getDataEbay();
+          }
+        });
+      } else {
+        this.$message.error("请填写规则名称");
+      }
     },
     delArt(index, row) {
       this.$confirm("确定删除?", "提示", {

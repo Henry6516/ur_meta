@@ -911,4 +911,17 @@ export function getEbayRx(param) {
     method: 'get'
   })
 }
+export function getEbayXpMind(param) {
+  return request({
+    url: '/products-engine/mind-recommend?plat=ebay&type=new&marketplace=' + param.marketplace + '&page=' + param.page + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
+    method: 'get'
+  })
+}
+
+export function getEbayRxMind(param) {
+  return request({
+    url: '/products-engine/mind-recommend?plat=ebay&type=hot&marketplace=' + param.marketplace + '&page=' + param.page + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
+    method: 'get'
+  })
+}
 

@@ -9,7 +9,12 @@
       >
         <i class="el-icon-plus"></i>添加
       </el-button>
-      <el-table :data="tableData" border style="width:98%;margin-left:0.7%;margin-top:15px;">
+      <el-table
+        :data="tableData"
+        border
+        style="width:98%;margin-left:0.7%;margin-top:15px;"
+        :header-cell-style="getRowClass"
+      >
         <el-table-column type="index" fixed align="center" width="50" header-align="center"></el-table-column>
         <el-table-column label="操作" fixed header-align="center" align="center" width="100">
           <template slot-scope="scope">
@@ -31,7 +36,10 @@
         </el-table-column>
         <el-table-column property="username" label="开发员" align="center"></el-table-column>
         <el-table-column property="depart" label="部门" align="center"></el-table-column>
-        <el-table-column property="ruleId" label="推送规则ID" align="center"></el-table-column>
+        <el-table-column property="ruleType" label="规则类型" align="center">
+          <template slot-scope="scope">{{scope.row.ruleType=='new'?'新品':'热销'}}</template>
+        </el-table-column>
+        <el-table-column property="ruleName" label="推送规则" align="center"></el-table-column>
         <el-table-column property="productNum" label="推送产品数量" align="center"></el-table-column>
         <el-table-column property="category" label="类目" align="center"></el-table-column>
         <el-table-column property="deliveryLocation" label="发货地点" align="center"></el-table-column>
@@ -39,7 +47,7 @@
         <el-table-column property="updatedDate" label="更新时间" align="center"></el-table-column>
       </el-table>
     </div>
-    <el-dialog title="添加" :visible.sync="addebaydisLogin" width="75%">
+    <el-dialog title="添加" :visible.sync="addebaydisLogin" width="78%">
       <el-row style="margin-top: 0">
         <el-col :span="24" class="cTop">
           <el-col :span="6" style="margin-bottom: 20px">
@@ -75,18 +83,72 @@
           </el-col>
           <el-col :span="6" style="margin-bottom: 20px">
             <el-col :span="7">
-              <p class="basp" style="text-align: center;">推送规则ID</p>
+              <p class="basp" style="text-align: center;">规则类型</p>
             </el-col>
             <el-col :span="17">
-              <el-input v-model="addData.ruleId"></el-input>
+              <el-select
+                v-model="addData.ruleType"
+                placeholder="请选择"
+                style="width:100%;"
+                @change="getRuleName($event)"
+              >
+                <el-option
+                  v-for="(item,index) in ruleType"
+                  :index="index"
+                  :key="item.id"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
             </el-col>
           </el-col>
           <el-col :span="6" style="margin-bottom: 20px">
+            <el-col :span="7">
+              <p class="basp" style="text-align: center;">推送规则</p>
+            </el-col>
+            <el-col :span="17">
+              <el-select v-model="addData.ruleName" placeholder="请选择" style="width:100%;">
+                <el-option
+                  v-for="(item,index) in ruleName"
+                  :index="index"
+                  :key="item.id"
+                  :label="item.ruleName"
+                  :value="item.ruleName"
+                ></el-option>
+              </el-select>
+            </el-col>
+          </el-col>
+          <!-- <el-col :span="6" style="margin-bottom: 20px">
             <el-col :span="7">
               <p class="basp" style="text-align: center;">类目规则ID</p>
             </el-col>
             <el-col :span="17">
               <el-input v-model="addData.cateRuleId"></el-input>
+            </el-col>
+          </el-col>-->
+          <el-col :span="6" style="margin-bottom: 20px">
+            <el-col :span="7">
+              <p class="basp" style="text-align: center;">普源类目</p>
+            </el-col>
+            <el-col :span="17">
+              <el-select style="width:100%" v-model="addData.category">
+                <el-option
+                  v-for="(item, key) in pyCate"
+                  :key="item.key"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-col>
+          </el-col>
+          <el-col :span="6" style="margin-bottom: 20px">
+            <el-col :span="7">
+              <p class="basp" style="text-align: center;">发货地点</p>
+            </el-col>
+            <el-col :span="17">
+              <el-select v-model="addData.deliveryLocation" placeholder="请选择" style="width:100%">
+                <el-option v-for="item in place" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
             </el-col>
           </el-col>
           <el-col :span="6" style="margin-bottom: 20px">
@@ -97,22 +159,6 @@
               <el-input v-model="addData.productNum"></el-input>
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">类目</p>
-            </el-col>
-            <el-col :span="17">
-              <el-input v-model="addData.category"></el-input>
-            </el-col>
-          </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">发货地点</p>
-            </el-col>
-            <el-col :span="17">
-              <el-input v-model="addData.deliveryLocation"></el-input>
-            </el-col>
-          </el-col>
         </el-col>
       </el-row>
       <div slot="footer" class="dialog-footer">
@@ -120,7 +166,7 @@
         <el-button type="primary" @click="addsave()">保 存</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="编辑" :visible.sync="datadisLogin" width="75%">
+    <el-dialog title="编辑" :visible.sync="datadisLogin" width="78%">
       <el-row style="margin-top: 0">
         <el-col :span="24" class="cTop">
           <el-col :span="6" style="margin-bottom: 20px">
@@ -156,18 +202,64 @@
           </el-col>
           <el-col :span="6" style="margin-bottom: 20px">
             <el-col :span="7">
-              <p class="basp" style="text-align: center;">推送规则ID</p>
+              <p class="basp" style="text-align: center;">规则类型</p>
             </el-col>
             <el-col :span="17">
-              <el-input v-model="data.ruleId"></el-input>
+              <el-select
+                v-model="data.ruleType"
+                placeholder="请选择"
+                style="width:100%;"
+                @change="getRuleName($event)"
+              >
+                <el-option
+                  v-for="(item,index) in ruleType"
+                  :index="index"
+                  :key="item.id"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
             </el-col>
           </el-col>
           <el-col :span="6" style="margin-bottom: 20px">
             <el-col :span="7">
-              <p class="basp" style="text-align: center;">类目规则ID</p>
+              <p class="basp" style="text-align: center;">推送规则</p>
             </el-col>
             <el-col :span="17">
-              <el-input v-model="data.cateRuleId"></el-input>
+              <el-select v-model="data.ruleName" placeholder="请选择" style="width:100%;">
+                <el-option
+                  v-for="(item,index) in ruleName"
+                  :index="index"
+                  :key="item.id"
+                  :label="item.ruleName"
+                  :value="item.ruleName"
+                ></el-option>
+              </el-select>
+            </el-col>
+          </el-col>
+          <el-col :span="6" style="margin-bottom: 20px">
+            <el-col :span="7">
+              <p class="basp" style="text-align: center;">类目</p>
+            </el-col>
+            <el-col :span="17">
+              <el-select style="width:100%" v-model="data.category">
+                <el-option
+                  v-for="(item, key) in pyCate"
+                  :key="item.key"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-col>
+          </el-col>
+          <el-col :span="6" style="margin-bottom: 20px">
+            <el-col :span="7">
+              <p class="basp" style="text-align: center;">发货地点</p>
+            </el-col>
+            <el-col :span="17">
+              <el-select v-model="data.deliveryLocation" placeholder="请选择" style="width:100%">
+                <el-option v-for="item in place" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
             </el-col>
           </el-col>
           <el-col :span="6" style="margin-bottom: 20px">
@@ -176,22 +268,6 @@
             </el-col>
             <el-col :span="17">
               <el-input v-model="data.productNum"></el-input>
-            </el-col>
-          </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">类目</p>
-            </el-col>
-            <el-col :span="17">
-              <el-input v-model="data.category"></el-input>
-            </el-col>
-          </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">发货地点</p>
-            </el-col>
-            <el-col :span="17">
-              <el-input v-model="data.deliveryLocation"></el-input>
             </el-col>
           </el-col>
         </el-col>
@@ -208,24 +284,41 @@
 import {
   getAllotRule,
   saveAllotRule,
-  DeleteAllotRule
+  DeleteAllotRule,
+  APRengineRule,
+  APRengineRuleHot
 } from "../../api/product";
-import { getMember, getSection } from "../../api/profit";
+import { getMember, getSection, getAttributeInfoCat } from "../../api/profit";
 export default {
   data() {
     return {
       tableData: [],
       department: [],
       member: [],
+      pyCate: [],
+      ruleName: [],
+      place: [
+        "中国",
+        "香港",
+        "美国",
+        "英国",
+        "法国",
+        "德国",
+        "意大利",
+        "澳大利亚"
+      ],
       addData: {
         username: null,
         depart: null,
         ruleId: null,
+        ruleName: null,
+        ruleType: null,
         cateRuleId: null,
         productNum: null,
         category: null,
         deliveryLocation: null
       },
+      ruleType: ["新品", "热销"],
       data: {
         id: null,
         username: null,
@@ -234,6 +327,8 @@ export default {
         cateRuleId: null,
         productNum: null,
         category: null,
+        ruleName: null,
+        ruleType: null,
         deliveryLocation: null
       },
       addebaydisLogin: false,
@@ -241,28 +336,70 @@ export default {
     };
   },
   methods: {
+    getRuleName(e) {
+      this.addData.ruleName = null;
+      this.data.ruleName = null;
+      if (e == "新品") {
+        APRengineRule().then(res => {
+          this.ruleName = res.data.data;
+        });
+      } else {
+        APRengineRuleHot().then(res => {
+          this.ruleName = res.data.data;
+        });
+      }
+    },
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     add() {
       this.addData.username = null;
       this.addData.depart = null;
       this.addData.ruleId = null;
+      this.addData.ruleName = null;
+      this.addData.ruleType = null;
       this.addData.cateRuleId = null;
       this.addData.productNum = null;
       this.addData.category = null;
+      this.ruleName = [];
       this.addData.deliveryLocation = null;
       this.addebaydisLogin = true;
     },
     editArt(index, row) {
-      this.data.id = row._id;
+      this.data.id = row._id.$oid;
       this.data.username = row.username;
       this.data.depart = row.depart;
       this.data.ruleId = row.ruleId;
       this.data.cateRuleId = row.cateRuleId;
       this.data.productNum = row.productNum;
       this.data.category = row.category;
+      this.data.ruleType = row.ruleType;
+      this.data.ruleName = row.ruleName;
       this.data.deliveryLocation = row.deliveryLocation;
+      if (this.data.ruleType == "new") {
+        this.data.ruleType = "新品";
+      } else {
+        this.data.ruleType = "热销";
+      }
       this.datadisLogin = true;
     },
     save() {
+      if (this.data.ruleName) {
+        for (let i = 0; i < this.ruleName.length; i++) {
+          if (this.data.ruleName == this.ruleName[i].ruleName) {
+            this.data.ruleId = this.ruleName[i]._id;
+          }
+        }
+      }
+      if (this.data.ruleType == "新品") {
+        this.data.ruleType = "new";
+      } else {
+        this.data.ruleType = "hot";
+      }
       saveAllotRule(this.data).then(res => {
         if (res.data.data) {
           this.$message({
@@ -289,6 +426,18 @@ export default {
       });
     },
     addsave() {
+      if (this.addData.ruleName) {
+        for (let i = 0; i < this.ruleName.length; i++) {
+          if (this.addData.ruleName == this.ruleName[i].ruleName) {
+            this.addData.ruleId = this.ruleName[i]._id;
+          }
+        }
+      }
+      if (this.addData.ruleType == "新品") {
+        this.addData.ruleType = "new";
+      } else {
+        this.addData.ruleType = "hot";
+      }
       saveAllotRule(this.addData).then(res => {
         if (res.data.data) {
           this.$message({
@@ -313,6 +462,9 @@ export default {
       this.department = res.filter(
         ele => ele.department && ele.type === "业务"
       );
+    });
+    getAttributeInfoCat().then(response => {
+      this.pyCate = response.data.data;
     });
     getMember().then(response => {
       const res = response.data.data;

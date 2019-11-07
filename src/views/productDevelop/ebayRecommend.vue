@@ -491,7 +491,7 @@ import {
   ebayXpRefuse,
   ebayRxRefuse
 } from "../../api/product";
-import { getEbayXp, getEbayRx } from "../../api/profit";
+import { getEbayXpMind, getEbayRxMind } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
@@ -963,7 +963,7 @@ export default {
     },
     ebayXp() {
       this.lodingEbayXp=true
-      getEbayXp(this.condition).then(res => {
+      getEbayXpMind(this.condition).then(res => {
         this.ebayDataXp1 = this.ebayDataXp = res.data.data.items;
         this.totalEbayXp = res.data.data._meta.totalCount;
         this.condition.page = res.data.data._meta.currentPage;
@@ -992,7 +992,7 @@ export default {
     },
     ebayRx() {
       this.lodingEbayRx=true
-      getEbayRx(this.condition1).then(res => {
+      getEbayRxMind(this.condition1).then(res => {
         this.ebayDataRx = this.ebayDataRx1 = res.data.data.items;
         this.totalEbayRx = res.data.data._meta.totalCount;
         this.condition1.page = res.data.data._meta.currentPage;

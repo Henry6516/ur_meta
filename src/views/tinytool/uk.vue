@@ -131,7 +131,7 @@ export default {
       this.listLoading = true
       getUK(this.condition).then(response => {
         this.listLoading = false
-        this.tableData1 = [response.data.data.detail]
+        this.tableData1 = response.data.data.detail
         this.tableData2 = [response.data.data.rate]
         this.tableData3 = [response.data.data.price]
         this.tableData4 = [response.data.data.transport]

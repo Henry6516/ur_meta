@@ -13,6 +13,7 @@
         :data="ebayData"
         border
         :height="tableHeightstock"
+        :header-cell-style="getRowClass"
         style="width:98%;margin-left:0.7%;margin-top:15px;"
       >
         <el-table-column type="index" fixed align="center" width="50" header-align="center"></el-table-column>
@@ -34,10 +35,13 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column property="developer" label="开发员" align="center"></el-table-column>
-        <el-table-column property="marketplace" label="刊登站点" align="center"></el-table-column>
-        <el-table-column property="firstCategory" label="一级类目" align="center"></el-table-column>
-        <el-table-column property="category" label="二级类目" align="center"></el-table-column>
+        <el-table-column property="pyCate" label="普源类目" align="center"></el-table-column>
+        <el-table-column property="plat" label="平台" align="center"></el-table-column>
+        <el-table-column property="marketplace" label="站点" align="center"></el-table-column>
+        <el-table-column property="cate" label="一级类目" align="center"></el-table-column>
+        <el-table-column property="subCate" label="二级类目" align="center"></el-table-column>
+        <el-table-column property="createdDate" label="添加时间" align="center"></el-table-column>
+        <el-table-column property="updatedDate" label="更新时间" align="center"></el-table-column>
       </el-table>
       <el-pagination
         background
@@ -50,25 +54,40 @@
         style="margin: 15px 0;margin-left: 10px;margin-bottom:0"
       ></el-pagination>
     </div>
-    <el-dialog title="编辑" :visible.sync="ebaydisLogin" width="70%">
+    <el-dialog title="编辑" :visible.sync="ebaydisLogin" width="60%">
       <el-row style="margin-top: 0">
         <el-col :span="24" class="cTop">
-          <el-col :span="6" style="margin-bottom: 20px">
+          <el-col :span="8" style="margin-bottom: 20px">
             <el-col :span="6">
-              <p class="basp">开发</p>
+              <p class="basp" style="text-align: center;">普源类目</p>
             </el-col>
             <el-col :span="18">
-              <el-select v-model="ebay.developer" placeholder="请选择" style="width:100%;">
+              <el-select style="width:100%" v-model="ebay.pyCate">
                 <el-option
-                  v-for="(item,key) in member"
+                  v-for="(item, key) in pyCate"
                   :key="item.key"
-                  :label="item.username"
-                  :value="item.username"
+                  :label="item"
+                  :value="item"
                 ></el-option>
               </el-select>
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
+          <el-col :span="8" style="margin-bottom: 20px">
+            <el-col :span="6">
+              <p class="basp" style="text-align: center;">平台</p>
+            </el-col>
+            <el-col :span="18">
+              <el-select style="width:100%" v-model="ebay.plat" @change="getPlatEbay($event)">
+                <el-option
+                  v-for="(item, key) in rulePlat"
+                  :key="item.key"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-col>
+          </el-col>
+          <el-col :span="8" style="margin-bottom: 20px">
             <el-col :span="6">
               <p class="basp" style="text-align: center;">刊登站点</p>
             </el-col>
@@ -79,7 +98,7 @@
                 @change="getOneLowRule($event)"
               >
                 <el-option
-                  v-for="(item, key) in ebayOptions"
+                  v-for="(item, key) in ebayRuleOptions"
                   :key="item.key"
                   :label="item"
                   :value="item"
@@ -87,13 +106,13 @@
               </el-select>
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
+          <el-col :span="8" style="margin-bottom: 20px">
             <el-col :span="6">
               <p class="basp" style="text-align: center;">一级类目</p>
             </el-col>
             <el-col :span="18">
               <el-select
-                v-model="ebay.firstCategory"
+                v-model="ebay.cate"
                 placeholder="请选择"
                 style="width:100%;"
                 @change="getTowLowRule($event)"
@@ -101,23 +120,23 @@
                 <el-option
                   v-for="(item,key) in ebayRuleOne"
                   :key="item.key"
-                  :label="item.category"
-                  :value="item.category"
+                  :label="item.cate"
+                  :value="item.cate"
                 ></el-option>
               </el-select>
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
+          <el-col :span="8" style="margin-bottom: 20px">
             <el-col :span="6">
               <p class="basp" style="text-align: center;">二级类目</p>
             </el-col>
             <el-col :span="18">
-              <el-select v-model="ebay.category" placeholder="请选择" style="width:100%;">
+              <el-select v-model="ebay.subCate" placeholder="请选择" style="width:100%;">
                 <el-option
                   v-for="(item,key) in ebayRuleTwo"
                   :key="item.key"
-                  :label="item.category"
-                  :value="item.category"
+                  :label="item"
+                  :value="item"
                 ></el-option>
               </el-select>
             </el-col>
@@ -129,25 +148,40 @@
         <el-button type="primary" @click="saveEbay()">保 存</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="添加" :visible.sync="addebaydisLogin" width="70%">
+    <el-dialog title="添加" :visible.sync="addebaydisLogin" width="60%">
       <el-row style="margin-top: 0">
         <el-col :span="24" class="cTop">
-          <el-col :span="6" style="margin-bottom: 20px">
+          <el-col :span="8" style="margin-bottom: 20px">
             <el-col :span="6">
-              <p class="basp">开发</p>
+              <p class="basp">普源类目</p>
             </el-col>
             <el-col :span="18">
-              <el-select v-model="addebay.developer" placeholder="请选择" style="width:100%;">
+              <el-select v-model="addebay.pyCate" placeholder="请选择" style="width:100%;">
                 <el-option
-                  v-for="(item,key) in member"
+                  v-for="(item,key) in pyCate"
                   :key="item.key"
-                  :label="item.username"
-                  :value="item.username"
+                  :label="item"
+                  :value="item"
                 ></el-option>
               </el-select>
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
+          <el-col :span="8" style="margin-bottom: 20px">
+            <el-col :span="6">
+              <p class="basp" style="text-align: center;">平台</p>
+            </el-col>
+            <el-col :span="18">
+              <el-select style="width:100%" v-model="addebay.plat" @change="getPlat($event)">
+                <el-option
+                  v-for="(item, key) in rulePlat"
+                  :key="item.key"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-col>
+          </el-col>
+          <el-col :span="8" style="margin-bottom: 20px">
             <el-col :span="6">
               <p class="basp" style="text-align: center;">刊登站点</p>
             </el-col>
@@ -166,13 +200,13 @@
               </el-select>
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
+          <el-col :span="8" style="margin-bottom: 20px">
             <el-col :span="6">
               <p class="basp" style="text-align: center;">一级类目</p>
             </el-col>
             <el-col :span="18">
               <el-select
-                v-model="addebay.firstCategory"
+                v-model="addebay.cate"
                 placeholder="请选择"
                 style="width:100%;"
                 @change="getTowLow($event)"
@@ -180,23 +214,23 @@
                 <el-option
                   v-for="(item,key) in addEbayOne"
                   :key="item.key"
-                  :label="item.category"
-                  :value="item.category"
+                  :label="item.cate"
+                  :value="item.cate"
                 ></el-option>
               </el-select>
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
+          <el-col :span="8" style="margin-bottom: 20px">
             <el-col :span="6">
               <p class="basp" style="text-align: center;">二级类目</p>
             </el-col>
             <el-col :span="18">
-              <el-select v-model="addebay.category" placeholder="请选择" style="width:100%;">
+              <el-select v-model="addebay.subCate" placeholder="请选择" style="width:100%;">
                 <el-option
                   v-for="(item,key) in addEbayTwo"
                   :key="item.key"
-                  :label="item.category"
-                  :value="item.category"
+                  :label="item"
+                  :value="item"
                 ></el-option>
               </el-select>
             </el-col>
@@ -216,9 +250,15 @@ import {
   ebayDevCatRule,
   ebayCatRule,
   ebaySaveDevCat,
-  ebayDeleteDevCat
+  ebayDeleteDevCat,
+  cateRule,
+  getRulePlat,
+  getRuleMarketplace,
+  ruleCategory,
+  ruleSaveCateRule,
+  ruleDeleteCateRule
 } from "../../api/product";
-import { getMember } from "../../api/profit";
+import { getMember,getAttributeInfoCat } from "../../api/profit";
 export default {
   data() {
     return {
@@ -229,38 +269,27 @@ export default {
       tableHeightstock: window.innerHeight - 175,
       ebaydisLogin: false,
       addebaydisLogin: false,
+      pyCate:[],
       condition: {
-        category: null,
-        developer: null,
-        marketplace: null,
         page: 1,
         pageSize: 40
       },
       total: null,
       ebay: {
         id: null,
-        developer: null,
-        category: null,
-        categoryId: null,
-        firstCategory: null,
-        marketplace: null
+        pyCate: null,
+        plat: null,
+        marketplace: null,
+        cate: null,
+        subCate: null
       },
-      ebayOptions: [
-        "EBAY_CH",
-        "EBAY_HK",
-        "EBAY_US",
-        "EBAY_GB",
-        "EBAY_FR",
-        "EBAY_DE",
-        "EBAY_IT",
-        "EBAY_AU"
-      ],
+      ebayOptions: [],
       addebay: {
-        developer: null,
-        category: null,
-        categoryId: null,
-        firstCategory: null,
-        marketplace: null
+        pyCate: null,
+        plat: null,
+        marketplace: null,
+        cate: null,
+        subCate: null
       },
       ebayCat: {
         parentId: null,
@@ -271,66 +300,85 @@ export default {
       ebayCatRuleId: [],
       member: [],
       ebayCatRuleTwo: [],
-      ebayData: []
+      ebayData: [],
+      rulePlat: [],
+      ebayRuleOptions: []
     };
   },
   methods: {
+    getPlat(e) {
+      let obj = {
+        plat: e
+      };
+      getRuleMarketplace(obj).then(res => {
+        if (res.data.data) {
+          this.ebayOptions = res.data.data;
+        }
+      });
+    },
+    getPlatEbay(e) {
+      let obj = {
+        plat: e
+      };
+      getRuleMarketplace(obj).then(res => {
+        if (res.data.data) {
+          this.ebayRuleOptions = res.data.data;
+        }
+      });
+    },
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
     getOneLow(e) {
-      this.addebay.firstCategory = null;
-      this.addebay.category = null;
+      this.addebay.cate = null;
+      this.addebay.subCate = null;
       this.addEbayTwo = [];
       let obj = {
-        parentId: 0,
-        category: null,
+        cate: null,
+        plat: this.addebay.plat,
         marketplace: e
       };
-      ebayCatRule(obj).then(res => {
+      ruleCategory(obj).then(res => {
         this.addEbayOne = res.data.data;
       });
     },
     getTowLow(e) {
-      this.addebay.category = null;
+      this.addebay.subCate = null;
       let obj = {
-        parentId: null,
-        category: null,
-        marketplace: null
+        cate: e,
+        plat: this.addebay.plat,
+        marketplace: this.addebay.marketplace
       };
-      for (let i = 0; i < this.addEbayOne.length; i++) {
-        if (e == this.addEbayOne[i].category) {
-          obj.parentId = this.addEbayOne[i].id;
-        }
-      }
-      ebayCatRule(obj).then(res => {
-        this.addEbayTwo = res.data.data;
+      ruleCategory(obj).then(res => {
+        this.addEbayTwo = res.data.data[0].subCate;
       });
     },
     getOneLowRule(e) {
-      this.ebay.firstCategory = null;
-      this.ebay.category = null;
+      this.ebay.cate = null;
+      this.ebay.subCate = null;
       this.ebayRuleTwo = [];
       let obj = {
-        parentId: 0,
-        category: null,
+        cate: null,
+        plat: this.ebay.plat,
         marketplace: e
       };
-      ebayCatRule(obj).then(res => {
+      ruleCategory(obj).then(res => {
         this.ebayRuleOne = res.data.data;
       });
     },
     getTowLowRule(e) {
-      this.ebay.category = null;
+      this.ebay.subCate = null;
       let obj = {
-        parentId: null,
-        category: null,
-        marketplace: null
+        cate: e,
+        plat: this.ebay.plat,
+        marketplace: this.ebay.marketplace
       };
-      for (let i = 0; i < this.ebayRuleOne.length; i++) {
-        if (e == this.ebayRuleOne[i].category) {
-          obj.parentId = this.ebayRuleOne[i].id;
-        }
-      }
-      ebayCatRule(obj).then(res => {
-        this.ebayRuleTwo = res.data.data;
+      ruleCategory(obj).then(res => {
+        this.ebayRuleTwo = res.data.data[0].subCate;
       });
     },
     handleSizeChange(val) {
@@ -352,28 +400,19 @@ export default {
       });
     },
     add() {
-      this.addebay.developer = null;
-      this.addebay.category = null;
-      this.addebay.firstCategory = null;
+      this.addebay.pyCate = null;
+      this.addebay.plat = null;
       this.addebay.marketplace = null;
+      this.addebay.cate = null;
+      this.addebay.subCate = null;
+      this.ebayOptions = [];
+      this.addEbayOne = [];
+      this.addEbayTwo = [];
       this.addebaydisLogin = true;
     },
     saveEbay() {
-      if (this.ebay.category || this.ebay.firstCategory) {
-        if (this.ebay.category) {
-          for (let i = 0; i < this.ebayRuleTwo.length; i++) {
-            if (this.ebay.category == this.ebayRuleTwo[i].category) {
-              this.ebay.categoryId = this.ebayRuleTwo[i].id;
-            }
-          }
-        } else {
-          for (let i = 0; i < this.ebayRuleOne.length; i++) {
-            if (this.ebay.firstCategory == this.ebayRuleOne[i].category) {
-              this.ebay.categoryId = this.ebayRuleOne[i].id;
-            }
-          }
-        }
-        ebaySaveDevCat(this.ebay).then(res => {
+      if (this.ebay.cate || this.ebay.subCate) {
+        ruleSaveCateRule(this.ebay).then(res => {
           if (res.data.data) {
             this.$message({
               message: "保存成功",
@@ -392,21 +431,8 @@ export default {
       }
     },
     addsaveEbay() {
-      if (this.addebay.category || this.addebay.firstCategory) {
-        if (this.addebay.category) {
-          for (let i = 0; i < this.addEbayTwo.length; i++) {
-            if (this.addebay.category == this.addEbayTwo[i].category) {
-              this.addebay.categoryId = this.addEbayTwo[i].id;
-            }
-          }
-        } else {
-          for (let i = 0; i < this.addEbayOne.length; i++) {
-            if (this.addebay.firstCategory == this.addEbayOne[i].category) {
-              this.addebay.categoryId = this.addEbayOne[i].id;
-            }
-          }
-        }
-        ebaySaveDevCat(this.addebay).then(res => {
+      if (this.addebay.cate || this.addebay.subCate) {
+        ruleSaveCateRule(this.addebay).then(res => {
           if (res.data.data) {
             this.$message({
               message: "保存成功",
@@ -425,36 +451,42 @@ export default {
       }
     },
     editArt(index, row) {
-      this.ebay.developer = row.developer;
-      this.ebay.category = row.category;
-      this.ebay.firstCategory = row.firstCategory;
+      this.ebay.pyCate = row.pyCate;
+      this.ebay.plat = row.plat;
+      this.ebay.cate = row.cate;
+      this.ebay.subCate = row.subCate;
       this.ebay.marketplace = row.marketplace;
-      this.ebay.id = row.id;
-      let obj = {
-        parentId: 0,
-        category: null,
-        marketplace: this.ebay.marketplace
-      };
-      ebayCatRule(obj).then(res => {
-        this.ebayRuleOne = res.data.data;
-        if (row.category && row.firstCategory) {
-          let strObj = {
-            parentId: null,
-            category: null,
-            marketplace: null
-          };
-          for (let i = 0; i < this.ebayRuleOne.length; i++) {
-            if (row.firstCategory == this.ebayRuleOne[i].category) {
-              strObj.parentId = this.ebayRuleOne[i].id;
-            }
+      this.ebay.id = row._id;
+      if (this.ebay.plat) {
+        let obj = {
+          plat: this.ebay.plat
+        };
+        getRuleMarketplace(obj).then(res => {
+          if (res.data.data) {
+            this.ebayRuleOptions = res.data.data;
           }
-          ebayCatRule(strObj).then(res => {
-            this.ebayRuleTwo = res.data.data;
-          });
-        } else {
-          this.ebayRuleTwo = [];
-        }
-      });
+        });
+      }
+      if (this.ebay.marketplace) {
+        let obj = {
+          cate: null,
+          plat: this.ebay.plat,
+          marketplace: this.ebay.marketplace
+        };
+        ruleCategory(obj).then(res => {
+          this.ebayRuleOne = res.data.data;
+        });
+      }
+      if (this.ebay.cate) {
+        let obj = {
+          cate: this.ebay.cate,
+          plat: this.ebay.plat,
+          marketplace: this.ebay.marketplace
+        };
+        ruleCategory(obj).then(res => {
+          this.ebayRuleTwo = res.data.data[0].subCate;
+        });
+      }
       this.ebaydisLogin = true;
     },
     delArt(index, row) {
@@ -465,9 +497,9 @@ export default {
       })
         .then(() => {
           let conId = {
-            id: row.id
+            id: row._id
           };
-          ebayDeleteDevCat(conId).then(res => {
+          ruleDeleteCateRule(conId).then(res => {
             if (res.data.message == "success") {
               this.$message({
                 message: "删除成功",
@@ -480,11 +512,22 @@ export default {
         .catch(() => {});
     },
     getData() {
-      ebayDevCatRule(this.condition).then(res => {
+      cateRule(this.condition).then(res => {
         this.ebayData = res.data.data.items;
         this.total = res.data.data._meta.totalCount;
         this.condition.pageSize = res.data.data._meta.perPage;
         this.condition.page = res.data.data._meta.currentPage;
+      });
+      getRulePlat().then(res => {
+        this.rulePlat = res.data.data;
+        // this.total = res.data.data._meta.totalCount;
+        // this.condition.pageSize = res.data.data._meta.perPage;
+        // this.condition.page = res.data.data._meta.currentPage;
+      });
+    },
+    getCate() {
+      getRulePlat().then(res => {
+        this.rulePlat = res.data.data;
       });
     },
     getDataCategory() {
@@ -502,7 +545,11 @@ export default {
   },
   mounted() {
     this.getData();
+    this.getCate();
     this.getDataCategory();
+    getAttributeInfoCat().then(response => {
+      this.pyCate = response.data.data;
+    });
     getMember().then(response => {
       const res = response.data.data;
       this.member = res.filter(ele => ele.position === "开发");

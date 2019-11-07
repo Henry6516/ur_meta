@@ -1604,3 +1604,51 @@ export function DeleteAllotRule(param) {
     data
   })
 }
+
+export function cateRule(param) {
+  return request({
+    url: '/products-engine/cate-rule?page=' + param.page,
+    method: 'get'
+  })
+}
+
+export function getRulePlat() {
+  return request({
+    url: '/products-engine/plat',
+    method: 'get'
+  })
+}
+
+export function getRuleMarketplace(param) {
+  return request({
+    url: '/products-engine/marketplace?plat=' + param.plat,
+    method: 'get'
+  })
+}
+
+export function ruleCategory(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/category',
+    method: 'post',
+    data
+  })
+}
+
+export function ruleSaveCateRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/save-cate-rule',
+    method: 'post',
+    data
+  })
+}
+
+export function ruleDeleteCateRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/delete-cate-rule',
+    method: 'post',
+    data
+  })
+}
