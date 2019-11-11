@@ -422,7 +422,7 @@
       <el-dialog title :visible.sync="dialogEbayXpRefuse">
         <el-row>
           <el-col :span="24">
-            <el-col :span="4" class="basp">过滤原因</el-col>
+            <el-col :span="4" class="basp"><span style="color:red">*</span>过滤原因</el-col>
             <el-col :span="18">
               <el-select
                 v-model="ebayXpText"
@@ -451,7 +451,7 @@
       <el-dialog title :visible.sync="dialogEbayRxRefuse">
         <el-row>
           <el-col :span="24">
-            <el-col :span="4" class="basp">过滤原因</el-col>
+            <el-col :span="4" class="basp"><span style="color:red">*</span>过滤原因</el-col>
             <el-col :span="18">
               <el-select
                 v-model="ebayRxText"
@@ -551,13 +551,13 @@ export default {
         ]
       },
       reason: [
-        "产品重复",
-        "产品侵权",
-        "产品不好运输",
-        "销量不好",
-        "找不到货源",
-        "价格没有优势",
-        "产品评价低",
+        "1：产品重复",
+        "2：产品侵权",
+        "3：产品不好运输",
+        "4：销量不好",
+        "5：找不到货源",
+        "6：价格没有优势",
+        "7：产品评价低",
         "其他(可以手动输入文字)"
       ],
       ebayOptions: [
@@ -645,7 +645,7 @@ export default {
         if (this.ebayXpText && this.ebayXpText1) {
           var condition = {
             id: this.ebayXpId,
-            reason: this.ebayXpText1
+            reason: '8：其他:'+this.ebayXpText1
           };
         } else {
           var condition = {
@@ -659,6 +659,7 @@ export default {
               message: "过滤成功",
               type: "success"
             });
+            this.proTotalXp=this.proTotalXp-1
             this.ebayXp();
           } else {
             this.$message.error(res.data.message);
@@ -689,6 +690,7 @@ export default {
               message: "过滤成功",
               type: "success"
             });
+            this.proTotalRx=this.proTotalRx-1
             this.ebayRx();
           } else {
             this.$message.error(res.data.message);
@@ -1070,6 +1072,7 @@ export default {
             message: "开发成功",
             type: "success"
           });
+          this.proTotalXp=this.proTotalXp-1
           this.ebayXp();
         } else {
           this.$message.error(res.data.message);
@@ -1087,6 +1090,7 @@ export default {
             message: "开发成功",
             type: "success"
           });
+          this.proTotalRx=this.proTotalRx-1
           this.ebayRx();
         } else {
           this.$message.error(res.data.message);

@@ -43,120 +43,90 @@
         <el-table-column property="productNum" label="推送产品数量" align="center"></el-table-column>
         <el-table-column property="category" label="类目" align="center"></el-table-column>
         <el-table-column property="deliveryLocation" label="发货地点" align="center"></el-table-column>
-        <el-table-column property="createdDate" label="添加时间" align="center"></el-table-column>
-        <el-table-column property="updatedDate" label="更新时间" align="center"></el-table-column>
+        <el-table-column property="createdDate" label="添加时间" align="center">
+          <template slot-scope="scope">
+              {{scope.row.createdDate | cutOutDate}}
+            </template>
+        </el-table-column>
+        <el-table-column property="updatedDate" label="更新时间" align="center">
+          <template slot-scope="scope">
+              {{scope.row.updatedDate | cutOutDate}}
+            </template>
+        </el-table-column>
       </el-table>
     </div>
-    <el-dialog title="添加" :visible.sync="addebaydisLogin" width="78%">
+    <el-dialog title="添加" :visible.sync="addebaydisLogin" width="78%" :close-on-click-modal="false">
       <el-row style="margin-top: 0">
-        <el-col :span="24" class="cTop">
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp">开发</p>
+        <el-col :span="24" class="cTop cTop1">
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">部 门</p>
             </el-col>
-            <el-col :span="17">
-              <el-select v-model="addData.username" placeholder="请选择" style="width:100%;">
-                <el-option
-                  v-for="(item,key) in member"
-                  :key="item.key"
-                  :label="item.username"
-                  :value="item.username"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:3px;">
+              <el-radio-group v-model="addData.depart">
+                <el-radio v-for='(item,index) in department' :key="index" :label="item.department" @change="getRuleDev(item.department)">{{item.department}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp">部门</p>
+          <el-col :span="24" style="margin-bottom: 12px" class="cTop1">
+            <el-col :span="2">
+              <p class="baspOne" style="padding-bottom:12px;">开发员</p>
             </el-col>
-            <el-col :span="17">
-              <el-select v-model="addData.depart" placeholder="请选择" style="width:100%;">
-                <el-option
-                  v-for="(item,index) in department"
-                  :index="index"
-                  :key="item.id"
-                  :label="item.department"
-                  :value="item.department"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:3px;">
+              <el-radio-group v-model="addData.username">
+                <el-radio v-for='(item,index) in devData' :key="index" :label="item.username">{{item.username}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">规则类型</p>
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">发货地点</p>
             </el-col>
-            <el-col :span="17">
-              <el-select
-                v-model="addData.ruleType"
-                placeholder="请选择"
-                style="width:100%;"
-                @change="getRuleName($event)"
-              >
-                <el-option
-                  v-for="(item,index) in ruleType"
-                  :index="index"
-                  :key="item.id"
-                  :label="item"
-                  :value="item"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:3px;">
+              <el-radio-group v-model="addData.deliveryLocation">
+                <el-radio v-for='(item,index) in place' :key="index" :label="item">{{item}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">推送规则</p>
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">普源类目</p>
             </el-col>
-            <el-col :span="17">
-              <el-select v-model="addData.ruleName" placeholder="请选择" style="width:100%;">
-                <el-option
-                  v-for="(item,index) in ruleName"
-                  :index="index"
-                  :key="item.id"
-                  :label="item.ruleName"
-                  :value="item.ruleName"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-radio-group v-model="addData.category">
+                <el-radio v-for='(item,index) in pyCate' :key="index" :label="item">{{item}}</el-radio>
+              </el-radio-group>
+              <!-- <el-checkbox-group v-model="category" @change="handleCheckedCitiesChange">
+                <el-checkbox v-for='(item,index) in pyCate' :key="index" :label="item" :value="item" @change="checkinlist(item)"></el-checkbox>
+              </el-checkbox-group> -->
             </el-col>
           </el-col>
-          <!-- <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">类目规则ID</p>
+          <el-col :span="24" style="margin-bottom: 25px">
+            <el-col :span="2">
+              <p class="baspOne">推送数量</p>
             </el-col>
-            <el-col :span="17">
-              <el-input v-model="addData.cateRuleId"></el-input>
-            </el-col>
-          </el-col>-->
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">普源类目</p>
-            </el-col>
-            <el-col :span="17">
-              <el-select style="width:100%" v-model="addData.category">
-                <el-option
-                  v-for="(item, key) in pyCate"
-                  :key="item.key"
-                  :label="item"
-                  :value="item"
-                ></el-option>
-              </el-select>
-            </el-col>
-          </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">发货地点</p>
-            </el-col>
-            <el-col :span="17">
-              <el-select v-model="addData.deliveryLocation" placeholder="请选择" style="width:100%">
-                <el-option v-for="item in place" :key="item" :label="item" :value="item"></el-option>
-              </el-select>
-            </el-col>
-          </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">推送产品数量</p>
-            </el-col>
-            <el-col :span="17">
+            <el-col :span="21">
               <el-input v-model="addData.productNum"></el-input>
+            </el-col>
+          </el-col>
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">规则类型</p>
+            </el-col>
+            <el-col :span="22" style="margin-top:3px;">
+              <el-radio-group v-model="addData.ruleType">
+                <el-radio v-for='(item,index) in ruleType' :key="index" :label="item" @change="getRuleName(item)">{{item}}</el-radio>
+              </el-radio-group>
+            </el-col>
+          </el-col>
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">推送规则</p>
+            </el-col>
+            <el-col :span="22" style="margin-top:3px;">
+              <el-radio-group v-model="addData.ruleName">
+                <el-radio v-for='(item,index) in ruleName' :key="index" :label="item.ruleName">{{item.ruleName}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
         </el-col>
@@ -166,108 +136,78 @@
         <el-button type="primary" @click="addsave()">保 存</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="编辑" :visible.sync="datadisLogin" width="78%">
+    <el-dialog title="编辑" :visible.sync="datadisLogin" width="78%" :close-on-click-modal="false">
       <el-row style="margin-top: 0">
-        <el-col :span="24" class="cTop">
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp">开发</p>
+        <el-col :span="24" class="cTop cTop1">
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">部 门</p>
             </el-col>
-            <el-col :span="17">
-              <el-select v-model="data.username" placeholder="请选择" style="width:100%;">
-                <el-option
-                  v-for="(item,key) in member"
-                  :key="item.key"
-                  :label="item.username"
-                  :value="item.username"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:3px;">
+              <el-radio-group v-model="data.depart">
+                <el-radio v-for='(item,index) in department' :key="index" :label="item.department" @change="getRuleDev(item.department)">{{item.department}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp">部门</p>
+          <el-col :span="24" style="margin-bottom: 15px" class="cTop1">
+            <el-col :span="2">
+              <p class="baspOne">开发员</p>
             </el-col>
-            <el-col :span="17">
-              <el-select v-model="data.depart" placeholder="请选择" style="width:100%;">
-                <el-option
-                  v-for="(item,index) in department"
-                  :index="index"
-                  :key="item.id"
-                  :label="item.department"
-                  :value="item.department"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:3px;">
+              <el-radio-group v-model="data.username">
+                <el-radio v-for='(item,index) in devData' :key="index" :label="item.username">{{item.username}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">规则类型</p>
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">发货地点</p>
             </el-col>
-            <el-col :span="17">
-              <el-select
-                v-model="data.ruleType"
-                placeholder="请选择"
-                style="width:100%;"
-                @change="getRuleName($event)"
-              >
-                <el-option
-                  v-for="(item,index) in ruleType"
-                  :index="index"
-                  :key="item.id"
-                  :label="item"
-                  :value="item"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:3px;">
+              <el-radio-group v-model="data.deliveryLocation">
+                <el-radio v-for='(item,index) in place' :key="index" :label="item">{{item}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">推送规则</p>
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">普源类目</p>
             </el-col>
-            <el-col :span="17">
-              <el-select v-model="data.ruleName" placeholder="请选择" style="width:100%;">
-                <el-option
-                  v-for="(item,index) in ruleName"
-                  :index="index"
-                  :key="item.id"
-                  :label="item.ruleName"
-                  :value="item.ruleName"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-radio-group v-model="data.category">
+                <el-radio v-for='(item,index) in pyCate' :key="index" :label="item">{{item}}</el-radio>
+              </el-radio-group>
+              <!-- <el-checkbox-group v-model="category" @change="handleCheckedCitiesChange">
+                <el-checkbox v-for='(item,index) in pyCate' :key="index" :label="item" :value="item" @change="checkinlist(item)"></el-checkbox>
+              </el-checkbox-group> -->
             </el-col>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">类目</p>
+          <el-col :span="24" style="margin-bottom: 20px">
+            <el-col :span="2">
+              <p class="baspOne" style="text-align: center;">推送数量</p>
             </el-col>
-            <el-col :span="17">
-              <el-select style="width:100%" v-model="data.category">
-                <el-option
-                  v-for="(item, key) in pyCate"
-                  :key="item.key"
-                  :label="item"
-                  :value="item"
-                ></el-option>
-              </el-select>
-            </el-col>
-          </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">发货地点</p>
-            </el-col>
-            <el-col :span="17">
-              <el-select v-model="data.deliveryLocation" placeholder="请选择" style="width:100%">
-                <el-option v-for="item in place" :key="item" :label="item" :value="item"></el-option>
-              </el-select>
-            </el-col>
-          </el-col>
-          <el-col :span="6" style="margin-bottom: 20px">
-            <el-col :span="7">
-              <p class="basp" style="text-align: center;">推送产品数量</p>
-            </el-col>
-            <el-col :span="17">
+            <el-col :span="21">
               <el-input v-model="data.productNum"></el-input>
+            </el-col>
+          </el-col>
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">规则类型</p>
+            </el-col>
+            <el-col :span="22" style="margin-top:3px;">
+              <el-radio-group v-model="data.ruleType">
+                <el-radio v-for='(item,index) in ruleType' :key="index" :label="item" @change="getRuleName(item)">{{item}}</el-radio>
+              </el-radio-group>
+            </el-col>
+          </el-col>
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">推送规则</p>
+            </el-col>
+            <el-col :span="22" style="margin-top:3px;">
+              <el-radio-group v-model="data.ruleName">
+                <el-radio v-for='(item,index) in ruleName' :key="index" :label="item.ruleName">{{item.ruleName}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
         </el-col>
@@ -307,6 +247,7 @@ export default {
         "意大利",
         "澳大利亚"
       ],
+      devData:[],
       addData: {
         username: null,
         depart: null,
@@ -315,9 +256,10 @@ export default {
         ruleType: null,
         cateRuleId: null,
         productNum: null,
-        category: null,
+        category: [],
         deliveryLocation: null
       },
+      category:[],
       ruleType: ["新品", "热销"],
       data: {
         id: null,
@@ -335,7 +277,29 @@ export default {
       datadisLogin: false
     };
   },
+  filters: {
+    cutOutDate(value){
+      value = value.substring(0, 11);
+      return value;
+    },
+  },
   methods: {
+    getRuleDev(val){
+      let arr=this.member
+      let stj=[]
+      for(let i=0;i<arr.length;i++){
+        if(arr[i].department==val || arr[i].parent_department==val){
+          stj.push(arr[i])
+        }
+      }
+      this.devData=stj
+    },
+    handleCheckedCitiesChange(val){
+      console.log(val)
+    },
+    checkinlist(val){
+      console.log(val)
+    },
     getRuleName(e) {
       this.addData.ruleName = null;
       this.data.ruleName = null;
@@ -366,6 +330,7 @@ export default {
       this.addData.productNum = null;
       this.addData.category = null;
       this.ruleName = [];
+      this.devData=[];
       this.addData.deliveryLocation = null;
       this.addebaydisLogin = true;
     },
@@ -381,10 +346,27 @@ export default {
       this.data.ruleName = row.ruleName;
       this.data.deliveryLocation = row.deliveryLocation;
       if (this.data.ruleType == "new") {
+        APRengineRule().then(res => {
+          this.ruleName = res.data.data;
+        });
         this.data.ruleType = "新品";
       } else {
+        APRengineRuleHot().then(res => {
+          this.ruleName = res.data.data;
+        });
         this.data.ruleType = "热销";
       }
+      if(this.data.depart){
+        const val=this.data.depart
+        let arr=this.member
+        let stj=[]
+        for(let i=0;i<arr.length;i++){
+          if(arr[i].department==val || arr[i].parent_department==val){
+            stj.push(arr[i])
+          }
+        }
+        this.devData=stj
+       }
       this.datadisLogin = true;
     },
     save() {
@@ -478,10 +460,31 @@ export default {
 .basp {
   text-align: center;
 }
+.baspOne{
+  text-align: center;
+  margin: 0;
+  color: #3c8dbc;
+}
 @media (max-width: 1500px) {
   .basp {
     text-align: center;
     font-size: 12px;
   }
+}
+</style>
+<style>
+.cTop1 .el-radio+.el-radio{
+  margin-left: 0;
+  margin-bottom: 15px;
+}
+.cTop1 .el-radio{
+  width: 90px;
+  margin-right: 10px;
+}
+.cTop1 .el-checkbox{
+  width: 90px;
+  margin-left: 0;
+  margin-right: 10px;
+  margin-bottom: 15px;
 }
 </style>

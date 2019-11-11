@@ -40,8 +40,16 @@
         <el-table-column property="marketplace" label="站点" align="center"></el-table-column>
         <el-table-column property="cate" label="一级类目" align="center"></el-table-column>
         <el-table-column property="subCate" label="二级类目" align="center"></el-table-column>
-        <el-table-column property="createdDate" label="添加时间" align="center"></el-table-column>
-        <el-table-column property="updatedDate" label="更新时间" align="center"></el-table-column>
+        <el-table-column property="createdDate" label="添加时间" align="center">
+            <template slot-scope="scope">
+              {{scope.row.createdDate | cutOutDate}}
+            </template>
+        </el-table-column>
+        <el-table-column property="updatedDate" label="更新时间" align="center">
+          <template slot-scope="scope">
+              {{scope.row.updatedDate | cutOutDate}}
+            </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         background
@@ -54,91 +62,60 @@
         style="margin: 15px 0;margin-left: 10px;margin-bottom:0"
       ></el-pagination>
     </div>
-    <el-dialog title="编辑" :visible.sync="ebaydisLogin" width="60%">
+    <el-dialog title="编辑" :visible.sync="ebaydisLogin" width="70%" :close-on-click-modal="false">
       <el-row style="margin-top: 0">
-        <el-col :span="24" class="cTop">
-          <el-col :span="8" style="margin-bottom: 20px">
-            <el-col :span="6">
-              <p class="basp" style="text-align: center;">普源类目</p>
+        <el-col :span="24" class="cTop cTop2">
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">普源类目</p>
             </el-col>
-            <el-col :span="18">
-              <el-select style="width:100%" v-model="ebay.pyCate">
-                <el-option
-                  v-for="(item, key) in pyCate"
-                  :key="item.key"
-                  :label="item"
-                  :value="item"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-radio-group v-model="ebay.pyCate">
+                <el-radio v-for='(item,index) in pyCate' :key="index" :label="item">{{item}}</el-radio>
+              </el-radio-group>
+              <!-- <el-checkbox-group v-model="category" @change="handleCheckedCitiesChange">
+                <el-checkbox v-for='(item,index) in pyCate' :key="index" :label="item" :value="item" @change="checkinlist(item)"></el-checkbox>
+              </el-checkbox-group> -->
             </el-col>
           </el-col>
-          <el-col :span="8" style="margin-bottom: 20px">
-            <el-col :span="6">
-              <p class="basp" style="text-align: center;">平台</p>
+          <el-col :span="24" style="margin-bottom: 12px">
+            <el-col :span="2">
+              <p class="baspOne">平台</p>
             </el-col>
-            <el-col :span="18">
-              <el-select style="width:100%" v-model="ebay.plat" @change="getPlatEbay($event)">
-                <el-option
-                  v-for="(item, key) in rulePlat"
-                  :key="item.key"
-                  :label="item"
-                  :value="item"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-radio-group v-model="ebay.plat">
+                <el-radio v-for='(item,index) in rulePlat' :key="index" @change="getPlatEbay(item)" :label="item">{{item}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
-          <el-col :span="8" style="margin-bottom: 20px">
-            <el-col :span="6">
-              <p class="basp" style="text-align: center;">刊登站点</p>
+          <el-col :span="24" style="margin-bottom: 12px">
+            <el-col :span="2">
+              <p class="baspOne">刊登站点</p>
             </el-col>
-            <el-col :span="18">
-              <el-select
-                style="width:100%"
-                v-model="ebay.marketplace"
-                @change="getOneLowRule($event)"
-              >
-                <el-option
-                  v-for="(item, key) in ebayRuleOptions"
-                  :key="item.key"
-                  :label="item"
-                  :value="item"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-radio-group v-model="ebay.marketplace">
+                <el-radio v-for='(item,index) in ebayRuleOptions' :key="index" @change="getOneLowRule(item)" :label="item">{{item}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
-          <el-col :span="8" style="margin-bottom: 20px">
-            <el-col :span="6">
-              <p class="basp" style="text-align: center;">一级类目</p>
+          <el-col :span="24" style="margin-bottom: 12px" class="topn">
+            <el-col :span="2">
+              <p class="baspOne">一级类目</p>
             </el-col>
-            <el-col :span="18">
-              <el-select
-                v-model="ebay.cate"
-                placeholder="请选择"
-                style="width:100%;"
-                @change="getTowLowRule($event)"
-              >
-                <el-option
-                  v-for="(item,key) in ebayRuleOne"
-                  :key="item.key"
-                  :label="item.cate"
-                  :value="item.cate"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-radio-group v-model="ebay.cate">
+                <el-radio v-for='(item,index) in ebayRuleOne' :key="index" @change="getTowLowRule(item.cate)" :label="item.cate">{{item.cate}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
-          <el-col :span="8" style="margin-bottom: 20px">
-            <el-col :span="6">
-              <p class="basp" style="text-align: center;">二级类目</p>
+          <el-col :span="24" style="margin-bottom: 0px" class="topn">
+            <el-col :span="2">
+              <p class="baspOne">二级类目</p>
             </el-col>
-            <el-col :span="18">
-              <el-select v-model="ebay.subCate" placeholder="请选择" style="width:100%;">
-                <el-option
-                  v-for="(item,key) in ebayRuleTwo"
-                  :key="item.key"
-                  :label="item"
-                  :value="item"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-radio-group v-model="ebay.subCate">
+                <el-radio v-for='(item,index) in ebayRuleTwo' :key="index" :label="item">{{item}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
         </el-col>
@@ -148,91 +125,60 @@
         <el-button type="primary" @click="saveEbay()">保 存</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="添加" :visible.sync="addebaydisLogin" width="60%">
+    <el-dialog title="添加" :visible.sync="addebaydisLogin" width="70%" :close-on-click-modal="false">
       <el-row style="margin-top: 0">
-        <el-col :span="24" class="cTop">
-          <el-col :span="8" style="margin-bottom: 20px">
-            <el-col :span="6">
-              <p class="basp">普源类目</p>
+        <el-col :span="24" class="cTop cTop2">
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">普源类目</p>
             </el-col>
-            <el-col :span="18">
-              <el-select v-model="addebay.pyCate" placeholder="请选择" style="width:100%;">
-                <el-option
-                  v-for="(item,key) in pyCate"
-                  :key="item.key"
-                  :label="item"
-                  :value="item"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-radio-group v-model="addebay.pyCate">
+                <el-radio v-for='(item,index) in pyCate' :key="index" :label="item">{{item}}</el-radio>
+              </el-radio-group>
+              <!-- <el-checkbox-group v-model="category" @change="handleCheckedCitiesChange">
+                <el-checkbox v-for='(item,index) in pyCate' :key="index" :label="item" :value="item" @change="checkinlist(item)"></el-checkbox>
+              </el-checkbox-group> -->
             </el-col>
           </el-col>
-          <el-col :span="8" style="margin-bottom: 20px">
-            <el-col :span="6">
-              <p class="basp" style="text-align: center;">平台</p>
+          <el-col :span="24" style="margin-bottom: 12px">
+            <el-col :span="2">
+              <p class="baspOne">平台</p>
             </el-col>
-            <el-col :span="18">
-              <el-select style="width:100%" v-model="addebay.plat" @change="getPlat($event)">
-                <el-option
-                  v-for="(item, key) in rulePlat"
-                  :key="item.key"
-                  :label="item"
-                  :value="item"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-radio-group v-model="addebay.plat">
+                <el-radio v-for='(item,index) in rulePlat' :key="index" @change="getPlat(item)" :label="item">{{item}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
-          <el-col :span="8" style="margin-bottom: 20px">
-            <el-col :span="6">
-              <p class="basp" style="text-align: center;">刊登站点</p>
+          <el-col :span="24" style="margin-bottom: 12px">
+            <el-col :span="2">
+              <p class="baspOne">刊登站点</p>
             </el-col>
-            <el-col :span="18">
-              <el-select
-                style="width:100%"
-                v-model="addebay.marketplace"
-                @change="getOneLow($event)"
-              >
-                <el-option
-                  v-for="(item, key) in ebayOptions"
-                  :key="item.key"
-                  :label="item"
-                  :value="item"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-radio-group v-model="addebay.marketplace">
+                <el-radio v-for='(item,index) in ebayOptions' :key="index" @change="getOneLow(item)" :label="item">{{item}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
-          <el-col :span="8" style="margin-bottom: 20px">
-            <el-col :span="6">
-              <p class="basp" style="text-align: center;">一级类目</p>
+          <el-col :span="24" style="margin-bottom: 12px" class="topn">
+            <el-col :span="2">
+              <p class="baspOne">一级类目</p>
             </el-col>
-            <el-col :span="18">
-              <el-select
-                v-model="addebay.cate"
-                placeholder="请选择"
-                style="width:100%;"
-                @change="getTowLow($event)"
-              >
-                <el-option
-                  v-for="(item,key) in addEbayOne"
-                  :key="item.key"
-                  :label="item.cate"
-                  :value="item.cate"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-radio-group v-model="addebay.cate">
+                <el-radio v-for='(item,index) in addEbayOne' :key="index" @change="getTowLow(item.cate)" :label="item.cate">{{item.cate}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
-          <el-col :span="8" style="margin-bottom: 20px">
-            <el-col :span="6">
-              <p class="basp" style="text-align: center;">二级类目</p>
+          <el-col :span="24" style="margin-bottom: 0px" class="topn">
+            <el-col :span="2">
+              <p class="baspOne">二级类目</p>
             </el-col>
-            <el-col :span="18">
-              <el-select v-model="addebay.subCate" placeholder="请选择" style="width:100%;">
-                <el-option
-                  v-for="(item,key) in addEbayTwo"
-                  :key="item.key"
-                  :label="item"
-                  :value="item"
-                ></el-option>
-              </el-select>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-radio-group v-model="addebay.subCate">
+                <el-radio v-for='(item,index) in addEbayTwo' :key="index" :label="item">{{item}}</el-radio>
+              </el-radio-group>
             </el-col>
           </el-col>
         </el-col>
@@ -304,6 +250,12 @@ export default {
       rulePlat: [],
       ebayRuleOptions: []
     };
+  },
+  filters: {
+    cutOutDate(value){
+      value = value.substring(0, 11);
+      return value;
+    },
   },
   methods: {
     getPlat(e) {
@@ -561,5 +513,28 @@ export default {
 <style scoped>
 .basp {
   text-align: center;
+}
+.baspOne{
+  text-align: center;
+  margin: 0;
+  color: #3c8dbc;
+  padding-bottom: 10px;
+}
+</style>
+<style>
+.cTop2 .el-radio+.el-radio{
+  margin-left: 0;
+  margin-bottom: 15px;
+}
+.cTop2 .el-radio{
+  margin-right: 15px;
+}
+.cTop2 .el-checkbox{
+  margin-left: 0;
+  margin-right: 10px;
+  margin-bottom: 15px;
+}
+.topn .el-radio{
+  width: 375px;
 }
 </style>
