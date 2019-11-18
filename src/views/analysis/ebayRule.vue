@@ -36,19 +36,27 @@
           </template>
         </el-table-column>
         <el-table-column property="pyCate" label="普源类目" align="center"></el-table-column>
-        <el-table-column property="plat" label="平台" align="center"></el-table-column>
-        <el-table-column property="marketplace" label="站点" align="center"></el-table-column>
-        <el-table-column property="cate" label="一级类目" align="center"></el-table-column>
-        <el-table-column property="subCate" label="二级类目" align="center"></el-table-column>
+        <el-table-column label="平台" align="center">
+          <template slot-scope="scope">
+            <div v-for="(item, index) in scope.row.detail" :key="index" class="supera">{{item.plat}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="站点" align="center">
+          <template slot-scope="scope">
+            <span v-for="(item, index) in scope.row.detail" :key="index" class="supera">
+              <span
+                v-for="(itemm, index) in item.platValue"
+                :key="index"
+                class="supera"
+              >{{itemm.marketplace}}，</span>
+            </span>
+          </template>
+        </el-table-column>
         <el-table-column property="createdDate" label="添加时间" align="center">
-            <template slot-scope="scope">
-              {{scope.row.createdDate | cutOutDate}}
-            </template>
+          <template slot-scope="scope">{{scope.row.createdDate | cutOutDate}}</template>
         </el-table-column>
         <el-table-column property="updatedDate" label="更新时间" align="center">
-          <template slot-scope="scope">
-              {{scope.row.updatedDate | cutOutDate}}
-            </template>
+          <template slot-scope="scope">{{scope.row.updatedDate | cutOutDate}}</template>
         </el-table-column>
       </el-table>
       <el-pagination
@@ -71,11 +79,11 @@
             </el-col>
             <el-col :span="22" style="margin-top:2px;">
               <el-radio-group v-model="ebay.pyCate">
-                <el-radio v-for='(item,index) in pyCate' :key="index" :label="item">{{item}}</el-radio>
+                <el-radio v-for="(item,index) in pyCate" :key="index" :label="item">{{item}}</el-radio>
               </el-radio-group>
               <!-- <el-checkbox-group v-model="category" @change="handleCheckedCitiesChange">
                 <el-checkbox v-for='(item,index) in pyCate' :key="index" :label="item" :value="item" @change="checkinlist(item)"></el-checkbox>
-              </el-checkbox-group> -->
+              </el-checkbox-group>-->
             </el-col>
           </el-col>
           <el-col :span="24" style="margin-bottom: 12px">
@@ -84,7 +92,12 @@
             </el-col>
             <el-col :span="22" style="margin-top:2px;">
               <el-radio-group v-model="ebay.plat">
-                <el-radio v-for='(item,index) in rulePlat' :key="index" @change="getPlatEbay(item)" :label="item">{{item}}</el-radio>
+                <el-radio
+                  v-for="(item,index) in rulePlat"
+                  :key="index"
+                  @change="getPlatEbay(item)"
+                  :label="item"
+                >{{item}}</el-radio>
               </el-radio-group>
             </el-col>
           </el-col>
@@ -94,7 +107,12 @@
             </el-col>
             <el-col :span="22" style="margin-top:2px;">
               <el-radio-group v-model="ebay.marketplace">
-                <el-radio v-for='(item,index) in ebayRuleOptions' :key="index" @change="getOneLowRule(item)" :label="item">{{item}}</el-radio>
+                <el-radio
+                  v-for="(item,index) in ebayRuleOptions"
+                  :key="index"
+                  @change="getOneLowRule(item)"
+                  :label="item"
+                >{{item}}</el-radio>
               </el-radio-group>
             </el-col>
           </el-col>
@@ -104,7 +122,12 @@
             </el-col>
             <el-col :span="22" style="margin-top:2px;">
               <el-radio-group v-model="ebay.cate">
-                <el-radio v-for='(item,index) in ebayRuleOne' :key="index" @change="getTowLowRule(item.cate)" :label="item.cate">{{item.cate}}</el-radio>
+                <el-radio
+                  v-for="(item,index) in ebayRuleOne"
+                  :key="index"
+                  @change="getTowLowRule(item.cate)"
+                  :label="item.cate"
+                >{{item.cate}}</el-radio>
               </el-radio-group>
             </el-col>
           </el-col>
@@ -114,7 +137,7 @@
             </el-col>
             <el-col :span="22" style="margin-top:2px;">
               <el-radio-group v-model="ebay.subCate">
-                <el-radio v-for='(item,index) in ebayRuleTwo' :key="index" :label="item">{{item}}</el-radio>
+                <el-radio v-for="(item,index) in ebayRuleTwo" :key="index" :label="item">{{item}}</el-radio>
               </el-radio-group>
             </el-col>
           </el-col>
@@ -125,60 +148,110 @@
         <el-button type="primary" @click="saveEbay()">保 存</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="添加" :visible.sync="addebaydisLogin" width="70%" :close-on-click-modal="false">
+    <el-dialog
+      title="添加"
+      :visible.sync="addebaydisLogin"
+      width="90%"
+      :close-on-click-modal="false"
+      top="5%"
+    >
       <el-row style="margin-top: 0">
         <el-col :span="24" class="cTop cTop2">
           <el-col :span="24" style="margin-bottom: 10px">
-            <el-col :span="2">
-              <p class="baspOne">普源类目</p>
+            <el-col :span="1">
+              <p class="baspOne">类目</p>
             </el-col>
             <el-col :span="22" style="margin-top:2px;">
-              <el-radio-group v-model="addebay.pyCate">
-                <el-radio v-for='(item,index) in pyCate' :key="index" :label="item">{{item}}</el-radio>
-              </el-radio-group>
-              <!-- <el-checkbox-group v-model="category" @change="handleCheckedCitiesChange">
-                <el-checkbox v-for='(item,index) in pyCate' :key="index" :label="item" :value="item" @change="checkinlist(item)"></el-checkbox>
-              </el-checkbox-group> -->
-            </el-col>
-          </el-col>
-          <el-col :span="24" style="margin-bottom: 12px">
-            <el-col :span="2">
-              <p class="baspOne">平台</p>
-            </el-col>
-            <el-col :span="22" style="margin-top:2px;">
-              <el-radio-group v-model="addebay.plat">
-                <el-radio v-for='(item,index) in rulePlat' :key="index" @change="getPlat(item)" :label="item">{{item}}</el-radio>
+              <el-radio-group v-model="addPyCate">
+                <el-radio v-for="(item,index) in pyCate" :key="index" :label="item">{{item}}</el-radio>
               </el-radio-group>
             </el-col>
           </el-col>
           <el-col :span="24" style="margin-bottom: 12px">
-            <el-col :span="2">
-              <p class="baspOne">刊登站点</p>
-            </el-col>
-            <el-col :span="22" style="margin-top:2px;">
-              <el-radio-group v-model="addebay.marketplace">
-                <el-radio v-for='(item,index) in ebayOptions' :key="index" @change="getOneLow(item)" :label="item">{{item}}</el-radio>
-              </el-radio-group>
-            </el-col>
-          </el-col>
-          <el-col :span="24" style="margin-bottom: 12px" class="topn">
-            <el-col :span="2">
-              <p class="baspOne">一级类目</p>
-            </el-col>
-            <el-col :span="22" style="margin-top:2px;">
-              <el-radio-group v-model="addebay.cate">
-                <el-radio v-for='(item,index) in addEbayOne' :key="index" @change="getTowLow(item.cate)" :label="item.cate">{{item.cate}}</el-radio>
-              </el-radio-group>
-            </el-col>
-          </el-col>
-          <el-col :span="24" style="margin-bottom: 0px" class="topn">
-            <el-col :span="2">
-              <p class="baspOne">二级类目</p>
-            </el-col>
-            <el-col :span="22" style="margin-top:2px;">
-              <el-radio-group v-model="addebay.subCate">
-                <el-radio v-for='(item,index) in addEbayTwo' :key="index" :label="item">{{item}}</el-radio>
-              </el-radio-group>
+            <el-col :span="24">
+              <el-col :span="1">
+                <p class="baspOne">规则</p>
+              </el-col>
+              <el-col :span="23">
+                <div v-for="(item,index) in itemDetail" :key="index">
+                  <el-col :span="24">
+                    <span
+                      class="curSpan"
+                      style="font-size:14px;color:#3c8dbc"
+                      @click="rulePlatActive(index)"
+                    >
+                      <span class="oneClass" :class="item.flag?'ruleBac':''"></span>
+                      {{item.plat}}
+                    </span>
+                  </el-col>
+                  <div
+                    v-for="(itemTwo,indexTwo) in item.platValue"
+                    :key="indexTwo"
+                    v-show="item.flag"
+                  >
+                    <el-col :span="8">
+                      <el-col :span="24" style="margin-top:20px;">
+                        <span class="curSpan" @click="ruleMakActive(index,indexTwo)" :class="itemTwo.flag?'cColor':''">
+                          <span
+                            class="oneClass"
+                            :class="itemTwo.flag?'ruleBac':''"
+                          ></span>
+                          {{itemTwo.marketplace}}
+                        </span>
+                      </el-col>
+                      <el-col :span="23" style="margin-top:5px;padding-left:18px;" class="scrollTopHeight">
+                        <el-col
+                          :span="24"
+                          v-for="(itemTree,indexTree) in itemTwo.marketplaceValue"
+                          :key="indexTree"
+                        >
+                          <el-col :span="24">
+                            <span
+                              class="curSpan curSpanTree"
+                               :class="itemTree.flag?'cColor':''"
+                              @click="ruleCateActive(index,indexTwo,indexTree)"
+                            >
+                              <span class="oneClass" :class="itemTree.flag?'ruleBac':''"></span>
+                              {{itemTree.cate}}
+                            </span>
+                          </el-col>
+                          <el-col :span="24" style="margin-top:5px;width:100%;" class="treeDiv">
+                            <el-select
+                              v-model="itemTree.cateValue.subCateChecked"
+                              multiple
+                              collapse-tags
+                              style="width:95%;"
+                              placeholder="请选择"
+                              size="small"
+                              @change="ruleSubcateActive(index,indexTwo,indexTree)"
+                            >
+                              <el-option
+                                v-for="item in itemTree.cateValue.subCate"
+                                :key="item"
+                                :label="item"
+                                :value="item"
+                              ></el-option>
+                            </el-select>
+                            <!-- <el-col
+                            :span="24"
+                            v-for="(itemFour,indexFour) in itemTree.cateValue"
+                            :key="indexFour"
+                          >
+                            <span
+                              class="curSpan curSpanFour"
+                              @click="ruleSubcateActive(index,indexTwo,indexTree,indexFour)"
+                            >
+                              <span class="oneClass" :class="itemFour.flag?'ruleBac':''"></span>
+                              {{itemFour.subCate}}
+                            </span>
+                            </el-col>-->
+                          </el-col>
+                        </el-col>
+                      </el-col>
+                    </el-col>
+                  </div>
+                </div>
+              </el-col>
             </el-col>
           </el-col>
         </el-col>
@@ -202,25 +275,36 @@ import {
   getRuleMarketplace,
   ruleCategory,
   ruleSaveCateRule,
-  ruleDeleteCateRule
+  ruleDeleteCateRule,
+  getCateRuleInfo
 } from "../../api/product";
-import { getMember,getAttributeInfoCat } from "../../api/profit";
+import { getMember, getAttributeInfoCat } from "../../api/profit";
 export default {
   data() {
     return {
       addEbayTwo: [],
       addEbayOne: [],
+      category: [],
       ebayRuleOne: [],
       ebayRuleTwo: [],
+      addRuleCat: [],
+      addCate: [],
+      addPlat: [],
+      itemDetail: [],
+      itemDetail1: [],
+      addPyCate: null,
+      ruleActive: 999,
+      addMarketplace: [],
       tableHeightstock: window.innerHeight - 175,
       ebaydisLogin: false,
       addebaydisLogin: false,
-      pyCate:[],
+      pyCate: [],
       condition: {
         page: 1,
         pageSize: 40
       },
       total: null,
+      itemId: null,
       ebay: {
         id: null,
         pyCate: null,
@@ -252,12 +336,61 @@ export default {
     };
   },
   filters: {
-    cutOutDate(value){
+    cutOutDate(value) {
       value = value.substring(0, 11);
       return value;
-    },
+    }
   },
   methods: {
+    ruleSubcateActive(a, b, c, d) {
+      if (
+        this.itemDetail[a].platValue[b].marketplaceValue[c].cateValue
+          .subCateChecked.length != 0
+      ) {
+        this.itemDetail[a].platValue[b].marketplaceValue[c].flag = true;
+        this.itemDetail[a].platValue[b].flag = true;
+      }
+      if (
+        this.itemDetail[a].platValue[b].marketplaceValue[c].cateValue
+          .subCateChecked.length == 0
+      ) {
+        this.itemDetail[a].platValue[b].marketplaceValue[c].flag = false;
+      }
+    },
+    ruleCateActive(a, b, c) {
+      this.itemDetail[a].platValue[b].marketplaceValue[c].flag = !this
+        .itemDetail[a].platValue[b].marketplaceValue[c].flag;
+      if (this.itemDetail[a].platValue[b].marketplaceValue[c].flag == false) {
+        var data = this.itemDetail[a].platValue[b].marketplaceValue[c]
+          .cateValue;
+        data.subCateChecked = [];
+      } else {
+        var data = this.itemDetail[a].platValue[b].marketplaceValue[c]
+          .cateValue;
+        data.subCateChecked = data.subCate;
+      }
+      if (this.itemDetail[a].platValue[b].marketplaceValue[c].flag == true) {
+        this.itemDetail[a].platValue[b].flag = true;
+      }
+    },
+    ruleMakActive(a, b) {
+      this.itemDetail[a].platValue[b].flag = !this.itemDetail[a].platValue[b]
+        .flag;
+      if (this.itemDetail[a].platValue[b].flag == false) {
+        var data = this.itemDetail[a].platValue[b].marketplaceValue;
+        for (var i = 0; i < data.length; i++) {
+          data[i].flag = false;
+          var Twodata = data[i].cateValue;
+          Twodata.subCateChecked = [];
+        }
+      }
+    },
+    rulePlatActive(i) {
+      this.itemDetail[i].flag = !this.itemDetail[i].flag;
+    },
+    handleCheckAllChange1(val) {
+      this.addRuleCat = val;
+    },
     getPlat(e) {
       let obj = {
         plat: e
@@ -285,10 +418,11 @@ export default {
         return "";
       }
     },
-    getOneLow(e) {
+    getOneLow(e, index) {
       this.addebay.cate = null;
       this.addebay.subCate = null;
       this.addEbayTwo = [];
+      this.ruleActive = index;
       let obj = {
         cate: null,
         plat: this.addebay.plat,
@@ -352,15 +486,16 @@ export default {
       });
     },
     add() {
-      this.addebay.pyCate = null;
-      this.addebay.plat = null;
-      this.addebay.marketplace = null;
-      this.addebay.cate = null;
-      this.addebay.subCate = null;
-      this.ebayOptions = [];
-      this.addEbayOne = [];
-      this.addEbayTwo = [];
-      this.addebaydisLogin = true;
+      this.itemId = null;
+      var obj = {
+        id: null
+      };
+      getCateRuleInfo(obj).then(response => {
+        this.itemDetail = response.data.data.detail;
+      });
+      setTimeout(() => {
+        this.addebaydisLogin = true;
+      }, 500);
     },
     saveEbay() {
       if (this.ebay.cate || this.ebay.subCate) {
@@ -383,8 +518,43 @@ export default {
       }
     },
     addsaveEbay() {
-      if (this.addebay.cate || this.addebay.subCate) {
-        ruleSaveCateRule(this.addebay).then(res => {
+      var obj = {
+        pyCate: this.addPyCate,
+        id: this.itemId,
+        detail: []
+      };
+      var data = this.itemDetail;
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].flag == false) {
+          data.splice(i, 1);
+          i--;
+        } else {
+          var dataTwo = data[i].platValue;
+          for (var k = 0; k < dataTwo.length; k++) {
+            if (dataTwo[k].flag == false) {
+              dataTwo.splice(k, 1);
+              k--;
+            } else {
+              var dataTree = dataTwo[k].marketplaceValue;
+              for (var j = 0; j < dataTree.length; j++) {
+                if (dataTree[j].flag == false) {
+                  dataTree.splice(j, 1);
+                  j--;
+                  // } else {
+                  //   var dataFour = dataTree[j].cateValue;
+                  //   for (var l = 0; l < dataFour.length; l++) {
+                  //     if (dataFour[l].flag == false) {
+                  //       dataFour.splice(l, 1);
+                  //       l--;
+                  //     }
+                  //   }
+                }
+              }
+            }
+          }
+        }
+        obj.detail = data;
+        ruleSaveCateRule(obj).then(res => {
           if (res.data.data) {
             this.$message({
               message: "保存成功",
@@ -398,48 +568,25 @@ export default {
             this.getData();
           }
         });
-      } else {
-        this.$message.error("请选择类目");
+        console.log(obj);
       }
     },
     editArt(index, row) {
-      this.ebay.pyCate = row.pyCate;
-      this.ebay.plat = row.plat;
-      this.ebay.cate = row.cate;
-      this.ebay.subCate = row.subCate;
-      this.ebay.marketplace = row.marketplace;
-      this.ebay.id = row._id;
-      if (this.ebay.plat) {
-        let obj = {
-          plat: this.ebay.plat
-        };
-        getRuleMarketplace(obj).then(res => {
-          if (res.data.data) {
-            this.ebayRuleOptions = res.data.data;
+      var obj = {
+        id: row._id
+      };
+      getCateRuleInfo(obj).then(response => {
+        this.itemDetail = response.data.data.detail;
+        this.itemId = response.data.data._id.$oid;
+        for (var i = 0; i < response.data.data.pyCate.length; i++) {
+          if (response.data.data.pyCate[i].flag == true) {
+            this.addPyCate = response.data.data.pyCate[i].name;
           }
-        });
-      }
-      if (this.ebay.marketplace) {
-        let obj = {
-          cate: null,
-          plat: this.ebay.plat,
-          marketplace: this.ebay.marketplace
-        };
-        ruleCategory(obj).then(res => {
-          this.ebayRuleOne = res.data.data;
-        });
-      }
-      if (this.ebay.cate) {
-        let obj = {
-          cate: this.ebay.cate,
-          plat: this.ebay.plat,
-          marketplace: this.ebay.marketplace
-        };
-        ruleCategory(obj).then(res => {
-          this.ebayRuleTwo = res.data.data[0].subCate;
-        });
-      }
-      this.ebaydisLogin = true;
+        }
+      });
+      setTimeout(() => {
+        this.addebaydisLogin = true;
+      }, 500);
     },
     delArt(index, row) {
       this.$confirm("确定删除?", "提示", {
@@ -502,6 +649,12 @@ export default {
     getAttributeInfoCat().then(response => {
       this.pyCate = response.data.data;
     });
+    var obj = {
+      id: null
+    };
+    getCateRuleInfo(obj).then(response => {
+      this.itemDetail = this.itemDetail1 = response.data.data.detail;
+    });
     getMember().then(response => {
       const res = response.data.data;
       this.member = res.filter(ele => ele.position === "开发");
@@ -514,27 +667,116 @@ export default {
 .basp {
   text-align: center;
 }
-.baspOne{
+.baspOne {
   text-align: center;
   margin: 0;
   color: #3c8dbc;
   padding-bottom: 10px;
 }
+.accspan {
+  margin: 0;
+  margin-bottom: 15px;
+  display: block;
+  border: #409eff solid 1px;
+  padding: 0 10px;
+  text-align: center;
+  border-radius: 5px;
+  line-height: 28px;
+  float: left;
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative;
+}
+.ruleAcc {
+  background: #409eff;
+  color: #fff;
+}
+.posx {
+  position: absolute;
+  display: block;
+  right: -5px;
+  top: -10px;
+  font-size: 14px;
+  background: #ccc;
+  color: #fff;
+  border-radius: 50%;
+  height: 20px;
+  line-height: 20px;
+  width: 20px;
+}
+.oneClass {
+  width: 14px;
+  height: 14px;
+  border: 1px solid #dcdfe6;
+  border-radius: 5px;
+  display: block;
+  float: left;
+  margin-right: 10px;
+}
+.curSpan {
+  cursor: pointer;
+}
+.curSpanTree {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+.curSpanFour {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 12px;
+  margin-top: 5px;
+}
+/* .treeDiv {
+  height: 90px;
+  overflow: hidden;
+  overflow-y: auto;
+} */
+.ruleBac {
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border: #409eff solid 6px;
+}
+.ruleBac1 {
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border: #67C23A solid 6px;
+}
+.scrollTopHeight{
+  height: 480px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.cColor{
+  color: #3c8dbc;
+}
 </style>
 <style>
-.cTop2 .el-radio+.el-radio{
+.cTop2 .el-radio + .el-radio {
   margin-left: 0;
   margin-bottom: 15px;
 }
-.cTop2 .el-radio{
+.cTop2 .el-radio {
   margin-right: 15px;
 }
-.cTop2 .el-checkbox{
+.cTop2 .el-checkbox {
   margin-left: 0;
-  margin-right: 10px;
+  margin-right: 20px;
   margin-bottom: 15px;
 }
-.topn .el-radio{
+.topn .el-radio {
   width: 375px;
+}
+.topn .el-checkbox {
+  width: 390px;
+  margin-left: 0;
+  margin-bottom: 10px;
+}
+.cTop2 ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 </style>

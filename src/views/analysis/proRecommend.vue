@@ -95,7 +95,7 @@
                 </a>
                 <a class="ebayBlocka ebayBlocka2" @click="refuseEbayXp(scope.row._id.oid)">
                   <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
-                </a> -->
+                </a>-->
                 <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
               </template>
             </el-table-column>
@@ -125,7 +125,7 @@
                   >连续三天有销量:{{scope.row.salesThreeDayFlag==0?'否':'是'}}</span>
                   <span
                     style="margin:0;margin-top:5px;font-size:13px;margin-left:15px;"
-                  >更新时间:{{scope.row.lastModiTime | cutOutMonye}}</span>
+                  >推荐时间:{{scope.row.recommendDate | cutOutMonye}}</span>
                 </div>
                 <div style="margin-top:8px;" class="ebayGoa">
                   <span
@@ -138,6 +138,28 @@
                   >货源链接</span>
                 </div>
               </template>
+            </el-table-column>
+            <el-table-column label="推荐状态" align="center" width="145">
+              <el-table-column :render-header="renderHeaderEbayXp" width="160" align="center">
+                <template slot-scope="scope">
+                  <div
+                    v-for="(item, index) in scope.row.recommendToPersons"
+                    :key="index"
+                    class="supera"
+                    style="font-size:13px;"
+                  >
+                    <a
+                      :style="index==0?'margin-bottom:10px':''"
+                      :class="item.status=='refuse'?'red':item.status=='accept'?'green':'gray'"
+                    >{{item.name}}</a>
+                    <a
+                      style="margin-top:5px;;color:red"
+                      :style="index==0?'margin-bottom:5px':''"
+                      v-show="item.reason"
+                    >{{item.reason}}</a>
+                  </div>
+                </template>
+              </el-table-column>
             </el-table-column>
             <el-table-column
               property="price"
@@ -177,8 +199,12 @@
               ></el-table-column>
             </el-table-column>
             <el-table-column property="seller" label="卖家名称" align="center" width="110">
-              <template slot-scope="scope">             
-              <a :href="'https://www.ebay.com/usr/'+scope.row.seller" target="_blank" class="goa">{{scope.row.seller}}</a>
+              <template slot-scope="scope">
+                <a
+                  :href="'https://www.ebay.com/usr/'+scope.row.seller"
+                  target="_blank"
+                  class="goa"
+                >{{scope.row.seller}}</a>
               </template>
             </el-table-column>
             <el-table-column property="itemLocation" label="发货地址" align="center" width="110"></el-table-column>
@@ -227,7 +253,7 @@
                 </a>
                 <a class="ebayBlocka ebayBlocka2" @click="refuseEbayRx(scope.row._id.oid)">
                   <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
-                </a> -->
+                </a>-->
                 <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
               </template>
             </el-table-column>
@@ -257,7 +283,7 @@
                   >连续三天有销量:{{scope.row.salesThreeDayFlag==0?'否':'是'}}</span>
                   <span
                     style="margin:0;margin-top:5px;font-size:13px;margin-left:15px;"
-                  >更新时间:{{scope.row.lastModiTime | cutOutMonye}}</span>
+                  >推荐时间:{{scope.row.recommendDate | cutOutMonye}}</span>
                 </div>
                 <div style="margin-top:8px;" class="ebayGoa">
                   <span
@@ -270,6 +296,28 @@
                   >货源链接</span>
                 </div>
               </template>
+            </el-table-column>
+            <el-table-column label="推荐状态" align="center" width="125">
+              <el-table-column :render-header="renderHeaderEbayRx" width="160" align="center">
+                <template slot-scope="scope">
+                  <div
+                    v-for="(item, index) in scope.row.recommendToPersons"
+                    :key="index"
+                    class="supera"
+                    style="font-size:13px;"
+                  >
+                    <a
+                      :style="index==0?'margin-bottom:10px':''"
+                      :class="item.status=='refuse'?'red':item.status=='accept'?'green':'gray'"
+                    >{{item.name}}</a>
+                    <a
+                      style="margin-top:5px;;color:red"
+                      :style="index==0?'margin-bottom:5px':''"
+                      v-show="item.reason"
+                    >{{item.reason}}</a>
+                  </div>
+                </template>
+              </el-table-column>
             </el-table-column>
             <el-table-column
               property="price"
@@ -355,8 +403,12 @@
               ></el-table-column>
             </el-table-column>
             <el-table-column property="seller" label="卖家名称" align="center" width="100">
-              <template slot-scope="scope">             
-              <a :href="'https://www.ebay.com/usr/'+scope.row.seller" target="_blank" class="goa">{{scope.row.seller}}</a>
+              <template slot-scope="scope">
+                <a
+                  :href="'https://www.ebay.com/usr/'+scope.row.seller"
+                  target="_blank"
+                  class="goa"
+                >{{scope.row.seller}}</a>
               </template>
             </el-table-column>
             <el-table-column property="itemLocation" label="发货地址" align="center" width="100"></el-table-column>
@@ -501,10 +553,10 @@ export default {
       totalEbayRx: null,
       ebayXpRefuse: false,
       ebayRxRefuse: false,
-      lodingEbayRx:false,
-      lodingEbayXp:false,
-      proTotalXp:0,
-      proTotalRx:0,
+      lodingEbayRx: false,
+      lodingEbayXp: false,
+      proTotalXp: 0,
+      proTotalRx: 0,
       options: {
         xAxis: {
           type: "category",
@@ -585,12 +637,14 @@ export default {
       },
       condition: {
         marketplace: "",
+        recommendStatus: "",
         page: 1,
         pageSize: 20,
         sort: ""
       },
       condition1: {
         marketplace: "",
+        recommendStatus: "",
         page: 1,
         pageSize: 20,
         sort: ""
@@ -704,14 +758,14 @@ export default {
       this.ebayXpId = id;
       this.ebayXpText = null;
       this.ebayXpText1 = null;
-      this.ebayXpRefuse=false
+      this.ebayXpRefuse = false;
       this.dialogEbayXpRefuse = true;
     },
     refuseEbayRx(id) {
       this.ebayRxId = id;
       this.ebayRxText = null;
       this.ebayRxText1 = null;
-      this.ebayRxRefuse=false
+      this.ebayRxRefuse = false;
       this.dialogEbayRxRefuse = true;
     },
     getEbayXpData() {
@@ -812,7 +866,39 @@ export default {
     },
     renderHeaderEbayXp(h, { column, $index }) {
       if ($index === 0) {
-        let filters =this.ebayOptions
+        let filters = ["未推送", "未处理", "已过滤", "已认领"];
+        return h(
+          "el-select",
+          {
+            props: {
+              placeholder: "请选择",
+              value: this.condition.recommendStatus,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.condition.recommendStatus = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.ebayXp();
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item,
+                  label: item
+                }
+              });
+            })
+          ]
+        );
+      } else if ($index === 1) {
+        let filters = this.ebayOptions;
         return h(
           "el-select",
           {
@@ -847,7 +933,39 @@ export default {
     },
     renderHeaderEbayRx(h, { column, $index }) {
       if ($index === 0) {
-        let filters =this.ebayOptions
+        let filters = ["未推送", "未处理", "已过滤", "已认领"];
+        return h(
+          "el-select",
+          {
+            props: {
+              placeholder: "请选择",
+              value: this.condition1.recommendStatus,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.condition1.recommendStatus = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.ebayRx();
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item,
+                  label: item
+                }
+              });
+            })
+          ]
+        );
+      } else if ($index === 1) {
+        let filters = this.ebayOptions;
         return h(
           "el-select",
           {
@@ -885,7 +1003,7 @@ export default {
         this.condition.sort = null;
         this.ebayXp(this.condition);
       }
-      if (column.order == "ascending") {       
+      if (column.order == "ascending") {
         this.condition.sort = "-" + column.prop;
         this.ebayXp(this.condition);
       }
@@ -934,15 +1052,15 @@ export default {
     goLinkUrlJoom(id) {
       window.open("https://www.joom.com/en/products/" + id);
     },
-    goLinkUrlEbay(id,url) {
-     if(id=='EBAY_GB'){
-        window.open('https://www.ebay.co.uk/itm/'+url);
-      }else if(id=='EBAY_DE'){
-        window.open('https://www.ebay.de/itm/'+url);
-      }else if(id=='EBAY_AU'){
-        window.open('https://www.ebay.com.au/itm/'+url);
-      }else{
-        window.open('https://www.ebay.com/itm/'+url);
+    goLinkUrlEbay(id, url) {
+      if (id == "EBAY_GB") {
+        window.open("https://www.ebay.co.uk/itm/" + url);
+      } else if (id == "EBAY_DE") {
+        window.open("https://www.ebay.de/itm/" + url);
+      } else if (id == "EBAY_AU") {
+        window.open("https://www.ebay.com.au/itm/" + url);
+      } else {
+        window.open("https://www.ebay.com/itm/" + url);
       }
     },
     handleCurrentChangeEbayXp(val) {
@@ -962,14 +1080,14 @@ export default {
       this.ebayRx(this.condition);
     },
     ebayXp() {
-      this.lodingEbayXp=true
+      this.lodingEbayXp = true;
       getEbayXp(this.condition).then(res => {
         this.ebayDataXp1 = this.ebayDataXp = res.data.data.items;
         this.totalEbayXp = res.data.data._meta.totalCount;
         this.condition.page = res.data.data._meta.currentPage;
         this.condition.pageSize = res.data.data._meta.perPage;
-        if(this.proTotalXp==0){
-          this.proTotalXp=res.data.data._meta.totalCount;
+        if (this.proTotalXp == 0) {
+          this.proTotalXp = res.data.data._meta.totalCount;
         }
         for (let i = 0; i < this.ebayDataXp.length; i++) {
           setTimeout(() => {
@@ -987,18 +1105,18 @@ export default {
             or2.setOption(this.options);
           }, 20);
         }
-        this.lodingEbayXp=false
+        this.lodingEbayXp = false;
       });
     },
     ebayRx() {
-      this.lodingEbayRx=true
+      this.lodingEbayRx = true;
       getEbayRx(this.condition1).then(res => {
         this.ebayDataRx = this.ebayDataRx1 = res.data.data.items;
         this.totalEbayRx = res.data.data._meta.totalCount;
         this.condition1.page = res.data.data._meta.currentPage;
         this.condition1.pageSize = res.data.data._meta.perPage;
-        if(this.proTotalRx==0){
-          this.proTotalRx=res.data.data._meta.totalCount;
+        if (this.proTotalRx == 0) {
+          this.proTotalRx = res.data.data._meta.totalCount;
         }
         for (let i = 0; i < this.ebayDataRx.length; i++) {
           setTimeout(() => {
@@ -1018,7 +1136,7 @@ export default {
             or2.setOption(this.options1);
           }, 20);
         }
-        this.lodingEbayRx=false
+        this.lodingEbayRx = false;
       });
     },
     handleClick(tab, event) {
@@ -1115,8 +1233,8 @@ export default {
     }
   },
   mounted() {
-    this.ebayXp()
-    this.ebayRx()
+    this.ebayXp();
+    this.ebayRx();
   }
 };
 </script>
@@ -1422,11 +1540,11 @@ export default {
   background: #f56c6c;
   color: #fff;
 }
-.goa{
+.goa {
   text-decoration: none;
-  color: #409EFF;
+  color: #409eff;
 }
-.pospan{
+.pospan {
   display: block;
   position: absolute;
   background: red;
@@ -1437,7 +1555,7 @@ export default {
   left: 108px;
   top: 3px;
 }
-.pospan1{
+.pospan1 {
   display: block;
   position: absolute;
   background: red;
@@ -1447,5 +1565,27 @@ export default {
   font-size: 10px;
   left: 247px;
   top: 3px;
+}
+.supera a {
+  display: block;
+  width: 85%;
+  line-height: 28px;
+  margin: auto;
+}
+.gray {
+  border: #ccc solid 1px;
+  border-radius: 5px;
+}
+.red {
+  color: #f56c6c;
+  border: 1px solid hsla(0, 87%, 69%, 0.2);
+  background: hsla(0, 87%, 69%, 0.1);
+  border-radius: 5px;
+}
+.green {
+  color: #0e9a00;
+  border: 1px solid rgba(3, 82, 38, 0.2);
+  background: rgba(33, 170, 95, 0.1);
+  border-radius: 5px;
 }
 </style>

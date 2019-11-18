@@ -111,6 +111,7 @@ import productShow from '../views/productDevelop/productShow.vue'
 import saleProduct from '../views/productDevelop/saleProduct.vue'
 import global from '../views/productDevelop/global.vue'
 import developTrend from '../views/productDevelop/developTrend.vue'
+import ebayRecommendEdit from '../views/productDevelop/ebayRecommendEdit.vue'
 // 数据采集
 import collection from '../views/productDevelop/collection.vue'
 import collectionJoom from '../views/productDevelop/collectionJoom.vue'
@@ -585,6 +586,11 @@ const routes = [
         path: '/v1/check/check-list',
         component: productApprove,
         name: '产品审批'
+      },
+      {
+        path: '/v1/oa-goodsinfo/ebayEdit',
+        component: ebayRecommendEdit,
+        name: '智能推荐跳转'
       },
       {
         path: '/v1/oa-goodsinfo/index',

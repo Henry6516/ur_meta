@@ -79,10 +79,10 @@
             <el-table-column property="visitEnd" label="浏览数小于" align="center"></el-table-column>
             <el-table-column property="priceStart" label="价格大于" align="center" width="80"></el-table-column>
             <el-table-column property="priceEnd" label="价格小于" align="center" width="80"></el-table-column>
-            <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
+            <el-table-column property="publishedSite" label="刊登站点" align="center" width="180"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center"></el-table-column>
-            <el-table-column property="salesThreeDayFlag" label="是否有小火苗" align="center">
-              <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'否':'是'}}</template>
+            <el-table-column property="popularStatus" label="是否有小火苗" align="center">
+              <template slot-scope="scope">{{scope.row.popularStatus==0?'否':'是'}}</template>
             </el-table-column>
             <el-table-column property="listedTime" label="上架时间" align="center"></el-table-column>
             <el-table-column property="isUsed" label="是否停用" align="center">
@@ -134,7 +134,7 @@
             </el-table-column>
             <el-table-column property="ruleName" label="规则名称" align="center" width="100"></el-table-column>
             <el-table-column property="ruleMark" label="规则备注" align="center" width="100"></el-table-column>
-            <el-table-column property="marketplace" label="刊登站点" align="center" width="180"></el-table-column>
+            <el-table-column property="publishedSite" label="刊登站点" align="center" width="180"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
             <el-table-column
               property="salesThreeDayFlag"
@@ -236,7 +236,7 @@
         </div>
       </div>
       <div v-show="show.joom">2</div>
-      <el-dialog title="ebay新品编辑" :visible.sync="ebaydisLoginxp" width="75%" :close-on-click-modal="false">
+      <el-dialog title="ebay新品规则" :visible.sync="ebaydisLoginxp" width="75%" :close-on-click-modal="false">
         <el-row style="margin-top: 0">
           <el-col :span="24" class="cTop">
             <el-col :span="8" style="margin-bottom: 20px">
@@ -309,12 +309,12 @@
                   collapse-tags
                   allow-create
                   default-first-option
-                  v-model="ebayXp.marketplace"
+                  v-model="ebayXp.publishedSite"
                 >
                   <el-button plain type="info" @click="selectalld1">全选</el-button>
                   <el-button plain type="info" @click="noselectd1">取消</el-button>
                   <el-option
-                    v-for="(item, key) in ebayOptions"
+                    v-for="(item, key) in ebayOptionsXp"
                     :key="item.key"
                     :label="item"
                     :value="item"
@@ -378,7 +378,7 @@
               </el-col>
               <el-col :span="15">
                 <el-switch
-                  v-model="ebayXp.salesThreeDayFlag"
+                  v-model="ebayXp.popularStatus"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   style="margin-top:10px;"
@@ -465,12 +465,12 @@
                   collapse-tags
                   allow-create
                   default-first-option
-                  v-model="addEbayXp.marketplace"
+                  v-model="addEbayXp.publishedSite"
                 >
                   <el-button plain type="info" @click="addselectalld1">全选</el-button>
                   <el-button plain type="info" @click="addnoselectd1">取消</el-button>
                   <el-option
-                    v-for="(item, key) in ebayOptions"
+                    v-for="(item, key) in ebayOptionsXp"
                     :key="item.key"
                     :label="item"
                     :value="item"
@@ -534,7 +534,7 @@
               </el-col>
               <el-col :span="15">
                 <el-switch
-                  v-model="addEbayXp.salesThreeDayFlag"
+                  v-model="addEbayXp.popularStatus"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   style="margin-top:10px;"
@@ -553,6 +553,22 @@
           <el-col :span="24" class="cTop">
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
+                <p class="basp"><span style="color:red;font-size:14px;">* </span>规则名称</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="addEbayRx.ruleName"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">规则备注</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="addEbayRx.ruleMark"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
                 <p class="basp">刊登站点</p>
               </el-col>
               <el-col :span="15">
@@ -563,12 +579,12 @@
                   collapse-tags
                   allow-create
                   default-first-option
-                  v-model="addEbayRx.marketplace"
+                  v-model="addEbayRx.publishedSite"
                 >
                   <el-button plain type="info" @click="addselectalld1Rx">全选</el-button>
                   <el-button plain type="info" @click="addnoselectd1Rx">取消</el-button>
                   <el-option
-                    v-for="(item, key) in ebayOptions"
+                    v-for="(item, key) in ebayOptionsXp"
                     :key="item.key"
                     :label="item"
                     :value="item"
@@ -599,22 +615,6 @@
                     :value="item"
                   ></el-option>
                 </el-select>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp"><span style="color:red;font-size:14px;">* </span>规则名称</p>
-              </el-col>
-              <el-col :span="15">
-                <el-input v-model="addEbayRx.ruleName"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp">规则备注</p>
-              </el-col>
-              <el-col :span="15">
-                <el-input v-model="addEbayRx.ruleMark"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -768,6 +768,22 @@
           <el-col :span="24" class="cTop">
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
+                <p class="basp"><span style="color:red;font-size:14px;">* </span>规则名称</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="ebayRx.ruleName"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">规则备注</p>
+              </el-col>
+              <el-col :span="15">
+                <el-input v-model="ebayRx.ruleMark"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
                 <p class="basp">刊登站点</p>
               </el-col>
               <el-col :span="15">
@@ -778,12 +794,12 @@
                   collapse-tags
                   allow-create
                   default-first-option
-                  v-model="ebayRx.marketplace"
+                  v-model="ebayRx.publishedSite"
                 >
                   <el-button plain type="info" @click="selectalld1Rx">全选</el-button>
                   <el-button plain type="info" @click="noselectd1Rx">取消</el-button>
                   <el-option
-                    v-for="(item, key) in ebayOptions"
+                    v-for="(item, key) in ebayOptionsXp"
                     :key="item.key"
                     :label="item"
                     :value="item"
@@ -814,22 +830,6 @@
                     :value="item"
                   ></el-option>
                 </el-select>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp"><span style="color:red;font-size:14px;">* </span>规则名称</p>
-              </el-col>
-              <el-col :span="15">
-                <el-input v-model="ebayRx.ruleName"></el-input>
-              </el-col>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 20px">
-              <el-col :span="9">
-                <p class="basp">规则备注</p>
-              </el-col>
-              <el-col :span="15">
-                <el-input v-model="ebayRx.ruleMark"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -974,7 +974,7 @@
           </el-col>
         </el-row>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="addEbaydisLoginrx = false">取 消</el-button>
+          <el-button @click="ebaydisLoginrx = false">取 消</el-button>
           <el-button type="primary" @click="saveEbayRx()">保 存</el-button>
         </div>
       </el-dialog>
@@ -1010,12 +1010,13 @@ export default {
         visitEnd: "",
         priceEnd: "",
         priceStart: "",
-        marketplace: [],
+        publishedSite: [],
         storeLocation: [],
         salesThreeDayFlag: "",
         listedTime: [],
         itemLocation: "",
         ruleMark: "",
+        popularStatus:false,
         ruleName: ""
       },
       addEbayXp: {
@@ -1025,16 +1026,18 @@ export default {
         visitEnd: "",
         priceEnd: "",
         priceStart: "",
-        marketplace: [],
+        publishedSite: [],
         storeLocation: [],
         salesThreeDayFlag: false,
         listedTime: [],
-        itemLocation: "",
+        itemLocation: false,
         ruleMark: "",
+        popularStatus:"",
         ruleName: ""
       },
       addEbayRx: {
         marketplace: [],
+        publishedSite: [],
         salesThreeDayFlag: false,
         priceStart: "",
         priceEnd: "",
@@ -1068,6 +1071,7 @@ export default {
         soldEnd: "",
         storeLocation: [],
         marketplace: [],
+        publishedSite: [],
         genTimeStart: "",
         genTimeEnd: "",
         soldThePreviousGrowthStart: "",
@@ -1108,6 +1112,12 @@ export default {
         "EBAY_DE",
         "EBAY_IT",
         "EBAY_AU"
+      ],
+      ebayOptionsXp: [
+        "美国",
+        "英国",
+        "德国",
+        "澳大利亚",
       ],
       ebayOptionsAddress: [
         "中国",
@@ -1174,43 +1184,43 @@ export default {
     },
     selectalld1() {
       var ard1 = [];
-      for (const item in this.ebayOptions) {
-        ard1.push(this.ebayOptions[item]);
+      for (const item in this.ebayOptionsXp) {
+        ard1.push(this.ebayOptionsXp[item]);
       }
-      this.ebayXp.marketplace = ard1;
+      this.ebayXp.publishedSite = ard1;
     },
     noselectd1() {
-      this.ebayXp.marketplace = [];
+      this.ebayXp.publishedSite = [];
     },
     selectalld1Rx() {
       var ard1 = [];
-      for (const item in this.ebayOptions) {
-        ard1.push(this.ebayOptions[item]);
+      for (const item in this.ebayOptionsXp) {
+        ard1.push(this.ebayOptionsXp[item]);
       }
-      this.ebayRx.marketplace = ard1;
+      this.ebayRx.publishedSite = ard1;
     },
     noselectd1Rx() {
-      this.ebayRx.marketplace = [];
+      this.ebayRx.publishedSite = [];
     },
     addselectalld1() {
       var ard1 = [];
-      for (const item in this.ebayOptions) {
-        ard1.push(this.ebayOptions[item]);
+      for (const item in this.ebayOptionsXp) {
+        ard1.push(this.ebayOptionsXp[item]);
       }
-      this.addEbayXp.marketplace = ard1;
+      this.addEbayXp.publishedSite = ard1;
     },
     addnoselectd1() {
-      this.addEbayXp.marketplace = [];
+      this.addEbayXp.publishedSite = [];
     },
     addselectalld1Rx() {
       var ard1 = [];
-      for (const item in this.ebayOptions) {
-        ard1.push(this.ebayOptions[item]);
+      for (const item in this.ebayOptionsXp) {
+        ard1.push(this.ebayOptionsXp[item]);
       }
-      this.addEbayRx.marketplace = ard1;
+      this.addEbayRx.publishedSite = ard1;
     },
     addnoselectd1Rx() {
-      this.addEbayRx.marketplace = [];
+      this.addEbayRx.publishedSite = [];
     },
     addselectalld2Rx() {
       var ard1 = [];
@@ -1280,9 +1290,10 @@ export default {
       this.addEbayXp.visitEnd = "";
       this.addEbayXp.priceEnd = "";
       this.addEbayXp.priceStart = "";
-      this.addEbayXp.marketplace = [];
+      this.addEbayXp.publishedSite = [];
       this.addEbayXp.storeLocation = [];
       this.addEbayXp.salesThreeDayFlag = false;
+      this.addEbayXp.popularStatus = false;
       this.addEbayXp.listedTime = [];
       this.addEbayXp.itemLocation = "";
       this.addEbayXp.ruleMark = "";
@@ -1291,6 +1302,7 @@ export default {
     },
     addEbayrxLogin() {
       this.addEbayRx.marketplace = [];
+      this.addEbayXp.publishedSite = [];
       this.addEbayRx.salesThreeDayFlag = false;
       this.addEbayRx.priceStart = "";
       this.addEbayRx.priceEnd = "";
@@ -1334,8 +1346,10 @@ export default {
       this.ebayXp.priceEnd = row.priceEnd;
       this.ebayXp.priceStart = row.priceStart;
       this.ebayXp.marketplace = row.marketplace;
+      this.ebayXp.publishedSite = row.publishedSite;
       this.ebayXp.storeLocation = row.storeLocation;
       this.ebayXp.salesThreeDayFlag = row.salesThreeDayFlag;
+      this.ebayXp.popularStatus = row.popularStatus;
       this.ebayXp.listedTime = row.listedTime;
       this.ebayXp.itemLocation = row.itemLocation;
       this.ebayXp.ruleName = row.ruleName;
@@ -1346,8 +1360,8 @@ export default {
       for(let i=0;i<this.ebayXp.listedTime.length;i++){
         this.ebayXp.listedTime[i]=this.ebayXp.listedTime[i].replace(/,/g, "");
       }
-      for(let i=0;i<this.ebayXp.marketplace.length;i++){
-        this.ebayXp.marketplace[i]=this.ebayXp.marketplace[i].replace(/,/g, "");
+      for(let i=0;i<this.ebayXp.publishedSite.length;i++){
+        this.ebayXp.publishedSite[i]=this.ebayXp.publishedSite[i].replace(/,/g, "");
       }
       // if (this.ebayXp.listedTime) {
       //   for (let i = 0; i < this.ebayXp.listedTime.length; i++) {
@@ -1365,6 +1379,9 @@ export default {
       this.ebayXp.salesThreeDayFlag == 0
         ? (this.ebayXp.salesThreeDayFlag = false)
         : (this.ebayXp.salesThreeDayFlag = true);
+        this.ebayXp.popularStatus == 0
+        ? (this.ebayXp.popularStatus = false)
+        : (this.ebayXp.popularStatus = true);
       this.ebaydisLoginxp = true;
     },
     editArtRx(index, row) {
@@ -1391,6 +1408,7 @@ export default {
       this.ebayRx.paymentThreeDay1Start = row.paymentThreeDay1Start;
       this.ebayRx.paymentThreeDay1End = row.paymentThreeDay1End;
       this.ebayRx.marketplace = row.marketplace;
+      this.ebayRx.publishedSite = row.publishedSite;
       this.ebayRx.ruleName = row.ruleName;
       this.ebayRx.ruleMark = row.ruleMark;
       if (this.ebayRx.salesThreeDayFlag == 0) {
@@ -1398,11 +1416,14 @@ export default {
       } else {
         this.ebayRx.salesThreeDayFlag = true;
       }
+      this.ebayRx.popularStatus == 0
+        ? (this.ebayRx.popularStatus = false)
+        : (this.ebayRx.popularStatus = true);
       for(let i=0;i<this.ebayRx.storeLocation.length;i++){
         this.ebayRx.storeLocation[i]=this.ebayRx.storeLocation[i].replace(/,/g, "");
       }
-      for(let i=0;i<this.ebayXp.marketplace.length;i++){
-        this.ebayRx.marketplace[i]=this.ebayRx.marketplace[i].replace(/,/g, "");
+      for(let i=0;i<this.ebayRx.publishedSite.length;i++){
+        this.ebayRx.publishedSite[i]=this.ebayRx.publishedSite[i].replace(/,/g, "");
       }
       this.ebaydisLoginrx = true;
     },
@@ -1424,6 +1445,11 @@ export default {
         this.ebayXp.salesThreeDayFlag = 1;
       } else {
         this.ebayXp.salesThreeDayFlag = 0;
+      }
+      if (this.ebayXp.popularStatus) {
+        this.ebayXp.popularStatus = 1;
+      } else {
+        this.ebayXp.popularStatus = 0;
       }
       ebaySaveRule(this.ebayXp).then(res => {
         if (res.data.data) {
@@ -1459,6 +1485,14 @@ export default {
         } else {
           this.addEbayXp.salesThreeDayFlag = 0;
         }
+        if (this.addEbayXp.popularStatus) {
+        this.addEbayXp.popularStatus = 1;
+      } else {
+        this.addEbayXp.popularStatus = 0;
+      }
+      if(this.addEbayXp.publishedSite.length==0){
+        this.addEbayXp.publishedSite=this.ebayOptionsXp
+      }
         ebaySaveRule(this.addEbayXp).then(res => {
           if (res.data.data) {
             this.$message({
@@ -1479,6 +1513,11 @@ export default {
       } else {
         this.ebayRx.salesThreeDayFlag = 0;
       }
+      if (this.ebayRx.popularStatus) {
+        this.ebayRx.popularStatus = 1;
+      } else {
+        this.ebayRx.popularStatus = 0;
+      }
       ebaySaveRuleHot(this.ebayRx).then(res => {
         if (res.data.data) {
           this.$message({
@@ -1497,6 +1536,11 @@ export default {
         } else {
           this.addEbayRx.salesThreeDayFlag = 0;
         }
+        if (this.addEbayRx.popularStatus) {
+        this.addEbayRx.popularStatus = 1;
+      } else {
+        this.addEbayRx.popularStatus = 0;
+      }
         ebaySaveRuleHot(this.addEbayRx).then(res => {
           if (res.data.data) {
             this.$message({
@@ -1601,15 +1645,15 @@ export default {
         for (let i = 0; i < this.ebaydata.length; i++) {
           let date = this.ebaydata[i].listedTime;
           let storeLocation = this.ebaydata[i].storeLocation;
-          let marketplace = this.ebaydata[i].marketplace;
+          let publishedSite = this.ebaydata[i].publishedSite;
           for(let i=0;i<storeLocation.length;i++){
-            if(i!=storeLocation[i].length-1){
+            if(i!=storeLocation.length-1){
               storeLocation[i]=storeLocation[i]+','
             }
           }
-          for(let i=0;i<marketplace.length;i++){
-            if(i!=marketplace[i].length-1){
-              marketplace[i]=marketplace[i]+','
+          for(let i=0;i<publishedSite.length;i++){
+            if(i!=publishedSite.length-1){
+              publishedSite[i]=publishedSite[i]+','
             }
           }
           for (let k = 0; k < date.length; k++) {
@@ -1628,29 +1672,17 @@ export default {
       });
       APRengineRuleHot().then(res => {
         this.ebayRxdata = res.data.data;
-        for (let i = 0; i < this.ebaydata.length; i++) {
-          let date = this.ebaydata[i].listedTime;
-          let storeLocation = this.ebaydata[i].storeLocation;
-          let marketplace = this.ebaydata[i].marketplace;
+        for (let i = 0; i < this.ebayRxdata.length; i++) {
+          let storeLocation = this.ebayRxdata[i].storeLocation;
+          let publishedSite = this.ebayRxdata[i].publishedSite;
           for(let i=0;i<storeLocation.length;i++){
-            if(i!=storeLocation[i].length-1){
+            if(i!=storeLocation.length-1){
               storeLocation[i]=storeLocation[i]+','
             }
           }
-          for(let i=0;i<marketplace.length;i++){
-            if(i!=marketplace[i].length-1){
-              marketplace[i]=marketplace[i]+','
-            }
-          }
-          for (let k = 0; k < date.length; k++) {
-            if (date[k] == "0") {
-              date[k] = "今天,";
-            }
-            if (date[k] == "1") {
-              date[k] = "昨天,";
-            }
-            if (date[k] == "2") {
-              date[k] = "前天";
+          for(let i=0;i<publishedSite.length;i++){
+            if(i!=publishedSite[i].length-1){
+              publishedSite[i]=publishedSite[i]+','
             }
           }
         }
@@ -1916,12 +1948,6 @@ export default {
 }
 .basp {
   text-align: center;
-}
-@media (max-width: 1500px) {
-  .basp {
-    text-align: center;
-    font-size: 10px;
-  }
 }
 .colspan {
   display: block;

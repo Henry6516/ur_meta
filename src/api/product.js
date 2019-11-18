@@ -1652,3 +1652,18 @@ export function ruleDeleteCateRule(param) {
     data
   })
 }
+
+export function getAllotRuleInfo(param) {
+  return request({
+    url: '/products-engine/allot-rule-info?id=' + param.id,
+    method: 'get'
+  })
+}
+
+export function getCateRuleInfo(param) {
+  return request({
+    url: '/products-engine/cate-rule-info?id=' + param.id,
+    method: 'get'
+  })
+}
+
