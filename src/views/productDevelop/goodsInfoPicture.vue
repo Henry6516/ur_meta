@@ -197,67 +197,131 @@
                 </el-table-column>
             </el-table>
             <!-- 图片信息查看对话框 -->
-            <el-dialog title='查看'
-                       :visible.sync="dialogPicture" width="70%">
+            <el-dialog title='详情' :visible.sync="dialogPicture" width="75%" top="2.2%">
                 <el-form
                         label-position="left"
-                        label-width="110px"
-                        ref="picForm" style="width: 100%;overflow: hidden">
-                    <el-form-item label="图片"
-                                  prop="goodsInfoPic.picUrl"
-                                  class="item1">
-                        <img :src='goodsInfoPic.picUrl'
-                             style="width: 150px;height: 150px;">
-                    </el-form-item>
-                    <el-form-item label="图片地址"
-                                  prop="picUrl"
-                                  class="item">
-                        <span><a :href="goodsInfoPic.picUrl" target="_blank" class="classa">{{goodsInfoPic.picUrl}}</a></span>
-                    </el-form-item>
-                    <el-form-item label="商品名称"
-                                  prop="GoodsName"
-                                  class="item">
-                        <span>{{goodsInfoPic.goodsName?goodsInfoPic.goodsName:'未设置'}}</span></el-form-item>
-                    <el-form-item label="商品编码"
-                                  prop="GoodsCode"
-                                  class="item">
-                        <span>{{goodsInfoPic.goodsCode}}</span>
-                    </el-form-item>
-                    <el-form-item label="是否备货"
-                                  prop="stockUp"
-                                  class="item">
-                        <span>{{goodsInfoPic.stockUp}}</span>
-                    </el-form-item>
-                    <el-form-item label="供应商名称"
-                                  prop="supplierName"
-                                  class="item"><span>{{goodsInfoPic.supplierName?goodsInfoPic.supplierName:'未设置'}}</span></el-form-item>
-                    <el-form-item label="中文申报名"
-                                  prop="aliasCnName"
-                                  class="item"><span>{{goodsInfoPic.aliasCnName?goodsInfoPic.aliasCnName:'未设置'}}</span></el-form-item>
-                    <el-form-item label="英文申报名"
-                                  prop="aliasEnName"
-                                  class="item"><span>{{goodsInfoPic.aliasEnName?goodsInfoPic.aliasEnName:'未设置'}}</span></el-form-item>
-                    <el-form-item label="规格"
-                                  prop=""
-                                  class="item"><span>{{goodsInfoPic.packName?goodsInfoPic.packName:'未设置'}}</span></el-form-item>
-                    <el-form-item label="季节"
-                                  prop="season"
-                                  class="item"><span>{{goodsInfoPic.season?goodsInfoPic.season:'未设置'}}</span></el-form-item>
-                    <el-form-item label="仓库"
-                                  prop="storeName"
-                                  class="item"><span>{{goodsInfoPic.storeName?goodsInfoPic.storeName:'未设置'}}</span></el-form-item>
-                    <el-form-item label="是否液体"
-                                  prop="isLiquid"
-                                  class="item"><span>{{goodsInfoPic.isLiquid}}</span></el-form-item>
-                    <el-form-item label="是否粉末"
-                                  prop="isPowder"
-                                  class="item"><span>{{goodsInfoPic.isPowder}}</span></el-form-item>
-                    <el-form-item label="是否带磁"
-                                  prop="isMagnetism"
-                                  class="item"><span>{{goodsInfoPic.isMagnetism}}</span></el-form-item>
-                    <el-form-item label="是否带电"
-                                  prop="isCharged"
-                                  class="item"><span>{{goodsInfoPic.isCharged}}</span></el-form-item>
+                        class="goodProForm"
+                        ref="picForm" style="width: 100%;overflow: hidden;padding:0 2px;">
+                        <el-row>
+                            <el-col :span="24">
+                                <a :href="goodsInfoPic.picUrl" target="_blank"><img :src="goodsInfoPic.picUrl" style="width: 125px;height: 125px;border:#d4d4d4 solid 1px;border-radius:5px;"></a>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="图片地址" prop="picUrl" class="item">
+                                <a :href="goodsInfoPic.picUrl" target="_blank"><el-input size="small" v-model="goodsInfoPic.picUrl" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="商品编码" prop="goodsCode" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.goodsCode" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="商品名称" prop="goodsName" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.goodsName" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="是否备货" prop="stockUp" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.stockUp" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="图片状态" prop="achieveStatus" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.picStatus" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>  
+                            <el-col :span="4">
+                                <el-form-item label="采购" prop="purchaser" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.purchaser" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="开发员" prop="developer" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.developer" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="美工" prop="possessMan1" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.possessMan1" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="供应商名称" prop="supplierName" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.supplierName" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="中文申报名" prop="aliasCnName" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.aliasCnName" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="英文申报名" prop="aliasEnName" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.aliasEnName" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="规格" prop="packName" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.packName" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="季节" prop="season" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.season" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="仓库" prop="storeName" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.storeName" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="是否液体" prop="isLiquid" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.isLiquid" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="是否粉末" prop="isPowder" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.isPowder" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="是否带磁" prop="isMagnetism" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.isMagnetism" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="是否带电" prop="isCharged" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.isCharged" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="是否多属性" prop="isVar" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.isVar" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="禁售平台" prop="dictionaryName" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.dictionaryName" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="开发时间" prop="devDatetime" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.devDatetime" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="更新时间" prop="updateTime" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.updateTime" style="width:95%;" disabled></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="24">
+                                <el-form-item label="描述" prop="description" class="item">
+                                <el-input size="small" v-model="goodsInfoPic.description" style="width:99%;" disabled type="textarea" rows="6"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
                 </el-form>
             </el-dialog>
             <el-pagination background

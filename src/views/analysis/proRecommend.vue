@@ -1086,9 +1086,7 @@ export default {
         this.totalEbayXp = res.data.data._meta.totalCount;
         this.condition.page = res.data.data._meta.currentPage;
         this.condition.pageSize = res.data.data._meta.perPage;
-        if (this.proTotalXp == 0) {
-          this.proTotalXp = res.data.data._meta.totalCount;
-        }
+        this.proTotalXp = res.data.data._meta.totalCount;
         for (let i = 0; i < this.ebayDataXp.length; i++) {
           setTimeout(() => {
             var obj = this.ebayDataXp[i].soldChart.soldData;
@@ -1115,9 +1113,7 @@ export default {
         this.totalEbayRx = res.data.data._meta.totalCount;
         this.condition1.page = res.data.data._meta.currentPage;
         this.condition1.pageSize = res.data.data._meta.perPage;
-        if (this.proTotalRx == 0) {
-          this.proTotalRx = res.data.data._meta.totalCount;
-        }
+        this.proTotalRx = res.data.data._meta.totalCount;
         for (let i = 0; i < this.ebayDataRx.length; i++) {
           setTimeout(() => {
             var obj = this.ebayDataRx[i].soldChart.soldData;

@@ -223,138 +223,177 @@
         </el-table>
       </div>
       <!-- 属性信息查看对话框 -->
-      <el-dialog title="查看" :visible.sync="dialogVisible" width="70%" class="dig70">
+      <el-dialog title="详情" :visible.sync="dialogVisible" width="75%" top="2.2%">
         <el-form
           label-position="left"
-          label-width="110px"
           ref="viewForm"
-          style="width: 100%;overflow: hidden"
+          class="goodProForm"
+          style="width: 100%;overflow: hidden;padding:0 2px;"
         >
-          <el-form-item label="图片" prop="picUrl" class="item1">
-            <a :href="goodsInfo.picUrl" target="_blank" style="cursor: pointer">
-              <img :src="goodsInfo.picUrl" style="width: 150px;height: 150px;" />
-            </a>
-          </el-form-item>
-          <el-form-item label="图片地址" prop="picUrl" class="item">
-            <span>
-              <a :href="goodsInfo.picUrl" target="_blank" class="classa">{{goodsInfo.picUrl}}</a>
-            </span>
-          </el-form-item>
-          <el-form-item label="商品编码" prop="goodsCode" class="item">
-            <span>{{goodsInfo.goodsCode?goodsInfo.goodsCode:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="是否备货" prop="stockUp" class="item">
-            <span>{{goodsInfo.stockUp}}</span>
-          </el-form-item>
-          <el-form-item label="商品名称" prop="goodsName" class="item">
-            <span>{{goodsInfo.goodsName?goodsInfo.goodsName:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="采购" prop="purchaser" class="item">
-            <span>{{goodsInfo.purchaser?goodsInfo.purchaser:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="开发员" prop="developer" class="item">
-            <span>{{goodsInfo.developer?goodsInfo.developer:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="美工" prop="possessMan1" class="item">
-            <span>{{goodsInfo.possessMan1?goodsInfo.possessMan1:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="供应商名称" prop="SupplierName" class="item">
-            <span>{{goodsInfo.supplierName?goodsInfo.supplierName:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="中文申报名" prop="AttributeName" class="item">
-            <span>{{goodsInfo.aliasCnName?goodsInfo.aliasCnName:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="英文申报名" prop="DictionaryName" class="item">
-            <span>{{goodsInfo.aliasEnName?goodsInfo.aliasEnName:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="规格" prop class="item">
-            <span>{{goodsInfo.packName?goodsInfo.packName:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="描述" prop class="item">
-            <span>{{goodsInfo.description?goodsInfo.description:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="季节" prop="Season" class="item">
-            <span>{{goodsInfo.season?goodsInfo.season:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="仓库" prop="StoreName" class="item">
-            <span>{{goodsInfo.storeName?goodsInfo.storeName:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="是否液体" prop="IsLiquid" class="item">
-            <span>{{goodsInfo.isLiquid?goodsInfo.isLiquid:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="是否粉末" prop="IsPowder" class="item">
-            <span>{{goodsInfo.isPowder?goodsInfo.isPowder:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="是否带磁" prop="isMagnetism" class="item">
-            <span>{{goodsInfo.isMagnetism?goodsInfo.isMagnetism:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="是否带电" prop="IsCharged" class="item">
-            <span>{{goodsInfo.isCharged?goodsInfo.isCharged:"未设置"}}</span>
-          </el-form-item>
-          <el-form-item label="主类目" prop class="item">
-            <span>{{oaGoods.cate}}</span>
-          </el-form-item>
-          <el-form-item label="子类目" prop class="item">
-            <span>{{oaGoods.subCate}}</span>
-          </el-form-item>
-          <el-form-item label="供应商链接1" prop class="item">
-            <span>
-              <a
-                :href="oaGoods.vendor1"
-                target="_blank"
-                class="classa"
-              >{{oaGoods.vendor1?oaGoods.vendor1:"未设置"}}</a>
-            </span>
-          </el-form-item>
-          <el-form-item label="供应商链接2" prop class="item">
-            <span>
-              <a
-                :href="oaGoods.vendor2"
-                target="_blank"
-                class="classa"
-              >{{oaGoods.vendor2?oaGoods.vendor2:"未设置"}}</a>
-            </span>
-          </el-form-item>
-          <el-form-item label="供应商链接3" prop class="item">
-            <span>
-              <a
-                :href="oaGoods.vendor3"
-                target="_blank"
-                class="classa"
-              >{{oaGoods.vendor3?oaGoods.vendor3:"未设置"}}</a>
-            </span>
-          </el-form-item>
-          <el-form-item label="平台参考链接1" prop class="item">
-            <span>
-              <a
-                :href="oaGoods.origin1"
-                target="_blank"
-                class="classa"
-              >{{oaGoods.origin1?oaGoods.origin1:"未设置"}}</a>
-            </span>
-          </el-form-item>
-          <el-form-item label="平台参考链接2" prop class="item">
-            <span>
-              <a
-                :href="oaGoods.origin2"
-                target="_blank"
-                class="classa"
-              >{{oaGoods.origin2?oaGoods.origin2:"未设置"}}</a>
-            </span>
-          </el-form-item>
-          <el-form-item label="平台参考链接3" prop class="item">
-            <span>
-              <a
-                :href="oaGoods.origin3"
-                target="_blank"
-                class="classa"
-              >{{oaGoods.origin3?oaGoods.origin3:"未设置"}}</a>
-            </span>
-          </el-form-item>
+        <el-row>
+          <el-col :span="24">
+            <a :href="goodsInfo.picUrl" target="_blank"><img :src="goodsInfo.picUrl" style="width: 125px;height: 125px;border:#d4d4d4 solid 1px;border-radius:5px;"></a>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="图片地址" prop="picUrl" class="item">
+              <a :href="goodsInfo.picUrl" target="_blank"><el-input size="small" v-model="goodsInfo.picUrl" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="商品编码" prop="goodsCode" class="item">
+              <el-input size="small" v-model="goodsInfo.goodsCode" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="是否备货" prop="stockUp" class="item">
+              <el-input size="small" v-model="goodsInfo.stockUp" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="商品名称" prop="goodsName" class="item">
+              <el-input size="small" v-model="goodsInfo.goodsName" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="属性状态" prop="achieveStatus" class="item">
+              <el-input size="small" v-model="goodsInfo.achieveStatus" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="采购" prop="purchaser" class="item">
+              <el-input size="small" v-model="goodsInfo.purchaser" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="开发员" prop="developer" class="item">
+              <el-input size="small" v-model="goodsInfo.developer" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="美工" prop="possessMan1" class="item">
+              <el-input size="small" v-model="goodsInfo.possessMan1" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="供应商名称" prop="supplierName" class="item">
+              <el-input size="small" v-model="goodsInfo.supplierName" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="中文申报名" prop="aliasCnName" class="item">
+              <el-input size="small" v-model="goodsInfo.aliasCnName" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="英文申报名" prop="aliasEnName" class="item">
+              <el-input size="small" v-model="goodsInfo.aliasEnName" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="规格" prop="packName" class="item">
+              <el-input size="small" v-model="goodsInfo.packName" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="季节" prop="season" class="item">
+              <el-input size="small" v-model="goodsInfo.season" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="仓库" prop="storeName" class="item">
+              <el-input size="small" v-model="goodsInfo.storeName" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="是否液体" prop="isLiquid" class="item">
+              <el-input size="small" v-model="goodsInfo.isLiquid" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="是否粉末" prop="isPowder" class="item">
+              <el-input size="small" v-model="goodsInfo.isPowder" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="是否带磁" prop="isMagnetism" class="item">
+              <el-input size="small" v-model="goodsInfo.isMagnetism" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="是否带电" prop="isCharged" class="item">
+              <el-input size="small" v-model="goodsInfo.isCharged" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="是否多属性" prop="isVar" class="item">
+              <el-input size="small" v-model="goodsInfo.isVar" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="主类目" prop="cate" class="item">
+              <el-input size="small" v-model="oaGoods.cate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="子类目" prop="subCate" class="item">
+              <el-input size="small" v-model="oaGoods.subCate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="供应商链接1" prop="vendor1" class="item">
+              <a :href="oaGoods.vendor1" target="_blank"><el-input size="small" v-model="oaGoods.vendor1" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="供应商链接2" prop="vendor2" class="item">
+              <a :href="oaGoods.vendor2" target="_blank"><el-input size="small" v-model="oaGoods.vendor2" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="供应商链接3" prop="vendor3" class="item">
+              <a :href="oaGoods.vendor3" target="_blank"><el-input size="small" v-model="oaGoods.vendor3" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="平台参考链接1" prop="origin1" class="item">
+              <a :href="oaGoods.origin1" target="_blank"><el-input size="small" v-model="oaGoods.origin1" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="平台参考链接2" prop="origin2" class="item">
+              <a :href="oaGoods.origin2" target="_blank"><el-input size="small" v-model="oaGoods.origin2" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="平台参考链接3" prop="origin3" class="item">
+              <a :href="oaGoods.origin3" target="_blank"><el-input size="small" v-model="oaGoods.origin3" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="禁售平台" prop="dictionaryName" class="item">
+              <el-input size="small" v-model="goodsInfo.dictionaryName" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="开发时间" prop="devDatetime" class="item">
+              <el-input size="small" v-model="goodsInfo.devDatetime" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="更新时间" prop="updateTime" class="item">
+              <el-input size="small" v-model="goodsInfo.updateTime" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="描述" prop="description" class="item">
+              <el-input size="small" v-model="goodsInfo.description" style="width:99%;" disabled type="textarea" rows="6"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         </el-form>
-        <span slot="footer" class="dialog-footer">
+        <!-- <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false" type="primary">关 闭</el-button>
-        </span>
+        </span> -->
       </el-dialog>
       <!-- 属性信息分页 -->
       <el-pagination

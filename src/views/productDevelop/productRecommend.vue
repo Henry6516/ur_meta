@@ -22,52 +22,68 @@
         <el-button type="danger" @click="delAll" class="mr5">批量删除</el-button>
       </el-col>
       <!-- 新增对话框 -->
-      <el-dialog title="新增" :visible.sync="dialogVisible">
+      <el-dialog title="新增" :visible.sync="dialogVisible" width="58%">
         <el-form
           :model="addForm"
           :rules="rules"
-          label-width="100px"
           label-position="left"
           class="demo-ruleForm"
           ref="addForm"
+          style="padding:0 10px;"
         >
-          <el-form-item label="图片" prop="img">
-            <el-input size="small" v-model="addForm.img" placeholder="必填"></el-input>
-          </el-form-item>
-          <el-form-item label="主类目" prop="cate">
-            <el-select
-              size="small"
-              v-model="addForm.cate"
-              @change="productcategory"
-              style="width:100%;"
-            >
-              <el-option v-for="item in cate" :value="item" :key="item"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="子类目" prop="subCate">
-            <el-select
-              size="small"
-              v-model="addForm.subCate"
-              :disabled="this.disabled"
-              style="width:100%;"
-            >
-              <el-option v-for="item in subCate" :value="item" :key="item"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="开发员" prop="developer">
-            <el-select size="small" v-model="addForm.developer" style="width:100%;">
-              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="供应商链接" prop="vendor1">
-            <el-input size="small" v-model="addForm.vendor1"></el-input>
-          </el-form-item>
-          <el-form-item label="平台参考链接" prop="origin1">
-            <el-input size="small" v-model="addForm.origin1"></el-input>
-          </el-form-item>
-          <el-form-item label="推荐理由" prop="introReason">
-            <el-input size="small" v-model="addForm.introReason" placeholder="选填"></el-input>
-          </el-form-item>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="图片" prop="img">
+              <el-input size="small" v-model="addForm.img" placeholder="必填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="主类目" prop="cate">
+              <el-select
+                size="small"
+                v-model="addForm.cate"
+                @change="productcategory"
+                style="width:95%;"
+              >
+                <el-option v-for="item in cate" :value="item" :key="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="子类目" prop="subCate">
+              <el-select
+                size="small"
+                v-model="addForm.subCate"
+                :disabled="this.disabled"
+                style="width:95%;"
+              >
+                <el-option v-for="item in subCate" :value="item" :key="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="开发员" prop="developer">
+              <el-select size="small" v-model="addForm.developer" style="width:95%;">
+                <el-option v-for="item in developer" :value="item" :key="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="供应商链接" prop="vendor1">
+              <el-input size="small" v-model="addForm.vendor1" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="平台参考链接" prop="origin1">
+              <el-input size="small" v-model="addForm.origin1" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="推荐理由" prop="introReason">
+              <el-input size="small" v-model="addForm.introReason" placeholder="选填" type="textarea" rows="4" style="width:98.5%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible=false">取消</el-button>
@@ -75,78 +91,106 @@
         </span>
       </el-dialog>
       <!-- 查看对话框 -->
-      <el-dialog title="查看" :visible.sync="dialogVisibleView" width="70%">
+      <el-dialog title="详情" :visible.sync="dialogVisibleView" width="58%">
         <el-form
           :model="viewForm"
           label-position="left"
-          label-width="100px"
           ref="viewForm"
-          style="width: 100%;overflow: hidden"
+          class="goodProForm"
+          style="width: 100%;overflow: hidden;padding:0 2px;"
         >
-          <el-form-item label="图片" prop="img" class="item1">
-             <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 150px;height: 150px;"></a>
-          </el-form-item>
-          <el-form-item label="图片地址" prop="img" class="item">
-            <span><a :href="viewForm.img" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.img}}</a></span>
-          </el-form-item>
-          <el-form-item label="主类目" prop="cate" class="item">
-            <span>{{viewForm.cate}}</span>
-          </el-form-item>
-          <el-form-item label="子类目" prop="subCate" class="item">
-            <span>{{viewForm.subCate}}</span>
-          </el-form-item>
-          <el-form-item label="供应商链接" prop="vendor1" class="item">
-            <span><a :href="viewForm.vendor1" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.vendor1}}</a></span>
-          </el-form-item>
-          <el-form-item label="平台参考链接" prop="origin1" class="item">
-            <span><a :href="viewForm.origin1" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.origin1}}</a></span>
-          </el-form-item>
+        <el-row>
+          <el-col :span="24">
+            <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 125px;height: 125px;border:#d4d4d4 solid 1px;border-radius:5px;"></a>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="图片地址" prop="img" class="item">
+              <a :href="viewForm.img" target="_blank"><el-input size="small" v-model="viewForm.img" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+           </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="主类目" prop="cate" class="item">
+              <el-input size="small" v-model="viewForm.cate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="子类目" prop="subCate" class="item">
+              <el-input size="small" v-model="viewForm.subCate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="供应商链接" prop="img" class="item">
+              <a :href="viewForm.vendor1" target="_blank"><el-input size="small" v-model="viewForm.vendor1" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+           </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="平台参考链接" prop="img" class="item">
+              <a :href="viewForm.origin1" target="_blank"><el-input size="small" v-model="viewForm.origin1" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+           </el-form-item>
+          </el-col>
+        </el-row>
         </el-form>
       </el-dialog>
       <!-- 更新对话框 -->
-      <el-dialog title="更新" :visible.sync="dialogVisibleEdit">
+      <el-dialog title="更新" :visible.sync="dialogVisibleEdit" width="58%">
         <el-form
           :model="editForm"
           :rules="rules"
-          label-width="100px"
           label-position="left"
           ref="editForm"
+          style="padding:0 10px;"
         >
-          <el-form-item label="图片" class="item2">
-            <img :src="editForm.img" style="width: 150px;height: 100px">
-          </el-form-item>
-          <el-form-item label="图片地址" prop="img">
-            <el-input v-model="editForm.img"></el-input>
-          </el-form-item>
-          <el-form-item label="主类目" prop="cate">
-            <el-select
-              size="small"
-              v-model="editForm.cate"
-              @change="getSubcate"
-              style="width:100%;"
-            >
-              <el-option v-for="item in cate" :value="item" :key="item"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="子类目" prop="subCate">
-            <el-select size="small" v-model="editForm.subCate" style="width:100%;">
-              <el-option v-for="item in subCate" :value="item" :key="item"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="开发员" prop="developer">
-            <el-select size="small" v-model="editForm.developer" style="width:100%;">
-              <el-option v-for="item in developer" :value="item" :key="item"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="供应商链接">
-            <el-input size="small" v-model="editForm.vendor1"></el-input>
-          </el-form-item>
-          <el-form-item label="平台参考链接">
-            <el-input size="small" v-model="editForm.origin1"></el-input>
-          </el-form-item>
-          <el-form-item label="推荐理由">
-            <el-input size="small" v-model="editForm.introReason" placeholder="选填"></el-input>
-          </el-form-item>
+        <el-row>
+          <el-col :span="24">
+            <img :src="editForm.img" style="width: 110px;height: 110px;border:#d4d4d4 solid 1px;border-radius:5px;">
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="图片地址" prop="img">
+              <el-input v-model="editForm.img" size="small" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="主类目" prop="cate">
+              <el-select
+                size="small"
+                v-model="editForm.cate"
+                @change="getSubcate"
+                style="width:95%;"
+              >
+                <el-option v-for="item in cate" :value="item" :key="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="子类目" prop="subCate">
+              <el-select size="small" v-model="editForm.subCate" style="width:95%;">
+                <el-option v-for="item in subCate" :value="item" :key="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="开发员" prop="developer">
+              <el-select size="small" v-model="editForm.developer" style="width:95%;">
+                <el-option v-for="item in developer" :value="item" :key="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="供应商链接">
+              <el-input size="small" v-model="editForm.vendor1" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="平台参考链接">
+              <el-input size="small" v-model="editForm.origin1" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="推荐理由">
+              <el-input size="small" v-model="editForm.introReason" placeholder="选填" type="textarea" rows="4" style="width:98.5%"></el-input>
+            </el-form-item>            
+          </el-col>
+        </el-row>
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="submitEdit">确定</el-button>
@@ -324,7 +368,7 @@
         <el-button type="danger" @click="claimAll1" class="mr5">批量提交审批</el-button>
       </el-col>
       <!-- 新增对话框 -->
-      <el-dialog title="新增" :visible.sync="dialogVisible1" width="60%">
+      <el-dialog title="新增" :visible.sync="dialogVisible1" width="58%">
         <el-form
           :model="addForm1"
           :rules="rules"
@@ -448,167 +492,249 @@
         </span>
       </el-dialog>
       <!-- 查看对话框 -->
-      <el-dialog title="查看" :visible.sync="dialogVisibleView1" width="70%">
+      <el-dialog title="详情" :visible.sync="dialogVisibleView1" width="60%" top="4.5%">
         <el-form
           :model="viewForm"
           label-position="left"
-          label-width="110px"
+          class="goodProForm"
           ref="viewForm"
-          style="width: 100%;overflow: hidden"
+          style="width: 100%;overflow: hidden;padding:0 2px;"
         >
-          <el-form-item label="图片" prop="img" class="item1">
-            <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 150px;height: 150px;"></a>
-          </el-form-item>
-          <el-form-item label="图片地址" prop="img" class="item">
-            <span><a :href="viewForm.img" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.img}}</a></span>
-          </el-form-item>
-          <el-form-item label="是否备货" prop="stockUp" class="item">
-            <span>{{viewForm.stockUp}}</span>
-          </el-form-item>
-          <el-form-item label="主类目" prop="cate" class="item">
-            <span>{{viewForm.cate}}</span>
-          </el-form-item>
-          <el-form-item label="子类目" prop="subCate" class="item">
-            <span>{{viewForm.subCate}}</span>
-          </el-form-item>
-          <el-form-item label="供应商链接1" prop="vendor1" class="item">
-            <span><a :href="viewForm.vendor1" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.vendor1}}</a></span>
-          </el-form-item>
-          <el-form-item label="供应商链接2" prop="vendor2" class="item">
-            <span><a :href="viewForm.vendor2" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.vendor2}}</a></span>
-          </el-form-item>
-          <el-form-item label="供应商链接3" prop="vendor3" class="item">
-            <span><a :href="viewForm.vendor3" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.vendor3}}</a></span>
-          </el-form-item>
-          <el-form-item label="平台参考链接1" prop="origin1" class="item">
-            <span><a :href="viewForm.origin1" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.origin1}}</a></span>
-          </el-form-item>
-          <el-form-item label="平台参考链接2" prop="origin2" class="item">
-            <span><a :href="viewForm.origin2" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.origin2}}</a></span>
-          </el-form-item>
-          <el-form-item label="平台参考链接3" prop="origin3" class="item">
-            <span><a :href="viewForm.origin3" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.origin3}}</a></span>
-          </el-form-item>
-          <el-form-item label="开发编号" prop="devNum" class="item">
-            <span>{{viewForm.devNum}}</span>
-          </el-form-item>
-          <el-form-item label="开发员" prop="developer" class="item">
-            <span>{{viewForm.developer}}</span>
-          </el-form-item>
-          <el-form-item label="推荐人" prop="introducer" class="item">
-            <span>{{viewForm.introducer}}</span>
-          </el-form-item>
-          <el-form-item label="推荐理由" prop="introReason" class="item">
-            <span>{{viewForm.introReason}}</span>
-          </el-form-item>
-          <el-form-item label="认领" prop="devStatus" class="item">
-            <span>{{viewForm.devStatus}}</span>
-          </el-form-item>
-          <el-form-item label="产品状态" prop="checkStatus" class="item">
-            <span>{{viewForm.checkStatus}}</span>
-          </el-form-item>
-          <el-form-item label="创建时间" prop="createDate" class="item">
-            <span>{{viewForm.createDate}}</span>
-          </el-form-item>
-          <el-form-item label="更新时间" prop="updateDate" class="item">
-            <span>{{viewForm.updateDate}}</span>
-          </el-form-item>
-          <el-form-item label="售价($)" prop="salePrice" class="item">
-            <span>{{viewForm.salePrice}}</span>
-          </el-form-item>
-          <el-form-item label="预估重量(克)" prop="hopeWeight" class="item">
-            <span>{{viewForm.hopeWeight}}</span>
-          </el-form-item>
-          <el-form-item label="预估利润率(%)" prop="hopeRate" class="item">
-            <span>{{viewForm.hopeRate}}</span>
-          </el-form-item>
-          <el-form-item label="预估月销量" prop="hopeSale" class="item">
-            <span>{{viewForm.hopeSale}}</span>
-          </el-form-item>
-          <el-form-item label="预估月毛利($)" prop="hopeMonthProfit" class="item">
-            <span>{{viewForm.hopeMonthProfit}}</span>
-          </el-form-item>
+        <el-row>
+          <el-col :span="24">
+            <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 125px;height: 125px;border:#d4d4d4 solid 1px;border-radius:5px;"></a>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="图片地址" prop="img" class="item">
+              <a :href="viewForm.img" target="_blank"><el-input size="small" v-model="viewForm.img" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="是否备货" prop="stockUp" class="item">
+              <el-input size="small" v-model="viewForm.stockUp" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="主类目" prop="cate" class="item">
+              <el-input size="small" v-model="viewForm.cate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="子类目" prop="subCate" class="item">
+              <el-input size="small" v-model="viewForm.subCate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>                     
+          <el-col :span="6">
+            <el-form-item label="供应商链接1" prop="vendor1" class="item">
+              <a :href="viewForm.vendor1" target="_blank"><el-input size="small" v-model="viewForm.vendor1" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="供应商链接2" prop="vendor2" class="item">
+              <a :href="viewForm.vendor2" target="_blank"><el-input size="small" v-model="viewForm.vendor2" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="供应商链接3" prop="vendor3" class="item">
+              <a :href="viewForm.vendor3" target="_blank"><el-input size="small" v-model="viewForm.vendor3" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>  
+          <el-col :span="6">
+            <el-form-item label="开发编号" prop="devNum" class="item">
+              <el-input size="small" v-model="viewForm.devNum" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>                     
+          <el-col :span="6">
+            <el-form-item label="平台参考链接1" prop="origin1" class="item">
+              <a :href="viewForm.origin1" target="_blank"><el-input size="small" v-model="viewForm.origin1" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="平台参考链接2" prop="origin2" class="item">
+              <a :href="viewForm.origin2" target="_blank"><el-input size="small" v-model="viewForm.origin2" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="平台参考链接3" prop="origin3" class="item">
+              <a :href="viewForm.origin3" target="_blank"><el-input size="small" v-model="viewForm.origin3" class="goodFormchild" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="推荐理由" prop="introReason" class="item">
+              <el-input size="small" v-model="viewForm.introReason" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>          
+          <el-col :span="6">
+            <el-form-item label="认领" prop="devStatus" class="item">
+              <el-input size="small" v-model="viewForm.devStatus" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="产品状态" prop="checkStatus" class="item">
+              <el-input size="small" v-model="viewForm.checkStatus" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>                     
+          <el-col :span="6">
+            <el-form-item label="开发员" prop="developer" class="item">
+              <el-input size="small" v-model="viewForm.developer" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="推荐人" prop="introducer" class="item">
+              <el-input size="small" v-model="viewForm.introducer" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="创建时间" prop="createDate" class="item">
+              <el-input size="small" v-model="viewForm.createDate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="更新时间" prop="updateDate" class="item">
+              <el-input size="small" v-model="viewForm.updateDate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="售价($)" prop="salePrice" class="item">
+              <el-input size="small" v-model="viewForm.salePrice" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="预估重量(克)" prop="hopeWeight" class="item">
+              <el-input size="small" v-model="viewForm.hopeWeight" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="预估利润率(%)" prop="hopeRate" class="item">
+              <el-input size="small" v-model="viewForm.hopeRate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="预估月销量" prop="hopeSale" class="item">
+              <el-input size="small" v-model="viewForm.hopeSale" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="预估月毛利($)" prop="hopeMonthProfit" class="item">
+              <el-input size="small" v-model="viewForm.hopeMonthProfit" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         </el-form>
       </el-dialog>
       <!-- 更新对话框 -->
-      <el-dialog title="更新" :visible.sync="dialogVisibleEdit1">
+      <el-dialog title="更新" :visible.sync="dialogVisibleEdit1" width="58%" top="4%">
         <el-form
           :model="editForm"
           :rules="rules"
-          label-width="110px"
           label-position="left"
+          style="padding:0 10px;"
           ref="editForm"
         >
-          <el-form-item label="图片" class="item2">
-            <img :src="editForm.img" style="width: 150px;height: 100px">
-          </el-form-item>
-          <el-form-item label="图片地址" prop="img">
-            <el-input v-model="editForm.img"></el-input>
-          </el-form-item>
-          <el-form-item label="主类目" prop="cate">
-            <el-select
-              size="small"
-              v-model="editForm.cate"
-              @change="getSubcate"
-              style="width:100%;"
+        <el-row>
+          <el-col :span="24">
+            <img :src="editForm.img" style="width: 110px;height: 110px;border:#d4d4d4 solid 1px;border-radius:5px;">
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="图片地址" prop="img">
+              <el-input size="small" v-model="editForm.img" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="主类目" prop="cate">
+              <el-select
+                size="small"
+                v-model="editForm.cate"
+                @change="getSubcate"
+                style="width:95%;"
+              >
+                <el-option v-for="item in cate" :value="item" :key="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="子类目" prop="subCate">
+              <el-select size="small" v-model="editForm.subCate" style="width:95%;">
+                <el-option
+                  v-for="item in subCate"
+                  :value="item"
+                  :key="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item
+              label="供应商链接1"
+              prop="vendor1"
+              :rules="[{required: true, message: '不能为空', trigger: 'blur'}]"
             >
-              <el-option v-for="item in cate" :value="item" :key="item"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="子类目" prop="subCate">
-            <el-select size="small" v-model="editForm.subCate" style="width:100%;">
-              <el-option
-                v-for="item in subCate"
-                :value="item"
-                :key="item"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            label="供应商链接1"
-            prop="vendor1"
-            :rules="[{required: true, message: '不能为空', trigger: 'blur'}]"
-          >
-            <el-input size="small" v-model="editForm.vendor1"></el-input>
-          </el-form-item>
-          <el-form-item label="供应商链接2">
-            <el-input size="small" v-model="editForm.vendor2"></el-input>
-          </el-form-item>
-          <el-form-item label="供应商链接3">
-            <el-input size="small" v-model="editForm.vendor3"></el-input>
-          </el-form-item>
-          <el-form-item label="平台参考链接1">
-            <el-input size="small" v-model="editForm.origin1"></el-input>
-          </el-form-item>
-          <el-form-item label="平台参考链接2">
-            <el-input size="small" v-model="editForm.origin2"></el-input>
-          </el-form-item>
-          <el-form-item label="平台参考链接3">
-            <el-input size="small" v-model="editForm.origin3"></el-input>
-          </el-form-item>
-          <el-form-item label="售价($)">
-            <el-input size="small" v-model="editForm.salePrice" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估月销量:">
-            <el-input size="small" v-model="editForm.hopeSale" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估利润率(%):">
-            <el-input size="small" v-model="editForm.hopeRate" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估重量(克):">
-            <el-input size="small" v-model="editForm.hopeWeight" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估成本(￥):">
-            <el-input size="small" v-model="editForm.hopeCost" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估月毛利($):">
-            <el-input size="small" v-model="editForm.hopeMonthProfit" disabled placeholder="自动计算"></el-input>
-          </el-form-item>
-          <el-form-item label>
-            <el-checkbox-group v-model="editForm.stockUp">
-              <el-checkbox label="是否备货" true-label="是" false-label="否" name="type"></el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
+              <el-input size="small" v-model="editForm.vendor1" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="供应商链接2">
+              <el-input size="small" v-model="editForm.vendor2" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="供应商链接3">
+              <el-input size="small" v-model="editForm.vendor3" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="平台参考链接1">
+              <el-input size="small" v-model="editForm.origin1" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="平台参考链接2">
+              <el-input size="small" v-model="editForm.origin2" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="平台参考链接3">
+              <el-input size="small" v-model="editForm.origin3" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="售价($)">
+              <el-input size="small" v-model="editForm.salePrice" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估月销量">
+              <el-input size="small" v-model="editForm.hopeSale" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估利润率(%)">
+              <el-input size="small" v-model="editForm.hopeRate" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估重量(克):">
+              <el-input size="small" v-model="editForm.hopeWeight" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估成本(￥):">
+              <el-input size="small" v-model="editForm.hopeCost" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估月毛利($):">
+              <el-input size="small" v-model="editForm.hopeMonthProfit" disabled placeholder="自动计算" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label>
+              <el-checkbox-group v-model="editForm.stockUp">
+                <el-checkbox label="是否备货" true-label="是" false-label="否" name="type"></el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="submitEdit1">更新</el-button>
@@ -818,88 +944,122 @@
         <el-button type="danger" @click="claimAll2" class="mr5">批量提交审批</el-button>
       </el-col>
       <!-- 新增对话框 -->
-      <el-dialog title="新增" :visible.sync="dialogVisible2">
+      <el-dialog title="新增" :visible.sync="dialogVisible2" width="58%">
         <el-form
           :model="addForm2"
           :rules="rules"
-          label-width="110px"
           label-position="left"
           class="demo-ruleForm"
+          style="padding:0 10px;"
           ref="addForm2"
         >
-          <el-form-item label="图片" prop="img">
-            <el-input size="small" v-model="addForm2.img" placeholder="必填"></el-input>
-          </el-form-item>
-          <el-form-item label="主类目" prop="cate">
-            <el-select
-              size="small"
-              v-model="addForm2.cate"
-              @change="productcategory2"
-              style="width:100%;"
-            >
-              <el-option v-for="item in cate" :value="item" :key="item"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="子类目" prop="subCate">
-            <el-select
-              size="small"
-              v-model="addForm2.subCate"
-              :disabled="this.disabled"
-              style="width:100%;"
-            >
-              <el-option
-                v-for="item in subCate"
-                :value="item"
-                :key="item"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="供应商链接1" prop="vendor1">
-            <el-input size="small" v-model="addForm2.vendor1"></el-input>
-          </el-form-item>
-          <el-form-item label="供应商链接2" prop="vendor2">
-            <el-input size="small" v-model="addForm2.vendor2"></el-input>
-          </el-form-item>
-          <el-form-item label="供应商链接3" prop="vendor3">
-            <el-input size="small" v-model="addForm2.vendor3"></el-input>
-          </el-form-item>
-          <el-form-item label="平台参考链接1" prop="origin1">
-            <el-input size="small" v-model="addForm2.origin1"></el-input>
-          </el-form-item>
-          <el-form-item label="平台参考链接2" prop="origin2">
-            <el-input size="small" v-model="addForm2.origin2"></el-input>
-          </el-form-item>
-          <el-form-item label="平台参考链接3" prop="origin3">
-            <el-input size="small" v-model="addForm2.origin3"></el-input>
-          </el-form-item>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="图片" prop="img">
+              <el-input size="small" v-model="addForm2.img" placeholder="必填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="主类目" prop="cate">
+              <el-select
+                size="small"
+                v-model="addForm2.cate"
+                @change="productcategory2"
+                style="width:95%;"
+              >
+                <el-option v-for="item in cate" :value="item" :key="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="子类目" prop="subCate">
+              <el-select
+                size="small"
+                v-model="addForm2.subCate"
+                :disabled="this.disabled"
+                style="width:95%;"
+              >
+                <el-option
+                  v-for="item in subCate"
+                  :value="item"
+                  :key="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="供应商链接1" prop="vendor1">
+              <el-input size="small" v-model="addForm2.vendor1" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="供应商链接2" prop="vendor2">
+              <el-input size="small" v-model="addForm2.vendor2" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="供应商链接3" prop="vendor3">
+              <el-input size="small" v-model="addForm2.vendor3" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="平台参考链接1" prop="origin1">
+              <el-input size="small" v-model="addForm2.origin1" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="平台参考链接2" prop="origin2">
+              <el-input size="small" v-model="addForm2.origin2" style="width:95%;"></el-input>
+            </el-form-item>            
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="平台参考链接3" prop="origin3">
+              <el-input size="small" v-model="addForm2.origin3" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="售价($)" prop="salePrice">
+              <el-input size="small" v-model="addForm2.salePrice" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估月销量" prop="hopeSale">
+              <el-input size="small" v-model="addForm2.hopeSale" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估利润率(%)" prop="hopeRate">
+              <el-input size="small" v-model="addForm2.hopeRate" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估重量(克)" prop="hopeWeight">
+              <el-input size="small" v-model="addForm2.hopeWeight" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估成本(￥)" prop="hopeCost">
+              <el-input size="small" v-model="addForm2.hopeCost" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估月毛利($)" prop="hopeMonthProfit">
+              <el-input size="small" v-model="addForm2.hopeMonthProfit" disabled placeholder="自动计算" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item>
+              <el-checkbox-group v-model="addForm2.stockUp">
+                <el-checkbox label="是否备货" true-label="是" false-label="否" name="type"></el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
           <!-- <el-form-item label="开发员" prop='developer'>
           <el-select size="small" v-model="addForm.developer" style="width:100%;">
             <el-option v-for="item in developer" :value="item.username" :key="item.username"></el-option>
           </el-select>
           </el-form-item>-->
-          <el-form-item label="售价($)" prop="salePrice">
-            <el-input size="small" v-model="addForm2.salePrice" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估月销量" prop="hopeSale">
-            <el-input size="small" v-model="addForm2.hopeSale" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估利润率(%)" prop="hopeRate">
-            <el-input size="small" v-model="addForm2.hopeRate" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估重量(克)" prop="hopeWeight">
-            <el-input size="small" v-model="addForm2.hopeWeight" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估成本(￥)" prop="hopeCost">
-            <el-input size="small" v-model="addForm2.hopeCost" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估月毛利($)" prop="hopeMonthProfit">
-            <el-input size="small" v-model="addForm2.hopeMonthProfit" disabled placeholder="自动计算"></el-input>
-          </el-form-item>
-          <el-form-item label="售价($)">
-            <el-checkbox-group v-model="addForm2.stockUp">
-              <el-checkbox label="是否备货" true-label="是" false-label="否" name="type"></el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="submitForm2">创建</el-button>
@@ -907,163 +1067,244 @@
         </span>
       </el-dialog>
       <!-- 查看对话框 -->
-      <el-dialog title="查看" :visible.sync="dialogVisibleView2" width="70%">
+      <el-dialog title="详情" :visible.sync="dialogVisibleView2" width="60%" top="4.5%">
         <el-form
           :model="viewForm"
           label-position="left"
-          label-width="110px"
+          class="goodProForm"
           ref="viewForm"
-          style="width: 100%;overflow: hidden"
+          style="width: 100%;overflow: hidden;padding:0 2px;"
         >
-          <el-form-item label="图片" prop="img" class="item1">
-            <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 150px;height: 150px;"></a>
-          </el-form-item>
-          <el-form-item label="图片地址" prop="img" class="item">
-            <span><a :href="viewForm.img" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.img}}</a></span>
-          </el-form-item>
-          <el-form-item label="是否备货" prop="stockUp" class="item">
-            <span>{{viewForm.stockUp}}</span>
-          </el-form-item>
-          <el-form-item label="主类目" prop="cate" class="item">
-            <span>{{viewForm.cate}}</span>
-          </el-form-item>
-          <el-form-item label="子类目" prop="subCate" class="item">
-            <span>{{viewForm.subCate}}</span>
-          </el-form-item>
-          <el-form-item label="供应商链接1" prop="vendor1" class="item">
-            <span><a :href="viewForm.vendor1" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.vendor1}}</a></span>
-          </el-form-item>
-          <el-form-item label="供应商链接2" prop="vendor2" class="item">
-            <span><a :href="viewForm.vendor2" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.vendor2}}</a></span>
-          </el-form-item>
-          <el-form-item label="供应商链接3" prop="vendor3" class="item">
-            <span><a :href="viewForm.vendor3" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.vendor3}}</a></span>
-          </el-form-item>
-          <el-form-item label="平台参考链接1" prop="origin1" class="item">
-            <span><a :href="viewForm.origin1" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.origin1}}</a></span>
-          </el-form-item>
-          <el-form-item label="平台参考链接2" prop="origin2" class="item">
-            <span><a :href="viewForm.origin2" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.origin2}}</a></span>
-          </el-form-item>
-          <el-form-item label="平台参考链接3" prop="origin3" class="item">
-            <span><a :href="viewForm.origin3" target="_blank" style="color:#337ab7;text-decoration:none">{{viewForm.origin3}}</a></span>
-          </el-form-item>
-          <el-form-item label="开发编号" prop="devNum" class="item">
-            <span>{{viewForm.devNum}}</span>
-          </el-form-item>
-          <el-form-item label="开发员" prop="developer" class="item">
-            <span>{{viewForm.developer}}</span>
-          </el-form-item>
-          <el-form-item label="推荐人" prop="introducer" class="item">
-            <span>{{viewForm.introducer}}</span>
-          </el-form-item>
-          <el-form-item label="推荐理由" prop="introReason" class="item">
-            <span>{{viewForm.introReason}}</span>
-          </el-form-item>
-          <el-form-item label="认领" prop="devStatus" class="item">
-            <span>{{viewForm.devStatus}}</span>
-          </el-form-item>
-          <el-form-item label="产品状态" prop="checkStatus" class="item">
-            <span>{{viewForm.checkStatus}}</span>
-          </el-form-item>
-          <el-form-item label="创建时间" prop="createDate" class="item">
-            <span>{{viewForm.createDate}}</span>
-          </el-form-item>
-          <el-form-item label="更新时间" prop="updateDate" class="item">
-            <span>{{viewForm.updateDate}}</span>
-          </el-form-item>
-          <el-form-item label="售价($)" prop="salePrice" class="item">
-            <span>{{viewForm.salePrice}}</span>
-          </el-form-item>
-          <el-form-item label="预估重量(克)" prop="hopeWeight" class="item">
-            <span>{{viewForm.hopeWeight}}</span>
-          </el-form-item>
-          <el-form-item label="预估利润率(%)" prop="hopeRate" class="item">
-            <span>{{viewForm.hopeRate}}</span>
-          </el-form-item>
-          <el-form-item label="预估月销量" prop="hopeSale" class="item">
-            <span>{{viewForm.hopeSale}}</span>
-          </el-form-item>
-          <el-form-item label="预估月毛利($)" prop="hopeMonthProfit" class="item">
-            <span>{{viewForm.hopeMonthProfit}}</span>
-          </el-form-item>
+        <el-row>
+          <el-col :span="24">
+            <a :href="viewForm.img" target="_blank"><img :src="viewForm.img" style="width: 125px;height: 125px;border:#d4d4d4 solid 1px;border-radius:5px;"></a>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="图片地址" prop="img" class="item">
+              <a :href="viewForm.img" target="_blank"><el-input size="small" class="goodFormchild" v-model="viewForm.img" style="width:95%;" disabled></el-input></a>
+            </el-form-item>            
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="是否备货" prop="stockUp" class="item">
+              <el-input size="small" v-model="viewForm.stockUp" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="主类目" prop="cate" class="item">
+              <el-input size="small" v-model="viewForm.cate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="子类目" prop="subCate" class="item">
+              <el-input size="small" v-model="viewForm.subCate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="供应商链接1" prop="vendor1" class="item">
+              <a :href="viewForm.vendor1" target="_blank"><el-input size="small" class="goodFormchild" v-model="viewForm.vendor1" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="供应商链接2" prop="vendor2" class="item">
+              <a :href="viewForm.vendor2" target="_blank"><el-input size="small" class="goodFormchild" v-model="viewForm.vendor2" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="供应商链接3" prop="vendor3" class="item">
+              <a :href="viewForm.vendor3" target="_blank"><el-input size="small" class="goodFormchild" v-model="viewForm.vendor3" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="开发编号" prop="devNum" class="item">
+              <el-input size="small" v-model="viewForm.devNum" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="平台参考链接1" prop="origin1" class="item">
+              <a :href="viewForm.origin1" target="_blank"><el-input size="small" class="goodFormchild" v-model="viewForm.origin1" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="平台参考链接2" prop="origin2" class="item">
+              <a :href="viewForm.origin2" target="_blank"><el-input size="small" class="goodFormchild" v-model="viewForm.origin2" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="平台参考链接3" prop="origin2" class="item">
+              <a :href="viewForm.origin3" target="_blank"><el-input size="small" class="goodFormchild" v-model="viewForm.origin3" style="width:95%;" disabled></el-input></a>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="推荐理由" prop="introReason" class="item">
+              <el-input size="small" v-model="viewForm.introReason" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="开发员" prop="developer" class="item">
+              <el-input size="small" v-model="viewForm.developer" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="推荐人" prop="introducer" class="item">
+              <el-input size="small" v-model="viewForm.introducer" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="认领" prop="devStatus" class="item">
+              <el-input size="small" v-model="viewForm.devStatus" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="产品状态" prop="checkStatus" class="item">
+              <el-input size="small" v-model="viewForm.checkStatus" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="创建时间" prop="createDate" class="item">
+              <el-input size="small" v-model="viewForm.createDate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="更新时间" prop="updateDate" class="item">
+              <el-input size="small" v-model="viewForm.updateDate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="售价($)" prop="salePrice" class="item">
+              <el-input size="small" v-model="viewForm.salePrice" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="预估重量(克)" prop="hopeWeight" class="item">
+              <el-input size="small" v-model="viewForm.hopeWeight" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="预估利润率(%)" prop="hopeRate" class="item">
+              <el-input size="small" v-model="viewForm.hopeRate" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="预估月销量" prop="hopeSale" class="item">
+              <el-input size="small" v-model="viewForm.hopeSale" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="预估月毛利($)" prop="hopeMonthProfit" class="item">
+              <el-input size="small" v-model="viewForm.hopeMonthProfit" style="width:95%;" disabled></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         </el-form>
       </el-dialog>
       <!-- 更新对话框 -->
-      <el-dialog title="更新" :visible.sync="dialogVisibleEdit2">
+      <el-dialog title="更新" :visible.sync="dialogVisibleEdit2" width="58%" top="4%">
         <el-form
           :model="editForm"
           :rules="rules"
-          label-width="110px"
           label-position="left"
           ref="editForm"
         >
-          <el-form-item label="图片">
-            <img :src="editForm.img" style="width: 70px;height: 70px">
-          </el-form-item>
-          <el-form-item label="图片地址" prop="img">
-            <el-input v-model="editForm.img"></el-input>
-          </el-form-item>
-          <el-form-item label="主类目" prop="cate">
-            <el-select
-              size="small"
-              v-model="editForm.cate"
-              @change="getSubcate"
-              style="width:100%;"
-            >
-              <el-option v-for="item in cate" :value="item" :key="item"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="子类目" prop="subCate">
-            <el-select size="small" v-model="editForm.subCate" style="width:100%;">
-              <el-option
-                v-for="item in subCate"
-                :value="item"
-                :key="item"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="供应商链接1">
-            <el-input size="small" v-model="editForm.vendor1"></el-input>
-          </el-form-item>
-          <el-form-item label="供应商链接2">
-            <el-input size="small" v-model="editForm.vendor2"></el-input>
-          </el-form-item>
-          <el-form-item label="供应商链接3">
-            <el-input size="small" v-model="editForm.vendor3"></el-input>
-          </el-form-item>
-          <el-form-item label="平台参考链接1">
-            <el-input size="small" v-model="editForm.origin1"></el-input>
-          </el-form-item>
-          <el-form-item label="平台参考链接2">
-            <el-input size="small" v-model="editForm.origin2"></el-input>
-          </el-form-item>
-          <el-form-item label="平台参考链接3">
-            <el-input size="small" v-model="editForm.origin3"></el-input>
-          </el-form-item>
-          <el-form-item label="售价($)">
-            <el-input size="small" v-model="editForm.salePrice" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估月销量:">
-            <el-input size="small" v-model="editForm.hopeSale" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估利润率(%):">
-            <el-input size="small" v-model="editForm.hopeRate" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估重量(克):">
-            <el-input size="small" v-model="editForm.hopeWeight" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估成本(￥):">
-            <el-input size="small" v-model="editForm.hopeCost" placeholder="选填"></el-input>
-          </el-form-item>
-          <el-form-item label="预估月毛利($):">
-            <el-input size="small" v-model="editForm.hopeMonthProfit" disabled placeholder="自动计算"></el-input>
-          </el-form-item>
-          <el-form-item label>
-            <el-checkbox-group v-model="editForm.stockUp">
-              <el-checkbox label="是否备货" true-label="是" false-label="否" name="type"></el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
+        <el-row>
+          <el-col :span="24">
+            <img :src="editForm.img" style="width: 110px;height: 110px;border:#d4d4d4 solid 1px;border-radius:5px;">
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="图片地址" prop="img">
+              <el-input v-model="editForm.img" size="small" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="主类目" prop="cate">
+              <el-select
+                size="small"
+                v-model="editForm.cate"
+                @change="getSubcate"
+                style="width:95%;"
+              >
+                <el-option v-for="item in cate" :value="item" :key="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="子类目" prop="subCate">
+              <el-select size="small" v-model="editForm.subCate" style="width:95%;">
+                <el-option
+                  v-for="item in subCate"
+                  :value="item"
+                  :key="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="供应商链接1">
+              <el-input size="small" v-model="editForm.vendor1" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="供应商链接2">
+              <el-input size="small" v-model="editForm.vendor2" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="供应商链接3">
+              <el-input size="small" v-model="editForm.vendor3" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="平台参考链接1">
+              <el-input size="small" v-model="editForm.origin1" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="平台参考链接2">
+              <el-input size="small" v-model="editForm.origin2" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="平台参考链接3">
+              <el-input size="small" v-model="editForm.origin3" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="售价($)">
+              <el-input size="small" v-model="editForm.salePrice" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估月销量:">
+              <el-input size="small" v-model="editForm.hopeSale" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估利润率(%):">
+              <el-input size="small" v-model="editForm.hopeRate" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估重量(克):">
+              <el-input size="small" v-model="editForm.hopeWeight" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估成本(￥):">
+              <el-input size="small" v-model="editForm.hopeCost" placeholder="选填" style="width:95%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="预估月毛利($):">
+              <el-input size="small" v-model="editForm.hopeMonthProfit" disabled placeholder="自动计算" style="width:95%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label>
+              <el-checkbox-group v-model="editForm.stockUp">
+                <el-checkbox label="是否备货" true-label="是" false-label="否" name="type"></el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="submitEdit2">更新</el-button>
@@ -3760,6 +4001,23 @@ export default {
 .item2 .el-form-item__label {
   margin-right: 1%;
   margin-top: 3%;
+}
+.goodProForm .el-input.is-disabled .el-input__inner{
+  color:#fff;
+  background-color:rgba(37, 115, 155, 0.8);
+  padding: 0px 10px;
+  border-radius: 6px;
+}
+.goodProForm .el-textarea.is-disabled .el-textarea__inner{
+  color:#000;
+}
+.goodProForm .el-form-item__label{
+  color: #333 !important;
+  line-height: 35px !important;
+}
+.goodProForm .goodFormchild .el-input__inner{
+  color:#fff !important;
+  cursor: pointer;
 }
 </style>
 

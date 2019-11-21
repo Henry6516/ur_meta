@@ -174,8 +174,8 @@
           </el-col>
         </el-col>
         <el-col :span="8" style="margin-top: 20px">
-          <el-col :span="5" style="text-align: center;margin-top: 8px;" class="font13">
-            主类目
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red" class="font13">
+            *主类目
           </el-col>
           <el-col :span="18">
             <el-select
@@ -1228,6 +1228,10 @@ export default {
         this.$message.error('请填写英文申报名')
         return
       }
+      if(!this.oaGoods.cate){
+        this.$message.error('请选择主类目')
+        return
+      }
       if(!this.editForm.supplierName){
         this.$message.error('请填写供应商名称')
         return
@@ -1336,6 +1340,10 @@ export default {
       }
       if(!this.editForm.aliasEnName){
         this.$message.error('请填写英文申报名')
+        return
+      }
+      if(!this.oaGoods.cate){
+        this.$message.error('请选择主类目')
         return
       }
       if(!this.editForm.supplierName){

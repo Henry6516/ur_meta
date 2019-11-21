@@ -1667,3 +1667,21 @@ export function getCateRuleInfo(param) {
   })
 }
 
+export function formProductReport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/product-report',
+    method: 'post',
+    data
+  })
+}
+
+export function formRuleReport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/rule-report',
+    method: 'post',
+    data
+  })
+}
+

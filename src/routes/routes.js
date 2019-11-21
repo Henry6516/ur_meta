@@ -131,6 +131,7 @@ import mySubscribe from '../views/analysis/mySubscribe.vue'
 import pushRules from '../views/analysis/pushRules.vue'
 import ebayRule from '../views/analysis/ebayRule.vue'
 import distributionRule from '../views/analysis/distributionRule.vue'
+import reportFormPro from '../views/analysis/reportFormPro.vue'
 
 const routes = [
   {
@@ -357,6 +358,11 @@ const routes = [
         path: '/v1/products-engine/dev-cat',
         component: ebayRule,
         name: 'ebay规则'
+      },
+      {
+        path: '/v1/products-engine/dashboard',
+        component: reportFormPro,
+        name: '统计报表'
       },
       {
         path: '/v1/products-engine/analysis',

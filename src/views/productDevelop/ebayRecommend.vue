@@ -287,10 +287,9 @@
             </el-table-column>
             <el-table-column
               property="receiver"
-              label="推荐列表"
+              label="推荐人列表"
               align="center"
-              width="90"
-              sortable="custom"
+              width="100"
             >
             <template slot-scope="scope">
                 <div
