@@ -1685,3 +1685,10 @@ export function formRuleReport(param) {
   })
 }
 
+export function getDailyReport() {
+  return request({
+    url: '/products-engine/daily-report',
+    method: 'get'
+  })
+}
+
