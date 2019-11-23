@@ -85,10 +85,7 @@
         </div>
         <div class="mtCase02 reCop" :style="mtCase01">
           <p class="mtop">今日开发产品处理情况</p>
-          <transition
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeIn"
-          >
+          <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeIn">
             <div class="xBox" v-show="isshow">
               <div class="mcT01" v-for="(item,index) in devNum" :key="index">
                 <span class="mName">{{item.username}}</span>
@@ -96,6 +93,15 @@
                   <span class="xg" :style="{width:item.claimRate+'%'}"></span>
                   <span class="xr" :style="{width:item.filterRate+'%'}"></span>
                   <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
+                  <!-- <el-tooltip :content="item.claimNum+''" placement="top">
+                    <span class="xg" :style="{width:item.claimRate+'%'}"></span>
+                  </el-tooltip>
+                  <el-tooltip :content="item.filterNum+''" placement="top">
+                    <span class="xr" :style="{width:item.filterRate+'%'}"></span>
+                  </el-tooltip>
+                  <el-tooltip :content="item.unhandledNum+''" placement="top">
+                    <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
+                  </el-tooltip>-->
                 </div>
               </div>
             </div>
@@ -143,15 +149,32 @@
         </div>
       </div>
       <div class="w95">
-        <el-card class="box-card" :style="obj1">
-          <el-col :span="24" style="margin-top:1px;">
-            <el-col :span="24">
-              <el-card>
-                <div ref="or1" :style="sty" v-loading="listLoading"></div>
-              </el-card>
-            </el-col>
-          </el-col>
-        </el-card>
+        <el-table
+          :data="tabledatarl"
+          border
+          class="elTableForm"
+          :summary-method="getSummariesrl"
+          :header-cell-style="getRowClass"
+          show-summary
+          :height="tableHeightstock"
+          style="width: 100%;margin:auto;margin-top:5px;"
+        >
+          <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
+          <el-table-column label="开发员" header-align="center" align="center" prop="developer"></el-table-column>
+          <el-table-column label="分配产品总数" header-align="center" align="center" prop="dispatchNum"></el-table-column>
+          <el-table-column label="爆款数" header-align="center" align="center" prop="hotNum"></el-table-column>
+          <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotRate">
+            <template slot-scope="scope">{{scope.row.hotRate | cutOut}}</template>
+          </el-table-column>
+          <el-table-column label="旺款数" header-align="center" align="center" prop="popNum"></el-table-column>
+          <el-table-column label="旺款率(%)" header-align="center" align="center" prop="popRate">
+            <template slot-scope="scope">{{scope.row.popRate | cutOut}}</template>
+          </el-table-column>
+          <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum"></el-table-column>
+          <el-table-column label="认领率(%)" header-align="center" align="center" prop="claimRate">
+            <template slot-scope="scope">{{scope.row.claimRate | cutOut}}</template>
+          </el-table-column>
+        </el-table>
       </div>
     </div>
     <div v-show="show.ts">
@@ -223,6 +246,7 @@
           </el-table-column>
           <el-table-column label="规则名称" header-align="center" align="center" prop="ruleName"></el-table-column>
           <el-table-column label="总产品数" header-align="center" align="center" prop="totalNum"></el-table-column>
+          <el-table-column label="推送总数" header-align="center" align="center" prop="dispatchNum"></el-table-column>
           <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum"></el-table-column>
           <el-table-column label="爆款数" header-align="center" align="center" prop="hotNum"></el-table-column>
           <el-table-column label="旺款数" header-align="center" align="center" prop="popNum"></el-table-column>
@@ -296,17 +320,18 @@ export default {
       tsrxtotal: 0,
       xptotal: 0,
       rxtotal: 0,
-      rlxptotal:0,
-      rlrxtotal:0,
-      glxptotal:0,
-      glrxtotal:0,
-      clxptotal:0,
-      clrxtotal:0,
+      rlxptotal: 0,
+      rlrxtotal: 0,
+      glxptotal: 0,
+      glrxtotal: 0,
+      clxptotal: 0,
+      clrxtotal: 0,
       allMenu: [],
       ruleNameXp: [],
       ruleNameRx: [],
       tabledata: [],
-      isshow:false,
+      tabledatarl: [],
+      isshow: false,
       devNum: [],
       options: {
         tooltip: {
@@ -455,6 +480,12 @@ export default {
       }
     };
   },
+  filters: {
+    cutOut: function(value) {
+      value = ((Number(value) * 1000000) / 10000).toFixed(2);
+      return value;
+    }
+  },
   methods: {
     getSummaries(param) {
       const { columns, data } = param;
@@ -481,6 +512,33 @@ export default {
       });
       return sums;
     },
+    getSummariesrl(param) {
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = "合计";
+          return;
+        }
+        if (index == 2 || index == 3 || index == 5 || index == 7) {
+          const values = data.map(item => Number(item[column.property]));
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] += "";
+          } else {
+            sums[index] = "N/A";
+          }
+        }
+      });
+      return sums;
+    },
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
         return "color:#337ab7;background:#f5f7fa";
@@ -499,6 +557,7 @@ export default {
     handleClick(tab, event) {
       if (tab.name === "/v1/products-engine/daily-report") {
         this.show["mt"] = true;
+        this.getDataTotal();
       } else {
         this.show["mt"] = false;
       }
@@ -515,6 +574,113 @@ export default {
         this.show["ts"] = false;
       }
     },
+    getDataTotal() {
+      getDailyReport().then(response => {
+        this.devNum = response.data.data.devData;
+        this.isshow = true;
+        var xptotal = response.data.data.totalNewNum;
+        var setTime = setInterval(() => {
+          if (this.xptotal >= xptotal) {
+            this.xptotal = xptotal;
+            clearInterval(setTime);
+          } else {
+            this.xptotal = this.xptotal + 5;
+          }
+        }, 1);
+        var rxtotal = response.data.data.totalHotNum;
+        var setTime1 = setInterval(() => {
+          if (this.rxtotal >= rxtotal) {
+            this.rxtotal = rxtotal;
+            clearInterval(setTime1);
+          } else {
+            this.rxtotal = this.rxtotal + 50;
+          }
+        }, 1);
+        var tsxptotal = response.data.data.dispatchNewNum;
+        var setTime2 = setInterval(() => {
+          if (this.tsxptotal >= tsxptotal) {
+            this.tsxptotal = tsxptotal;
+            clearInterval(setTime2);
+          } else {
+            this.tsxptotal = this.tsxptotal + 1;
+          }
+        }, 1);
+        var tsrxtotal = response.data.data.dispatchHotNum;
+        var setTime3 = setInterval(() => {
+          if (this.tsrxtotal >= tsrxtotal) {
+            this.tsrxtotal = tsrxtotal;
+            clearInterval(setTime3);
+          } else {
+            this.tsrxtotal = this.tsrxtotal + 1;
+          }
+        }, 1);
+        var rlxptotal = response.data.data.claimNewNum;
+        var setTime4 = setInterval(() => {
+          if (this.rlxptotal >= rlxptotal) {
+            this.rlxptotal = rlxptotal;
+            clearInterval(setTime4);
+          } else {
+            this.rlxptotal = this.rlxptotal + 1;
+          }
+        }, 1);
+        var rlrxtotal = response.data.data.claimHotNum;
+        var setTime7 = setInterval(() => {
+          if (this.rlrxtotal >= rlrxtotal) {
+            this.rlrxtotal = rlrxtotal;
+            clearInterval(setTime7);
+          } else {
+            this.rlrxtotal = this.rlrxtotal + 1;
+          }
+        }, 1);
+        var glxptotal = response.data.data.filterNewNum;
+        var setTime5 = setInterval(() => {
+          if (this.glxptotal >= glxptotal) {
+            this.glxptotal = glxptotal;
+            clearInterval(setTime5);
+          } else {
+            this.glxptotal = this.glxptotal + 1;
+          }
+        }, 1);
+        var glrxtotal = response.data.data.filterHotNum;
+        var setTime8 = setInterval(() => {
+          if (this.glrxtotal >= glrxtotal) {
+            this.glrxtotal = glrxtotal;
+            clearInterval(setTime8);
+          } else {
+            this.glrxtotal = this.glrxtotal + 1;
+          }
+        }, 1);
+        var clxptotal = response.data.data.unhandledNewNum;
+        var setTime6 = setInterval(() => {
+          if (this.clxptotal >= clxptotal) {
+            this.clxptotal = clxptotal;
+            clearInterval(setTime6);
+          } else {
+            this.clxptotal = this.clxptotal + 1;
+          }
+        }, 1);
+        var clrxtotal = response.data.data.unhandledHotNum;
+        var setTime9 = setInterval(() => {
+          if (this.clrxtotal >= clrxtotal) {
+            this.clrxtotal = clrxtotal;
+            clearInterval(setTime9);
+          } else {
+            this.clrxtotal = this.clrxtotal + 1;
+          }
+        }, 1);
+        var arrName = [];
+        var arrData = [];
+        var lineData = response.data.data.claimData;
+        for (var i = 0; i < lineData.length; i++) {
+          arrName.push(lineData[i].name);
+          arrData.push(lineData[i].value);
+        }
+        this.options.xAxis[0].data = arrName;
+        this.options.series[0].data = arrData;
+        let indexOr = this.$echarts.init(this.$refs.indexOr);
+        indexOr.setOption(this.options);
+      });
+    },
     getDataTs() {
       formRuleReport(this.condition1).then(res => {
         this.tabledata = res.data.data;
@@ -523,37 +689,22 @@ export default {
     getData() {
       this.listLoading = true;
       formProductReport(this.condition).then(res => {
-        var data = res.data.data;
-        var name = [];
-        var data1 = [];
-        var data2 = [];
-        var data3 = [];
-        for (var i = 0; i < data.length; i++) {
-          name.push(data[i].developer);
-          data1.push(data[i].hotNum);
-          data2.push(data[i].popNum);
-          data3.push(data[i].totalNum);
-        }
-        this.options1.xAxis[0].data = name;
-        this.options1.series[0].data = data1;
-        this.options1.series[1].data = data2;
-        this.options1.series[2].data = data3;
-        let or1 = this.$echarts.init(this.$refs.or1);
-        or1.setOption(this.options1);
+        this.tabledatarl = res.data.data;
         this.listLoading = false;
       });
     }
   },
   mounted() {
-    var startData = getMonthDate("lastMonth").start;
-    var endData = getMonthDate("lastMonth").end;
+    this.getDataTotal();
+    var startData = getMonthDate("sevenData").start;
+    var endData = getMonthDate("sevenData").end;
     this.condition.dateRange = [
-      getNextDate(startData, -1),
-      getNextDate(endData, -1)
+      getNextDate(startData, 0),
+      getNextDate(endData, 0)
     ];
     this.condition1.dateRange = [
-      getNextDate(startData, -1),
-      getNextDate(endData, -1)
+      getNextDate(startData, 0),
+      getNextDate(endData, 0)
     ];
     APRengineRule().then(res => {
       this.ruleNameXp = res.data.data;
@@ -574,117 +725,6 @@ export default {
     });
     getDeveloper().then(response => {
       this.developer = response.data.data;
-    });
-    getDailyReport().then(response => {
-      this.devNum = response.data.data.devData;
-      this.isshow=true
-      var xptotal = response.data.data.totalNewNum;
-      var setTime = setInterval(() => {
-        if (this.xptotal >= xptotal) {
-          this.xptotal = xptotal;
-          clearInterval(setTime);
-        } else {
-          this.xptotal = this.xptotal + 5;
-        }
-      }, 1);
-      var rxtotal = response.data.data.totalHotNum;
-      var setTime1 = setInterval(() => {
-        if (this.rxtotal >= rxtotal) {
-          this.rxtotal = rxtotal;
-          clearInterval(setTime1);
-        } else {
-          this.rxtotal = this.rxtotal + 20;
-        }
-      }, 1);
-      var tsxptotal = response.data.data.dispatchNewNum;
-      var setTime2 = setInterval(() => {
-        if (this.tsxptotal >= tsxptotal) {
-          this.tsxptotal = tsxptotal;
-          clearInterval(setTime2);
-        } else {
-          this.tsxptotal = this.tsxptotal + 1;
-        }
-      }, 1);
-      var tsrxtotal = response.data.data.dispatchHotNum;
-      var setTime3 = setInterval(() => {
-        if (this.tsrxtotal >= tsrxtotal) {
-          this.tsrxtotal = tsrxtotal;
-          clearInterval(setTime3);
-        } else {
-          this.tsrxtotal = this.tsrxtotal + 1;
-        }
-      }, 1);
-      var rlxptotal =
-        response.data.data.claimNewNum;
-      var setTime4 = setInterval(() => {
-        if (this.rlxptotal >= rlxptotal) {
-          this.rlxptotal = rlxptotal;
-          clearInterval(setTime4);
-        } else {
-          this.rlxptotal = this.rlxptotal + 1;
-        }
-      }, 1);
-      var rlrxtotal =
-        response.data.data.claimHotNum;
-      var setTime7 = setInterval(() => {
-        if (this.rlrxtotal >= rlrxtotal) {
-          this.rlrxtotal = rlrxtotal;
-          clearInterval(setTime7);
-        } else {
-          this.rlrxtotal = this.rlrxtotal + 1;
-        }
-      }, 1);
-      var glxptotal =
-        response.data.data.filterNewNum;
-      var setTime5 = setInterval(() => {
-        if (this.glxptotal >= glxptotal) {
-          this.glxptotal = glxptotal;
-          clearInterval(setTime5);
-        } else {
-          this.glxptotal = this.glxptotal + 1;
-        }
-      }, 1);
-      var glrxtotal =
-        response.data.data.filterHotNum;
-      var setTime8 = setInterval(() => {
-        if (this.glrxtotal >= glrxtotal) {
-          this.glrxtotal = glrxtotal;
-          clearInterval(setTime8);
-        } else {
-          this.glrxtotal = this.glrxtotal + 1;
-        }
-      }, 1);
-      var clxptotal =
-        response.data.data.unhandledNewNum;
-      var setTime6 = setInterval(() => {
-        if (this.clxptotal >= clxptotal) {
-          this.clxptotal = clxptotal;
-          clearInterval(setTime6);
-        } else {
-          this.clxptotal = this.clxptotal + 1;
-        }
-      }, 1);
-      var clrxtotal =
-        response.data.data.unhandledHotNum;
-      var setTime9 = setInterval(() => {
-        if (this.clrxtotal >= clrxtotal) {
-          this.clrxtotal = clrxtotal;
-          clearInterval(setTime9);
-        } else {
-          this.clrxtotal = this.clrxtotal + 1;
-        }
-      }, 1);
-      var arrName = [];
-      var arrData = [];
-      var lineData = response.data.data.claimData;
-      for (var i = 0; i < lineData.length; i++) {
-        arrName.push(lineData[i].name);
-        arrData.push(lineData[i].value);
-      }
-      this.options.xAxis[0].data = arrName;
-      this.options.series[0].data = arrData;
-      let indexOr = this.$echarts.init(this.$refs.indexOr);
-      indexOr.setOption(this.options);
     });
   }
 };

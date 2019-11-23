@@ -84,6 +84,13 @@ export function getMonthDate(dateType) {
     start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
     return { start: dateFormatter(start), end: dateFormatter(end) }
   }
+
+  if (dateType === 'sevenData') {
+    const end = new Date()
+    const start = new Date()
+    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+    return { start: dateFormatter(start), end: dateFormatter(end) }
+  }
 }
 
 // 判断dateType

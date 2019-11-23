@@ -384,6 +384,14 @@ export default {
           Twodata.subCateChecked = [];
         }
       }
+      if (this.itemDetail[a].platValue[b].flag == true) {
+        var data = this.itemDetail[a].platValue[b].marketplaceValue;
+        for (var i = 0; i < data.length; i++) {
+          data[i].flag = true;
+          var Twodata = data[i].cateValue;
+          Twodata.subCateChecked = Twodata.subCate;
+        }
+      }
     },
     rulePlatActive(i) {
       this.itemDetail[i].flag = !this.itemDetail[i].flag;
