@@ -166,6 +166,9 @@
                 <el-radio v-for="(item,index) in pyCate" :key="index" :label="item">{{item}}</el-radio>
               </el-radio-group>
             </el-col>
+            <div class="pacAb">
+              <el-button size="small"  type="success" @click="customCate">自定义类目</el-button>
+            </div>
           </el-col>
           <el-col :span="24" style="margin-bottom: 12px">
             <el-col :span="24">
@@ -261,6 +264,13 @@
         <el-button type="primary" @click="addsaveEbay()">保 存</el-button>
       </div>
     </el-dialog>
+    <el-dialog width="30%" title="添加类目" :visible.sync="innerVisible" append-to-body :close-on-click-modal="false">
+        <el-input v-model="CustomCateName" placeholder="类目名称"></el-input>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="innerVisible = false" type="primary">取 消</el-button>
+          <el-button @click="addCustomCate" type="primary">确 定</el-button>
+        </div>
+    </el-dialog>
   </section>
 </template>
 
@@ -276,7 +286,8 @@ import {
   ruleCategory,
   ruleSaveCateRule,
   ruleDeleteCateRule,
-  getCateRuleInfo
+  getCateRuleInfo,
+  getPyCate
 } from "../../api/product";
 import { getMember, getAttributeInfoCat } from "../../api/profit";
 export default {
@@ -298,6 +309,8 @@ export default {
       tableHeightstock: window.innerHeight - 175,
       ebaydisLogin: false,
       addebaydisLogin: false,
+      innerVisible:false,
+      CustomCateName:null,
       pyCate: [],
       condition: {
         page: 1,
@@ -342,6 +355,19 @@ export default {
     }
   },
   methods: {
+    addCustomCate(){
+      if(this.CustomCateName){
+        this.pyCate.push(this.CustomCateName)
+        this.addPyCate=this.CustomCateName
+        this.innerVisible=false
+      }else{
+        this.$message.error("请输入类目名称");
+      }
+    },
+    customCate(){
+      this.CustomCateName=null
+      this.innerVisible=true
+    },
     ruleSubcateActive(a, b, c, d) {
       if (
         this.itemDetail[a].platValue[b].marketplaceValue[c].cateValue
@@ -498,8 +524,12 @@ export default {
       var obj = {
         id: null
       };
+      this.addPyCate=null
       getCateRuleInfo(obj).then(response => {
         this.itemDetail = response.data.data.detail;
+      });
+      getPyCate().then(response => {
+        this.pyCate = response.data.data;
       });
       setTimeout(() => {
         this.addebaydisLogin = true;
@@ -585,12 +615,15 @@ export default {
       };
       getCateRuleInfo(obj).then(response => {
         this.itemDetail = response.data.data.detail;
+        // var pyCate=[]
         this.itemId = response.data.data._id.$oid;
         for (var i = 0; i < response.data.data.pyCate.length; i++) {
+          // pyCate.push(response.data.data.pyCate[i].name)
           if (response.data.data.pyCate[i].flag == true) {
             this.addPyCate = response.data.data.pyCate[i].name;
           }
         }
+        // this.pyCate=pyCate
       });
       setTimeout(() => {
         this.addebaydisLogin = true;
@@ -654,7 +687,7 @@ export default {
     this.getData();
     this.getCate();
     this.getDataCategory();
-    getAttributeInfoCat().then(response => {
+    getPyCate().then(response => {
       this.pyCate = response.data.data;
     });
     var obj = {
@@ -662,6 +695,11 @@ export default {
     };
     getCateRuleInfo(obj).then(response => {
       this.itemDetail = this.itemDetail1 = response.data.data.detail;
+      // var pyCate=[]
+      // for(var i=0;i<response.data.data.pyCate.length;i++){
+      //   pyCate.push(response.data.data.pyCate[i].name)
+      // }
+      // this.pyCate=pyCate
     });
     getMember().then(response => {
       const res = response.data.data;
@@ -760,6 +798,11 @@ export default {
 }
 .cColor{
   color: #3c8dbc;
+}
+.pacAb{
+  position: absolute;
+  top: -40px;
+  right: 1%;
 }
 </style>
 <style>

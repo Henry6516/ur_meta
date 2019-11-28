@@ -705,7 +705,7 @@ export default {
         if (this.ebayRxText && this.ebayRxText1) {
           var condition = {
             id: this.ebayRxId,
-            reason: this.ebayRxText1
+            reason: '8：其他:'+this.ebayRxText1
           };
         } else {
           var condition = {

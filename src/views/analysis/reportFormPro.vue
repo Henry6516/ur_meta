@@ -89,10 +89,16 @@
             <div class="xBox" v-show="isshow">
               <div class="mcT01" v-for="(item,index) in devNum" :key="index">
                 <span class="mName">{{item.username}}</span>
-                <div class="xCase">
-                  <span class="xg" :style="{width:item.claimRate+'%'}"></span>
-                  <span class="xr" :style="{width:item.filterRate+'%'}"></span>
-                  <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
+                <div class="xCase" @mouseover="numIndex=index" @mouseout="numIndex=999">
+                  <span class="xg" :style="{width:item.claimRate+'%'}">
+                    <span v-show="index==numIndex">{{item.claimNum}}</span>
+                  </span>
+                  <span class="xr" :style="{width:item.filterRate+'%'}">
+                    <span v-show="index==numIndex">{{item.filterNum}}</span>
+                  </span>
+                  <span class="xh" :style="{width:item.unhandledRate+'%'}">
+                    <span v-show="index==numIndex">{{item.unhandledNum}}</span>
+                  </span>
                   <!-- <el-tooltip :content="item.claimNum+''" placement="top">
                     <span class="xg" :style="{width:item.claimRate+'%'}"></span>
                   </el-tooltip>
@@ -162,6 +168,14 @@
           <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
           <el-table-column label="开发员" header-align="center" align="center" prop="developer"></el-table-column>
           <el-table-column label="分配产品总数" header-align="center" align="center" prop="dispatchNum"></el-table-column>
+          <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum"></el-table-column>
+          <el-table-column label="认领率(%)" header-align="center" align="center" prop="claimRate">
+            <template slot-scope="scope">{{scope.row.claimRate | cutOut}}</template>
+          </el-table-column>
+          <el-table-column label="过滤数" header-align="center" align="center" prop="filterNum"></el-table-column>
+          <el-table-column label="过滤率(%)" header-align="center" align="center" prop="filterRate">
+            <template slot-scope="scope">{{scope.row.filterRate | cutOut}}</template>
+          </el-table-column>
           <el-table-column label="爆款数" header-align="center" align="center" prop="hotNum"></el-table-column>
           <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotRate">
             <template slot-scope="scope">{{scope.row.hotRate | cutOut}}</template>
@@ -170,10 +184,7 @@
           <el-table-column label="旺款率(%)" header-align="center" align="center" prop="popRate">
             <template slot-scope="scope">{{scope.row.popRate | cutOut}}</template>
           </el-table-column>
-          <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum"></el-table-column>
-          <el-table-column label="认领率(%)" header-align="center" align="center" prop="claimRate">
-            <template slot-scope="scope">{{scope.row.claimRate | cutOut}}</template>
-          </el-table-column>
+          <el-table-column label="未处理数" header-align="center" align="center" prop="unhandledNum"></el-table-column>
         </el-table>
       </div>
     </div>
@@ -248,11 +259,67 @@
           <el-table-column label="总产品数" header-align="center" align="center" prop="totalNum"></el-table-column>
           <el-table-column label="推送总数" header-align="center" align="center" prop="dispatchNum"></el-table-column>
           <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum"></el-table-column>
+          <el-table-column label="认领率(%)" header-align="center" align="center" prop="claimRate">
+            <template slot-scope="scope">{{scope.row.claimRate | cutOut}}</template>
+          </el-table-column>
+          <el-table-column label="过滤产品数" header-align="center" align="center" prop="filterNum"></el-table-column>
+          <el-table-column label="过滤率(%)" header-align="center" align="center" prop="filterRate">
+            <template slot-scope="scope">{{scope.row.filterRate | cutOut}}</template>
+          </el-table-column>
           <el-table-column label="爆款数" header-align="center" align="center" prop="hotNum"></el-table-column>
+          <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotRate">
+            <template slot-scope="scope">{{scope.row.hotRate | cutOut}}</template>
+          </el-table-column>
           <el-table-column label="旺款数" header-align="center" align="center" prop="popNum"></el-table-column>
+          <el-table-column label="旺款率(%)" header-align="center" align="center" prop="popRate">
+            <template slot-scope="scope">{{scope.row.popRate | cutOut}}</template>
+          </el-table-column>
+          <el-table-column label="未处理产品数" header-align="center" align="center" prop="unhandledNewNum"></el-table-column>
         </el-table>
       </div>
     </div>
+    <div v-show="show.gl">
+      <div class="w95">
+        <div class="floet">
+          <div class="floet01">
+            <span>时间日期</span>
+            <el-date-picker
+              size="small"
+              v-model="condition2.dateRange"
+              value-format="yyyy-MM-dd"
+              type="daterange"
+              align="right"
+              clearable
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              style="width:250px;margin-left:10px;"
+              :picker-options="pickerOptions2"
+            ></el-date-picker>
+          </div>
+          <div class="floet01">
+            <el-button size="small" type="primary" @click="getDataGl()">查询</el-button>
+          </div>
+        </div>
+      </div>
+      <div class="w95">
+        <el-col :span="24">
+          <el-card>
+            <div ref="or1" :style="obj1"></div>
+          </el-card>
+        </el-col>
+      </div>
+    </div>
+    <el-dialog width="75%" title="" :visible.sync="innerVisible">
+        <el-row>
+          <div v-for="(item,index) in detailArr" :key="index" class="xRep">
+            <div class="xRepChild">
+              <span class="ddSpan">{{item.name}}</span><span class="deSpan">{{item.num}}</span>
+            </div>  
+          </div>
+        </el-row>
+    </el-dialog>
   </section>
 </template>
 <script type="text/ecmascript-6">
@@ -264,7 +331,8 @@ import {
   APRengineRule,
   APRengineRuleHot,
   formRuleReport,
-  getDailyReport
+  getDailyReport,
+  formRefuseReport
 } from "../../api/product";
 import {
   compareUp,
@@ -276,6 +344,8 @@ export default {
   data() {
     return {
       index: 1,
+      numIndex:999,
+      innerVisible:false,
       tableHeightstock: window.innerHeight - 210,
       activeName: "first",
       developer: [],
@@ -288,7 +358,8 @@ export default {
       show: {
         mt: true,
         rl: false,
-        ts: false
+        ts: false,
+        gl: false
       },
       styObj: {
         width: "100%",
@@ -308,6 +379,9 @@ export default {
       condition1: {
         ruleType: null,
         ruleName: null,
+        dateRange: []
+      },
+      condition2: {
         dateRange: []
       },
       ruleType: ["新品", "热销"],
@@ -331,6 +405,8 @@ export default {
       ruleNameRx: [],
       tabledata: [],
       tabledatarl: [],
+      tabledatagl: [],
+      detailArr:[],
       isshow: false,
       devNum: [],
       options: {
@@ -413,43 +489,73 @@ export default {
             }
           }
         },
-        legend: {
-          top: "2%",
-          data: ["爆款数", "旺款数", "产品总数"]
-        },
         grid: {
           left: "3%",
-          right: "4%",
+          right: "3%",
           bottom: "3%",
           containLabel: true
         },
-        xAxis: [
-          {
-            type: "category",
-            top: "1%",
-            data: []
-          }
-        ],
-        yAxis: [
-          {
-            type: "value"
-          }
-        ],
+        xAxis: {
+          type: "category",
+          data: []
+        },
+        yAxis: {
+          type: "value"
+        },
         series: [
           {
-            name: "爆款数",
+            data: [],
             type: "bar",
-            data: []
-          },
-          {
-            name: "旺款数",
-            type: "bar",
-            data: []
-          },
-          {
-            name: "产品总数",
-            type: "bar",
-            data: []
+            itemStyle: {
+              normal: {
+                label: {
+                  show: true,
+                  position: "top",
+                  textStyle: {
+                    color: "#222222"
+                  },
+                  formatter: function(params) {
+                    if (params.value == 0) {
+                      return "";
+                    } else {
+                      return params.value;
+                    }
+                  }
+                },
+                barBorderRadius: [12, 12, 12, 12],
+                //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: "#4fd6d2" // 0% 处的颜色
+                  },
+                  {
+                    offset: 0.5,
+                    color: "#4fd6d2" // 100% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "#4fd6d2" // 100% 处的颜色
+                  }
+                ]), //背景渐变色
+                lineStyle: {
+                  // 系列级个性化折线样式
+                  width: 4,
+                  type: "solid",
+                  color: "#4fd6d2"
+                }
+              },
+              emphasis: {
+                color: "#4fd6d2",
+                lineStyle: {
+                  // 系列级个性化折线样式
+                  width: 4,
+                  type: "dotted",
+                  color: "#4fd6d2" //折线的颜色
+                }
+              }
+            }, //线条样式
+            barWidth: "20" //折线点的大小
           }
         ]
       },
@@ -495,6 +601,7 @@ export default {
           sums[index] = "合计";
           return;
         }
+        if (index == 3 || index == 4 || index == 5 || index == 7 || index == 9 || index == 11 || index == 13) {
         const values = data.map(item => Number(item[column.property]));
         if (!values.every(value => isNaN(value))) {
           sums[index] = values.reduce((prev, curr) => {
@@ -509,6 +616,22 @@ export default {
         } else {
           sums[index] = "N/A";
         }
+        }else{
+          sums[index] = "--";
+        }
+        var arr=sums
+        if(index==6){
+          sums[index] = (arr[5]/arr[4]*100).toFixed(2);
+        }
+        if(index==8){
+          sums[index] = (arr[7]/arr[4]*100).toFixed(2);
+        }
+        if(index==10){
+          sums[index] = (arr[9]/arr[5]*100).toFixed(2);
+        }
+        if(index==12){
+          sums[index] = (arr[11]/arr[5]*100).toFixed(2);
+        }
       });
       return sums;
     },
@@ -520,7 +643,7 @@ export default {
           sums[index] = "合计";
           return;
         }
-        if (index == 2 || index == 3 || index == 5 || index == 7) {
+        if (index == 2 || index == 3 || index == 5 || index == 7 || index == 9 || index == 11) {
           const values = data.map(item => Number(item[column.property]));
           if (!values.every(value => isNaN(value))) {
             sums[index] = values.reduce((prev, curr) => {
@@ -535,6 +658,21 @@ export default {
           } else {
             sums[index] = "N/A";
           }
+        }else{
+          sums[index] = "--";
+        }
+        var arr=sums
+        if(index==4){
+          sums[index] = (arr[3]/arr[2]*100).toFixed(2);
+        }
+        if(index==6){
+          sums[index] = (arr[5]/arr[2]*100).toFixed(2);
+        }
+        if(index==8){
+          sums[index] = (arr[7]/arr[3]*100).toFixed(2);
+        }
+        if(index==10){
+          sums[index] = (arr[9]/arr[3]*100).toFixed(2);
         }
       });
       return sums;
@@ -573,6 +711,12 @@ export default {
       } else {
         this.show["ts"] = false;
       }
+      if (tab.name === "/v1/products-engine/refuse-report") {
+        this.show["gl"] = true;
+        this.getDataGl();
+      } else {
+        this.show["gl"] = false;
+      }
     },
     getDataTotal() {
       getDailyReport().then(response => {
@@ -593,7 +737,7 @@ export default {
             this.rxtotal = rxtotal;
             clearInterval(setTime1);
           } else {
-            this.rxtotal = this.rxtotal + 50;
+            this.rxtotal = this.rxtotal + 200;
           }
         }, 1);
         var tsxptotal = response.data.data.dispatchNewNum;
@@ -686,6 +830,33 @@ export default {
         this.tabledata = res.data.data;
       });
     },
+    getDataGl() {
+      formRefuseReport(this.condition2).then(res => {
+        var tabledatagl = res.data.data.refuse;
+        var name = [];
+        var data = [];
+        for (var i = 0; i < tabledatagl.length; i++) {
+          name.push(tabledatagl[i].refuse);
+          data.push(tabledatagl[i].num);
+        }
+        this.options1.xAxis.data = name;
+        this.options1.series[0].data = data;
+        let or1 = this.$echarts.init(this.$refs.or1);
+        or1.setOption(this.options1);
+        var _this =this
+        or1.on('click', function (params) {
+          if(params.name=="8：其他"){
+            _this.innerVisible=true
+          }
+        })
+        var detailArr=res.data.data.detail;
+        for(var i=0;i<detailArr.length;i++){
+          detailArr[i].name=detailArr[i].name.replace("8：其他:","");
+          detailArr[i].name=detailArr[i].name.replace("8：其它:","");
+        }
+        this.detailArr=detailArr
+      });
+    },
     getData() {
       this.listLoading = true;
       formProductReport(this.condition).then(res => {
@@ -703,6 +874,10 @@ export default {
       getNextDate(endData, 0)
     ];
     this.condition1.dateRange = [
+      getNextDate(startData, 0),
+      getNextDate(endData, 0)
+    ];
+    this.condition2.dateRange = [
       getNextDate(startData, 0),
       getNextDate(endData, 0)
     ];
@@ -738,7 +913,7 @@ export default {
   width: 97%;
   overflow: hidden;
   background: #fff;
-  margin-left: 0.5%;
+  margin-left: 0.6%;
   padding: 10px 10px;
   margin-top: 10px;
   border-radius: 5px;
@@ -896,18 +1071,69 @@ export default {
   float: left;
   background: #67c23a;
   height: 12px;
+  position: relative;
+}
+.xg span{
+  text-align: center;
+  display: block;
+  color: #000;
+  line-height: 12px;
+}
+.xr span{
+  text-align: center;
+  display: block;
+  color: #000;
+  line-height: 12px;
+}
+.xh span{
+  text-align: center;
+  display: block;
+  color: #000;
+  line-height: 12px;
 }
 .xr {
   display: block;
   float: left;
   background: #f56c6c;
   height: 12px;
+  position: relative;
 }
 .xh {
   display: block;
   float: left;
   background: #909399;
   height: 12px;
+  position: relative;
+}
+.xRep{
+  width: 15.6%;
+  float: left;
+  margin: 8px 0.4%;
+  text-align: center;
+  font-size: 13px;
+  line-height: 40px;
+  border: #eee solid 1px;
+  background: #eee;
+  border-radius: 5px;
+  text-align:center;
+  position: relative;
+}
+.xRepChild{
+  overflow: hidden;
+  margin:0 auto;
+}
+.ddSpan{
+  display:inline-block;text-align:left;
+}
+.deSpan{
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #f35b5b;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  color: #fff;
 }
 @media screen and (max-width: 1500px) {
   .img1 {

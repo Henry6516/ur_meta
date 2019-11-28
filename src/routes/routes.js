@@ -132,6 +132,7 @@ import pushRules from '../views/analysis/pushRules.vue'
 import ebayRule from '../views/analysis/ebayRule.vue'
 import distributionRule from '../views/analysis/distributionRule.vue'
 import reportFormPro from '../views/analysis/reportFormPro.vue'
+import repeatTesting from '../views/analysis/repeatTesting.vue'
 
 const routes = [
   {
@@ -363,6 +364,11 @@ const routes = [
         path: '/v1/products-engine/dashboard',
         component: reportFormPro,
         name: '统计报表'
+      },
+      {
+        path: '/v1/products-engine/image-inspect',
+        component: repeatTesting,
+        name: '去重检测'
       },
       {
         path: '/v1/products-engine/analysis',

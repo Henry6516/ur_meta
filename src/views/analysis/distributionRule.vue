@@ -42,6 +42,7 @@
         <el-table-column property="ruleName" label="推送规则" align="center"></el-table-column> -->
         <el-table-column property="productNum" label="推送产品数量" align="center"></el-table-column>
         <el-table-column property="category" label="类目" align="center"></el-table-column>
+        <el-table-column property="excludePyCate" label="排除类目" align="center"></el-table-column>
         <el-table-column property="deliveryLocation" label="发货地点" align="center"></el-table-column>
         <el-table-column property="createdDate" label="添加时间" align="center">
           <template slot-scope="scope">{{scope.row.createdDate | cutOutDate}}</template>
@@ -108,6 +109,22 @@
             </el-col>
             <el-col :span="22" style="margin-top:2px;">
               <el-checkbox-group v-model="category" @change="handleCheckedCitiesChange">
+                <el-checkbox
+                  v-for="(item,index) in pyCate"
+                  :key="index"
+                  :label="item"
+                  :value="item"
+                  @change="checkinlist(item)"
+                ></el-checkbox>
+              </el-checkbox-group>
+            </el-col>
+          </el-col>
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">排除类目</p>
+            </el-col>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-checkbox-group v-model="excludePyCate" @change="handleCheckedCitiesChange">
                 <el-checkbox
                   v-for="(item,index) in pyCate"
                   :key="index"
@@ -224,6 +241,21 @@
               </el-checkbox-group>
             </el-col>
           </el-col>
+          <el-col :span="24" style="margin-bottom: 10px">
+            <el-col :span="2">
+              <p class="baspOne">排除类目</p>
+            </el-col>
+            <el-col :span="22" style="margin-top:2px;">
+              <el-checkbox-group v-model="dateExcludePyCate">
+                <el-checkbox
+                  v-for="(item,index) in pyCate"
+                  :key="index"
+                  :label="item"
+                  :value="item"
+                ></el-checkbox>
+              </el-checkbox-group>
+            </el-col>
+          </el-col>
           <el-col :span="24">
             <el-col :span="2">
               <p class="baspOne">推送规则</p>
@@ -274,7 +306,8 @@ import {
   DeleteAllotRule,
   APRengineRule,
   APRengineRuleHot,
-  getAllotRuleInfo
+  getAllotRuleInfo,
+  getPyCate
 } from "../../api/product";
 import { getMember, getSection, getAttributeInfoCat } from "../../api/profit";
 export default {
@@ -296,6 +329,8 @@ export default {
       ruleNameHot: [],
       ruleDeliveryLocation: [],
       dateruleDeliveryLocation:[],
+      excludePyCate:[],
+      dateExcludePyCate:[],
       ruleActive: 0,
       ruleNew: false,
       ruleHot: false,
@@ -316,6 +351,7 @@ export default {
         username: null,
         depart: null,
         productNum: null,
+        excludePyCate:[],
         category: [],
         deliveryLocation: null,
         detail: []
@@ -331,6 +367,7 @@ export default {
         category: null,
         ruleName: null,
         detail:[],
+        excludePyCate:[],
         deliveryLocation: null
       },
       addebaydisLogin: false,
@@ -488,6 +525,7 @@ export default {
       this.addData.productNum = null;
       this.addData.category = null;
       this.addData.detail = [];
+      this.addData.excludePyCate = [];
       this.ruleDeliveryLocation = [];
       this.category = [];
       this.addruleNameHot = [];
@@ -510,6 +548,7 @@ export default {
         this.data.productNum=res.data.data.productNum
         this.dateruleDeliveryLocation=res.data.data.deliveryLocation
         this.datecategory=res.data.data.category
+        this.dateExcludePyCate=res.data.data.excludePyCate
         var detail=res.data.data.detail    
         this.ruleNameNew=[]
         this.ruleNameHot=[]
@@ -538,6 +577,7 @@ export default {
       if (this.data.depart && this.data.username) {
         this.data.category = this.datecategory;
         this.data.deliveryLocation = this.dateruleDeliveryLocation;
+        this.data.excludePyCate = this.dateExcludePyCate;
         if (this.addruleNew) {
           var obj = {
             ruleType: "new",
@@ -610,6 +650,7 @@ export default {
       if (this.addData.depart && this.addData.username) {
         this.addData.category = this.category;
         this.addData.deliveryLocation = this.ruleDeliveryLocation;
+        this.addData.excludePyCate = this.excludePyCate;
         if (this.ruleNew) {
           var obj = {
             ruleType: "new",
@@ -670,9 +711,15 @@ export default {
         for (let i = 0; i < this.tableData.length; i++) {
           let category = this.tableData[i].category;
           let deliveryLocation = this.tableData[i].deliveryLocation;
+          let excludePyCate = this.tableData[i].excludePyCate;
           for(let i=0;i<category.length;i++){
             if(i!=category.length-1){
               category[i]=category[i]+','
+            }
+          }
+          for(let i=0;i<excludePyCate.length;i++){
+            if(i!=excludePyCate.length-1){
+              excludePyCate[i]=excludePyCate[i]+','
             }
           }
           for(let i=0;i<deliveryLocation.length;i++){
@@ -698,7 +745,7 @@ export default {
         ele => ele.department && ele.type === "业务"
       );
     });
-    getAttributeInfoCat().then(response => {
+    getPyCate().then(response => {
       this.pyCate = response.data.data;
     });
     getMember().then(response => {
