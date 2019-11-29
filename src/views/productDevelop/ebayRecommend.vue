@@ -579,14 +579,14 @@ export default {
         ]
       },
       reason: [
-        "1：产品重复",
-        "2：产品侵权",
-        "3：产品不好运输",
+        "1: 重复",
+        "2: 侵权",
+        "3: 不好运输",
         "4：销量不好",
-        "5：找不到货源",
-        "6：价格没有优势",
-        "7：产品评价低",
-        "其他(可以手动输入文字)"
+        "5: 找不到货源",
+        "6: 价格没优势",
+        "7: 评分低",
+        "8: 其他"
       ],
       ebayOptions: [
         "EBAY_CH",
@@ -656,14 +656,14 @@ export default {
   },
   methods: {
     selectEbayXp(e) {
-      if (e == "其他(可以手动输入文字)") {
+      if (e == "8: 其他") {
         this.ebayXpRefuse = true;
       } else {
         this.ebayXpRefuse = false;
       }
     },
     selectEbayRx(e) {
-      if (e == "其他(可以手动输入文字)") {
+      if (e == "8: 其他") {
         this.ebayRxRefuse = true;
       } else {
         this.ebayRxRefuse = false;
@@ -674,7 +674,7 @@ export default {
         if (this.ebayXpText && this.ebayXpText1) {
           var condition = {
             id: this.ebayXpId,
-            reason: '8：其他:'+this.ebayXpText1
+            reason: '8: 其他:'+this.ebayXpText1
           };
         } else {
           var condition = {
@@ -705,7 +705,7 @@ export default {
         if (this.ebayRxText && this.ebayRxText1) {
           var condition = {
             id: this.ebayRxId,
-            reason: '8：其他:'+this.ebayRxText1
+            reason: '8: 其他:'+this.ebayRxText1
           };
         } else {
           var condition = {

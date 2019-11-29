@@ -89,15 +89,17 @@
             <div class="xBox" v-show="isshow">
               <div class="mcT01" v-for="(item,index) in devNum" :key="index">
                 <span class="mName">{{item.username}}</span>
+                <div class="mcDiv" v-show="numIndex==index">
+                  <span :style="{width:item.claimRate+'%'}" v-show="item.claimNum>0">{{item.claimNum}}</span>
+                  <span :style="{width:item.filterRate+'%'}" v-show="item.filterNum>0">{{item.filterNum}}</span>
+                  <span :style="{width:item.unhandledRate+'%'}" v-show="item.unhandledNum>0">{{item.unhandledNum}}</span>
+                </div>
                 <div class="xCase" @mouseover="numIndex=index" @mouseout="numIndex=999">
                   <span class="xg" :style="{width:item.claimRate+'%'}">
-                    <span v-show="index==numIndex">{{item.claimNum}}</span>
                   </span>
                   <span class="xr" :style="{width:item.filterRate+'%'}">
-                    <span v-show="index==numIndex">{{item.filterNum}}</span>
                   </span>
                   <span class="xh" :style="{width:item.unhandledRate+'%'}">
-                    <span v-show="index==numIndex">{{item.unhandledNum}}</span>
                   </span>
                   <!-- <el-tooltip :content="item.claimNum+''" placement="top">
                     <span class="xg" :style="{width:item.claimRate+'%'}"></span>
@@ -845,14 +847,14 @@ export default {
         or1.setOption(this.options1);
         var _this =this
         or1.on('click', function (params) {
-          if(params.name=="8：其他"){
+          if(params.name=="8: 其他"){
             _this.innerVisible=true
           }
         })
         var detailArr=res.data.data.detail;
         for(var i=0;i<detailArr.length;i++){
-          detailArr[i].name=detailArr[i].name.replace("8：其他:","");
-          detailArr[i].name=detailArr[i].name.replace("8：其它:","");
+          detailArr[i].name=detailArr[i].name.replace("8: 其他:","");
+          detailArr[i].name=detailArr[i].name.replace("8: 其它:","");
         }
         this.detailArr=detailArr
       });
@@ -869,6 +871,8 @@ export default {
     this.getDataTotal();
     var startData = getMonthDate("sevenData").start;
     var endData = getMonthDate("sevenData").end;
+    var startToda = getMonthDate("todaData").start;
+    var endToda = getMonthDate("todaData").end;
     this.condition.dateRange = [
       getNextDate(startData, 0),
       getNextDate(endData, 0)
@@ -878,8 +882,8 @@ export default {
       getNextDate(endData, 0)
     ];
     this.condition2.dateRange = [
-      getNextDate(startData, 0),
-      getNextDate(endData, 0)
+      getNextDate(startToda, 0),
+      getNextDate(endToda, 0)
     ];
     APRengineRule().then(res => {
       this.ruleNameXp = res.data.data;
@@ -1046,13 +1050,14 @@ export default {
 }
 .xBox {
   width: 100%;
-  height: 100%;
+  height: 90%;
   overflow: hidden;
   overflow-y: auto;
 }
 .mcT01 {
   width: 92%;
   margin: auto;
+  position: relative;
 }
 .mName {
   display: block;
@@ -1104,6 +1109,21 @@ export default {
   background: #909399;
   height: 12px;
   position: relative;
+}
+.mcDiv{
+  width: 95%;
+  left:50%;
+  margin-left: -47.5%;
+  overflow: hidden;
+  position: absolute;
+  border-radius: 25px;
+  top: 15px;
+}
+.mcDiv span{
+  width: 100%;
+  display: block;
+  float: left;
+  text-align: right;
 }
 .xRep{
   width: 15.6%;

@@ -1971,6 +1971,12 @@
               ></div>
             </div>
             <div class="leftDemo">
+              <div
+                v-for="(item,index) in last110"
+                :key="index"
+                @click="judge(item.rate)"
+                :class="[item.rxtraBonus==100?'indexbImg1 jb01img':item.rxtraBonus==200?'indexbImg1 jb02img':item.rxtraBonus==300?'indexbImg1 jb03img':item.rxtraBonus==400?'indexbImg1 jb04img':item.rxtraBonus==500?'indexbImg1 jb05img':item.rxtraBonus==600?'indexbImg jb06img':item.rxtraBonus==700?'indexbImg jb07img':item.rxtraBonus==800?'indexbImg jb08img':item.rxtraBonus==900?'indexbImg jb09img':item.rxtraBonus==1000?'indexbImg jb010img':item.rxtraBonus==1100?'indexbImg jb011img':item.rxtraBonus==1200?'indexbImg jb012img':item.rxtraBonus==1300?'indexbImg jb013img':item.rxtraBonus==1400?'indexbImg jb014img':item.rxtraBonus>=1500?'indexbImg jb015img':'',item.username==sysUserName?'imbge':'']"
+              ></div>
               <div class="jblist">
                 <div class="jb01 jbg">
                   <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
@@ -2417,6 +2423,7 @@ export default {
       last60: [],
       last80: [],
       last100: [],
+      last110: [],
       dateArr:[],
       data: {
         id: "",
@@ -3465,7 +3472,7 @@ export default {
           
           dateArr[i].amt = Number(dateArr[i].amt).toFixed(0);
           if(Number(dateArr[i].rate>=100)){
-            dateArr[i].bonus = Number(dateArr[i].bonus).toFixed(0)+Number(dateArr[i].rxtraBonus).toFixed(0);
+            dateArr[i].bonus = Number(dateArr[i].bonus)+Number(dateArr[i].rxtraBonus);
           }else{
             dateArr[i].bonus = 0;
           }
@@ -3575,8 +3582,11 @@ export default {
         if (arrData[i].rate > 60 && arrData[i].rate <= 80) {
           this.last80.push(arrData[i]);
         }
-        if (arrData[i].rate > 80 && arrData[i].rate <= 100) {
+        if (arrData[i].rate > 80 && arrData[i].rate <= 100 && arrData[i].rxtraBonus == 0) {
           this.last100.push(arrData[i]);
+        }
+        if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >0) {
+          this.last110.push(arrData[i]);
         }
       }
       this.tabSort = arrData;
@@ -5318,6 +5328,11 @@ h2:hover {
   top: -85px;
   left: 40%;
 }
+.jb01img {
+  position: absolute;
+  top: -35px;
+  left: 42%;
+}
 .jb01 span {
   display: block;
   position: absolute;
@@ -5329,6 +5344,11 @@ h2:hover {
   position: absolute;
   top: -85px;
   left: 30%;
+}
+.jb02img {
+  position: absolute;
+  top: -35px;
+  left: 32%;
 }
 .jb02 span {
   display: block;
@@ -5342,6 +5362,11 @@ h2:hover {
   top: -85px;
   left: 20%;
 }
+.jb03img {
+  position: absolute;
+  top: -35px;
+  left: 22%;
+}
 .jb03 span {
   display: block;
   position: absolute;
@@ -5353,6 +5378,11 @@ h2:hover {
   position: absolute;
   top: -85px;
   left: 10%;
+}
+.jb04img {
+  position: absolute;
+  top: -35px;
+  left: 12%;
 }
 .jb04 span {
   display: block;
@@ -5366,6 +5396,11 @@ h2:hover {
   top: -85px;
   left: 0%;
 }
+.jb05img {
+  position: absolute;
+  top: -28px;
+  left: 2%;
+}
 .jb05 span {
   display: block;
   position: absolute;
@@ -5377,6 +5412,11 @@ h2:hover {
   position: absolute;
   bottom: 3px;
   left: 0%;
+}
+.jb06img {
+  position: absolute;
+  bottom: -28px;
+  left: 2%;
 }
 .jb06 span {
   display: block;
@@ -5390,6 +5430,11 @@ h2:hover {
   bottom: 3px;
   left: 10%;
 }
+.jb07img {
+  position: absolute;
+  bottom: -35px;
+  left: 12%;
+}
 .jb07 span {
   display: block;
   position: absolute;
@@ -5401,6 +5446,11 @@ h2:hover {
   position: absolute;
   bottom: 3px;
   left: 20%;
+}
+.jb08img {
+  position: absolute;
+  bottom: -35px;
+  left: 22%;
 }
 .jb08 span {
   display: block;
@@ -5414,6 +5464,11 @@ h2:hover {
   bottom: 3px;
   left: 30%;
 }
+.jb09img {
+  position: absolute;
+  bottom: -35px;
+  left: 32%;
+}
 .jb09 span {
   display: block;
   position: absolute;
@@ -5425,6 +5480,11 @@ h2:hover {
   position: absolute;
   bottom: 3px;
   left: 40%;
+}
+.jb010img {
+  position: absolute;
+  bottom: -35px;
+  left: 42%;
 }
 .jb10 span {
   display: block;
@@ -5438,6 +5498,11 @@ h2:hover {
   bottom: 3px;
   left: 50%;
 }
+.jb011img {
+  position: absolute;
+  bottom: -35px;
+  left: 52%;
+}
 .jb11 span {
   display: block;
   position: absolute;
@@ -5449,6 +5514,11 @@ h2:hover {
   position: absolute;
   bottom: 3px;
   left: 60%;
+}
+.jb012img {
+  position: absolute;
+  bottom: -35px;
+  left: 62%;
 }
 .jb12 span {
   display: block;
@@ -5462,6 +5532,11 @@ h2:hover {
   bottom: 3px;
   left: 70%;
 }
+.jb013img {
+  position: absolute;
+  bottom: -35px;
+  left: 72%;
+}
 .jb13 span {
   display: block;
   position: absolute;
@@ -5474,6 +5549,11 @@ h2:hover {
   bottom: 3px;
   left: 80%;
 }
+.jb014img {
+  position: absolute;
+  bottom: -35px;
+  left: 82%;
+}
 .jb14 span {
   display: block;
   position: absolute;
@@ -5485,6 +5565,11 @@ h2:hover {
   position: absolute;
   bottom: 3px;
   left: 90%;
+}
+.jb015img {
+  position: absolute;
+  bottom: -35px;
+  left: 92%;
 }
 .jb15 span {
   display: block;
