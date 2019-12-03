@@ -1924,7 +1924,7 @@
           style="width: 40px;height: 40px;"
         />
         <div class="leftBox">
-          <div class="bigDemo">
+          <div class="bigDemo" ref="bigDemo">
             <div class="rightDemo">
               <span class="span20">10%</span>
               <div
@@ -1975,7 +1975,7 @@
                 v-for="(item,index) in last110"
                 :key="index"
                 @click="judge(item.rate)"
-                :class="[item.rxtraBonus==100?'indexbImg1 jb01img':item.rxtraBonus==200?'indexbImg1 jb02img':item.rxtraBonus==300?'indexbImg1 jb03img':item.rxtraBonus==400?'indexbImg1 jb04img':item.rxtraBonus==500?'indexbImg1 jb05img':item.rxtraBonus==600?'indexbImg jb06img':item.rxtraBonus==700?'indexbImg jb07img':item.rxtraBonus==800?'indexbImg jb08img':item.rxtraBonus==900?'indexbImg jb09img':item.rxtraBonus==1000?'indexbImg jb010img':item.rxtraBonus==1100?'indexbImg jb011img':item.rxtraBonus==1200?'indexbImg jb012img':item.rxtraBonus==1300?'indexbImg jb013img':item.rxtraBonus==1400?'indexbImg jb014img':item.rxtraBonus>=1500?'indexbImg jb015img':'',item.username==sysUserName?'imbge':'']"
+                :class="[item.rxtraBonus==100?'indexbImg1 jb01img':item.rxtraBonus==200?'indexbImg1 jb02img':item.rxtraBonus==300?'indexbImg1 jb03img':item.rxtraBonus==400?'indexbImg1 jb04img':item.rxtraBonus==500?'indexbImg1 jb05img':item.rxtraBonus==600?'indexbImg jb06img':item.rxtraBonus==700?'indexbImg jb07img':item.rxtraBonus==800?'indexbImg jb08img':item.rxtraBonus==900?'indexbImg jb09img':item.rxtraBonus==1000?'indexbImg jb010img':item.rxtraBonus==1100?'indexbImg jb011img':item.rxtraBonus==1200?'indexbImg jb012img':item.rxtraBonus==1300?'indexbImg jb013img':item.rxtraBonus==1400?'indexbImg jb014img':item.rxtraBonus==1500?'indexbImg jb015img':'',item.username==sysUserName?'imbge':'']"
               ></div>
               <div class="jblist">
                 <div class="jb01 jbg">
@@ -1990,6 +1990,94 @@
                 <div class="jb04 jbg">
                   <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
                 </div>
+                <div class="jb05 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb06 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb07 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb08 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb09 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb10 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb11 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb12 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb13 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb14 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb15 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+              </div>
+            </div>
+            <div class="rightDemo">
+              <div
+               v-for="(item,index) in last120"
+                :key="index"
+                @click="judge(item.rate)"
+                :class="[item.rxtraBonus==1600?'indexbImg jb016img':item.rxtraBonus==1700?'indexbImg1 jb017img':item.rxtraBonus==1800?'indexbImg1 jb018img':item.rxtraBonus==1900?'indexbImg1 jb019img':item.rxtraBonus==2000?'indexbImg1 jb020img':item.rxtraBonus==2100?'indexbImg1 jb021img':item.rxtraBonus==2200?'indexbImg1 jb022img':item.rxtraBonus==2300?'indexbImg1 jb023img':item.rxtraBonus==2400?'indexbImg1 jb024img':item.rxtraBonus==2500?'indexbImg1 jb025img':item.rxtraBonus==2600?'indexbImg1 jb026img':'',item.username==sysUserName?'imbge':'']"
+              >
+              </div>
+              <div class="jblist">
+                <div class="jbg jbr1">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr2 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr3 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr4 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr5 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr6 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr7 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr8 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr9 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr10 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr11 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+              </div>
+            </div>
+            <div class="leftDemo">
+              <div
+               v-for="(item,index) in last130"
+                :key="index"
+                @click="judge(item.rate)"
+                :class="[item.rxtraBonus==2700?'indexbImg1 jb027img':item.rxtraBonus==2800?'indexbImg jb028img':item.rxtraBonus==2900?'indexbImg jb029img':item.rxtraBonus==3000?'indexbImg jb030img':item.rxtraBonus==3100?'indexbImg jb031img':item.rxtraBonus==3200?'indexbImg jb032img':item.rxtraBonus==3300?'indexbImg jb033img':item.rxtraBonus==3400?'indexbImg jb034img':item.rxtraBonus==3500?'indexbImg jb035img':item.rxtraBonus==3600?'indexbImg jb036img':item.rxtraBonus==3700?'indexbImg jb037img':'',item.username==sysUserName?'imbge':'']"
+              >
+              </div>
+              <div class="jblist">
                 <div class="jb05 jbg">
                   <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
                 </div>
@@ -2424,6 +2512,8 @@ export default {
       last80: [],
       last100: [],
       last110: [],
+      last120:[],
+      last130:[],
       dateArr:[],
       data: {
         id: "",
@@ -3585,8 +3675,14 @@ export default {
         if (arrData[i].rate > 80 && arrData[i].rate <= 100 && arrData[i].rxtraBonus == 0) {
           this.last100.push(arrData[i]);
         }
-        if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >0) {
+        if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >0 && arrData[i].rxtraBonus >0<=1500) {
           this.last110.push(arrData[i]);
+        }
+        if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >1500 &&  arrData[i].rxtraBonus >0<=2600) {
+          this.last120.push(arrData[i]);
+        }
+        if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >2600 &&  arrData[i].rxtraBonus >0<=3700) {
+          this.last130.push(arrData[i]);
         }
       }
       this.tabSort = arrData;
@@ -3608,6 +3704,17 @@ export default {
       ).toFixed(0);
     });
     this.getNews();
+    setTimeout(()=>{
+      var bigDemo=this.$refs.bigDemo
+      var cont=0
+      var setTime=setInterval(() => {
+        if(cont<190){
+          bigDemo.scrollTop=cont++
+        }else{
+          clearInterval(setTime)
+        }
+      }, 5);
+    },1000)
   }
 };
 </script>
@@ -3757,7 +3864,7 @@ export default {
   float: left;
   margin-top: 1.5%;
   height: 915px;
-  background: url(../assets/bgban5.jpg) no-repeat center;
+  background: url(../assets/bgban51.png) no-repeat center;
   background-size: 100% 100%;
   position: relative;
 }
@@ -3892,7 +3999,7 @@ h2:hover {
 }
 .leftDemo,
 .rightDemo {
-  position: relative;
+  position: absolute;
   width: 507.5px;
   height: 90px;
   border: 30px solid;
@@ -3935,9 +4042,11 @@ h2:hover {
 .bigDemo {
   width: 980px;
   margin: 0 auto;
-  margin-top: 66px;
+  padding-top: 66px;
   position: relative;
-  height: 670px;
+  height: 800px;
+  overflow: hidden;
+  overflow-y: auto;
 }
 .start {
   display: block;
@@ -3947,7 +4056,7 @@ h2:hover {
   border: #303334 solid 10px;
   border-radius: 50%;
   position: absolute;
-  top: -8px;
+  top: 57px;
   left: 450px;
   text-align: center;
   line-height: 25px;
@@ -3959,7 +4068,7 @@ h2:hover {
   background: #fff;
   border-radius: 50%;
   position: absolute;
-  bottom: 36px;
+  top: 656px;
   text-align: center;
   line-height: 25px;
   right: 477px;
@@ -4041,13 +4150,13 @@ h2:hover {
 }
 .rightDemo:nth-child(1) {
   border-color: #76c5cc;
-  top: 1.5px;
+  top: 66.5px;
 }
 .rightDemo:nth-child(1):before {
   border-color: #69b8a7;
 }
 .leftDemo:nth-child(2) {
-  top: -29px;
+  top: 186px;
   width: 460px;
   border-color: #69b8a7;
 }
@@ -4059,7 +4168,7 @@ h2:hover {
   left: 485.5px;
   z-index: 2;
   width: 460px;
-  top: -59.5px;
+  top: 305.5px;
   border-color: #76c5cc;
 }
 .rightDemo:nth-child(3):before {
@@ -4068,7 +4177,7 @@ h2:hover {
 }
 .leftDemo:nth-child(4) {
   width: 475px;
-  top: -90px;
+  top: 425px;
   border-color: #69b8a7;
 }
 .leftDemo:nth-child(4):before {
@@ -4077,9 +4186,9 @@ h2:hover {
 }
 .rightDemo:nth-child(5) {
   left: 485.5px;
-  z-index: 2;
+  z-index: 3;
   width: 460px;
-  top: -120.5px;
+  top: 544px;
   border-color: #76c5cc;
 }
 .rightDemo:nth-child(5):before {
@@ -4088,10 +4197,32 @@ h2:hover {
 }
 .leftDemo:nth-child(6) {
   width: 870px;
-  top: -150px;
+  top: 665px;
+  z-index: 2;
   border-color: #6caf29;
 }
 .leftDemo:nth-child(6):before {
+  width: 870px;
+  border-color: #8cc63e;
+}
+.rightDemo:nth-child(7) {
+  width: 870px;
+  top: 785px;
+  left:75px;
+  z-index: 1;
+  border-color: #8cc63e;
+}
+.rightDemo:nth-child(7):before {
+  width: 870px;
+  border-color: #6caf29;
+}
+.leftDemo:nth-child(8) {
+  width: 870px;
+  top: 905px;
+  border-color: #6caf29;
+  z-index: 0;
+}
+.leftDemo:nth-child(8):before {
   width: 870px;
   border-color: #8cc63e;
 }
@@ -5578,6 +5709,248 @@ h2:hover {
   top: 35%;
   left: 12%;
 }
+.jb016img {
+  position: absolute;
+  top: -30px;
+  left: 97%;
+}
+.jb017img {
+  position: absolute;
+  bottom: -35px;
+  left: 97%;
+}
+.jb018img {
+  position: absolute;
+  bottom: -35px;
+  left: 87%;
+}
+.jb019img {
+  position: absolute;
+  bottom: -35px;
+  left: 77%;
+}
+.jb020img {
+  position: absolute;
+  bottom: -35px;
+  left: 67%;
+}
+.jb021img {
+  position: absolute;
+  bottom: -35px;
+  left: 57%;
+}
+.jb022img {
+  position: absolute;
+  bottom: -35px;
+  left: 47%;
+}
+.jb023img {
+  position: absolute;
+  bottom: -35px;
+  left: 37%;
+}
+.jb024img {
+  position: absolute;
+  bottom: -35px;
+  left: 27%;
+}
+.jb025img {
+  position: absolute;
+  bottom: -35px;
+  left: 17%;
+}
+.jb026img {
+  position: absolute;
+  bottom: -35px;
+  left: 7%;
+}
+.jb027img {
+  position: absolute;
+  top: -28px;
+  left: 2%;
+}
+.jb028img {
+  position: absolute;
+  bottom: -28px;
+  left: 2%;
+}
+.jb029img {
+  position: absolute;
+  bottom: -35px;
+  left: 12%;
+}
+.jb030img {
+  position: absolute;
+  bottom: -35px;
+  left: 22%;
+}
+.jb031img {
+  position: absolute;
+  bottom: -35px;
+  left: 32%;
+}
+.jb032img {
+  position: absolute;
+  bottom: -35px;
+  left: 42%;
+}
+.jb033img {
+  position: absolute;
+  bottom: -35px;
+  left: 52%;
+}
+.jb034img {
+  position: absolute;
+  bottom: -35px;
+  left: 62%;
+}
+.jb035img {
+  position: absolute;
+  bottom: -35px;
+  left: 72%;
+}
+.jb036img {
+  position: absolute;
+  bottom: -35px;
+  left: 82%;
+}
+.jb037img {
+  position: absolute;
+  bottom: -35px;
+  left: 92%;
+}
+.jbr1{
+  position: absolute;
+  top: -85px;
+  left:95%;
+}
+.jbr1 span {
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jbr2{
+  position: absolute;
+  top: 34px;
+  left:95%;
+}
+.jbr2 span {
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jbr3{
+  position: absolute;
+  top: 34px;
+  left:85%;
+}
+.jbr3 span {
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jbr4{
+  position: absolute;
+  top: 34px;
+  left:75%;
+}
+.jbr4 span {
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jbr5{
+  position: absolute;
+  top: 34px;
+  left:65%;
+}
+.jbr5 span {
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jbr6{
+  position: absolute;
+  top: 34px;
+  left:55%;
+}
+.jbr6 span {
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jbr7{
+  position: absolute;
+  top: 34px;
+  left:45%;
+}
+.jbr7 span {
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jbr8{
+  position: absolute;
+  top: 34px;
+  left:35%;
+}
+.jbr8 span {
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jbr9{
+  position: absolute;
+  top: 34px;
+  left:25%;
+}
+.jbr9 span {
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jbr10{
+  position: absolute;
+  top: 34px;
+  left:15%;
+}
+.jbr10 span {
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
+.jbr11{
+  position: absolute;
+  top: 34px;
+  left:5%;
+}
+.jbr11 span {
+  display: block;
+  position: absolute;
+  color: #fff;
+  top: 35%;
+  left: 12%;
+}
 //第二屏幕
 .bgCase {
   width: 100%;
@@ -5603,6 +5976,7 @@ h2:hover {
   top: 20px;
   left: 20px;
   cursor: pointer;
+  z-index: 999;
 }
 @media (max-width: 1500px) {
   .cardLeft {
@@ -5639,5 +6013,9 @@ h2:hover {
 }
 .el-progress-bar__outer{
   background-color:#ccc;
+}
+.bigDemo::-webkit-scrollbar {
+  width: 1px !important;
+  height: 1px !important;
 }
 </style>

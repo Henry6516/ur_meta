@@ -26,15 +26,18 @@
         </div>
       </div>
     </div>
-    <div style="margin-top:10px;">
+    <div>
       <div class="imgDiv" style="margin-left:10px;">
-        <img :src="condition.imageUrl" class="imageSty" />
+        <img :src="condition.imageUrl" style="width:88%;height:245px;margin-left:3%;margin-top:10px;" />
       </div>
     </div>
     <div class="w90" :style="obj1" v-loading="imgLoading">
       <div style="margin-left:10px;">
         <div v-for="(item,index) in imageArr" :key="index" class="imgDiv">
-          <img :src="item.PicName" class="imageSty" />
+          <a :href="item.ProductId" target="_black">
+          <img :src="item.ProductId" class="imageSty" />
+          </a>
+          <span>{{item.PicName}}</span>
         </div>
       </div>
     </div>
@@ -109,7 +112,7 @@ export default {
   width: 100%;
   overflow: hidden;
   background: #fff;
-  padding: 15px 6px;
+  padding: 12px 6px;
   border-radius: 5px;
 }
 .w90 {
@@ -122,11 +125,17 @@ export default {
   overflow: hidden;
 }
 .imageSty {
-  width: 92%;
+  width: 88%;
   margin: auto;
-  height: 250px;
+  height: 245px;
   border: #ccc solid 1px;
-  margin-bottom: 10px;
+  transition: transform 0.3s;
+  margin-left: 3%;
+  margin-top: 12px;
+}
+.imageSty:hover{
+  transform: scale(1.1);
+  border: #3c8dbc solid 1px;
 }
 .floet01 {
   float: left;
@@ -136,13 +145,20 @@ export default {
   width: 20%;
   float: left;
 }
+.imgDiv span{
+    display: block;
+    width: 90%;
+    text-align: center;
+    overflow: hidden;
+    color: red;
+    font-weight: bold;
+}
 @media screen and (max-width: 1500px) {
   .imageSty {
     width: 92%;
     margin: auto;
     height: 180px;
     border: #ccc solid 1px;
-    margin-bottom: 10px;
   }
 }
 </style>

@@ -692,13 +692,13 @@
                 <p class="basp">前一天销量增幅</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="addEbayRx.soldThePreviousGrowthStart" placeholder="大于"></el-input>
+                <el-input v-model="addEbayRx.soldThePreviousGrowthStart" placeholder="大于(%)"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="addEbayRx.soldThePreviousGrowthEnd" placeholder="小于"></el-input>
+                <el-input v-model="addEbayRx.soldThePreviousGrowthEnd" placeholder="小于(%)"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -734,13 +734,13 @@
                 <p class="basp">近三天销量增幅</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="addEbayRx.salesThreeDayGrowthStart" placeholder="大于"></el-input>
+                <el-input v-model="addEbayRx.salesThreeDayGrowthStart" placeholder="大于(%)"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="addEbayRx.salesThreeDayGrowthEnd" placeholder="小于"></el-input>
+                <el-input v-model="addEbayRx.salesThreeDayGrowthEnd" placeholder="小于(%)"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -907,13 +907,13 @@
                 <p class="basp">前一天销量增幅</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="ebayRx.soldThePreviousGrowthStart" placeholder="大于"></el-input>
+                <el-input v-model="ebayRx.soldThePreviousGrowthStart" placeholder="大于(%)"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="ebayRx.soldThePreviousGrowthEnd" placeholder="小于"></el-input>
+                <el-input v-model="ebayRx.soldThePreviousGrowthEnd" placeholder="小于(%)"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -949,13 +949,13 @@
                 <p class="basp">近三天销量增幅</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="ebayRx.salesThreeDayGrowthStart" placeholder="大于"></el-input>
+                <el-input v-model="ebayRx.salesThreeDayGrowthStart" placeholder="大于(%)"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="ebayRx.salesThreeDayGrowthEnd" placeholder="小于"></el-input>
+                <el-input v-model="ebayRx.salesThreeDayGrowthEnd" placeholder="小于(%)"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
