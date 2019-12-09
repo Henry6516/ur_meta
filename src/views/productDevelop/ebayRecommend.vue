@@ -8,7 +8,7 @@
         @tab-click="handleClick"
       >
         <el-tab-pane v-for="(item, index) in this.allMenu" :label="item" :name="item" :key="index"></el-tab-pane>
-      </el-tabs> -->
+      </el-tabs>-->
       <div v-show="show.wish">
         <div class="proBox">
           <div class="proCase01" v-for="(item,index) in nostockdata" :key="index">
@@ -90,10 +90,18 @@
                   </div>
                   <img :src="scope.row.mainImage" style="width: 60px;height: 60px" />
                 </el-tooltip>
-                <a class="ebayBlocka ebayBlocka1" @click="submissionEbayXp(scope.row._id.oid)" v-show="scope.row.flag">
+                <a
+                  class="ebayBlocka ebayBlocka1"
+                  @click="submissionEbayXp(scope.row._id.oid)"
+                  v-show="scope.row.flag"
+                >
                   <i class="el-icon-star-off" style="margin-right:3px;"></i>认领
                 </a>
-                <a class="ebayBlocka ebayBlocka2" @click="refuseEbayXp(scope.row._id.oid)" v-show="scope.row.flag">
+                <a
+                  class="ebayBlocka ebayBlocka2"
+                  @click="refuseEbayXp(scope.row._id.oid)"
+                  v-show="scope.row.flag"
+                >
                   <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
                 </a>
                 <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
@@ -133,25 +141,20 @@
                     @click="goLinkUrlEbay(scope.row.marketplace,scope.row.itemId)"
                   >eBay链接</span>
                   <span
-                    style="margin:0;margin-top:5px;font-size:13px;"
+                    style="margin:0;margin-top:5px;margin-left:5.5%;font-size:13px;"
                     @click="goLinkUrlEbayHy('https://kj.1688.com/pdt_tongkuan.html?imgUrl=' + scope.row.mainImage)"
                   >货源链接</span>
+                  <span
+                    style="margin:0;margin-top:5px;font-size:13px;"
+                    @click="goLinkPhoto(scope.row.similarImages,scope.row.mainImage)"
+                  >相似产品</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column
-              property="receiver"
-              label="推荐人列表"
-              align="center"
-              width="100"
-            >
-            <template slot-scope="scope">
-                <div
-                  v-for="(itemm, index) in scope.row.receiver"
-                  :key="index"
-                >{{itemm}}
-              </div>
-            </template>
+            <el-table-column property="receiver" label="推荐人列表" align="center" width="100">
+              <template slot-scope="scope">
+                <div v-for="(itemm, index) in scope.row.receiver" :key="index">{{itemm}}</div>
+              </template>
             </el-table-column>
             <el-table-column
               property="price"
@@ -191,8 +194,12 @@
               ></el-table-column>
             </el-table-column>
             <el-table-column property="seller" label="卖家名称" align="center" width="110">
-              <template slot-scope="scope">             
-              <a :href="'https://www.ebay.com/usr/'+scope.row.seller" target="_blank" class="goa">{{scope.row.seller}}</a>
+              <template slot-scope="scope">
+                <a
+                  :href="'https://www.ebay.com/usr/'+scope.row.seller"
+                  target="_blank"
+                  class="goa"
+                >{{scope.row.seller}}</a>
               </template>
             </el-table-column>
             <el-table-column property="itemLocation" label="发货地址" align="center" width="110"></el-table-column>
@@ -236,10 +243,18 @@
                   </div>
                   <img :src="scope.row.mainImage" style="width: 60px;height: 60px" />
                 </el-tooltip>
-                <a class="ebayBlocka ebayBlocka1" @click="submissionEbayRx(scope.row._id.oid)" v-show="scope.row.flag">
+                <a
+                  class="ebayBlocka ebayBlocka1"
+                  @click="submissionEbayRx(scope.row._id.oid)"
+                  v-show="scope.row.flag"
+                >
                   <i class="el-icon-star-off" style="margin-right:3px;"></i>认领
                 </a>
-                <a class="ebayBlocka ebayBlocka2" @click="refuseEbayRx(scope.row._id.oid)" v-show="scope.row.flag">
+                <a
+                  class="ebayBlocka ebayBlocka2"
+                  @click="refuseEbayRx(scope.row._id.oid)"
+                  v-show="scope.row.flag"
+                >
                   <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
                 </a>
                 <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
@@ -279,25 +294,20 @@
                     @click="goLinkUrlEbay(scope.row.marketplace,scope.row.itemId)"
                   >eBay链接</span>
                   <span
-                    style="margin:0;margin-top:5px;font-size:13px;"
+                    style="margin:0;margin-top:5px;margin-left:5%;font-size:13px;"
                     @click="goLinkUrlEbayHy('https://kj.1688.com/pdt_tongkuan.html?imgUrl=' + scope.row.mainImage)"
                   >货源链接</span>
+                  <span
+                    style="margin:0;margin-top:5px;font-size:13px;"
+                    @click="goLinkPhoto(scope.row.similarImages,scope.row.mainImage)"
+                  >相似产品</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column
-              property="receiver"
-              label="推荐人列表"
-              align="center"
-              width="100"
-            >
-            <template slot-scope="scope">
-                <div
-                  v-for="(itemm, index) in scope.row.receiver"
-                  :key="index"
-                >{{itemm}}
-              </div>
-            </template>
+            <el-table-column property="receiver" label="推荐人列表" align="center" width="100">
+              <template slot-scope="scope">
+                <div v-for="(itemm, index) in scope.row.receiver" :key="index">{{itemm}}</div>
+              </template>
             </el-table-column>
             <el-table-column
               property="price"
@@ -383,8 +393,12 @@
               ></el-table-column>
             </el-table-column>
             <el-table-column property="seller" label="卖家名称" align="center" width="100">
-              <template slot-scope="scope">             
-              <a :href="'https://www.ebay.com/usr/'+scope.row.seller" target="_blank" class="goa">{{scope.row.seller}}</a>
+              <template slot-scope="scope">
+                <a
+                  :href="'https://www.ebay.com/usr/'+scope.row.seller"
+                  target="_blank"
+                  class="goa"
+                >{{scope.row.seller}}</a>
               </template>
             </el-table-column>
             <el-table-column property="itemLocation" label="发货地址" align="center" width="100"></el-table-column>
@@ -450,7 +464,9 @@
       <el-dialog title :visible.sync="dialogEbayXpRefuse">
         <el-row>
           <el-col :span="24">
-            <el-col :span="4" class="basp"><span style="color:red">*</span>过滤原因</el-col>
+            <el-col :span="4" class="basp">
+              <span style="color:red">*</span>过滤原因
+            </el-col>
             <el-col :span="18">
               <el-select
                 v-model="ebayXpText"
@@ -479,7 +495,9 @@
       <el-dialog title :visible.sync="dialogEbayRxRefuse">
         <el-row>
           <el-col :span="24">
-            <el-col :span="4" class="basp"><span style="color:red">*</span>过滤原因</el-col>
+            <el-col :span="4" class="basp">
+              <span style="color:red">*</span>过滤原因
+            </el-col>
             <el-col :span="18">
               <el-select
                 v-model="ebayRxText"
@@ -503,6 +521,29 @@
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogEbayRxRefuse = false">取 消</el-button>
           <el-button type="primary" @click="addEbayRxRefuse">确 定</el-button>
+        </div>
+      </el-dialog>
+      <el-dialog title :visible.sync="dialogPhoto" width="85%">
+        <div class="ccdiv">
+          <div class="xxb">
+            <div class="xx01" v-for="(item,index) in photoImg" :key="index">
+              <div class="xx01Left">
+                <span style="display:block;margin-bottom:5px;color:red">原图</span>
+                <img :src="item.image">
+              </div>
+              <div class="xx01Right">
+                <span style="display:block;margin-left:10px;margin-top:5px;color:red">相似产品</span>
+                <div class="xxBox" v-for="(itemId,index) in item.similar" :key="index">
+                  <img :src="itemId.ProductId">
+                  <span>{{itemId.GoodsCode}}</span>
+                </div>
+              </div>
+            </div>
+            <!-- <div v-for="(item,index) in photoImg" :key="index" class="cdIV">
+              <img :src="item.ProductId" class="imgPhto" />
+              <span>{{item.GoodsCode}}</span>
+            </div> -->
+          </div>
         </div>
       </el-dialog>
     </div>
@@ -529,10 +570,13 @@ export default {
       totalEbayRx: null,
       ebayXpRefuse: false,
       ebayRxRefuse: false,
-      lodingEbayRx:false,
-      lodingEbayXp:false,
-      proTotalXp:0,
-      proTotalRx:0,
+      lodingEbayRx: false,
+      lodingEbayXp: false,
+      dialogPhoto: false,
+      photoImg: [],
+      imgUrl:null,
+      proTotalXp: 0,
+      proTotalRx: 0,
       options: {
         xAxis: {
           type: "category",
@@ -644,7 +688,7 @@ export default {
       ebayRxId: null,
       ebayRxText: null,
       ebayRxText1: null,
-      sysUserName:null
+      sysUserName: null
     };
   },
   filters: {
@@ -655,6 +699,15 @@ export default {
     }
   },
   methods: {
+    goLinkPhoto(e,img) {
+      this.photoImg=[];
+      this.imgUrl=null
+      setTimeout(()=>{
+        this.imgUrl=img
+        this.photoImg = e;
+        this.dialogPhoto = true;
+      },500)
+    },
     selectEbayXp(e) {
       if (e == "8: 其他") {
         this.ebayXpRefuse = true;
@@ -674,7 +727,7 @@ export default {
         if (this.ebayXpText && this.ebayXpText1) {
           var condition = {
             id: this.ebayXpId,
-            reason: '8: 其他:'+this.ebayXpText1
+            reason: "8: 其他:" + this.ebayXpText1
           };
         } else {
           var condition = {
@@ -688,7 +741,7 @@ export default {
               message: "过滤成功",
               type: "success"
             });
-            this.proTotalXp=this.proTotalXp-1
+            this.proTotalXp = this.proTotalXp - 1;
             this.ebayXp();
           } else {
             this.$message.error(res.data.message);
@@ -705,7 +758,7 @@ export default {
         if (this.ebayRxText && this.ebayRxText1) {
           var condition = {
             id: this.ebayRxId,
-            reason: '8: 其他:'+this.ebayRxText1
+            reason: "8: 其他:" + this.ebayRxText1
           };
         } else {
           var condition = {
@@ -719,7 +772,7 @@ export default {
               message: "过滤成功",
               type: "success"
             });
-            this.proTotalRx=this.proTotalRx-1
+            this.proTotalRx = this.proTotalRx - 1;
             this.ebayRx();
           } else {
             this.$message.error(res.data.message);
@@ -735,14 +788,14 @@ export default {
       this.ebayXpId = id;
       this.ebayXpText = null;
       this.ebayXpText1 = null;
-      this.ebayXpRefuse=false
+      this.ebayXpRefuse = false;
       this.dialogEbayXpRefuse = true;
     },
     refuseEbayRx(id) {
       this.ebayRxId = id;
       this.ebayRxText = null;
       this.ebayRxText1 = null;
-      this.ebayRxRefuse=false
+      this.ebayRxRefuse = false;
       this.dialogEbayRxRefuse = true;
     },
     getEbayXpData() {
@@ -843,7 +896,7 @@ export default {
     },
     renderHeaderEbayXp(h, { column, $index }) {
       if ($index === 0) {
-        let filters =this.ebayOptions
+        let filters = this.ebayOptions;
         return h(
           "el-select",
           {
@@ -878,7 +931,7 @@ export default {
     },
     renderHeaderEbayRx(h, { column, $index }) {
       if ($index === 0) {
-        let filters =this.ebayOptions
+        let filters = this.ebayOptions;
         return h(
           "el-select",
           {
@@ -916,7 +969,7 @@ export default {
         this.condition.sort = null;
         this.ebayXp(this.condition);
       }
-      if (column.order == "ascending") {       
+      if (column.order == "ascending") {
         this.condition.sort = "-" + column.prop;
         this.ebayXp(this.condition);
       }
@@ -965,15 +1018,15 @@ export default {
     goLinkUrlJoom(id) {
       window.open("https://www.joom.com/en/products/" + id);
     },
-    goLinkUrlEbay(id,url) {
-     if(id=='EBAY_GB'){
-        window.open('https://www.ebay.co.uk/itm/'+url);
-      }else if(id=='EBAY_DE'){
-        window.open('https://www.ebay.de/itm/'+url);
-      }else if(id=='EBAY_AU'){
-        window.open('https://www.ebay.com.au/itm/'+url);
-      }else{
-        window.open('https://www.ebay.com/itm/'+url);
+    goLinkUrlEbay(id, url) {
+      if (id == "EBAY_GB") {
+        window.open("https://www.ebay.co.uk/itm/" + url);
+      } else if (id == "EBAY_DE") {
+        window.open("https://www.ebay.de/itm/" + url);
+      } else if (id == "EBAY_AU") {
+        window.open("https://www.ebay.com.au/itm/" + url);
+      } else {
+        window.open("https://www.ebay.com/itm/" + url);
       }
     },
     handleCurrentChangeEbayXp(val) {
@@ -993,17 +1046,17 @@ export default {
       this.ebayRx(this.condition);
     },
     ebayXp() {
-      this.lodingEbayXp=true
+      this.lodingEbayXp = true;
       getEbayXpMind(this.condition).then(res => {
         this.ebayDataXp1 = this.ebayDataXp = res.data.data.items;
         this.totalEbayXp = res.data.data._meta.totalCount;
         this.condition.page = res.data.data._meta.currentPage;
         this.condition.pageSize = res.data.data._meta.perPage;
-        if(this.proTotalXp==0){
-          this.proTotalXp=res.data.data._meta.totalCount;
+        if (this.proTotalXp == 0) {
+          this.proTotalXp = res.data.data._meta.totalCount;
         }
         for (let i = 0; i < this.ebayDataXp.length; i++) {
-          this.$set(this.ebayDataXp[i],'flag',false)
+          this.$set(this.ebayDataXp[i], "flag", false);
           setTimeout(() => {
             var obj = this.ebayDataXp[i].soldChart.soldData;
             for (var k = 0; k < obj.length; k++) {
@@ -1018,28 +1071,28 @@ export default {
             );
             or2.setOption(this.options);
           }, 20);
-          var str=this.ebayDataXp[i].receiver
-          for(var k=0;k<str.length;k++){
-            if(this.sysUserName==str[k]){
-              this.ebayDataXp[i].flag=true
+          var str = this.ebayDataXp[i].receiver;
+          for (var k = 0; k < str.length; k++) {
+            if (this.sysUserName == str[k]) {
+              this.ebayDataXp[i].flag = true;
             }
           }
         }
-        this.lodingEbayXp=false
+        this.lodingEbayXp = false;
       });
     },
     ebayRx() {
-      this.lodingEbayRx=true
+      this.lodingEbayRx = true;
       getEbayRxMind(this.condition1).then(res => {
         this.ebayDataRx = this.ebayDataRx1 = res.data.data.items;
         this.totalEbayRx = res.data.data._meta.totalCount;
         this.condition1.page = res.data.data._meta.currentPage;
         this.condition1.pageSize = res.data.data._meta.perPage;
-        if(this.proTotalRx==0){
-          this.proTotalRx=res.data.data._meta.totalCount;
+        if (this.proTotalRx == 0) {
+          this.proTotalRx = res.data.data._meta.totalCount;
         }
         for (let i = 0; i < this.ebayDataRx.length; i++) {
-          this.$set(this.ebayDataRx[i],'flag',false)
+          this.$set(this.ebayDataRx[i], "flag", false);
           setTimeout(() => {
             var obj = this.ebayDataRx[i].soldChart.soldData;
             for (var k = 0; k < obj.length; k++) {
@@ -1055,15 +1108,15 @@ export default {
               document.getElementById("echartsRx" + i)
             );
             or2.setOption(this.options1);
-            var str=this.ebayDataRx[i].receiver
-            for(var k=0;k<str.length;k++){
-              if(this.sysUserName==str[k]){
-                this.ebayDataRx[i].flag=true
+            var str = this.ebayDataRx[i].receiver;
+            for (var k = 0; k < str.length; k++) {
+              if (this.sysUserName == str[k]) {
+                this.ebayDataRx[i].flag = true;
               }
             }
           }, 20);
         }
-        this.lodingEbayRx=false
+        this.lodingEbayRx = false;
       });
     },
     handleClick(tab, event) {
@@ -1113,15 +1166,16 @@ export default {
           };
           ebayXpAccept(condition).then(res => {
             if (res.data.code == 200) {
-              this.proTotalXp=this.proTotalXp-1
+              this.proTotalXp = this.proTotalXp - 1;
               sessionStorage.setItem("ebayEdit", res.data.data.data.devNum);
-              this.$confirm("认领成功,前去开发", "提示", { type: "success" }).then(
-              () => {
+              this.$confirm("认领成功,前去开发", "提示", {
+                type: "success"
+              }).then(() => {
                 let Logistics = this.$router.resolve({
                   path: `/v1/oa-goodsinfo/ebayEdit`
                 });
-                window.open(Logistics.href);                
-              })
+                window.open(Logistics.href);
+              });
               this.ebayXp();
             } else {
               this.$message.error(res.data.message);
@@ -1139,15 +1193,16 @@ export default {
           };
           ebayRxAccept(condition).then(res => {
             if (res.data.code == 200) {
-              this.proTotalRx=this.proTotalRx-1
+              this.proTotalRx = this.proTotalRx - 1;
               sessionStorage.setItem("ebayEdit", res.data.data.data.devNum);
-              this.$confirm("认领成功,前去开发", "提示", { type: "success" }).then(
-              () => {
+              this.$confirm("认领成功,前去开发", "提示", {
+                type: "success"
+              }).then(() => {
                 let Logistics = this.$router.resolve({
                   path: `/v1/oa-goodsinfo/ebayEdit`
                 });
-                window.open(Logistics.href);                
-              })
+                window.open(Logistics.href);
+              });
               this.ebayXp();
               this.ebayRx();
             } else {
@@ -1181,9 +1236,9 @@ export default {
     }
   },
   mounted() {
-    this.ebayXp()
-    this.ebayRx()
-    this.sysUserName = sessionStorage.getItem('user')
+    this.ebayXp();
+    this.ebayRx();
+    this.sysUserName = sessionStorage.getItem("user");
   }
 };
 </script>
@@ -1340,47 +1395,6 @@ export default {
 .proCase01:hover .priImg img {
   transform: scale(1.1);
 }
-@media (max-width: 1400px) {
-  .floet01 {
-    float: left;
-    margin-right: 10px;
-  }
-  .justa {
-    display: block;
-    font-size: 10px;
-    background: #fff;
-    padding: 10px 5px;
-    max-height: 50px;
-    overflow: hidden;
-  }
-  .floet01 span {
-    width: 70px;
-    text-align: center;
-    display: inline-block;
-  }
-  .winput {
-    width: 100px;
-  }
-  .proCase01 {
-    width: 17.7%;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  .proText p:first-child {
-    float: left;
-    font-size: 14px;
-  }
-  .proText p:last-child {
-    float: right;
-    font-size: 14px;
-  }
-  .goDev {
-    font-size: 14px;
-  }
-  .goStore {
-    font-size: 14px;
-  }
-}
 .justa {
   display: block;
   font-size: 12px;
@@ -1477,23 +1491,30 @@ export default {
   line-height: 28px;
   cursor: pointer;
 }
-.ebayGoa span:first-child {
-  width: 40%;
+.ebayGoa span:nth-child(1) {
+  width: 30%;
   float: left;
   background: #409eff;
   color: #fff;
 }
-.ebayGoa span:last-child {
-  width: 40%;
-  float: right;
+.ebayGoa span:nth-child(2) {
+  width: 30%;
+  float: left;
   background: #f56c6c;
   color: #fff;
+  margin-left: 1.5%;
 }
-.goa{
+.ebayGoa span:nth-child(3) {
+  width: 30%;
+  float: right;
+  background: #67c23a;
+  color: #fff;
+}
+.goa {
   text-decoration: none;
-  color: #409EFF;
+  color: #409eff;
 }
-.pospan{
+.pospan {
   display: block;
   position: absolute;
   background: red;
@@ -1504,7 +1525,7 @@ export default {
   left: 108px;
   top: 3px;
 }
-.pospan1{
+.pospan1 {
   display: block;
   position: absolute;
   background: red;
@@ -1514,5 +1535,186 @@ export default {
   font-size: 10px;
   left: 247px;
   top: 3px;
+}
+.imgPhto {
+  width: 100%;
+  height: 205px;
+  border: #ccc solid 1px;
+  margin: 10px;
+}
+.cdIV {
+  width: 13.5%;
+  height: 255px;
+  float: left;
+  background: #fff;
+  margin: 0 6px;
+}
+.ccdiv {
+  width: 100%;
+  overflow: hidden;
+}
+.cdIV span{
+  display: block;
+  text-align: center;
+  color: red;
+}
+.imgDiv{
+  width: 100%;
+  overflow: hidden;
+}
+.imgDiv img{
+  display: block;
+  width: 235px;
+  height: 205px;
+  border:#ccc solid 1px;
+  margin: auto;
+}
+.xxb{
+  width: 100%;
+  overflow: hidden;
+  max-height: 640px;
+  overflow-y: auto;
+}
+.imgDiv img:hover{
+  border:#3c8dbc solid 1px;
+}
+.xx01{
+  width: 99%;
+  overflow: hidden;
+  border: #ccc solid 1px;
+  margin-bottom: 10px;
+}
+.xx01Left{
+  float: left;
+  width: 12.5%;
+  height: 200px;
+  padding: 10px;
+}
+.xx01Left img{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.xx01Right{
+  float: right;
+  width: 86%;
+  border-left: #ccc solid 1px;
+}
+.xxBox{
+  width: 12.2%;
+  // overflow: hidden;
+  float: left;
+  margin: 0 1%;
+}
+.xxBox span{
+  display: block;
+  text-align: center;
+  color: red;
+  line-height: 30px;
+}
+.xx01Right img{
+  display: block;
+  height: 185px;
+  width: 100%;
+  margin-top: 5px;
+  border: #eee solid 1px;
+  transition: All 0.3s ease-in-out;
+}
+.xx01Right img:hover{
+  display: block;
+  border: #3c8dbc solid 1px;
+  transform: scale(1.1)
+}
+@media (max-width: 1700px) {
+  .cdIV {
+    width: 13%;
+    height: 255px;
+    float: left;
+    background: #fff;
+    margin: 0 6px;
+  }
+  .xx01Left{
+    height: 170px;
+    width: 12%;
+  }
+  .xx01Right img{
+  display: block;
+  height: 155px;
+  width: 100%;
+  margin-top: 5px;
+  border: #ccc solid 1px;
+}
+}
+@media (max-width: 1400px) {
+  .floet01 {
+    float: left;
+    margin-right: 10px;
+  }
+  .xx01Left{
+    height: 150px;
+  }
+  .xx01Right img{
+  display: block;
+  height: 135px;
+  width: 100%;
+  margin-top: 5px;
+  border: #ccc solid 1px;
+}
+  .justa {
+    display: block;
+    font-size: 10px;
+    background: #fff;
+    padding: 10px 5px;
+    max-height: 50px;
+    overflow: hidden;
+  }
+  .floet01 span {
+    width: 70px;
+    text-align: center;
+    display: inline-block;
+  }
+  .winput {
+    width: 100px;
+  }
+  .proCase01 {
+    width: 17.7%;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .proText p:first-child {
+    float: left;
+    font-size: 14px;
+  }
+  .proText p:last-child {
+    float: right;
+    font-size: 14px;
+  }
+  .goDev {
+    font-size: 14px;
+  }
+  .goStore {
+    font-size: 14px;
+  }
+  .cdIV {
+    width: 15.5%;
+    height: 255px;
+    float: left;
+    background: #fff;
+    margin: 0 6px;
+  }
+}
+@media (max-width: 1300px) {
+  .cdIV {
+    width: 14.8%;
+    height: 255px;
+    float: left;
+    background: #fff;
+    margin: 0 6px;
+  }
+.xx01Right{
+  float: left;
+  width: 85.5%;
+  border-left: #ccc solid 1px;
+}
 }
 </style>

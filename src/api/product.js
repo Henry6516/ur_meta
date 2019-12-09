@@ -1716,3 +1716,12 @@ export function formImageSearch(param) {
     data
   })
 }
+
+export function formSkuInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/sku-info',
+    method: 'post',
+    data
+  })
+}

@@ -1964,10 +1964,10 @@
             <div class="rightDemo">
               <span class="span100">100%</span>
               <div
-                :class="[item.rate==81?'indexbImg b81':item.rate==82?'indexbImg b82':item.rate==83?'indexbImg b83':item.rate==84?'indexbImg b84':item.rate==85?'indexbImg b85':item.rate==86?'indexbImg b86':item.rate==87?'indexbImg b87':item.rate==88?'indexbImg b88':item.rate==89?'indexbImg b89':item.rate==90?'indexbImg b90':item.rate==91?'indexbImg1 b91':item.rate==92?'indexbImg1 b92':item.rate==93?'indexbImg1 b93':item.rate==94?'indexbImg1 b94':item.rate==95?'indexbImg1 b95':item.rate==96?'indexbImg1 b96':item.rate==97?'indexbImg1 b97':item.rate==98?'indexbImg1 b98':item.rate==99?'indexbImg1 b99':item.rate==100?'indexbImg1 b100':'',item.username==sysUserName?'imbge':'']"
+                :class="[item.rate==81?'indexbImg b81':item.rate==82?'indexbImg b82':item.rate==83?'indexbImg b83':item.rate==84?'indexbImg b84':item.rate==85?'indexbImg b85':item.rate==86?'indexbImg b86':item.rate==87?'indexbImg b87':item.rate==88?'indexbImg b88':item.rate==89?'indexbImg b89':item.rate==90?'indexbImg b90':item.rate==91?'indexbImg1 b91':item.rate==92?'indexbImg1 b92':item.rate==93?'indexbImg1 b93':item.rate==94?'indexbImg1 b94':item.rate==95?'indexbImg1 b95':item.rate==96?'indexbImg1 b96':item.rate==97?'indexbImg1 b97':item.rate==98?'indexbImg1 b98':item.rate==99?'indexbImg1 b99':item.rate>=100?'indexbImg1 b100':'',item.username==sysUserName?'imbge':'']"
                 v-for="(item,index) in last100"
                 :key="index"
-                @click="judge(item.rate)"
+                @click="judge(item.rate,item.rxtraBonus)"
               ></div>
             </div>
             <div class="leftDemo">
@@ -2113,6 +2113,94 @@
                 </div>
               </div>
             </div>
+            <div class="rightDemo">
+              <div
+               v-for="(item,index) in last140"
+                :key="index"
+                @click="judge(item.rate)"
+                :class="[item.rxtraBonus==3800?'indexbImg jb016img':item.rxtraBonus==3900?'indexbImg1 jb017img':item.rxtraBonus==4000?'indexbImg1 jb018img':item.rxtraBonus==4100?'indexbImg1 jb019img':item.rxtraBonus==4200?'indexbImg1 jb020img':item.rxtraBonus==4300?'indexbImg1 jb021img':item.rxtraBonus==4400?'indexbImg1 jb022img':item.rxtraBonus==4500?'indexbImg1 jb023img':item.rxtraBonus==4600?'indexbImg1 jb024img':item.rxtraBonus==4700?'indexbImg1 jb025img':item.rxtraBonus==4800?'indexbImg1 jb026img':'',item.username==sysUserName?'imbge':'']"
+              >
+              </div>
+              <div class="jblist">
+                <div class="jbg jbr1">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr2 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr3 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr4 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr5 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr6 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr7 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr8 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr9 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr10 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr11 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+              </div>
+            </div>
+            <div class="leftDemo">
+              <div
+               v-for="(item,index) in last150"
+                :key="index"
+                @click="judge(item.rate)"
+                :class="[item.rxtraBonus==4900?'indexbImg1 jb027img':item.rxtraBonus==5000?'indexbImg jb028img':item.rxtraBonus==5100?'indexbImg jb029img':item.rxtraBonus==5200?'indexbImg jb030img':item.rxtraBonus==5300?'indexbImg jb031img':item.rxtraBonus==5400?'indexbImg jb032img':item.rxtraBonus==5500?'indexbImg jb033img':item.rxtraBonus==5600?'indexbImg jb034img':item.rxtraBonus==5700?'indexbImg jb035img':item.rxtraBonus==5800?'indexbImg jb036img':item.rxtraBonus==5900?'indexbImg jb037img':'',item.username==sysUserName?'imbge':'']"
+              >
+              </div>
+              <div class="jblist">
+                <div class="jb05 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb06 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb07 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb08 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb09 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb10 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb11 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb12 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb13 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb14 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb15 jbg">
+                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                </div>
+              </div>
+            </div>
             <span class="start"></span>
             <span class="end">
               <img src="../assets/qizi.png" style="width: 50px;height: 50px;" />
@@ -2160,7 +2248,7 @@
                   <img :src="item.avatar" style="width: 40px;height: 40px;border-radius:50%;" />
                   <span>{{item.username}}</span>
                   <p class="njts">{{item.vacationDays}}天</p>
-                  <p>{{item.bonus | cutOut1}}+{{item.rxtraBonus | cutOut1}}</p>
+                  <p>{{item.bonus | cutOut1}}<b v-show="item.rxtraBonus!=0">+</b><b v-show="item.rxtraBonus!=0">{{item.rxtraBonus | cutOut1}}</b></p>
                 </div>
               </div>
             </div>
@@ -2514,6 +2602,8 @@ export default {
       last110: [],
       last120:[],
       last130:[],
+      last140:[],
+      last150:[],
       dateArr:[],
       data: {
         id: "",
@@ -2644,7 +2734,7 @@ export default {
       this.activeTitle = "销售排名";
       this.indexTabactive = 0;
     },
-    judge(n) {
+    judge(n,b) {
       this.flagShow = false;
       this.flagShowFour = false;
       this.flagShowTwo = false;
@@ -2655,8 +2745,14 @@ export default {
         for (var i = 0; i < dateArr.length; i++) {
           var arrDb = String(parseInt(dateArr[i].rate));
           var arrDbi = arrDb.split('.');
-          if (arrDbi[0] == n) {
-            this.sortData.push(dateArr[i]);
+          if(n>=100 && b && b==0){
+            if(arrDbi[0]>=100 && dateArr[i].rxtraBonus==0){
+              this.sortData.push(dateArr[i]);
+            }
+          }else{
+            if (arrDbi[0] == n) {
+              this.sortData.push(dateArr[i]);
+            }
           }
         }
         setTimeout(() => {
@@ -3672,7 +3768,7 @@ export default {
         if (arrData[i].rate > 60 && arrData[i].rate <= 80) {
           this.last80.push(arrData[i]);
         }
-        if (arrData[i].rate > 80 && arrData[i].rate <= 100 && arrData[i].rxtraBonus == 0) {
+        if (arrData[i].rate > 80 && arrData[i].rxtraBonus == 0) {
           this.last100.push(arrData[i]);
         }
         if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >0 && arrData[i].rxtraBonus >0<=1500) {
@@ -3684,6 +3780,12 @@ export default {
         if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >2600 &&  arrData[i].rxtraBonus >0<=3700) {
           this.last130.push(arrData[i]);
         }
+        if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >3700 &&  arrData[i].rxtraBonus >0<=4800) {
+          this.last140.push(arrData[i]);
+        }
+        if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >4800 &&  arrData[i].rxtraBonus >0<=5900) {
+          this.last150.push(arrData[i]);
+        }
       }
       this.tabSort = arrData;
     });
@@ -3694,6 +3796,11 @@ export default {
           this.bonusList[i].avatar = `/static/img/header.1a1e548.png`;
         }
       }
+      var fun = (arr, key, decrease = false) => {
+          arr.sort((a, b) => (decrease ? 1 : -1) * (a[key] - b[key]));
+          return arr;
+      }
+      fun(this.bonusList,'rxtraBonus')
       this.bonus.total = Number(res.data.data.bonusAllNum).toFixed(0);
       this.bonus.totalnj = Number(res.data.data.vacationDaysAllNum).toFixed(0);
       this.bonus.pass = Number(res.data.data.bonusUsedNum).toFixed(0);
@@ -3708,12 +3815,12 @@ export default {
       var bigDemo=this.$refs.bigDemo
       var cont=0
       var setTime=setInterval(() => {
-        if(cont<190){
+        if(cont<450){
           bigDemo.scrollTop=cont++
         }else{
           clearInterval(setTime)
         }
-      }, 5);
+      },1);
     },1000)
   }
 };
@@ -4186,7 +4293,7 @@ h2:hover {
 }
 .rightDemo:nth-child(5) {
   left: 485.5px;
-  z-index: 3;
+  z-index: 5;
   width: 460px;
   top: 544px;
   border-color: #76c5cc;
@@ -4198,7 +4305,7 @@ h2:hover {
 .leftDemo:nth-child(6) {
   width: 870px;
   top: 665px;
-  z-index: 2;
+  z-index: 4;
   border-color: #6caf29;
 }
 .leftDemo:nth-child(6):before {
@@ -4209,7 +4316,7 @@ h2:hover {
   width: 870px;
   top: 785px;
   left:75px;
-  z-index: 1;
+  z-index: 3;
   border-color: #8cc63e;
 }
 .rightDemo:nth-child(7):before {
@@ -4220,9 +4327,30 @@ h2:hover {
   width: 870px;
   top: 905px;
   border-color: #6caf29;
-  z-index: 0;
+  z-index: 2;
 }
 .leftDemo:nth-child(8):before {
+  width: 870px;
+  border-color: #8cc63e;
+}
+.rightDemo:nth-child(9) {
+  width: 870px;
+  top: 1025px;
+  left:75px;
+  z-index: 1;
+  border-color: #8cc63e;
+}
+.rightDemo:nth-child(9):before {
+  width: 870px;
+  border-color: #6caf29;
+}
+.leftDemo:nth-child(10) {
+  width: 870px;
+  top: 1145px;
+  border-color: #6caf29;
+  z-index: 0;
+}
+.leftDemo:nth-child(10):before {
   width: 870px;
   border-color: #8cc63e;
 }
