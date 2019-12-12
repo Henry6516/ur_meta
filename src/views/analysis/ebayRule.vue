@@ -167,7 +167,7 @@
               </el-radio-group>
             </el-col>
             <div class="pacAb">
-              <el-button size="small"  type="success" @click="customCate">自定义类目</el-button>
+              <el-button size="small" type="success" @click="customCate">自定义类目</el-button>
             </div>
           </el-col>
           <el-col :span="24" style="margin-bottom: 12px">
@@ -176,8 +176,22 @@
                 <p class="baspOne">规则</p>
               </el-col>
               <el-col :span="23">
+                <el-col :span="24">
+                  <div v-for="(item,index) in itemDetail" :key="index">
+                      <span
+                        class="curSpan"
+                        style="font-size:14px;color:#3c8dbc;display:block;float:left;margin-right:20px;"
+                         @click="rulePlatActive1(index)"
+                      >
+                        <span class="oneClass" :class="item.flag?'ruleBac':''" @click.stop="rulePlatActive(index)"></span>
+                        {{item.plat}}
+                      </span>
+                  </div>
+                </el-col>
+              </el-col>
+              <el-col :span="23">
                 <div v-for="(item,index) in itemDetail" :key="index">
-                  <el-col :span="24">
+                  <el-col :span="24" style="display: none;">
                     <span
                       class="curSpan"
                       style="font-size:14px;color:#3c8dbc"
@@ -190,19 +204,24 @@
                   <div
                     v-for="(itemTwo,indexTwo) in item.platValue"
                     :key="indexTwo"
-                    v-show="item.flag"
+                    v-show="itemCateIndex==index"
                   >
                     <el-col :span="8">
                       <el-col :span="24" style="margin-top:20px;">
-                        <span class="curSpan" @click="ruleMakActive(index,indexTwo)" :class="itemTwo.flag?'cColor':''">
-                          <span
-                            class="oneClass"
-                            :class="itemTwo.flag?'ruleBac':''"
-                          ></span>
+                        <span
+                          class="curSpan"
+                          @click="ruleMakActive(index,indexTwo)"
+                          :class="itemTwo.flag?'cColor':''"
+                        >
+                          <span class="oneClass" :class="itemTwo.flag?'ruleBac':''"></span>
                           {{itemTwo.marketplace}}
                         </span>
                       </el-col>
-                      <el-col :span="23" style="margin-top:5px;padding-left:18px;" class="scrollTopHeight">
+                      <el-col
+                        :span="23"
+                        style="margin-top:5px;padding-left:18px;"
+                        class="scrollTopHeight"
+                      >
                         <el-col
                           :span="24"
                           v-for="(itemTree,indexTree) in itemTwo.marketplaceValue"
@@ -211,7 +230,7 @@
                           <el-col :span="24">
                             <span
                               class="curSpan curSpanTree"
-                               :class="itemTree.flag?'cColor':''"
+                              :class="itemTree.flag?'cColor':''"
                               @click="ruleCateActive(index,indexTwo,indexTree)"
                             >
                               <span class="oneClass" :class="itemTree.flag?'ruleBac':''"></span>
@@ -264,12 +283,18 @@
         <el-button type="primary" @click="addsaveEbay()">保 存</el-button>
       </div>
     </el-dialog>
-    <el-dialog width="30%" title="添加类目" :visible.sync="innerVisible" append-to-body :close-on-click-modal="false">
-        <el-input v-model="CustomCateName" placeholder="类目名称"></el-input>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="innerVisible = false" type="primary">取 消</el-button>
-          <el-button @click="addCustomCate" type="primary">确 定</el-button>
-        </div>
+    <el-dialog
+      width="30%"
+      title="添加类目"
+      :visible.sync="innerVisible"
+      append-to-body
+      :close-on-click-modal="false"
+    >
+      <el-input v-model="CustomCateName" placeholder="类目名称"></el-input>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="innerVisible = false" type="primary">取 消</el-button>
+        <el-button @click="addCustomCate" type="primary">确 定</el-button>
+      </div>
     </el-dialog>
   </section>
 </template>
@@ -293,6 +318,7 @@ import { getMember, getAttributeInfoCat } from "../../api/profit";
 export default {
   data() {
     return {
+      itemCateIndex: 0,
       addEbayTwo: [],
       addEbayOne: [],
       category: [],
@@ -309,8 +335,8 @@ export default {
       tableHeightstock: window.innerHeight - 175,
       ebaydisLogin: false,
       addebaydisLogin: false,
-      innerVisible:false,
-      CustomCateName:null,
+      innerVisible: false,
+      CustomCateName: null,
       pyCate: [],
       condition: {
         page: 1,
@@ -355,18 +381,18 @@ export default {
     }
   },
   methods: {
-    addCustomCate(){
-      if(this.CustomCateName){
-        this.pyCate.push(this.CustomCateName)
-        this.addPyCate=this.CustomCateName
-        this.innerVisible=false
-      }else{
+    addCustomCate() {
+      if (this.CustomCateName) {
+        this.pyCate.push(this.CustomCateName);
+        this.addPyCate = this.CustomCateName;
+        this.innerVisible = false;
+      } else {
         this.$message.error("请输入类目名称");
       }
     },
-    customCate(){
-      this.CustomCateName=null
-      this.innerVisible=true
+    customCate() {
+      this.CustomCateName = null;
+      this.innerVisible = true;
     },
     ruleSubcateActive(a, b, c, d) {
       if (
@@ -419,6 +445,9 @@ export default {
         }
       }
     },
+    rulePlatActive1(i) {
+      this.itemCateIndex = i;
+    },    
     rulePlatActive(i) {
       this.itemDetail[i].flag = !this.itemDetail[i].flag;
     },
@@ -524,7 +553,8 @@ export default {
       var obj = {
         id: null
       };
-      this.addPyCate=null
+      this.addPyCate = null;
+      this.itemCateIndex=0
       getCateRuleInfo(obj).then(response => {
         this.itemDetail = response.data.data.detail;
       });
@@ -591,7 +621,8 @@ export default {
             }
           }
         }
-        obj.detail = data;
+      }
+      obj.detail = data;
         ruleSaveCateRule(obj).then(res => {
           if (res.data.data) {
             this.$message({
@@ -607,12 +638,12 @@ export default {
           }
         });
         console.log(obj);
-      }
     },
     editArt(index, row) {
       var obj = {
         id: row._id
       };
+      this.itemCateIndex=0
       getCateRuleInfo(obj).then(response => {
         this.itemDetail = response.data.data.detail;
         // var pyCate=[]
@@ -789,17 +820,17 @@ export default {
   width: 4px;
   height: 4px;
   background: #fff;
-  border: #67C23A solid 6px;
+  border: #67c23a solid 6px;
 }
-.scrollTopHeight{
+.scrollTopHeight {
   height: 480px;
   overflow: hidden;
   overflow-y: auto;
 }
-.cColor{
+.cColor {
   color: #3c8dbc;
 }
-.pacAb{
+.pacAb {
   position: absolute;
   top: -40px;
   right: 1%;
