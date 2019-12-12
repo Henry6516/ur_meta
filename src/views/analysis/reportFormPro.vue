@@ -171,28 +171,29 @@
           :header-cell-style="getRowClass"
           show-summary
           :height="tableHeightstock"
+          @sort-change="sortNumber1"
           style="width: 100%;margin:auto;margin-top:5px;"
         >
           <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
           <el-table-column label="开发员" header-align="center" align="center" prop="developer"></el-table-column>
-          <el-table-column label="分配产品总数" header-align="center" align="center" prop="dispatchNum"></el-table-column>
-          <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum"></el-table-column>
-          <el-table-column label="认领率(%)" header-align="center" align="center" prop="claimRate">
+          <el-table-column label="分配产品总数" header-align="center" align="center" prop="dispatchNum" sortable="custom"></el-table-column>
+          <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum" sortable="custom"></el-table-column>
+          <el-table-column label="认领率(%)" header-align="center" align="center" prop="claimRate" sortable="custom">
             <template slot-scope="scope">{{scope.row.claimRate | cutOut}}</template>
           </el-table-column>
-          <el-table-column label="过滤数" header-align="center" align="center" prop="filterNum"></el-table-column>
-          <el-table-column label="过滤率(%)" header-align="center" align="center" prop="filterRate">
+          <el-table-column label="过滤数" header-align="center" align="center" prop="filterNum" sortable="custom"></el-table-column>
+          <el-table-column label="过滤率(%)" header-align="center" align="center" prop="filterRate" sortable="custom">
             <template slot-scope="scope">{{scope.row.filterRate | cutOut}}</template>
           </el-table-column>
-          <el-table-column label="爆款数" header-align="center" align="center" prop="hotNum"></el-table-column>
-          <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotRate">
+          <el-table-column label="爆款数" header-align="center" align="center" prop="hotNum" sortable="custom"></el-table-column>
+          <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotRate" sortable="custom">
             <template slot-scope="scope">{{scope.row.hotRate | cutOut}}</template>
           </el-table-column>
-          <el-table-column label="旺款数" header-align="center" align="center" prop="popNum"></el-table-column>
-          <el-table-column label="旺款率(%)" header-align="center" align="center" prop="popRate">
+          <el-table-column label="旺款数" header-align="center" align="center" prop="popNum" sortable="custom"></el-table-column>
+          <el-table-column label="旺款率(%)" header-align="center" align="center" prop="popRate" sortable="custom">
             <template slot-scope="scope">{{scope.row.popRate | cutOut}}</template>
           </el-table-column>
-          <el-table-column label="未处理数" header-align="center" align="center" prop="unhandledNum"></el-table-column>
+          <el-table-column label="未处理数" header-align="center" align="center" prop="unhandledNum" sortable="custom"></el-table-column>
         </el-table>
       </div>
     </div>
@@ -255,36 +256,39 @@
           :header-cell-style="getRowClass"
           show-summary
           :height="tableHeightstock"
+          @sort-change="sortNumber"
           style="width: 100%;margin:auto;margin-top:5px;"
         >
-          <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
-          <el-table-column label="规则类型" header-align="center" align="center" prop="ruleType">
+          <el-table-column type="index" fixed align="center" width="40" header-align="center"></el-table-column>
+          <el-table-column label="规则类型" header-align="center" align="center" prop="ruleType" width="80">
             <template slot-scope="scope">
               <span>{{scope.row.ruleType=='new'?'新品':'热销'}}</span>
             </template>
           </el-table-column>
           <el-table-column label="规则名称" header-align="center" align="center" prop="ruleName"></el-table-column>
-          <el-table-column label="总产品数" header-align="center" align="center" prop="totalNum"></el-table-column>
-          <el-table-column label="推送总数" header-align="center" align="center" prop="dispatchNum"></el-table-column>
-          <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum"></el-table-column>
-          <el-table-column label="认领率(%)" header-align="center" align="center" prop="claimRate">
+          <el-table-column label="总产品数" header-align="center" align="center" prop="totalNum" sortable="custom"></el-table-column>
+          <el-table-column label="推送总数" header-align="center" align="center" prop="dispatchNum" sortable="custom"></el-table-column>
+          <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum" sortable="custom"></el-table-column>
+          <el-table-column label="认领率(%)" header-align="center" align="center" prop="claimRate" sortable="custom">
             <template slot-scope="scope">{{scope.row.claimRate | cutOut}}</template>
           </el-table-column>
-          <el-table-column label="过滤产品数" header-align="center" align="center" prop="filterNum"></el-table-column>
-          <el-table-column label="过滤率(%)" header-align="center" align="center" prop="filterRate">
+          <el-table-column label="过滤产品数" header-align="center" align="center" prop="filterNum" sortable="custom"></el-table-column>
+          <el-table-column label="过滤率(%)" header-align="center" align="center" prop="filterRate" sortable="custom">
             <template slot-scope="scope">{{scope.row.filterRate | cutOut}}</template>
           </el-table-column>
-          <el-table-column label="爆款数" header-align="center" align="center" prop="hotNum"></el-table-column>
-          <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotRate">
+          <el-table-column label="爆款数" header-align="center" align="center" prop="hotNum" sortable="custom"></el-table-column>
+          <el-table-column label="爆款率(%)" header-align="center" align="center" prop="hotRate" sortable="custom">
             <template slot-scope="scope">{{scope.row.hotRate | cutOut}}</template>
           </el-table-column>
-          <el-table-column label="旺款数" header-align="center" align="center" prop="popNum"></el-table-column>
-          <el-table-column label="旺款率(%)" header-align="center" align="center" prop="popRate">
+          <el-table-column label="旺款数" header-align="center" align="center" prop="popNum" sortable="custom"></el-table-column>
+          <el-table-column label="旺款率(%)" header-align="center" align="center" prop="popRate" sortable="custom">
             <template slot-scope="scope">{{scope.row.popRate | cutOut}}</template>
           </el-table-column>
           <el-table-column
             label="未处理产品数"
+            width="130"
             header-align="center"
+            sortable="custom"
             align="center"
             prop="unhandledNewNum"
           ></el-table-column>
@@ -614,6 +618,22 @@ export default {
     this.initWebSocket();
   },
   methods: {
+    sortNumber(column, prop, order) {
+      const data = this.tabledata
+      if (column.order === 'ascending') {
+        this.tabledata = data.sort(compareDown(data, column.prop));
+      } else {
+        this.tabledata = data.sort(compareUp(data, column.prop));
+      }
+    },
+    sortNumber1(column, prop, order) {
+      const data = this.tabledatarl
+      if (column.order === 'ascending') {
+        this.tabledatarl = data.sort(compareDown(data, column.prop));
+      } else {
+        this.tabledatarl = data.sort(compareUp(data, column.prop));
+      }
+    },    
     initWebSocket() {
       //初始化weosocket
       const wsuri = "ws://192.168.0.150:2346"; //ws地址
@@ -735,9 +755,9 @@ export default {
       this.websock.send(agentData);
     },
 
-    websocketclose() {
+    websocketclose(e) {
       //关闭
-      console.log("我关闭了");
+      console.log("我关闭了",e);
     },
     getSummaries(param) {
       const { columns, data } = param;

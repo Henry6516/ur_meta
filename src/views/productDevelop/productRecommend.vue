@@ -16,6 +16,9 @@
     <div v-show="show.recpro">
       <ebayRecommend></ebayRecommend>
     </div>
+    <div v-show="show.repTes">
+      <repeatTesting></repeatTesting>
+    </div>
     <div v-show="show.product">
       <el-col :span="24" style="padding:10px 15px;">
         <el-button type="success" @click="showCp" class="mr5">新增产品</el-button>
@@ -1510,6 +1513,7 @@
 
 <script type="text/ecmascript-6">
 import ebayRecommend from "./ebayRecommend.vue";
+import repeatTesting from "./repeatTesting.vue";
 import {
   goodsList,
   goodsCreate,
@@ -1537,7 +1541,8 @@ import { getMenu } from "../../api/login";
 
 export default {
   components: {
-    ebayRecommend
+    ebayRecommend,
+    repeatTesting
   },
   data() {
     return {
@@ -1562,6 +1567,7 @@ export default {
         forward: false,
         reverse: false,
         recpro:false,
+        repTes:false,
       },
       condition: {
         cate: "",
@@ -1784,6 +1790,11 @@ export default {
         this.show["recpro"] = true;
       } else {
         this.show["recpro"] = false;
+      }
+      if (tab.name === "/v1/oa-goods/image-search") {
+        this.show["repTes"] = true;
+      } else {
+        this.show["repTes"] = false;
       }
       if (tab.name === "/v1/oa-goods/list") {
         this.show["product"] = true;

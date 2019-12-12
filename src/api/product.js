@@ -1725,3 +1725,19 @@ export function formSkuInfo(param) {
     data
   })
 }
+
+export function wishProductsRule() {
+  return request({
+    url: '/wish-products/rule',
+    method: 'get'
+  })
+}
+
+export function wishProductsSaveRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/wish-products/save-rule',
+    method: 'post',
+    data
+  })
+}

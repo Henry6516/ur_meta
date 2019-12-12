@@ -72,7 +72,7 @@
                 <div class="leftDemo">
                   <div class="jblist">
                     <div class="jb01 jbg">
-                      <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                      <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                     </div>
                     <div class="jb02 jbg">
                       <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
@@ -1979,49 +1979,49 @@
               ></div>
               <div class="jblist">
                 <div class="jb01 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb02 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb03 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb04 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb05 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb06 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb07 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb08 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb09 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb10 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb11 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb12 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb13 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb14 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb15 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
               </div>
             </div>
@@ -2035,37 +2035,37 @@
               </div>
               <div class="jblist">
                 <div class="jbg jbr1">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr2 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr3 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr4 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr5 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr6 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr7 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr8 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr9 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr10 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr11 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
               </div>
             </div>
@@ -2079,37 +2079,37 @@
               </div>
               <div class="jblist">
                 <div class="jb05 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb06 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb07 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb08 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb09 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb10 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb11 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb12 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb13 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb14 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb15 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
               </div>
             </div>
@@ -2123,37 +2123,37 @@
               </div>
               <div class="jblist">
                 <div class="jbg jbr1">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr2 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr3 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr4 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr5 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr6 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr7 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr8 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr9 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr10 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jbr11 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
               </div>
             </div>
@@ -2167,37 +2167,125 @@
               </div>
               <div class="jblist">
                 <div class="jb05 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb06 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb07 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb08 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb09 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb10 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb11 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb12 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb13 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb14 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
                 <div class="jb15 jbg">
-                  <img src="../assets/jb.png" style="width: 35px;height: 50px;" />
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+              </div>
+            </div>
+            <div class="rightDemo">
+              <div
+               v-for="(item,index) in last160"
+                :key="index"
+                @click="judge(item.rate)"
+                :class="[item.rxtraBonus==6000?'indexbImg jb016img':item.rxtraBonus==6100?'indexbImg1 jb017img':item.rxtraBonus==6200?'indexbImg1 jb018img':item.rxtraBonus==6300?'indexbImg1 jb019img':item.rxtraBonus==6400?'indexbImg1 jb020img':item.rxtraBonus==6500?'indexbImg1 jb021img':item.rxtraBonus==6600?'indexbImg1 jb022img':item.rxtraBonus==6700?'indexbImg1 jb023img':item.rxtraBonus==6800?'indexbImg1 jb024img':item.rxtraBonus==6900?'indexbImg1 jb025img':item.rxtraBonus==7000?'indexbImg1 jb026img':'',item.username==sysUserName?'imbge':'']"
+              >
+              </div>
+              <div class="jblist">
+                <div class="jbg jbr1">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr2 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr3 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr4 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr5 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr6 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr7 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr8 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr9 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr10 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jbr11 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+              </div>
+            </div>
+            <div class="leftDemo">
+              <div
+               v-for="(item,index) in last170"
+                :key="index"
+                @click="judge(item.rate)"
+                :class="[item.rxtraBonus==7100?'indexbImg1 jb027img':item.rxtraBonus==7200?'indexbImg jb028img':item.rxtraBonus==7300?'indexbImg jb029img':item.rxtraBonus==7400?'indexbImg jb030img':item.rxtraBonus==7500?'indexbImg jb031img':item.rxtraBonus==7600?'indexbImg jb032img':item.rxtraBonus==7700?'indexbImg jb033img':item.rxtraBonus==7800?'indexbImg jb034img':item.rxtraBonus==7900?'indexbImg jb035img':item.rxtraBonus==8000?'indexbImg jb036img':item.rxtraBonus==8100?'indexbImg jb037img':'',item.username==sysUserName?'imbge':'']"
+              >
+              </div>
+              <div class="jblist">
+                <div class="jb05 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb06 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb07 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb08 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb09 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb10 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb11 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb12 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb13 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb14 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
+                </div>
+                <div class="jb15 jbg">
+                  <img src="../assets/jb11.png" style="width: 35px;height: 50px;" />
                 </div>
               </div>
             </div>
@@ -2604,6 +2692,8 @@ export default {
       last130:[],
       last140:[],
       last150:[],
+      last160:[],
+      last170:[],
       dateArr:[],
       data: {
         id: "",
@@ -3786,6 +3876,12 @@ export default {
         if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >4800 &&  arrData[i].rxtraBonus >0<=5900) {
           this.last150.push(arrData[i]);
         }
+        if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >5900 &&  arrData[i].rxtraBonus >0<=7000) {
+          this.last160.push(arrData[i]);
+        }
+        if (arrData[i].rate >= 100 && arrData[i].rxtraBonus >7000 &&  arrData[i].rxtraBonus >0<=8100) {
+          this.last170.push(arrData[i]);
+        }
       }
       this.tabSort = arrData;
     });
@@ -3815,7 +3911,7 @@ export default {
       var bigDemo=this.$refs.bigDemo
       var cont=0
       var setTime=setInterval(() => {
-        if(cont<450){
+        if(cont<680){
           bigDemo.scrollTop=cont++
         }else{
           clearInterval(setTime)
@@ -3971,7 +4067,7 @@ export default {
   float: left;
   margin-top: 1.5%;
   height: 915px;
-  background: url(../assets/bgban51.png) no-repeat center;
+  background: url(../assets/bgban7.jpg) no-repeat center;
   background-size: 100% 100%;
   position: relative;
 }
@@ -4293,7 +4389,7 @@ h2:hover {
 }
 .rightDemo:nth-child(5) {
   left: 485.5px;
-  z-index: 5;
+  z-index: 7;
   width: 460px;
   top: 544px;
   border-color: #76c5cc;
@@ -4305,7 +4401,7 @@ h2:hover {
 .leftDemo:nth-child(6) {
   width: 870px;
   top: 665px;
-  z-index: 4;
+  z-index: 6;
   border-color: #6caf29;
 }
 .leftDemo:nth-child(6):before {
@@ -4316,7 +4412,7 @@ h2:hover {
   width: 870px;
   top: 785px;
   left:75px;
-  z-index: 3;
+  z-index: 5;
   border-color: #8cc63e;
 }
 .rightDemo:nth-child(7):before {
@@ -4327,7 +4423,7 @@ h2:hover {
   width: 870px;
   top: 905px;
   border-color: #6caf29;
-  z-index: 2;
+  z-index: 4;
 }
 .leftDemo:nth-child(8):before {
   width: 870px;
@@ -4337,7 +4433,7 @@ h2:hover {
   width: 870px;
   top: 1025px;
   left:75px;
-  z-index: 1;
+  z-index: 3;
   border-color: #8cc63e;
 }
 .rightDemo:nth-child(9):before {
@@ -4348,9 +4444,30 @@ h2:hover {
   width: 870px;
   top: 1145px;
   border-color: #6caf29;
-  z-index: 0;
+  z-index: 2;
 }
 .leftDemo:nth-child(10):before {
+  width: 870px;
+  border-color: #8cc63e;
+}
+.rightDemo:nth-child(11) {
+  width: 870px;
+  top: 1265px;
+  left:75px;
+  z-index: 1;
+  border-color: #8cc63e;
+}
+.rightDemo:nth-child(11):before {
+  width: 870px;
+  border-color: #6caf29;
+}
+.leftDemo:nth-child(12) {
+  width: 870px;
+  top: 1385px;
+  border-color: #6caf29;
+  z-index: 0;
+}
+.leftDemo:nth-child(12):before {
   width: 870px;
   border-color: #8cc63e;
 }
