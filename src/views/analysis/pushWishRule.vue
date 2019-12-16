@@ -63,16 +63,6 @@
                 {{scope.row.ruleType=='new'?'新品':'热销'}}
               </template>
             </el-table-column>
-            <el-table-column property="maxNumBoughtStart" label="销量大于" align="center" width="80"></el-table-column>
-            <el-table-column property="maxNumBoughtEnd" label="销量小于" align="center" width="80"></el-table-column>
-            <el-table-column property="ratingStart" label="评分大于" align="center"></el-table-column>
-            <el-table-column property="ratingEnd" label="评分小于" align="center"></el-table-column>
-            <el-table-column property="totalpriceStart" label="价格大于" align="center" width="80"></el-table-column>
-            <el-table-column property="totalpriceEnd" label="价格小于" align="center" width="80"></el-table-column>
-            <el-table-column property="viewRate1Start" label="前7天Viewing均值大于" align="center" width="170"></el-table-column>
-            <el-table-column property="viewRate1End" label="前7天Viewing均值小于" align="center" width="170"></el-table-column>
-            <el-table-column property="intervalRatingStart" label="前30天新增评论数大于" align="center" width="170"></el-table-column>
-            <el-table-column property="intervalRatingEnd" label="前30天新增评论数小于" align="center" width="170"></el-table-column>
             <el-table-column property="pb" label="商品pb" align="center" width="80">
               <template slot-scope="scope">
                 {{scope.row.pb=='1'?'有':scope.row.pb=='0'?'无':'不限'}}
@@ -88,12 +78,17 @@
                 {{scope.row.verified=='1'?'认证':scope.row.verified=='0'?'非认证':'不限'}}
               </template>
             </el-table-column>
-            <el-table-column property="genTimeStart" label="上架开始时间" align="center" width="120">
-              <template slot-scope="scope">{{scope.row.genTimeStart | cutOutMonye}}</template>
-            </el-table-column>
-            <el-table-column property="genTimeEnd" label="上架结束时间" align="center" width="120">
-              <template slot-scope="scope">{{scope.row.genTimeEnd | cutOutMonye}}</template>
-            </el-table-column>
+            <el-table-column property="listedTime" label="上架时间" align="center" width="90"></el-table-column>
+            <el-table-column property="maxNumBoughtStart" label="销量大于" align="center" width="80"></el-table-column>
+            <el-table-column property="maxNumBoughtEnd" label="销量小于" align="center" width="80"></el-table-column>
+            <el-table-column property="ratingStart" label="评分大于" align="center"></el-table-column>
+            <el-table-column property="ratingEnd" label="评分小于" align="center"></el-table-column>
+            <el-table-column property="totalpriceStart" label="价格大于" align="center" width="80"></el-table-column>
+            <el-table-column property="totalpriceEnd" label="价格小于" align="center" width="80"></el-table-column>
+            <el-table-column property="viewRate1Start" label="前7天Viewing均值大于" align="center" width="170"></el-table-column>
+            <el-table-column property="viewRate1End" label="前7天Viewing均值小于" align="center" width="170"></el-table-column>
+            <el-table-column property="intervalRatingStart" label="前30天新增评论数大于" align="center" width="170"></el-table-column>
+            <el-table-column property="intervalRatingEnd" label="前30天新增评论数小于" align="center" width="170"></el-table-column>
           </el-table>
         </div>
         <div v-show="ebay.rx">
@@ -315,26 +310,25 @@
               <el-col :span="9">
                 <p class="basp">上架时间</p>
               </el-col>
-              <el-col :span="7">
-                <el-date-picker
-                  v-model="ebayXp.genTimeStart"
-                  type="date"
-                  style="width:100%;"
-                  value-format="yyyy-MM-dd"
-                  placeholder="选择日期">
-                </el-date-picker>
-              </el-col>
-              <el-col :span="1">
-                <span class="colspan">-</span>
-              </el-col>
-              <el-col :span="7">
-                <el-date-picker
-                  v-model="ebayXp.genTimeEnd"
-                  style="width:100%;"
-                  type="date"
-                  value-format="yyyy-MM-dd"
-                  placeholder="选择日期">
-                </el-date-picker>
+              <el-col :span="15">
+               <el-select
+                  style="width:100%"
+                  multiple
+                  filterable
+                  collapse-tags
+                  allow-create
+                  default-first-option
+                  v-model="ebayXp.listedTime"
+                >
+                  <el-button plain type="info" @click="selectalld3">全选</el-button>
+                  <el-button plain type="info" @click="noselectd3">取消</el-button>
+                  <el-option
+                    v-for="(item, key) in ebayOptionsTime"
+                    :key="item.key"
+                    :label="item"
+                    :value="item"
+                  ></el-option>
+                </el-select>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -497,26 +491,25 @@
               <el-col :span="9">
                 <p class="basp">上架时间</p>
               </el-col>
-              <el-col :span="7">
-                <el-date-picker
-                  v-model="addEbayXp.genTimeStart"
-                  type="date"
-                  style="width:100%;"
-                  value-format="yyyy-MM-dd"
-                  placeholder="选择日期">
-                </el-date-picker>
-              </el-col>
-              <el-col :span="1">
-                <span class="colspan">-</span>
-              </el-col>
-              <el-col :span="7">
-                <el-date-picker
-                  v-model="addEbayXp.genTimeEnd"
-                  style="width:100%;"
-                  type="date"
-                  value-format="yyyy-MM-dd"
-                  placeholder="选择日期">
-                </el-date-picker>
+              <el-col :span="15">
+               <el-select
+                  style="width:100%"
+                  multiple
+                  filterable
+                  collapse-tags
+                  allow-create
+                  default-first-option
+                  v-model="addEbayXp.listedTime"
+                >
+                  <el-button plain type="info" @click="addselectalld3">全选</el-button>
+                  <el-button plain type="info" @click="addnoselectd3">取消</el-button>
+                  <el-option
+                    v-for="(item, key) in ebayOptionsTime"
+                    :key="item.key"
+                    :label="item"
+                    :value="item"
+                  ></el-option>
+                </el-select>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -610,6 +603,7 @@ import {
   ebaySaveRuleHot,
   ebaySaveRuleDelete,
   ebaySaveRuleDeleteHot,
+  wishRuleDelete,
   ebayRunRuleNew,
   ebayRunRuleHot
 } from "../../api/product";
@@ -627,6 +621,7 @@ export default {
       optionsPb:['有','无'],
       optionsHwc:['海外仓','非海外仓'],
       optionsWish:['认证','非认证'],
+      ebayOptionsTime: ["今天", "昨天", "前天"],
       ebayXp: {
         id: "",
         ruleType: "",
@@ -637,6 +632,7 @@ export default {
         totalpriceStart:'',
         totalpriceEnd:'',
         viewRate1Start:'',
+        listedTime:[],
         viewRate1End:'',
         intervalRatingStart:'',
         intervalRatingEnd:'',
@@ -650,6 +646,7 @@ export default {
       },
       addEbayXp: {
         ruleType: "",
+        listedTime:[],
         ruleMark: "",
         ruleName: "",
         genTimeStart:'',
@@ -773,6 +770,26 @@ export default {
     }
   },
   methods: {
+    addselectalld3() {
+      var ard1 = [];
+      for (const item in this.ebayOptionsTime) {
+        ard1.push(this.ebayOptionsTime[item]);
+      }
+      this.addEbayXp.listedTime = ard1;
+    },
+    addnoselectd3() {
+      this.addEbayXp.listedTime = [];
+    },
+    selectalld3() {
+      var ard1 = [];
+      for (const item in this.ebayOptionsTime) {
+        ard1.push(this.ebayOptionsTime[item]);
+      }
+      this.ebayXp.listedTime = ard1;
+    },
+    noselectd3() {
+      this.ebayXp.listedTime = [];
+    },    
     ljArt(index, row) {
       let conde = {
         ruleId: row._id
@@ -934,6 +951,7 @@ export default {
       this.addEbayXpruleTypehwc='';
       this.addEbayXpruleTypeverified='';
       this.addEbayXp.ruleMark = "";
+      this.addEbayXp.listedTime = [];
       this.addEbayXp.ruleName = "";
       this.addEbaydisLoginxp = true;
     },
@@ -994,12 +1012,27 @@ export default {
       this.ebayXp.ruleName = row.ruleName;
       this.ebayXp.ruleMark = row.ruleMark;
       this.ebayXp.ruleType = row.ruleType;
+      this.ebayXp.listedTime = row.listedTime;
       this.ebayXp.pb == 0 ? this.ebayXp.pb = '无': this.ebayXp.pb == 1?this.ebayXp.pb = '有':this.ebayXp.pb='';
       this.ebayXp.hwc == 0? this.ebayXp.hwc = '非海外仓': this.ebayXp.hwc == 1?this.ebayXp.hwc = '海外仓':this.ebayXp.hwc='';
       this.ebayXp.verified == 0? this.ebayXp.verified = '非认证': this.ebayXp.verified == 1?this.ebayXp.verified = '认证':this.ebayXp.verified='';  
+      for(let i=0;i<this.ebayXp.listedTime.length;i++){
+        this.ebayXp.listedTime[i]=this.ebayXp.listedTime[i].replace(/,/g, "");
+      }
       this.ebaydisLoginxp = true;
     },
     saveEbayXp() {
+      for (let i = 0; i < this.ebayXp.listedTime.length; i++) {
+          if (this.ebayXp.listedTime[i] == "今天") {
+            this.ebayXp.listedTime[i] = 0;
+          }
+          if (this.ebayXp.listedTime[i] == "昨天") {
+            this.ebayXp.listedTime[i] = 1;
+          }
+          if (this.ebayXp.listedTime[i] == "前天") {
+            this.ebayXp.listedTime[i] = 2;
+          }
+      }
       this.ebayXp.pb == '无' ? this.ebayXp.pb = '0': this.ebayXp.pb == '有'?this.ebayXp.pb = '1':this.ebayXp.pb='';
       this.ebayXp.hwc == '非海外仓'? this.ebayXp.hwc = '0': this.ebayXp.hwc == '海外仓'?this.ebayXp.hwc = '1':this.ebayXp.hwc='';
       this.ebayXp.verified == '非认证'? this.ebayXp.verified = '0': this.ebayXp.verified == '认证'?this.ebayXp.verified = '1':this.ebayXp.verified='';  
@@ -1020,6 +1053,17 @@ export default {
     },
     addSaveEbayXp() {
       if (this.addEbayXp.ruleName) {
+        for (let i = 0; i < this.addEbayXp.listedTime.length; i++) {
+            if (this.addEbayXp.listedTime[i] == "今天") {
+              this.addEbayXp.listedTime[i] = 0;
+            }
+            if (this.addEbayXp.listedTime[i] == "昨天") {
+              this.addEbayXp.listedTime[i] = 1;
+            }
+            if (this.addEbayXp.listedTime[i] == "前天") {
+              this.addEbayXp.listedTime[i] = 2;
+            }
+        }
         this.addEbayXp.pb == '无' ? this.addEbayXp.pb = '0': this.addEbayXp.pb == '有'?this.addEbayXp.pb = '1':this.addEbayXp.pb='';
         this.addEbayXp.hwc == '非海外仓'? this.addEbayXp.hwc = '0': this.addEbayXp.hwc == '海外仓'?this.addEbayXp.hwc = '1':this.addEbayXp.hwc='';
         this.addEbayXp.verified == '非认证'? this.addEbayXp.verified = '0': this.addEbayXp.verified == '认证'?this.addEbayXp.verified = '1':this.addEbayXp.verified=''; 
@@ -1095,7 +1139,7 @@ export default {
           let conId = {
             id: row._id
           };
-          ebaySaveRuleDelete(conId).then(res => {
+          wishRuleDelete(conId).then(res => {
             if (res.data.message == "success") {
               this.$message({
                 message: "删除成功",
@@ -1172,6 +1216,20 @@ export default {
       this.listLoading = true;
       wishProductsRule().then(res => {
         this.ebaydata = res.data.data;
+        for (let i = 0; i < this.ebaydata.length; i++) {
+          let date = this.ebaydata[i].listedTime;
+          for (let k = 0; k < date.length; k++) {
+              if (date[k] == "0") {
+                date[k] = "今天,";
+              }
+              if (date[k] == "1") {
+                date[k] = "昨天,";
+              }
+              if (date[k] == "2") {
+                date[k] = "前天";
+              }
+          }
+        }
         this.listLoading = false;
       });
     }

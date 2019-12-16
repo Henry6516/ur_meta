@@ -61,7 +61,7 @@
               <a :href="item.linkUrl" target="_black">
                 <img :src="item.ProductId" class="imageSty" title="点击图片跳转到阿里巴巴链接"  />
               </a>
-              <span @click="goDetails(item.GoodsCode)">{{item.GoodsCode}}<a style="margin-left:5px;display:block">{{item.goodsStatus}}</a><a style="padding:2px 8px;background:#409EFF;color:#fff;display:block">查看</a></span>
+              <span @click="goDetails(item.GoodsCode)">{{item.GoodsCode}}<a style="margin-left:5px;display:block">{{item.goodsStatus}}</a><a style="margin-left:5px;display:block">相似度:{{item.SortExprValues | str1}}</a><a style="padding:2px 8px;background:#409EFF;color:#fff;display:block">查看</a></span>
             </div>
           </div>
         </div>
@@ -129,6 +129,13 @@ export default {
       }
     };
   },
+  filters: {
+    str1: function(value) {
+      if (!value) return "";
+      value = value.substring(0, 4);
+      return value;
+    },
+  },  
   methods: {
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
@@ -210,6 +217,7 @@ export default {
   width: 100%;
   overflow: hidden;
   margin: auto;
+  overflow-y: auto;
   // margin-top: 15px;
 }
 .floet {
@@ -244,7 +252,7 @@ export default {
   color: red;
   font-weight: bold;
   cursor: pointer;
-  line-height: 30px;
+  line-height: 24px;
 }
 .repa {
   display: block;
@@ -268,21 +276,25 @@ export default {
 }
 @media screen and (max-width: 1500px) {
   .imgDiv {
-  width: 32%;
+  width: 20%;
   float: left;
 }
   .imageSty {
     width: 92%;
     margin: auto;
-    height: 180px;
-    margin-left: 5%;
+    height: 168px;
     border: #ccc solid 1px;
+    margin-top: 10px;
   }
   .w90 {
     width: 100%;
     overflow: hidden;
     margin: auto;
     margin-top: 15px;
+    overflow-y: auto;
+  }
+  .imgDiv span{
+    line-height: 23px;
   }
 }
 </style>

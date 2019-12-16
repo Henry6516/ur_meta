@@ -180,7 +180,8 @@
                   <div v-for="(item,index) in itemDetail" :key="index">
                       <span
                         class="curSpan"
-                        style="font-size:14px;color:#3c8dbc;display:block;float:left;margin-right:20px;"
+                        style="font-size:14px;display:block;float:left;margin-right:20px;"
+                         :class="itemCateIndex==index?'redred':''"
                          @click="rulePlatActive1(index)"
                       >
                         <span class="oneClass" :class="item.flag?'ruleBac':''" @click.stop="rulePlatActive(index)"></span>
@@ -206,6 +207,7 @@
                     :key="indexTwo"
                     v-show="itemCateIndex==index"
                   >
+                  <div v-if="item.plat=='ebay'">
                     <el-col :span="8">
                       <el-col :span="24" style="margin-top:20px;">
                         <span
@@ -254,23 +256,65 @@
                                 :value="item"
                               ></el-option>
                             </el-select>
-                            <!-- <el-col
-                            :span="24"
-                            v-for="(itemFour,indexFour) in itemTree.cateValue"
-                            :key="indexFour"
-                          >
-                            <span
-                              class="curSpan curSpanFour"
-                              @click="ruleSubcateActive(index,indexTwo,indexTree,indexFour)"
-                            >
-                              <span class="oneClass" :class="itemFour.flag?'ruleBac':''"></span>
-                              {{itemFour.subCate}}
-                            </span>
-                            </el-col>-->
                           </el-col>
                         </el-col>
                       </el-col>
                     </el-col>
+                  </div>
+                  <div v-if="item.plat=='wish'">
+                    <el-col :span="24">
+                      <el-col :span="24" style="margin-top:20px;">
+                        <span
+                          class="curSpan"
+                          @click="ruleMakActive(index,indexTwo)"
+                          :class="itemTwo.flag?'cColor':''"
+                        >
+                          <span class="oneClass" :class="itemTwo.flag?'ruleBac':''"></span>
+                          {{itemTwo.marketplace}}
+                        </span>
+                      </el-col>
+                      <el-col
+                        :span="23"
+                        style="margin-top:5px;padding-left:18px;"
+                        class="scrollTopHeight"
+                      >
+                        <el-col
+                          :span="12"
+                          v-for="(itemTree,indexTree) in itemTwo.marketplaceValue"
+                          :key="indexTree"
+                        >
+                          <el-col :span="24">
+                            <span
+                              class="curSpan curSpanTree"
+                              :class="itemTree.flag?'cColor':''"
+                              @click="ruleCateActive(index,indexTwo,indexTree)"
+                            >
+                              <span class="oneClass" :class="itemTree.flag?'ruleBac':''"></span>
+                              {{itemTree.cate}}
+                            </span>
+                          </el-col>
+                          <el-col :span="24" style="margin-top:5px;width:100%;" class="treeDiv">
+                            <el-select
+                              v-model="itemTree.cateValue.subCateChecked"
+                              multiple
+                              collapse-tags
+                              style="width:95%;"
+                              placeholder="请选择"
+                              size="small"
+                              @change="ruleSubcateActive(index,indexTwo,indexTree)"
+                            >
+                              <el-option
+                                v-for="item in itemTree.cateValue.subCate"
+                                :key="item"
+                                :label="item"
+                                :value="item"
+                              ></el-option>
+                            </el-select>
+                          </el-col>
+                        </el-col>
+                      </el-col>
+                    </el-col>
+                  </div>
                   </div>
                 </div>
               </el-col>
@@ -821,6 +865,9 @@ export default {
   height: 4px;
   background: #fff;
   border: #67c23a solid 6px;
+}
+.redred{
+  color: #3c8dbc !important;
 }
 .scrollTopHeight {
   height: 480px;

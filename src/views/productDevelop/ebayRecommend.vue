@@ -535,7 +535,7 @@
                 <span style="display:block;margin-left:10px;margin-top:5px;color:#000">相似产品</span>
                 <div class="xxBox" v-for="(itemId,index) in item.similar" :key="index">
                   <a :href="itemId.linkUrl" target="_blank"><img :src="itemId.ProductId" title="点击图片跳转到阿里巴巴链接" /></a>
-                  <span @click="goDetails(itemId.GoodsCode)">{{itemId.GoodsCode}}<a style="margin-left:5px;display:block">{{itemId.goodsStatus}}</a><a style="padding:2px 8px;background:#409EFF;color:#fff;display:block">查看</a></span>
+                  <span @click="goDetails(itemId.GoodsCode)">{{itemId.GoodsCode}}<a style="margin-left:5px;display:block">{{itemId.goodsStatus}}</a><a style="margin-left:5px;display:block">相似度:{{itemId.SortExprValues | str1}}</a><a style="padding:2px 8px;background:#409EFF;color:#fff;display:block">查看</a></span>
                 </div>
               </div>
             </div>
@@ -727,7 +727,12 @@ export default {
       if (!value) return "";
       value = value.substring(0, 11);
       return value;
-    }
+    },
+    str1: function(value) {
+      if (!value) return "";
+      value = value.substring(0, 4);
+      return value;
+    },
   },
   methods: {
     closeDlg(){

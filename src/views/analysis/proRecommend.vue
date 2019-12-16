@@ -129,13 +129,17 @@
                 </div>
                 <div style="margin-top:8px;" class="ebayGoa">
                   <span
-                    style="margin:0;margin-top:5px;font-size:13px;"
+                    style="margin-top:5px;font-size:13px;"
                     @click="goLinkUrlEbay(scope.row.marketplace,scope.row.itemId)"
                   >eBay链接</span>
                   <span
-                    style="margin:0;margin-top:5px;font-size:13px;"
+                    style="margin-top:5px;font-size:13px;"
                     @click="goLinkUrlEbayHy('https://kj.1688.com/pdt_tongkuan.html?imgUrl=' + scope.row.mainImage)"
                   >货源链接</span>
+                  <span
+                    style="margin-top:5px;font-size:13px;"
+                    @click="manualPush(scope.row.itemId)"
+                  >手动推送</span>
                 </div>
               </template>
             </el-table-column>
@@ -294,6 +298,10 @@
                     style="margin:0;margin-top:5px;font-size:13px;"
                     @click="goLinkUrlEbayHy('https://kj.1688.com/pdt_tongkuan.html?imgUrl=' + scope.row.mainImage)"
                   >货源链接</span>
+                  <span
+                    style="margin-top:5px;font-size:13px;"
+                    @click="manualPush(scope.row.itemId)"
+                  >手动推送</span>
                 </div>
               </template>
             </el-table-column>
@@ -529,6 +537,37 @@
           <el-button type="primary" @click="addEbayRxRefuse">确 定</el-button>
         </div>
       </el-dialog>
+      <el-dialog title :visible.sync="dialogmanualPush" width="40%">
+        <el-row>
+          <el-col :span="24">
+            <el-col :span="4" class="basp">推送规则</el-col>
+            <el-col :span="18">
+              <el-select
+                v-model="itemShow.type"
+                placeholder="请选择"
+                style="width:100%"
+              >
+                <el-option v-for="item in showRule" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="4" class="basp" style="margin-top:15px;">产品开发</el-col>
+            <el-col :span="18" style="margin-top:15px;">
+              <el-select
+                 v-model="itemShow.developer"
+                placeholder="请选择"
+                multiple
+                style="width:100%"
+              >
+                <el-option v-for="item in developerItem" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+            </el-col>
+          </el-col>
+        </el-row>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogmanualPush = false">取 消</el-button>
+          <el-button type="primary" @click="saveManualPush">确 定</el-button>
+        </div>
+      </el-dialog>
     </div>
   </section>
 </template>
@@ -541,13 +580,15 @@ import {
   ebayXpAccept,
   ebayRxAccept,
   ebayXpRefuse,
-  ebayRxRefuse
+  ebayRxRefuse,
+  manualRecommend
 } from "../../api/product";
-import { getEbayXp, getEbayRx } from "../../api/profit";
+import { getEbayXp, getEbayRx,getDeveloper } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
+      dialogmanualPush:false,
       tableHeightstock: window.innerHeight - 209,
       totalEbayXp: null,
       totalEbayRx: null,
@@ -555,6 +596,12 @@ export default {
       ebayRxRefuse: false,
       lodingEbayRx: false,
       lodingEbayXp: false,
+      developerItem:[],
+      itemShow:{
+        itemId:null,
+        type:null,
+        developer:[]
+      },
       proTotalXp: 0,
       proTotalRx: 0,
       options: {
@@ -651,6 +698,7 @@ export default {
       },
       ebayStlye: 0,
       allMenu: ["Ebay", "Wish", "Joom", "Amazon", "Aliexpress"],
+      showRule: ["new", "hot"],
       listLoading: false,
       corner: "Ebay",
       activeName: "Ebay",
@@ -680,6 +728,25 @@ export default {
     }
   },
   methods: {
+    saveManualPush(){
+      manualRecommend(this.itemShow).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "推送成功",
+              type: "success"
+            });
+            this.ebayXp();
+            this.ebayRx();
+          } else {
+            this.$message.error(res.data.message);
+          }
+          this.dialogmanualPush=false
+      });
+    },
+    manualPush(id){
+      this.itemShow.itemId=id
+      this.dialogmanualPush=true
+    },
     selectEbayXp(e) {
       if (e == "其他(可以手动输入文字)") {
         this.ebayXpRefuse = true;
@@ -1231,6 +1298,10 @@ export default {
   mounted() {
     this.ebayXp();
     this.ebayRx();
+    getDeveloper().then(response => {
+      const possessMan = response.data.data;
+      this.developerItem = possessMan
+    });
   }
 };
 </script>
@@ -1525,15 +1596,23 @@ export default {
   cursor: pointer;
 }
 .ebayGoa span:first-child {
-  width: 40%;
+  width: 30%;
   float: left;
   background: #409eff;
   color: #fff;
 }
-.ebayGoa span:last-child {
-  width: 40%;
-  float: right;
+.ebayGoa span:nth-child(2) {
+  width: 30%;
+  float: left;
   background: #f56c6c;
+  color: #fff;
+  margin-left: 3%;
+}
+.ebayGoa span:last-child {
+  width: 30%;
+  float: left;
+  margin-left: 3%;
+  background: #67C23A;
   color: #fff;
 }
 .goa {
