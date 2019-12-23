@@ -46,7 +46,7 @@
             style="width:98%;margin-left:0.7%;margin-top:15px;"
           >
             <el-table-column type="index" fixed align="center" width="40" header-align="center"></el-table-column>
-            <el-table-column label="操作" fixed header-align="center" align="center" width="75">
+            <el-table-column label="操作" fixed header-align="center" align="center" width="95">
               <template slot-scope="scope">
                 <el-tooltip content="更新">
                   <i
@@ -69,10 +69,20 @@
                     @click="delArt(scope.$index, scope.row)"
                   ></i>
                 </el-tooltip>
+                <el-tooltip :content="scope.row.isUsed==0?'启用':'停用'">
+                  <i
+                    class="el-icon-menu"
+                    style="color: #409EFF;cursor:pointer;"
+                    @click="startRule(scope.$index, scope.row,'news')"
+                  ></i>
+                </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column property="ruleName" label="规则名称" align="center"></el-table-column>
+            <el-table-column property="ruleName" label="规则名称" align="center" width="110"></el-table-column>
             <el-table-column property="ruleMark" label="规则备注" align="center"></el-table-column>
+            <el-table-column property="isUsed" label="是否停用" align="center" width="100">
+              <template slot-scope="scope"><a :class="scope.row.isUsed==0?'clasRed1':'clasGreen1'">{{scope.row.isUsed==0?'停用':'在用'}}</a></template>
+            </el-table-column>
             <el-table-column property="soldStart" label="销量大于" align="center" width="80"></el-table-column>
             <el-table-column property="soldEnd" label="销量小于" align="center" width="80"></el-table-column>
             <el-table-column property="visitStart" label="浏览数大于" align="center"></el-table-column>
@@ -85,9 +95,6 @@
               <template slot-scope="scope">{{scope.row.popularStatus==0?'否':'是'}}</template>
             </el-table-column>
             <el-table-column property="listedTime" label="上架时间" align="center"></el-table-column>
-            <el-table-column property="isUsed" label="是否停用" align="center">
-              <template slot-scope="scope">{{scope.row.isUsed==0?'停用':'在用'}}</template>
-            </el-table-column>
             <el-table-column property="creator" label="创建人" align="center" width="80"></el-table-column>
             <el-table-column property="createdDate" label="创建时间" align="center">
               <template slot-scope="scope">{{scope.row.createdDate | cutOutMonye}}</template>
@@ -107,7 +114,7 @@
             style="width:98%;margin-left:0.7%;margin-top:15px;"
           >
             <el-table-column type="index" fixed align="center" width="40" header-align="center"></el-table-column>
-            <el-table-column label="操作" fixed header-align="center" align="center" width="80">
+            <el-table-column label="操作" fixed header-align="center" align="center" width="95">
               <template slot-scope="scope">
                 <el-tooltip content="更新">
                   <i
@@ -130,10 +137,20 @@
                     @click="delArtRx(scope.$index, scope.row)"
                   ></i>
                 </el-tooltip>
+                <el-tooltip :content="scope.row.isUsed==0?'启用':'停用'">
+                  <i
+                    class="el-icon-menu"
+                    style="color: #409EFF;cursor:pointer;"
+                    @click="startRule(scope.$index, scope.row,'hot')"
+                  ></i>
+                </el-tooltip>
               </template>
             </el-table-column>
             <el-table-column property="ruleName" label="规则名称" align="center" width="100"></el-table-column>
             <el-table-column property="ruleMark" label="规则备注" align="center" width="100"></el-table-column>
+            <el-table-column property="isUsed" label="是否停用" align="center" width="100">
+              <template slot-scope="scope"><a :class="scope.row.isUsed==0?'clasRed1':'clasGreen1'">{{scope.row.isUsed==0?'停用':'在用'}}</a></template>
+            </el-table-column>
             <el-table-column property="publishedSite" label="刊登站点" align="center" width="180"></el-table-column>
             <el-table-column property="storeLocation" label="注册地址" align="center" width="100"></el-table-column>
             <el-table-column
@@ -143,9 +160,6 @@
               width="120"
             >
               <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'否':'是'}}</template>
-            </el-table-column>
-            <el-table-column property="isUsed" label="是否停用" align="center">
-              <template slot-scope="scope">{{scope.row.isUsed==0?'停用':'在用'}}</template>
             </el-table-column>
             <el-table-column property="priceEnd" label="价格小于" align="center" width="100"></el-table-column>
             <el-table-column property="priceStart" label="价格大于" align="center" width="100"></el-table-column>
@@ -377,12 +391,25 @@
                 <p class="basp">是否有小火苗</p>
               </el-col>
               <el-col :span="15">
-                <el-switch
+                <el-col :span="6">
+                  <el-switch
                   v-model="ebayXp.popularStatus"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   style="margin-top:10px;"
                 ></el-switch>
+                </el-col>
+                <el-col :span="12">
+                  <p class="basp">是否手动推送</p>
+                </el-col>
+                <el-col :span="6">
+                  <el-switch
+                  v-model="ebayXp.type"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  style="margin-top:10px;"
+                ></el-switch>
+                </el-col>
               </el-col>
             </el-col>
           </el-col>
@@ -533,12 +560,25 @@
                 <p class="basp">是否有小火苗</p>
               </el-col>
               <el-col :span="15">
-                <el-switch
+                <el-col :span="6">
+                  <el-switch
                   v-model="addEbayXp.popularStatus"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   style="margin-top:10px;"
                 ></el-switch>
+                </el-col>
+                <el-col :span="12">
+                  <p class="basp">是否手动推送</p>
+                </el-col>
+                <el-col :span="6">
+                  <el-switch
+                  v-model="addEbayXp.type"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  style="margin-top:10px;"
+                ></el-switch>
+                </el-col>
               </el-col>
             </el-col>
           </el-col>
@@ -748,12 +788,25 @@
                 <p class="basp">连续三天有销量</p>
               </el-col>
               <el-col :span="15">
-                <el-switch
+                <el-col :span="6">
+                  <el-switch
                   v-model="addEbayRx.salesThreeDayFlag"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   style="margin-top:10px;"
                 ></el-switch>
+                </el-col>
+                <el-col :span="12">
+                  <p class="basp">是否手动推送</p>
+                </el-col>
+                <el-col :span="6">
+                  <el-switch
+                  v-model="addEbayRx.type"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  style="margin-top:10px;"
+                ></el-switch>
+                </el-col>
               </el-col>
             </el-col>
           </el-col>
@@ -963,12 +1016,25 @@
                 <p class="basp">连续三天有销量</p>
               </el-col>
               <el-col :span="15">
-                <el-switch
+                <el-col :span="6">
+                  <el-switch
                   v-model="ebayRx.salesThreeDayFlag"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
-                  style="margin-top:10px;margin-left:10px;"
+                  style="margin-top:10px;"
                 ></el-switch>
+                </el-col>
+                <el-col :span="12">
+                  <p class="basp">是否手动推送</p>
+                </el-col>
+                <el-col :span="6">
+                  <el-switch
+                  v-model="ebayRx.type"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  style="margin-top:10px;"
+                ></el-switch>
+                </el-col>
               </el-col>
             </el-col>
           </el-col>
@@ -990,7 +1056,9 @@ import {
   ebaySaveRuleDelete,
   ebaySaveRuleDeleteHot,
   ebayRunRuleNew,
-  ebayRunRuleHot
+  ebayRunRuleHot,
+  startRule,
+  stopRule
 } from "../../api/product";
 export default {
   data() {
@@ -1017,6 +1085,7 @@ export default {
         itemLocation: "",
         ruleMark: "",
         popularStatus:false,
+        type:'',
         ruleName: ""
       },
       addEbayXp: {
@@ -1029,21 +1098,25 @@ export default {
         publishedSite: [],
         storeLocation: [],
         salesThreeDayFlag: false,
+        type:false,
         listedTime: [],
         itemLocation: false,
         ruleMark: "",
         popularStatus:"",
+        isUsed:1,
         ruleName: ""
       },
       addEbayRx: {
         marketplace: [],
         publishedSite: [],
         salesThreeDayFlag: false,
+        type:false,
         priceStart: "",
         priceEnd: "",
         soldStart: "",
         soldEnd: "",
         storeLocation: [],
+        isUsed:1,
         genTimeStart: "",
         genTimeEnd: "",
         soldThePreviousGrowthStart: "",
@@ -1065,6 +1138,7 @@ export default {
         _id: "",
         brand: "",
         salesThreeDayFlag: "",
+        type:'',
         priceStart: "",
         priceEnd: "",
         soldStart: "",
@@ -1140,6 +1214,41 @@ export default {
     }
   },
   methods: {
+    startRule(index,row,type){
+      if(row.isUsed=='0'){
+        var obj={
+          type:type,
+          ruleId:row._id
+        }
+        startRule(obj).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "成功",
+              type: "success"
+            });
+            this.getDataEbay();
+          } else {
+            this.$message.error(res.data.message);
+          }
+        });
+      }else{
+        var obj={
+          type:'news',
+          ruleId:row._id
+        }
+        stopRule(obj).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "成功",
+              type: "success"
+            });
+            this.getDataEbay();
+          } else {
+            this.$message.error(res.data.message);
+          }
+        });
+      }
+    },
     ljArt(index, row) {
       let conde = {
         ruleId: row._id
@@ -1351,6 +1460,7 @@ export default {
       this.ebayXp.salesThreeDayFlag = row.salesThreeDayFlag;
       this.ebayXp.popularStatus = row.popularStatus;
       this.ebayXp.listedTime = row.listedTime;
+      this.ebayXp.type = row.type;
       this.ebayXp.itemLocation = row.itemLocation;
       this.ebayXp.ruleName = row.ruleName;
       this.ebayXp.ruleMark = row.ruleMark;
@@ -1379,6 +1489,9 @@ export default {
       this.ebayXp.salesThreeDayFlag == 0
         ? (this.ebayXp.salesThreeDayFlag = false)
         : (this.ebayXp.salesThreeDayFlag = true);
+        this.ebayXp.type == 'auto'
+        ? (this.ebayXp.type = false)
+        : (this.ebayXp.type = true);
         this.ebayXp.popularStatus == 0
         ? (this.ebayXp.popularStatus = false)
         : (this.ebayXp.popularStatus = true);
@@ -1411,6 +1524,7 @@ export default {
       this.ebayRx.publishedSite = row.publishedSite;
       this.ebayRx.ruleName = row.ruleName;
       this.ebayRx.ruleMark = row.ruleMark;
+      this.ebayRx.type = row.type;
       if (this.ebayRx.salesThreeDayFlag == 0) {
         this.ebayRx.salesThreeDayFlag = false;
       } else {
@@ -1419,6 +1533,9 @@ export default {
       this.ebayRx.popularStatus == 0
         ? (this.ebayRx.popularStatus = false)
         : (this.ebayRx.popularStatus = true);
+      this.ebayRx.type == 'auto'
+        ? (this.ebayRx.type = false)
+        : (this.ebayRx.type = true);  
       for(let i=0;i<this.ebayRx.storeLocation.length;i++){
         this.ebayRx.storeLocation[i]=this.ebayRx.storeLocation[i].replace(/,/g, "");
       }
@@ -1484,6 +1601,11 @@ export default {
           this.addEbayXp.salesThreeDayFlag = 1;
         } else {
           this.addEbayXp.salesThreeDayFlag = 0;
+        }
+        if (this.addEbayXp.type) {
+          this.addEbayXp.type = 'manual';
+        } else {
+          this.addEbayXp.type = 'auto';
         }
         if (this.addEbayXp.popularStatus) {
         this.addEbayXp.popularStatus = 1;
@@ -1711,7 +1833,7 @@ export default {
   color: #f56c6c;
   border: rgba(245, 108, 108, 0.2) solid 1px;
   background: rgba(245, 108, 108, 0.1);
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;
@@ -1720,7 +1842,7 @@ export default {
 .clasGreen1 {
   color: #0e9a00;
   border-radius: 5px;
-  width: 65%;
+  width: 85%;
   margin: auto;
   line-height: 32px;
   display: block;

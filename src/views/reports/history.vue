@@ -11,7 +11,7 @@
           :inline="true"
           ref="condition"
           class="demo-form-inline"
-          label-width="6rem"
+          label-width="70px"
           v-show="show"
         >
           <el-form-item label="部门" class="input">
@@ -104,7 +104,7 @@
               v-model="time1"
               type="month"
               value-format="yyyy-MM"
-              style="width:10rem;"
+              style="width:110px;"
               placeholder="起始月"
               @change="settime"
             ></el-date-picker>
@@ -114,7 +114,7 @@
               v-model="time2"
               type="month"
               value-format="yyyy-MM"
-              style="width:10rem;"
+              style="width:110px;"
               placeholder="结束月"
               @change="gettime"
             ></el-date-picker>

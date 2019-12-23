@@ -25,7 +25,7 @@
           active-text-color="#ffd04b"
           router
         >
-          <el-menu-item index="/index" style="line-height:5rem;">
+          <el-menu-item index="/index" style="line-height:60px;">
             <font class="typeface" style="padding:0 12px 0 10px;"><i class="el-icon-menu ishowHome" style="color:#fff;margin-right:5px;margin-top:-3px;"></i>主页</font>
           </el-menu-item>
           <el-submenu
@@ -371,6 +371,8 @@ export default {
 }
 .menuCon .el-submenu__title {
   padding: 0 15px 0 12px;
+  line-height: 60px !important;
+  height: 60px !important;
 }
 @media screen and (max-width: 1452px) {
   .menuCon .el-submenu__title {
@@ -470,7 +472,7 @@ export default {
   .main {
     display: flex;
     position: absolute;
-    top: 5rem;
+    top: 60px;
     bottom: 0rem;
     overflow: hidden;
     aside {
@@ -545,12 +547,12 @@ export default {
   width: 100%;
   @media (min-width: 1152px) {
     .header {
-      height: 5rem;
-      line-height: 5rem;
+      height: 60px;
+      line-height: 60px;
       background-color: #3c8dbc;
       color: #fff;
       .el-col-3 {
-        height: 5rem;
+        height: 60px;
         .el-dropdown {
           line-height: 0rem;
         }
@@ -599,23 +601,23 @@ export default {
     .main {
       display: flex;
       position: absolute;
-      top: 5rem;
+      top: 60px;
       bottom: 0rem;
       overflow: hidden;
       aside {
-        flex: 0 0 18rem;
-        width: 18rem;
+        flex: 0 0 215px;
+        width: 215px;
         overflow-y: auto;
         overflow-x: hidden;
         .el-menu {
           height: 100%;
         }
         .el-menu-item {
-          min-width: 18rem;
+          min-width: 215px;
           padding-left: 4rem !important;
         }
         .data-scroll-width {
-          width: 18rem;
+          width: 215px;
         }
         .collapsed {
           .item {
@@ -639,7 +641,7 @@ export default {
         right: 0rem;
         top: 0rem;
         bottom: 0rem;
-        left: 18rem;
+        left: 215px;
         overflow: auto;
         padding: 0rem !important; //二次修改
         .grid-content .bg-purple-light {
@@ -672,7 +674,7 @@ export default {
 }
 .homeLogo {
   float: left;
-  width: 18rem;
+  width: 215px;
   height: 100%;
   border-right: #ccc solid 1px;
 }

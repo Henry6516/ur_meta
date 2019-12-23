@@ -8,7 +8,7 @@
         <el-form :model="condition"
                  :inline="true"
                  ref="condition"
-                 label-width="6.8rem"
+                 label-width="70px"
                  class="demo-form-inline"
                  v-show="show"
                  style="margin-bottom:10px;">

@@ -1767,3 +1767,20 @@ export function manualRecommend(param) {
   })
 }
 
+export function startRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/start-rule',
+    method: 'post',
+    data
+  })
+}
+
+export function stopRule(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/stop-rule',
+    method: 'post',
+    data
+  })
+}

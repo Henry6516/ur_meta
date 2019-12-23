@@ -274,32 +274,45 @@
               <p class="baspOne">推送规则</p>
             </el-col>
             <el-col :span="22" style="margin-top:1px;">
-              <el-col :span="24">
-                <el-checkbox v-model="addruleNew" @change="addruleNewOne">新品</el-checkbox>
+              <el-col :span="24">eBay</el-col>
+              <el-col
+                :span="24"
+                v-for="(item,index) in ebayData"
+                :key="index"
+                style="cursor:pointer"
+              >
+                <el-col :span="24" style="margin-top:15px;margin-left:10px;">
+                  <span @click="ebayT1(index)">
+                    <span class="oneClass" :class="item.flag?'ruleBac':''"></span>
+                    {{item.ruleType=='new'?'新品':'热销'}}
+                  </span>
+                </el-col>
+                <el-col
+                  :span="3"
+                  style="margin-top:15px;margin-left:20px;"
+                  v-for="(itemName,indexTwo) in item.ruleValue"
+                  :key="indexTwo"
+                >
+                  <span @click="ebayT2(index,indexTwo)">
+                    <span class="oneClass" :class="itemName.flag?'ruleBac':''"></span>
+                    {{itemName.ruleName}}
+                  </span>
+                </el-col>
               </el-col>
-              <el-col :span="24">
-                <el-checkbox-group v-model="ruleNameNew" @change="addruleNewGet">
-                  <el-checkbox
-                    style="margin-left:25px;"
-                    v-for="(item,index) in ruleNameXp"
-                    :key="index"
-                    :label="item.ruleName"
-                  >{{item.ruleName}}</el-checkbox>
-                </el-checkbox-group>
-              </el-col>
-              <el-col :span="24">
-                <el-checkbox v-model="addruleHot" @change="addruleHotOne">热销</el-checkbox>
-              </el-col>
-              <el-col :span="24">
-                <el-checkbox-group v-model="ruleNameHot" @change="addruleHotGet">
-                  <el-checkbox
-                    style="margin-left:25px;"
-                    v-for="(item,index) in ruleNameRx"
-                    :key="index"
-                    :label="item.ruleName"
-                  >{{item.ruleName}}</el-checkbox>
-                </el-checkbox-group>
-              </el-col>
+            </el-col>
+            <el-col :span="22" :offset="2">
+              <el-col :span="24" style="margin-top:15px;">Wish</el-col>
+            <el-col
+              :span="3"
+              style="margin-top:15px;margin-left:20px;cursor:pointer"
+              v-for="(itemWish,index) in wishData"
+              :key="index"
+            >
+            <span @click="wishT1(index)">
+              <span class="oneClass" :class="itemWish.flag?'ruleBac':''"></span>
+              {{itemWish.ruleName}}
+            </span>
+            </el-col>
             </el-col>
           </el-col>
         </el-col>
@@ -421,6 +434,9 @@ export default {
     },
     ebayT2(index,indexTwo){
       this.ebayData[index].ruleValue[indexTwo].flag = !this.ebayData[index].ruleValue[indexTwo].flag;
+      if(this.ebayData[index].ruleValue[indexTwo].flag==true){
+        this.ebayData[index].flag=true
+      }
     },
     addruleNewGet() {
       if (this.ruleNameNew.length <= 0) {
@@ -569,6 +585,7 @@ export default {
       this.addData.excludePyCate = [];
       this.ruleDeliveryLocation = [];
       this.category = [];
+      this.excludePyCate=[]
       this.addruleNameHot = [];
       this.addruleNameNew = [];
       this.ruleHot = false;
@@ -597,6 +614,8 @@ export default {
         this.dateruleDeliveryLocation = res.data.data.deliveryLocation;
         this.datecategory = res.data.data.category;
         this.dateExcludePyCate = res.data.data.excludePyCate;
+        this.wishData=res.data.data.detail.wish;
+        this.ebayData=res.data.data.detail.ebay;
         var detail = res.data.data.detail;
         this.ruleNameNew = [];
         this.ruleNameHot = [];
@@ -626,46 +645,33 @@ export default {
         this.data.category = this.datecategory;
         this.data.deliveryLocation = this.dateruleDeliveryLocation;
         this.data.excludePyCate = this.dateExcludePyCate;
-        if (this.addruleNew) {
-          var obj = {
-            ruleType: "new",
-            ruleValue: []
-          };
-          for (var i = 0; i < this.ruleNameNew.length; i++) {
-            for (var k = 0; k < this.ruleNameXp.length; k++) {
-              if (this.ruleNameNew[i] == this.ruleNameXp[k].ruleName) {
-                var str = {
-                  ruleName: this.ruleNameNew[i],
-                  ruleId: {
-                    oid: this.ruleNameXp[k]._id
-                  }
-                };
-                obj.ruleValue.push(str);
-              }
-            }
+        var wish=this.wishData
+        var ebay=this.ebayData
+        for (var i = 0; i < wish.length; i++) {
+          if (wish[i].flag == false) {
+            wish.splice(i, 1);
+            i--;
           }
-          this.data.detail.push(obj);
         }
-        if (this.addruleHot) {
-          var obj = {
-            ruleType: "hot",
-            ruleValue: []
-          };
-          for (var i = 0; i < this.ruleNameHot.length; i++) {
-            for (var k = 0; k < this.ruleNameRx.length; k++) {
-              if (this.ruleNameHot[i] == this.ruleNameRx[k].ruleName) {
-                var str = {
-                  ruleName: this.ruleNameHot[i],
-                  ruleId: {
-                    oid: this.ruleNameRx[k]._id
-                  }
-                };
-                obj.ruleValue.push(str);
+        for (var k = 0; k < ebay.length; k++) {
+          if (ebay[k].flag == false) {
+            ebay.splice(k, 1);
+            k--;
+          }else{
+            var dataTree = ebay[k].ruleValue;
+              for (var j = 0; j < dataTree.length; j++) {
+                if (dataTree[j].flag == false) {
+                  dataTree.splice(j, 1);
+                  j--;
+                }
               }
-            }
           }
-          this.data.detail.push(obj);
         }
+        var obj={
+          wish:wish,
+          ebay:ebay
+        }
+        this.data.detail=obj
         saveAllotRule(this.data).then(res => {
           if (res.data.data) {
             this.$message({
@@ -699,9 +705,31 @@ export default {
         this.addData.category = this.category;
         this.addData.deliveryLocation = this.ruleDeliveryLocation;
         this.addData.excludePyCate = this.excludePyCate;
+        var wish=this.wishData
+        var ebay=this.ebayData
+        for (var i = 0; i < wish.length; i++) {
+          if (wish[i].flag == false) {
+            wish.splice(i, 1);
+            i--;
+          }
+        }
+        for (var k = 0; k < ebay.length; k++) {
+          if (ebay[k].flag == false) {
+            ebay.splice(k, 1);
+            k--;
+          }else{
+            var dataTree = ebay[k].ruleValue;
+              for (var j = 0; j < dataTree.length; j++) {
+                if (dataTree[j].flag == false) {
+                  dataTree.splice(j, 1);
+                  j--;
+                }
+              }
+          }
+        }
         var obj={
-          wish:this.wishData,
-          ebay:this.ebayData
+          wish:wish,
+          ebay:ebay
         }
         this.addData.detail=obj
         saveAllotRule(this.addData).then(res => {

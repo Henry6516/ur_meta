@@ -11,7 +11,7 @@
           :model="condition"
           :inline="true"
           ref="condition"
-          label-width="10rem"
+          label-width="120px"
           class="demo-form-inline"
           v-show="show"
         >
@@ -136,7 +136,7 @@
                 :key="item.id"
                 :label="item.id"
                 :value="item.id"
-                style="width:8.55rem"
+                style="width:102px"
               >{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
@@ -157,7 +157,7 @@
               start-placeholder="开始日期"
               end-placeholder="结束日期"
               :picker-options="pickerOptions2"
-              style="width:18rem;"
+              style="width:218px;"
             ></el-date-picker>
           </el-form-item>
           <el-form-item style="margin-left:6rem">

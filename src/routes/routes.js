@@ -133,6 +133,8 @@ import ebayRule from '../views/analysis/ebayRule.vue'
 import distributionRule from '../views/analysis/distributionRule.vue'
 import reportFormPro from '../views/analysis/reportFormPro.vue'
 import repeatTesting from '../views/analysis/repeatTesting.vue'
+import recommendWish from '../views/analysis/recommendWish.vue'
+import recommendEbay from '../views/analysis/recommendEbay.vue'
 
 const routes = [
   {
@@ -343,7 +345,19 @@ const routes = [
       {
         path: '/v1/products-engine/recommend',
         component: proRecommend,
-        name: '商品推荐'
+        name: '商品推荐',
+        children: [
+          {
+            path: '/v1/products-engine/recommendWish',
+            component: recommendWish,
+            name: '每日推荐wish'
+          },
+          {
+            path: '/v1/products-engine/recommendEbay',
+            component: recommendEbay,
+            name: '每日推荐ebay'
+          }
+        ]
       },
       {
         path: '/v1/products-engine/watch',

@@ -8,7 +8,7 @@
                  :inline="true"
                  ref="condition"
                  class="demo-form-inline"
-                 label-width="10rem"
+                 label-width="120px"
                  v-show="show">
           <el-form-item label="部门"
                         class="input">
@@ -127,7 +127,7 @@
                         :key="item.id"
                         :label="item.id"
                         :value="item.id"
-                        style="width:8.55rem">{{item.type}}</el-radio>
+                        style="width:102px">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="显示方式"
@@ -140,7 +140,7 @@
                         :key="item.id"
                         :label="item.id"
                         :value="item.id"
-                        style="width:8.55rem;">{{item.type}}</el-radio>
+                        style="width:102px;">{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="日期"
@@ -157,7 +157,7 @@
                             start-placeholder="开始日期"
                             end-placeholder="结束日期"
                             :picker-options="pickerOptions2"
-                            style="width:18rem;">
+                            style="width:218px;">
             </el-date-picker>
           </el-form-item>
           <el-form-item style="margin-left:6rem">

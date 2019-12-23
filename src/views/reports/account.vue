@@ -11,7 +11,7 @@
           :model="condition"
           :inline="true"
           ref="condition"
-          label-width="8rem"
+          label-width="100px"
           class="demo-form-inline"
           v-show="show"
         >
@@ -102,11 +102,11 @@
             </el-select>
           </el-form-item>
           <el-form-item label="商品名称">
-            <el-input size="small" v-model="condition.goodsName" style="width:18rem;"></el-input>
+            <el-input size="small" v-model="condition.goodsName" style="width:215px;"></el-input>
           </el-form-item>
 
           <el-form-item label="商品编码">
-            <el-input size="small" v-model="condition.sku" style="width:18rem;"></el-input>
+            <el-input size="small" v-model="condition.sku" style="width:215px;"></el-input>
           </el-form-item>
           <el-form-item label="时间类型" class="input" prop="dateType">
             <el-radio-group v-model="condition.dateType">
@@ -117,7 +117,7 @@
                 :key="item.id"
                 :label="item.id"
                 :value="item.id"
-                style="width:8.5rem"
+                style="width:102px"
               >{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
@@ -138,7 +138,7 @@
               start-placeholder="开始日期"
               end-placeholder="结束日期"
               :picker-options="pickerOptions2"
-              style="width:18rem;"
+              style="width:218px;"
             ></el-date-picker>
           </el-form-item>
           <el-form-item>

@@ -42,6 +42,12 @@ export function getDeveloper() {
     method: 'get'
   })
 }
+export function getRuleDeveloper() {
+  return request({
+    url: '/products-engine/recommend-developer',
+    method: 'get'
+  })
+}
 // 没有权限的人员
 export function getUsers() {
   return request({
@@ -908,6 +914,19 @@ export function getEbayXp(param) {
 export function getEbayRx(param) {
   return request({
     url: '/products-engine/recommend?plat=ebay&type=hot&marketplace=' + param.marketplace + '&page=' + param.page + '&recommendStatus=' + param.recommendStatus + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
+    method: 'get'
+  })
+}
+export function getWishXp(param) {
+  return request({
+    url: '/products-engine/recommend?plat=wish&type=new&marketplace=' + param.marketplace + '&page=' + param.page + '&recommendStatus=' + param.recommendStatus + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
+    method: 'get'
+  })
+}
+
+export function getWishRx(param) {
+  return request({
+    url: '/products-engine/recommend?plat=wish&type=hot&marketplace=' + param.marketplace + '&page=' + param.page + '&recommendStatus=' + param.recommendStatus + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
     method: 'get'
   })
 }

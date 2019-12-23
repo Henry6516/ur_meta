@@ -364,14 +364,19 @@
                 <p class="basp">商品pb</p>
               </el-col>
               <el-col :span="15">
-                <el-select v-model="ebayXp.pb" placeholder="请选择" style="width:100%;" clearable>
+                <el-radio-group v-model="ebayXp.pb" size="medium">
+                  <el-radio-button label="">不限</el-radio-button>
+                  <el-radio-button label="0">无</el-radio-button>
+                  <el-radio-button label="1">有</el-radio-button>
+                </el-radio-group>
+                <!-- <el-select v-model="ebayXp.pb" placeholder="请选择" style="width:100%;" clearable>
                   <el-option
                     v-for="item in optionsPb"
                     :key="item.value"
                     :label="item"
                     :value="item">
                   </el-option>
-                </el-select>
+                </el-select> -->
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -379,14 +384,19 @@
                 <p class="basp">海外仓</p>
               </el-col>
               <el-col :span="15">
-                <el-select v-model="ebayXp.hwc" placeholder="请选择" style="width:100%;" clearable>
+                <el-radio-group v-model="ebayXp.hwc" size="medium">
+                  <el-radio-button label="">不限</el-radio-button>
+                  <el-radio-button label="0">非海外仓</el-radio-button>
+                  <el-radio-button label="1">海外仓</el-radio-button>
+                </el-radio-group>
+                <!-- <el-select v-model="ebayXp.hwc" placeholder="请选择" style="width:100%;" clearable>
                   <el-option
                     v-for="item in optionsHwc"
                     :key="item.value"
                     :label="item"
                     :value="item">
                   </el-option>
-                </el-select>
+                </el-select> -->
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -394,14 +404,19 @@
                 <p class="basp">Wish认证</p>
               </el-col>
               <el-col :span="15">
-                <el-select v-model="ebayXp.verified" placeholder="请选择" style="width:100%;" clearable>
+                <el-radio-group v-model="ebayXp.verified" size="medium">
+                  <el-radio-button label="">不限</el-radio-button>
+                  <el-radio-button label="0">非认证</el-radio-button>
+                  <el-radio-button label="1">认证</el-radio-button>
+                </el-radio-group>
+                <!-- <el-select v-model="ebayXp.verified" placeholder="请选择" style="width:100%;" clearable>
                   <el-option
                     v-for="item in optionsWish"
                     :key="item.value"
                     :label="item"
                     :value="item">
                   </el-option>
-                </el-select>
+                </el-select> -->
               </el-col>
             </el-col>
           </el-col>
@@ -545,14 +560,19 @@
                 <p class="basp">商品pb</p>
               </el-col>
               <el-col :span="15">
-                <el-select v-model="addEbayXp.pb" placeholder="请选择" style="width:100%;" clearable>
+                <el-radio-group v-model="addEbayXp.pb" size="medium">
+                  <el-radio-button label="">不限</el-radio-button>
+                  <el-radio-button label="0">无</el-radio-button>
+                  <el-radio-button label="1">有</el-radio-button>
+                </el-radio-group>
+                <!-- <el-select v-model="addEbayXp.pb" placeholder="请选择" style="width:100%;" clearable>
                   <el-option
                     v-for="item in optionsPb"
                     :key="item.value"
                     :label="item"
                     :value="item">
                   </el-option>
-                </el-select>
+                </el-select> -->
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -560,14 +580,19 @@
                 <p class="basp">海外仓</p>
               </el-col>
               <el-col :span="15">
-                <el-select v-model="addEbayXp.hwc" placeholder="请选择" style="width:100%;" clearable>
+                <el-radio-group v-model="addEbayXp.hwc" size="medium">
+                  <el-radio-button label="">不限</el-radio-button>
+                  <el-radio-button label="0">非海外仓</el-radio-button>
+                  <el-radio-button label="1">海外仓</el-radio-button>
+                </el-radio-group>
+                <!-- <el-select v-model="addEbayXp.hwc" placeholder="请选择" style="width:100%;" clearable>
                   <el-option
                     v-for="item in optionsHwc"
                     :key="item.value"
                     :label="item"
                     :value="item">
                   </el-option>
-                </el-select>
+                </el-select> -->
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -575,14 +600,19 @@
                 <p class="basp">Wish认证</p>
               </el-col>
               <el-col :span="15">
-                <el-select v-model="addEbayXp.verified" placeholder="请选择" style="width:100%;" clearable>
+                <el-radio-group v-model="addEbayXp.verified" size="medium">
+                  <el-radio-button label="">不限</el-radio-button>
+                  <el-radio-button label="0">非认证</el-radio-button>
+                  <el-radio-button label="1">认证</el-radio-button>
+                </el-radio-group>
+                <!-- <el-select v-model="addEbayXp.verified" placeholder="请选择" style="width:100%;" clearable>
                   <el-option
                     v-for="item in optionsWish"
                     :key="item.value"
                     :label="item"
                     :value="item">
                   </el-option>
-                </el-select>
+                </el-select> -->
               </el-col>
             </el-col>
           </el-col>
@@ -934,22 +964,22 @@ export default {
     },
     forbidSale1(e) {},
     addEbayxpLogin() {
-      this.addEbayXpruleType= "";
-      this.addEbayXpruleTypegenTimeStart='';
-      this.addEbayXpruleTypegenTimeEnd='';
-      this.addEbayXpruleTypetotalpriceStart='';
-      this.addEbayXpruleTypetotalpriceEnd='';
-      this.addEbayXpruleTypeviewRate1Start='';
-      this.addEbayXpruleTypeviewRate1End='';
-      this.addEbayXpruleTypeintervalRatingStart='';
-      this.addEbayXpruleTypeintervalRatingEnd='';
-      this.addEbayXpruleTypemaxNumBoughtStart='';
-      this.addEbayXpruleTypemaxNumBoughtEnd='';
-      this.addEbayXpruleTyperatingStart='';
-      this.addEbayXpruleTyperatingEnd='';
-      this.addEbayXpruleTypepb='';
-      this.addEbayXpruleTypehwc='';
-      this.addEbayXpruleTypeverified='';
+      this.addEbayXp.ruleType= "";
+      this.addEbayXp.genTimeStart='';
+      this.addEbayXp.genTimeEnd='';
+      this.addEbayXp.totalpriceStart='';
+      this.addEbayXp.totalpriceEnd='';
+      this.addEbayXp.viewRate1Start='';
+      this.addEbayXp.viewRate1End='';
+      this.addEbayXp.intervalRatingStart='';
+      this.addEbayXp.intervalRatingEnd='';
+      this.addEbayXp.maxNumBoughtStart='';
+      this.addEbayXp.maxNumBoughtEnd='';
+      this.addEbayXp.ratingStart='';
+      this.addEbayXp.ratingEnd='';
+      this.addEbayXp.pb='';
+      this.addEbayXp.hwc='';
+      this.addEbayXp.verified='';
       this.addEbayXp.ruleMark = "";
       this.addEbayXp.listedTime = [];
       this.addEbayXp.ruleName = "";
@@ -1013,9 +1043,9 @@ export default {
       this.ebayXp.ruleMark = row.ruleMark;
       this.ebayXp.ruleType = row.ruleType;
       this.ebayXp.listedTime = row.listedTime;
-      this.ebayXp.pb == 0 ? this.ebayXp.pb = '无': this.ebayXp.pb == 1?this.ebayXp.pb = '有':this.ebayXp.pb='';
-      this.ebayXp.hwc == 0? this.ebayXp.hwc = '非海外仓': this.ebayXp.hwc == 1?this.ebayXp.hwc = '海外仓':this.ebayXp.hwc='';
-      this.ebayXp.verified == 0? this.ebayXp.verified = '非认证': this.ebayXp.verified == 1?this.ebayXp.verified = '认证':this.ebayXp.verified='';  
+      // this.ebayXp.pb == 0 ? this.ebayXp.pb = '无': this.ebayXp.pb == 1?this.ebayXp.pb = '有':this.ebayXp.pb='';
+      // this.ebayXp.hwc == 0? this.ebayXp.hwc = '非海外仓': this.ebayXp.hwc == 1?this.ebayXp.hwc = '海外仓':this.ebayXp.hwc='';
+      // this.ebayXp.verified == 0? this.ebayXp.verified = '非认证': this.ebayXp.verified == 1?this.ebayXp.verified = '认证':this.ebayXp.verified='';  
       for(let i=0;i<this.ebayXp.listedTime.length;i++){
         this.ebayXp.listedTime[i]=this.ebayXp.listedTime[i].replace(/,/g, "");
       }
@@ -1033,9 +1063,9 @@ export default {
             this.ebayXp.listedTime[i] = 2;
           }
       }
-      this.ebayXp.pb == '无' ? this.ebayXp.pb = '0': this.ebayXp.pb == '有'?this.ebayXp.pb = '1':this.ebayXp.pb='';
-      this.ebayXp.hwc == '非海外仓'? this.ebayXp.hwc = '0': this.ebayXp.hwc == '海外仓'?this.ebayXp.hwc = '1':this.ebayXp.hwc='';
-      this.ebayXp.verified == '非认证'? this.ebayXp.verified = '0': this.ebayXp.verified == '认证'?this.ebayXp.verified = '1':this.ebayXp.verified='';  
+      // this.ebayXp.pb == '无' ? this.ebayXp.pb = '0': this.ebayXp.pb == '有'?this.ebayXp.pb = '1':this.ebayXp.pb='';
+      // this.ebayXp.hwc == '非海外仓'? this.ebayXp.hwc = '0': this.ebayXp.hwc == '海外仓'?this.ebayXp.hwc = '1':this.ebayXp.hwc='';
+      // this.ebayXp.verified == '非认证'? this.ebayXp.verified = '0': this.ebayXp.verified == '认证'?this.ebayXp.verified = '1':this.ebayXp.verified='';  
       this.ebaydisLoginxp = true;
       wishProductsSaveRule(this.ebayXp).then(res => {
         if (res.data.data) {
@@ -1064,9 +1094,9 @@ export default {
               this.addEbayXp.listedTime[i] = 2;
             }
         }
-        this.addEbayXp.pb == '无' ? this.addEbayXp.pb = '0': this.addEbayXp.pb == '有'?this.addEbayXp.pb = '1':this.addEbayXp.pb='';
-        this.addEbayXp.hwc == '非海外仓'? this.addEbayXp.hwc = '0': this.addEbayXp.hwc == '海外仓'?this.addEbayXp.hwc = '1':this.addEbayXp.hwc='';
-        this.addEbayXp.verified == '非认证'? this.addEbayXp.verified = '0': this.addEbayXp.verified == '认证'?this.addEbayXp.verified = '1':this.addEbayXp.verified=''; 
+        // this.addEbayXp.pb == '无' ? this.addEbayXp.pb = '0': this.addEbayXp.pb == '有'?this.addEbayXp.pb = '1':this.addEbayXp.pb='';
+        // this.addEbayXp.hwc == '非海外仓'? this.addEbayXp.hwc = '0': this.addEbayXp.hwc == '海外仓'?this.addEbayXp.hwc = '1':this.addEbayXp.hwc='';
+        // this.addEbayXp.verified == '非认证'? this.addEbayXp.verified = '0': this.addEbayXp.verified == '认证'?this.addEbayXp.verified = '1':this.addEbayXp.verified=''; 
         wishProductsSaveRule(this.addEbayXp).then(res => {
           if (res.data.data) {
             this.$message({

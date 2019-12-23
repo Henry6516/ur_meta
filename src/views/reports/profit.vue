@@ -11,7 +11,7 @@
           :model="condition"
           :inline="true"
           ref="condition"
-          label-width="5.8rem"
+          label-width="70px"
           class="demo-form-inline"
           v-show="show"
         >
