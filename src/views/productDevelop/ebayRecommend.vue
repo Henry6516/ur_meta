@@ -1,71 +1,17 @@
 <template>
   <section>
     <div>
-      <!-- <el-tabs
-        v-model="activeName"
-        type="card"
-        style="background-color:#fff"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane v-for="(item, index) in this.allMenu" :label="item" :name="item" :key="index"></el-tab-pane>
-      </el-tabs>-->
-      <div v-show="show.wish">
-        <div class="proBox">
-          <div class="proCase01" v-for="(item,index) in nostockdata" :key="index">
-            <div class="priImg">
-              <img
-                :src="'https://contestimg.wish.com/api/webimage/'+item.pid+'-medium.jpg'"
-                @click="goLinkUrl(item.pid)"
-              />
-            </div>
-            <span class="corner">{{corner}}</span>
-            <a class="justa">{{item.pname}}</a>
-            <div class="proText">
-              <div class="pro01">
-                <p>
-                  评论数
-                  <span class="pred">{{item.num_rating}}</span>
-                </p>
-                <p>
-                  评分
-                  <span class="pred">{{item.rating}}</span>
-                </p>
-              </div>
-              <div class="pro01">
-                <p>
-                  USD
-                  <span class="pblue">{{item.price}}</span>
-                </p>
-                <p>
-                  销售量
-                  <span class="pblue">{{item.max_num_bought}}</span>
-                </p>
-              </div>
-              <p style="text-align:left;margin-left:8px;margin-top:5px;">
-                上架时间
-                <span class="pblue">{{item.gen_time | cutOutMonye}}</span>
-              </p>
-              <div class="pbottom">
-                <a
-                  class="goDev"
-                  @click="submission('https://contestimg.wish.com/api/webimage/'+item.pid+'-medium.jpg','https://www.wish.com/product/'+item.pid,item.price)"
-                >立即开发</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div v-show="show.ebay" style="background:#fff;padding-top:10px;">
         <div class="ebayCase">
-          <span class="ebayText" @click="tabEbayXp" style="margin-left:12px;">
-            <span class="ebayactive" :class="ebayStlye==0?'ebayActive':''"></span>新品商品
-          </span>
-          <span class="ebayText" @click="tabEbayRx">
+          <span class="ebayText" @click="tabEbayRx" v-show="!ebay.wish">
             <span class="ebayactive" :class="ebayStlye==1?'ebayActive':''"></span>热销商品
           </span>
-          <span class="pospan">{{proTotalXp}}</span>
-          <span class="pospan1">{{proTotalRx}}</span>
-          <el-select v-model="platValue" placeholder="请选择" size="small" style="float:right;margin-right:15px;width:150px;">
+          <span class="ebayText" @click="tabEbayXp" style="margin-left:12px;" v-show="!ebay.wish">
+            <span class="ebayactive" :class="ebayStlye==0?'ebayActive':''"></span>新品商品
+          </span>
+          <span class="pospan" v-show="!ebay.wish">{{proTotalXp}}</span>
+          <span class="pospan1" v-show="!ebay.wish">{{proTotalRx}}</span>
+          <el-select v-model="platValue" placeholder="请选择" size="small" style="float:left;margin-left:15px;width:150px;margin-top:3px;" @change="getPlat($event)">
             <el-option
               v-for="item in platArr"
               :key="item"
@@ -220,7 +166,7 @@
               @size-change="handleSizeChangeEbayXp"
               @current-change="handleCurrentChangeEbayXp"
               :current-page="this.condition.page"
-              :page-sizes="[20, 30, 40, 50]"
+              :page-sizes="[5,20, 30, 40, 50]"
               :page-size="this.condition.pageSize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="this.totalEbayXp"
@@ -418,54 +364,144 @@
               @size-change="handleSizeChangeEbayRx"
               @current-change="handleCurrentChangeEbayRx"
               :current-page="this.condition1.page"
-              :page-sizes="[20, 30, 40, 50]"
+              :page-sizes="[5,20, 30, 40, 50]"
               :page-size="this.condition1.pageSize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="this.totalEbayRx"
             ></el-pagination>
           </div>
         </div>
-      </div>
-      <div v-show="show.joom">
-        <div class="proBox">
-          <div class="proCase01" v-for="(item,index) in dataJoom" :key="index">
-            <div class="priImg">
-              <img :src="item.mainImage" @click="goLinkUrlJoom(item.productId)" />
-            </div>
-            <span class="corner">{{corner}}</span>
-            <a class="justa">{{item.productName}}</a>
-            <div class="proText">
-              <div class="pro01">
-                <p>
-                  评论数
-                  <span class="pred">{{item.reviewsCount}}</span>
-                </p>
-                <p>
-                  评分
-                  <span class="pred">{{item.rating}}</span>
-                </p>
-              </div>
-              <div class="pro01">
-                <p>
-                  USD
-                  <span class="pblue">{{item.price}}</span>
-                </p>
-                <p>
-                  推荐指数
-                  <span class="pblue">{{item.hot_index}}</span>
-                </p>
-              </div>
-              <p style="text-align:left;margin-left:8px;margin-top:5px;">
-                上架时间
-                <span class="pblue">{{item.publishedDate | cutOutMonye}}</span>
-              </p>
-              <div class="pbottom">
-                <a
-                  class="goDev"
-                  @click="submission(item.mainImage,'https://www.joom.com/en/products/'+item.productId,item.price)"
-                >立即开发</a>
-              </div>
-            </div>
+        <div v-show="ebay.wish">
+          <el-table
+            :data="ebayDataWish"
+            border
+            :height="tableHeightstock"
+            @sort-change="sortNumberWish"
+            :header-cell-style="getRowClass"
+            v-loading="lodingEbayWish"
+            style="width:98%;margin-left:0.7%;margin-top:10px;"
+          >
+            <el-table-column type="index" fixed align="center" width="40" header-align="center"></el-table-column>
+            <el-table-column prop="pid" fixed label="主图" header-align="center" width="80">
+              <template slot-scope="scope">
+                <el-tooltip
+                  placement="right"
+                  :open-delay="10"
+                  class="exxHover"
+                  popper-class="page-login-toolTipClass"
+                >
+                  <div slot="content">
+                    <img :src="'https://contestimg.wish.com/api/webimage/'+scope.row.pid+'-small.jpg'" style="width: 300px;height: 300px;" />
+                  </div>
+                  <img :src="'https://contestimg.wish.com/api/webimage/'+scope.row.pid+'-small.jpg'" style="width: 60px;height: 60px" />
+                </el-tooltip>
+                <a class="ebayBlocka ebayBlocka1" @click="submissionWish(scope.row._id.oid)" v-show="scope.row.flag">
+                  <i class="el-icon-star-off" style="margin-right:3px;"></i>认领
+                </a>
+                <a class="ebayBlocka ebayBlocka2" @click="refuseWish(scope.row._id.oid)" v-show="scope.row.flag">
+                  <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
+                </a>
+                <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
+              </template>
+            </el-table-column>
+            <el-table-column
+              property="title"
+              label="商品标题"
+              header-align="center"
+              fixed
+              width="300"
+            >
+              <template slot-scope="scope">
+                <p style="margin:0">{{scope.row.title}}</p>
+                <p
+                  style="margin:0;margin-top:8px;color:#e6a23c;font-size:13px;"
+                >{{scope.row.pname}}</p>
+                <div style="margin-top:8px;">
+                  <span
+                    style="margin:0;margin-top:8px;color:#3c8dbc;font-size:13px;"
+                  >商品ID:{{scope.row.pid}}</span>
+                </div>
+                <div style="margin-top:8px;" class="ebayGoa">
+                  <span
+                    style="margin-top:5px;font-size:13px;"
+                    @click="goLinkUrlEbay(scope.row.pid)"
+                  >Wish链接</span>
+                  <span
+                    style="margin:0;margin-top:5px;margin-left:5%;font-size:13px;"
+                  >货源链接</span>
+                  <span
+                    style="margin:0;margin-top:5px;font-size:13px;"
+                    @click="goLinkPhoto(scope.row.similarImages,scope.row.mainImage)"
+                  >相似产品</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column property="receiver" label="推荐人列表" align="center" width="100">
+              <template slot-scope="scope">
+                <div v-for="(itemm, index) in scope.row.receiver" :key="index">{{itemm}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              property="rating"
+              label="评分"
+              align="center"
+              width="95"
+              sortable="custom"
+            ></el-table-column>
+            <el-table-column
+              property="totalprice"
+              label="商品总价"
+              align="center"
+              width="95"
+              sortable="custom"
+            ></el-table-column>
+            <el-table-column property="price" label="售价" align="center" width="95" sortable="custom"></el-table-column>
+            <el-table-column property="soldChart" label="销量走势图" align="center" width="258">
+              <template slot-scope="scope">
+                <div class="eDiv1" :id="'echartsWish'+scope.$index"></div>
+              </template>
+            </el-table-column>
+            <el-table-column label="前7天Viewing Now" align="center">
+              <el-table-column
+                property="viewRate1"
+                label="均值"
+                align="center"
+                width="85"
+                sortable="custom"
+              ></el-table-column>
+              <el-table-column
+                property="viewRateGrowth"
+                label="增幅"
+                align="center"
+                width="85"
+                sortable="custom"
+              ></el-table-column>
+            </el-table-column>
+            <el-table-column
+              property="listedTime"
+              label="上架时间"
+              align="center"
+              width="110"
+              sortable="custom"
+            >
+              <template slot-scope="scope">{{scope.row.genTime | cutOutMonye}}</template>
+            </el-table-column>
+            <el-table-column property="shipping" label="运费" align="center" width="95" sortable="custom"></el-table-column>
+            <el-table-column property="numEntered" label="总收藏数" align="center" width="95" sortable="custom"></el-table-column>
+            <el-table-column property="maxNumBought" label="销量总数" align="center" width="95" sortable="custom"></el-table-column>
+            <el-table-column property="merchant" label="店铺名称" align="center" width="120"></el-table-column>
+          </el-table>
+          <div class="block toolbar">
+            <el-pagination
+              background
+              @size-change="handleSizeChangeWish"
+              @current-change="handleCurrentChangeWish"
+              :current-page="this.condition2.page"
+              :page-sizes="[5,20, 30, 40, 50]"
+              :page-size="this.condition2.pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="this.totalWish"
+            ></el-pagination>
           </div>
         </div>
       </div>
@@ -531,6 +567,37 @@
           <el-button type="primary" @click="addEbayRxRefuse">确 定</el-button>
         </div>
       </el-dialog>
+      <el-dialog title :visible.sync="dialogWishRefuse">
+        <el-row>
+          <el-col :span="24">
+            <el-col :span="4" class="basp">
+              <span style="color:red">*</span>过滤原因
+            </el-col>
+            <el-col :span="18">
+              <el-select
+                v-model="wishText"
+                placeholder="请选择"
+                style="width:100%"
+                @change="selectWish($event)"
+              >
+                <el-option v-for="item in reason" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+              <el-input
+                type="textarea"
+                v-show="wishProRefuse"
+                :rows="4"
+                placeholder="其他"
+                style="margin-top:10px;"
+                v-model="wishText1"
+              ></el-input>
+            </el-col>
+          </el-col>
+        </el-row>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogWishRefuse = false">取 消</el-button>
+          <el-button type="primary" @click="wishRefuse">确 定</el-button>
+        </div>
+      </el-dialog>      
       <el-dialog title :visible.sync="dialogPhoto" width="85%" @close='closeDlg'>
         <div class="ccdiv" v-show="!arrtable">
           <div class="xxb" ref="xxb">
@@ -595,21 +662,28 @@ import {
   ebayRxAccept,
   ebayXpRefuse,
   ebayRxRefuse,
-  formSkuInfo
+  formSkuInfo,
+  wishRefuse,
+  wishAccept
 } from "../../api/product";
-import { getEbayXpMind, getEbayRxMind } from "../../api/profit";
+import { getEbayXpMind, getEbayRxMind,getWishRxMind } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
+      ebayDataWish:[],
+      ebayDataWish1:[],
       tableHeightstock: window.innerHeight - 209,
       totalEbayXp: null,
       totalEbayRx: null,
       ebayXpRefuse: false,
       ebayRxRefuse: false,
+      wishProRefuse:false,
       lodingEbayRx: false,
       lodingEbayXp: false,
+      lodingEbayWish:false,
       dialogPhoto: false,
+      dialogWishRefuse:false,
       photoImg: [],
       imgUrl:null,
       platValue:'eBay',
@@ -638,6 +712,30 @@ export default {
         ]
       },
       options1: {
+        grid: {
+          left: "17%"
+        },
+        xAxis: {
+          type: "category",
+          show: false,
+          boundaryGap: false,
+          data: []
+        },
+        tooltip: {
+          trigger: "axis"
+        },
+        yAxis: {
+          type: "value",
+          minInterval: 100
+        },
+        series: [
+          {
+            data: [],
+            type: "line"
+          }
+        ]
+      },
+      options2: {
         grid: {
           left: "17%"
         },
@@ -692,18 +790,25 @@ export default {
       },
       ebay: {
         xp: true,
-        rx: false
+        rx: false,
+        wish:false
       },
       condition: {
         marketplace: "",
         page: 1,
-        pageSize: 20,
+        pageSize: 5,
         sort: ""
       },
       condition1: {
         marketplace: "",
         page: 1,
-        pageSize: 20,
+        pageSize: 5,
+        sort: ""
+      },
+      condition2: {
+        marketplace: "",
+        page: 1,
+        pageSize: 5,
         sort: ""
       },
       ebayStlye: 0,
@@ -727,9 +832,13 @@ export default {
       ebayRxId: null,
       ebayRxText: null,
       ebayRxText1: null,
+      wishText:null,
+      wishText1:null,
       sysUserName: null,
       arrData:[],
       arrtable:false,
+      wishId:null,
+      totalWish:null
     };
   },
   filters: {
@@ -745,6 +854,61 @@ export default {
     },
   },
   methods: {
+    refuseWish(id){
+      this.wishId = id;
+      this.wishText = null;
+      this.wishText1 = null;
+      this.wishProRefuse = false;
+      this.dialogWishRefuse = true;
+    },
+    selectWish(e){
+      if (e == "8: 其他") {
+        this.wishProRefuse = true;
+      } else {
+        this.wishProRefuse = false;
+      }
+    },
+    wishRefuse(){
+      if (this.wishText || this.wishText1) {
+        if (this.wishText && this.wishText1) {
+          var condition = {
+            id: this.wishId,
+            reason: "8: 其他:" + this.wishText1
+          };
+        } else {
+          var condition = {
+            id: this.wishId,
+            reason: this.wishText
+          };
+        }
+        wishRefuse(condition).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "过滤成功",
+              type: "success"
+            });
+            this.ebayWish();
+          } else {
+            this.$message.error(res.data.message);
+          }
+          this.dialogWishRefuse = false;
+        });
+      } else {
+        this.$message.error("请选择过滤理由");
+      }
+    },
+    getPlat(e){
+      if(e=='Wish'){
+        this.ebay.wish=true
+        this.ebay.xp=false
+        this.ebay.rx=false
+      }else{
+        this.ebay.wish=false
+        this.ebay.xp=true
+        this.ebayStlye=0
+        this.ebay.rx=false
+      }
+    },
     closeDlg(){
       if(this.arrtable){
         this.dialogPhoto=true
@@ -1056,6 +1220,20 @@ export default {
         this.ebayRx(this.condition1);
       }
     },
+    sortNumberWish(column, prop, order) {
+      if (column.order == null) {
+        this.condition2.sort = null;
+        this.ebayWish(this.condition2);
+      }
+      if (column.order == "ascending") {
+        this.condition2.sort = "-" + column.prop;
+        this.ebayWish(this.condition2);
+      }
+      if (column.order == "descending") {
+        this.condition2.sort = column.prop;
+        this.ebayWish(this.condition2);
+      }
+    },    
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex <= 1) {
         return "color:#337ab7;background:#f5f7fa";
@@ -1108,6 +1286,14 @@ export default {
     handleSizeChangeEbayRx(val) {
       this.condition1.pageSize = val;
       this.ebayRx(this.condition);
+    },
+    handleCurrentChangeWish(val) {
+      this.condition2.page = val;
+      this.ebayWish();
+    },
+    handleSizeChangeWish(val) {
+      this.condition2.pageSize = val;
+      this.ebayWish();
     },
     ebayXp() {
       this.lodingEbayXp = true;
@@ -1181,6 +1367,39 @@ export default {
           }, 20);
         }
         this.lodingEbayRx = false;
+      });
+    },
+    ebayWish() {
+      this.lodingEbayWish = true;
+      getWishRxMind(this.condition2).then(res => {
+        this.ebayDataWish = this.ebayDataWish1 = res.data.data.items;
+        this.totalWish = res.data.data._meta.totalCount;
+        this.condition2.page = res.data.data._meta.currentPage;
+        this.condition2.pageSize = res.data.data._meta.perPage;
+        for (let i = 0; i < this.ebayDataWish.length; i++) {
+          this.$set(this.ebayDataWish[i], "flag", false);
+          setTimeout(() => {
+            var obj = this.ebayDataWish[i].soldChart.viewData;
+            for (var k = 0; k < obj.length; k++) {
+              if (obj[k] == null) {
+                obj[k] = 0;
+              }
+            }
+            this.options2.xAxis.data = this.ebayDataWish[i].soldChart.viewTime;
+            this.options2.series[0].data = this.ebayDataWish[i].soldChart.viewData;
+            let or2 = this.$echarts.init(
+              document.getElementById("echartsWish" + i)
+            );
+            or2.setOption(this.options2);
+            var str = this.ebayDataWish[i].receiver;
+            for (var k = 0; k < str.length; k++) {
+              if (this.sysUserName == str[k]) {
+                this.ebayDataWish[i].flag = true;
+              }
+            }
+          }, 20);
+        }
+        this.lodingEbayWish = false;
       });
     },
     handleClick(tab, event) {
@@ -1277,6 +1496,32 @@ export default {
         }
       );
     },
+    submissionWish(id) {
+      this.$confirm("确定认领改产品？", "提示", { type: "success" }).then(
+        () => {
+          let condition = {
+            id: id
+          };
+          wishAccept(condition).then(res => {
+            if (res.data.code == 200) {
+              sessionStorage.setItem("ebayEdit", res.data.data.data.devNum);
+              this.$confirm("认领成功,前去开发", "提示", {
+                type: "success"
+              }).then(() => {
+                let Logistics = this.$router.resolve({
+                  path: `/v1/oa-goodsinfo/ebayEdit`
+                });
+                window.open(Logistics.href);
+              });
+              this.ebayWish();
+            } else {
+              this.$message.error(res.data.message);
+              this.ebayWish();
+            }
+          });
+        }
+      );
+    },
     getDataEbay() {
       this.listLoading = true;
       APRecommendEbay().then(res => {
@@ -1302,6 +1547,7 @@ export default {
   mounted() {
     this.ebayXp();
     this.ebayRx();
+    this.ebayWish();
     this.sysUserName = sessionStorage.getItem("user");
   }
 };
@@ -1495,12 +1741,12 @@ export default {
   font-size: 14px;
   padding: 0 18px;
   display: block;
-  float: left;
+  float: right;
   cursor: pointer;
   border: #eee solid 1px;
   background: #fff;
   line-height: 35px;
-  margin-left: 20px;
+  margin-right: 20px;
   border-radius: 5px;
 }
 .ebayactive {
@@ -1586,7 +1832,7 @@ export default {
   padding: 1px 5px;
   border-radius: 20px;
   font-size: 10px;
-  left: 108px;
+  right: 150px;
   top: 3px;
 }
 .pospan1 {
@@ -1597,7 +1843,7 @@ export default {
   padding: 1px 5px;
   border-radius: 20px;
   font-size: 10px;
-  left: 247px;
+  right: 10px;
   top: 3px;
 }
 .imgPhto {

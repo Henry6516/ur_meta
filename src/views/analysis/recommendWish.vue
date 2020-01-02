@@ -637,7 +637,6 @@ export default {
               type: "success"
             });
             this.ebayXp();
-            this.ebayRx();
           } else {
             this.$message.error(res.data.message);
           }

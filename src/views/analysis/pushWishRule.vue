@@ -310,7 +310,16 @@
               <el-col :span="9">
                 <p class="basp">上架时间</p>
               </el-col>
-              <el-col :span="15">
+              <el-col :span="7">
+                <el-input v-model="listedTime1" placeholder="大于"></el-input>
+              </el-col>
+              <el-col :span="1">
+                <span class="colspan">-</span>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="listedTime2" placeholder="小于"></el-input>
+              </el-col>
+              <!-- <el-col :span="15">
                <el-select
                   style="width:100%"
                   multiple
@@ -329,7 +338,7 @@
                     :value="item"
                   ></el-option>
                 </el-select>
-              </el-col>
+              </el-col> -->
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
@@ -506,7 +515,16 @@
               <el-col :span="9">
                 <p class="basp">上架时间</p>
               </el-col>
-              <el-col :span="15">
+              <el-col :span="7">
+                <el-input v-model="listedTime1" placeholder="大于"></el-input>
+              </el-col>
+              <el-col :span="1">
+                <span class="colspan">-</span>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="listedTime2" placeholder="小于"></el-input>
+              </el-col>
+              <!-- <el-col :span="15">
                <el-select
                   style="width:100%"
                   multiple
@@ -525,7 +543,7 @@
                     :value="item"
                   ></el-option>
                 </el-select>
-              </el-col>
+              </el-col> -->
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
@@ -647,6 +665,8 @@ export default {
       addEbaydisLoginxp: false,
       addEbaydisLoginrx: false,
       lodingTo: false,
+      listedTime1:null,
+      listedTime2:null,
       optionsType:['new','hot'],
       optionsPb:['有','无'],
       optionsHwc:['海外仓','非海外仓'],
@@ -982,6 +1002,8 @@ export default {
       this.addEbayXp.verified='';
       this.addEbayXp.ruleMark = "";
       this.addEbayXp.listedTime = [];
+      this.listedTime1='';
+      this.listedTime2='';
       this.addEbayXp.ruleName = "";
       this.addEbaydisLoginxp = true;
     },
@@ -1046,26 +1068,32 @@ export default {
       // this.ebayXp.pb == 0 ? this.ebayXp.pb = '无': this.ebayXp.pb == 1?this.ebayXp.pb = '有':this.ebayXp.pb='';
       // this.ebayXp.hwc == 0? this.ebayXp.hwc = '非海外仓': this.ebayXp.hwc == 1?this.ebayXp.hwc = '海外仓':this.ebayXp.hwc='';
       // this.ebayXp.verified == 0? this.ebayXp.verified = '非认证': this.ebayXp.verified == 1?this.ebayXp.verified = '认证':this.ebayXp.verified='';  
-      for(let i=0;i<this.ebayXp.listedTime.length;i++){
-        this.ebayXp.listedTime[i]=this.ebayXp.listedTime[i].replace(/,/g, "");
-      }
+      // for(let i=0;i<this.ebayXp.listedTime.length;i++){
+      //   this.ebayXp.listedTime[i]=this.ebayXp.listedTime[i].replace(/,/g, "");
+      // }
+      this.listedTime1=this.ebayXp.listedTime[0]
+      this.listedTime2=this.ebayXp.listedTime[1]
       this.ebaydisLoginxp = true;
     },
     saveEbayXp() {
-      for (let i = 0; i < this.ebayXp.listedTime.length; i++) {
-          if (this.ebayXp.listedTime[i] == "今天") {
-            this.ebayXp.listedTime[i] = 0;
-          }
-          if (this.ebayXp.listedTime[i] == "昨天") {
-            this.ebayXp.listedTime[i] = 1;
-          }
-          if (this.ebayXp.listedTime[i] == "前天") {
-            this.ebayXp.listedTime[i] = 2;
-          }
-      }
+      // for (let i = 0; i < this.ebayXp.listedTime.length; i++) {
+      //     if (this.ebayXp.listedTime[i] == "今天") {
+      //       this.ebayXp.listedTime[i] = 0;
+      //     }
+      //     if (this.ebayXp.listedTime[i] == "昨天") {
+      //       this.ebayXp.listedTime[i] = 1;
+      //     }
+      //     if (this.ebayXp.listedTime[i] == "前天") {
+      //       this.ebayXp.listedTime[i] = 2;
+      //     }
+      // }
       // this.ebayXp.pb == '无' ? this.ebayXp.pb = '0': this.ebayXp.pb == '有'?this.ebayXp.pb = '1':this.ebayXp.pb='';
       // this.ebayXp.hwc == '非海外仓'? this.ebayXp.hwc = '0': this.ebayXp.hwc == '海外仓'?this.ebayXp.hwc = '1':this.ebayXp.hwc='';
       // this.ebayXp.verified == '非认证'? this.ebayXp.verified = '0': this.ebayXp.verified == '认证'?this.ebayXp.verified = '1':this.ebayXp.verified='';  
+      var arr=[]
+      arr.push(this.listedTime1)
+      arr.push(this.listedTime2)
+      this.ebayXp.listedTime=arr
       this.ebaydisLoginxp = true;
       wishProductsSaveRule(this.ebayXp).then(res => {
         if (res.data.data) {
@@ -1083,17 +1111,21 @@ export default {
     },
     addSaveEbayXp() {
       if (this.addEbayXp.ruleName) {
-        for (let i = 0; i < this.addEbayXp.listedTime.length; i++) {
-            if (this.addEbayXp.listedTime[i] == "今天") {
-              this.addEbayXp.listedTime[i] = 0;
-            }
-            if (this.addEbayXp.listedTime[i] == "昨天") {
-              this.addEbayXp.listedTime[i] = 1;
-            }
-            if (this.addEbayXp.listedTime[i] == "前天") {
-              this.addEbayXp.listedTime[i] = 2;
-            }
-        }
+        // for (let i = 0; i < this.addEbayXp.listedTime.length; i++) {
+        //     if (this.addEbayXp.listedTime[i] == "今天") {
+        //       this.addEbayXp.listedTime[i] = 0;
+        //     }
+        //     if (this.addEbayXp.listedTime[i] == "昨天") {
+        //       this.addEbayXp.listedTime[i] = 1;
+        //     }
+        //     if (this.addEbayXp.listedTime[i] == "前天") {
+        //       this.addEbayXp.listedTime[i] = 2;
+        //     }
+        // }
+        var arr=[]
+        arr.push(this.listedTime1)
+        arr.push(this.listedTime2)
+        this.addEbayXp.listedTime=arr
         // this.addEbayXp.pb == '无' ? this.addEbayXp.pb = '0': this.addEbayXp.pb == '有'?this.addEbayXp.pb = '1':this.addEbayXp.pb='';
         // this.addEbayXp.hwc == '非海外仓'? this.addEbayXp.hwc = '0': this.addEbayXp.hwc == '海外仓'?this.addEbayXp.hwc = '1':this.addEbayXp.hwc='';
         // this.addEbayXp.verified == '非认证'? this.addEbayXp.verified = '0': this.addEbayXp.verified == '认证'?this.addEbayXp.verified = '1':this.addEbayXp.verified=''; 

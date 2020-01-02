@@ -483,6 +483,7 @@ export default {
       }
       .el-menu-item {
         min-width: 15rem;
+        // text-align: center;
         padding-left: 4rem !important;
       }
       .data-scroll-width {
@@ -565,8 +566,8 @@ export default {
           cursor: pointer;
           color: #fff;
           img {
-            width: 4rem;
-            height: 4rem;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             margin: 0.5rem 0rem 0rem 0.5rem;
             float: right;
@@ -614,7 +615,8 @@ export default {
         }
         .el-menu-item {
           min-width: 215px;
-          padding-left: 4rem !important;
+          // text-align: center;
+          padding-left: 40px !important;
         }
         .data-scroll-width {
           width: 215px;

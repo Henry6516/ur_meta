@@ -1508,6 +1508,15 @@ export function ebayRxAccept(param) {
   })
 }
 
+export function wishAccept(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/accept?plat=wish',
+    method: 'post',
+    data
+  })
+}
+
 export function ebayXpRefuse(param) {
   const data = { condition: param }
   return request({
@@ -1521,6 +1530,15 @@ export function ebayRxRefuse(param) {
   const data = { condition: param }
   return request({
     url: '/products-engine/refuse?plat=ebay&type=hot',
+    method: 'post',
+    data
+  })
+}
+
+export function wishRefuse(param) {
+  const data = { condition: param }
+  return request({
+    url: '/products-engine/refuse?plat=wish',
     method: 'post',
     data
   })

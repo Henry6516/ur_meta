@@ -16,63 +16,93 @@
     <div v-show="show.mt">
       <div class="mtBox">
         <div class="mtBox01">
-          <div class="t1">今日全部</div>
+          <div class="t1">
+            <span>今日全部</span>
+            <a class="ta" :class="[qbactove==index?'blueActive':'',index==0?'taright':'']" v-for="(item,index) in plat" :key="index" @click="qbtab(index)">{{item}}</a>
+          </div>
           <img src="../../assets/qbpro.png" class="img1" style="width: 50px;height: 50px;" />
-          <div class="twz">
+          <div class="twz" v-show="qbTotal.ebay">
             <span class="tw1">新品</span>
             <span class="tw2">{{xptotal}}</span>
           </div>
-          <div class="twz">
+          <div class="twz" v-show="qbTotal.ebay">
             <span class="tw1">热销</span>
             <span class="tw2">{{rxtotal}}</span>
           </div>
+          <div v-show="qbTotal.wish" class="twz1">
+            <span class="tw3">{{wishmrtotal}}</span>
+          </div>
         </div>
         <div class="mtBox01">
-          <div class="t1">今日已推送</div>
+          <div class="t1">
+            <span>今日已推送</span>
+            <a class="ta" :class="[tsactove==index?'blueActive':'',index==0?'taright':'']" v-for="(item,index) in plat" :key="index" @click="tstab(index)">{{item}}</a>
+          </div>
           <img src="../../assets/tspro.png" class="img1" style="width: 50px;height: 50px;" />
-          <div class="twz">
+          <div class="twz" v-show="tsTotal.ebay">
             <span class="tw1">新品</span>
             <span class="tw2">{{tsxptotal}}</span>
           </div>
-          <div class="twz">
+          <div class="twz" v-show="tsTotal.ebay">
             <span class="tw1">热销</span>
             <span class="tw2">{{tsrxtotal}}</span>
           </div>
+          <div v-show="tsTotal.wish" class="twz1">
+            <span class="tw3">{{wishtstotal}}</span>
+          </div>
         </div>
         <div class="mtBox01">
-          <div class="t1">今日已认领</div>
+          <div class="t1">
+            <span>今日已认领</span>
+            <a class="ta" :class="[rlactove==index?'blueActive':'',index==0?'taright':'']" v-for="(item,index) in plat" :key="index" @click="rltab(index)">{{item}}</a>
+          </div>
           <img src="../../assets/rlpro.png" class="img1" style="width: 50px;height: 50px;" />
-          <div class="twz">
+          <div class="twz" v-show="rlTotal.ebay">
             <span class="tw1">新品</span>
             <span class="tw2">{{rlxptotal}}</span>
           </div>
-          <div class="twz">
+          <div class="twz" v-show="rlTotal.ebay">
             <span class="tw1">热销</span>
             <span class="tw2">{{rlrxtotal}}</span>
           </div>
+          <div v-show="rlTotal.wish" class="twz1">
+            <span class="tw3">{{wishrltotal}}</span>
+          </div>
         </div>
         <div class="mtBox01">
-          <div class="t1">今日已过滤</div>
+          <div class="t1">
+            <span>今日已过滤</span>
+            <a class="ta" :class="[glactove==index?'blueActive':'',index==0?'taright':'']" v-for="(item,index) in plat" :key="index" @click="gltab(index)">{{item}}</a>
+          </div>
           <img src="../../assets/glpro.png" class="img1" style="width: 50px;height: 50px;" />
-          <div class="twz">
+          <div class="twz" v-show="glTotal.ebay">
             <span class="tw1">新品</span>
             <span class="tw2">{{glxptotal}}</span>
           </div>
-          <div class="twz">
+          <div class="twz" v-show="glTotal.ebay">
             <span class="tw1">热销</span>
             <span class="tw2">{{glrxtotal}}</span>
           </div>
+          <div v-show="glTotal.wish" class="twz1">
+            <span class="tw3">{{wishgltotal}}</span>
+          </div>
         </div>
         <div class="mtBox01">
-          <div class="t1">今日未处理</div>
+          <div class="t1">
+            <span>今日未处理</span>
+            <a class="ta" :class="[clactove==index?'blueActive':'',index==0?'taright':'']" v-for="(item,index) in plat" :key="index" @click="cltab(index)">{{item}}</a>
+          </div>
           <img src="../../assets/clpro.png" class="img1" style="width: 50px;height: 50px;" />
-          <div class="twz">
+          <div class="twz" v-show="clTotal.ebay">
             <span class="tw1">新品</span>
             <span class="tw2">{{clxptotal}}</span>
           </div>
-          <div class="twz">
+          <div class="twz" v-show="clTotal.ebay">
             <span class="tw1">热销</span>
             <span class="tw2">{{clrxtotal}}</span>
+          </div>
+          <div v-show="clTotal.wish" class="twz1">
+            <span class="tw3">{{wishcltotal}}</span>
           </div>
         </div>
       </div>
@@ -361,6 +391,36 @@ import {
 export default {
   data() {
     return {
+      qbTotal:{
+        ebay:true,
+        wish:false
+      },
+      tsTotal:{
+        ebay:true,
+        wish:false
+      },
+      rlTotal:{
+        ebay:true,
+        wish:false
+      },
+      glTotal:{
+        ebay:true,
+        wish:false
+      },
+      clTotal:{
+        ebay:true,
+        wish:false
+      },
+      wishcltotal:null,
+      wishgltotal:null,
+      wishrltotal:null,
+      wishtstotal:null,
+      wishmrtotal:null,
+      qbactove:1,
+      tsactove:1,
+      rlactove:1,
+      glactove:1,
+      clactove:1,
       index: 1,
       numIndex: 999,
       innerVisible: false,
@@ -374,6 +434,7 @@ export default {
       obj1: {
         height: window.innerHeight - 205 + "px"
       },
+      plat:['Wish','eBay'],
       show: {
         mt: true,
         rl: false,
@@ -618,6 +679,71 @@ export default {
     this.initWebSocket();
   },
   methods: {
+    cltab(index){
+      this.clactove=index
+      if(index==1){
+        this.clTotal.ebay=true
+      }else{
+        this.clTotal.ebay=false
+      }
+      if(index==0){
+        this.clTotal.wish=true
+      }else{
+        this.clTotal.wish=false
+      }
+    },    
+    gltab(index){
+      this.glactove=index
+      if(index==1){
+        this.glTotal.ebay=true
+      }else{
+        this.glTotal.ebay=false
+      }
+      if(index==0){
+        this.glTotal.wish=true
+      }else{
+        this.glTotal.wish=false
+      }
+    },    
+    rltab(index){
+      this.rlactove=index
+      if(index==1){
+        this.rlTotal.ebay=true
+      }else{
+        this.rlTotal.ebay=false
+      }
+      if(index==0){
+        this.rlTotal.wish=true
+      }else{
+        this.rlTotal.wish=false
+      }
+    },    
+    tstab(index){
+      this.tsactove=index
+      if(index==1){
+        this.tsTotal.ebay=true
+      }else{
+        this.tsTotal.ebay=false
+      }
+      if(index==0){
+        this.tsTotal.wish=true
+      }else{
+        this.tsTotal.wish=false
+      }
+    },    
+    qbtab(index){
+      this.qbactove=index
+      if(index==1){
+        this.qbTotal.ebay=true
+      }else{
+        this.qbTotal.ebay=false
+      }
+      if(index==0){
+        this.qbTotal.wish=true
+      }else{
+        this.qbTotal.wish=false
+      }
+    },
     sortNumber(column, prop, order) {
       const data = this.tabledata
       if (column.order === 'ascending') {
@@ -676,6 +802,11 @@ export default {
           this.rxtotal = this.rxtotal + 200;
         }
       }, 1);
+      this.wishmrtotal = redata.totalWishNum;
+      this.wishtstotal = redata.dispatchWishNum;
+      this.wishrltotal = redata.claimWishNum;
+      this.wishgltotal = redata.filterWishNum;
+      this.wishcltotal = redata.unhandledWishNum;
       var tsxptotal = redata.dispatchNewNum;
       var setTime2 = setInterval(() => {
         if (this.tsxptotal >= tsxptotal) {
@@ -1089,6 +1220,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.ta{
+  text-align: right;
+  display: block;
+  float: right;
+  margin: 0 5px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.tsec{
+  float: right;
+  width: 90px;
+  margin-right: 18px;
+  height: 25px;
+  line-height: 25px;
+}
 .tabheught {
   background: #eee;
 }
@@ -1174,12 +1320,21 @@ export default {
   border-radius: 5px;
   margin-right: 0.45%;
 }
-.t1 {
+.t1{
   color: #fff;
   font-size: 15px;
   padding: 10px;
   width: 100%;
   padding-left: 15px;
+}
+.taright{
+  margin-right: 25px !important;
+}
+.blueActive{
+  color: #edf102 !important;
+}
+.blueActive1{
+  color: #edf102 !important;
 }
 .img1 {
   position: absolute;
@@ -1204,6 +1359,12 @@ export default {
   letter-spacing: 2px;
   float: left;
 }
+.twz1 {
+  width: 85%;
+  color: #fff;
+  letter-spacing: 2px;
+  float: left;
+}
 .tw1 {
   display: block;
   text-align: center;
@@ -1216,6 +1377,16 @@ export default {
   font-size: 15px;
   font-size: 28px;
   margin-top: 10px;
+  text-shadow: 0px 1px 0px #fff, 0px 2px 0px #888, 0px 1px 0px #777,
+    0px 1px 0px #666, 0px 1px 0px #555, 0px 1px 0px #444,
+    0px 1px 0px rgb(95, 95, 95), 0px 5px 5px #606061;
+}
+.tw3 {
+  display: block;
+  text-align: center;
+  font-size: 15px;
+  font-size: 34px;
+  margin-top: 20px;
   text-shadow: 0px 1px 0px #fff, 0px 2px 0px #888, 0px 1px 0px #777,
     0px 1px 0px #666, 0px 1px 0px #555, 0px 1px 0px #444,
     0px 1px 0px rgb(95, 95, 95), 0px 5px 5px #606061;
