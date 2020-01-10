@@ -1160,6 +1160,127 @@
                   </el-table-column>
                 </el-table>
               </div>
+              <div v-show="pmShow.pmVOVA">
+                <el-table :data="proTablepm" size="small" @sort-change="sortNumberPX" height="800">
+                  <el-table-column
+                    prop="order"
+                    label="排名"
+                    sortable="custom"
+                    align="center"
+                    width="75"
+                  >
+                    <template slot-scope="scope">
+                      <img
+                        src="../assets/j1.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==1"
+                      />
+                      <img
+                        src="../assets/j2.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==2"
+                      />
+                      <img
+                        src="../assets/j3.png"
+                        style="width: 31px;height: 38px;"
+                        v-if="scope.row.order==3"
+                      />
+                      <span v-if="scope.row.order>3">{{scope.row.order}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="username" label="销售员" align="center" width="100"></el-table-column>
+                  <el-table-column prop="img" label="头像" align="center" width="100">
+                    <template slot-scope="scope">
+                      <div
+                        class="poImg"
+                        :class="[scope.row.order==1?'poImg1':scope.row.order==2?'poImg2':scope.row.order==3?'poImg3':'']"
+                      >
+                        <img
+                          :src="scope.row.img"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img!=null"
+                        />
+                        <img
+                          src="../assets/header.png"
+                          style="width: 60px;height: 60px;border-radius:50%;"
+                          v-if="scope.row.img==null"
+                        />
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="100"></el-table-column>
+                  <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column
+                    prop="lastProfit"
+                    label="上月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastAve"
+                    label="上月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="lastDiff"
+                    label="上月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="thisProfit"
+                    label="本月毛利"
+                    sortable="custom"
+                    align="center"
+                    width="100"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本月本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="本月毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="130"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="hireDate"
+                    label="入职时长(月)"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="createDate"
+                    label="统计时间"
+                    sortable="custom"
+                    align="center"
+                    width="120"
+                  >
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span>{{dateFormatter(scope.row.createDate)}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
             </div>
             <div class="tabs-container tab-index-pan" v-show="showTitle.zz">
               <el-tabs
@@ -2829,7 +2950,8 @@ export default {
         "SMT",
         "Amazon",
         "Joom",
-        "Shopee"
+        "Shopee",
+        "VOVA"
       ],
       activeTabName: "eBay-义乌仓",
       activeTabzz: "郑州eBay平台",
@@ -2982,7 +3104,8 @@ export default {
         pmHSMT: false,
         pmHAMA: false,
         pmHJOOM: false,
-        pmHShopee: false
+        pmHShopee: false,
+        pmHVOVA: false,
       },
       indexbk: {
         yw: true,
@@ -3783,6 +3906,15 @@ export default {
         });
       } else {
         this.pmShow["pmShopee"] = false;
+      }
+      if (tab.label === "VOVA") {
+        this.activePlatpm = "VOVA";
+        this.pmShow["pmVOVA"] = true;
+        ProsTargetPm(this.activePlatpm).then(res => {
+          this.proTablepm = res.data.data;
+        });
+      } else {
+        this.pmShow["pmVOVA"] = false;
       }
     },
     handleTitle(n, index) {

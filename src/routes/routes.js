@@ -2,6 +2,7 @@ import Login from '../views/Login.vue'
 import NotFound from '../views/404.vue'
 import Home from '../views/Home.vue'
 import index from '../views/index.vue'
+import prize from '../views/prize.vue'
 // 毛利润报表
 import sell from '../views/reports/sell.vue'
 import develop from '../views/reports/develop.vue'
@@ -140,6 +141,12 @@ const routes = [
   {
     path: '/login',
     component: Login,
+    name: '',
+    hidden: true
+  },
+  {
+    path: '/prize',
+    component: prize,
     name: '',
     hidden: true
   },
