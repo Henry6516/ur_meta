@@ -92,7 +92,7 @@
                   >货源链接</span> -->
                   <span
                     style="margin-top:5px;font-size:13px;"
-                    @click="manualPush(scope.row.itemId,'new')"
+                    @click="manualPush(scope.row.pid,'wish')"
                   >手动推送</span>
                 </div>
               </template>
@@ -645,7 +645,7 @@ export default {
     },
     manualPush(id,type){
       this.itemShow.itemId=id
-      this.itemShow.type=type
+      this.itemShow.plat=type
       this.itemShow.developer=[]
       this.dialogmanualPush=true
     },
