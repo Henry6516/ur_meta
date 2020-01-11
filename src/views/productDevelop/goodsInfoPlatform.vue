@@ -8,8 +8,16 @@
     <!--:name="item.name"-->
     <!--:key="index">-->
     <!--</el-tab-pane>-->
-    <!--</el-tabs>-->
+    <!--</el-tabs>-->    
     <el-col :span="24" style="padding:10px 0;padding-left:10px;">
+      <el-input
+        placeholder="SKU查询(逗号隔开)"
+        v-model="plat.codeStr"
+        class="none16001"
+        style="width:250px;float: left"
+        clearable
+      ></el-input>
+      <span class="exportAccount" @click="seachSku">查询</span>
       <el-select
         placeholder="--请选择账号--"
         clearable
@@ -17,19 +25,12 @@
         collapse-tags
         v-model="joom"
         class="none1600"
-        style="float: left;width:155px;"
+        style="float: left;width:155px;margin-left:10px;"
       >
         <el-button plain type="info" @click="selectalld1">全选</el-button>
         <el-button plain type="info" @click="noselectd1">取消</el-button>
         <el-option v-for="(item, key) in joomArr" :key="item.key" :label="item" :value="item"></el-option>
       </el-select>
-      <el-input
-        placeholder="请填写商品编码(多个用逗号隔开)"
-        v-model="joomName"
-        class="none16001"
-        style="width:250px;margin-left:10px;float: left"
-        clearable
-      ></el-input>
       <span class="exportAccount" @click="exportJoom">导出Joom模板</span>
       <el-select
         placeholder="--请选择账号--"
@@ -620,6 +621,7 @@ export default {
         isVar: null,
         goodsStatus: null,
         stockDays: null,
+        codeStr:null,
         pageSize: 10,
         page: 1
       },
@@ -645,6 +647,9 @@ export default {
     }
   },
   methods: {
+    seachSku(){
+      this.getPlat();
+    },
     selectalld3() {
       var ard1 = [];
       for (const item in this.vovaArr) {
@@ -2739,14 +2744,14 @@ export default {
 }
 @media (max-width: 1600px) {
   .none1600 {
-    width: 154px !important;
+    width: 124px !important;
   }
   .none16001 {
-    width: 130px !important;
+    width: 110px !important;
     margin-left: 5px !important;
   }
   .none16002 {
-    width: 135px !important;
+    width: 125px !important;
     margin-left: 5px !important;
   }
 }
