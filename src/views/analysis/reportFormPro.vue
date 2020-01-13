@@ -13,95 +13,96 @@
         :key="index"
       ></el-tab-pane>
     </el-tabs>
+    <div class="platname" v-show="totoalPlat">
+      <div class="plat01" v-for="(item,index) in selectPlat" :key="index" @click="platSelect(index,item)">
+        <span :class="index==platindex?'platActive':''"></span>
+        <a :class="index==platindex?'platActiveText':''">{{item}}</a>
+      </div>
+    </div>
     <div v-show="show.mt">
       <div class="mtBox">
         <div class="mtBox01">
           <div class="t1">
             <span>今日全部</span>
-            <a class="ta" :class="[qbactove==index?'blueActive':'',index==0?'taright':'']" v-for="(item,index) in plat" :key="index" @click="qbtab(index)">{{item}}</a>
           </div>
           <img src="../../assets/qbpro.png" class="img1" style="width: 50px;height: 50px;" />
-          <div class="twz" v-show="qbTotal.ebay">
+          <div class="twz" v-show="plateBay">
             <span class="tw1">新品</span>
             <span class="tw2">{{xptotal}}</span>
           </div>
-          <div class="twz" v-show="qbTotal.ebay">
+          <div class="twz" v-show="plateBay">
             <span class="tw1">热销</span>
             <span class="tw2">{{rxtotal}}</span>
           </div>
-          <div v-show="qbTotal.wish" class="twz1">
+          <div v-show="platWish" class="twz1">
             <span class="tw3">{{wishmrtotal}}</span>
           </div>
         </div>
         <div class="mtBox01">
           <div class="t1">
             <span>今日已推送</span>
-            <a class="ta" :class="[tsactove==index?'blueActive':'',index==0?'taright':'']" v-for="(item,index) in plat" :key="index" @click="tstab(index)">{{item}}</a>
           </div>
           <img src="../../assets/tspro.png" class="img1" style="width: 50px;height: 50px;" />
-          <div class="twz" v-show="tsTotal.ebay">
+          <div class="twz" v-show="plateBay">
             <span class="tw1">新品</span>
             <span class="tw2">{{tsxptotal}}</span>
           </div>
-          <div class="twz" v-show="tsTotal.ebay">
+          <div class="twz" v-show="plateBay">
             <span class="tw1">热销</span>
             <span class="tw2">{{tsrxtotal}}</span>
           </div>
-          <div v-show="tsTotal.wish" class="twz1">
+          <div v-show="platWish" class="twz1">
             <span class="tw3">{{wishtstotal}}</span>
           </div>
         </div>
         <div class="mtBox01">
           <div class="t1">
             <span>今日已认领</span>
-            <a class="ta" :class="[rlactove==index?'blueActive':'',index==0?'taright':'']" v-for="(item,index) in plat" :key="index" @click="rltab(index)">{{item}}</a>
           </div>
           <img src="../../assets/rlpro.png" class="img1" style="width: 50px;height: 50px;" />
-          <div class="twz" v-show="rlTotal.ebay">
+          <div class="twz" v-show="plateBay">
             <span class="tw1">新品</span>
             <span class="tw2">{{rlxptotal}}</span>
           </div>
-          <div class="twz" v-show="rlTotal.ebay">
+          <div class="twz" v-show="plateBay">
             <span class="tw1">热销</span>
             <span class="tw2">{{rlrxtotal}}</span>
           </div>
-          <div v-show="rlTotal.wish" class="twz1">
+          <div v-show="platWish" class="twz1">
             <span class="tw3">{{wishrltotal}}</span>
           </div>
         </div>
         <div class="mtBox01">
           <div class="t1">
             <span>今日已过滤</span>
-            <a class="ta" :class="[glactove==index?'blueActive':'',index==0?'taright':'']" v-for="(item,index) in plat" :key="index" @click="gltab(index)">{{item}}</a>
           </div>
           <img src="../../assets/glpro.png" class="img1" style="width: 50px;height: 50px;" />
-          <div class="twz" v-show="glTotal.ebay">
+          <div class="twz" v-show="plateBay">
             <span class="tw1">新品</span>
             <span class="tw2">{{glxptotal}}</span>
           </div>
-          <div class="twz" v-show="glTotal.ebay">
+          <div class="twz" v-show="plateBay">
             <span class="tw1">热销</span>
             <span class="tw2">{{glrxtotal}}</span>
           </div>
-          <div v-show="glTotal.wish" class="twz1">
+          <div v-show="platWish" class="twz1">
             <span class="tw3">{{wishgltotal}}</span>
           </div>
         </div>
         <div class="mtBox01">
           <div class="t1">
             <span>今日未处理</span>
-            <a class="ta" :class="[clactove==index?'blueActive':'',index==0?'taright':'']" v-for="(item,index) in plat" :key="index" @click="cltab(index)">{{item}}</a>
           </div>
           <img src="../../assets/clpro.png" class="img1" style="width: 50px;height: 50px;" />
-          <div class="twz" v-show="clTotal.ebay">
+          <div class="twz" v-show="plateBay">
             <span class="tw1">新品</span>
             <span class="tw2">{{clxptotal}}</span>
           </div>
-          <div class="twz" v-show="clTotal.ebay">
+          <div class="twz" v-show="plateBay">
             <span class="tw1">热销</span>
             <span class="tw2">{{clrxtotal}}</span>
           </div>
-          <div v-show="clTotal.wish" class="twz1">
+          <div v-show="platWish" class="twz1">
             <span class="tw3">{{wishcltotal}}</span>
           </div>
         </div>
@@ -115,8 +116,7 @@
         </div>
         <div class="mtCase02 reCop" :style="mtCase01">
           <p class="mtop">今日开发产品处理情况</p>
-          <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeIn">
-            <div class="xBox" v-show="isshow">
+            <div class="xBox" v-show="plateBay">
               <div class="mcT01" v-for="(item,index) in devNum" :key="index">
                 <span class="mName">{{item.username}}</span>
                 <div class="mcDiv" v-show="numIndex==index">
@@ -137,19 +137,33 @@
                   <span class="xg" :style="{width:item.claimRate+'%'}"></span>
                   <span class="xr" :style="{width:item.filterRate+'%'}"></span>
                   <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
-                  <!-- <el-tooltip :content="item.claimNum+''" placement="top">
-                    <span class="xg" :style="{width:item.claimRate+'%'}"></span>
-                  </el-tooltip>
-                  <el-tooltip :content="item.filterNum+''" placement="top">
-                    <span class="xr" :style="{width:item.filterRate+'%'}"></span>
-                  </el-tooltip>
-                  <el-tooltip :content="item.unhandledNum+''" placement="top">
-                    <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
-                  </el-tooltip>-->
                 </div>
               </div>
             </div>
-          </transition>
+            <div class="xBox" v-show="platWish">
+              <div class="mcT01" v-for="(item,index) in devNumWish" :key="index">
+                <span class="mName">{{item.username}}</span>
+                <div class="mcDiv" v-show="numIndex==index">
+                  <span
+                    :style="{width:item.claimRate+'%'}"
+                    v-show="item.claimNum>0"
+                  >{{item.claimNum}}</span>
+                  <span
+                    :style="{width:item.filterRate+'%'}"
+                    v-show="item.filterNum>0"
+                  >{{item.filterNum}}</span>
+                  <span
+                    :style="{width:item.unhandledRate+'%'}"
+                    v-show="item.unhandledNum>0"
+                  >{{item.unhandledNum}}</span>
+                </div>
+                <div class="xCase" @mouseover="numIndex=index" @mouseout="numIndex=999">
+                  <span class="xg" :style="{width:item.claimRate+'%'}"></span>
+                  <span class="xr" :style="{width:item.filterRate+'%'}"></span>
+                  <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
     </div>
@@ -391,6 +405,12 @@ import {
 export default {
   data() {
     return {
+      totoalPlat:true,
+      platindex:0,
+      plateBay:true,
+      platWish:false,
+      selectPlat:['eBay','Wish'],
+      platName:null,
       qbTotal:{
         ebay:true,
         wish:false
@@ -489,6 +509,7 @@ export default {
       detailArr: [],
       isshow: false,
       devNum: [],
+      devNumWish: [],
       options: {
         tooltip: {
           trigger: "axis",
@@ -679,6 +700,18 @@ export default {
     this.initWebSocket();
   },
   methods: {
+    platSelect(index,item){
+      this.platindex=index
+      if(item=='eBay'){
+        this.plateBay=true
+        this.platWish=false
+      }
+      if(item=='Wish'){
+        this.plateBay=false
+        this.platWish=true
+      }
+      this.getDataTotal();
+    },
     cltab(index){
       this.clactove=index
       if(index==1){
@@ -780,9 +813,10 @@ export default {
     },
     websocketonmessage(e) {
       //数据接收
-      var redata = JSON.parse(e.data);
-      console.log(redata)
+      var redata = JSON.parse(e.data).ebay;
+      var redataWish = JSON.parse(e.data).wish;
       this.devNum = redata.devData;
+      this.devNumWish = redataWish.devData;
       this.isshow = true;
       var xptotal = redata.totalNewNum;
       var setTime = setInterval(() => {
@@ -802,11 +836,11 @@ export default {
           this.rxtotal = this.rxtotal + 200;
         }
       }, 1);
-      this.wishmrtotal = redata.totalWishNum;
-      this.wishtstotal = redata.dispatchWishNum;
-      this.wishrltotal = redata.claimWishNum;
-      this.wishgltotal = redata.filterWishNum;
-      this.wishcltotal = redata.unhandledWishNum;
+      this.wishmrtotal = redataWish.totalWishNum;
+      this.wishtstotal = redataWish.dispatchWishNum;
+      this.wishrltotal = redataWish.claimWishNum;
+      this.wishgltotal = redataWish.filterWishNum;
+      this.wishcltotal = redataWish.unhandledWishNum;
       var tsxptotal = redata.dispatchNewNum;
       var setTime2 = setInterval(() => {
         if (this.tsxptotal >= tsxptotal) {
@@ -1007,24 +1041,28 @@ export default {
     handleClick(tab, event) {
       if (tab.name === "/v1/products-engine/daily-report") {
         this.show["mt"] = true;
+        this.totoalPlat=true
         this.getDataTotal();
       } else {
         this.show["mt"] = false;
       }
       if (tab.name === "/v1/products-engine/product-report") {
         this.show["rl"] = true;
+        this.totoalPlat=false
         this.getData();
       } else {
         this.show["rl"] = false;
       }
       if (tab.name === "/v1/products-engine/rule-report") {
         this.show["ts"] = true;
+        this.totoalPlat=false
         this.getDataTs();
       } else {
         this.show["ts"] = false;
       }
       if (tab.name === "/v1/products-engine/refuse-report") {
         this.show["gl"] = true;
+        this.totoalPlat=false
         this.getDataGl();
       } else {
         this.show["gl"] = false;
@@ -1032,109 +1070,30 @@ export default {
     },
     getDataTotal() {
       getDailyReport().then(response => {
-        // this.devNum = response.data.data.devData;
-        // this.isshow = true;
-        // var xptotal = response.data.data.totalNewNum;
-        // var setTime = setInterval(() => {
-        //   if (this.xptotal >= xptotal) {
-        //     this.xptotal = xptotal;
-        //     clearInterval(setTime);
-        //   } else {
-        //     this.xptotal = this.xptotal + 5;
-        //   }
-        // }, 1);
-        // var rxtotal = response.data.data.totalHotNum;
-        // var setTime1 = setInterval(() => {
-        //   if (this.rxtotal >= rxtotal) {
-        //     this.rxtotal = rxtotal;
-        //     clearInterval(setTime1);
-        //   } else {
-        //     this.rxtotal = this.rxtotal + 200;
-        //   }
-        // }, 1);
-        // var tsxptotal = response.data.data.dispatchNewNum;
-        // var setTime2 = setInterval(() => {
-        //   if (this.tsxptotal >= tsxptotal) {
-        //     this.tsxptotal = tsxptotal;
-        //     clearInterval(setTime2);
-        //   } else {
-        //     this.tsxptotal = this.tsxptotal + 1;
-        //   }
-        // }, 1);
-        // var tsrxtotal = response.data.data.dispatchHotNum;
-        // var setTime3 = setInterval(() => {
-        //   if (this.tsrxtotal >= tsrxtotal) {
-        //     this.tsrxtotal = tsrxtotal;
-        //     clearInterval(setTime3);
-        //   } else {
-        //     this.tsrxtotal = this.tsrxtotal + 1;
-        //   }
-        // }, 1);
-        // var rlxptotal = response.data.data.claimNewNum;
-        // var setTime4 = setInterval(() => {
-        //   if (this.rlxptotal >= rlxptotal) {
-        //     this.rlxptotal = rlxptotal;
-        //     clearInterval(setTime4);
-        //   } else {
-        //     this.rlxptotal = this.rlxptotal + 1;
-        //   }
-        // }, 1);
-        // var rlrxtotal = response.data.data.claimHotNum;
-        // var setTime7 = setInterval(() => {
-        //   if (this.rlrxtotal >= rlrxtotal) {
-        //     this.rlrxtotal = rlrxtotal;
-        //     clearInterval(setTime7);
-        //   } else {
-        //     this.rlrxtotal = this.rlrxtotal + 1;
-        //   }
-        // }, 1);
-        // var glxptotal = response.data.data.filterNewNum;
-        // var setTime5 = setInterval(() => {
-        //   if (this.glxptotal >= glxptotal) {
-        //     this.glxptotal = glxptotal;
-        //     clearInterval(setTime5);
-        //   } else {
-        //     this.glxptotal = this.glxptotal + 1;
-        //   }
-        // }, 1);
-        // var glrxtotal = response.data.data.filterHotNum;
-        // var setTime8 = setInterval(() => {
-        //   if (this.glrxtotal >= glrxtotal) {
-        //     this.glrxtotal = glrxtotal;
-        //     clearInterval(setTime8);
-        //   } else {
-        //     this.glrxtotal = this.glrxtotal + 1;
-        //   }
-        // }, 1);
-        // var clxptotal = response.data.data.unhandledNewNum;
-        // var setTime6 = setInterval(() => {
-        //   if (this.clxptotal >= clxptotal) {
-        //     this.clxptotal = clxptotal;
-        //     clearInterval(setTime6);
-        //   } else {
-        //     this.clxptotal = this.clxptotal + 1;
-        //   }
-        // }, 1);
-        // var clrxtotal = response.data.data.unhandledHotNum;
-        // var setTime9 = setInterval(() => {
-        //   if (this.clrxtotal >= clrxtotal) {
-        //     this.clrxtotal = clrxtotal;
-        //     clearInterval(setTime9);
-        //   } else {
-        //     this.clrxtotal = this.clrxtotal + 1;
-        //   }
-        // }, 1);
         var arrName = [];
         var arrData = [];
-        var lineData = response.data.data.claimData;
-        for (var i = 0; i < lineData.length; i++) {
-          arrName.push(lineData[i].name);
-          arrData.push(lineData[i].value);
+        if(this.plateBay){
+          var lineData = response.data.data.ebay.claimData;
+          for (var i = 0; i < lineData.length; i++) {
+            arrName.push(lineData[i].name);
+            arrData.push(lineData[i].value);
+          }
+          this.options.xAxis[0].data = arrName;
+          this.options.series[0].data = arrData;
+          let indexOr = this.$echarts.init(this.$refs.indexOr);
+          indexOr.setOption(this.options);
         }
-        this.options.xAxis[0].data = arrName;
-        this.options.series[0].data = arrData;
-        let indexOr = this.$echarts.init(this.$refs.indexOr);
-        indexOr.setOption(this.options);
+        if(this.platWish){
+          var lineData = response.data.data.wish.claimData;
+          for (var i = 0; i < lineData.length; i++) {
+            arrName.push(lineData[i].name);
+            arrData.push(lineData[i].value);
+          }
+          this.options.xAxis[0].data = arrName;
+          this.options.series[0].data = arrData;
+          let indexOr = this.$echarts.init(this.$refs.indexOr);
+          indexOr.setOption(this.options);
+        }
       });
     },
     getDataTs() {
@@ -1220,6 +1179,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.plat01{
+  overflow: hidden;
+  float: left;
+  margin-left: 20px;
+  cursor: pointer;
+}
+.plat01 span{
+  display: block;
+  width: 12px;
+  height: 12px;
+  border:#ccc solid 1px;
+  border-radius: 50%;
+  float: left;
+  margin-right: 10px;
+  margin-top: 13px;
+}
+.plat01 a{
+  display: block;
+  float: left;
+  line-height: 41px;
+  color: #303133;
+  padding: 0;
+  margin: 0;
+}
+.platActive{
+  background: #409EFF !important;
+  border:#409EFF solid 1px !important;
+}
+.platActiveText{
+color: #409EFF !important;
+}
+.platname{
+  position: absolute;
+  right: 1.4%;
+  top: 0;
+}
 .ta{
   text-align: right;
   display: block;
