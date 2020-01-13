@@ -218,12 +218,16 @@
           @sort-change="sortNumber1"
           style="width: 100%;margin:auto;margin-top:5px;"
         >
-          <el-table-column type="index" fixed align="center" width="80" header-align="center"></el-table-column>
-          <el-table-column label="开发员" header-align="center" align="center" prop="developer"></el-table-column>
+          <el-table-column type="index" fixed align="center" width="45" header-align="center"></el-table-column>
+          <el-table-column label="开发员" header-align="center" align="center" prop="developer" width="90"></el-table-column>
           <el-table-column label="分配产品总数" header-align="center" align="center" prop="dispatchNum" sortable="custom"></el-table-column>
           <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum" sortable="custom"></el-table-column>
           <el-table-column label="认领率(%)" header-align="center" align="center" prop="claimRate" sortable="custom">
             <template slot-scope="scope">{{scope.row.claimRate | cutOut}}</template>
+          </el-table-column>
+          <el-table-column label="出单数" header-align="center" align="center" prop="orderNum" sortable="custom"></el-table-column>
+          <el-table-column label="出单率(%)" header-align="center" align="center" prop="orderRate" sortable="custom">
+            <template slot-scope="scope">{{scope.row.orderRate | cutOut}}</template>
           </el-table-column>
           <el-table-column label="过滤数" header-align="center" align="center" prop="filterNum" sortable="custom"></el-table-column>
           <el-table-column label="过滤率(%)" header-align="center" align="center" prop="filterRate" sortable="custom">
@@ -312,11 +316,15 @@
           <el-table-column label="规则名称" header-align="center" align="center" prop="ruleName"></el-table-column>
           <el-table-column label="总产品数" header-align="center" align="center" prop="totalNum" sortable="custom"></el-table-column>
           <el-table-column label="推送总数" header-align="center" align="center" prop="dispatchNum" sortable="custom"></el-table-column>
-          <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum" sortable="custom"></el-table-column>
+          <el-table-column label="认领产品数" header-align="center" align="center" prop="claimNum" sortable="custom" width="115"></el-table-column>
           <el-table-column label="认领率(%)" header-align="center" align="center" prop="claimRate" sortable="custom">
             <template slot-scope="scope">{{scope.row.claimRate | cutOut}}</template>
           </el-table-column>
-          <el-table-column label="过滤产品数" header-align="center" align="center" prop="filterNum" sortable="custom"></el-table-column>
+          <el-table-column label="出单数" header-align="center" align="center" prop="orderNum" sortable="custom"></el-table-column>
+          <el-table-column label="出单率(%)" header-align="center" align="center" prop="orderRate" sortable="custom">
+            <template slot-scope="scope">{{scope.row.orderRate | cutOut}}</template>
+          </el-table-column>
+          <el-table-column label="过滤产品数" header-align="center" align="center" prop="filterNum" sortable="custom" width="115"></el-table-column>
           <el-table-column label="过滤率(%)" header-align="center" align="center" prop="filterRate" sortable="custom">
             <template slot-scope="scope">{{scope.row.filterRate | cutOut}}</template>
           </el-table-column>
@@ -330,7 +338,7 @@
           </el-table-column>
           <el-table-column
             label="未处理产品数"
-            width="130"
+            width="100"
             header-align="center"
             sortable="custom"
             align="center"
@@ -939,7 +947,8 @@ export default {
           index == 7 ||
           index == 9 ||
           index == 11 ||
-          index == 13
+          index == 13 ||
+          index == 15
         ) {
           const values = data.map(item => Number(item[column.property]));
           if (!values.every(value => isNaN(value))) {
@@ -963,13 +972,16 @@ export default {
           sums[index] = ((arr[5] / arr[4]) * 100).toFixed(2);
         }
         if (index == 8) {
-          sums[index] = ((arr[7] / arr[4]) * 100).toFixed(2);
+          sums[index] = ((arr[7] / arr[5]) * 100).toFixed(2);
         }
         if (index == 10) {
-          sums[index] = ((arr[9] / arr[5]) * 100).toFixed(2);
+          sums[index] = ((arr[9] / arr[4]) * 100).toFixed(2);
         }
         if (index == 12) {
           sums[index] = ((arr[11] / arr[5]) * 100).toFixed(2);
+        }
+        if (index == 14) {
+          sums[index] = ((arr[13] / arr[5]) * 100).toFixed(2);
         }
       });
       return sums;
@@ -988,7 +1000,8 @@ export default {
           index == 5 ||
           index == 7 ||
           index == 9 ||
-          index == 11
+          index == 11 ||
+          index == 13
         ) {
           const values = data.map(item => Number(item[column.property]));
           if (!values.every(value => isNaN(value))) {
@@ -1012,13 +1025,16 @@ export default {
           sums[index] = ((arr[3] / arr[2]) * 100).toFixed(2);
         }
         if (index == 6) {
-          sums[index] = ((arr[5] / arr[2]) * 100).toFixed(2);
+          sums[index] = ((arr[5] / arr[3]) * 100).toFixed(2);
         }
         if (index == 8) {
-          sums[index] = ((arr[7] / arr[3]) * 100).toFixed(2);
+          sums[index] = ((arr[7] / arr[2]) * 100).toFixed(2);
         }
         if (index == 10) {
           sums[index] = ((arr[9] / arr[3]) * 100).toFixed(2);
+        }
+        if (index == 12) {
+          sums[index] = ((arr[11] / arr[3]) * 100).toFixed(2);
         }
       });
       return sums;
