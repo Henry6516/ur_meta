@@ -1802,3 +1802,12 @@ export function stopRule(param) {
     data
   })
 }
+
+export function shopeeProductsRule() {
+  const data = { condition: { plat: 'shopee' }}
+  return request({
+    url: '/wish-products/rule',
+    method: 'post',
+    data: data
+  })
+}

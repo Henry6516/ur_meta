@@ -7,7 +7,7 @@
           :model="condition"
           :inline="true"
           ref="condition"
-          label-width="5.8rem"
+          label-width="70px"
           class="demo-form-inline"
         >
           <el-form-item label="开发员" class="input" style="margin-left:12px;">

@@ -216,6 +216,7 @@
           show-summary
           :height="tableHeightstock"
           @sort-change="sortNumber1"
+          v-loading="listLoading1"
           style="width: 100%;margin:auto;margin-top:5px;"
         >
           <el-table-column type="index" fixed align="center" width="45" header-align="center"></el-table-column>
@@ -304,6 +305,7 @@
           :header-cell-style="getRowClass"
           show-summary
           :height="tableHeightstock"
+          v-loading="listLoading1"
           @sort-change="sortNumber"
           style="width: 100%;margin:auto;margin-top:5px;"
         >
@@ -495,6 +497,7 @@ export default {
       ruleType: ["新品", "热销"],
       ruleNameData: [],
       listLoading: false,
+      listLoading1: false,
       rltotal: 0,
       gltotal: 0,
       cltotal: 0,
@@ -1113,8 +1116,10 @@ export default {
       });
     },
     getDataTs() {
+      this.listLoading1 = true;
       formRuleReport(this.condition1).then(res => {
         this.tabledata = res.data.data;
+        this.listLoading1 = false;
       });
     },
     getDataGl() {
@@ -1145,10 +1150,10 @@ export default {
       });
     },
     getData() {
-      this.listLoading = true;
+      this.listLoading1 = true;
       formProductReport(this.condition).then(res => {
         this.tabledatarl = res.data.data;
-        this.listLoading = false;
+        this.listLoading1 = false;
       });
     }
   },

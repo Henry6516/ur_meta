@@ -151,6 +151,12 @@ export default {
           path: `/v1/tiny-tool/uk-virtual-replenish`
         });
       }
+      if (tab.name === "/v1/tiny-tool/sku") {
+        sessionStorage.setItem("fixname", "/v1/tiny-tool/sku");
+        this.$router.push({
+          path: `/v1/tiny-tool/sku`
+        });
+      }
     }
   },
   mounted() {

@@ -57,6 +57,7 @@ import prescription from '../views/tinytool/prescription.vue'
 import ukxn from '../views/tinytool/ukxn.vue'
 import ukzc from '../views/tinytool/ukzc.vue'
 import auzc from '../views/tinytool/auzc.vue'
+import hwckc from '../views/tinytool/hwckc.vue'
 import joomtool from '../views/tinytool/joomtool.vue'
 import bidding from '../views/tinytool/bidding.vue'
 import ebayBalance from '../views/tinytool/ebayBalance.vue'
@@ -136,6 +137,7 @@ import reportFormPro from '../views/analysis/reportFormPro.vue'
 import repeatTesting from '../views/analysis/repeatTesting.vue'
 import recommendWish from '../views/analysis/recommendWish.vue'
 import recommendEbay from '../views/analysis/recommendEbay.vue'
+import recommendShopee from '../views/analysis/recommendShopee.vue'
 
 const routes = [
   {
@@ -363,6 +365,11 @@ const routes = [
             path: '/v1/products-engine/recommendEbay',
             component: recommendEbay,
             name: '每日推荐ebay'
+          },
+          {
+            path: '/v1/products-engine/recommendShopee',
+            component: recommendShopee,
+            name: '每日推荐shopee'
           }
         ]
       },
@@ -509,6 +516,11 @@ const routes = [
             path: '/v1/tiny-tool/uk',
             component: uk,
             name: 'UK真仓定价'
+          },
+          {
+            path: '/v1/tiny-tool/sku',
+            component: hwckc,
+            name: '海外仓库存'
           },
           {
             path: '/v1/tiny-tool/au',

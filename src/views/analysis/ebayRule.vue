@@ -315,6 +315,60 @@
                       </el-col>
                     </el-col>
                   </div>
+                  <div v-if="item.plat=='shopee'">
+                    <el-col :span="6">
+                      <el-col :span="24" style="margin-top:20px;">
+                        <span
+                          class="curSpan"
+                          @click="ruleMakActive(index,indexTwo)"
+                          :class="itemTwo.flag?'cColor':''"
+                        >
+                          <span class="oneClass" :class="itemTwo.flag?'ruleBac':''"></span>
+                          {{itemTwo.marketplace}}
+                        </span>
+                      </el-col>
+                      <el-col
+                        :span="23"
+                        style="margin-top:5px;padding-left:18px;"
+                        class="scrollTopHeight1"
+                      >
+                        <el-col
+                          :span="24"
+                          v-for="(itemTree,indexTree) in itemTwo.marketplaceValue"
+                          :key="indexTree"
+                        >
+                          <el-col :span="24">
+                            <span
+                              class="curSpan curSpanTree"
+                              :class="itemTree.flag?'cColor':''"
+                              @click="ruleCateActive(index,indexTwo,indexTree)"
+                            >
+                              <span class="oneClass" :class="itemTree.flag?'ruleBac':''"></span>
+                              {{itemTree.cate}}
+                            </span>
+                          </el-col>
+                          <el-col :span="24" style="margin-top:5px;width:100%;" class="treeDiv">
+                            <el-select
+                              v-model="itemTree.cateValue.subCateChecked"
+                              multiple
+                              collapse-tags
+                              style="width:95%;"
+                              placeholder="请选择"
+                              size="small"
+                              @change="ruleSubcateActive(index,indexTwo,indexTree)"
+                            >
+                              <el-option
+                                v-for="item in itemTree.cateValue.subCate"
+                                :key="item"
+                                :label="item"
+                                :value="item"
+                              ></el-option>
+                            </el-select>
+                          </el-col>
+                        </el-col>
+                      </el-col>
+                    </el-col>
+                  </div>
                   </div>
                 </div>
               </el-col>
@@ -871,6 +925,11 @@ export default {
 }
 .scrollTopHeight {
   height: 480px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.scrollTopHeight1{
+  height: 210px;
   overflow: hidden;
   overflow-y: auto;
 }

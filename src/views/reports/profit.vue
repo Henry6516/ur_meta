@@ -240,7 +240,7 @@
       <el-table-column
         width="108"
         prop="smtSold"
-        label="SMT销量"
+        label="Aliexpress销量"
          align="center"
         :formatter="empty"
         sortable="custom"
@@ -249,7 +249,7 @@
         width="105"
         prop="smtProfit"
          align="center"
-        label="SMT利润"
+        label="Aliexpress利润"
         :formatter="empty"
         sortable="custom"
       >

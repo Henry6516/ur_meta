@@ -951,3 +951,19 @@ export function getWishRxMind(param) {
   })
 }
 
+export function gethwckcsku(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/sku?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+
+export function getShopeePro(param) {
+  return request({
+    url: '/products-engine/recommend?plat=shopee&page=' + param.page + '&recommendStatus=' + param.recommendStatus + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
+    method: 'get'
+  })
+}
+

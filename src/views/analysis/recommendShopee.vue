@@ -40,9 +40,9 @@
                   popper-class="page-login-toolTipClass"
                 >
                   <div slot="content">
-                    <img :src="'https://contestimg.wish.com/api/webimage/'+scope.row.pid+'-small.jpg'" style="width: 300px;height: 300px;" />
+                    <img :src="'https://s-cf-id.shopeesz.com/file/'+scope.row.image" style="width: 300px;height: 300px;" />
                   </div>
-                  <img :src="'https://contestimg.wish.com/api/webimage/'+scope.row.pid+'-small.jpg'" style="width: 60px;height: 60px" />
+                  <img :src="'https://s-cf-id.shopeesz.com/file/'+scope.row.image" style="width: 60px;height: 60px" />
                 </el-tooltip>
                 <!-- <a class="ebayBlocka ebayBlocka1" @click="submissionEbayXp(scope.row._id.oid)">
                   <i class="el-icon-star-off" style="margin-right:3px;"></i>认领
@@ -58,34 +58,35 @@
               label="商品标题"
               header-align="center"
               fixed
-              width="300"
+              width="280"
             >
               <template slot-scope="scope">
                 <p style="margin:0">{{scope.row.title}}</p>
                 <p
                   style="margin:0;margin-top:8px;color:#e6a23c;font-size:13px;"
                 >{{scope.row.pname}}</p>
-                <!-- <div style="margin-top:8px;">
-                  <span
-                    style="margin:0;margin-top:8px;color:#3c8dbc;font-size:13px;"
-                  >商品ID:{{scope.row.itemId}}</span>
-                  <span
-                    style="margin:0;margin-top:8px;color:#3c8dbc;font-size:13px;margin-left:15px;"
-                  >品牌:{{scope.row.brand}}</span>
-                </div>
                 <div style="margin-top:8px;">
                   <span
-                    style="margin:0;margin-top:5px;font-size:13px;"
-                  >连续三天有销量:{{scope.row.salesThreeDayFlag==0?'否':'是'}}</span>
+                    style="margin:0;margin-top:2px;color:#3c8dbc;font-size:13px;display:block;"
+                  >商品ID:{{scope.row.pid}}</span>
                   <span
-                    style="margin:0;margin-top:5px;font-size:13px;margin-left:15px;"
-                  >推荐时间:{{scope.row.recommendDate | cutOutMonye}}</span>
-                </div> -->
+                    style="margin:0;margin-top:2px;color:#3c8dbc;font-size:13px;display:block;"
+                  >Loation:{{scope.row.shopLocation}}</span>
+                  <span
+                    style="margin:0;margin-top:2px;color:#3c8dbc;font-size:13px;display:block;"
+                  >评分:{{scope.row.rating}}</span>
+                  <span
+                    style="margin:0;margin-top:2px;color:#3c8dbc;font-size:13px;display:block;"
+                  >Favorite:{{scope.row.likedCount}}</span>
+                  <span
+                    style="margin:0;margin-top:2px;color:#3c8dbc;font-size:13px;display:block;"
+                  >ratings:{{scope.row.ratingCount}}</span>
+                </div>
                 <div style="margin-top:8px;" class="ebayGoa">
                   <span
                     style="margin-top:5px;font-size:13px;"
                     @click="goLinkUrlEbay(scope.row.pid)"
-                  >Wish链接</span>
+                  >shopee链接</span>
                   <!-- <span
                     style="margin-top:5px;font-size:13px;"
                     @click="goLinkUrlEbayHy('https://kj.1688.com/pdt_tongkuan.html?imgUrl=' + scope.row.mainImage)"
@@ -119,41 +120,16 @@
                 </template>
               </el-table-column>
             </el-table-column>
-            <el-table-column
-              property="rating"
-              label="评分"
-              align="center"
-              width="95"
-              sortable="custom"
-            ></el-table-column>
-            <el-table-column
-              property="totalprice"
-              label="商品总价"
-              align="center"
-              width="95"
-              sortable="custom"
-            ></el-table-column>
             <el-table-column property="price" label="售价" align="center" width="95" sortable="custom"></el-table-column>
-            <el-table-column property="soldChart" label="销量走势图" align="center" width="258">
+            <el-table-column property="soldChart" label="每日销量走势图" align="center" width="258">
               <template slot-scope="scope">
                 <div class="eDiv" :id="'echarts'+scope.$index"></div>
               </template>
             </el-table-column>
-            <el-table-column label="前7天Viewing Now" align="center">
-              <el-table-column
-                property="viewRate1"
-                label="均值"
-                align="center"
-                width="85"
-                sortable="custom"
-              ></el-table-column>
-              <el-table-column
-                property="viewRateGrowth"
-                label="增幅"
-                align="center"
-                width="85"
-                sortable="custom"
-              ></el-table-column>
+            <el-table-column property="soldChart" label="favorite每日新增走势图" align="center" width="258">
+              <template slot-scope="scope">
+                <div class="eDiv" :id="'echarts1'+scope.$index"></div>
+              </template>
             </el-table-column>
             <el-table-column
               property="listedTime"
@@ -164,10 +140,24 @@
             >
               <template slot-scope="scope">{{scope.row.genTime | cutOutMonye}}</template>
             </el-table-column>
-            <el-table-column property="shipping" label="运费" align="center" width="95" sortable="custom"></el-table-column>
-            <el-table-column property="numEntered" label="总收藏数" align="center" width="95" sortable="custom"></el-table-column>
-            <el-table-column property="maxNumBought" label="销量总数" align="center" width="95" sortable="custom"></el-table-column>
-            <el-table-column property="merchant" label="店铺名称" align="center" width="120"></el-table-column>
+            <el-table-column label="前30天销售" align="center">
+              <el-table-column
+                property="sold"
+                label="件数"
+                align="center"
+                width="85"
+                sortable="custom"
+              ></el-table-column>
+              <el-table-column
+                property="payment"
+                label="金额"
+                align="center"
+                width="85"
+                sortable="custom"
+              ></el-table-column>
+            </el-table-column>            
+            <el-table-column property="historicalSold" label="销量总数" align="center" width="95" sortable="custom"></el-table-column>
+            <el-table-column property="shopName" label="店铺名称" align="center" width="120"></el-table-column>
           </el-table>
           <div class="block toolbar">
             <el-pagination
@@ -484,7 +474,7 @@ import {
   ebayRxRefuse,
   manualRecommend
 } from "../../api/product";
-import { getWishXp, getWishRx,getRuleDeveloper } from "../../api/profit";
+import { getShopeePro, getWishRx,getRuleDeveloper } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
@@ -584,7 +574,6 @@ export default {
         rx: false
       },
       condition: {
-        marketplace: "",
         recommendStatus: "",
         page: 1,
         pageSize: 5,
@@ -1022,7 +1011,7 @@ export default {
       window.open("https://www.joom.com/en/products/" + id);
     },
     goLinkUrlEbay(id) {
-      window.open("https://www.wish.com/product/" + id);
+      window.open("https://shopee.co.id/" + id);
     },
     handleCurrentChangeEbayXp(val) {
       this.condition.page = val;
@@ -1042,28 +1031,28 @@ export default {
     },
     ebayXp() {
       this.lodingEbayXp = true;
-      getWishXp(this.condition).then(res => {
+      getShopeePro(this.condition).then(res => {
         this.ebayDataXp1 = this.ebayDataXp = res.data.data.items;
         this.totalEbayXp = res.data.data._meta.totalCount;
         this.condition.page = res.data.data._meta.currentPage;
         this.condition.pageSize = res.data.data._meta.perPage;
         this.proTotalXp = res.data.data._meta.totalCount;
-        for (let i = 0; i < this.ebayDataXp.length; i++) {
-          setTimeout(() => {
-            var obj = this.ebayDataXp[i].soldChart.viewData;
-            for (var k = 0; k < obj.length; k++) {
-              if (obj[k] == null) {
-                obj[k] = 0;
-              }
-            }
-            this.options.xAxis.data = this.ebayDataXp[i].soldChart.viewTime;
-            this.options.series[0].data = this.ebayDataXp[i].soldChart.viewData;
-            let or2 = this.$echarts.init(
-              document.getElementById("echarts" + i)
-            );
-            or2.setOption(this.options);
-          }, 20);
-        }
+        // for (let i = 0; i < this.ebayDataXp.length; i++) {
+        //   setTimeout(() => {
+        //     var obj = this.ebayDataXp[i].soldChart.viewData;
+        //     for (var k = 0; k < obj.length; k++) {
+        //       if (obj[k] == null) {
+        //         obj[k] = 0;
+        //       }
+        //     }
+        //     this.options.xAxis.data = this.ebayDataXp[i].soldChart.viewTime;
+        //     this.options.series[0].data = this.ebayDataXp[i].soldChart.viewData;
+        //     let or2 = this.$echarts.init(
+        //       document.getElementById("echarts" + i)
+        //     );
+        //     or2.setOption(this.options);
+        //   }, 20);
+        // }
         this.lodingEbayXp = false;
       });
     },

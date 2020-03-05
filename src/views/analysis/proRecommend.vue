@@ -23,10 +23,11 @@ export default {
   },
   data() {
     return {
-      allMenu: ["Ebay", "Wish", "Joom", "Amazon", "Aliexpress"],
+      allMenu: ["Ebay", "Wish", "Shopee"],
       show: {
         ebay: true,
-        wish: false
+        wish: false,
+        shopee: false
       },
       activeName: "Ebay"
     };
@@ -49,10 +50,13 @@ export default {
       } else {
         this.show.ebay = false;
       }
-      if (tab.name === "Joom") {
-        this.show.joom = true;
+      if (tab.name === "Shopee") {
+        this.show.shopee = true;
+        this.$router.push({
+          path: `/v1/products-engine/recommendShopee`
+        });
       } else {
-        this.show.joom = false;
+        this.show.shopee = false;
       }
       if (tab.name === "Amazon") {
         this.corner = "Amazon";

@@ -11,6 +11,7 @@
       </el-tabs>
       <pushWishRule v-show="show.wish"></pushWishRule>
       <pushEbayRule v-show="show.ebay"></pushEbayRule>
+      <pushShopeeRule v-show="show.shopee"></pushShopeeRule>
       <div v-show="show.joom"></div>
     </div>
   </section>
@@ -18,20 +19,23 @@
 <script type="text/ecmascript-6">
 import pushEbayRule from "./pushEbayRule.vue";
 import pushWishRule from "./pushWishRule.vue";
+import pushShopeeRule from "./pushShopeeRule.vue";
 export default {
   components: {
     pushEbayRule,
-    pushWishRule
+    pushWishRule,
+    pushShopeeRule
   },
   data() {
     return {
-      allMenu: ["Ebay", "Wish", "Joom", "Amazon", "Aliexpress"],
+      allMenu: ["Ebay", "Wish","Shopee"],
       listLoading: false,
       activeName:'Ebay',
       show:{
         ebay:true,
         wish:false,
-        joom:false
+        joom:false,
+        shopee:false,
       }
     };
   },
@@ -41,6 +45,11 @@ export default {
         this.show.wish = true;
       } else {
         this.show.wish = false;
+      }
+      if (tab.name === "Shopee") {
+        this.show.shopee = true;
+      } else {
+        this.show.shopee = false;
       }
       if (tab.name === "Ebay") {
         this.show.ebay = true;

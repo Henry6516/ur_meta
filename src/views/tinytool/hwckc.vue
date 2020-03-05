@@ -1,0 +1,214 @@
+<template>
+  <!-- <div>UK虚拟仓</div>     -->
+  <div class="toolbar">
+    <div class="demo-block demo-box demo-zh-CN demo-transition">
+      <transition name="el-fade-in-linear">
+        <el-form
+          :model="condition"
+          :inline="true"
+          ref="condition"
+          label-width="70px"
+          class="demo-form-inline"
+        >
+          <el-form-item label="商品编码" class="input" style="margin-left:10px;">
+            <el-input
+              placeholder="sku"
+              v-model="condition.goodsCode"
+              style="width:170px;"
+              size="small"
+              clearable
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="销售员" class="input">
+            <el-select
+              size="small"
+              clearable
+              v-model="condition.seller"
+              style="width:170px;"
+              placeholder="销售员"
+            >
+              <el-option
+                v-for="(item,index) in member"
+                :index="index"
+                :key="item.username"
+                :label="item.username"
+                :value="item.username"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              size="small"
+              type="primary"
+              @click="onSubmit(condition)"
+              style="margin-left:10px;"
+            >查询</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="small" type="success" @click="exportExcel(condition)">导出</el-button>
+          </el-form-item>
+        </el-form>
+      </transition>
+    </div>
+    <el-table
+      :data="tableData"
+      id="sale-table"
+      v-loading="listLoading"
+      element-loading-text="正在加载中..."
+      @sort-change="sortNumber"
+      :height="tableHeight"
+      border
+      class="elTable"
+      :header-cell-style="getRowClass"
+      style="width: 100%;font-size:13px;"
+    >
+      <el-table-column prop="sku" label="sku" align="center" fixed></el-table-column>
+      <el-table-column prop="goodsCode" label="商品编码" align="center" fixed></el-table-column>
+      <el-table-column prop="skuName" label="商品名称" align="center" fixed></el-table-column>
+      <el-table-column prop="goodsStatus" label="商品状态" align="center"></el-table-column>
+      <el-table-column prop="storeName" label="仓库" align="center"></el-table-column>
+      <el-table-column
+        prop="salerName"
+        label="开发员"
+        align="center"
+      ></el-table-column>
+      <el-table-column prop="seller1" label="销售员1" align="center"></el-table-column>
+      <el-table-column prop="seller2" label="销售员2" align="center"></el-table-column>      
+      <el-table-column prop="costPrice" label="平均单价" align="center" sortable="custom"></el-table-column>
+      <el-table-column prop="useNum" label="可用库存" align="center" sortable="custom"></el-table-column>
+      <el-table-column prop="costmoney" label="成本" align="center" sortable="custom"></el-table-column>
+      <el-table-column prop="hopeUseNum" label="预计可用库存" align="center" sortable="custom" width="125"></el-table-column>
+      <el-table-column prop="sellCount1" label="5天销量" align="center" sortable="custom"></el-table-column>
+      <el-table-column
+        prop="sellCount2"
+        label="10天销量"
+        align="center"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
+        prop="sellCount3"
+        label="20天销量"
+        align="center"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column prop="weight" label="重量" align="center" sortable="custom"></el-table-column>
+    </el-table>
+    <div class="toolbar" style="overflow:hidden">
+      <div style="float:left;">
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="this.condition.page"
+          :page-sizes="[100, 200, 300, 400]"
+          :page-size="this.condition.pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="this.total"
+        ></el-pagination>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+import { getMember, gethwckcsku } from "../../api/profit";
+import { APIExportReplenish } from "../../api/product";
+import { compareUp, compareDown, getMonthDate } from "../../api/tools";
+
+export default {
+  data() {
+    return {
+      tableHeight: window.innerHeight - 210,
+      tableData: [],
+      goodsState: [],
+      member: [],
+      total: null,
+      totalPrice: 0,
+      purchaser: [],
+      condition: {
+        goodsCode: "",
+        seller: "",
+        pageSize: 100,
+        page: 1
+      },
+      listLoading: false
+    };
+  },
+  methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
+    exportExcel(from) {
+      from.type = "uk2";
+      APIExportReplenish(from).then(res => {
+        const blob = new Blob([res.data], {
+          type:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        var file = res.headers["content-disposition"]
+          .split(";")[1]
+          .split("filename=")[1];
+        var filename = JSON.parse(file);
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        // const filename =
+        //   "Wish_" + year + month + strDate + hour + minute + second;
+        downloadElement.download = filename;
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+      });
+    },
+    sortNumber(column, prop, order) {
+      const data = this.tableData;
+      if (column.order === "descending") {
+        this.tableData = data.sort(compareDown(data, column.prop));
+      } else {
+        this.tableData = data.sort(compareUp(data, column.prop));
+      }
+    },
+    handleCurrentChange(val) {
+      this.condition.page = val;
+      this.onSubmit(this.condition);
+    },
+    handleSizeChange(val) {
+      this.condition.pageSize = val;
+      this.onSubmit(this.condition);
+    },
+    onSubmit(form) {
+      this.listLoading = true;
+      gethwckcsku(form).then(response => {
+        this.listLoading = false;
+        this.tableData = response.data.data.items;
+        this.total = response.data.data._meta.totalCount;
+        this.condition.page = response.data.data._meta.currentPage;
+        this.condition.pageSize = response.data.data._meta.perPage;
+      });
+    }
+  },
+  mounted() {
+    getMember().then(response => {
+      const res = response.data.data;
+      this.allMember = this.member = res.filter(
+        ele =>
+          (ele.department === '运营一部' || ele.parent_department === '运营一部') &&
+          ele.position === "销售"
+      );
+    });
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.el-form {
+  margin-bottom: 20px;
+  .el-form-item {
+    margin-bottom: 0px;
+  }
+}
+</style>

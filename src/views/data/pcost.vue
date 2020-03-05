@@ -3,7 +3,7 @@
     <el-form :model='form'
              :inline='true'
              ref='condition'
-             label-width='6rem'
+             label-width='80px'
              class='demo-form-inline toolbar'>
       <el-form-item label='日期'
                     class='input'
