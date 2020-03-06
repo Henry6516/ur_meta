@@ -53,7 +53,9 @@
             <el-table-column property="genTimeEnd" label="上架结束时间" align="center" width="80"></el-table-column>
             <el-table-column property="historicalSoldStart" label="总销售件数大于" align="center" width="80"></el-table-column>
             <el-table-column property="historicalSoldEnd" label="总销售件数小于" align="center" width="80"></el-table-column>
-            <el-table-column property="isShopeeVerified" label="虾皮优选" align="center" width="100"></el-table-column>
+            <el-table-column property="isShopeeVerified" label="虾皮优选" align="center" width="100">
+              <template slot-scope="scope">{{scope.row.shopLocationStatus==''?'不限':scope.row.shopLocationStatus}}</template>
+            </el-table-column>
             <el-table-column property="likedCountStart" label="Favorite大于" align="center" width="80"></el-table-column>
             <el-table-column property="likedCountEnd" label="Favorite小于" align="center" width="80"></el-table-column>
             <el-table-column property="paymentStart" label="前30天销售金额大于" align="center" width="100"></el-table-column>
@@ -196,7 +198,7 @@
               </el-col>
               <el-col :span="15">
                 <el-radio-group v-model="ebayXp.isShopeeVerified" size="medium">
-                  <el-radio-button label="不限">不限</el-radio-button>
+                  <el-radio-button label="">不限</el-radio-button>
                   <el-radio-button label="是">是</el-radio-button>
                   <el-radio-button label="否">否</el-radio-button>
                 </el-radio-group>
@@ -345,7 +347,7 @@
               </el-col>
               <el-col :span="15">
                 <el-radio-group v-model="addEbayXp.isShopeeVerified" size="medium">
-                  <el-radio-button label="不限">不限</el-radio-button>
+                  <el-radio-button label="">不限</el-radio-button>
                   <el-radio-button label="是">是</el-radio-button>
                   <el-radio-button label="否">否</el-radio-button>
                 </el-radio-group>
@@ -412,7 +414,7 @@ export default {
         genTimeStart: "",
         historicalSoldEnd: "",
         historicalSoldStart: "",
-        isShopeeVerified: "不限",
+        isShopeeVerified: "",
         likedCountEnd: "",
         likedCountStart: "",
         paymentEnd: "",
@@ -432,7 +434,7 @@ export default {
         genTimeStart: "",
         historicalSoldEnd: "",
         historicalSoldStart: "",
-        isShopeeVerified: "不限",
+        isShopeeVerified: "",
         likedCountEnd: "",
         likedCountStart: "",
         paymentEnd: "",
@@ -713,6 +715,9 @@ export default {
     forbidSale1(e) {},
     addEbayxpLogin() {
       this.addEbayXp.ruleType= "";
+      this.addEbayXp.country= "",
+      this.addEbayXp.isShopeeVerified= "",
+      this.addEbayXp.shopLocationStatus= "",
       this.addEbayXp.genTimeStart='';
       this.addEbayXp.genTimeEnd='';
       this.addEbayXp.totalpriceStart='';
@@ -795,7 +800,7 @@ export default {
     },
     saveEbayXp() {
       this.ebaydisLoginxp = true;
-      this.ebayXp.country=='马来西亚'?this.ebayXp.country='1':this.ebayXp.country=='印度尼西亚'?this.ebayXp.country='2':this.ebayXp.country=='泰国'?this.ebayXp.country='3':this.ebayXp.country=='菲律宾'?this.ebayXp.country='4':this.ebayXp.country=='台湾'?this.ebayXp.country='5':this.ebayXp.country=='新加坡'?this.ebayXp.country='6':'7'
+      this.ebayXp.country=='马来西亚'?this.ebayXp.country='1':this.ebayXp.country=='印度尼西亚'?this.ebayXp.country='2':this.ebayXp.country=='泰国'?this.ebayXp.country='3':this.ebayXp.country=='菲律宾'?this.ebayXp.country='4':this.ebayXp.country=='台湾'?this.ebayXp.country='5':this.ebayXp.country=='新加坡'?this.ebayXp.country='6':this.ebayXp.country='7'
       wishProductsSaveRule(this.ebayXp).then(res => {
         if (res.data.data) {
           this.$message({
@@ -812,7 +817,7 @@ export default {
     },
     addSaveEbayXp() {
       if (this.addEbayXp.ruleName) {
-        this.addEbayXp.country=='马来西亚'?this.addEbayXp.country='1':this.addEbayXp.country=='印度尼西亚'?this.addEbayXp.country='2':this.addEbayXp.country=='泰国'?this.addEbayXp.country='3':this.addEbayXp.country=='菲律宾'?this.addEbayXp.country='4':this.addEbayXp.country=='台湾'?this.addEbayXp.country='5':this.addEbayXp.country=='新加坡'?this.addEbayXp.country='6':'7'
+        this.addEbayXp.country=='马来西亚'?this.addEbayXp.country='1':this.addEbayXp.country=='印度尼西亚'?this.addEbayXp.country='2':this.addEbayXp.country=='泰国'?this.addEbayXp.country='3':this.addEbayXp.country=='菲律宾'?this.addEbayXp.country='4':this.addEbayXp.country=='台湾'?this.addEbayXp.country='5':this.addEbayXp.country=='新加坡'?this.addEbayXp.country='6':this.addEbayXp.country='7'
         wishProductsSaveRule(this.addEbayXp).then(res => {
           if (res.data.data) {
             this.$message({
@@ -964,7 +969,7 @@ export default {
       shopeeProductsRule().then(res => {
         this.ebaydata = res.data.data;
         for(var i=0;i<this.ebaydata.length;i++){
-          this.ebaydata[i].country==1?this.ebaydata[i].country='马来西亚':this.ebaydata[i].country=='2'?this.ebaydata[i].country='印度尼西亚':this.ebaydata[i].country=='3'?this.ebaydata[i].country='泰国':this.ebaydata[i].country=='4'?this.ebaydata[i].country='菲律宾':this.ebaydata[i].country=='5'?this.ebaydata[i].country='台湾':this.ebaydata[i].country=='6'?this.ebaydata[i].country='新加坡':'越南'
+          this.ebaydata[i].country==1?this.ebaydata[i].country='马来西亚':this.ebaydata[i].country=='2'?this.ebaydata[i].country='印度尼西亚':this.ebaydata[i].country=='3'?this.ebaydata[i].country='泰国':this.ebaydata[i].country=='4'?this.ebaydata[i].country='菲律宾':this.ebaydata[i].country=='5'?this.ebaydata[i].country='台湾':this.ebaydata[i].country=='6'?this.ebaydata[i].country='新加坡':this.ebaydata[i].country='越南'
         }
         this.listLoading = false;
       });

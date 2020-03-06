@@ -37,6 +37,9 @@
           <div v-show="platWish" class="twz1">
             <span class="tw3">{{wishmrtotal}}</span>
           </div>
+          <div v-show="platShopee" class="twz1">
+            <span class="tw3">{{wishmrtotal}}</span>
+          </div>
         </div>
         <div class="mtBox01">
           <div class="t1">
@@ -52,6 +55,9 @@
             <span class="tw2">{{tsrxtotal}}</span>
           </div>
           <div v-show="platWish" class="twz1">
+            <span class="tw3">{{wishtstotal}}</span>
+          </div>
+          <div v-show="platShopee" class="twz1">
             <span class="tw3">{{wishtstotal}}</span>
           </div>
         </div>
@@ -71,6 +77,9 @@
           <div v-show="platWish" class="twz1">
             <span class="tw3">{{wishrltotal}}</span>
           </div>
+          <div v-show="platShopee" class="twz1">
+            <span class="tw3">{{wishrltotal}}</span>
+          </div>
         </div>
         <div class="mtBox01">
           <div class="t1">
@@ -88,6 +97,9 @@
           <div v-show="platWish" class="twz1">
             <span class="tw3">{{wishgltotal}}</span>
           </div>
+          <div v-show="platShopee" class="twz1">
+            <span class="tw3">{{wishgltotal}}</span>
+          </div>
         </div>
         <div class="mtBox01">
           <div class="t1">
@@ -103,6 +115,9 @@
             <span class="tw2">{{clrxtotal}}</span>
           </div>
           <div v-show="platWish" class="twz1">
+            <span class="tw3">{{wishcltotal}}</span>
+          </div>
+          <div v-show="platShopee" class="twz1">
             <span class="tw3">{{wishcltotal}}</span>
           </div>
         </div>
@@ -141,6 +156,30 @@
               </div>
             </div>
             <div class="xBox" v-show="platWish">
+              <div class="mcT01" v-for="(item,index) in devNumWish" :key="index">
+                <span class="mName">{{item.username}}</span>
+                <div class="mcDiv" v-show="numIndex==index">
+                  <span
+                    :style="{width:item.claimRate+'%'}"
+                    v-show="item.claimNum>0"
+                  >{{item.claimNum}}</span>
+                  <span
+                    :style="{width:item.filterRate+'%'}"
+                    v-show="item.filterNum>0"
+                  >{{item.filterNum}}</span>
+                  <span
+                    :style="{width:item.unhandledRate+'%'}"
+                    v-show="item.unhandledNum>0"
+                  >{{item.unhandledNum}}</span>
+                </div>
+                <div class="xCase" @mouseover="numIndex=index" @mouseout="numIndex=999">
+                  <span class="xg" :style="{width:item.claimRate+'%'}"></span>
+                  <span class="xr" :style="{width:item.filterRate+'%'}"></span>
+                  <span class="xh" :style="{width:item.unhandledRate+'%'}"></span>
+                </div>
+              </div>
+            </div>
+            <div class="xBox" v-show="platShopee">
               <div class="mcT01" v-for="(item,index) in devNumWish" :key="index">
                 <span class="mName">{{item.username}}</span>
                 <div class="mcDiv" v-show="numIndex==index">
@@ -419,7 +458,8 @@ export default {
       platindex:0,
       plateBay:true,
       platWish:false,
-      selectPlat:['eBay','Wish'],
+      platShopee:false,
+      selectPlat:['eBay','Wish','shopee'],
       platName:null,
       qbTotal:{
         ebay:true,
@@ -716,10 +756,17 @@ export default {
       if(item=='eBay'){
         this.plateBay=true
         this.platWish=false
+        this.platShopee=false
       }
       if(item=='Wish'){
         this.plateBay=false
         this.platWish=true
+        this.platShopee=false
+      }
+      if(item=='shopee'){
+        this.plateBay=false
+        this.platWish=false
+        this.platShopee=true
       }
       this.getDataTotal();
     },
@@ -1104,6 +1151,17 @@ export default {
         }
         if(this.platWish){
           var lineData = response.data.data.wish.claimData;
+          for (var i = 0; i < lineData.length; i++) {
+            arrName.push(lineData[i].name);
+            arrData.push(lineData[i].value);
+          }
+          this.options.xAxis[0].data = arrName;
+          this.options.series[0].data = arrData;
+          let indexOr = this.$echarts.init(this.$refs.indexOr);
+          indexOr.setOption(this.options);
+        }
+        if(this.platShopee){
+          var lineData = response.data.data.shopee.claimData;
           for (var i = 0; i < lineData.length; i++) {
             arrName.push(lineData[i].name);
             arrData.push(lineData[i].value);

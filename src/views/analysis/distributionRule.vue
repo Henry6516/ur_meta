@@ -180,6 +180,20 @@
             </span>
             </el-col>
             </el-col>
+            <el-col :span="22" :offset="2">
+              <el-col :span="24" style="margin-top:15px;">Shopee</el-col>
+            <el-col
+              :span="3"
+              style="margin-top:15px;margin-left:20px;cursor:pointer"
+              v-for="(itemWish,index) in shopeeData"
+              :key="index"
+            >
+            <span @click="shopeeT1(index)">
+              <span class="oneClass" :class="itemWish.flag?'ruleBac':''"></span>
+              {{itemWish.ruleName}}
+            </span>
+            </el-col>
+            </el-col>
           </el-col>
         </el-col>
       </el-row>
@@ -314,6 +328,20 @@
             </span>
             </el-col>
             </el-col>
+            <el-col :span="22" :offset="2">
+              <el-col :span="24" style="margin-top:15px;">shopee</el-col>
+            <el-col
+              :span="3"
+              style="margin-top:15px;margin-left:20px;cursor:pointer"
+              v-for="(itemWish,index) in shopeeData"
+              :key="index"
+            >
+            <span @click="shopeeT1(index)">
+              <span class="oneClass" :class="itemWish.flag?'ruleBac':''"></span>
+              {{itemWish.ruleName}}
+            </span>
+            </el-col>
+            </el-col>
           </el-col>
         </el-col>
       </el-row>
@@ -345,6 +373,7 @@ export default {
       platWishArr: ["Wish"],
       ebayData: [],
       wishData: [],
+      shopeeData: [],
       ruleNameWish: [],
       tableData: [],
       department: [],
@@ -415,6 +444,9 @@ export default {
     }
   },
   methods: {
+    shopeeT1(index){
+      this.shopeeData[index].flag = !this.shopeeData[index].flag;
+    },    
     wishT1(index){
       this.wishData[index].flag = !this.wishData[index].flag;
     },
@@ -597,6 +629,7 @@ export default {
       getallotRuleInfo(obj).then(response => {
         this.ebayData = response.data.data.detail.ebay;
         this.wishData = response.data.data.detail.wish;
+        this.shopeeData = response.data.data.detail.shopee;
       });
       this.addebaydisLogin = true;
     },
@@ -616,6 +649,7 @@ export default {
         this.dateExcludePyCate = res.data.data.excludePyCate;
         this.wishData=res.data.data.detail.wish;
         this.ebayData=res.data.data.detail.ebay;
+        this.shopeeData=res.data.data.detail.shopee;
         var detail = res.data.data.detail;
         this.ruleNameNew = [];
         this.ruleNameHot = [];
@@ -647,10 +681,17 @@ export default {
         this.data.excludePyCate = this.dateExcludePyCate;
         var wish=this.wishData
         var ebay=this.ebayData
+        var shopee=this.shopeeData
         for (var i = 0; i < wish.length; i++) {
           if (wish[i].flag == false) {
             wish.splice(i, 1);
             i--;
+          }
+        }
+        for (var h = 0; h < shopee.length; h++) {
+          if (shopee[h].flag == false) {
+            shopee.splice(h, 1);
+            h--;
           }
         }
         for (var k = 0; k < ebay.length; k++) {
@@ -669,7 +710,8 @@ export default {
         }
         var obj={
           wish:wish,
-          ebay:ebay
+          ebay:ebay,
+          shopee:shopee
         }
         this.data.detail=obj
         saveAllotRule(this.data).then(res => {
@@ -707,10 +749,17 @@ export default {
         this.addData.excludePyCate = this.excludePyCate;
         var wish=this.wishData
         var ebay=this.ebayData
+        var shopee=this.shopeeData
         for (var i = 0; i < wish.length; i++) {
           if (wish[i].flag == false) {
             wish.splice(i, 1);
             i--;
+          }
+        }
+        for (var h = 0; h < shopee.length; h++) {
+          if (shopee[h].flag == false) {
+            shopee.splice(h, 1);
+            h--;
           }
         }
         for (var k = 0; k < ebay.length; k++) {
@@ -729,7 +778,8 @@ export default {
         }
         var obj={
           wish:wish,
-          ebay:ebay
+          ebay:ebay,
+          shopee:shopee
         }
         this.addData.detail=obj
         saveAllotRule(this.addData).then(res => {

@@ -85,7 +85,7 @@
                 <div style="margin-top:8px;" class="ebayGoa">
                   <span
                     style="margin-top:5px;font-size:13px;"
-                    @click="goLinkUrlEbay(scope.row.pid)"
+                    @click="goLinkUrlEbay(scope.row.title,scope.row.shopId,scope.row.pid)"
                   >shopee链接</span>
                   <!-- <span
                     style="margin-top:5px;font-size:13px;"
@@ -93,7 +93,7 @@
                   >货源链接</span> -->
                   <span
                     style="margin-top:5px;font-size:13px;"
-                    @click="manualPush(scope.row.pid,'wish')"
+                    @click="manualPush(scope.row.pid,'shopee')"
                   >手动推送</span>
                 </div>
               </template>
@@ -121,12 +121,12 @@
               </el-table-column>
             </el-table-column>
             <el-table-column property="price" label="售价" align="center" width="95" sortable="custom"></el-table-column>
-            <el-table-column property="soldChart" label="每日销量走势图" align="center" width="258">
+            <el-table-column label="每日销量走势图" align="center" width="258">
               <template slot-scope="scope">
                 <div class="eDiv" :id="'echarts'+scope.$index"></div>
               </template>
             </el-table-column>
-            <el-table-column property="soldChart" label="favorite每日新增走势图" align="center" width="258">
+            <el-table-column label="favorite每日新增走势图" align="center" width="258">
               <template slot-scope="scope">
                 <div class="eDiv" :id="'echarts1'+scope.$index"></div>
               </template>
@@ -1010,8 +1010,8 @@ export default {
     goLinkUrlJoom(id) {
       window.open("https://www.joom.com/en/products/" + id);
     },
-    goLinkUrlEbay(id) {
-      window.open("https://shopee.co.id/" + id);
+    goLinkUrlEbay(a,b,c) {
+      window.open("https://shopee.com.my/" + a +'-i' + b +'.' + c);
     },
     handleCurrentChangeEbayXp(val) {
       this.condition.page = val;
@@ -1037,22 +1037,38 @@ export default {
         this.condition.page = res.data.data._meta.currentPage;
         this.condition.pageSize = res.data.data._meta.perPage;
         this.proTotalXp = res.data.data._meta.totalCount;
-        // for (let i = 0; i < this.ebayDataXp.length; i++) {
-        //   setTimeout(() => {
-        //     var obj = this.ebayDataXp[i].soldChart.viewData;
-        //     for (var k = 0; k < obj.length; k++) {
-        //       if (obj[k] == null) {
-        //         obj[k] = 0;
-        //       }
-        //     }
-        //     this.options.xAxis.data = this.ebayDataXp[i].soldChart.viewTime;
-        //     this.options.series[0].data = this.ebayDataXp[i].soldChart.viewData;
-        //     let or2 = this.$echarts.init(
-        //       document.getElementById("echarts" + i)
-        //     );
-        //     or2.setOption(this.options);
-        //   }, 20);
-        // }
+        for (let i = 0; i < this.ebayDataXp.length; i++) {
+          setTimeout(() => {
+            var obj = this.ebayDataXp[i].boughtChart.dailyBought;
+            for (var k = 0; k < obj.length; k++) {
+              if (obj[k] == null) {
+                obj[k] = 0;
+              }
+            }
+            this.options.xAxis.data = this.ebayDataXp[i].boughtChart.date;
+            this.options.series[0].data = this.ebayDataXp[i].boughtChart.dailyBought;
+            let or2 = this.$echarts.init(
+              document.getElementById("echarts" + i)
+            );
+            or2.setOption(this.options);
+          }, 20);
+        }
+        for (let i = 0; i < this.ebayDataXp.length; i++) {
+          setTimeout(() => {
+            var obj = this.ebayDataXp[i].boughtChart.favorite;
+            for (var k = 0; k < obj.length; k++) {
+              if (obj[k] == null) {
+                obj[k] = 0;
+              }
+            }
+            this.options.xAxis.data = this.ebayDataXp[i].boughtChart.date;
+            this.options.series[0].data = this.ebayDataXp[i].boughtChart.favorite;
+            let or2 = this.$echarts.init(
+              document.getElementById("echarts1" + i)
+            );
+            or2.setOption(this.options);
+          }, 20);
+        }
         this.lodingEbayXp = false;
       });
     },

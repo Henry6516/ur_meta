@@ -126,6 +126,7 @@
       style="width: 100%;font-size:13px;"
     >
       <el-table-column prop="salerName" label="开发员" width="100" fixed align="center"></el-table-column>
+      <el-table-column prop="supplierName" label="供应商" width="140" fixed align="center"></el-table-column>
       <el-table-column prop="SKU" label="sku" width="100" fixed align="center"></el-table-column>
       <el-table-column prop="SKUName" label="SKU名称" width="120" fixed align="center"></el-table-column>
       <el-table-column prop="goodsCode" label="商品编码" width="100" fixed align="center"></el-table-column>
@@ -135,7 +136,6 @@
       <el-table-column prop="price" label="价格" sortable="custom" width="100" align="center"></el-table-column>
       <el-table-column prop="weight" label="重量(g)" sortable="custom" width="100" align="center"></el-table-column>
       <el-table-column prop="purchaser" label="采购" width="100" align="center"></el-table-column>
-      <el-table-column prop="supplierName" label="供应商" width="140" align="center"></el-table-column>
       <el-table-column prop="saleNum3days" label="3天销量" sortable="custom" width="100" align="center"></el-table-column>
       <el-table-column prop="saleNum7days" label="7天销量" sortable="custom" width="100" align="center"></el-table-column>
       <el-table-column prop="saleNum15days" label="15天销量" sortable="custom" width="100" align="center"></el-table-column>
