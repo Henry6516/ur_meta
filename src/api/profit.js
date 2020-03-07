@@ -951,6 +951,13 @@ export function getWishRxMind(param) {
   })
 }
 
+export function getShopeeMind(param) {
+  return request({
+    url: '/products-engine/mind-recommend?plat=shopee&marketplace=' + param.marketplace + '&page=' + param.page + '&pageSize=' + param.pageSize + '&sort=' + param.sort,
+    method: 'get'
+  })
+}
+
 export function gethwckcsku(param) {
   const data = { condition: param }
   return request({

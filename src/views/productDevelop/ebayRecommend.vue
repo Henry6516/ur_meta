@@ -3,14 +3,14 @@
     <div>
       <div v-show="show.ebay" style="background:#fff;padding-top:10px;">
         <div class="ebayCase">
-          <span class="ebayText" @click="tabEbayRx" v-show="!ebay.wish">
+          <span class="ebayText" @click="tabEbayRx" v-show="!ebay.wish && !ebay.shopee">
             <span class="ebayactive" :class="ebayStlye==1?'ebayActive':''"></span>热销商品
           </span>
-          <span class="ebayText" @click="tabEbayXp" style="margin-left:12px;" v-show="!ebay.wish">
+          <span class="ebayText" @click="tabEbayXp" style="margin-left:12px;" v-show="!ebay.wish && !ebay.shopee">
             <span class="ebayactive" :class="ebayStlye==0?'ebayActive':''"></span>新品商品
           </span>
-          <span class="pospan" v-show="!ebay.wish">{{proTotalXp}}</span>
-          <span class="pospan1" v-show="!ebay.wish">{{proTotalRx}}</span>
+          <span class="pospan" v-show="!ebay.wish && !ebay.shopee">{{proTotalXp}}</span>
+          <span class="pospan1" v-show="!ebay.wish && !ebay.shopee">{{proTotalRx}}</span>
           <el-select v-model="platValue" placeholder="请选择" size="small" style="float:left;margin-left:15px;width:150px;margin-top:3px;" @change="getPlat($event)">
             <el-option
               v-for="item in platArr"
@@ -504,6 +504,133 @@
             ></el-pagination>
           </div>
         </div>
+        <div v-show="ebay.shopee">
+          <el-table
+            :data="ebayDataShopee"
+            border
+            :height="tableHeightstock"
+            @sort-change="sortNumberWish"
+            :header-cell-style="getRowClass"
+            v-loading="lodingEbayWish"
+            style="width:98%;margin-left:0.7%;margin-top:10px;"
+          >
+            <el-table-column type="index" fixed align="center" width="40" header-align="center"></el-table-column>
+            <el-table-column prop="pid" fixed label="主1图" header-align="center" width="80">
+              <template slot-scope="scope">
+                <el-tooltip
+                  placement="right"
+                  :open-delay="10"
+                  class="exxHover"
+                  popper-class="page-login-toolTipClass"
+                >
+                  <div slot="content">
+                    <img :src="'https://s-cf-id.shopeesz.com/file/'+scope.row.image" style="width: 300px;height: 300px;" />
+                  </div>
+                  <img :src="'https://s-cf-id.shopeesz.com/file/'+scope.row.image" style="width: 60px;height: 60px" />
+                </el-tooltip>
+                <a class="ebayBlocka ebayBlocka1" @click="submissionShopee(scope.row._id.oid)" v-show="scope.row.flag">
+                  <i class="el-icon-star-off" style="margin-right:3px;"></i>认领
+                </a>
+                <a class="ebayBlocka ebayBlocka2" @click="refuseShopee(scope.row._id.oid)" v-show="scope.row.flag">
+                  <i class="el-icon-delete" style="margin-right:3px;"></i>过滤
+                </a>
+                <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
+              </template>
+            </el-table-column>
+            <el-table-column
+              property="title"
+              label="商品标题"
+              header-align="center"
+              fixed
+              width="310"
+            >
+              <template slot-scope="scope">
+                <p style="margin:0">{{scope.row.title}}</p>
+                <p
+                  style="margin:0;margin-top:8px;color:#e6a23c;font-size:13px;"
+                >{{scope.row.pname}}</p>
+                <div style="margin-top:8px;">
+                  <span
+                    style="margin:0;margin-top:2px;color:#3c8dbc;font-size:13px;display:block;"
+                  >商品ID:{{scope.row.pid}}</span>
+                  <span
+                    style="margin:0;margin-top:2px;color:#3c8dbc;font-size:13px;display:block;"
+                  >Loation:{{scope.row.shopLocation}}</span>
+                  <span
+                    style="margin:0;margin-top:2px;color:#3c8dbc;font-size:13px;display:block;"
+                  >评分:{{scope.row.rating}}</span>
+                  <span
+                    style="margin:0;margin-top:2px;color:#3c8dbc;font-size:13px;display:block;"
+                  >Favorite:{{scope.row.likedCount}}</span>
+                  <span
+                    style="margin:0;margin-top:2px;color:#3c8dbc;font-size:13px;display:block;"
+                  >ratings:{{scope.row.ratingCount}}</span>
+                </div>
+                <div style="margin-top:8px;" class="ebayGoa">
+                  <span
+                    style="margin-top:5px;font-size:13px;"
+                    @click="goLinkUrlEbay(scope.row.title,scope.row.shopId,scope.row.pid)"
+                  >shopee链接</span>
+                </div>
+              </template>
+            </el-table-column>            
+            <el-table-column property="receiver" label="推荐人列表" align="center" width="100">
+              <template slot-scope="scope">
+                <div v-for="(itemm, index) in scope.row.receiver" :key="index">{{itemm}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column property="price" label="售价" align="center" width="95" sortable="custom"></el-table-column>
+            <el-table-column label="每日销量走势图" align="center" width="275">
+              <template slot-scope="scope">
+                <div class="eDiv1" :id="'echartsShopee'+scope.$index"></div>
+              </template>
+            </el-table-column>
+            <el-table-column label="favorite每日新增走势图" align="center" width="275">
+              <template slot-scope="scope">
+                <div class="eDiv1" :id="'echarts1Shopee'+scope.$index"></div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              property="listedTime"
+              label="上架时间"
+              align="center"
+              width="110"
+              sortable="custom"
+            >
+              <template slot-scope="scope">{{scope.row.genTime | cutOutMonye}}</template>
+            </el-table-column>
+            <el-table-column label="前30天销售" align="center">
+              <el-table-column
+                property="sold"
+                label="件数"
+                align="center"
+                width="85"
+                sortable="custom"
+              ></el-table-column>
+              <el-table-column
+                property="payment"
+                label="金额"
+                align="center"
+                width="85"
+                sortable="custom"
+              ></el-table-column>
+            </el-table-column>            
+            <el-table-column property="historicalSold" label="销量总数" align="center" width="95" sortable="custom"></el-table-column>
+            <el-table-column property="shopName" label="店铺名称" align="center" width="120"></el-table-column>
+          </el-table>
+          <div class="block toolbar">
+            <el-pagination
+              background
+              @size-change="handleSizeChangeShopee"
+              @current-change="handleCurrentChangeShopee"
+              :current-page="this.condition3.page"
+              :page-sizes="[5,20, 30, 40, 50]"
+              :page-size="this.condition3.pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="this.totalShopee"
+            ></el-pagination>
+          </div>
+        </div>
       </div>
       <el-dialog title :visible.sync="dialogEbayXpRefuse">
         <el-row>
@@ -597,6 +724,37 @@
           <el-button @click="dialogWishRefuse = false">取 消</el-button>
           <el-button type="primary" @click="wishRefuse">确 定</el-button>
         </div>
+      </el-dialog>
+      <el-dialog title :visible.sync="dialogShopeeRefuse">
+        <el-row>
+          <el-col :span="24">
+            <el-col :span="4" class="basp">
+              <span style="color:red">*</span>过滤原因
+            </el-col>
+            <el-col :span="18">
+              <el-select
+                v-model="shopeeText"
+                placeholder="请选择"
+                style="width:100%"
+                @change="selectShopee($event)"
+              >
+                <el-option v-for="item in reason" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+              <el-input
+                type="textarea"
+                v-show="shopeeProRefuse"
+                :rows="4"
+                placeholder="其他"
+                style="margin-top:10px;"
+                v-model="shopeeText1"
+              ></el-input>
+            </el-col>
+          </el-col>
+        </el-row>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogShopeeRefuse = false">取 消</el-button>
+          <el-button type="primary" @click="shopeeRefuse">确 定</el-button>
+        </div>
       </el-dialog>      
       <el-dialog title :visible.sync="dialogPhoto" width="85%" @close='closeDlg'>
         <div class="ccdiv" v-show="!arrtable">
@@ -664,30 +822,36 @@ import {
   ebayRxRefuse,
   formSkuInfo,
   wishRefuse,
-  wishAccept
+  shopeeRefuse,
+  wishAccept,
+  shopeeAccept
 } from "../../api/product";
-import { getEbayXpMind, getEbayRxMind,getWishRxMind } from "../../api/profit";
+import { getEbayXpMind, getEbayRxMind,getWishRxMind,getShopeeMind } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
       ebayDataWish:[],
       ebayDataWish1:[],
+      ebayDataShopee:[],
+      ebayDataShopee1:[],
       tableHeightstock: window.innerHeight - 209,
       totalEbayXp: null,
       totalEbayRx: null,
       ebayXpRefuse: false,
       ebayRxRefuse: false,
       wishProRefuse:false,
+      shopeeProRefuse:false,
       lodingEbayRx: false,
       lodingEbayXp: false,
       lodingEbayWish:false,
       dialogPhoto: false,
       dialogWishRefuse:false,
+      dialogShopeeRefuse:false,
       photoImg: [],
       imgUrl:null,
       platValue:'eBay',
-      platArr:['eBay','Wish'],
+      platArr:['eBay','Wish','Shopee'],
       proTotalXp: 0,
       proTotalRx: 0,
       options: {
@@ -791,7 +955,8 @@ export default {
       ebay: {
         xp: true,
         rx: false,
-        wish:false
+        wish:false,
+        shopee:false
       },
       condition: {
         marketplace: "",
@@ -806,6 +971,12 @@ export default {
         sort: ""
       },
       condition2: {
+        marketplace: "",
+        page: 1,
+        pageSize: 5,
+        sort: ""
+      },
+      condition3: {
         marketplace: "",
         page: 1,
         pageSize: 5,
@@ -834,11 +1005,15 @@ export default {
       ebayRxText1: null,
       wishText:null,
       wishText1:null,
+      shopeeText:null,
+      shopeeText1:null,
       sysUserName: null,
       arrData:[],
       arrtable:false,
       wishId:null,
-      totalWish:null
+      shopeeId:null,
+      totalWish:null,
+      totalShopee:null
     };
   },
   filters: {
@@ -861,6 +1036,13 @@ export default {
       this.wishProRefuse = false;
       this.dialogWishRefuse = true;
     },
+    refuseShopee(id){
+      this.shopeeId = id;
+      this.shopeeText = null;
+      this.shopeeText1 = null;
+      this.shopeeProRefuse = false;
+      this.dialogShopeeRefuse = true;
+    },    
     selectWish(e){
       if (e == "8: 其他") {
         this.wishProRefuse = true;
@@ -868,6 +1050,13 @@ export default {
         this.wishProRefuse = false;
       }
     },
+    selectShopee(e){
+      if (e == "8: 其他") {
+        this.shopeeProRefuse = true;
+      } else {
+        this.shopeeProRefuse = false;
+      }
+    },    
     wishRefuse(){
       if (this.wishText || this.wishText1) {
         if (this.wishText && this.wishText1) {
@@ -897,16 +1086,52 @@ export default {
         this.$message.error("请选择过滤理由");
       }
     },
+    shopeeRefuse(){
+      if (this.shopeeText || this.shopeeText1) {
+        if (this.shopeeText && this.shopeeText1) {
+          var condition = {
+            id: this.shopeeId,
+            reason: "8: 其他:" + this.shopeeText1
+          };
+        } else {
+          var condition = {
+            id: this.shopeeId,
+            reason: this.shopeeText
+          };
+        }
+        shopeeRefuse(condition).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "过滤成功",
+              type: "success"
+            });
+            this.ebayShopee();
+          } else {
+            this.$message.error(res.data.message);
+          }
+          this.dialogShopeeRefuse = false;
+        });
+      } else {
+        this.$message.error("请选择过滤理由");
+      }
+    },    
     getPlat(e){
       if(e=='Wish'){
         this.ebay.wish=true
         this.ebay.xp=false
         this.ebay.rx=false
-      }else{
+        this.ebay.shopee=false
+      }else if(e=='eBay'){
         this.ebay.wish=false
         this.ebay.xp=true
         this.ebayStlye=0
         this.ebay.rx=false
+        this.ebay.shopee=false
+      }else{
+        this.ebay.wish=false
+        this.ebay.xp=false
+        this.ebay.rx=false
+        this.ebay.shopee=true
       }
     },
     closeDlg(){
@@ -1295,6 +1520,14 @@ export default {
       this.condition2.pageSize = val;
       this.ebayWish();
     },
+    handleCurrentChangeShopee(val) {
+      this.condition3.page = val;
+      this.ebayShopee();
+    },
+    handleSizeChangeShopee(val) {
+      this.condition3.pageSize = val;
+      this.ebayShopee();
+    },    
     ebayXp() {
       this.lodingEbayXp = true;
       getEbayXpMind(this.condition).then(res => {
@@ -1395,6 +1628,55 @@ export default {
             for (var k = 0; k < str.length; k++) {
               if (this.sysUserName == str[k]) {
                 this.ebayDataWish[i].flag = true;
+              }
+            }
+          }, 20);
+        }
+        this.lodingEbayWish = false;
+      });
+    },
+    ebayShopee() {
+      this.lodingEbayWish = true;
+      getShopeeMind(this.condition3).then(res => {
+        this.ebayDataShopee = this.ebayDataShopee1 = res.data.data.items;
+        this.totalShopee = res.data.data._meta.totalCount;
+        this.condition3.page = res.data.data._meta.currentPage;
+        this.condition3.pageSize = res.data.data._meta.perPage;
+        for (let i = 0; i < this.ebayDataShopee.length; i++) {
+          this.$set(this.ebayDataShopee[i], "flag", false);
+          setTimeout(() => {
+            for (let i = 0; i < this.ebayDataShopee.length; i++) {
+                var obj = this.ebayDataShopee[i].boughtChart.dailyBought;
+                for (var k = 0; k < obj.length; k++) {
+                  if (obj[k] == null) {
+                    obj[k] = 0;
+                  }
+                }
+                this.options.xAxis.data = this.ebayDataShopee[i].boughtChart.date;
+                this.options.series[0].data = this.ebayDataShopee[i].boughtChart.dailyBought;
+                let or2 = this.$echarts.init(
+                  document.getElementById("echartsShopee" + i)
+                );
+                or2.setOption(this.options);
+            }
+            for (let i = 0; i < this.ebayDataShopee.length; i++) {
+                var obj = this.ebayDataShopee[i].boughtChart.favorite;
+                for (var h = 0; h < obj.length; h++) {
+                  if (obj[h] == null) {
+                    obj[h] = 0;
+                  }
+                }
+                this.options.xAxis.data = this.ebayDataShopee[i].boughtChart.date;
+                this.options.series[0].data = this.ebayDataShopee[i].boughtChart.favorite;
+                let or2 = this.$echarts.init(
+                  document.getElementById("echarts1Shopee" + i)
+                );
+                or2.setOption(this.options);
+            }
+            var str = this.ebayDataShopee[i].receiver;
+            for (var k = 0; k < str.length; k++) {
+              if (this.sysUserName == str[k]) {
+                this.ebayDataShopee[i].flag = true;
               }
             }
           }, 20);
@@ -1522,6 +1804,32 @@ export default {
         }
       );
     },
+    submissionShopee(id) {
+      this.$confirm("确定认领改产品？", "提示", { type: "success" }).then(
+        () => {
+          let condition = {
+            id: id
+          };
+          shopeeAccept(condition).then(res => {
+            if (res.data.code == 200) {
+              sessionStorage.setItem("ebayEdit", res.data.data.data.devNum);
+              this.$confirm("认领成功,前去开发", "提示", {
+                type: "success"
+              }).then(() => {
+                let Logistics = this.$router.resolve({
+                  path: `/v1/oa-goodsinfo/ebayEdit`
+                });
+                window.open(Logistics.href);
+              });
+              this.ebayShopee();
+            } else {
+              this.$message.error(res.data.message);
+              this.ebayShopee();
+            }
+          });
+        }
+      );
+    },    
     getDataEbay() {
       this.listLoading = true;
       APRecommendEbay().then(res => {
@@ -1548,6 +1856,7 @@ export default {
     this.ebayXp();
     this.ebayRx();
     this.ebayWish();
+    this.ebayShopee();
     this.sysUserName = sessionStorage.getItem("user");
   }
 };

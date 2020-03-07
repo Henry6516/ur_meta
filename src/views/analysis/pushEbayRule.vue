@@ -1563,6 +1563,11 @@ export default {
       } else {
         this.ebayXp.salesThreeDayFlag = 0;
       }
+      if (this.ebayXp.type) {
+          this.ebayXp.type = 'manual';
+        } else {
+          this.ebayXp.type = 'auto';
+        }
       if (this.ebayXp.popularStatus) {
         this.ebayXp.popularStatus = 1;
       } else {
@@ -1640,6 +1645,11 @@ export default {
       } else {
         this.ebayRx.popularStatus = 0;
       }
+      if (this.ebayRx.type) {
+          this.ebayRx.type = 'manual';
+        } else {
+          this.ebayRx.type = 'auto';
+        }
       ebaySaveRuleHot(this.ebayRx).then(res => {
         if (res.data.data) {
           this.$message({
@@ -1663,6 +1673,11 @@ export default {
       } else {
         this.addEbayRx.popularStatus = 0;
       }
+      if (this.addEbayRx.type) {
+          this.addEbayRx.type = 'manual';
+        } else {
+          this.addEbayRx.type = 'auto';
+        }
         ebaySaveRuleHot(this.addEbayRx).then(res => {
           if (res.data.data) {
             this.$message({
