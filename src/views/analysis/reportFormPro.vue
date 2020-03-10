@@ -38,7 +38,7 @@
             <span class="tw3">{{wishmrtotal}}</span>
           </div>
           <div v-show="platShopee" class="twz1">
-            <span class="tw3">{{wishmrtotal}}</span>
+            <span class="tw3">{{shopeemrtotal}}</span>
           </div>
         </div>
         <div class="mtBox01">
@@ -58,7 +58,7 @@
             <span class="tw3">{{wishtstotal}}</span>
           </div>
           <div v-show="platShopee" class="twz1">
-            <span class="tw3">{{wishtstotal}}</span>
+            <span class="tw3">{{shopeetstotal}}</span>
           </div>
         </div>
         <div class="mtBox01">
@@ -78,7 +78,7 @@
             <span class="tw3">{{wishrltotal}}</span>
           </div>
           <div v-show="platShopee" class="twz1">
-            <span class="tw3">{{wishrltotal}}</span>
+            <span class="tw3">{{shopeerltotal}}</span>
           </div>
         </div>
         <div class="mtBox01">
@@ -98,7 +98,7 @@
             <span class="tw3">{{wishgltotal}}</span>
           </div>
           <div v-show="platShopee" class="twz1">
-            <span class="tw3">{{wishgltotal}}</span>
+            <span class="tw3">{{shopeegltotal}}</span>
           </div>
         </div>
         <div class="mtBox01">
@@ -118,7 +118,7 @@
             <span class="tw3">{{wishcltotal}}</span>
           </div>
           <div v-show="platShopee" class="twz1">
-            <span class="tw3">{{wishcltotal}}</span>
+            <span class="tw3">{{shopeecltotal}}</span>
           </div>
         </div>
       </div>
@@ -180,7 +180,7 @@
               </div>
             </div>
             <div class="xBox" v-show="platShopee">
-              <div class="mcT01" v-for="(item,index) in devNumWish" :key="index">
+              <div class="mcT01" v-for="(item,index) in devNumShopee" :key="index">
                 <span class="mName">{{item.username}}</span>
                 <div class="mcDiv" v-show="numIndex==index">
                   <span
@@ -486,6 +486,11 @@ export default {
       wishrltotal:null,
       wishtstotal:null,
       wishmrtotal:null,
+      shopeecltotal:null,
+      shopeegltotal:null,
+      shopeerltotal:null,
+      shopeetstotal:null,
+      shopeemrtotal:null,      
       qbactove:1,
       tsactove:1,
       rlactove:1,
@@ -561,6 +566,7 @@ export default {
       isshow: false,
       devNum: [],
       devNumWish: [],
+      devNumShopee: [],
       options: {
         tooltip: {
           trigger: "axis",
@@ -873,8 +879,10 @@ export default {
       //数据接收
       var redata = JSON.parse(e.data).ebay;
       var redataWish = JSON.parse(e.data).wish;
+      var redataShopee = JSON.parse(e.data).shopee;
       this.devNum = redata.devData;
       this.devNumWish = redataWish.devData;
+      this.devNumShopee = redataShopee.devData;
       this.isshow = true;
       var xptotal = redata.totalNewNum;
       var setTime = setInterval(() => {
@@ -899,6 +907,11 @@ export default {
       this.wishrltotal = redataWish.claimWishNum;
       this.wishgltotal = redataWish.filterWishNum;
       this.wishcltotal = redataWish.unhandledWishNum;
+      this.shopeemrtotal = redataShopee.totalShopeeNum;
+      this.shopeetstotal = redataShopee.dispatchShopeeNum;
+      this.shopeerltotal = redataShopee.claimShopeeNum;
+      this.shopeegltotal = redataShopee.filterShopeeNum;
+      this.shopeecltotal = redataShopee.unhandledShopeeNum;
       var tsxptotal = redata.dispatchNewNum;
       var setTime2 = setInterval(() => {
         if (this.tsxptotal >= tsxptotal) {
