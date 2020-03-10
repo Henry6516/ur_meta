@@ -56,19 +56,19 @@
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column property="ruleName" label="规则名称" align="center" width="100"></el-table-column>
-            <el-table-column property="ruleMark" label="规则备注" align="center" width="100"></el-table-column>
+            <el-table-column property="ruleName" label="规则名称" align="center" width="120"></el-table-column>
+            <el-table-column property="ruleMark" label="规则备注" align="center" width="120"></el-table-column>
             <el-table-column property="ruleType" label="规则类别" align="center" width="100">
               <template slot-scope="scope">
                 {{scope.row.ruleType=='new'?'新品':'热销'}}
               </template>
             </el-table-column>
-            <el-table-column property="pb" label="商品pb" align="center" width="80">
+            <el-table-column property="pb" label="商品pb" align="center" width="90">
               <template slot-scope="scope">
                 {{scope.row.pb=='1'?'有':scope.row.pb=='0'?'无':'不限'}}
               </template>
             </el-table-column>
-            <el-table-column property="hwc" label="海外仓" align="center" width="80">
+            <el-table-column property="hwc" label="海外仓" align="center" width="90">
               <template slot-scope="scope">
                 {{scope.row.hwc=='1'?'海外仓':scope.row.hwc=='0'?'非海外仓':'不限'}}
               </template>
@@ -79,16 +79,26 @@
               </template>
             </el-table-column>
             <el-table-column property="listedTime" label="上架时间" align="center" width="90"></el-table-column>
-            <el-table-column property="maxNumBoughtStart" label="销量大于" align="center" width="80"></el-table-column>
-            <el-table-column property="maxNumBoughtEnd" label="销量小于" align="center" width="80"></el-table-column>
-            <el-table-column property="ratingStart" label="评分大于" align="center"></el-table-column>
-            <el-table-column property="ratingEnd" label="评分小于" align="center"></el-table-column>
-            <el-table-column property="totalpriceStart" label="价格大于" align="center" width="80"></el-table-column>
-            <el-table-column property="totalpriceEnd" label="价格小于" align="center" width="80"></el-table-column>
-            <el-table-column property="viewRate1Start" label="前7天Viewing均值大于" align="center" width="170"></el-table-column>
-            <el-table-column property="viewRate1End" label="前7天Viewing均值小于" align="center" width="170"></el-table-column>
-            <el-table-column property="intervalRatingStart" label="前30天新增评论数大于" align="center" width="170"></el-table-column>
-            <el-table-column property="intervalRatingEnd" label="前30天新增评论数小于" align="center" width="170"></el-table-column>
+            <el-table-column property="maxNumBoughtStart" label="销量区间" align="center" width="125">
+              <template slot-scope="scope">{{scope.row.maxNumBoughtStart}} - {{scope.row.maxNumBoughtEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="maxNumBoughtEnd" label="销量小于" align="center" width="80"></el-table-column> -->
+            <el-table-column property="ratingStart" label="评分区间" align="center" width="125">
+              <template slot-scope="scope">{{scope.row.ratingStart}} - {{scope.row.ratingEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="ratingEnd" label="评分小于" align="center"></el-table-column> -->
+            <el-table-column property="totalpriceStart" label="价格区间" align="center" width="125">
+              <template slot-scope="scope">{{scope.row.totalpriceStart}} - {{scope.row.totalpriceEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="totalpriceEnd" label="价格小于" align="center" width="80"></el-table-column> -->
+            <el-table-column property="viewRate1Start" label="前7天Viewing均值" align="center" width="145">
+              <template slot-scope="scope">{{scope.row.viewRate1Start}} - {{scope.row.viewRate1End}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="viewRate1End" label="前7天Viewing均值小于" align="center" width="170"></el-table-column> -->
+            <el-table-column property="intervalRatingStart" label="前30天新增评论数" align="center" width="145">
+              <template slot-scope="scope">{{scope.row.intervalRatingStart}} - {{scope.row.intervalRatingEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="intervalRatingEnd" label="前30天新增评论数小于" align="center" width="170"></el-table-column> -->
             <el-table-column property="creator" label="创建人" align="center" width="80"></el-table-column>
             <el-table-column property="createdDate" label="创建时间" align="center" width="100">
               <template slot-scope="scope">{{scope.row.createdDate | cutOutMonye}}</template>

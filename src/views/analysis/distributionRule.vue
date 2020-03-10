@@ -16,7 +16,7 @@
         :header-cell-style="getRowClass"
       >
         <el-table-column type="index" fixed align="center" width="50" header-align="center"></el-table-column>
-        <el-table-column label="操作" fixed header-align="center" align="center" width="100">
+        <el-table-column label="操作" fixed header-align="center" align="center" width="70">
           <template slot-scope="scope">
             <el-tooltip content="更新">
               <i
@@ -34,20 +34,32 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column property="username" label="开发员" align="center"></el-table-column>
-        <el-table-column property="depart" label="部门" align="center"></el-table-column>
+        <el-table-column property="username" label="开发员" align="center" width="110"></el-table-column>
+        <el-table-column property="depart" label="部门" align="center" width="110"></el-table-column>
         <!-- <el-table-column property="ruleType" label="规则类型" align="center">
           <template slot-scope="scope">{{scope.row.ruleType=='new'?'新品':'热销'}}</template>
         </el-table-column>
         <el-table-column property="ruleName" label="推送规则" align="center"></el-table-column>-->
-        <el-table-column property="productNum" label="推送产品数量" align="center"></el-table-column>
-        <el-table-column property="category" label="类目" align="center"></el-table-column>
-        <el-table-column property="excludePyCate" label="排除类目" align="center"></el-table-column>
-        <el-table-column property="deliveryLocation" label="发货地点" align="center"></el-table-column>
-        <el-table-column property="createdDate" label="添加时间" align="center">
+        <el-table-column property="productNum" label="推送产品数量" align="center" width="115"></el-table-column>
+        <el-table-column property="category" label="类目" align="center" width="405">
+          <template slot-scope="scope">
+            <div v-for="(item, index) in scope.row.category" :key="index" class="supera">{{item}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column property="excludePyCate" label="排除类目" align="center" width="400">
+          <template slot-scope="scope">
+            <div v-for="(item, index) in scope.row.excludePyCate" :key="index" class="supera2">{{item}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column property="deliveryLocation" label="发货地点" align="center" width="180">
+          <template slot-scope="scope">
+            <div v-for="(item, index) in scope.row.deliveryLocation" :key="index" class="supera1">{{item}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column property="createdDate" label="添加时间" align="center"  width="115">
           <template slot-scope="scope">{{scope.row.createdDate | cutOutDate}}</template>
         </el-table-column>
-        <el-table-column property="updatedDate" label="更新时间" align="center">
+        <el-table-column property="updatedDate" label="更新时间" align="center"  width="115">
           <template slot-scope="scope">{{scope.row.updatedDate | cutOutDate}}</template>
         </el-table-column>
       </el-table>
@@ -848,6 +860,40 @@ export default {
 </script>
 
 <style scoped>
+.supera{
+  display: block;
+  float: left;
+  padding: 5px 7px;
+  color: #0e9a00;
+  border:rgba(3, 82, 38, 0.2) solid 1px;
+  background:rgba(33, 170, 95, 0.1);
+  border-radius:4px;
+  margin: 3px 5px;
+}
+.supera1{
+  display: block;
+  float: left;
+  padding: 5px 7px;
+  color: #409EFF;
+  border:1px solid rgba(64,158,255,.2);
+  background:rgba(64,158,255,.1);
+  border-radius:4px;
+  margin: 3px 5px;
+  white-space:nowrap;
+  box-sizing:border-box;
+}
+.supera2{
+  display: block;
+  float: left;
+  padding: 5px 7px;
+  color: #f56c6c;
+  border:rgba(245, 108, 108, 0.2) solid 1px;
+  background:rgba(245, 108, 108, 0.1);
+  border-radius:4px;
+  margin: 3px 5px;
+  white-space:nowrap;
+  box-sizing:border-box;
+}
 .basp {
   text-align: center;
 }

@@ -21,7 +21,7 @@
             style="width:98%;margin-left:0.7%;margin-top:15px;"
           >
             <el-table-column type="index" fixed align="center" width="40" header-align="center"></el-table-column>
-            <el-table-column label="操作" fixed header-align="center" align="center" width="75">
+            <el-table-column label="操作" fixed header-align="center" align="center" width="80">
               <template slot-scope="scope">
                 <el-tooltip content="更新">
                   <i
@@ -46,28 +46,40 @@
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column property="ruleName" label="规则名称" align="center" width="100"></el-table-column>
-            <el-table-column property="ruleMark" label="规则备注" align="center" width="100"></el-table-column>
-            <el-table-column property="country" label="国家" align="center" width="100"></el-table-column>
-            <el-table-column property="genTimeStart" label="上架开始时间" align="center" width="80"></el-table-column>
-            <el-table-column property="genTimeEnd" label="上架结束时间" align="center" width="80"></el-table-column>
-            <el-table-column property="historicalSoldStart" label="总销售件数大于" align="center" width="80"></el-table-column>
-            <el-table-column property="historicalSoldEnd" label="总销售件数小于" align="center" width="80"></el-table-column>
-            <el-table-column property="isShopeeVerified" label="虾皮优选" align="center" width="100">
+            <el-table-column property="ruleName" label="规则名称" align="center" width="130"></el-table-column>
+            <el-table-column property="ruleMark" label="规则备注" align="center" width="130"></el-table-column>
+            <el-table-column property="country" label="国家" align="center" width="120"></el-table-column>
+            <el-table-column property="genTimeStart" label="上架时间" align="center" width="128">
+              <template slot-scope="scope">{{scope.row.genTimeStart}} - {{scope.row.genTimeEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="genTimeEnd" label="上架时间" align="center" width="80"></el-table-column> -->
+            <el-table-column property="historicalSoldStart" label="总销售件数" align="center" width="125">
+              <template slot-scope="scope">{{scope.row.historicalSoldStart}} - {{scope.row.historicalSoldEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="historicalSoldEnd" label="总销售件数小于" align="center" width="80"></el-table-column> -->
+            <el-table-column property="isShopeeVerified" label="虾皮优选" align="center" width="110">
               <template slot-scope="scope">{{scope.row.shopLocationStatus==''?'不限':scope.row.shopLocationStatus}}</template>
             </el-table-column>
-            <el-table-column property="likedCountStart" label="Favorite大于" align="center" width="80"></el-table-column>
-            <el-table-column property="likedCountEnd" label="Favorite小于" align="center" width="80"></el-table-column>
-            <el-table-column property="paymentStart" label="前30天销售金额大于" align="center" width="100"></el-table-column>
-            <el-table-column property="paymentEnd" label="前30天销售金额小于" align="center" width="100"></el-table-column>
-            <el-table-column property="soldStart" label="前30天销售件数大于" align="center" width="100"></el-table-column>
-            <el-table-column property="soldEnd" label="前30天销售件数小于" align="center" width="100"></el-table-column>
-            <el-table-column property="ratingCountStart" label="评分大于" align="center" width="100"></el-table-column>
-            <el-table-column property="ratingCountEnd" label="评分小于" align="center" width="100"></el-table-column>
+            <el-table-column property="likedCountStart" label="Favorite" align="center" width="128">
+              <template slot-scope="scope">{{scope.row.likedCountStart}} - {{scope.row.likedCountEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="likedCountEnd" label="Favorite小于" align="center" width="80"></el-table-column> -->
+            <el-table-column property="paymentStart" label="前30天销售金额" align="center" width="128">
+              <template slot-scope="scope">{{scope.row.paymentStart}} - {{scope.row.paymentEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="paymentEnd" label="前30天销售金额小于" align="center" width="100"></el-table-column> -->
+            <el-table-column property="soldStart" label="前30天销售件数" align="center" width="128">
+              <template slot-scope="scope">{{scope.row.soldStart}} - {{scope.row.soldEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="soldEnd" label="前30天销售件数小于" align="center" width="100"></el-table-column> -->
+            <el-table-column property="ratingCountStart" label="评分区间" align="center" width="128">
+              <template slot-scope="scope">{{scope.row.ratingCountStart}} - {{scope.row.ratingCountEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="ratingCountEnd" label="评分小于" align="center" width="100"></el-table-column> -->
             <el-table-column property="shopLocationStatus" label="所在地" align="center" width="100">
               <template slot-scope="scope">{{scope.row.shopLocationStatus==1?'海外':scope.row.shopLocationStatus==1?'本地':'全部'}}</template>
             </el-table-column>
-            <el-table-column property="creator" label="创建人" align="center" width="80"></el-table-column>
+            <el-table-column property="creator" label="创建人" align="center" width="95"></el-table-column>
             <el-table-column property="createdDate" label="创建时间" align="center" width="100">
               <template slot-scope="scope">{{scope.row.createdDate | cutOutMonye}}</template>
             </el-table-column>

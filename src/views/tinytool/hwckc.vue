@@ -64,7 +64,7 @@
     >
       <el-table-column prop="sku" label="sku" align="center" fixed width="100"></el-table-column>
       <el-table-column prop="goodsCode" label="商品编码" align="center" fixed width="90"></el-table-column>
-      <el-table-column prop="skuName" label="商品名称" align="center" fixed width="100"></el-table-column>
+      <el-table-column prop="skuName" label="商品名称" align="center" fixed width="150"></el-table-column>
       <el-table-column prop="goodsStatus" label="商品状态" align="center" width="80"></el-table-column>
       <el-table-column prop="storeName" label="仓库" align="center" width="80"></el-table-column>
       <el-table-column
@@ -85,21 +85,7 @@
       <el-table-column prop="threeSellCount" label="3天销量" align="center" sortable="custom" width="100"></el-table-column>
       <el-table-column prop="sevenSellCount" label="7天销量" align="center" sortable="custom" width="100"></el-table-column>
       <el-table-column prop="fourteenSellCount" label="14天销量" align="center" sortable="custom" width="100"></el-table-column>
-      <el-table-column prop="sellCount1" label="5天销量" align="center" sortable="custom" width="100"></el-table-column>
-      <el-table-column
-        prop="sellCount2"
-        label="10天销量"
-         width="100"
-        align="center"
-        sortable="custom"
-      ></el-table-column>
-      <el-table-column
-        prop="sellCount3"
-        label="20天销量"
-         width="100"
-        align="center"
-        sortable="custom"
-      ></el-table-column>
+      <el-table-column prop="thirtySellCount" label="30天销量" align="center" sortable="custom" width="100"></el-table-column>
       <el-table-column prop="weight" label="重量" align="center" sortable="custom" width="80"></el-table-column>
       <el-table-column prop="turnoverDays" label="周转天数" align="center" sortable="custom" width="100"></el-table-column>
       <el-table-column prop="updateTime" label="更新时间" align="center" sortable="custom" width="100">
@@ -125,7 +111,7 @@
 
 <script type="text/ecmascript-6">
 import { getMember, gethwckcsku } from "../../api/profit";
-import { APIExportReplenish } from "../../api/product";
+import { APIExportskuExport } from "../../api/product";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 
 export default {
@@ -162,8 +148,7 @@ export default {
       }
     },
     exportExcel(from) {
-      from.type = "uk2";
-      APIExportReplenish(from).then(res => {
+      APIExportskuExport().then(res => {
         const blob = new Blob([res.data], {
           type:
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"

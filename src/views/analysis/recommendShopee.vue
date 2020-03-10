@@ -85,7 +85,7 @@
                 <div style="margin-top:8px;" class="ebayGoa">
                   <span
                     style="margin-top:5px;font-size:13px;"
-                    @click="goLinkUrlEbay(scope.row.title,scope.row.shopId,scope.row.pid)"
+                    @click="goLinkUrlEbay(scope.row.title,scope.row.shopId,scope.row.pid,scope.row.country)"
                   >shopee链接</span>
                   <!-- <span
                     style="margin-top:5px;font-size:13px;"
@@ -121,12 +121,12 @@
               </el-table-column>
             </el-table-column>
             <el-table-column property="price" label="售价" align="center" width="95" sortable="custom"></el-table-column>
-            <el-table-column label="每日销量走势图" align="center" width="258">
+            <el-table-column label="每日销量走势图" align="center" width="248">
               <template slot-scope="scope">
                 <div class="eDiv" :id="'echarts'+scope.$index"></div>
               </template>
             </el-table-column>
-            <el-table-column label="favorite每日新增走势图" align="center" width="258">
+            <el-table-column label="favorite每日新增走势图" align="center" width="248">
               <template slot-scope="scope">
                 <div class="eDiv" :id="'echarts1'+scope.$index"></div>
               </template>
@@ -152,12 +152,12 @@
                 property="payment"
                 label="金额"
                 align="center"
-                width="85"
+                width="115"
                 sortable="custom"
               ></el-table-column>
             </el-table-column>            
             <el-table-column property="historicalSold" label="销量总数" align="center" width="95" sortable="custom"></el-table-column>
-            <el-table-column property="shopName" label="店铺名称" align="center" width="120"></el-table-column>
+            <el-table-column property="shopName" label="店铺名称" align="center" width="105"></el-table-column>
           </el-table>
           <div class="block toolbar">
             <el-pagination
@@ -1010,8 +1010,22 @@ export default {
     goLinkUrlJoom(id) {
       window.open("https://www.joom.com/en/products/" + id);
     },
-    goLinkUrlEbay(a,b,c) {
-      window.open("https://shopee.com.my/" + a +'-i' + b +'.' + c);
+    goLinkUrlEbay(a,b,c,e) {
+      if(e=='Malaysia'){
+        window.open("https://shopee.com.my/" + a +'-i' + b +'.' + c);
+      }else if(e=='Indonesia'){
+        window.open("https://shopee.co.id/" + a +'-i' + b +'.' + c);
+      }else if(e=='Thailand'){
+        window.open("https://shopee.co.th/" + a +'-i' + b +'.' + c);
+      }else if(e=='Philippines'){
+        window.open("https://shopee.ph/" + a +'-i' + b +'.' + c);
+      }else if(e=='Taiwan'){
+        window.open("https://tw.shopeesz.com/" + a +'-i' + b +'.' + c);
+      }else if(e=='Singapore'){
+        window.open("https://shopee.sg/" + a +'-i' + b +'.' + c);
+      }else if(e=='Vietnam'){
+        window.open("https://shopee.vn/" + a +'-i' + b +'.' + c);
+      }
     },
     handleCurrentChangeEbayXp(val) {
       this.condition.page = val;

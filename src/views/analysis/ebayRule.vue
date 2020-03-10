@@ -17,7 +17,7 @@
         style="width:98%;margin-left:0.7%;margin-top:15px;"
       >
         <el-table-column type="index" fixed align="center" width="50" header-align="center"></el-table-column>
-        <el-table-column label="操作" fixed header-align="center" align="center" width="100">
+        <el-table-column label="操作" fixed header-align="center" align="center" width="70">
           <template slot-scope="scope">
             <el-tooltip content="更新">
               <i
@@ -35,27 +35,26 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column property="pyCate" label="普源类目" align="center"></el-table-column>
-        <el-table-column label="平台" align="center">
+        <el-table-column property="pyCate" label="普源类目" align="center" width="120"></el-table-column>
+        <el-table-column label="平台" width="222" header-align="center" align="center">
           <template slot-scope="scope">
             <div v-for="(item, index) in scope.row.detail" :key="index" class="supera">{{item.plat}}</div>
           </template>
         </el-table-column>
         <el-table-column label="站点" align="center">
           <template slot-scope="scope">
-            <span v-for="(item, index) in scope.row.detail" :key="index" class="supera">
+            <span v-for="(item, index) in scope.row.detail" :key="index">
               <span
                 v-for="(itemm, index) in item.platValue"
                 :key="index"
-                class="supera"
               >{{itemm.marketplace}}，</span>
             </span>
           </template>
         </el-table-column>
-        <el-table-column property="createdDate" label="添加时间" align="center">
+        <el-table-column property="createdDate" label="添加时间" align="center" width="150">
           <template slot-scope="scope">{{scope.row.createdDate | cutOutDate}}</template>
         </el-table-column>
-        <el-table-column property="updatedDate" label="更新时间" align="center">
+        <el-table-column property="updatedDate" label="更新时间" align="center" width="150">
           <template slot-scope="scope">{{scope.row.updatedDate | cutOutDate}}</template>
         </el-table-column>
       </el-table>
@@ -932,6 +931,16 @@ export default {
   height: 210px;
   overflow: hidden;
   overflow-y: auto;
+}
+.supera{
+  display: block;
+  float: left;
+  padding: 5px 10px;
+  color: #0e9a00;
+  border:rgba(3, 82, 38, 0.2) solid 1px;
+  background:rgba(33, 170, 95, 0.1);
+  border-radius:4px;
+  margin: 5px 5px;
 }
 .cColor {
   color: #3c8dbc;

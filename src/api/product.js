@@ -835,6 +835,17 @@ export function APIExportReplenish(param) {
     responseType: 'arraybuffer'
   })
 }
+
+export function APIExportskuExport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/sku-export',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
+
 export function APIPlatExportEbay(param) {
   const data = { condition: param }
   return request({

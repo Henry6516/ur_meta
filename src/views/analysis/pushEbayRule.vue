@@ -78,28 +78,34 @@
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column property="ruleName" label="规则名称" align="center" width="110"></el-table-column>
-            <el-table-column property="ruleMark" label="规则备注" align="center"></el-table-column>
+            <el-table-column property="ruleName" label="规则名称" align="center" width="120"></el-table-column>
+            <el-table-column property="ruleMark" label="规则备注" align="center" width="120"></el-table-column>
             <el-table-column property="isUsed" label="是否停用" align="center" width="100">
               <template slot-scope="scope"><a :class="scope.row.isUsed==0?'clasRed1':'clasGreen1'">{{scope.row.isUsed==0?'停用':'在用'}}</a></template>
             </el-table-column>
-            <el-table-column property="soldStart" label="销量大于" align="center" width="80"></el-table-column>
-            <el-table-column property="soldEnd" label="销量小于" align="center" width="80"></el-table-column>
-            <el-table-column property="visitStart" label="浏览数大于" align="center"></el-table-column>
-            <el-table-column property="visitEnd" label="浏览数小于" align="center"></el-table-column>
-            <el-table-column property="priceStart" label="价格大于" align="center" width="80"></el-table-column>
-            <el-table-column property="priceEnd" label="价格小于" align="center" width="80"></el-table-column>
+            <el-table-column property="soldStart" label="销量区间" align="center" width="125">
+              <template slot-scope="scope">{{scope.row.soldStart}} -- {{scope.row.soldEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="soldEnd" label="销量小于" align="center" width="80"></el-table-column> -->
+            <el-table-column property="visitStart" label="浏览数区间" align="center" width="125">
+              <template slot-scope="scope">{{scope.row.visitStart}} -- {{scope.row.visitEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="visitEnd" label="浏览数小于" align="center"></el-table-column> -->
+            <el-table-column property="priceStart" label="价格区间" align="center" width="125">
+              <template slot-scope="scope">{{scope.row.priceStart}} -- {{scope.row.priceEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="priceEnd" label="价格小于" align="center" width="80"></el-table-column> -->
             <el-table-column property="publishedSite" label="刊登站点" align="center" width="180"></el-table-column>
-            <el-table-column property="storeLocation" label="注册地址" align="center"></el-table-column>
-            <el-table-column property="popularStatus" label="是否有小火苗" align="center">
+            <el-table-column property="storeLocation" label="注册地址" align="center" width="110"></el-table-column>
+            <el-table-column property="popularStatus" label="是否有小火苗" align="center" width="120">
               <template slot-scope="scope">{{scope.row.popularStatus==0?'否':'是'}}</template>
             </el-table-column>
-            <el-table-column property="listedTime" label="上架时间" align="center"></el-table-column>
+            <el-table-column property="listedTime" label="上架时间" align="center" width="120"></el-table-column>
             <el-table-column property="creator" label="创建人" align="center" width="80"></el-table-column>
-            <el-table-column property="createdDate" label="创建时间" align="center">
+            <el-table-column property="createdDate" label="创建时间" align="center" width="110">
               <template slot-scope="scope">{{scope.row.createdDate | cutOutMonye}}</template>
             </el-table-column>
-            <el-table-column property="updatedDate" label="更新时间" align="center">
+            <el-table-column property="updatedDate" label="更新时间" align="center" width="100">
               <template slot-scope="scope">{{scope.row.updatedDate | cutOutMonye}}</template>
             </el-table-column>
           </el-table>
@@ -146,8 +152,8 @@
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column property="ruleName" label="规则名称" align="center" width="100"></el-table-column>
-            <el-table-column property="ruleMark" label="规则备注" align="center" width="100"></el-table-column>
+            <el-table-column property="ruleName" label="规则名称" align="center" width="120"></el-table-column>
+            <el-table-column property="ruleMark" label="规则备注" align="center" width="120"></el-table-column>
             <el-table-column property="isUsed" label="是否停用" align="center" width="100">
               <template slot-scope="scope"><a :class="scope.row.isUsed==0?'clasRed1':'clasGreen1'">{{scope.row.isUsed==0?'停用':'在用'}}</a></template>
             </el-table-column>
@@ -161,84 +167,102 @@
             >
               <template slot-scope="scope">{{scope.row.salesThreeDayFlag==0?'否':'是'}}</template>
             </el-table-column>
-            <el-table-column property="priceEnd" label="价格小于" align="center" width="100"></el-table-column>
-            <el-table-column property="priceStart" label="价格大于" align="center" width="100"></el-table-column>
-            <el-table-column property="soldEnd" label="销量小于" align="center" width="100"></el-table-column>
-            <el-table-column property="soldStart" label="销量大于" align="center" width="100"></el-table-column>
-            <el-table-column property="genTimeEnd" label="上架时间小于" align="center" width="110"></el-table-column>
-            <el-table-column property="genTimeStart" label="上架时间大于" align="center" width="110"></el-table-column>
+            <el-table-column property="priceEnd" label="价格区间" align="center" width="125">
+              <template slot-scope="scope">{{scope.row.priceStart}} -- {{scope.row.priceEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="priceStart" label="价格大于" align="center" width="100"></el-table-column> -->
+            <el-table-column property="soldEnd" label="销量区间" align="center" width="125">
+              <template slot-scope="scope">{{scope.row.soldStart}} - {{scope.row.soldEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="soldStart" label="销量大于" align="center" width="100"></el-table-column> -->
+            <el-table-column property="genTimeEnd" label="上架时间" align="center" width="125">
+              <template slot-scope="scope">{{scope.row.genTimeStart}} - {{scope.row.genTimeEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column property="genTimeStart" label="上架时间大于" align="center" width="110"></el-table-column> -->
             <el-table-column
               property="soldThePreviousDayEnd"
-              label="前一天销量小于"
+              label="前一天销量"
               align="center"
               width="120"
-            ></el-table-column>
-            <el-table-column
+            >
+              <template slot-scope="scope">{{scope.row.soldThePreviousDayStart}} - {{scope.row.soldThePreviousDayEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column
               property="soldThePreviousDayStart"
               label="前一天销量大于"
               align="center"
               width="120"
-            ></el-table-column>
+            ></el-table-column> -->
             <el-table-column
               property="paymentThePreviousDayEnd"
-              label="前一天销售额小于"
+              label="前一天销售额"
               align="center"
-              width="140"
-            ></el-table-column>
-            <el-table-column
+              width="125"
+            >
+              <template slot-scope="scope">{{scope.row.paymentThePreviousDayStart}} - {{scope.row.paymentThePreviousDayEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column
               property="paymentThePreviousDayStart"
               label="前一天销售额大于"
               align="center"
               width="140"
-            ></el-table-column>
+            ></el-table-column>-->
             <el-table-column
               property="soldThePreviousGrowthEnd"
-              label="前一天销量增幅小于"
+              label="前一天销量增幅"
               align="center"
-              width="150"
-            ></el-table-column>
-            <el-table-column
+              width="125"
+            >
+              <template slot-scope="scope">{{scope.row.soldThePreviousGrowthStart}} - {{scope.row.soldThePreviousGrowthEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column
               property="soldThePreviousGrowthStart"
               label="前一天销量增幅大于"
               align="center"
               width="150"
-            ></el-table-column>
+            ></el-table-column> -->
             <el-table-column
               property="salesThreeDay1End"
-              label="近三天销量小于"
+              label="近三天销量"
               align="center"
-              width="140"
-            ></el-table-column>
-            <el-table-column
+              width="125"
+            >
+              <template slot-scope="scope">{{scope.row.salesThreeDay1Start}} - {{scope.row.salesThreeDay1End}}</template>
+            </el-table-column>
+            <!-- <el-table-column
               property="salesThreeDay1Start"
               label="近三天销量大于"
               align="center"
               width="140"
-            ></el-table-column>
+            ></el-table-column> -->
             <el-table-column
               property="paymentThreeDay1End"
-              label="近三天销售额小于"
+              label="近三天销售额"
               align="center"
-              width="140"
-            ></el-table-column>
-            <el-table-column
+              width="125"
+            >
+              <template slot-scope="scope">{{scope.row.paymentThreeDay1Start}} - {{scope.row.paymentThreeDay1End}}</template>
+            </el-table-column>
+            <!-- <el-table-column
               property="paymentThreeDay1Start"
               label="近三天销售额大于"
               align="center"
               width="140"
-            ></el-table-column>
+            ></el-table-column> -->
             <el-table-column
               property="salesThreeDayGrowthEnd"
-              label="近三天销量增幅小于"
+              label="近三天销量增幅"
               align="center"
-              width="150"
-            ></el-table-column>
-            <el-table-column
+              width="125"
+            >
+              <template slot-scope="scope">{{scope.row.salesThreeDayGrowthStart}} - {{scope.row.salesThreeDayGrowthEnd}}</template>
+            </el-table-column>
+            <!-- <el-table-column
               property="salesThreeDayGrowthStart"
               label="近三天销量增幅大于"
               align="center"
               width="150"
-            ></el-table-column>
+            ></el-table-column> -->
             <el-table-column property="creator" label="创建人" align="center" width="80"></el-table-column>
             <el-table-column property="createdDate" label="创建时间" align="center" width="100">
               <template slot-scope="scope">{{scope.row.createdDate | cutOutMonye}}</template>
