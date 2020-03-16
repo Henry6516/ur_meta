@@ -1,24 +1,24 @@
 <template>
   <div class="toolbar">
-    <el-form :model="condition" label-width="20rem" class="demo-form-inline" :inline='true'>
+    <el-form :model="condition" label-width="140px" class="demo-form-inline" :inline='true'>
       <el-form-item label="卖家账号：">
-        <el-select size="small" v-model="condition.suffix" filterable clearable>
+        <el-select size="small" v-model="condition.suffix" filterable clearable  style="width:140px">
           <el-option v-for='(item,index) in type' :index='index' :key='item.ibaySuffix' :label='item.ibaySuffix' :value='item.ibaySuffix'></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="商品编码：">
-        <el-input size="small" v-model="condition.goodsCode" style="width:18.1rem"></el-input>
+        <el-input size="small" v-model="condition.goodsCode" style="width:120px"></el-input>
       </el-form-item>
       <el-form-item label="保留价(msrp$)：">
-        <el-input size="small" v-model="condition.msrp" style="width:18.1rem"></el-input>
+        <el-input size="small" v-model="condition.msrp" style="width:120px"></el-input>
       </el-form-item>
       <el-form-item label="商品售价(Price$)：">
-        <el-input size="small" v-model="condition.price" style="width:18.1rem"></el-input>
+        <el-input size="small" v-model="condition.price" style="width:120px"></el-input>
       </el-form-item>
       <el-form-item label="运费(Shipping$)：">
-        <el-input size="small" v-model="condition.shipping" style="width:18.1rem"></el-input>
+        <el-input size="small" v-model="condition.shipping" style="width:120px"></el-input>
       </el-form-item>
-      <el-form-item style="margin-left:28.5rem">
+      <el-form-item style="margin-left:10px">
         <el-button size="small" type="primary" @click="onSubmit()">属性设置
           <i class="el-icon-caret-right"></i>
         </el-button>

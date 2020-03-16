@@ -424,7 +424,7 @@
                 <div style="margin-top:8px;" class="ebayGoa">
                   <span
                     style="margin-top:5px;font-size:13px;"
-                    @click="goLinkUrlEbay(scope.row.pid)"
+                    @click="goLinkUrlWish(scope.row.pid)"
                   >Wish链接</span>
                   <span
                     style="margin:0;margin-top:5px;margin-left:5%;font-size:13px;"
@@ -487,8 +487,8 @@
               <template slot-scope="scope">{{scope.row.genTime | cutOutMonye}}</template>
             </el-table-column>
             <el-table-column property="shipping" label="运费" align="center" width="95" sortable="custom"></el-table-column>
-            <el-table-column property="numEntered" label="总收藏数" align="center" width="95" sortable="custom"></el-table-column>
-            <el-table-column property="maxNumBought" label="销量总数" align="center" width="95" sortable="custom"></el-table-column>
+            <el-table-column property="numEntered" label="总收藏数" align="center" width="105" sortable="custom"></el-table-column>
+            <el-table-column property="maxNumBought" label="销量总数" align="center" width="105" sortable="custom"></el-table-column>
             <el-table-column property="merchant" label="店铺名称" align="center" width="120"></el-table-column>
           </el-table>
           <div class="block toolbar">
@@ -569,7 +569,7 @@
                 <div style="margin-top:8px;" class="ebayGoa">
                   <span
                     style="margin-top:5px;font-size:13px;"
-                    @click="goLinkUrlEbay(scope.row.title,scope.row.shopId,scope.row.pid)"
+                    @click="goLinkUrlShopee(scope.row.title,scope.row.shopId,scope.row.pid,scope.row.country)"
                   >shopee链接</span>
                 </div>
               </template>
@@ -594,7 +594,7 @@
               property="listedTime"
               label="上架时间"
               align="center"
-              width="110"
+              width="105"
               sortable="custom"
             >
               <template slot-scope="scope">{{scope.row.genTime | cutOutMonye}}</template>
@@ -615,8 +615,8 @@
                 sortable="custom"
               ></el-table-column>
             </el-table-column>            
-            <el-table-column property="historicalSold" label="销量总数" align="center" width="95" sortable="custom"></el-table-column>
-            <el-table-column property="shopName" label="店铺名称" align="center" width="120"></el-table-column>
+            <el-table-column property="historicalSold" label="销量总数" align="center" width="105" sortable="custom"></el-table-column>
+            <el-table-column property="shopName" label="店铺名称" align="center" width="105"></el-table-column>
           </el-table>
           <div class="block toolbar">
             <el-pagination
@@ -1484,6 +1484,26 @@ export default {
     },
     goLinkUrlJoom(id) {
       window.open("https://www.joom.com/en/products/" + id);
+    },
+    goLinkUrlShopee(a,b,c,e) {
+      if(e=='Malaysia'){
+        window.open("https://shopee.com.my/" + a +'-i' + b +'.' + c);
+      }else if(e=='Indonesia'){
+        window.open("https://shopee.co.id/" + a +'-i' + b +'.' + c);
+      }else if(e=='Thailand'){
+        window.open("https://shopee.co.th/" + a +'-i' + b +'.' + c);
+      }else if(e=='Philippines'){
+        window.open("https://shopee.ph/" + a +'-i' + b +'.' + c);
+      }else if(e=='Taiwan'){
+        window.open("https://tw.shopeesz.com/" + a +'-i' + b +'.' + c);
+      }else if(e=='Singapore'){
+        window.open("https://shopee.sg/" + a +'-i' + b +'.' + c);
+      }else if(e=='Vietnam'){
+        window.open("https://shopee.vn/" + a +'-i' + b +'.' + c);
+      }
+    },
+    goLinkUrlWish(id){
+      window.open("https://www.wish.com/product/" + id);
     },
     goLinkUrlEbay(id, url) {
       if (id == "EBAY_GB") {

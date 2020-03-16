@@ -8,6 +8,7 @@
           :inline="true"
           ref="condition"
           label-width="70px"
+          style="padding-top:10px;"
           class="demo-form-inline"
         >
           <el-form-item label="开发员" class="input" style="margin-left:12px;">
@@ -133,7 +134,7 @@ import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
-      tableHeight: window.innerHeight - 210,
+      tableHeight: window.innerHeight - 197,
       tableData: [],
       goodsState: [],
       member: [],
@@ -221,7 +222,7 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   .el-form-item {
     margin-bottom: 0px;
   }

@@ -155,7 +155,6 @@ export default {
   margin: 0.8rem;
 }
 .el-row {
-  max-height: 64rem;
   overflow: auto;
   .mix:hover {
     border-radius: 1rem;
@@ -167,7 +166,7 @@ export default {
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     display: inline-block;
-    height: 13.3rem;
+    height: 165px;
     margin-left: 0.9%;
     position: relative;
     transition: all 0.2s ease-in-out;

@@ -2,12 +2,13 @@
   <div>
     <el-form :model='condition'
              :inline='true'
-             label-width='8.5rem'
+             label-width='100px'
              style="padding:10px 0 0 8px;"
              class='demo-form-inline toolbar'>
       <el-form-item label='美工1'
                     class='input'>
         <el-select size="small"
+                   style="width:220px;" 
                    v-model='condition.possessMan1'
                    clearable>
           <el-option v-for='item in possessMan1'
@@ -18,6 +19,7 @@
       <el-form-item label='美工2'
                     class='input'>
         <el-select size="small"
+                   style="width:220px;"  
                    v-model='condition.possessMan2'
                    clearable>
           <el-option v-for='item in possessMan2'
@@ -28,14 +30,15 @@
       <el-form-item label='商品关键字'
                     class='input'>
         <el-input size="small"
+                  style="width:220px;" 
                   v-model='condition.goodsName'
-                  placeholder="多个关键字用逗号隔开"
-                  style="width:18rem">
+                  placeholder="多个关键字用逗号隔开">
         </el-input>
       </el-form-item>
       <el-form-item label='产品分类1'
                     class='input'>
         <el-select size="small"
+                  style="width:220px;" 
                    v-model='condition.categoryParentName'
                    clearable
                    @change="productcategory">
@@ -48,6 +51,7 @@
       <el-form-item label='产品分类2'
                     class='input'>
         <el-select size="small"
+                  style="width:220px;" 
                    v-model='condition.categoryName'
                    clearable
                    :disabled="disabled">
@@ -60,14 +64,15 @@
       <el-form-item label='供应商关键字'
                     class='input'>
         <el-input size="small"
+                  style="width:220px;" 
                   v-model='condition.supplierName'
-                  placeholder="供应商名称关键字"
-                  style="width:18rem">
+                  placeholder="供应商名称关键字">
         </el-input>
       </el-form-item>
       <el-form-item label='产品状态'
                     class='input'>
         <el-select size="small"
+                   style="width:220px;"  
                    v-model='condition.goodsSkuStatus'
                    clearable>
           <el-option v-for='item in goodsSkuStatus'
@@ -78,6 +83,7 @@
       <el-form-item label='开发'
                     class='input'>
         <el-select size="small"
+                   style="width:220px;"  
                    v-model='condition.salerName'
                    clearable>
           <el-option v-for='item in salerName'
@@ -87,7 +93,7 @@
       </el-form-item>
       <el-form-item label='日期'>
         <el-date-picker size="small"
-                        style="width:18rem"
+                        style="width:220px"
                         v-model='dateRange'
                         type='daterange'
                         value-format='yyyy-MM-dd'

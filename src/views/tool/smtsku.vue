@@ -1,6 +1,6 @@
 <template>
   <div class="toolbar">
-    <el-form v-model="condition" label-width="9rem" class="demo-form-inline" :inline='true'>
+    <el-form v-model="condition" label-width="120px" class="demo-form-inline" :inline='true'>
       <el-form-item label="卖家账号：">
         <el-select size="small" v-model="condition.suffix" filterable clearable>
           <el-option v-for='(item,index) in suffix' :index='index' :key='item.DictionaryName' :label='item.DictionaryName' :value='item.DictionaryName'></el-option>

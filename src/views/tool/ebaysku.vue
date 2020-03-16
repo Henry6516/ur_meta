@@ -1,6 +1,6 @@
 <template>
   <div class="toolbar">
-    <el-form v-model="condition" label-width="16rem" class="demo-form-inline" :inline='true'>
+    <el-form v-model="condition" label-width="120px" class="demo-form-inline" :inline='true'>
       <el-form-item label="卖家账号：">
         <el-select size="small" v-model="condition.suffix" filterable clearable>
           <el-option v-for='(item,index) in suffix' :index='index' :key='item.ebaySuffix' :label='item.ebayName' :value='item.ebayName'></el-option>
@@ -12,8 +12,8 @@
         </el-select>
       </el-form-item>
       <el-form-item label="产品类别：">
-        <el-input size="small" v-model="condition.Cat1" style="width:8.8rem;" placeholder="Category1"></el-input>
-        <el-input size="small" v-model="condition.Cat2" style="width:8.8rem;" placeholder="Category2"></el-input>
+        <el-input size="small" v-model="condition.Cat1" style="width:106px;" placeholder="Category1"></el-input>
+        <el-input size="small" v-model="condition.Cat2" style="width:106px;" placeholder="Category2"></el-input>
       </el-form-item>
       <el-form-item label="商品编码：">
         <el-input size="small" v-model="condition.goodsCode" style="width:18rem;"></el-input>
@@ -22,8 +22,8 @@
         <el-input size="small" v-model="condition.price" style="width:18rem;"></el-input>
       </el-form-item>
       <el-form-item label="运 费：">
-        <el-input size="small" v-model="condition.shipping1" style="width:8.8rem;" placeholder="首件运费"></el-input>
-        <el-input size="small" v-model="condition.shipping2" style="width:8.8rem;" placeholder="续件运费"></el-input>
+        <el-input size="small" v-model="condition.shipping1" style="width:106px;" placeholder="首件运费"></el-input>
+        <el-input size="small" v-model="condition.shipping2" style="width:106px;" placeholder="续件运费"></el-input>
       </el-form-item>
       <el-form-item style="margin-left:50px;">
         <el-button size="small" type="primary" @click="onSubmit(condition)">

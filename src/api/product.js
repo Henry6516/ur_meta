@@ -1840,3 +1840,12 @@ export function shopeeProductsRule() {
     data: data
   })
 }
+
+export function hwcSkuUpdate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/sku-update',
+    method: 'post',
+    data
+  })
+}
