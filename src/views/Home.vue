@@ -45,19 +45,32 @@
         </el-menu>
       </el-col>
       <div class="rightTitle none1920">
-        <span class="indexImg"><img :src="image" /></span>
-        <span class="indexName indexNameNone">{{sysUserName}}</span>
-        <span class="w1h1"></span>
-        <span class="indexName" @click="dialogVisible=true" style="margin-top:15px;"><el-button type="success" size="small">设置头像</el-button></span>
+        <span class="indexImg" style="margin-right:12px;"><img :src="image" /></span>
+        <span class="indexName indexNameNone" style="margin-right:12px;">{{sysUserName}}</span>
+        <span class="w1h1" style="margin-right:14px;"></span>
+        <span class="indexName" @click="dialogVisible=true" style="margin-top:15px;"><el-button type="warning" size="small">设置头像</el-button></span>
+        <span class="indexName" @click="updatePassword()" style="margin-top:15px;"><el-button type="success" size="small">修改密码</el-button></span>
         <span class="w1h1"></span>
         <span class="indexNameLast" @click="logout"><el-button type="danger" size="small">退出登录</el-button></span>
       </div>
+      <el-dialog title="修改密码" :visible.sync="dialogPassword" :close-on-click-modal="false" width="35%" style="line-height:0">
+        <el-row>
+          <el-col :span="4" style="line-height:40px;height:40px;text-align:center;color:#3c8dbc">新密码</el-col>
+          <el-col :span="19"><el-input v-model="newPassword" type="password"></el-input></el-col>
+          <el-col :span="4" style="line-height:40px;height:40px;text-align:center;color:#3c8dbc;margin-top:15px;">确认密码</el-col>
+          <el-col :span="19" style="margin-top:15px;"><el-input v-model="newPasswordConfirm" type="password"></el-input></el-col>
+        </el-row>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogPassword = false">取 消</el-button>
+          <el-button type="primary" @click="changePassword()">确 定</el-button>
+        </div>
+      </el-dialog>
       <el-col :span="3" class="userinfo none1400">
         <el-dropdown trigger="hover">
           <span class="el-dropdown-link userinfo-inner">{{sysUserName}}</span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>我的消息</el-dropdown-item>
             <el-dropdown-item @click.native="dialogVisible=true">设置头像</el-dropdown-item>
+            <el-dropdown-item @click.native="updatePassword()">修改密码</el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -65,10 +78,11 @@
           <img :src="image" />
         </span>
       </el-col>
-      <el-dialog :visible.sync="dialogVisible">
+      <el-dialog :visible.sync="dialogVisible" style="line-height:0" width="30%">
         <div
           class="pan-item"
           @click="imagecropperShow = true"
+          style="left:50%;margin-left:-50px;"
           :style="{zIndex:zIndex,height:height,width:width}"
         >
           <div class="pan-info">
@@ -76,21 +90,23 @@
               <slot></slot>
             </div>
           </div>
-          <img class="pan-thumb" :src="image" />
-          <el-button
+          <img class="pan-thumb" :src="image" style="width:150px;height:150px;" />
+          <!-- <el-button
             round
             plain
             type="success"
             style="font-size:18px;margin-left:130px;margin-top:40px;"
-          >修改头像</el-button>
+          >修改头像</el-button> -->
         </div>
-        <hr style="border:1px solid #f0f0f0;" />
+        <!-- <hr style="border:1px solid #f0f0f0;" /> -->
         <el-form
           :inline="true"
           :model="ValidateForm"
           status-icon
+          label-width='100px'
           ref="ValidateForm"
           class="demo-dynamic"
+          style="text-align:center;margin-top:10px;"
         >
           <el-form-item
             prop="email"
@@ -99,9 +115,9 @@
           { required: true, message: '请输入邮箱地址', trigger: 'blur' },
           { type:'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
           ]"
-            class="lab"
+            class="lab labnew"
           >
-            <el-input v-model="ValidateForm.email"></el-input>
+            <el-input v-model="ValidateForm.email" style="width:250px;"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -165,6 +181,7 @@
 import { removeToken } from "../utils/auth";
 import { getMenu } from "../api/login";
 import { getAvatarUrl } from "../api/api";
+import { changePassword } from "../api/profit";
 import ImageCropper from "@/components/ImageCropper";
 import { mapActions, mapGetters } from "vuex";
 
@@ -178,11 +195,11 @@ export default {
     },
     width: {
       type: String,
-      default: "100px"
+      default: "150px"
     },
     height: {
       type: String,
-      default: "100px"
+      default: "150px"
     }
   },
   data() {
@@ -190,7 +207,10 @@ export default {
       ValidateForm: {
         email: ""
       },
+      dialogPassword:false,
       dialogVisible: false,
+      newPassword:null,
+      newPasswordConfirm:null,
       activeIndex: "/index",
       allMenu: [],
       asideMenu: { position: 0, menu: [{ name: "", children: [] }] },
@@ -259,6 +279,41 @@ export default {
     }
   },
   methods: {
+    updatePassword(){
+      this.newPassword=null
+      this.dialogPassword=true
+    },
+    changePassword(){
+      if(this.newPassword && this.newPasswordConfirm){
+        if(this.newPassword != this.newPasswordConfirm){
+          this.$message.error('两次密码不一致');
+        }else{
+          this.$confirm("确定修改密码?", "提示", { type: "warning" }).then(
+            () => {
+              var condition={
+                password:this.newPassword
+              }
+              changePassword(condition).then(response => {
+                if (response.data.code === 200) {
+                    this.$message({
+                      message: "成功",
+                      type: "success"
+                    });
+                    this.dialogPassword = false;
+                    sessionStorage.removeItem("user");
+                    removeToken();
+                    this.$router.push("/login");
+                  } else {
+                    this.$message.error(response.data.message);
+                  }
+              })
+            }
+          );
+        }
+      }else{
+        this.$message.error('请输入新密码');
+      }
+    },
     ...mapActions(
       // 语法糖
       ["GetMenu"] // 相当于this.$store.dispatch('GetMenu'),提交这个方法
@@ -363,6 +418,10 @@ export default {
 </script>
 
 <style>
+.labnew .el-form-item__label {
+  margin-right: 0px !important;
+  margin-top: 0px !important;
+}
 .lab .el-form-item__label {
   font-size: 18px;
   color: #969696;
@@ -702,7 +761,7 @@ export default {
   font-family: '微软雅黑';
   line-height: 20px;
   margin-top: 19px;
-  padding: 0 22px;
+  margin-right: 12px;
   cursor: pointer;
 }
 .w1h1{
@@ -718,7 +777,7 @@ export default {
   float: left;
   line-height: 25px;
   margin-top: 15px;
-  padding: 0 22px;
+  padding: 0 12px;
   cursor: pointer;
 }
 .indexImg{

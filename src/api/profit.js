@@ -974,3 +974,12 @@ export function getShopeePro(param) {
   })
 }
 
+export function changePassword(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/set-password',
+    method: 'post',
+    data
+  })
+}
+

@@ -33,6 +33,12 @@ export default {
         this.$router.push({
          path: `/v1/oa-data-mine/collectionJoom`
         });
+      }else if(tab.name === "/v1/oa-data-mine/vova"){
+        this.showis=true
+        sessionStorage.setItem("judgeCollection", "/v1/oa-data-mine/vova");
+        this.$router.push({
+         path: `/v1/oa-data-mine/collectionVova`
+        });
       }else if(tab.name === "/v1/oa-data-mine/joom-cate-mine-index"){
         this.showis=true
         sessionStorage.setItem("judgeCollection", "/v1/oa-data-mine/joom-cate-mine-index");
@@ -58,6 +64,13 @@ export default {
           sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
           this.$router.push({
             path: `/v1/oa-data-mine/collectionJoom`
+          });
+        }
+        if (this.allMenu[0].route == "/v1/oa-data-mine/vova") {
+          this.activeName = this.allMenu[0].route;
+          sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
+          this.$router.push({
+            path: `/v1/oa-data-mine/collectionVova`
           });
         }
         if (this.allMenu[0].route == "/v1/oa-data-mine/wish") {
@@ -111,6 +124,13 @@ export default {
           sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
           this.$router.push({
             path: `/v1/oa-data-mine/collectionJoom`
+          });
+        }
+        if (this.allMenu[0].route == "/v1/oa-data-mine/vova") {
+          this.activeName = this.allMenu[0].route;
+          sessionStorage.setItem("judgeCollection", this.allMenu[0].route);
+          this.$router.push({
+            path: `/v1/oa-data-mine/collectionVova`
           });
         }
         if (this.allMenu[0].route == "/v1/oa-data-mine/joom-cate-mine-index") {

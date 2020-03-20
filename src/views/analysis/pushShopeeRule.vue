@@ -218,7 +218,7 @@
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">海外仓</p>
+                <p class="basp">所在地</p>
               </el-col>
               <el-col :span="15">
                 <el-radio-group v-model="ebayXp.shopLocationStatus" size="medium">

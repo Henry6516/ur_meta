@@ -42,7 +42,7 @@
               size="small"
               type="primary"
               @click="onSubmit(condition)"
-              style="margin-left:10px;"
+              style="margin-left:1px;"
             >查询</el-button>
           </el-form-item>
           <el-form-item>
