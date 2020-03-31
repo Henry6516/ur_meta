@@ -11,7 +11,7 @@
     <div v-if="pickingTab">
       <el-form
         :model="condition"
-        label-width="12rem"
+        label-width="100px"
         class="demo-ruleForm login-container"
         ref="condition"
       >
@@ -20,7 +20,7 @@
           prop="suffix"
           :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]"
         >
-          <el-select v-model="condition.suffix">
+          <el-select v-model="condition.suffix" style="width:230px;">
             <el-option v-for="item in suffix" :key="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
@@ -32,6 +32,7 @@
           <el-input
             v-model="condition.goodsCode"
             placeholder="--必填--"
+            style="width:230px;"
             @change="myFunction()"
             ref="gName"
           ></el-input>

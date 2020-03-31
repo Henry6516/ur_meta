@@ -1849,3 +1849,10 @@ export function hwcSkuUpdate(param) {
     data
   })
 }
+
+export function getIntegral() {
+  return request({
+    url: '/warehouse-tools/integral',
+    method: 'get'
+  })
+}

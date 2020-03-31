@@ -281,6 +281,7 @@ export default {
   methods: {
     updatePassword(){
       this.newPassword=null
+      this.newPasswordConfirm=null
       this.dialogPassword=true
     },
     changePassword(){

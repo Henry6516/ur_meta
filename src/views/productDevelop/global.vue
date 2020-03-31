@@ -9,7 +9,7 @@
               size="small"
               v-model="condition.plat"
               clearable
-              style="width:120px;"
+              style="width:120px;margin-left:10px;"
               placeholder="平台"
             >
               <el-option
@@ -22,13 +22,31 @@
             </el-select>
           </div>
           <div class="floet01">
+            <span>仓库</span>
+            <el-select
+              size="small"
+              v-model="condition.warehouse"
+              clearable
+              style="width:120px;margin-left:10px;"
+              placeholder="仓库"
+            >
+              <el-option
+                v-for="(item,index) in store"
+                :index="index"
+                :key="item"
+                :label="item"
+                :value="item"
+              ></el-option>
+            </el-select>
+          </div>
+          <div class="floet01">
             <span>账号</span>
             <el-select
               size="small"
               v-model="condition.suffix"
               filterable
               clearable
-              style="width:160px;"
+              style="width:160px;margin-left:10px;"
               placeholder="账号"
             >
               <el-option
@@ -83,7 +101,7 @@
 </template>
 <script type="text/ecmascript-6">
 import { APIGlobalMarket } from "../../api/product";
-import { getPlatform,getAccount } from "../../api/profit";
+import { getPlatform,getAccount,getStore } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate,getNextDate } from "../../api/tools";
 export default {
   data() {
@@ -91,6 +109,7 @@ export default {
       tableHeightstock: window.innerHeight - 214,
       options: [],
       plat:[],
+      store:[],
       account:[],
       total: null,
       developer: [],
@@ -104,7 +123,8 @@ export default {
         plat: null,
         suffix: null,
         orderDate: [],
-        goodsCode:null
+        goodsCode:null,
+        warehouse:null
       },
       options1: {
         title: {
@@ -141,8 +161,11 @@ export default {
         series: [
           {
             name: "访问来源",
-            type: "pie",
-            radius : '60%',
+            type: "funnel",
+            width: '85%',
+            height: '85%',
+            funnelAlign: 'left',
+            center: ['75%', '25%'],  // for pie
             data: []
           }
         ]
@@ -182,8 +205,11 @@ export default {
         series: [
           {
             name: "访问来源",
-            type: "pie",
-            radius : '60%',
+            type: "funnel",
+            width: '85%',
+            height: '85%',
+            funnelAlign: 'left',
+            center: ['75%', '25%'],  // for pie
             data:[] 
           }
         ]
@@ -260,6 +286,9 @@ export default {
     getAccount().then(response => {
       this.account = response.data.data;
     });
+    getStore().then(response => {
+      this.store = response.data.data;
+    });
     var startData = getMonthDate("lastMonth").start;
     var endData = getMonthDate("lastMonth").end;
     this.condition.orderDate = [
@@ -333,6 +362,6 @@ export default {
   margin-left: 10px;
 }
 .m210 {
-  width: 220px;
+  width: 210px;
 }
 </style>

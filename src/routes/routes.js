@@ -72,6 +72,7 @@ import splitcargo from '../views/warehouse/splitCargo.vue'
 import pickStatistics from '../views/warehouse/pickStatistics.vue'
 import pickStatisticsTable from '../views/warehouse/pickStatisticsTable.vue'
 import skupick from '../views/warehouse/skupick.vue'
+import ckIntegral from '../views/warehouse/ckIntegral.vue'
 // 反馈中心
 import requirements from '../views/feedback/requirements.vue'
 import news from '../views/feedback/news.vue'
@@ -441,6 +442,11 @@ const routes = [
       {
         path: '/v1/warehouse-tools/sort-tools',
         component: splitcargo,
+        name: '分货单'
+      },
+      {
+        path: '/v1/warehouse-tools/integral',
+        component: ckIntegral,
         name: '分货单'
       }
     ]

@@ -5,7 +5,7 @@
         <el-col :span="24" style="padding:15px 15px;">
           <el-col :span="6">
             <el-input
-              placeholder="15090-18415021(多个用逗号隔开)"
+              placeholder="输入产品网址链接(多个用逗号隔开)"
               v-model="collectionNumber"
               style="width:97%;"
               clearable
@@ -107,7 +107,7 @@
             <el-table-column prop="picUrl" fixed label="商品图片" header-align="center" width="80">
               <template slot-scope="scope">
                 <a
-                :href="'https://www.joom.com/en/products/'+scope.row.proId"
+                :href="scope.row.proId"
                 target="_blank"
                 style="display: block; width: 60px;height: 60px"
               >
@@ -119,7 +119,7 @@
                 </a>
               </template>
             </el-table-column>
-            <el-table-column label="商品编号" header-align="center">
+            <el-table-column label="商品地址" header-align="center">
               <el-table-column
                 prop="proId"
                 :render-header="renderHeaderPic"
@@ -671,9 +671,13 @@ export default {
     },
     joomId(idnex, row) {
       if (row.progress != "采集失败") {
-        this.$router.push({
-          path: `/vova/${row.id}`
+        let Logistics = this.$router.resolve({
+         path: `/vova/${row.id}`
         });
+        window.open(Logistics.href);
+        // this.$router.push({
+        //   path: `/vova/${row.id}`
+        // });
       } else {
         this.$message.error("采集成功以后才能编辑");
       }
@@ -775,7 +779,8 @@ export default {
               props: {
                 value: this.condition.platForm,
                 size: "mini",
-                clearable: true
+                clearable: true,
+                disabled: true,
               },
               on: {
                 input: value => {
