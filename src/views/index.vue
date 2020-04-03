@@ -22,7 +22,7 @@
                 </p>
               </div>
             </div>
-            <div class="tabs-container tab-index-pan tabdColor" v-show="showTitle.ckIntegral">
+            <div class="tabs-container tabsPm tab-index-pan tabdColor" v-show="showTitle.ckIntegral">
               <el-tabs
                 v-model="activeCkName"
                 style="width:100%;padding-left:14px;"
@@ -85,38 +85,42 @@
                     width="160"
                     label="职位"
                   >
-                  <el-table-column prop="job" :render-header="renderHeaderCkzb" align="center" width="160"></el-table-column>
+                    <el-table-column prop="job" :render-header="renderHeaderCkzb" align="center" width="145"></el-table-column>
                   </el-table-column>
-                  <el-table-column prop="this_total_num" align="center" :render-header="renderHeaderCk11" sortable="custom" min-width="145">
-                    <template slot-scope="scope">
-                      <span :class="scope.row.this_total_num<0?'colorRed':''">{{scope.row.this_total_num}}</span>
-                    </template>
+                  <el-table-column :render-header="renderHeaderCk01"  align="center">
+                    <el-table-column prop="this_total_num" align="center" :render-header="renderHeaderCk11" sortable="custom" min-width="135">
+                      <template slot-scope="scope">
+                        <span :class="scope.row.this_total_num<0?'colorRed':''">{{scope.row.this_total_num}}</span>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="this_job_num" align="center" :render-header="renderHeaderCk1" sortable="custom" min-width="115">
+                      <template slot-scope="scope">
+                        <span :class="scope.row.this_job_num<0?'colorRed':''">{{scope.row.this_job_num}}</span>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="this_other_num" align="center" :render-header="renderHeaderCk0" sortable="custom" min-width="135">
+                      <template slot-scope="scope">
+                        <span :class="scope.row.this_other_num<0?'colorRed':''">{{scope.row.this_other_num}}</span>
+                      </template>
+                    </el-table-column>                  
+                    <el-table-column prop="this_agv_num" align="center" :render-header="renderHeaderCk2" sortable="custom" width="135">
+                      <template slot-scope="scope">
+                        <span :class="scope.row.this_agv_num<0?'colorRed':''">{{scope.row.this_agv_num}}</span>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="this_diff" align="center" sortable="custom" :render-header="renderHeaderCk3" min-width="115">
+                      <template slot-scope="scope">
+                        <span :class="scope.row.this_diff<0?'colorRed':''">{{scope.row.this_diff}}</span>
+                      </template>
+                    </el-table-column>
                   </el-table-column>
-                  <el-table-column prop="this_other_num" align="center" :render-header="renderHeaderCk0" sortable="custom" min-width="160">
-                    <template slot-scope="scope">
-                      <span :class="scope.row.this_other_num<0?'colorRed':''">{{scope.row.this_other_num}}</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="this_num" align="center" :render-header="renderHeaderCk1" sortable="custom" min-width="130">
-                    <template slot-scope="scope">
-                      <span :class="scope.row.this_num<0?'colorRed':''">{{scope.row.this_num}}</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="this_agv_num" align="center" :render-header="renderHeaderCk2" sortable="custom" width="205">
-                    <template slot-scope="scope">
-                      <span :class="scope.row.this_agv_num<0?'colorRed':''">{{scope.row.this_agv_num}}</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="this_diff" align="center" sortable="custom" :render-header="renderHeaderCk3" min-width="145">
-                    <template slot-scope="scope">
-                      <span :class="scope.row.this_diff<0?'colorRed':''">{{scope.row.this_diff}}</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="last_num" align="center" sortable="custom" :render-header="renderHeaderCk4" min-width="130">
-                    <template slot-scope="scope">
-                      <span :class="scope.row.last_num<0?'colorRed':''">{{scope.row.last_num}}</span>
-                    </template>
-                  </el-table-column>
+                  <el-table-column :render-header="renderHeaderCk02"  align="center">
+                    <el-table-column prop="last_num" align="center" sortable="custom" :render-header="renderHeaderCk4" min-width="115">
+                      <template slot-scope="scope">
+                        <span :class="scope.row.last_num<0?'colorRed':''">{{scope.row.last_num}}</span>
+                      </template>
+                    </el-table-column>
+                  </el-table-column>   
                   <el-table-column prop="this_last" align="center" label="本月VS上月" sortable="custom" min-width="120">
                     <template slot-scope="scope">
                       <el-progress
@@ -194,12 +198,13 @@
                     width="90"
                     label="职位"
                   ></el-table-column>
-                  <el-table-column prop="this_num" align="center" :render-header="renderHeaderCk1" sortable="custom" min-width="130">
+                  <el-table-column :render-header="renderHeaderCk01"  align="center">
+                  <el-table-column prop="this_job_num" align="center" :render-header="renderHeaderCk1" sortable="custom" min-width="130">
                     <template slot-scope="scope">
-                      <span :class="scope.row.this_num<0?'colorRed':''">{{scope.row.this_num}}</span>
+                      <span :class="scope.row.this_job_num<0?'colorRed':''">{{scope.row.this_job_num}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="this_agv_num" align="center" :render-header="renderHeaderCk2" sortable="custom" width="205">
+                  <el-table-column prop="this_agv_num" align="center" :render-header="renderHeaderCk2" sortable="custom" min-width="175">
                     <template slot-scope="scope">
                       <span :class="scope.row.this_agv_num<0?'colorRed':''">{{scope.row.this_agv_num}}</span>
                     </template>
@@ -209,10 +214,13 @@
                       <span :class="scope.row.this_diff<0?'colorRed':''">{{scope.row.this_diff}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="last_num" align="center" sortable="custom" :render-header="renderHeaderCk4" min-width="130">
+                  </el-table-column>
+                  <el-table-column :render-header="renderHeaderCk02"  align="center">
+                  <el-table-column prop="last_num" align="center" sortable="custom" :render-header="renderHeaderCk44" min-width="130">
                     <template slot-scope="scope">
                       <span :class="scope.row.last_num<0?'colorRed':''">{{scope.row.last_num}}</span>
                     </template>
+                  </el-table-column>
                   </el-table-column>
                   <el-table-column prop="this_last" align="center" label="本月VS上月" sortable="custom" min-width="120">
                     <template slot-scope="scope">
@@ -242,7 +250,7 @@
                   </el-table-column>
                 </el-table>
             </div>
-            <div class="tabs-container tab-index-pan" v-show="showTitle.pming">
+            <div class="tabs-container tab-index-pan tabsPm" v-show="showTitle.pming">
               <el-tabs
                 v-model="activeTabName"
                 style="width:100%;padding-left:14px;"
@@ -302,64 +310,68 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="70"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
-                    prop="lastProfit"
-                    :render-header="renderHeaderPm1"                  
+                    prop="thisProfit"
+                    label="毛利"
                     sortable="custom"
                     align="center"
-                    width="130"
+                    width="110"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="135"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  </el-table-column>
+                  <el-table-column :render-header="renderHeaderCk02"  align="center">
+                  <el-table-column
+                    prop="lastProfit"
+                    label="毛利"              
+                    sortable="custom"
+                    align="center"
+                    width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    :render-header="renderHeaderPm2"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
-                    width="195"
+                    width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    :render-header="renderHeaderPm3"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
-                    width="155"
+                    width="145"
                   >
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="thisProfit"
-                    :render-header="renderHeaderPm4"
-                    sortable="custom"
-                    align="center"
-                    width="130"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisAve"
-                    :render-header="renderHeaderPm5"
-                    sortable="custom"
-                    align="center"
-                    width="200"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisDiff"
-                    :render-header="renderHeaderPm6"
-                    sortable="custom"
-                    align="center"
-                    width="160"
-                  >
-                    <template slot-scope="scope">
-                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                    </template>
                   </el-table-column>
                   <el-table-column
                     prop="hireDate"
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    width="120"
+                    width="125"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
@@ -422,64 +434,68 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="70"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
-                    prop="lastProfit"
-                    :render-header="renderHeaderPm1"                  
+                    prop="thisProfit"
+                    label="毛利"
                     sortable="custom"
                     align="center"
-                    width="130"
+                    width="110"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="135"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  </el-table-column>
+                  <el-table-column :render-header="renderHeaderCk02"  align="center">
+                  <el-table-column
+                    prop="lastProfit"
+                    label="毛利"              
+                    sortable="custom"
+                    align="center"
+                    width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    :render-header="renderHeaderPm2"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
-                    width="195"
+                    width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    :render-header="renderHeaderPm3"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
-                    width="155"
+                    width="145"
                   >
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="thisProfit"
-                    :render-header="renderHeaderPm4"
-                    sortable="custom"
-                    align="center"
-                    width="130"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisAve"
-                    :render-header="renderHeaderPm5"
-                    sortable="custom"
-                    align="center"
-                    width="200"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisDiff"
-                    :render-header="renderHeaderPm6"
-                    sortable="custom"
-                    align="center"
-                    width="160"
-                  >
-                    <template slot-scope="scope">
-                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                    </template>
                   </el-table-column>
                   <el-table-column
                     prop="hireDate"
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    width="120"
+                    width="125"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
@@ -542,64 +558,68 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="70"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
-                    prop="lastProfit"
-                    :render-header="renderHeaderPm1"                  
+                    prop="thisProfit"
+                    label="毛利"
                     sortable="custom"
                     align="center"
-                    width="130"
+                    width="110"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="135"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  </el-table-column>
+                  <el-table-column :render-header="renderHeaderCk02"  align="center">
+                  <el-table-column
+                    prop="lastProfit"
+                    label="毛利"              
+                    sortable="custom"
+                    align="center"
+                    width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    :render-header="renderHeaderPm2"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
-                    width="195"
+                    width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    :render-header="renderHeaderPm3"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
-                    width="155"
+                    width="145"
                   >
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="thisProfit"
-                    :render-header="renderHeaderPm4"
-                    sortable="custom"
-                    align="center"
-                    width="130"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisAve"
-                    :render-header="renderHeaderPm5"
-                    sortable="custom"
-                    align="center"
-                    width="200"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisDiff"
-                    :render-header="renderHeaderPm6"
-                    sortable="custom"
-                    align="center"
-                    width="160"
-                  >
-                    <template slot-scope="scope">
-                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                    </template>
                   </el-table-column>
                   <el-table-column
                     prop="hireDate"
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    width="120"
+                    width="125"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
@@ -662,64 +682,68 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="70"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
-                    prop="lastProfit"
-                    :render-header="renderHeaderPm1"                  
+                    prop="thisProfit"
+                    label="毛利"
                     sortable="custom"
                     align="center"
-                    width="130"
+                    width="110"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="135"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  </el-table-column>
+                  <el-table-column :render-header="renderHeaderCk02"  align="center">
+                  <el-table-column
+                    prop="lastProfit"
+                    label="毛利"              
+                    sortable="custom"
+                    align="center"
+                    width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    :render-header="renderHeaderPm2"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
-                    width="195"
+                    width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    :render-header="renderHeaderPm3"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
-                    width="155"
+                    width="145"
                   >
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="thisProfit"
-                    :render-header="renderHeaderPm4"
-                    sortable="custom"
-                    align="center"
-                    width="130"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisAve"
-                    :render-header="renderHeaderPm5"
-                    sortable="custom"
-                    align="center"
-                    width="200"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisDiff"
-                    :render-header="renderHeaderPm6"
-                    sortable="custom"
-                    align="center"
-                    width="160"
-                  >
-                    <template slot-scope="scope">
-                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                    </template>
                   </el-table-column>
                   <el-table-column
                     prop="hireDate"
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    width="120"
+                    width="125"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
@@ -782,64 +806,68 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="70"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
-                    prop="lastProfit"
-                    :render-header="renderHeaderPm1"                  
+                    prop="thisProfit"
+                    label="毛利"
                     sortable="custom"
                     align="center"
-                    width="130"
+                    width="110"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="135"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  </el-table-column>
+                  <el-table-column :render-header="renderHeaderCk02"  align="center">
+                  <el-table-column
+                    prop="lastProfit"
+                    label="毛利"              
+                    sortable="custom"
+                    align="center"
+                    width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    :render-header="renderHeaderPm2"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
-                    width="195"
+                    width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    :render-header="renderHeaderPm3"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
-                    width="155"
+                    width="145"
                   >
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="thisProfit"
-                    :render-header="renderHeaderPm4"
-                    sortable="custom"
-                    align="center"
-                    width="130"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisAve"
-                    :render-header="renderHeaderPm5"
-                    sortable="custom"
-                    align="center"
-                    width="200"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisDiff"
-                    :render-header="renderHeaderPm6"
-                    sortable="custom"
-                    align="center"
-                    width="160"
-                  >
-                    <template slot-scope="scope">
-                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                    </template>
                   </el-table-column>
                   <el-table-column
                     prop="hireDate"
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    width="120"
+                    width="125"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
@@ -902,64 +930,68 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="70"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
-                    prop="lastProfit"
-                    :render-header="renderHeaderPm1"                  
+                    prop="thisProfit"
+                    label="毛利"
                     sortable="custom"
                     align="center"
-                    width="130"
+                    width="110"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="135"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  </el-table-column>
+                  <el-table-column :render-header="renderHeaderCk02"  align="center">
+                  <el-table-column
+                    prop="lastProfit"
+                    label="毛利"              
+                    sortable="custom"
+                    align="center"
+                    width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    :render-header="renderHeaderPm2"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
-                    width="195"
+                    width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    :render-header="renderHeaderPm3"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
-                    width="155"
+                    width="145"
                   >
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="thisProfit"
-                    :render-header="renderHeaderPm4"
-                    sortable="custom"
-                    align="center"
-                    width="130"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisAve"
-                    :render-header="renderHeaderPm5"
-                    sortable="custom"
-                    align="center"
-                    width="200"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisDiff"
-                    :render-header="renderHeaderPm6"
-                    sortable="custom"
-                    align="center"
-                    width="160"
-                  >
-                    <template slot-scope="scope">
-                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                    </template>
                   </el-table-column>
                   <el-table-column
                     prop="hireDate"
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    width="120"
+                    width="125"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
@@ -1022,64 +1054,68 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="70"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
-                    prop="lastProfit"
-                    :render-header="renderHeaderPm1"                  
+                    prop="thisProfit"
+                    label="毛利"
                     sortable="custom"
                     align="center"
-                    width="130"
+                    width="110"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="135"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  </el-table-column>
+                  <el-table-column :render-header="renderHeaderCk02"  align="center">
+                  <el-table-column
+                    prop="lastProfit"
+                    label="毛利"              
+                    sortable="custom"
+                    align="center"
+                    width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    :render-header="renderHeaderPm2"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
-                    width="195"
+                    width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    :render-header="renderHeaderPm3"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
-                    width="155"
+                    width="145"
                   >
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="thisProfit"
-                    :render-header="renderHeaderPm4"
-                    sortable="custom"
-                    align="center"
-                    width="130"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisAve"
-                    :render-header="renderHeaderPm5"
-                    sortable="custom"
-                    align="center"
-                    width="200"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisDiff"
-                    :render-header="renderHeaderPm6"
-                    sortable="custom"
-                    align="center"
-                    width="160"
-                  >
-                    <template slot-scope="scope">
-                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                    </template>
                   </el-table-column>
                   <el-table-column
                     prop="hireDate"
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    width="120"
+                    width="125"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
@@ -1142,64 +1178,68 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="depart" label="部门" align="center" width="70"></el-table-column>
+                  <el-table-column prop="depart" label="部门" align="center" width="88"></el-table-column>
                   <!-- <el-table-column prop="role" label="职位" sortable="custom" align="center"></el-table-column> -->
+                  <el-table-column :render-header="renderHeaderCk01"  align="center">
                   <el-table-column
-                    prop="lastProfit"
-                    :render-header="renderHeaderPm1"                  
+                    prop="thisProfit"
+                    label="毛利"
                     sortable="custom"
                     align="center"
-                    width="130"
+                    width="110"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisAve"
+                    label="本平台平均毛利"
+                    sortable="custom"
+                    align="center"
+                    width="170"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="thisDiff"
+                    label="毛利差额"
+                    sortable="custom"
+                    align="center"
+                    width="135"
+                  >
+                    <template slot-scope="scope">
+                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
+                    </template>
+                  </el-table-column>
+                  </el-table-column>
+                  <el-table-column :render-header="renderHeaderCk02"  align="center">
+                  <el-table-column
+                    prop="lastProfit"
+                    label="毛利"              
+                    sortable="custom"
+                    align="center"
+                    width="110"
                   ></el-table-column>
                   <el-table-column
                     prop="lastAve"
-                    :render-header="renderHeaderPm2"
+                    label="本平台平均毛利"
                     sortable="custom"
                     align="center"
-                    width="195"
+                    width="175"
                   ></el-table-column>
                   <el-table-column
                     prop="lastDiff"
-                    :render-header="renderHeaderPm3"
+                    label="毛利差额"
                     sortable="custom"
                     align="center"
-                    width="155"
+                    width="145"
                   >
                     <template slot-scope="scope">
                       <span :class="scope.row.lastDiff<0?'colorRed':''">{{scope.row.lastDiff}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="thisProfit"
-                    :render-header="renderHeaderPm4"
-                    sortable="custom"
-                    align="center"
-                    width="130"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisAve"
-                    :render-header="renderHeaderPm5"
-                    sortable="custom"
-                    align="center"
-                    width="200"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="thisDiff"
-                    :render-header="renderHeaderPm6"
-                    sortable="custom"
-                    align="center"
-                    width="160"
-                  >
-                    <template slot-scope="scope">
-                      <span :class="scope.row.thisDiff<0?'colorRed':''">{{scope.row.thisDiff}}</span>
-                    </template>
                   </el-table-column>
                   <el-table-column
                     prop="hireDate"
                     label="入职时长(月)"
                     sortable="custom"
                     align="center"
-                    width="120"
+                    width="125"
                   ></el-table-column>
                   <el-table-column
                     prop="createDate"
@@ -1535,8 +1575,10 @@
                   <el-table-column prop="depart" :render-header="renderHeadertic" align="center"></el-table-column>
                 </el-table-column>
                 <el-table-column prop="username" align="center" label="姓名" sortable></el-table-column>
-                <el-table-column prop="lastProfit" align="center" :render-header="renderHeaderticMl1" sortable="custom"></el-table-column>
-                <el-table-column prop="profit" align="center" :render-header="renderHeaderticMl2" sortable="custom"></el-table-column>
+                <el-table-column :render-header="renderHeaderCk022"  align="center">
+                <el-table-column prop="lastProfit" align="center" :render-header="renderHeaderCk02none" sortable="custom"></el-table-column>
+                <el-table-column prop="profit" align="center" :render-header="renderHeaderCk01none" sortable="custom"></el-table-column>
+                </el-table-column>
                 <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
                   <template slot-scope="scope">
                     <el-progress
@@ -1575,8 +1617,10 @@
                 <el-table-column prop="depart" label="部门" align="center">
                   <el-table-column prop="depart" :render-header="renderHeadertic2" align="center"></el-table-column>
                 </el-table-column>
-                <el-table-column prop="lastProfit" align="center" :render-header="renderHeaderticMl1" sortable="custom"></el-table-column>
-                <el-table-column prop="profit" :render-header="renderHeaderticMl2" align="center" sortable="custom"></el-table-column>
+                <el-table-column :render-header="renderHeaderCk022"  align="center">
+                <el-table-column prop="lastProfit" align="center" :render-header="renderHeaderCk02none" sortable="custom"></el-table-column>
+                <el-table-column prop="profit" align="center" :render-header="renderHeaderCk01none" sortable="custom"></el-table-column>
+                </el-table-column>
                 <el-table-column prop="rate" label="本月VS上月" align="center" sortable="custom">
                   <template slot-scope="scope">
                     <el-progress
@@ -1619,8 +1663,10 @@
                 <!-- <el-table-column prop="role"
                                align="center"
                 label="角色"></el-table-column>-->
-                <el-table-column prop="lastProfit" align="center" :render-header="renderHeaderticMl1" sortable="custom"></el-table-column>
-                <el-table-column prop="profit" align="center" :render-header="renderHeaderticMl2" sortable="custom"></el-table-column>
+                <el-table-column :render-header="renderHeaderCk022"  align="center">
+                <el-table-column prop="lastProfit" align="center" :render-header="renderHeaderCk02none" sortable="custom"></el-table-column>
+                <el-table-column prop="profit" align="center" :render-header="renderHeaderCk01none" sortable="custom"></el-table-column>
+                </el-table-column>
                 <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
                   <template slot-scope="scope">
                     <el-progress
@@ -1667,8 +1713,10 @@
                 <!-- <el-table-column prop="role"
                                align="center"
                 label="角色"></el-table-column>-->
-                <el-table-column prop="lastAmt" align="center" :render-header="renderHeaderticXs1" sortable="custom"></el-table-column>
-                <el-table-column prop="amt" align="center" :render-header="renderHeaderticXs2" sortable="custom"></el-table-column>
+                <el-table-column :render-header="renderHeaderCk011"  align="center">
+                <el-table-column prop="lastAmt" align="center" :render-header="renderHeaderCk02none" sortable="custom"></el-table-column>
+                <el-table-column prop="amt" align="center" :render-header="renderHeaderCk01none" sortable="custom"></el-table-column>
+                </el-table-column>
                 <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
                   <template slot-scope="scope">
                     <el-progress
@@ -1751,8 +1799,10 @@
                 <el-table-column prop="depart" label="部门" align="center">
                   <el-table-column prop="depart" :render-header="renderHeaderPic2" align="center"></el-table-column>
                 </el-table-column>
-                <el-table-column prop="lastAmt" align="center" :render-header="renderHeaderticXs1" sortable="custom"></el-table-column>
-                <el-table-column prop="amt" :render-header="renderHeaderticXs2" align="center" sortable="custom"></el-table-column>
+                <el-table-column :render-header="renderHeaderCk011"  align="center">
+                <el-table-column prop="lastAmt" align="center" :render-header="renderHeaderCk02none" sortable="custom"></el-table-column>
+                <el-table-column prop="amt" :render-header="renderHeaderCk01none" align="center" sortable="custom"></el-table-column>
+                </el-table-column>
                 <el-table-column prop="rate" label="本月VS上月" align="center" sortable="custom">
                   <template slot-scope="scope">
                     <el-progress
@@ -1795,8 +1845,10 @@
                 <!-- <el-table-column prop="role"
                                align="center"
                 label="角色"></el-table-column>-->
-                <el-table-column prop="lastAmt" align="center" :render-header="renderHeaderticXs1" sortable="custom"></el-table-column>
-                <el-table-column prop="amt" align="center" :render-header="renderHeaderticXs2" sortable="custom"></el-table-column>
+                <el-table-column :render-header="renderHeaderCk011"  align="center">
+                <el-table-column prop="lastAmt" align="center" :render-header="renderHeaderCk02none" sortable="custom"></el-table-column>
+                <el-table-column prop="amt" align="center" :render-header="renderHeaderCk01none" sortable="custom"></el-table-column>
+                </el-table-column>
                 <el-table-column prop="rate" align="center" label="本月VS上月" sortable="custom">
                   <template slot-scope="scope">
                     <el-progress
@@ -2230,15 +2282,75 @@ export default {
           ],
         );
     },
-    renderHeaderCk11(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+    renderHeaderCk01(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        var pmMonth=this.thisMonth
+        return h(
+          'span',
+          [ 
+            h('span',{
+              style:'color:red;font-size:16px;'
+            }, '本月'),
+            h('span', {
+              style:'color:red;font-size:16px;'
+            },'('+pmMonth+'月)'),
+          ],
+        );
+    },
+    renderHeaderCk011(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        return h(
+          'span',
+          [ 
+            h('span', '销售额($)'),
+          ],
+        );
+    },    
+    renderHeaderCk022(h,{column}) { 
+        return h(
+          'span',
+          [ 
+            h('span', '毛利(￥)'),
+          ],
+        );
+    },
+    renderHeaderCk02none(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        var pmMonth=this.lastMonth
+        return h(
+          'span',
+          [ 
+            h('span', '上月'),
+            h('span','('+pmMonth+'月)'),
+          ],
+        );
+    },  
+    renderHeaderCk01none(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
         var pmMonth=this.thisMonth
         return h(
           'span',
           [ 
             h('span', '本月'),
+            h('span','('+pmMonth+'月)'),
+          ],
+        );
+    },          
+    renderHeaderCk02(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        var pmMonth=this.lastMonth
+        return h(
+          'span',
+          [ 
+            h('span',{
+              style:'color:red;font-size:16px;'
+            }, '上月'),
             h('span', {
-              style:'color:red;'
+              style:'color:red;font-size:16px;'
             },'('+pmMonth+'月)'),
+          ],
+        );
+    },
+    renderHeaderCk11(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        var pmMonth=this.thisMonth
+        return h(
+          'span',
+          [ 
             h('span', '总积分'),
           ],
         );
@@ -2248,11 +2360,7 @@ export default {
         return h(
           'span',
           [ 
-            h('span', '其他岗位'),
-            h('span', {
-              style:'color:red;'
-            },'('+pmMonth+'月)'),
-            h('span', '积分'),
+            h('span', '其他岗位积分'),
           ],
         );
     },    
@@ -2261,11 +2369,7 @@ export default {
         return h(
           'span',
           [ 
-            h('span', '本月'),
-            h('span', {
-              style:'color:red;'
-            },'('+pmMonth+'月)'),
-            h('span', '积分'),
+            h('span', '本岗位积分'),
           ],
         );
     },
@@ -2274,11 +2378,7 @@ export default {
         return h(
           'span',
           [ 
-            h('span', '本月'),
-            h('span', {
-              style:'color:red;'
-            },'('+pmMonth+'月)'),
-            h('span', '本岗位平均积分'),
+            h('span', '人员平均积分'),
           ],
         );
     },
@@ -2287,10 +2387,6 @@ export default {
         return h(
           'span',
           [ 
-            h('span', '本月'),
-            h('span', {
-              style:'color:red;'
-            },'('+pmMonth+'月)'),
             h('span', '积分差'),
           ],
         );
@@ -2300,14 +2396,19 @@ export default {
         return h(
           'span',
           [ 
-            h('span', '上月'),
-            h('span', {
-              style:'color:red;'
-            },'('+pmMonth+'月)'),
-            h('span', '积分'),
+            h('span', '总积分'),
           ],
         );
     },
+    renderHeaderCk44(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        var pmMonth=this.lastMonth
+        return h(
+          'span',
+          [ 
+            h('span', '本岗位积分'),
+          ],
+        );
+    },    
     renderHeaderPm1(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
         var pmMonth=this.lastMonth
         return h(
@@ -2672,7 +2773,7 @@ export default {
     },
     renderHeadertic(h, { column, $index }) {
       if ($index === 0) {
-        let filters = this.shbm;
+        let filters = this.sybm;
         return h(
           "el-select",
           {
@@ -2812,7 +2913,7 @@ export default {
     },
     renderHeaderPic(h, { column, $index }) {
       if ($index === 0) {
-        let filters = this.shbm;
+        let filters = this.sybm;
         return h(
           "el-select",
           {
@@ -4095,617 +4196,6 @@ h2:hover {
     transform: translate(0px, 0px);
   }
 }
-.indexbImg img {
-  display: block;
-  width: 45px;
-  height: 45px;
-}
-.b0 {
-  position: absolute;
-  top: -35px;
-  left: 5%;
-  z-index: 101;
-}
-.b1 {
-  position: absolute;
-  top: -35px;
-  left: 15%;
-  z-index: 101;
-}
-.b2 {
-  position: absolute;
-  top: -35px;
-  left: 25%;
-  z-index: 101;
-}
-.b3 {
-  position: absolute;
-  top: -35px;
-  left: 35%;
-  z-index: 101;
-}
-.b4 {
-  position: absolute;
-  top: -35px;
-  left: 45%;
-  z-index: 101;
-}
-.b5 {
-  position: absolute;
-  top: -35px;
-  left: 55%;
-  z-index: 101;
-}
-.b6 {
-  position: absolute;
-  top: -35px;
-  left: 65%;
-  z-index: 101;
-}
-.b7 {
-  position: absolute;
-  top: -35px;
-  left: 75%;
-  z-index: 101;
-}
-.b8 {
-  position: absolute;
-  top: -35px;
-  left: 85%;
-  z-index: 101;
-}
-.b9 {
-  position: absolute;
-  top: -32px;
-  left: 95%;
-  z-index: 101;
-}
-.b10 {
-  position: absolute;
-  top: -0px;
-  right: -25px;
-  z-index: 101;
-}
-.b11 {
-  position: absolute;
-  top: 60px;
-  right: -27px;
-  z-index: 101;
-}
-.b12 {
-  position: absolute;
-  bottom: -35px;
-  left: 90%;
-  z-index: 101;
-}
-.b13 {
-  position: absolute;
-  bottom: -35px;
-  left: 80%;
-  z-index: 101;
-}
-.b14 {
-  position: absolute;
-  bottom: -35px;
-  left: 70%;
-  z-index: 101;
-}
-.b15 {
-  position: absolute;
-  bottom: -35px;
-  left: 60%;
-  z-index: 101;
-}
-.b16 {
-  position: absolute;
-  bottom: -35px;
-  left: 50%;
-  z-index: 101;
-}
-.b17 {
-  position: absolute;
-  bottom: -35px;
-  left: 40%;
-  z-index: 101;
-}
-.b18 {
-  position: absolute;
-  bottom: -35px;
-  left: 30%;
-  z-index: 101;
-}
-.b19 {
-  position: absolute;
-  bottom: -35px;
-  left: 20%;
-  z-index: 101;
-}
-.b20 {
-  position: absolute;
-  bottom: -35px;
-  left: 5%;
-  z-index: 101;
-}
-.b21 {
-  position: absolute;
-  top: -35px;
-  left: 90%;
-  z-index: 101;
-}
-.b22 {
-  position: absolute;
-  top: -35px;
-  left: 80%;
-  z-index: 101;
-}
-.b23 {
-  position: absolute;
-  top: -35px;
-  left: 70%;
-  z-index: 101;
-}
-.b24 {
-  position: absolute;
-  top: -35px;
-  left: 60%;
-  z-index: 101;
-}
-.b25 {
-  position: absolute;
-  top: -35px;
-  left: 50%;
-  z-index: 101;
-}
-.b26 {
-  position: absolute;
-  top: -35px;
-  left: 40%;
-  z-index: 101;
-}
-.b27 {
-  position: absolute;
-  top: -35px;
-  left: 30%;
-  z-index: 101;
-}
-.b28 {
-  position: absolute;
-  top: -35px;
-  left: 20%;
-  z-index: 101;
-}
-.b29 {
-  position: absolute;
-  top: -35px;
-  left: 10%;
-  z-index: 101;
-}
-.b30 {
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  z-index: 101;
-}
-.b31 {
-  position: absolute;
-  top: 60px;
-  left: -5px;
-  z-index: 101;
-}
-.b32 {
-  position: absolute;
-  bottom: -35px;
-  left: 10%;
-  z-index: 101;
-}
-.b33 {
-  position: absolute;
-  bottom: -35px;
-  left: 20%;
-  z-index: 101;
-}
-.b34 {
-  position: absolute;
-  bottom: -35px;
-  left: 30%;
-  z-index: 101;
-}
-.b35 {
-  position: absolute;
-  bottom: -35px;
-  left: 40%;
-  z-index: 101;
-}
-.b36 {
-  position: absolute;
-  bottom: -35px;
-  left: 50%;
-  z-index: 101;
-}
-.b37 {
-  position: absolute;
-  bottom: -35px;
-  left: 60%;
-  z-index: 101;
-}
-.b38 {
-  position: absolute;
-  bottom: -35px;
-  left: 70%;
-  z-index: 101;
-}
-.b39 {
-  position: absolute;
-  bottom: -35px;
-  left: 80%;
-  z-index: 101;
-}
-.b40 {
-  position: absolute;
-  bottom: -35px;
-  left: 85%;
-  z-index: 101;
-}
-.b41 {
-  position: absolute;
-  top: -35px;
-  left: 10%;
-  z-index: 101;
-}
-.b42 {
-  position: absolute;
-  top: -35px;
-  left: 20%;
-  z-index: 101;
-}
-.b43 {
-  position: absolute;
-  top: -35px;
-  left: 30%;
-  z-index: 101;
-}
-.b44 {
-  position: absolute;
-  top: -35px;
-  left: 40%;
-  z-index: 101;
-}
-.b45 {
-  position: absolute;
-  top: -35px;
-  left: 50%;
-  z-index: 101;
-}
-.b46 {
-  position: absolute;
-  top: -35px;
-  left: 60%;
-  z-index: 101;
-}
-.b47 {
-  position: absolute;
-  top: -35px;
-  left: 70%;
-  z-index: 101;
-}
-.b48 {
-  position: absolute;
-  top: -35px;
-  left: 80%;
-  z-index: 101;
-}
-.b49 {
-  position: absolute;
-  top: -35px;
-  left: 90%;
-  z-index: 101;
-}
-.b50 {
-  position: absolute;
-  top: -5px;
-  right: -25px;
-  z-index: 101;
-}
-.b51 {
-  position: absolute;
-  top: 60px;
-  right: -27px;
-  z-index: 101;
-}
-.b52 {
-  position: absolute;
-  bottom: -35px;
-  left: 90%;
-  z-index: 101;
-}
-.b53 {
-  position: absolute;
-  bottom: -35px;
-  left: 80%;
-  z-index: 101;
-}
-.b54 {
-  position: absolute;
-  bottom: -35px;
-  left: 70%;
-  z-index: 101;
-}
-.b55 {
-  position: absolute;
-  bottom: -35px;
-  left: 60%;
-  z-index: 101;
-}
-.b56 {
-  position: absolute;
-  bottom: -35px;
-  left: 50%;
-  z-index: 101;
-}
-.b57 {
-  position: absolute;
-  bottom: -35px;
-  left: 40%;
-  z-index: 101;
-}
-.b58 {
-  position: absolute;
-  bottom: -35px;
-  left: 30%;
-  z-index: 101;
-}
-.b59 {
-  position: absolute;
-  bottom: -35px;
-  left: 20%;
-  z-index: 101;
-}
-.b60 {
-  position: absolute;
-  bottom: -35px;
-  left: 5%;
-  z-index: 101;
-}
-.b61 {
-  position: absolute;
-  top: -35px;
-  left: 90%;
-  z-index: 101;
-}
-.b62 {
-  position: absolute;
-  top: -35px;
-  left: 80%;
-  z-index: 101;
-}
-.b63 {
-  position: absolute;
-  top: -35px;
-  left: 70%;
-  z-index: 101;
-}
-.b64 {
-  position: absolute;
-  top: -35px;
-  left: 60%;
-  z-index: 101;
-}
-.b65 {
-  position: absolute;
-  top: -35px;
-  left: 50%;
-  z-index: 101;
-}
-.b66 {
-  position: absolute;
-  top: -35px;
-  left: 40%;
-  z-index: 101;
-}
-.b67 {
-  position: absolute;
-  top: -35px;
-  left: 30%;
-  z-index: 101;
-}
-.b68 {
-  position: absolute;
-  top: -35px;
-  left: 20%;
-  z-index: 101;
-}
-.b69 {
-  position: absolute;
-  top: -35px;
-  left: 10%;
-  z-index: 101;
-}
-.b70 {
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  z-index: 101;
-}
-.b71 {
-  position: absolute;
-  top: 60px;
-  left: -5px;
-  z-index: 101;
-}
-.b72 {
-  position: absolute;
-  bottom: -35px;
-  left: 10%;
-  z-index: 101;
-}
-.b73 {
-  position: absolute;
-  bottom: -35px;
-  left: 20%;
-  z-index: 101;
-}
-.b74 {
-  position: absolute;
-  bottom: -35px;
-  left: 30%;
-  z-index: 101;
-}
-.b75 {
-  position: absolute;
-  bottom: -35px;
-  left: 40%;
-  z-index: 101;
-}
-.b76 {
-  position: absolute;
-  bottom: -35px;
-  left: 50%;
-  z-index: 101;
-}
-.b77 {
-  position: absolute;
-  bottom: -35px;
-  left: 60%;
-  z-index: 101;
-}
-.b78 {
-  position: absolute;
-  bottom: -35px;
-  left: 70%;
-  z-index: 101;
-}
-.b79 {
-  position: absolute;
-  bottom: -35px;
-  left: 80%;
-  z-index: 101;
-}
-.b80 {
-  position: absolute;
-  bottom: -35px;
-  left: 90%;
-  z-index: 101;
-}
-.b81 {
-  position: absolute;
-  top: -35px;
-  left: 10%;
-  z-index: 101;
-}
-.b82 {
-  position: absolute;
-  top: -35px;
-  left: 20%;
-  z-index: 101;
-}
-.b83 {
-  position: absolute;
-  top: -35px;
-  left: 30%;
-  z-index: 101;
-}
-.b84 {
-  position: absolute;
-  top: -35px;
-  left: 40%;
-  z-index: 101;
-}
-.b85 {
-  position: absolute;
-  top: -35px;
-  left: 50%;
-  z-index: 101;
-}
-.b86 {
-  position: absolute;
-  top: -35px;
-  left: 60%;
-  z-index: 101;
-}
-.b87 {
-  position: absolute;
-  top: -35px;
-  left: 70%;
-  z-index: 101;
-}
-.b88 {
-  position: absolute;
-  top: -35px;
-  left: 80%;
-  z-index: 101;
-}
-.b89 {
-  position: absolute;
-  top: -35px;
-  left: 90%;
-  z-index: 101;
-}
-.b90 {
-  position: absolute;
-  top: -5px;
-  right: -25px;
-  z-index: 101;
-}
-.b91 {
-  position: absolute;
-  top: 60px;
-  right: -27px;
-  z-index: 101;
-}
-.b92 {
-  position: absolute;
-  bottom: -35px;
-  left: 91%;
-  z-index: 101;
-}
-.b93 {
-  position: absolute;
-  bottom: -35px;
-  left: 79%;
-  z-index: 101;
-}
-.b94 {
-  position: absolute;
-  bottom: -35px;
-  left: 69%;
-  z-index: 101;
-}
-.b95 {
-  position: absolute;
-  bottom: -35px;
-  left: 59%;
-  z-index: 101;
-}
-.b96 {
-  position: absolute;
-  bottom: -35px;
-  left: 49%;
-  z-index: 101;
-}
-.b97 {
-  position: absolute;
-  bottom: -35px;
-  left: 39%;
-  z-index: 101;
-}
-.b98 {
-  position: absolute;
-  bottom: -35px;
-  left: 29%;
-  z-index: 101;
-}
-.b99 {
-  position: absolute;
-  bottom: -35px;
-  left: 19%;
-  z-index: 101;
-}
-.b100 {
-  position: absolute;
-  bottom: -35px;
-  left: 8%;
-  z-index: 101;
-}
 // 全部
 .digWhite {
   width: 1300px;
@@ -5281,504 +4771,6 @@ h2:hover {
     -webkit-transform: rotateY(360deg);
   }
 }
-//金币
-.jb01 {
-  position: absolute;
-  top: -85px;
-  left: 40%;
-}
-.jb01img {
-  position: absolute;
-  top: -35px;
-  left: 42%;
-}
-.jb01 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 18%;
-}
-.jb02 {
-  position: absolute;
-  top: -85px;
-  left: 30%;
-}
-.jb02img {
-  position: absolute;
-  top: -35px;
-  left: 32%;
-}
-.jb02 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 18%;
-}
-.jb03 {
-  position: absolute;
-  top: -85px;
-  left: 20%;
-}
-.jb03img {
-  position: absolute;
-  top: -35px;
-  left: 22%;
-}
-.jb03 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 18%;
-}
-.jb04 {
-  position: absolute;
-  top: -85px;
-  left: 10%;
-}
-.jb04img {
-  position: absolute;
-  top: -35px;
-  left: 12%;
-}
-.jb04 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 18%;
-}
-.jb05 {
-  position: absolute;
-  top: -85px;
-  left: 0%;
-}
-.jb05img {
-  position: absolute;
-  top: -28px;
-  left: 2%;
-}
-.jb05 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jb06 {
-  position: absolute;
-  bottom: 3px;
-  left: 0%;
-}
-.jb06img {
-  position: absolute;
-  bottom: -28px;
-  left: 2%;
-}
-.jb06 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jb07 {
-  position: absolute;
-  bottom: 3px;
-  left: 10%;
-}
-.jb07img {
-  position: absolute;
-  bottom: -35px;
-  left: 12%;
-}
-.jb07 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jb08 {
-  position: absolute;
-  bottom: 3px;
-  left: 20%;
-}
-.jb08img {
-  position: absolute;
-  bottom: -35px;
-  left: 22%;
-}
-.jb08 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jb09 {
-  position: absolute;
-  bottom: 3px;
-  left: 30%;
-}
-.jb09img {
-  position: absolute;
-  bottom: -35px;
-  left: 32%;
-}
-.jb09 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jb10 {
-  position: absolute;
-  bottom: 3px;
-  left: 40%;
-}
-.jb010img {
-  position: absolute;
-  bottom: -35px;
-  left: 42%;
-}
-.jb10 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jb11 {
-  position: absolute;
-  bottom: 3px;
-  left: 50%;
-}
-.jb011img {
-  position: absolute;
-  bottom: -35px;
-  left: 52%;
-}
-.jb11 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jb12 {
-  position: absolute;
-  bottom: 3px;
-  left: 60%;
-}
-.jb012img {
-  position: absolute;
-  bottom: -35px;
-  left: 62%;
-}
-.jb12 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jb13 {
-  position: absolute;
-  bottom: 3px;
-  left: 70%;
-}
-.jb013img {
-  position: absolute;
-  bottom: -35px;
-  left: 72%;
-}
-.jb13 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jb14 {
-  position: absolute;
-  bottom: 3px;
-  left: 80%;
-}
-.jb014img {
-  position: absolute;
-  bottom: -35px;
-  left: 82%;
-}
-.jb14 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jb15 {
-  position: absolute;
-  bottom: 3px;
-  left: 90%;
-}
-.jb015img {
-  position: absolute;
-  bottom: -35px;
-  left: 92%;
-}
-.jb15 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jb016img {
-  position: absolute;
-  top: -30px;
-  left: 97%;
-}
-.jb017img {
-  position: absolute;
-  bottom: -35px;
-  left: 97%;
-}
-.jb018img {
-  position: absolute;
-  bottom: -35px;
-  left: 87%;
-}
-.jb019img {
-  position: absolute;
-  bottom: -35px;
-  left: 77%;
-}
-.jb020img {
-  position: absolute;
-  bottom: -35px;
-  left: 67%;
-}
-.jb021img {
-  position: absolute;
-  bottom: -35px;
-  left: 57%;
-}
-.jb022img {
-  position: absolute;
-  bottom: -35px;
-  left: 47%;
-}
-.jb023img {
-  position: absolute;
-  bottom: -35px;
-  left: 37%;
-}
-.jb024img {
-  position: absolute;
-  bottom: -35px;
-  left: 27%;
-}
-.jb025img {
-  position: absolute;
-  bottom: -35px;
-  left: 17%;
-}
-.jb026img {
-  position: absolute;
-  bottom: -35px;
-  left: 7%;
-}
-.jb027img {
-  position: absolute;
-  top: -28px;
-  left: 2%;
-}
-.jb028img {
-  position: absolute;
-  bottom: -28px;
-  left: 2%;
-}
-.jb029img {
-  position: absolute;
-  bottom: -35px;
-  left: 12%;
-}
-.jb030img {
-  position: absolute;
-  bottom: -35px;
-  left: 22%;
-}
-.jb031img {
-  position: absolute;
-  bottom: -35px;
-  left: 32%;
-}
-.jb032img {
-  position: absolute;
-  bottom: -35px;
-  left: 42%;
-}
-.jb033img {
-  position: absolute;
-  bottom: -35px;
-  left: 52%;
-}
-.jb034img {
-  position: absolute;
-  bottom: -35px;
-  left: 62%;
-}
-.jb035img {
-  position: absolute;
-  bottom: -35px;
-  left: 72%;
-}
-.jb036img {
-  position: absolute;
-  bottom: -35px;
-  left: 82%;
-}
-.jb037img {
-  position: absolute;
-  bottom: -35px;
-  left: 92%;
-}
-.jbr1{
-  position: absolute;
-  top: -85px;
-  left:95%;
-}
-.jbr1 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jbr2{
-  position: absolute;
-  top: 34px;
-  left:95%;
-}
-.jbr2 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jbr3{
-  position: absolute;
-  top: 34px;
-  left:85%;
-}
-.jbr3 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jbr4{
-  position: absolute;
-  top: 34px;
-  left:75%;
-}
-.jbr4 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jbr5{
-  position: absolute;
-  top: 34px;
-  left:65%;
-}
-.jbr5 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jbr6{
-  position: absolute;
-  top: 34px;
-  left:55%;
-}
-.jbr6 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jbr7{
-  position: absolute;
-  top: 34px;
-  left:45%;
-}
-.jbr7 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jbr8{
-  position: absolute;
-  top: 34px;
-  left:35%;
-}
-.jbr8 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jbr9{
-  position: absolute;
-  top: 34px;
-  left:25%;
-}
-.jbr9 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jbr10{
-  position: absolute;
-  top: 34px;
-  left:15%;
-}
-.jbr10 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
-.jbr11{
-  position: absolute;
-  top: 34px;
-  left:5%;
-}
-.jbr11 span {
-  display: block;
-  position: absolute;
-  color: #fff;
-  top: 35%;
-  left: 12%;
-}
 //第二屏幕
 .bgCase {
   width: 100%;
@@ -5848,5 +4840,10 @@ h2:hover {
 }
 .newIndex td{
   padding:0.7rem 0 !important;
+}
+.tabsPm td{
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
 }
 </style>

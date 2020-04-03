@@ -17,6 +17,7 @@
                        v-model="formInline.region"
                        multiple
                        collapse-tags
+                       style="width:130px;"
                        placeholder="部门"
                        @change="choosed">
               <el-button plain
@@ -36,6 +37,7 @@
                         class="input">
             <el-select size="small"
                        v-model="condition.member"
+                       style="width:170px;"
                        filterable
                        multiple
                        collapse-tags
@@ -75,7 +77,7 @@
                             type="daterange"
                             align="right"
                             unlink-panels
-                            style="width:250px;"
+                            style="width:215px;"
                             range-separator="至"
                             start-placeholder="开始日期"
                             end-placeholder="结束日期"

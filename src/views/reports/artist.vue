@@ -19,6 +19,7 @@
                        multiple
                        collapse-tags
                        placeholder="部门"
+                       style="width:130px;"
                        @change="choosed">
               <el-button plain
                          type="info"
@@ -40,6 +41,7 @@
                        v-model="condition.member"
                        filterable
                        multiple
+                       style="width:170px;"
                        collapse-tags
                        placeholder="美工员">
               <el-button plain
@@ -77,7 +79,7 @@
                             value-format="yyyy-MM-dd"
                             type="daterange"
                             align="right"
-                            style="width:250px;"
+                            style="width:215px;"
                             unlink-panels
                             range-separator="至"
                             start-placeholder="开始日期"

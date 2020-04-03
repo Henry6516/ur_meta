@@ -16,6 +16,7 @@
             <el-select size="small"
                        v-model="formInline.region"
                        multiple
+                       style="width:130px;"
                        collapse-tags
                        placeholder="部门"
                        @change="choosed">
@@ -38,6 +39,7 @@
             <el-select size="small"
                        v-model="condition.member"
                        filterable
+                       style="width:170px;"
                        multiple
                        collapse-tags
                        placeholder="推荐人">
@@ -76,7 +78,7 @@
                             type="daterange"
                             align="right"
                             unlink-panels
-                            style="width:250px;"
+                            style="width:215px;"
                             range-separator="至"
                             start-placeholder="开始日期"
                             end-placeholder="结束日期"
