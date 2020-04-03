@@ -3,7 +3,7 @@
     <el-form :model='condition'
              :inline='true'
              ref='condition'
-             label-width='5rem'
+             label-width='60px'
              class='demo-form-inline toolbar'>
       <el-form-item label="品牌"
                     prop="brand">

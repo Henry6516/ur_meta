@@ -1850,9 +1850,57 @@ export function hwcSkuUpdate(param) {
   })
 }
 
-export function getIntegral() {
+export function getIntegral(param) {
+  const data = { condition: param }
   return request({
     url: '/warehouse-tools/integral',
+    method: 'post',
+    data
+  })
+}
+
+export function getqueryInfojob() {
+  return request({
+    url: '/warehouse-tools/query-info?type=job',
     method: 'get'
+  })
+}
+
+export function getqueryInfoname() {
+  return request({
+    url: '/warehouse-tools/query-info?type=name',
+    method: 'get'
+  })
+}
+
+export function getqueryInfogroup() {
+  return request({
+    url: '/warehouse-tools/query-info?type=group',
+    method: 'get'
+  })
+}
+
+export function getwarehouseRate() {
+  return request({
+    url: '/settings/warehouse-rate',
+    method: 'get'
+  })
+}
+
+export function getSavewarehouseRate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/settings/warehouse-rate',
+    method: 'post',
+    data
+  })
+}
+
+export function getDeletewarehouseRate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/settings/warehouse-rate',
+    method: 'delete',
+    data
   })
 }

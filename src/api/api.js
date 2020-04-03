@@ -489,7 +489,14 @@ export function getSiteIndexBM() {
 
 export function getCkIntegral(param) {
   return request({
-    url: '/site/integral-ranking?job=' + param.job,
+    url: '/site/integral-ranking?job=' + param.job + '&type=' + param.type,
     method: 'get'
   })
 }
+
+export function uploadCk() {
+  const baseUrl = process.env.BASE_API
+  const url = '/settings/import-integral-data'
+  return baseUrl + url
+}
+

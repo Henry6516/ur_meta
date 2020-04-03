@@ -66,6 +66,7 @@ import ukxnhw from '../views/tinytool/ukxnhw.vue'
 import deadFee from '../views/settings/deadFee.vue'
 import operationFee from '../views/settings/operationFee.vue'
 import exchange from '../views/settings/exchange.vue'
+import rateCk from '../views/settings/rateCk.vue'
 // 仓库工具
 import picking from '../views/warehouse/picking.vue'
 import splitcargo from '../views/warehouse/splitCargo.vue'
@@ -345,6 +346,11 @@ const routes = [
         path: '/v1/settings/exchange',
         component: exchange,
         name: '美元设置'
+      },
+      {
+        path: '/v1/settings/warehouse-rate',
+        component: rateCk,
+        name: '仓库报表设置'
       }
     ]
   },

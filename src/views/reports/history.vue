@@ -20,6 +20,7 @@
               v-model="condition.department"
               multiple
               collapse-tags
+              style="width:140px;"
               placeholder="部门"
               @change="choosed"
             >
@@ -38,6 +39,7 @@
             <el-select
               size="small"
               v-model="condition.secDepartment"
+              style="width:180px;"
               multiple
               collapse-tags
               placeholder="二级部门"
@@ -59,9 +61,9 @@
               size="small"
               v-model="condition.plat"
               multiple
+              style="width:180px;"
               collapse-tags
               placeholder="销售平台"
-              style="height: 3rem;"
             >
               <el-button plain type="info" @click="selectAll('plat')">全选</el-button>
               <el-button plain type="info" @click="unselect('plat')">取消</el-button>
@@ -77,6 +79,7 @@
           <el-form-item label="销售员" class="input">
             <el-select
               size="small"
+              style="width:170px;"
               v-model="condition.member"
               filterable
               multiple
@@ -471,7 +474,7 @@ export default {
         for (let i = 0; i < val.length; i++) {
           // 部门
           for (let k = 0; k < this.allSecDep.length; k++) {
-            if (allDepartmentsMap[this.allSecDep[k].parent] === val[i]) {
+            if (allDepartmentsMap[this.allSecDep[k].parent] === val[i] && this.allSecDep[k].type.indexOf('销售')>-1) {
               secDep.push(this.allSecDep[k]);
             }
           }

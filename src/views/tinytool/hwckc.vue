@@ -313,8 +313,7 @@ export default {
       const res = response.data.data;
       this.allMember = this.member = res.filter(
         ele =>
-          (ele.department === "运营一部" ||
-            ele.parent_department === "运营一部") &&
+          ele.parent_id === "1" &&
           ele.position === "销售"
       );
     });

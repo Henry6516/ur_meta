@@ -1,7 +1,7 @@
 <template>
   <el-form :model='condition' label-width="120px" class="demo-ruleForm login-container" ref="condition">
     <el-form-item label="卖家账号：" prop="suffix" :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]">
-      <el-select v-model="condition.suffix" filterable multiple collapse-tags>
+      <el-select v-model="condition.suffix" filterable multiple collapse-tags style="width:315px;">
         <el-button plain type="info" @click="selectall">全选</el-button>
         <el-button plain type="info" @click="noselect">取消</el-button>
         <el-option v-for="item in suffix" :key="item.ebaySuffix" :value="item.ebayName"></el-option>
@@ -101,16 +101,16 @@ export default {
   border-radius: 5px;
   -moz-border-radius: 5px;
   background-clip: padding-box;
-  margin: 8rem auto;
-  width: 40rem;
-  padding: 6rem 2rem 2rem 4.5rem;
+  margin: 15rem auto;
+  width: 500px;
+  padding: 40px 40px 40px 40px;
   background: #fff;
   border: 1px solid #eaeaea;
   box-shadow: 0 0 25px #cac6c6;
   .el-form-item {
     margin-bottom: 4rem;
     .el-input {
-      width: 215px;
+      width: 315px;
     }
     .el-button {
       margin-left: 3rem;

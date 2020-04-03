@@ -426,7 +426,7 @@ export default {
         for (let i = 0; i < val.length; i++) {
           // 部门
           for (let k = 0; k < this.allSecDep.length; k++) {
-            if (allDepartmentsMap[this.allSecDep[k].parent] === val[i]) {
+            if (allDepartmentsMap[this.allSecDep[k].parent] === val[i] && this.allSecDep[k].type.indexOf('销售')>-1) {
               secDep.push(this.allSecDep[k])
             }
           }

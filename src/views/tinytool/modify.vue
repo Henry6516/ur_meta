@@ -148,14 +148,12 @@ export default {
       this.member = res.filter(ele => ele.position === "销售");
       this.res = res.filter(
         ele =>
-          (ele.department === "运营一部" ||
-            ele.parent_department === "运营一部") &&
+          ele.parent_id === "1" &&
           ele.position === "销售"
       );
       this.resJl = res.filter(
         ele =>
-          (ele.department === "运营一部" ||
-            ele.parent_department === "运营一部") &&
+          ele.parent_id === "1" &&
           ele.position == "经理"
       );
     });

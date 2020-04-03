@@ -274,7 +274,7 @@ export default {
   mounted() {
     getMember().then(response => {
       const res = response.data.data;
-      this.allMember = this.member = res.filter(ele => ele.position === "开发" && ele.department === "运营一部开发组");
+      this.allMember = this.member = res.filter(ele => ele.position === "开发" && ele.parent_id === "1");
       this.purchaser = res.filter(ele => ele.position === "采购");
       this.res = res.filter(ele => ele.position === "主管");
     });
