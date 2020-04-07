@@ -56,30 +56,45 @@
           <el-table-column type="index" fixed align="center" header-align="center" width="45"></el-table-column>  
           <el-table-column label="姓名" fixed header-align="center" align="center" prop="name" width="80"></el-table-column>
           <el-table-column label="月份" fixed header-align="center" align="center" prop="month" width="80"></el-table-column>
-          <el-table-column label="总积分" fixed header-align="center" align="center" prop="total_integral" width="100" sortable="custom"></el-table-column>
-          <el-table-column label="计件工资" fixed header-align="center" align="center" prop="wages" width="105" sortable="custom">
+          <el-table-column label="总积分"  header-align="center" align="center" prop="total_integral" width="100" sortable="custom"></el-table-column>
+          <el-table-column label="计件工资"  header-align="center" align="center" prop="wages" width="105" sortable="custom">
             <template slot-scope="scope">
               <span style="color:red;">{{scope.row.wages}}</span>
             </template>
           </el-table-column>
+          <el-table-column label="出勤天数" header-align="center" align="center" prop="all_days" width="110" sortable="custom"></el-table-column>
           <el-table-column label="贴标出勤天数" header-align="center" align="center" prop="labeling_days" width="130" sortable="custom"></el-table-column>
           <el-table-column label="分拣出勤天数" header-align="center" align="center" prop="sorting_days" width="130" sortable="custom"></el-table-column>  
           <el-table-column label="组别" header-align="center" align="center" prop="group" width="80"></el-table-column>
           <el-table-column label="职位" header-align="center" align="center" prop="job" width="80"></el-table-column>
           <el-table-column label="小组" header-align="center" align="center" prop="team" width="80"></el-table-column>
-          <el-table-column label="采购入库包裹" header-align="center" align="center" prop="pur_in_package_num" width="130" sortable="custom"></el-table-column>
+          <el-table-column label="拆包" header-align="center" align="center">
+            <el-table-column label="采购入库包裹" header-align="center" align="center" prop="pur_in_package_num" width="130" sortable="custom"></el-table-column>
+          </el-table-column>
+          <el-table-column label="打标" header-align="center" align="center">
           <el-table-column label="打标入库包裹" header-align="center" align="center" prop="marking_in_storage_package_num" width="130" sortable="custom"></el-table-column>
           <el-table-column label="打标入库数量" header-align="center" align="center" prop="marking_in_storage_num" width="130" sortable="custom"></el-table-column>
+          </el-table-column>
+          <el-table-column label="贴标" header-align="center" align="center">
           <el-table-column label="贴标入库包裹" header-align="center" align="center" prop="labeling_in_storage_package_num" width="130" sortable="custom"></el-table-column>
           <el-table-column label="贴标入库数量" header-align="center" align="center" prop="labeling_in_storage_num" width="130" sortable="custom"></el-table-column>
+          </el-table-column>
+          <el-table-column label="上架" header-align="center" align="center">
           <el-table-column label="PDA入库SKU数" header-align="center" align="center" prop="pda_in_storage_sku_num" width="150" sortable="custom"></el-table-column>
+          </el-table-column>
+          <el-table-column label="拣货" header-align="center" align="center">
           <el-table-column label="单品包裹数" header-align="center" align="center" prop="single_package_num" width="115" sortable="custom"></el-table-column>
           <el-table-column label="核单包裹数" header-align="center" align="center" prop="multi_package_num" width="115" sortable="custom"></el-table-column>
-          <el-table-column label="打包单品包裹数" header-align="center" align="center" prop="pack_single_package_num" width="145" sortable="custom"></el-table-column>
-          <el-table-column label="打包核单包裹数" header-align="center" align="center" prop="pack_multi_package_num" width="145" sortable="custom"></el-table-column>
           <el-table-column label="拣货SKU种数" header-align="center" align="center" prop="picking_sku_num" width="135" sortable="custom"></el-table-column>
           <el-table-column label="拣货总数量" header-align="center" align="center" prop="picking_total_num" width="115" sortable="custom"></el-table-column>
+          </el-table-column>
+          <el-table-column label="打包" header-align="center" align="center">
+          <el-table-column label="打包单品包裹数" header-align="center" align="center" prop="pack_single_package_num" width="145" sortable="custom"></el-table-column>
+          <el-table-column label="打包核单包裹数" header-align="center" align="center" prop="pack_multi_package_num" width="145" sortable="custom"></el-table-column>
+          </el-table-column>
+          <el-table-column label="分拣" header-align="center" align="center">
           <el-table-column label="分拣包裹数" header-align="center" align="center" prop="package_num" width="130" sortable="custom"></el-table-column>
+          </el-table-column>
           <el-table-column label="拆包积分" header-align="center" align="center" prop="unpacking_integral" width="105" sortable="custom"></el-table-column>
           <el-table-column label="打标积分" header-align="center" align="center" prop="marking_integral" width="105" sortable="custom"></el-table-column>
           <el-table-column label="贴标积分" header-align="center" align="center" prop="labeling_integral" width="105" sortable="custom"></el-table-column>
@@ -188,6 +203,7 @@ export default {
         "组别",
         "职位",
         "小组",
+        "出勤天数",
         "贴标出勤天数",
         "分拣出勤天数",
         "采购入库包裹",
@@ -222,6 +238,7 @@ export default {
         "group",
         "job",
         "team",
+        "all_days",
         "labeling_days",
         "sorting_days",
         "pur_in_package_num",
@@ -263,6 +280,8 @@ export default {
     },
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
+        return "color:#3c8dbc;background:#f5f7fa";
+      }else if(rowIndex == 1 || columnIndex>3){
         return "color:#3c8dbc;background:#f5f7fa";
       } else {
         return "";

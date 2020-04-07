@@ -478,9 +478,9 @@ export default {
 }
 @media (max-width: 1152px) {
   .header {
-    height: 5rem;
-    line-height: 5rem;
-    background-color: #409eff;
+    height: 60px;
+    line-height: 60px;
+    background-color: rgb(60, 141, 188);
     color: #fff;
     .el-col-3 {
       height: 5rem;
@@ -496,8 +496,8 @@ export default {
         cursor: pointer;
         color: #fff;
         img {
-          width: 4rem;
-          height: 4rem;
+          width: 50px;
+          height: 50px;
           border-radius: 50%;
           margin: 0.5rem 0rem 0rem 0.5rem;
           float: right;

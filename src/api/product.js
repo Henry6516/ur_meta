@@ -1904,3 +1904,11 @@ export function getDeletewarehouseRate(param) {
     data
   })
 }
+
+export function getintegralLog() {
+  return request({
+    url: '/settings/integral-log',
+    method: 'get'
+  })
+}
+

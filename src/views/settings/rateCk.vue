@@ -97,26 +97,60 @@
                 </el-button>
               </el-col>
               <div class="ckRight">
-                <span class="ckText"><span class="ckActive" :class="ckindex==1?'ckActiveBlock':''"></span><span>导入记录</span></span>
-                <span class="ckText"><span class="ckActive" :class="ckindex==0?'ckActiveBlock':''"></span><span>导入列表</span></span>
+                <span class="ckText" @click="tabcl('1')"><span class="ckActive" :class="ckindex==1?'ckActiveBlock':''"></span><span>导入列表</span></span>
+                <span class="ckText" @click="tabcl('0')"><span class="ckActive" :class="ckindex==0?'ckActiveBlock':''"></span><span>导入记录</span></span>
               </div>  
             </el-col>
           </div>
           <el-col :span="24">
             <el-table
-            :data="dateArt"
+            :data="data1"
             border
+            v-show="ckindex==0"
             class="elTable"
             :header-cell-style="getRowClass" 
             :height="tableHeightCk"
             style="width: 97.1%;margin-left:1.2%;margin-top:15px"
           >
             <el-table-column type="index" fixed align="center" width="60" header-align="center"></el-table-column>
-            <el-table-column label="参数名称" align="center" prop="type">
+            <el-table-column label="文件名" align="center" prop="fileName">
             </el-table-column>
-            <el-table-column label="参数值" align="center" prop="rate">
+            <el-table-column label="文件大小" align="center" prop="fileSize">
             </el-table-column>
-            <el-table-column label="更新时间" align="center" prop="update">
+            <el-table-column label="上传人" align="center" prop="creator">
+            </el-table-column>
+            <el-table-column label="创建时间" align="center" prop="createdDate">
+            </el-table-column>
+            <el-table-column label="更新时间" align="center" prop="updatedDate">
+            </el-table-column>
+          </el-table>
+          <el-table
+            :data="data2"
+            border
+            class="elTable"
+            v-show="ckindex==1"
+            :header-cell-style="getRowClass" 
+            :height="tableHeightCk"
+            style="width: 97.1%;margin-left:1.2%;margin-top:15px"
+          >
+            <el-table-column type="index" fixed align="center" width="60" header-align="center"></el-table-column>
+            <el-table-column label="姓名" align="center" prop="name">
+            </el-table-column>
+            <el-table-column label="月份" align="center" prop="month">
+            </el-table-column>
+            <el-table-column label="小组" align="center" prop="team">
+            </el-table-column>
+            <el-table-column label="出勤天数" align="center" prop="all_days">
+            </el-table-column>
+            <el-table-column label="贴标出勤天数" align="center" prop="labeling_days">
+            </el-table-column>
+            <el-table-column label="分拣出勤天数" align="center" prop="sorting_days">
+            </el-table-column>
+            <el-table-column label="其它得分项" align="center" prop="other_integral">
+            </el-table-column>
+            <el-table-column label="扣分项" align="center" prop="deduction_integral">
+            </el-table-column>
+            <el-table-column label="更新时间" align="center" prop="update_time">
             </el-table-column>
           </el-table>
           </el-col>
@@ -182,7 +216,8 @@
 import {
   getwarehouseRate,
   getSavewarehouseRate,
-  getDeletewarehouseRate
+  getDeletewarehouseRate,
+  getintegralLog
 } from "../../api/product";
 import { uploadJoom, getHeaders } from "../../api/api";
 import XLSX from 'xlsx'
@@ -193,6 +228,8 @@ export default {
         sz:true,
         sj:false
       },
+      data1:[],
+      data2:[],
       ckindex:0,
       activeName:'参数设置',
       allMenu: ['参数设置','数据导入'],
@@ -217,6 +254,9 @@ export default {
     };
   },
   methods: {
+    tabcl(n){
+      this.ckindex=n
+    },
     handleClick(tab, event) {
       if (tab.label === "参数设置") {
         this.show.sz = true;
@@ -243,36 +283,45 @@ export default {
       console.log(err);
     },
     export01Excel() {
-      /* convert state to workbook */
-      const ws = XLSX.utils.aoa_to_sheet(this.data01)
-      const wb = XLSX.utils.book_new()
-      const date = new Date()
-      const year = date.getFullYear()
-      let month = date.getMonth() + 1
-      let strDate = date.getDate()
-      let hour = date.getHours()
-      let minute = date.getMinutes()
-      let second = date.getSeconds()
-      if (month >= 1 && month <= 9) {
-        month = '0' + month
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = '0' + strDate
-      }
-      if (hour >= 0 && hour <= 9) {
-        hour = '0' + hour
-      }
-      if (minute >= 0 && minute <= 9) {
-        minute = '0' + minute
-      }
-      if (second >= 0 && second <= 9) {
-        second = '0' + second
-      }
-      const filename =
-        'example' + year + month + strDate + hour + minute + second
-      XLSX.utils.book_append_sheet(wb, ws, 'Y_saleofflineclearn')
-      /* generate file and send to client */
-      XLSX.writeFile(wb, filename + '.xlsx')
+      var dataArr =[
+        {
+          "name":'庄美英',
+          "month":'2020-03',
+          "job":'打包',
+          "team":'周芹英',
+          "all_days":'0',
+          "labeling_days":'2',
+          "sorting_days":'0',
+          "other_integral":'11',
+          "deduction_integral":'22'
+        }
+      ]
+      const th = [
+        "name",
+        "month",
+        "job",
+        "team",
+        "all_days",
+        "labeling_days",
+        "sorting_days",
+        "other_integral",
+        "deduction_integral"
+      ];
+      const filterVal = [
+        "name",
+        "month",
+        "job",
+        "team",
+        "all_days",
+        "labeling_days",
+        "sorting_days",
+        "other_integral",
+        "deduction_integral"
+      ];
+      const Filename = "example";
+      const data = dataArr.map(v => filterVal.map(k => v[k]));
+      const [fileName, fileType, sheetName] = [Filename, "xls"];
+      this.$toExcel({ th, data, fileName, fileType, sheetName });
     },    
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
@@ -362,12 +411,19 @@ export default {
       getwarehouseRate().then(res => {
         this.dateArt = res.data.data;
       });
-    }
+    },
+    getLog(){
+      getintegralLog().then(res => {
+        this.data1 = res.data.data.log;
+        this.data2 = res.data.data.content;
+      });
+    },
   },
   mounted() {
     this.action = uploadJoom();
     this.headers = getHeaders();
     this.getDateArt();
+    this.getLog();
   }
 };
 </script>
