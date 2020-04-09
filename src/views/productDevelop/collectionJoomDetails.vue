@@ -15,28 +15,34 @@
     </el-col>
     <div class="w98">
       <el-col :span="24">
-        <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter">标题</el-col>
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">标题</el-col>
           <el-col :span="18">
             <el-input v-model="editForm.proName" clearable></el-input>
           </el-col>
         </el-col>
-        <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter">标签</el-col>
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">标签</el-col>
           <el-col :span="18">
             <el-input v-model="editForm.tags" clearable></el-input>
           </el-col>
         </el-col>
-        <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter">商品编码</el-col>
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">商品编码</el-col>
           <el-col :span="18">
             <el-input v-model="editForm.goodsCode" clearable></el-input>
           </el-col>
         </el-col>
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">店铺ID</el-col>
+          <el-col :span="18">
+            <el-input v-model="editForm.storeId" clearable></el-input>
+          </el-col>
+        </el-col>
       </el-col>
       <el-col :span="24">
-        <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter">主类目</el-col>
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">主类目</el-col>
           <el-col :span="18">
             <el-select
               v-model="editForm.cat"
@@ -48,16 +54,16 @@
             </el-select>
           </el-col>
         </el-col>
-        <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter">子类目</el-col>
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">子类目</el-col>
           <el-col :span="18">
             <el-select v-model="editForm.subCat" clearable style="width:100%;">
               <el-option v-for="item in subCate" :value="item" :key="item"></el-option>
             </el-select>
           </el-col>
         </el-col>
-        <el-col :span="8" class="top15">
-          <el-col :span="4" class="titCenter">特殊属性</el-col>
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">特殊属性</el-col>
           <el-col :span="18">
             <el-select v-model="editForm.spAttribute" clearable style="width: 100%">
               <el-option
@@ -69,16 +75,22 @@
             </el-select>
           </el-col>
         </el-col>
+        <el-col :span="6" class="top15">
+          <el-col :span="6" class="titCenter">主图</el-col>
+          <el-col :span="18">
+            <el-input v-model="editForm.mainImage" clearable></el-input>
+          </el-col>
+        </el-col>
       </el-col>
     </div>
     <el-col :span="24">
-      <el-col :span="1" class="titCenter top15" style="text-align: center;margin-left:23px;">描述</el-col>
+      <el-col :span="2" class="titCenter top15" style="text-align: center;">描述</el-col>
       <el-col :span="22">
         <el-input
           type="textarea"
           :rows="14"
           v-model="editForm.description"
-          style="width:98%;margin-left:10px;;margin-top:15px;"
+          style="width:100%;margin-left:-16px;margin-top:15px;"
         ></el-input>
       </el-col>
     </el-col>
@@ -96,13 +108,13 @@
             <img :src="editForm.mainImage" style="display: block; width: 205px;height: 205px" />
           </a>
         </el-col>
-        <el-col :span="17">
+        <!-- <el-col :span="17">
           <el-col :span="3" class="textZt">主图</el-col>
           <el-col :span="21">
             <el-input v-model="editForm.mainImage"></el-input>
           </el-col>
           <el-col :span="3" class="textZt" style="margin-top: 15px"></el-col>
-        </el-col>
+        </el-col> -->
       </el-col>
       <el-col style="margin-bottom: 10px;margin-top: 10px" :span="24">
         <span

@@ -1171,6 +1171,30 @@ export default {
 }
 </script>
 
-<style lang="scss">
-
+<style rel="stylesheet/scss" lang="scss" scoped>
+.poImg {
+  width: 80px;
+  height: 80px;
+}
+.poImg img {
+  margin-top: 16px;
+}
+.poImg1 {
+  width: 80px;
+  height: 80px;
+  background: url(../../assets/touguan.png) no-repeat center;
+  background-size: 100% 100%;
+}
+.poImg2 {
+  width: 80px;
+  height: 80px;
+  background: url(../../assets/toukuang1.png) no-repeat center;
+  background-size: 100% 100%;
+}
+.poImg3 {
+  width: 80px;
+  height: 80px;
+  background: url(../../assets/toukuang2.png) no-repeat center;
+  background-size: 100% 100%;
+}
 </style>

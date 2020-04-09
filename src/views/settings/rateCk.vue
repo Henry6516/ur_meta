@@ -219,7 +219,7 @@ import {
   getDeletewarehouseRate,
   getintegralLog
 } from "../../api/product";
-import { uploadJoom, getHeaders } from "../../api/api";
+import { uploadCk, getHeaders } from "../../api/api";
 import XLSX from 'xlsx'
 export default {
   data() {
@@ -270,7 +270,7 @@ export default {
       }
     },
     uploadSuccess(response, file, fileList) {
-      if (response.code == 200 && response.data[0] == "上传成功") {
+      if (response.code == 200) {
         this.$message({
           message: "上传成功",
           type: "success"
@@ -320,7 +320,7 @@ export default {
       ];
       const Filename = "example";
       const data = dataArr.map(v => filterVal.map(k => v[k]));
-      const [fileName, fileType, sheetName] = [Filename, "xls"];
+      const [fileName, fileType, sheetName] = [Filename, "xlsx"];
       this.$toExcel({ th, data, fileName, fileType, sheetName });
     },    
     getRowClass({ row, column, rowIndex, columnIndex }) {
@@ -420,7 +420,7 @@ export default {
     },
   },
   mounted() {
-    this.action = uploadJoom();
+    this.action = uploadCk();
     this.headers = getHeaders();
     this.getDateArt();
     this.getLog();
