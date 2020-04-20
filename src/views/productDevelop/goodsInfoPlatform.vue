@@ -94,7 +94,7 @@
             <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
           </template>
         </el-table-column>
-        <el-table-column label="商品编码" fixed header-align="center">
+        <el-table-column label="商品编码" fixed width="100" header-align="center">
           <el-table-column
             prop="goodsCode"
             fixed
@@ -2020,6 +2020,7 @@ export default {
           "div",
           {
             style: {
+              width:'100%',
               height: "40px"
             }
           },

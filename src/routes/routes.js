@@ -594,7 +594,7 @@ const routes = [
         name: '修改订单申报价'
       },
       {
-        path: '/v1/tiny-tool/ebay-balance',
+        path: '/v1/tiny-tool/ebay-balance/index',
         component: ebayBalance,
         name: 'ebay账号余额'
       },

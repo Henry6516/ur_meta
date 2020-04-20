@@ -1912,3 +1912,48 @@ export function getintegralLog() {
   })
 }
 
+export function getEbayBalanceTimeGet(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/ebay-balance-time-get?page=' + param.page + '&sort=' + param.sort,
+    method: 'post',
+    data
+  })
+}
+
+export function getebayBalanceTimeCreate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/ebay-balance-time-create',
+    method: 'post',
+    data
+  })
+}
+
+export function getebayBalanceTimeDelet(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/ebay-balance-time-delete',
+    method: 'post',
+    data
+  })
+}
+
+export function getebayBalanceTimeUpdate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/ebay-balance-time-update',
+    method: 'post',
+    data
+  })
+}
+
+export function APIExtendDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-data/extend-detail',
+    method: 'post',
+    data
+  })
+}
+

@@ -372,7 +372,7 @@ export default {
         return h(
           'span',
           [ 
-            h('span', '销售额($)'),
+            h('span', '销售额(￥)'),
           ],
         );
     },    

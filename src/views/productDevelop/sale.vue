@@ -59,8 +59,9 @@
             align="center"
           >
             <template slot-scope="scope">
-              <a
+              <a  @click="exStatus(scope.$index,scope.row)"
                 :class="scope.row.extendStatus=='未推广'?'clasRed1':'clasGreen1'"
+                style='cursor:pointer'
               >{{scope.row.extendStatus}}</a>
             </template>
           </el-table-column>
@@ -442,6 +443,33 @@
           </el-form-item>
         </el-form>
       </el-dialog>
+      <el-dialog
+        title="推广状态"
+        :visible.sync="dialogVisibleSatus"
+        width="30%">
+        <el-row>
+          <div class='stauStyle'>
+            <el-col :span='24' class='statBor'>
+              已推广：
+            </el-col>
+            <el-col :span='24'>
+              <span v-for='(item,index) in yesList' :key='index' class='spanYes'>{{item}}</span>
+            </el-col>
+            <el-col :span='24' class='statBor'>
+              未推广：
+            </el-col>
+            <el-col :span='24'>
+              <span v-for='(item,index) in noList' :key='index' class='spanNo'>{{item}}</span>
+            </el-col>
+            <el-col :span='24' class='statBor'>
+              进度条：
+            </el-col>
+            <el-col :span='24'>
+              <el-progress :text-inside="true" :stroke-width="22" :percentage="statWidth" style='width:95%;margin:15px 0;margin-left:10px;'></el-progress>
+            </el-col>
+          </div>
+        </el-row>
+      </el-dialog>      
     </div>
   </section>
 </template>
@@ -452,7 +480,8 @@ import {
   APIFormWish,
   APIStock,
   APInoStock,
-  APIFormExtend
+  APIFormExtend,
+  APIExtendDetail
 } from "../../api/product";
 import {
   getAttributeInfoStoreName,
@@ -466,6 +495,10 @@ export default {
   data() {
     return {
       //销售
+      statWidth:'20',
+      yesList:[],
+      noList:[],
+      dialogVisibleSatus:false,
       tableHeight: window.innerHeight - 195,
       activeName: "",
       allMenu: [],
@@ -578,6 +611,30 @@ export default {
     }
   },
   methods: {
+    exStatus(index,row){
+      let obj = {
+        id: row.id,
+        mapPersons:row.mapPersons
+      };
+      APIExtendDetail(obj).then(res => {
+        if (res.data.code == 200) {
+          if(res.data.data.extended.length==0 || res.data.data.extended[0]==''){
+            this.yesList=['无']
+          }else{
+            this.yesList=res.data.data.extended
+          }
+          if(res.data.data.toExtend.length==0 || res.data.data.toExtend[0]==''){
+            this.noList=['无']
+          }else{
+            this.noList=res.data.data.toExtend
+          }
+          this.statWidth=res.data.data.progress*100
+          this.dialogVisibleSatus=true
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });  
+    },
     handleClick(tab, event) {
       if (tab.name === "/v1/oa-data/sales") {
         this.show["sale"] = true;
@@ -1981,9 +2038,31 @@ export default {
   border: rgba(3, 82, 38, 0.2) solid 1px;
   background: rgba(33, 170, 95, 0.1);
 }
+.stauStyle{
+  border:#eee solid 1px;
+  overflow:hidden;
+  border-top:none;
+}
+.statBor{
+  border-bottom:#eee solid 1px;
+  padding:10px;
+  border-top:#eee solid 1px;
+}
 .redCu {
   color: red;
   font-weight: bold;
+}
+.spanYes{
+  display:block;
+  float:left;
+  padding:0 10px;
+  margin:10px 0;
+}
+.spanNo{
+  display:block;
+  float:left;
+  padding:0 10px;
+  margin:10px 0;
 }
 .redblack {
   color: #606266;

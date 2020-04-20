@@ -1,6 +1,14 @@
 <template>
   <div>
-    <div>
+    <el-tabs v-model="activeName" style="width:100%;" type="card" @tab-click="handclick">
+      <el-tab-pane
+        v-for="(item, index) in allMenu"
+        :label="item.name"
+        :name="item.route"
+        :key="index"
+      ></el-tab-pane>
+    </el-tabs>
+    <div v-show="show.cx">
       <el-col :span="24" style="padding:15px 10px;">
         <el-select
           v-model="reccondition.department"
@@ -111,16 +119,24 @@
         <el-button type="text" @click="showAll">显示全部</el-button>
       </el-pagination>
     </div>
+    <div v-show="show.sz">
+      <ebayBalanceSz />
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import { APIEbayBalance, APIExportEbayBalance } from "../../api/product";
 import { getEbayBalanceConditon } from "../../api/profit";
+import { getMenu } from "../../api/login";
+import ebayBalanceSz from './ebayBalanceSz.vue'
 export default {
+  components: { ebayBalanceSz },
   data() {
     return {
-      tableHeight: window.innerHeight - 160,
+      activeName: null,
+      allMenu: [],
+      tableHeight: window.innerHeight - 200,
       total: 0,
       time1: null,
       load1: false,
@@ -131,6 +147,10 @@ export default {
       department: [],
       member: [],
       member1: [],
+      show: {
+        cx: true,
+        sz: false
+      },
       reccondition: {
         pageSize: null,
         page: 1,
@@ -146,6 +166,18 @@ export default {
     };
   },
   methods: {
+    handclick(tab, event) {
+      if (tab.name === "/v1/tiny-tool/ebay-balance") {
+        this.show["cx"] = true;
+      } else {
+        this.show["cx"] = false;
+      }
+      if (tab.name === "/v1/tiny-tool/ebay-balance-time-get") {
+        this.show["sz"] = true;
+      } else {
+        this.show["sz"] = false;
+      }
+    },
     choosed() {
       const val = this.reccondition.department;
       let per = [];
@@ -488,6 +520,17 @@ export default {
     }
   },
   mounted() {
+    getMenu().then(response => {
+      const res = response.data.data;
+      const menu = res.filter(e => e.name === "UR小工具");
+      const arr = menu[0].children;
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].name == "ebay账号余额") {
+          this.allMenu = arr[i].tabs;
+        }
+      }
+      this.activeName = this.allMenu[0].route;
+    });
     this.getPic();
     function unique1(arr) {
       var hash = [];

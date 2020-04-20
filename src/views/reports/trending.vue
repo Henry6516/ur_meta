@@ -521,6 +521,9 @@ export default {
             getSalestrend(myform).then(response => {
               this.listLoading = false
               const ret = response.data.data
+              if(ret.length==0 || Number(ret[0].totalamt)==0){
+                this.$message.error('数据为空,联系管理员');
+              }
               const lineName = []
               const series = []
               ret.forEach(element => {
@@ -559,6 +562,9 @@ export default {
             APIOrderCount(myform).then(response => {
               this.listLoading = false
               const ret = response.data.data
+              if(ret.length==0 || Number(ret[0].totalamt)==0){
+                this.$message.error('数据为空,联系管理员');
+              }
               const lineName = []
               const series = []
               ret.forEach(element => {
@@ -597,6 +603,9 @@ export default {
             APISkuCount(myform).then(response => {
               this.listLoading = false
               const ret = response.data.data
+              if(ret.length==0 || Number(ret[0].totalamt)==0){
+                this.$message.error('数据为空,联系管理员');
+              }
               const lineName = []
               const series = []
               ret.forEach(element => {
@@ -635,6 +644,9 @@ export default {
            getProfitReport(myform).then(response => {
               this.listLoading = false
               const ret = response.data.data
+              if(ret.length==0 || Number(ret[0].totalamt)==0){
+                this.$message.error('数据为空,联系管理员');
+              }
               const lineName = []
               const series = []
               ret.forEach(element => {

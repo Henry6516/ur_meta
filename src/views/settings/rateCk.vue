@@ -275,6 +275,7 @@ export default {
           message: "上传成功",
           type: "success"
         });
+        this.getLog();
       } else {
         this.$message.error(response.message);
       }
