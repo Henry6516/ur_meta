@@ -495,7 +495,7 @@ export default {
   data() {
     return {
       //销售
-      statWidth:'20',
+      statWidth:'0',
       yesList:[],
       noList:[],
       dialogVisibleSatus:false,
@@ -628,7 +628,7 @@ export default {
           }else{
             this.noList=res.data.data.toExtend
           }
-          this.statWidth=res.data.data.progress*100
+          this.statWidth=parseInt(res.data.data.progress*100)
           this.dialogVisibleSatus=true
         } else {
           this.$message.error(res.data.message);

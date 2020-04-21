@@ -391,9 +391,9 @@
                   popper-class="page-login-toolTipClass"
                 >
                   <div slot="content">
-                    <img :src="'https://contestimg.wish.com/api/webimage/'+scope.row.pid+'-small.jpg'" style="width: 300px;height: 300px;" />
+                    <img :src="'https://contestimg.wish.com/api/webimage/'+scope.row.pid+'-large.jpg'" style="width: 300px;height: 300px;" />
                   </div>
-                  <img :src="'https://contestimg.wish.com/api/webimage/'+scope.row.pid+'-small.jpg'" style="width: 60px;height: 60px" />
+                  <img :src="'https://contestimg.wish.com/api/webimage/'+scope.row.pid+'-large.jpg'" style="width: 60px;height: 60px" />
                 </el-tooltip>
                 <a class="ebayBlocka ebayBlocka1" @click="submissionWish(scope.row._id.oid)" v-show="scope.row.flag">
                   <i class="el-icon-star-off" style="margin-right:3px;"></i>认领

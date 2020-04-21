@@ -45,12 +45,11 @@
         </el-menu>
       </el-col>
       <div class="rightTitle none1920">
-        <span class="indexImg" style="margin-right:12px;"><img :src="image" /></span>
-        <span class="indexName indexNameNone" style="margin-right:12px;">{{sysUserName}}</span>
+        <span class="indexImg" style="margin-right:10px;"><img :src="image" /></span>
+        <span class="indexName indexNameNone" style="margin-right:10px;">{{sysUserName}}</span>
         <span class="w1h1" style="margin-right:14px;"></span>
         <span class="indexName" @click="dialogVisible=true" style="margin-top:15px;"><el-button type="warning" size="small">设置头像</el-button></span>
         <span class="indexName" @click="updatePassword()" style="margin-top:15px;"><el-button type="success" size="small">修改密码</el-button></span>
-        <span class="w1h1"></span>
         <span class="indexNameLast" @click="logout"><el-button type="danger" size="small">退出登录</el-button></span>
       </div>
       <el-dialog title="修改密码" :visible.sync="dialogPassword" :close-on-click-modal="false" width="35%" style="line-height:0">
@@ -762,7 +761,7 @@ export default {
   font-family: '微软雅黑';
   line-height: 20px;
   margin-top: 19px;
-  margin-right: 12px;
+  margin-right: 10px;
   cursor: pointer;
 }
 .w1h1{
@@ -778,7 +777,7 @@ export default {
   float: left;
   line-height: 25px;
   margin-top: 15px;
-  padding: 0 12px;
+  margin-right: 10px;
   cursor: pointer;
 }
 .indexImg{
