@@ -1646,33 +1646,35 @@ export default {
             }
           }
         }
+        this.URoutShippingMethod1=this.wishForm.outShippingMethod1
+        this.URinShippingMethod1=this.wishForm.inShippingMethod1
       });
     },
     OutFirebEbay() {
       this.ShippingOutFir.site = this.wishForm.site;
       APIShippingEbay(this.ShippingOutFir).then(response => {
         this.ebayOutFir = response.data.data.items;
-        if (response.data.data.items.length == 0) {
-          this.wishForm.outShippingMethod1 = null;
-        }
+        // if (response.data.data.items.length == 0) {
+        //   this.wishForm.outShippingMethod1 = null;
+        // }
       });
     },
     InFirEbay() {
       this.ShippingInFir.site = this.wishForm.site;
       APIShippingEbay(this.ShippingInFir).then(response => {
         this.ebayInFir = response.data.data.items;
-        if (response.data.data.items.length == 0) {
-          this.wishForm.inShippingMethod1 = null;
-        }
+        // if (response.data.data.items.length == 0) {
+        //   this.wishForm.inShippingMethod1 = null;
+        // }
       });
     },
     InSecEbay() {
       this.ShippingSec.site = this.wishForm.site;
       APIShippingEbay(this.ShippingSec).then(response => {
         this.ebayInSec = response.data.data.items;
-        if (response.data.data.items.length == 0) {
-          this.wishForm.inShippingMethod2 = null;
-        }
+        // if (response.data.data.items.length == 0) {
+        //   this.wishForm.inShippingMethod2 = null;
+        // }
       });
     },
     keep() {
@@ -1815,12 +1817,13 @@ export default {
           if(this.ebaySite[i].code==this.wishForm.site){
             this.currencyCode=`--${this.ebaySite[i].currencyCode}--`
             this.wishForm.site=this.ebaySite[i].name
+            this.ebaySiteUr=this.ebaySite[i].name
           }
       }
       this.OutFirebEbay();
       this.InFirEbay();
       this.InSecEbay();
-    }, 1000);
+    }, 2000);
   }
 };
 </script>

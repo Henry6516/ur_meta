@@ -79,8 +79,10 @@
               </template>
             </el-table-column>
             <el-table-column property="listedTime" label="上架时间" align="center" width="90"></el-table-column>
-            <el-table-column property="maxNumBoughtStart" label="销量区间" align="center" width="125">
-              <template slot-scope="scope">{{scope.row.maxNumBoughtStart}} - {{scope.row.maxNumBoughtEnd}}</template>
+            <el-table-column property="maxNumBought" label="总销售件数" align="center" width="125">
+              <template slot-scope="scope">
+                <span v-for="(item,index) in scope.row.maxNumBought" :key='index'>{{item}}, </span>
+              </template>
             </el-table-column>
             <!-- <el-table-column property="maxNumBoughtEnd" label="销量小于" align="center" width="80"></el-table-column> -->
             <el-table-column property="ratingStart" label="评分区间" align="center" width="125">
@@ -280,16 +282,17 @@
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">销量区间</p>
+                <p class="basp">总销售件数</p>
               </el-col>
-              <el-col :span="7">
-                <el-input v-model="ebayXp.maxNumBoughtStart" placeholder="大于"></el-input>
-              </el-col>
-              <el-col :span="1">
-                <span class="colspan">-</span>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="ebayXp.maxNumBoughtEnd" placeholder="小于"></el-input>
+              <el-col :span="15">
+                <el-select v-model="ebayXp.maxNumBought" placeholder="请选择" style="width:100%;" clearable multiple collapse-tags>
+                  <el-option
+                    v-for="item in maxNumBoughtList"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                  </el-option>
+                </el-select>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -485,16 +488,17 @@
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
               <el-col :span="9">
-                <p class="basp">销量区间</p>
+                <p class="basp">总销售件数</p>
               </el-col>
-              <el-col :span="7">
-                <el-input v-model="addEbayXp.maxNumBoughtStart" placeholder="大于"></el-input>
-              </el-col>
-              <el-col :span="1">
-                <span class="colspan">-</span>
-              </el-col>
-              <el-col :span="7">
-                <el-input v-model="addEbayXp.maxNumBoughtEnd" placeholder="小于"></el-input>
+              <el-col :span="15">
+                <el-select v-model="addEbayXp.maxNumBought" placeholder="请选择" style="width:100%;" clearable multiple collapse-tags>
+                  <el-option
+                    v-for="item in maxNumBoughtList"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                  </el-option>
+                </el-select>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -672,6 +676,7 @@ import {
 export default {
   data() {
     return {
+      maxNumBoughtList:['0','1-9','10+','50+','100+','1000+','5000+','其他'],
       tableHeightstock: window.innerHeight - 185,
       ebayStlye: 0,
       ebaydisLoginxp: false,
@@ -693,6 +698,7 @@ export default {
         ruleName: "",
         genTimeStart:'',
         genTimeEnd:'',
+        maxNumBought:[],
         totalpriceStart:'',
         totalpriceEnd:'',
         viewRate1Start:'',
@@ -714,6 +720,7 @@ export default {
         ruleMark: "",
         ruleName: "",
         genTimeStart:'',
+        maxNumBought:[],
         genTimeEnd:'',
         totalpriceStart:'',
         totalpriceEnd:'',
@@ -1008,6 +1015,7 @@ export default {
       this.addEbayXp.intervalRatingStart='';
       this.addEbayXp.intervalRatingEnd='';
       this.addEbayXp.maxNumBoughtStart='';
+      this.addEbayXp.maxNumBought=[];
       this.addEbayXp.maxNumBoughtEnd='';
       this.addEbayXp.ratingStart='';
       this.addEbayXp.ratingEnd='';
@@ -1078,6 +1086,7 @@ export default {
       this.ebayXp.ruleName = row.ruleName;
       this.ebayXp.ruleMark = row.ruleMark;
       this.ebayXp.ruleType = row.ruleType;
+      this.ebayXp.maxNumBought = row.maxNumBought;
       this.ebayXp.listedTime = row.listedTime;
       // this.ebayXp.pb == 0 ? this.ebayXp.pb = '无': this.ebayXp.pb == 1?this.ebayXp.pb = '有':this.ebayXp.pb='';
       // this.ebayXp.hwc == 0? this.ebayXp.hwc = '非海外仓': this.ebayXp.hwc == 1?this.ebayXp.hwc = '海外仓':this.ebayXp.hwc='';
