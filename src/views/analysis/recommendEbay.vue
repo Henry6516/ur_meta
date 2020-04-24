@@ -8,7 +8,7 @@
         @tab-click="handleClick"
       >
         <el-tab-pane v-for="(item, index) in this.allMenu" :label="item" :name="item" :key="index"></el-tab-pane>
-      </el-tabs> -->
+      </el-tabs>-->
       <div v-show="show.wish">
         <div class="proBox">
           <div class="proCase01" v-for="(item,index) in nostockdata" :key="index">
@@ -142,6 +142,9 @@
                   >手动推送</span>
                 </div>
               </template>
+            </el-table-column>
+            <el-table-column label="规则名称" align="center" width="145">
+              <el-table-column :render-header="renderHeaderEbayXp" width="160" property="ruleName" align="center"></el-table-column>
             </el-table-column>
             <el-table-column label="推荐状态" align="center" width="145">
               <el-table-column :render-header="renderHeaderEbayXp" width="160" align="center">
@@ -304,6 +307,9 @@
                   >手动推送</span>
                 </div>
               </template>
+            </el-table-column>
+            <el-table-column label="规则名称" align="center" width="145">
+              <el-table-column :render-header="renderHeaderEbayRx" width="160" property="ruleName" align="center"></el-table-column>
             </el-table-column>
             <el-table-column label="推荐状态" align="center" width="125">
               <el-table-column :render-header="renderHeaderEbayRx" width="160" align="center">
@@ -542,12 +548,7 @@
           <el-col :span="24">
             <el-col :span="4" class="basp" style="margin-top:15px;">产品开发</el-col>
             <el-col :span="18" style="margin-top:15px;">
-              <el-select
-                 v-model="itemShow.developer"
-                placeholder="请选择"
-                multiple
-                style="width:100%"
-              >
+              <el-select v-model="itemShow.developer" placeholder="请选择" multiple style="width:100%">
                 <el-option v-for="item in developerItem" :key="item" :label="item" :value="item"></el-option>
               </el-select>
             </el-col>
@@ -571,14 +572,16 @@ import {
   ebayRxAccept,
   ebayXpRefuse,
   ebayRxRefuse,
-  manualRecommend
+  manualRecommend,
+  APRengineRuleHot,
+  APRengineRule
 } from "../../api/product";
-import { getEbayXp, getEbayRx,getRuleDeveloper } from "../../api/profit";
+import { getEbayXp, getEbayRx, getRuleDeveloper } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
-      dialogmanualPush:false,
+      dialogmanualPush: false,
       tableHeightstock: window.innerHeight - 209,
       totalEbayXp: null,
       totalEbayRx: null,
@@ -586,11 +589,11 @@ export default {
       ebayRxRefuse: false,
       lodingEbayRx: false,
       lodingEbayXp: false,
-      developerItem:[],
-      itemShow:{
-        itemId:null,
-        type:null,
-        developer:[]
+      developerItem: [],
+      itemShow: {
+        itemId: null,
+        type: null,
+        developer: []
       },
       proTotalXp: 0,
       proTotalRx: 0,
@@ -672,19 +675,23 @@ export default {
         xp: true,
         rx: false
       },
+      newRule: [],
+      hotRule: [],
       condition: {
         marketplace: "",
         recommendStatus: "",
         page: 1,
         pageSize: 5,
-        sort: ""
+        sort: "",
+        ruleName: ""
       },
       condition1: {
         marketplace: "",
         recommendStatus: "",
         page: 1,
         pageSize: 5,
-        sort: ""
+        sort: "",
+        ruleName: ""
       },
       ebayStlye: 0,
       allMenu: ["Ebay", "Wish", "Joom", "Amazon", "Aliexpress"],
@@ -718,26 +725,26 @@ export default {
     }
   },
   methods: {
-    saveManualPush(){
+    saveManualPush() {
       manualRecommend(this.itemShow).then(res => {
-          if (res.data.code == 200) {
-            this.$message({
-              message: "推送成功",
-              type: "success"
-            });
-            this.ebayXp();
-            this.ebayRx();
-          } else {
-            this.$message.error(res.data.message);
-          }
-          this.dialogmanualPush=false
+        if (res.data.code == 200) {
+          this.$message({
+            message: "推送成功",
+            type: "success"
+          });
+          this.ebayXp();
+          this.ebayRx();
+        } else {
+          this.$message.error(res.data.message);
+        }
+        this.dialogmanualPush = false;
       });
     },
-    manualPush(id,type){
-      this.itemShow.itemId=id
-      this.itemShow.type=type
-      this.itemShow.developer=[]
-      this.dialogmanualPush=true
+    manualPush(id, type) {
+      this.itemShow.itemId = id;
+      this.itemShow.type = type;
+      this.itemShow.developer = [];
+      this.dialogmanualPush = true;
     },
     selectEbayXp(e) {
       if (e == "其他(可以手动输入文字)") {
@@ -925,6 +932,38 @@ export default {
     },
     renderHeaderEbayXp(h, { column, $index }) {
       if ($index === 0) {
+        let filters = this.newRule;
+        return h(
+          "el-select",
+          {
+            props: {
+              placeholder: "请选择",
+              value: this.condition.ruleName,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.condition.ruleName = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.ebayXp();
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item.ruleName,
+                  label: item.ruleName
+                }
+              });
+            })
+          ]
+        );
+      } else if ($index === 1) {
         let filters = ["未推送", "未处理", "已过滤", "已认领"];
         return h(
           "el-select",
@@ -956,7 +995,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 1) {
+      } else if ($index === 2) {
         let filters = this.ebayOptions;
         return h(
           "el-select",
@@ -992,6 +1031,38 @@ export default {
     },
     renderHeaderEbayRx(h, { column, $index }) {
       if ($index === 0) {
+        let filters = this.hotRule;
+        return h(
+          "el-select",
+          {
+            props: {
+              placeholder: "请选择",
+              value: this.condition1.ruleName,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.condition1.ruleName = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.ebayRx();
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item.ruleName,
+                  label: item.ruleName
+                }
+              });
+            })
+          ]
+        );
+      } else if ($index === 1) {
         let filters = ["未推送", "未处理", "已过滤", "已认领"];
         return h(
           "el-select",
@@ -1023,7 +1094,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 1) {
+      }else if ($index === 2) {
         let filters = this.ebayOptions;
         return h(
           "el-select",
@@ -1292,7 +1363,13 @@ export default {
     this.ebayRx();
     getRuleDeveloper().then(response => {
       const possessMan = response.data.data;
-      this.developerItem = possessMan
+      this.developerItem = possessMan;
+    });
+    APRengineRule().then(res => {
+      this.newRule = res.data.data;
+    });
+    APRengineRuleHot().then(res => {
+      this.hotRule = res.data.data;
     });
   }
 };
@@ -1604,7 +1681,7 @@ export default {
   width: 30%;
   float: left;
   margin-left: 3%;
-  background: #67C23A;
+  background: #67c23a;
   color: #fff;
 }
 .goa {

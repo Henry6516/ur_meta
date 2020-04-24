@@ -97,6 +97,9 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column label="规则名称" align="center" width="145">
+              <el-table-column :render-header="renderHeaderEbayXp" width="160" property="ruleName" align="center"></el-table-column>
+            </el-table-column>
             <el-table-column label="推荐状态" align="center" width="145">
               <el-table-column :render-header="renderHeaderEbayXp" width="160" align="center">
                 <template slot-scope="scope">
@@ -482,13 +485,15 @@ import {
   ebayRxAccept,
   ebayXpRefuse,
   ebayRxRefuse,
-  manualRecommend
+  manualRecommend,
+  wishProductsRule
 } from "../../api/product";
 import { getWishXp, getWishRx,getRuleDeveloper } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
+      wishRule:[],
       dialogmanualPush:false,
       tableHeightstock: window.innerHeight - 146,
       totalEbayXp: null,
@@ -588,7 +593,8 @@ export default {
         recommendStatus: "",
         page: 1,
         pageSize: 5,
-        sort: ""
+        sort: "",
+        ruleName:'',
       },
       condition1: {
         marketplace: "",
@@ -835,6 +841,38 @@ export default {
     },
     renderHeaderEbayXp(h, { column, $index }) {
       if ($index === 0) {
+        let filters = this.wishRule;
+        return h(
+          "el-select",
+          {
+            props: {
+              placeholder: "请选择",
+              value: this.condition.ruleName,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.condition.ruleName = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.ebayXp();
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item.ruleName,
+                  label: item.ruleName
+                }
+              });
+            })
+          ]
+        );
+      } else if ($index === 1) {
         let filters = ["未推送", "未处理", "已过滤", "已认领"];
         return h(
           "el-select",
@@ -866,7 +904,7 @@ export default {
             })
           ]
         );
-      } else if ($index === 1) {
+      }else if ($index === 2) {
         let filters = this.ebayOptions;
         return h(
           "el-select",
@@ -1165,6 +1203,9 @@ export default {
     getRuleDeveloper().then(response => {
       const possessMan = response.data.data;
       this.developerItem = possessMan
+    });
+    wishProductsRule().then(res => {
+      this.wishRule = res.data.data;
     });
   }
 };
