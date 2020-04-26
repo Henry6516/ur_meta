@@ -648,20 +648,24 @@ export default {
             proId: this.collectionNumber
           };
         }
-        APICjMine(objStr).then(res => {
-          if (res.data.code == 200) {
-            this.$message({
-              message: "采集成功",
-              type: "success"
-            });
-            this.getDate();
-            setTimeout(() => {
+        if(objStr.proId.indexOf('/') > -1 || objStr.proId.indexOf('http') > -1){
+          this.$message.error('请检查商品编号是否正确');
+        }else{
+          APICjMine(objStr).then(res => {
+            if (res.data.code == 200) {
+              this.$message({
+                message: "采集成功",
+                type: "success"
+              });
               this.getDate();
-            }, 1000);
-          } else {
-            this.$message.error(res.data.message);
-          }
-        });
+              setTimeout(() => {
+                this.getDate();
+              }, 1000);
+            } else {
+              this.$message.error(res.data.message);
+            }
+          });
+        }
       } else {
         this.$message.error("未输入商品编号");
       }

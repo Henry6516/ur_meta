@@ -148,8 +148,8 @@
         </el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogTableVisible = false">取 消</el-button>
         <el-button type="primary" @click="exportExcelMx()">导出明细</el-button>
+        <el-button @click="dialogTableVisible = false">取 消</el-button>
       </div>
     </el-dialog>
     <el-table
@@ -164,12 +164,12 @@
       border 
       class="elTablTab"
       :header-cell-style="getRowClass" 
-      style="width: 100%;font-size:12px;zoom:0.89">
+      style="width: 100%;">
     >
-      <el-table-column prop="developer" width="75" label="开发员" :formatter="empty" align="center"></el-table-column>
-      <el-table-column width="55" prop="sold" label="查看" :formatter="empty" align="center">
+      <el-table-column prop="developer" width="75" label="开发员" :formatter="empty" align="center" fixed></el-table-column>
+      <el-table-column width="55" prop="sold" label="查看" :formatter="empty" align="center" fixed>
         <template slot-scope="scope">
-          <span type="text" @click="view1(scope.$index, scope.row)">
+          <span type="text" @click="view1(scope.$index, scope.row)" style="cursor:pointer">
             <i class="iconfont icon-yulan"></i>
           </span>
         </template>
@@ -178,18 +178,18 @@
         width="105"
         prop="goodsCode"
         label="产品编码"
+        fixed
          align="center"
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
-      <el-table-column width="100" prop="devDate" label="开发日期" sortable="custom" :formatter="formatter" align="center"></el-table-column>
+      <el-table-column width="105" prop="devDate" label="开发日期" sortable="custom" :formatter="formatter" align="center"></el-table-column>
       <el-table-column
-        width="100"
+        width="90"
         prop="goodsStatus"
          align="center"
         label="产品状态"
         :formatter="empty"
-        sortable="custom"
       ></el-table-column>
       <el-table-column width="75" prop="sold" label="销量" :formatter="empty" sortable="custom" align="center"></el-table-column>
       <el-table-column width="95" prop="amt" label="销售额" :formatter="empty" sortable="custom" align="center">
@@ -198,8 +198,8 @@
       <el-table-column width="90" prop="profit" label="总利润" :formatter="empty" sortable="custom" align="center">
         <template slot-scope="scope">{{scope.row.profit | cutOut1}}</template>
       </el-table-column>
-      <el-table-column width="90" prop="rate" label="利润率" :formatter="empty" sortable="custom" align="center">
-        <template slot-scope="scope">{{scope.row.rate | cutOut1}}</template>
+      <el-table-column width="110" prop="rate" label="利润率(%)" :formatter="empty" sortable="custom" align="center">
+        <template slot-scope="scope">{{scope.row.rate | cutOut2}}</template>
       </el-table-column>
       <el-table-column
         width="108"
@@ -238,7 +238,7 @@
       <template slot-scope="scope">{{scope.row.wishProfit | cutOut1}}</template>
       </el-table-column>
       <el-table-column
-        width="108"
+        width="145"
         prop="smtSold"
         label="Aliexpress销量"
          align="center"
@@ -246,7 +246,7 @@
         sortable="custom"
       ></el-table-column>
       <el-table-column
-        width="105"
+        width="145"
         prop="smtProfit"
          align="center"
         label="Aliexpress利润"
@@ -256,7 +256,7 @@
       <template slot-scope="scope">{{scope.row.smtProfit | cutOut1}}</template>
       </el-table-column>
       <el-table-column
-        width="110"
+        width="115"
         prop="joomSold"
          align="center"
         label="Joom销量"
@@ -264,7 +264,7 @@
         sortable="custom"
       ></el-table-column>
       <el-table-column
-        width="110"
+        width="115"
         prop="joomProfit"
          align="center"
         label="Joom利润"
@@ -334,7 +334,7 @@ export default {
       showis1: true,
       showis2: false,
       viewForm: [],
-      tabheight:window.innerHeight -120,
+      tabheight:window.innerHeight -205,
       goodsState: [],
       tableData1: [],
       dead: {
@@ -429,7 +429,15 @@ export default {
         value = Number(value).toFixed(2);
       return value;
       }
-    }
+    },
+    cutOut2: function(value) {
+      if(value==0){
+       return 0;
+      }else{
+        value = (Number(value)*100).toFixed(2);
+        return value;
+      }
+    }    
   },
   methods: {
     getRowClass({ row, column, rowIndex, columnIndex }) {
@@ -593,11 +601,11 @@ export default {
       if (this.show === false) {
         this.text = "显示输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tabheight=window.innerHeight -35
+        this.tabheight=window.innerHeight -128
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tabheight=window.innerHeight -120
+        this.tabheight=window.innerHeight -205
       }
     },
     changeActive() {
@@ -708,6 +716,10 @@ export default {
           sums[index] = Math.round(sums[index] * 100) / 100;
         } else {
           sums[index] = "N/A";
+        }
+        let arr=sums
+        if(index==8){
+            sums[index] = (arr[7]/arr[6]*100).toFixed(2);
         }
       });
       // 退款率和利润率核算
