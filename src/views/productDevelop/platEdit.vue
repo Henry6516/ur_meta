@@ -16,7 +16,7 @@
                    name='second'>
         <plat-ebay></plat-ebay>
       </el-tab-pane>
-      <el-tab-pane label="SMT"
+      <el-tab-pane label="Aliexpress"
                    name='third'>
         <plat-smt></plat-smt>
       </el-tab-pane>

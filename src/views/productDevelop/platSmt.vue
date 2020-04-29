@@ -11,17 +11,6 @@
           type="success"
           @click="keepWs()"
         >保存并完善</el-button>
-        <el-tooltip class="item" effect="dark" content="提示：此分类对应所有所选产品，不同类的产品请分多次操作！" placement="top-start">
-          <el-cascader
-          v-model="category"
-          style="width: 250px;float: left;"
-          :show-all-levels="false"
-          placeholder="选择类目"
-          :options="options"
-          clearable
-          :props="defaultPropsApp"
-          @change="handleChange"></el-cascader>
-        </el-tooltip>
         <el-select
           placeholder="--所有账号--"
           clearable
@@ -39,7 +28,7 @@
             :label="item"
             :value="item"
           ></el-option>
-        </el-select>  
+        </el-select>
         <span class="exportAccount" @click="exportSmt">添加导出队列</span>
       </el-col>
     </el-col>
@@ -210,32 +199,54 @@
           </el-col>
           <el-col :span="24">
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="6" style="text-align: center;margin-top: 8px" class="font13">商品包装长度</el-col>
-              <el-col :span="17">
+              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">分类</el-col>
+              <el-col :span="15">
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="提示：此分类对应所有所选产品，不同类的产品请分多次操作！"
+                  placement="top-start"
+                >
+                  <el-cascader
+                    v-model="category"
+                    style="width: 100%;"
+                    :show-all-levels="false"
+                    placeholder="选择类目"
+                    :options="options"
+                    clearable
+                    :props="defaultPropsApp"
+                    @change="handleChange"
+                  ></el-cascader>
+                </el-tooltip>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-top: 10px">
+              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品包装长度(CM)</el-col>
+              <el-col :span="15">
                 <el-input v-model="smtForm.packageLength" placeholder="CM"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="6" style="text-align: center;margin-top: 8px" class="font13">商品包装宽度</el-col>
-              <el-col :span="17">
+              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品包装宽度(CM)</el-col>
+              <el-col :span="15">
                 <el-input v-model="smtForm.packageWidth" placeholder="CM"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="6" style="text-align: center;margin-top: 8px" class="font13">商品包装高度</el-col>
-              <el-col :span="17">
+              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品包装高度(CM)</el-col>
+              <el-col :span="15">
                 <el-input v-model="smtForm.packageHeight" placeholder="CM"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 20px">
-              <el-col :span="6" style="text-align: center;margin-top: 8px" class="font13">商品毛重</el-col>
-              <el-col :span="17">
+              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品毛重(KG)</el-col>
+              <el-col :span="15">
                 <el-input v-model="smtForm.grossWeight" placeholder="KG"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 20px">
-              <el-col :span="6" style="text-align: center;margin-top: 8px" class="font13">是否自定义计重</el-col>
-              <el-col :span="17">
+              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">是否自定义计重</el-col>
+              <el-col :span="15">
                 <el-select
                   v-model="smtForm.isPackSell"
                   placeholder="请选择"
@@ -544,12 +555,12 @@ export default {
       defaultPropsApp: {
         children: "children",
         label: "name",
-        value:'id'
+        value: "id"
       },
-      category:[],
-      options:[],
-      accountNum:[],
-      accountNumber:[],
+      category: [],
+      options: [],
+      accountNum: [],
+      accountNumber: [],
       rows: null,
       time: null,
       advicePrice: null,
@@ -611,8 +622,7 @@ export default {
     };
   },
   methods: {
-    handleChange(value) {
-    },    
+    handleChange(value) {},
     selectalld1() {
       var ard1 = [];
       for (const item in this.accountNumber) {
@@ -622,13 +632,12 @@ export default {
     },
     noselectd1() {
       this.accountNum = [];
-    },    
+    },
     exportSmt() {
-      if(this.accountNum.length!=0 && this.category.length!=0){
+      if (this.accountNum.length != 0) {
         let objStr = {
-          ids:[this.smtForm.infoId],
-          suffix:this.accountNum,
-          category: this.category[this.category.length-1]
+          ids: [this.smtForm.infoId],
+          suffix: this.accountNum,
         };
         APIPlatExportSmt(objStr).then(res => {
           if (res.data.code === 200) {
@@ -640,8 +649,8 @@ export default {
             this.$message.error(res.data.message);
           }
         });
-      }else{
-        this.$message.error('请选择分类或者账号');
+      } else {
+        this.$message.error("请选择账号");
       }
     },
     delSku(index, row) {
@@ -769,71 +778,89 @@ export default {
       this.showattribute = !this.showattribute;
     },
     keep() {
-      const data = {
-        plat: "smt",
-        basicInfo: {},
-        skuInfo: []
-      };
-      data.basicInfo = this.smtForm;
-      const url = this.url;
-      for (var y = 0; y < url.length; y++) {
-        data.basicInfo["imageUrl" + y] = url[y];
-      }
-      data.basicInfo.packageType == "是"
-        ? (data.basicInfo.packageType = "1")
-        : (data.basicInfo.packageType = "0");
-      data.basicInfo.isPackSell == "是"
-        ? (data.basicInfo.isPackSell = "1")
-        : (data.basicInfo.isPackSell = "0");
-      data.basicInfo.autoDelay == "是"
-        ? (data.basicInfo.autoDelay = "1")
-        : (data.basicInfo.autoDelay = "0");
-      data.skuInfo = this.tableData;
-      APISaveSmt(data).then(res => {
-        if (res.data.code == 200) {
-          this.$message({
-            message: "保存成功",
-            type: "success"
-          });
-          this.getData();
-        } else {
-          this.$message.error("保存失败");
+      if (this.category.length != 0) {
+        const data = {
+          plat: "smt",
+          basicInfo: {},
+          skuInfo: []
+        };
+        data.basicInfo = this.smtForm;
+        const url = this.url;
+        for (var y = 0; y < url.length; y++) {
+          data.basicInfo["imageUrl" + y] = url[y];
         }
-      });
+        data.basicInfo.packageType == "是"
+          ? (data.basicInfo.packageType = "1")
+          : (data.basicInfo.packageType = "0");
+        data.basicInfo.isPackSell == "是"
+          ? (data.basicInfo.isPackSell = "1")
+          : (data.basicInfo.isPackSell = "0");
+        data.basicInfo.autoDelay == "是"
+          ? (data.basicInfo.autoDelay = "1")
+          : (data.basicInfo.autoDelay = "0");
+        if (this.category.length != 0) {
+          data.basicInfo.category1 = this.category[this.category.length - 1];
+        } else {
+          data.basicInfo.category1 = null;
+        }
+        data.skuInfo = this.tableData;
+        APISaveSmt(data).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "保存成功",
+              type: "success"
+            });
+            this.getData();
+          } else {
+            this.$message.error("保存失败");
+          }
+        });
+      } else {
+        this.$message.error("请选择分类");
+      }
     },
     keepWs() {
-      const data = {
-        id: this.smtForm.infoId,
-        plat: "smt",
-        basicInfo: {},
-        skuInfo: []
-      };
-      data.basicInfo = this.smtForm;
-      const url = this.url;
-      for (var y = 0; y < url.length; y++) {
-        data.basicInfo["imageUrl" + y] = url[y];
-      }
-      data.basicInfo.packageType == "是"
-        ? (data.basicInfo.packageType = "1")
-        : (data.basicInfo.packageType = "0");
-      data.basicInfo.isPackSell == "是"
-        ? (data.basicInfo.isPackSell = "1")
-        : (data.basicInfo.isPackSell = "0");
-      data.basicInfo.autoDelay == "是"
-        ? (data.basicInfo.autoDelay = "1")
-        : (data.basicInfo.autoDelay = "0");
-      data.skuInfo = this.tableData;
-      APISaveFinishPlat(data).then(res => {
-        if (res.data.code == 200) {
-          this.$message({
-            message: "保存成功",
-            type: "success"
-          });
-          this.getData();
-        } else {
-          this.$message.error("保存失败");
+      if (this.category.length != 0) {
+        const data = {
+          id: this.smtForm.infoId,
+          plat: "smt",
+          basicInfo: {},
+          skuInfo: []
+        };
+        data.basicInfo = this.smtForm;
+        const url = this.url;
+        for (var y = 0; y < url.length; y++) {
+          data.basicInfo["imageUrl" + y] = url[y];
         }
-      });
+        data.basicInfo.packageType == "是"
+          ? (data.basicInfo.packageType = "1")
+          : (data.basicInfo.packageType = "0");
+        data.basicInfo.isPackSell == "是"
+          ? (data.basicInfo.isPackSell = "1")
+          : (data.basicInfo.isPackSell = "0");
+        data.basicInfo.autoDelay == "是"
+          ? (data.basicInfo.autoDelay = "1")
+          : (data.basicInfo.autoDelay = "0");
+        if (this.category.length != 0) {
+          data.basicInfo.category1 = this.category[this.category.length - 1];
+        } else {
+          data.basicInfo.category1 = null;
+        }
+        data.skuInfo = this.tableData;
+        APISaveFinishPlat(data).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "保存成功",
+              type: "success"
+            });
+            this.getData();
+          } else {
+            this.$message.error("保存失败");
+          }
+        });
+      } else {
+        this.$message.error("请选择分类");
+      }
     },
     revise(e, index) {
       this.url[index] = e;
@@ -898,17 +925,76 @@ export default {
           }
         }
         this.url.shift();
+        if (this.smtForm.category1 != null) {
+          setTimeout(() => {
+            const arr = this.regroupCascaderData(
+              this.smtForm.category1,
+              this.options,
+              "name",
+              "id",
+              "children"
+            );
+            this.category = arr["arr"];
+          }, 1500);
+        } else {
+          this.category = [];
+        }
       });
+    },
+    regroupCascaderData(
+      id, //要寻找的唯一值
+      data, // 列表总数据
+      key = "name", //列表总数据 的key
+      val = "id", //列表总数据 的value
+      list = "children" //列表总数据 下属关系的key
+    ) {
+      let _allObj = {};
+      const _allArr = [];
+      const setData = function(data) {
+        let Obj;
+        for (const item of data) {
+          Obj = {
+            [key]: item[key],
+            [val]: item[val]
+          };
+          if (item[val] == id) {
+            Obj["isOk"] = true; //如果条件符合，接下来就不会再判断
+            return Obj;
+          } else if (item[list] && item[list].length) {
+            Obj[list] = setData(item[list]);
+            if (Obj[list] && Obj[list]["isOk"]) {
+              Obj["isOk"] = true;
+              return Obj;
+            }
+          } else {
+            Obj = null;
+          }
+        }
+        return Obj;
+      };
+      const getObjData = function(data) {
+        // 递归向数组中填充数据
+        _allArr.push(data[val]);
+        if (data[list]) {
+          getObjData(data[list]);
+        }
+      };
+      _allObj = setData(data);
+      getObjData(_allObj);
+      return {
+        Obj: _allObj,
+        arr: _allArr
+      };
     }
   },
   mounted() {
     this.condition.id = this.$route.params.id;
     this.getData();
     getPlatSmtAccount().then(response => {
-      this.accountNumber=response.data.data
+      this.accountNumber = response.data.data;
     });
     getPlatSmtCategory().then(response => {
-      this.options=response.data.data
+      this.options = response.data.data;
     });
   }
 };
@@ -1054,11 +1140,11 @@ section {
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
 }
 .leftmedia {
-  margin-left: 18.5%;
+  margin-left: 22.5%;
 }
 @media screen and (max-width: 1600px) {
   .leftmedia {
-    margin-left: 9.5%;
+    margin-left: 18.5%;
   }
   //  .ptom60{
   //    padding-bottom: 50px;

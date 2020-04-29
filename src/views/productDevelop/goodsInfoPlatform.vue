@@ -24,8 +24,8 @@
         multiple
         collapse-tags
         v-model="joom"
-        class="none1600"
-        style="float: left;width:155px;margin-left:10px;"
+        class="none16002"
+        style="float: left;width:252px;margin-left:10px;"
       >
         <el-button plain type="info" @click="selectalld1">全选</el-button>
         <el-button plain type="info" @click="noselectd1">取消</el-button>
@@ -46,23 +46,13 @@
         <el-option v-for="(item, key) in vovaArr" :key="item.key" :label="item" :value="item"></el-option>
       </el-select>
       <span class="exportAccount" @click="exportVova">导出vova模板</span>
-      <el-tooltip class="item" effect="dark" content="提示：此分类对应所有所选产品，不同类的产品请分多次操作！" placement="bottom-start">
-          <el-cascader
-          v-model="category"
-          style="width: 15%;float: left;margin-left:10px"
-          :show-all-levels="false"
-          placeholder="选择类目"
-          :options="options"
-          clearable
-          :props="defaultPropsApp"></el-cascader>
-      </el-tooltip>
       <el-select
           placeholder="--所有账号--"
           clearable
           multiple
           collapse-tags
           v-model="accountNum"
-          style="width: 15%;float: left;"
+          style="width: 16%;float: left;margin-left:10px"
           class="selee"
         >
           <el-button plain type="info" @click="selectalld2">全选</el-button>
@@ -81,6 +71,7 @@
         <span class="signPerfectWish" @click="keepPerfect('wish')">标记Wish完善</span>
         <span class="signPerfectEbay" @click="keepPerfect('ebay')">标记eBay完善</span>
         <span class="signPerfectJoom" @click="keepPerfect('joom')">标记Joom完善</span>
+        <span class="signPerfectSmt" @click="keepPerfect('aliexpress')">标记Aliexpress完善</span>
         <span class="signPerfectTotal" @click="keepPerfect('total')">标记全部完善</span>
       </div>
     </el-col>
@@ -693,15 +684,15 @@ export default {
   },
   methods: {
     exportSmt() {
-      if(this.accountNum.length!=0 && this.category.length!=0 && this.sels.length!=0){
+      if(this.accountNum.length!=0 && this.sels.length!=0){
         let smtAry = [];
         for (let i = 0; i < this.sels.length; i++) {
           smtAry.push(this.sels[i].id);
         }
         let objStr = {
           ids:smtAry,
-          suffix:this.accountNum,
-          category: this.category[this.category.length-1]
+          suffix:this.accountNum
+          // category: this.category[this.category.length-1]
         };
         APIPlatExportSmt(objStr).then(res => {
           if (res.data.code === 200) {
@@ -715,7 +706,7 @@ export default {
           }
         });
       }else{
-        this.$message.error('请选择分类或者账号');
+        this.$message.error('请账号或者产品');
       }
     },    
     selectalld2() {
@@ -2055,8 +2046,10 @@ export default {
           dataObj.plat = ["ebay"];
         } else if (n == "joom") {
           dataObj.plat = ["joom"];
+        }else if (n == "aliexpress") {
+          dataObj.plat = ["aliexpress"];
         } else {
-          dataObj.plat = ["wish", "ebay", "joom"];
+          dataObj.plat = ["wish", "ebay", "joom","aliexpress"];
         }
         APIFinishPlat(dataObj).then(res => {
           if (res.data.code == 200) {
@@ -2819,6 +2812,17 @@ export default {
   margin-left: 10px;
   border-radius: 5px;
 }
+.signPerfectSmt {
+  padding: 0 10px;
+  display: block;
+  float: left;
+  line-height: 30px;
+  background: #d30101;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 5px;
+}
 .signPerfectTotal {
   padding: 0 10px;
   display: block;
@@ -2832,14 +2836,14 @@ export default {
 }
 @media (max-width: 1600px) {
   .none1600 {
-    width: 124px !important;
+    width: 175px !important;
   }
   .none16001 {
-    width: 120px !important;
+    width: 145px !important;
     margin-left: 5px !important;
   }
   .none16002 {
-    width: 125px !important;
+    width: 175px !important;
     margin-left: 5px !important;
   }
 }
