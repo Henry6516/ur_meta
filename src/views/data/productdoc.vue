@@ -8,7 +8,8 @@
         :key="index"
       ></el-tab-pane>
     </el-tabs>
-    <div v-show="show.pricetrend">
+    <router-view></router-view>
+    <!-- <div v-show="show.pricetrend">
       <pricetrend></pricetrend>
     </div>
     <div v-show="show.perform">
@@ -19,7 +20,7 @@
     </div>
     <div v-show="show.departInventory">
       <departInventory></departInventory>
-    </div>
+    </div> -->
   </section>
 </template>
 
@@ -55,26 +56,48 @@ export default {
     },
     handleClick(tab, event) {
       if (tab.name === "/v1/data-center/price-trend") {
-        this.show["pricetrend"] = true;
-      } else {
-        this.show["pricetrend"] = false;
+        this.$router.push({
+         path: `/v1/data-center/price-trend`
+        });
       }
       if (tab.name === "/v1/perform/perform") {
-        this.show["perform"] = true;
-      } else {
-        this.show["perform"] = false;
+        this.$router.push({
+         path: `/v1/perform/perform`
+        });
       }
       if (tab.name === "/v1/data-center/stock-status") {
-        this.show["inventory"] = true;
-      } else {
-        this.show["inventory"] = false;
+        this.$router.push({
+         path: `/v1/data-center/stock-status`
+        });
       }
       if (tab.name === "/v1/data-center/stock-depart-detail") {
-        this.show["departInventory"] = true;
-      } else {
-        this.show["departInventory"] = false;
+        this.$router.push({
+         path: `/v1/data-center/stock-depart-detail`
+        });
       }
     }
+    // handleClick(tab, event) {
+    //   if (tab.name === "/v1/data-center/price-trend") {
+    //     this.show["pricetrend"] = true;
+    //   } else {
+    //     this.show["pricetrend"] = false;
+    //   }
+    //   if (tab.name === "/v1/perform/perform") {
+    //     this.show["perform"] = true;
+    //   } else {
+    //     this.show["perform"] = false;
+    //   }
+    //   if (tab.name === "/v1/data-center/stock-status") {
+    //     this.show["inventory"] = true;
+    //   } else {
+    //     this.show["inventory"] = false;
+    //   }
+    //   if (tab.name === "/v1/data-center/stock-depart-detail") {
+    //     this.show["departInventory"] = true;
+    //   } else {
+    //     this.show["departInventory"] = false;
+    //   }
+    // }
   },
   mounted() {
     getMenu().then(response => {
@@ -88,6 +111,9 @@ export default {
       }
       this.activeName = this.allMenu[0].route;
     });
+    this.$router.push({
+         path: `/v1/data-center/price-trend`
+        });
   }
 };
 </script>

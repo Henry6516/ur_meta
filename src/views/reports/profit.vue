@@ -164,7 +164,7 @@
       border 
       class="elTablTab"
       :header-cell-style="getRowClass" 
-      style="width: 100%;">
+      style="width: 100%;font-size:13px;">
     >
       <el-table-column prop="developer" width="75" label="开发员" :formatter="empty" align="center" fixed></el-table-column>
       <el-table-column width="55" prop="sold" label="查看" :formatter="empty" align="center" fixed>
@@ -210,10 +210,10 @@
         sortable="custom"
       ></el-table-column>
       <el-table-column
-        width="108"
+        width="125"
         prop="ebayProfit"
          align="center"
-        label="eBay利润"
+        label="eBay利润(￥)"
         :formatter="empty"
         sortable="custom"
       >
@@ -228,10 +228,10 @@
         sortable="custom"
       ></el-table-column>
       <el-table-column
-        width="108"
+        width="125"
         prop="wishProfit"
          align="center"
-        label="Wish利润"
+        label="Wish利润(￥)"
         :formatter="empty"
         sortable="custom"
       >
@@ -246,10 +246,10 @@
         sortable="custom"
       ></el-table-column>
       <el-table-column
-        width="145"
+        width="160"
         prop="smtProfit"
          align="center"
-        label="Aliexpress利润"
+        label="Aliexpress利润(￥)"
         :formatter="empty"
         sortable="custom"
       >
@@ -264,10 +264,10 @@
         sortable="custom"
       ></el-table-column>
       <el-table-column
-        width="115"
+        width="130"
         prop="joomProfit"
          align="center"
-        label="Joom利润"
+        label="Joom利润(￥)"
         :formatter="empty"
         sortable="custom"
       >
@@ -282,10 +282,10 @@
         sortable="custom"
       ></el-table-column>
       <el-table-column
-        width="128"
+        width="145"
         prop="amazonProfit"
          align="center"
-        label="Amazon利润"
+        label="Amazon利润(￥)"
         :formatter="empty"
         sortable="custom"
       >

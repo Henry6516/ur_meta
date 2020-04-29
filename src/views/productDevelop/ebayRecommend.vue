@@ -961,25 +961,25 @@ export default {
       condition: {
         marketplace: "",
         page: 1,
-        pageSize: 5,
+        pageSize: 20,
         sort: ""
       },
       condition1: {
         marketplace: "",
         page: 1,
-        pageSize: 5,
+        pageSize: 20,
         sort: ""
       },
       condition2: {
         marketplace: "",
         page: 1,
-        pageSize: 5,
+        pageSize: 20,
         sort: ""
       },
       condition3: {
         marketplace: "",
         page: 1,
-        pageSize: 5,
+        pageSize: 20,
         sort: ""
       },
       ebayStlye: 0,

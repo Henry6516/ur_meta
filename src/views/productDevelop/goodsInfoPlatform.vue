@@ -14,7 +14,7 @@
         placeholder="SKU查询(逗号隔开)"
         v-model="plat.codeStr"
         class="none16001"
-        style="width:250px;float: left"
+        style="width:280px;float: left"
         clearable
       ></el-input>
       <span class="exportAccount" @click="seachSku">查询</span>
@@ -46,10 +46,43 @@
         <el-option v-for="(item, key) in vovaArr" :key="item.key" :label="item" :value="item"></el-option>
       </el-select>
       <span class="exportAccount" @click="exportVova">导出vova模板</span>
-      <span class="signPerfectWish" @click="keepPerfect('wish')">标记Wish完善</span>
-      <span class="signPerfectEbay" @click="keepPerfect('ebay')">标记eBay完善</span>
-      <span class="signPerfectJoom" @click="keepPerfect('joom')">标记Joom完善</span>
-      <span class="signPerfectTotal" @click="keepPerfect('total')">标记全部完善</span>
+      <el-tooltip class="item" effect="dark" content="提示：此分类对应所有所选产品，不同类的产品请分多次操作！" placement="bottom-start">
+          <el-cascader
+          v-model="category"
+          style="width: 15%;float: left;margin-left:10px"
+          :show-all-levels="false"
+          placeholder="选择类目"
+          :options="options"
+          clearable
+          :props="defaultPropsApp"></el-cascader>
+      </el-tooltip>
+      <el-select
+          placeholder="--所有账号--"
+          clearable
+          multiple
+          collapse-tags
+          v-model="accountNum"
+          style="width: 15%;float: left;"
+          class="selee"
+        >
+          <el-button plain type="info" @click="selectalld2">全选</el-button>
+          <el-button plain type="info" @click="noselectd2">取消</el-button>
+          <el-option
+            v-for="(item, key) in accountNumber"
+            :key="item.key"
+            :label="item"
+            :value="item"
+          ></el-option>
+        </el-select>
+      <span class="exportAccount" @click="exportSmt">添加导出队列</span>
+    </el-col>
+    <el-col :span="24">
+      <div class="posIndex">
+        <span class="signPerfectWish" @click="keepPerfect('wish')">标记Wish完善</span>
+        <span class="signPerfectEbay" @click="keepPerfect('ebay')">标记eBay完善</span>
+        <span class="signPerfectJoom" @click="keepPerfect('joom')">标记Joom完善</span>
+        <span class="signPerfectTotal" @click="keepPerfect('total')">标记全部完善</span>
+      </div>
     </el-col>
     <div class="infoTable">
       <!-- 平台信息列表 -->
@@ -503,7 +536,10 @@ import {
   APIPlatExportJoom,
   APIPlatExportVova,
   APIFinishPlat,
-  APIVovaName
+  APIVovaName,
+  getPlatSmtAccount,
+  getPlatSmtCategory,
+  APIPlatExportSmt
 } from "../../api/product";
 import {
   getAttributeInfoStoreName,
@@ -516,6 +552,15 @@ import { getMenu } from "../../api/login";
 export default {
   data() {
     return {
+      defaultPropsApp: {
+        children: "children",
+        label: "name",
+        value:'id'
+      },
+      category:[],      
+      options:[],
+      accountNum:[],
+      accountNumber:[],
       tableHeight: window.innerHeight - 195,
       dialogVisible: false,
       dialogPicture: false,
@@ -647,6 +692,42 @@ export default {
     }
   },
   methods: {
+    exportSmt() {
+      if(this.accountNum.length!=0 && this.category.length!=0 && this.sels.length!=0){
+        let smtAry = [];
+        for (let i = 0; i < this.sels.length; i++) {
+          smtAry.push(this.sels[i].id);
+        }
+        let objStr = {
+          ids:smtAry,
+          suffix:this.accountNum,
+          category: this.category[this.category.length-1]
+        };
+        APIPlatExportSmt(objStr).then(res => {
+          if (res.data.code === 200) {
+            this.$message({
+              message: "成功",
+              type: "success"
+            });
+            this.getPlat();
+          } else {
+            this.$message.error(res.data.message);
+          }
+        });
+      }else{
+        this.$message.error('请选择分类或者账号');
+      }
+    },    
+    selectalld2() {
+      var ard1 = [];
+      for (const item in this.accountNumber) {
+        ard1.push(this.accountNumber[item]);
+      }
+      this.accountNum = ard1;
+    },
+    noselectd2() {
+      this.accountNum = [];
+    },    
     seachSku(){
       this.getPlat();
     },
@@ -2671,6 +2752,12 @@ export default {
     APIVovaName().then(response => {
       this.vovaArr = response.data.data;
     });
+    getPlatSmtAccount().then(response => {
+      this.accountNumber=response.data.data
+    });
+    getPlatSmtCategory().then(response => {
+      this.options=response.data.data
+    });
   }
 };
 </script>
@@ -2703,7 +2790,7 @@ export default {
   padding: 0 10px;
   display: block;
   float: left;
-  line-height: 40px;
+  line-height: 30px;
   background: #00c0ef;
   color: #fff;
   cursor: pointer;
@@ -2714,7 +2801,7 @@ export default {
   padding: 0 10px;
   display: block;
   float: left;
-  line-height: 40px;
+  line-height: 30px;
   background: #367fa9;
   color: #fff;
   cursor: pointer;
@@ -2725,7 +2812,7 @@ export default {
   padding: 0 10px;
   display: block;
   float: left;
-  line-height: 40px;
+  line-height: 30px;
   background: #008d4c;
   color: #fff;
   cursor: pointer;
@@ -2736,7 +2823,7 @@ export default {
   padding: 0 10px;
   display: block;
   float: left;
-  line-height: 40px;
+  line-height: 30px;
   background: #e08e0b;
   color: #fff;
   cursor: pointer;
@@ -2748,12 +2835,17 @@ export default {
     width: 124px !important;
   }
   .none16001 {
-    width: 110px !important;
+    width: 120px !important;
     margin-left: 5px !important;
   }
   .none16002 {
     width: 125px !important;
     margin-left: 5px !important;
   }
+}
+.posIndex{
+  position: absolute;
+  right: 10px;
+  top: 5px;
 }
 </style>

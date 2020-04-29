@@ -16,6 +16,10 @@
                    name='second'>
         <plat-ebay></plat-ebay>
       </el-tab-pane>
+      <el-tab-pane label="SMT"
+                   name='third'>
+        <plat-smt></plat-smt>
+      </el-tab-pane>
     </el-tabs>
   </section>
 </template>
@@ -24,10 +28,12 @@ import { APIPlatInfo, APISaveWishInfo } from '../../api/product'
 import { getMenu } from '../../api/login'
 import platWish from './platWish.vue'
 import platEbay from './platEbay.vue'
+import platSmt from './platSmt.vue'
 export default {
   components: {
     platWish,
-    platEbay
+    platEbay,
+    platSmt
   },
   data() {
     return {

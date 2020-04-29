@@ -24,6 +24,10 @@ import ptrend from '../views/data/pricetrend.vue'
 import weight from '../views/data/weight.vue'
 import delay from '../views/data/delay.vue'
 import productdoc from '../views/data/productdoc.vue'
+import pricetrend1 from '../views/data/pricetrend.vue'
+import perform1 from '../views/data/perform.vue'
+import inventory1 from '../views/data/inventory.vue'
+import departInventory1 from '../views/data/departInventory.vue'
 import saledoc from '../views/data/saledoc.vue'
 import logisticsdoc from '../views/data/logisticsdoc.vue'
 import shortagedoc from '../views/data/shortagedoc.vue'
@@ -239,7 +243,29 @@ const routes = [
       {
         path: '/v1/data-center/product',
         component: productdoc,
-        name: '产品'
+        name: '产品',
+        children: [
+          {
+            path: '/v1/data-center/price-trend',
+            component: pricetrend1,
+            name: '默认'
+          },
+          {
+            path: '/v1/perform/perform',
+            component: perform1,
+            name: '新品'
+          },
+          {
+            path: '/v1/data-center/stock-status',
+            component: inventory1,
+            name: '库存'
+          },
+          {
+            path: '/v1/data-center/stock-depart-detail',
+            component: departInventory1,
+            name: '部门库存'
+          }
+        ]
       },
       {
         path: '/v1/data-center/stock-status',

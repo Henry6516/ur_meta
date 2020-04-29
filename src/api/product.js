@@ -1957,3 +1957,34 @@ export function APIExtendDetail(param) {
   })
 }
 
+export function APISaveSmt(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/save-smt-info',
+    method: 'post',
+    data
+  })
+}
+
+export function getPlatSmtAccount() {
+  return request({
+    url: '/oa-goodsinfo/smt-account',
+    method: 'get'
+  })
+}
+
+export function getPlatSmtCategory() {
+  return request({
+    url: '/oa-goodsinfo/smt-category',
+    method: 'get'
+  })
+}
+export function APIPlatExportSmt(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat-smt-export',
+    method: 'post',
+    data
+  })
+}
+

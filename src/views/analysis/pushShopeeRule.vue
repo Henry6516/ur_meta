@@ -30,13 +30,13 @@
                     style="color: #409EFF;cursor:pointer;"
                   ></i>
                 </el-tooltip>
-                <el-tooltip content="立即更新">
+                <!-- <el-tooltip content="立即更新">
                   <i
                     @click="ljArt(scope.$index, scope.row)"
                     class="el-icon-star-on"
                     style="color: #409EFF;cursor:pointer;"
                   ></i>
-                </el-tooltip>
+                </el-tooltip> -->
                 <el-tooltip content="删除">
                   <i
                     class="el-icon-delete"
@@ -50,23 +50,26 @@
             <el-table-column property="ruleMark" label="规则备注" align="center" width="130"></el-table-column>
             <el-table-column property="country" label="国家" align="center" width="120"></el-table-column>
             <el-table-column property="genTimeStart" label="上架时间" align="center" width="128">
-              <template slot-scope="scope">{{scope.row.genTimeStart}} - {{scope.row.genTimeEnd}}</template>
+              <template slot-scope="scope">{{scope.row.listedTime[0]}} - {{scope.row.listedTime[1]}}</template>
             </el-table-column>
             <!-- <el-table-column property="genTimeEnd" label="上架时间" align="center" width="80"></el-table-column> -->
             <el-table-column property="historicalSoldStart" label="总销售件数" align="center" width="125">
               <template slot-scope="scope">{{scope.row.historicalSoldStart}} - {{scope.row.historicalSoldEnd}}</template>
             </el-table-column>
+            <el-table-column property="historicalSoldStart" label="价格区间" align="center" width="128">
+              <template slot-scope="scope">{{scope.row.priceStart}} - {{scope.row.priceEnd}}</template>
+            </el-table-column>
             <!-- <el-table-column property="historicalSoldEnd" label="总销售件数小于" align="center" width="80"></el-table-column> -->
             <el-table-column property="isShopeeVerified" label="虾皮优选" align="center" width="110">
-              <template slot-scope="scope">{{scope.row.shopLocationStatus==''?'不限':scope.row.shopLocationStatus}}</template>
+              <template slot-scope="scope">{{scope.row.shopLocationStatus==''?'不限':scope.row.shopLocationStatus=='1'?'是':scope.row.shopLocationStatus}}</template>
             </el-table-column>
             <el-table-column property="likedCountStart" label="Favorite" align="center" width="128">
               <template slot-scope="scope">{{scope.row.likedCountStart}} - {{scope.row.likedCountEnd}}</template>
             </el-table-column>
             <!-- <el-table-column property="likedCountEnd" label="Favorite小于" align="center" width="80"></el-table-column> -->
-            <el-table-column property="paymentStart" label="前30天销售金额" align="center" width="128">
+            <!-- <el-table-column property="paymentStart" label="前30天销售金额" align="center" width="128">
               <template slot-scope="scope">{{scope.row.paymentStart}} - {{scope.row.paymentEnd}}</template>
-            </el-table-column>
+            </el-table-column> -->
             <!-- <el-table-column property="paymentEnd" label="前30天销售金额小于" align="center" width="100"></el-table-column> -->
             <el-table-column property="soldStart" label="前30天销售件数" align="center" width="128">
               <template slot-scope="scope">{{scope.row.soldStart}} - {{scope.row.soldEnd}}</template>
@@ -125,13 +128,13 @@
                 <p class="basp">上架时间</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="ebayXp.genTimeStart" placeholder="开始"></el-input>
+                <el-input v-model="ebayXp.listedTime[0]" placeholder="开始"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="ebayXp.genTimeEnd" placeholder="结束"></el-input>
+                <el-input v-model="ebayXp.listedTime[1]" placeholder="结束"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -146,6 +149,20 @@
               </el-col>
               <el-col :span="7">
                 <el-input v-model="ebayXp.historicalSoldEnd" placeholder="小于"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">价格区间</p>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.priceStart" placeholder="大于"></el-input>
+              </el-col>
+              <el-col :span="1">
+                <span class="colspan">-</span>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="ebayXp.priceEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -211,8 +228,8 @@
               <el-col :span="15">
                 <el-radio-group v-model="ebayXp.isShopeeVerified" size="medium">
                   <el-radio-button label="">不限</el-radio-button>
-                  <el-radio-button label="是">是</el-radio-button>
-                  <el-radio-button label="否">否</el-radio-button>
+                  <el-radio-button label="1">是</el-radio-button>
+                  <el-radio-button label="0">否</el-radio-button>
                 </el-radio-group>
               </el-col>
             </el-col>
@@ -274,13 +291,13 @@
                 <p class="basp">上架时间</p>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="addEbayXp.genTimeStart" placeholder="开始"></el-input>
+                <el-input v-model="addEbayXp.listedTime[0]" placeholder="开始"></el-input>
               </el-col>
               <el-col :span="1">
                 <span class="colspan">-</span>
               </el-col>
               <el-col :span="7">
-                <el-input v-model="addEbayXp.genTimeEnd" placeholder="结束"></el-input>
+                <el-input v-model="addEbayXp.listedTime[1]" placeholder="结束"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -295,6 +312,20 @@
               </el-col>
               <el-col :span="7">
                 <el-input v-model="addEbayXp.historicalSoldEnd" placeholder="小于"></el-input>
+              </el-col>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 20px">
+              <el-col :span="9">
+                <p class="basp">价格区间</p>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.priceStart" placeholder="大于"></el-input>
+              </el-col>
+              <el-col :span="1">
+                <span class="colspan">-</span>
+              </el-col>
+              <el-col :span="7">
+                <el-input v-model="addEbayXp.priceEnd" placeholder="小于"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-bottom: 20px">
@@ -360,8 +391,8 @@
               <el-col :span="15">
                 <el-radio-group v-model="addEbayXp.isShopeeVerified" size="medium">
                   <el-radio-button label="">不限</el-radio-button>
-                  <el-radio-button label="是">是</el-radio-button>
-                  <el-radio-button label="否">否</el-radio-button>
+                  <el-radio-button label="1">是</el-radio-button>
+                  <el-radio-button label="0">否</el-radio-button>
                 </el-radio-group>
               </el-col>
             </el-col>
@@ -434,6 +465,9 @@ export default {
         ratingCountEnd: "",
         ratingCountStart: "",
         shopLocationStatus: "",
+        listedTime:[],
+        priceStart:'',
+        priceEnd:'',
         soldEnd: "",
         soldStart: "",
       },
@@ -449,11 +483,14 @@ export default {
         isShopeeVerified: "",
         likedCountEnd: "",
         likedCountStart: "",
+        listedTime:[],
         paymentEnd: "",
         paymentStart: "",
         ratingCountEnd: "",
         ratingCountStart: "",
         shopLocationStatus: "",
+        priceStart:'',
+        priceEnd:'',
         soldEnd: "",
         soldStart: "",
       },
@@ -604,25 +641,25 @@ export default {
       });
     },
     ljArtRx(index, row) {
-      let conde = {
-        ruleId: row._id
-      };
-      this.lodingTo = true;
-      this.$message({
-          message: '正在更新',
-          type: 'warning'
-      });
-      ebayRunRuleHot(conde).then(res => {
-        if (res.data.code == 200) {
-          this.$message({
-            message: "更新成功",
-            type: "success"
-          });
-        } else {
-          this.$message.error(res.data.message);
-        }
-        this.lodingTo = false;
-      });
+      // let conde = {
+      //   ruleId: row._id
+      // };
+      // this.lodingTo = true;
+      // this.$message({
+      //     message: '正在更新',
+      //     type: 'warning'
+      // });
+      // ebayRunRuleHot(conde).then(res => {
+      //   if (res.data.code == 200) {
+      //     this.$message({
+      //       message: "更新成功",
+      //       type: "success"
+      //     });
+      //   } else {
+      //     this.$message.error(res.data.message);
+      //   }
+      //   this.lodingTo = false;
+      // });
     },
     selectalld1() {
       var ard1 = [];
@@ -800,12 +837,15 @@ export default {
       this.ebayXp.likedCountEnd = row.likedCountEnd;
       this.ebayXp.likedCountStart = row.likedCountStart;
       this.ebayXp.paymentEnd = row.paymentEnd;
+      this.ebayXp.listedTime = row.listedTime;
       this.ebayXp.paymentStart = row.paymentStart;
       this.ebayXp.ratingCountEnd = row.ratingCountEnd;
       this.ebayXp.ratingCountStart = row.ratingCountStart;
       this.ebayXp.shopLocationStatus = row.shopLocationStatus;
       this.ebayXp.soldEnd = row.soldEnd;
       this.ebayXp.soldStart = row.soldStart;
+      this.ebayXp.priceEnd = row.priceEnd;
+      this.ebayXp.priceStart = row.priceStart;
       this.ebayXp.ruleName = row.ruleName;
       this.ebayXp.ruleMark = row.ruleMark;      
       this.ebaydisLoginxp = true;
