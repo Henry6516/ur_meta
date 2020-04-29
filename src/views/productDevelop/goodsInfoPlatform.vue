@@ -697,8 +697,9 @@ export default {
         APIPlatExportSmt(objStr).then(res => {
           if (res.data.code === 200) {
             this.$message({
-              message: "成功",
-              type: "success"
+              type: 'success', 
+              dangerouslyUseHTMLString: true,
+              message: res.data.data
             });
             this.getPlat();
           } else {
