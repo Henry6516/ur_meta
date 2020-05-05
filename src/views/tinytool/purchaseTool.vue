@@ -8,44 +8,50 @@
         :key="index"
       ></el-tab-pane>
     </el-tabs>
-    <!-- <div v-show="show.pricetrend">
-      <pricetrend></pricetrend>
+    <div v-show="show.qc">
+      <purchaseQc></purchaseQc>
     </div>
-    <div v-show="show.perform">
-      <perform></perform>
+    <div v-show="show.nqc">
+      <purchasenQc></purchasenQc>
     </div>
-    <div v-show="show.inventory">
-      <inventory></inventory>
+    <div v-show="show.qh">
+      <purchaseQh></purchaseQh>
     </div>
-    <div v-show="show.departInventory">
-      <departInventory></departInventory>
-    </div> -->
+    <div v-show="show.zd">
+      <purchaseZd></purchaseZd>
+    </div>
+    <div v-show="show.tb">
+      <purchaseTb></purchaseTb>
+    </div>
   </section>
 </template>
 
 <script type="text/ecmascript-6">
 import { getMenu } from "../../api/login";
-// import pricetrend from "./pricetrend.vue";
-// import perform from "./perform.vue";
-// import inventory from "./inventory.vue";
-// import departInventory from "./departInventory.vue";
+import purchaseQc from "./purchaseQc.vue";
+import purchasenQc from "./purchasenQc.vue";
+import purchaseQh from "./purchaseQh.vue";
+import purchaseZd from "./purchaseZd.vue";
+import purchaseTb from "./purchaseTb.vue";
 
 export default {
   components: {
-    // pricetrend,
-    // perform,
-    // inventory,
-    // departInventory
+    purchaseQc,
+    purchasenQc,
+    purchaseQh,
+    purchaseZd,
+    purchaseTb
   },
   data() {
     return {
       allMenu: [],
       activeName: "",
       show: {
-        pricetrend: true,
-        perform: false,
-        inventory: false,
-        departInventory: false
+        qc: true,
+        nqc: false,
+        qh: false,
+        zd: false,
+        tb: false
       }
     };
   },
@@ -54,25 +60,30 @@ export default {
       return cellValue || "--";
     },
     handleClick(tab, event) {
-      if (tab.name === "/v1/data-center/price-trend") {
-        this.show["pricetrend"] = true;
+      if (tab.name === "/v1/purchase-tool/clear-sku") {
+        this.show["qc"] = true;
       } else {
-        this.show["pricetrend"] = false;
+        this.show["qc"] = false;
       }
-      if (tab.name === "/v1/perform/perform") {
-        this.show["perform"] = true;
+      if (tab.name === "/v1/purchase-tool/unclear-sku") {
+        this.show["nqc"] = true;
       } else {
-        this.show["perform"] = false;
+        this.show["nqc"] = false;
       }
-      if (tab.name === "/v1/data-center/stock-status") {
-        this.show["inventory"] = true;
+      if (tab.name === "/v1/purchase-tool/shortage") {
+        this.show["qh"] = true;
       } else {
-        this.show["inventory"] = false;
+        this.show["qh"] = false;
       }
-      if (tab.name === "/v1/data-center/stock-depart-detail") {
-        this.show["departInventory"] = true;
+      if (tab.name === "/v1/purchase-tool/checking") {
+        this.show["zd"] = true;
       } else {
-        this.show["departInventory"] = false;
+        this.show["zd"] = false;
+      }
+      if (tab.name === "/v1/purchase-tool/auto-sync") {
+        this.show["tb"] = true;
+      } else {
+        this.show["tb"] = false;
       }
     }
   },

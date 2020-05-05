@@ -194,6 +194,209 @@
               </el-col>
             </el-col>
           </el-col>
+          <el-col :span="24" style="padding: 0;">
+            <h3 class="toolbar essential">主信息</h3>
+          </el-col>
+          <!-- <el-col :span="24">
+            <span style="text-align: center;float: left;margin-left: 15px;margin-top: 6px">关键词Tags</span>
+            <el-col :span="21" style="margin-left: 15px;">
+              <el-input v-model="smtForm.wishTags" style="width: 100%" class="aArial"></el-input>
+            </el-col>
+          </el-col> -->
+          <el-col :span="24">
+            <el-col :span="24" style="margin-top: 15px">
+              <span
+                style="text-align: center;float: left;margin-left: 15px;margin-right: 13px"
+              >最前关键词</span>
+              <span>
+                <span style="color: red">{{foremost}}</span>个字符
+              </span>
+              <span style="margin-left: 10px">
+                <font style="color: red">说明：</font>性别定位/多个一卖等。如Women/Men/Girl/Baby/Kids/1PC/2PC/5PC/4 Colors/5Pcs Set…
+              </span>
+            </el-col>
+            <el-col :span="22" style="margin-left: 100px;margin-top: 10px">
+              <el-input
+                v-model="smtForm.headKeywords"
+                style="width:96%"
+                class="aArial"
+                placeholder="--一个关键词--"
+                @input="top($event)"
+              ></el-input>
+            </el-col>
+          </el-col>
+          <el-col :span="24">
+            <el-col :span="24" style="margin-top: 4px">
+              <span style="text-align: center;margin-left: 15px;margin-right: 13px">必选关键词</span>
+              <span>
+                <span style="color: red">{{bxlength}}</span>个关键词
+                <span style="color: red;margin-left: 10px">{{bxtotal}}</span>个字符
+              </span>
+              <span>
+                <font style="color: red;margin-left: 10px">说明：</font>物品名/材质/特征等。如T-Shirt(物品名)/V-neck(特征)/Cotton(材质)
+              </span>
+              <el-button type="text" @click="dialogTableVisible = true">批量设置</el-button>
+            </el-col>
+            <el-col :span="23">
+              <div style="margin-left: 70px">
+                必填
+                <el-input
+                  style="width:31.8%"
+                  v-model="mandatoryData[0]"
+                  @blur="mandatory()"
+                  class="aArial"
+                ></el-input>
+                <el-input
+                  style="width:31.8%"
+                  v-model="mandatoryData[1]"
+                  @blur="mandatory()"
+                  class="aArial"
+                ></el-input>
+                <el-input
+                  style="width:31.8%"
+                  v-model="mandatoryData[2]"
+                  @blur="mandatory()"
+                  class="aArial"
+                ></el-input>
+              </div>
+              <div style="margin-left: 70px;margin-top: 5px">
+                选填
+                <el-input
+                  style="width:31.8%"
+                  v-model="mandatoryData[3]"
+                  @blur="mandatory()"
+                  class="aArial"
+                ></el-input>
+                <el-input
+                  style="width:31.8%"
+                  v-model="mandatoryData[4]"
+                  @blur="mandatory()"
+                  class="aArial"
+                ></el-input>
+                <el-input
+                  style="width:31.8%"
+                  v-model="mandatoryData[5]"
+                  @blur="mandatory()"
+                  class="aArial"
+                ></el-input>
+              </div>
+            </el-col>
+          </el-col>
+          <el-col :span="24">
+            <el-col :span="24" style="margin-top: 4px">
+              <span style="text-align: center;margin-left: 15px;margin-right: 13px">随机关键词</span>
+              <span>
+                <span style="color: red">{{sjlength}}</span>个关键词
+                <span style="color: red;margin-left: 10px">{{sjtotal}}</span>个字符
+              </span>
+              <span>
+                <font style="color: red;margin-left: 10px">说明：</font>形容词/品类热词等。如Fashion/Elegant/Hot/DIY/Casual…
+              </span>
+              <el-button type="text" @click="dialogTable = true">批量设置</el-button>
+            </el-col>
+            <el-col :span="23">
+              <div style="margin-left: 70px">
+                必填
+                <el-input
+                  style="width:19%"
+                  v-model="randomData[0]"
+                  @blur="random()"
+                  class="aArial"
+                ></el-input>
+                <el-input
+                  style="width:19%"
+                  v-model="randomData[1]"
+                  @blur="random()"
+                  class="aArial"
+                ></el-input>
+                <el-input
+                  style="width:19%"
+                  v-model="randomData[2]"
+                  @blur="random()"
+                  class="aArial"
+                ></el-input>
+                <el-input
+                  style="width:19%"
+                  v-model="randomData[3]"
+                  @blur="random()"
+                  class="aArial"
+                ></el-input>
+                <el-input
+                  style="width:19%"
+                  v-model="randomData[4]"
+                  @blur="random()"
+                  class="aArial"
+                ></el-input>
+              </div>
+              <div style="margin-left: 70px;margin-top: 5px">
+                选填
+                <el-input
+                  style="width:19%"
+                  v-model="randomData[5]"
+                  @blur="random()"
+                  class="aArial"
+                ></el-input>
+                <el-input
+                  style="width:19%"
+                  v-model="randomData[6]"
+                  @blur="random()"
+                  class="aArial"
+                ></el-input>
+                <el-input
+                  style="width:19%"
+                  v-model="randomData[7]"
+                  @blur="random()"
+                  class="aArial"
+                ></el-input>
+                <el-input
+                  style="width:19%"
+                  v-model="randomData[8]"
+                  @blur="random()"
+                  class="aArial"
+                ></el-input>
+                <el-input
+                  style="width:19%"
+                  v-model="randomData[9]"
+                  @blur="random()"
+                  class="aArial"
+                ></el-input>
+              </div>
+            </el-col>
+          </el-col>
+          <el-col :span="24">
+            <el-col :span="24" style="margin-top: 15px">
+              <span
+                style="text-align: center;float: left;margin-left: 15px;margin-right: 13px"
+                class="aArial"
+              >最后关键词</span>
+              <span>
+                <span style="color: red">{{last}}</span>个字符
+              </span>
+              <span>
+                <font style="color: red">说明：</font>附加说明词。如Randomly/S-3XL/2ml/(Color: Nude)/Big Size…
+              </span>
+            </el-col>
+            <el-col :span="22" style="margin-left: 100px;margin-top: 10px;margin-bottom: 20px">
+              <el-input
+                v-model="smtForm.tailKeywords"
+                style="width: 96%"
+                placeholder="--最多一个关键词--"
+                @input="bottm($event)"
+              ></el-input>
+            </el-col>
+          </el-col>
+          <el-col :span="24">
+            <span style="text-align: right;margin-top: 8px;float: left;padding-left: 44px">描述</span>
+            <el-col :span="22">
+              <el-input
+                v-model="smtForm.description"
+                type="textarea"
+                class="aArial"
+                :rows="14"
+                style="width:96%;margin-left: 27px"
+              ></el-input>
+            </el-col>
+          </el-col>
           <el-col :span="24" style="padding: 0;margin-top:10px;">
             <h3 class="toolbar essential">刊登细节</h3>
           </el-col>
@@ -536,6 +739,25 @@
           </el-col>
         </el-row>
       </el-form>
+      <!-- 批量设置对话框 -->
+      <el-dialog title="批量增加必选关键词" :visible.sync="dialogTableVisible">
+        <el-input
+          size="small"
+          type="textarea"
+          :rows="20"
+          placeholder="-多个必选关键词-"
+          @change="mandatoryDate($event)"
+        ></el-input>
+      </el-dialog>
+      <el-dialog title="批量增加随机关键词" :visible.sync="dialogTable">
+        <el-input
+          size="small"
+          type="textarea"
+          :rows="20"
+          placeholder="-多个随机关键词-"
+          @change="mandatoryDate1($event)"
+        ></el-input>
+      </el-dialog>
     </el-row>
   </section>
 </template>
@@ -552,6 +774,16 @@ import {
 export default {
   data() {
     return {
+      dialogTableVisible: false,
+      dialogTable: false,
+      foremost: 0,
+      bxlength: 0,
+      bxtotal: 0,
+      mandatoryData: ["", "", "", "", "", ""],
+      randomData: ["", "", "", "", "", "", "", "", "", ""],
+      sjlength: 0,
+      last: 0,
+      sjtotal: 0,
       defaultPropsApp: {
         children: "children",
         label: "name",
@@ -622,6 +854,74 @@ export default {
     };
   },
   methods: {
+    top(e) {
+      this.foremost = e.length;
+    },
+    bottm(e) {
+      this.last = e.length;
+    },
+    mandatoryDate(e) {
+      this.bxlength = 0;
+      this.bxtotal = 0;
+      var st1 = 0;
+      let arde = e.split(/[(\r\n)\r\n]+/);
+      for (var i = 0; i < arde.length; i++) {
+        var daee = arde[i];
+        for (var j = 0; j < this.mandatoryData.length; j++) {
+          this.mandatoryData[i] = daee;
+        }
+      }
+      for (var i = 0; i < this.mandatoryData.length; i++) {
+        if (this.mandatoryData[i] != "") {
+          this.bxlength++;
+          st1 += this.mandatoryData[i].length;
+        }
+      }
+      this.bxtotal = st1;
+    },
+    mandatoryDate1(e) {
+      this.sjlength = 0;
+      this.sjtotal = 0;
+      var st2 = 0;
+      let arde1 = e.split(/[(\r\n)\r\n]+/);
+      for (var i = 0; i < arde1.length; i++) {
+        var daee = arde1[i];
+        for (var j = 0; j < this.randomData.length; j++) {
+          this.randomData[i] = daee;
+        }
+      }
+      for (var i = 0; i < this.randomData.length; i++) {
+        if (this.randomData[i] != "") {
+          this.sjlength++;
+          st2 += this.randomData[i].length;
+        }
+      }
+      this.sjtotal = st2;
+    },
+    random(e) {
+      this.sjlength = 0;
+      this.sjtotal = 0;
+      var st2 = 0;
+      for (var i = 0; i < this.randomData.length; i++) {
+        if (this.randomData[i] != "") {
+          this.sjlength++;
+          st2 += this.randomData[i].length;
+        }
+      }
+      this.sjtotal = st2;
+    },
+    mandatory(e) {
+      this.bxlength = 0;
+      this.bxtotal = 0;
+      var st1 = 0;
+      for (var i = 0; i < this.mandatoryData.length; i++) {
+        if (this.mandatoryData[i] != "") {
+          this.bxlength++;
+          st1 += this.mandatoryData[i].length;
+        }
+      }
+      this.bxtotal = st1;
+    },
     handleChange(value) {},
     selectalld1() {
       var ard1 = [];
@@ -637,12 +937,12 @@ export default {
       if (this.accountNum.length != 0) {
         let objStr = {
           ids: [this.smtForm.infoId],
-          suffix: this.accountNum,
+          suffix: this.accountNum
         };
         APIPlatExportSmt(objStr).then(res => {
           if (res.data.code === 200) {
-             this.$message({
-              type: 'success', 
+            this.$message({
+              type: "success",
               dangerouslyUseHTMLString: true,
               message: res.data.data
             });
@@ -786,6 +1086,10 @@ export default {
           skuInfo: []
         };
         data.basicInfo = this.smtForm;
+        const md = JSON.stringify(this.mandatoryData);
+        const mr = JSON.stringify(this.randomData);
+        data.basicInfo.requiredKeywords = md;
+        data.basicInfo.randomKeywords = mr;
         const url = this.url;
         for (var y = 0; y < url.length; y++) {
           data.basicInfo["imageUrl" + y] = url[y];
@@ -829,6 +1133,10 @@ export default {
           skuInfo: []
         };
         data.basicInfo = this.smtForm;
+        const md = JSON.stringify(this.mandatoryData);
+        const mr = JSON.stringify(this.randomData);
+        data.basicInfo.requiredKeywords = md;
+        data.basicInfo.randomKeywords = mr;
         const url = this.url;
         for (var y = 0; y < url.length; y++) {
           data.basicInfo["imageUrl" + y] = url[y];
@@ -939,6 +1247,38 @@ export default {
           }, 1500);
         } else {
           this.category = [];
+        }
+        this.smtForm.requiredKeywords = JSON.parse(
+          this.smtForm.requiredKeywords
+        );
+        this.smtForm.randomKeywords = JSON.parse(this.smtForm.randomKeywords);
+        if (this.smtForm.headKeywords) {
+          this.foremost = this.smtForm.headKeywords.length;
+        }
+        if (this.smtForm.tailKeywords) {
+          this.last = this.smtForm.tailKeywords.length;
+        }
+        if (this.smtForm.requiredKeywords) {
+          this.mandatoryData = this.smtForm.requiredKeywords;
+        }
+        if (this.smtForm.randomKeywords) {
+          this.randomData = this.smtForm.randomKeywords;
+        }
+        if (this.smtForm.randomKeywords) {
+          for (var i = 0; i < this.smtForm.randomKeywords.length; i++) {
+            if (this.smtForm.randomKeywords[i] != "") {
+              this.sjlength++;
+              this.sjtotal += this.smtForm.randomKeywords[i].length;
+            }
+          }
+        }
+        if (this.smtForm.requiredKeywords) {
+          for (var i = 0; i < this.smtForm.requiredKeywords.length; i++) {
+            if (this.smtForm.requiredKeywords[i] != "") {
+              this.bxlength++;
+              this.bxtotal += this.smtForm.requiredKeywords[i].length;
+            }
+          }
         }
       });
     },

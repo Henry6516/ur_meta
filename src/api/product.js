@@ -1987,4 +1987,34 @@ export function APIPlatExportSmt(param) {
     data
   })
 }
+export function getClearSku() {
+  return request({
+    url: '/purchase-tool/clear-sku',
+    method: 'get'
+  })
+}
+export function getUnclearSku() {
+  return request({
+    url: '/purchase-tool/unclear-sku',
+    method: 'get'
+  })
+}
+export function getShortage() {
+  return request({
+    url: '/purchase-tool/shortage',
+    method: 'get'
+  })
+}
+export function getChecking() {
+  return request({
+    url: '/purchase-tool/checking',
+    method: 'get'
+  })
+}
+export function getAutoSync() {
+  return request({
+    url: '/purchase-tool/auto-sync',
+    method: 'get'
+  })
+}
 
