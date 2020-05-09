@@ -3,7 +3,7 @@
     <div class="tabPurChase">
       <el-col :span="24" style="font-size:18px">生成非清仓采购SKU</el-col>
       <el-col :span="24">
-        <el-button type="primary" size="small" style="margin-top:10px;" @click="create()">开始生成</el-button>
+        <el-button type="primary" size="small" style="margin-top:10px;" @click="create()" :disabled="qcFlag">开始生成</el-button>
       </el-col>
     </div>
     <el-col :span="24">
@@ -29,6 +29,7 @@ export default {
     return {
       loading: false,
       tableHeight: window.innerHeight - 190,
+      qcFlag: false,
       tableData: []
     };
   },
@@ -42,11 +43,38 @@ export default {
     },
     create() {
       this.loading = true;
+      this.qcFlag = true;
       getUnclearSku().then(res => {
-        let obj = {
-          value: res.data.data
-        };
-        this.tableData.push(obj);
+        const arr = []
+        if (res.data.data.length < 8000) {
+          let obj = {
+            value: res.data.data
+          };
+          arr.push(obj)
+          this.tableData = arr;
+        } else {
+          let attr = res.data.data;
+          let strLength = 0;
+          checked(8000);
+          let obj1 = {
+            value: attr.substring(0, strLength + 1)
+          };
+          let obj2 = {
+            value: attr.substring(strLength + 1, attr.length)
+          };
+          arr.push(obj1)
+          arr.push(obj2)
+          this.tableData = arr
+          function checked(length) {
+            if (attr.charAt(length) == ",") {
+              strLength = length;
+              return;
+            } else {
+              checked(length - 1);
+            }
+          }
+        }
+        this.qcFlag = false;
         this.loading = false;
       });
     }

@@ -3,7 +3,7 @@
     <el-form :model="condition"
              :inline="true"
              ref="condition"
-             label-width="90px"
+             label-width="80px"
              style="padding-top:12px;padding-bottom:2px;"
              >
       <el-form-item label="部门"
@@ -11,6 +11,7 @@
         <el-select size="small"
                    v-model="condition.department"
                    multiple
+                   class="weightWidth"
                    collapse-tags
                    placeholder="部门"
                    @change="choosed">
@@ -33,6 +34,7 @@
         <el-select size="small"
                    v-model='condition.secDepartment'
                    multiple
+                   class="weightWidth"
                    collapse-tags
                    placeholder='二级部门'
                    @change='secChoosed'>
@@ -54,9 +56,9 @@
         <el-select size="small"
                    v-model="condition.plat"
                    multiple
+                   class="weightWidth"
                    collapse-tags
-                   placeholder="平台"
-                   style="height: 3rem;">
+                   placeholder="平台">
           <el-button plain
                      type="info"
                      @click='selectAll("plat")'>全选</el-button>
@@ -77,6 +79,7 @@
                    v-model='condition.member'
                    filterable
                    multiple
+                   class="weightWidth"
                    collapse-tags
                    placeholder='销售员'>
           <el-button plain
@@ -98,6 +101,7 @@
                    v-model="condition.account"
                    filterable
                    multiple
+                   class="weightWidth"
                    collapse-tags
                    placeholder="账号">
           <el-button plain
@@ -115,9 +119,9 @@
       </el-form-item>
       <el-form-item label="订单编号">
         <el-input size="small"
+                  class="weightWidth"
                   v-model="condition.trendId"
-                  placeholder="多个订单以英文格式逗号分隔"
-                  style="width:215px;"></el-input>
+                  placeholder="多个订单以英文格式逗号分隔"></el-input>
       </el-form-item>
       <el-form-item label="发货时间"
                     class="input"
@@ -133,10 +137,10 @@
                         start-placeholder="开始日期"
                         end-placeholder="结束日期"
                         :picker-options="pickerOptions2"
-                        style="width:18rem;">
+                        class="weightWidth">
         </el-date-picker>
       </el-form-item>
-      <el-form-item style="margin-left:40px">
+      <el-form-item style="margin-left:10px">
         <el-button size="small"
                    type="primary"
                    @click="onSubmit(condition)">查询</el-button>
@@ -531,6 +535,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.weightWidth{
+  width: 188px;
+}
 </style>
 
 

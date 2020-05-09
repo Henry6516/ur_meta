@@ -14,7 +14,7 @@
       ></el-tab-pane>
     </el-tabs>
     <div v-show="show.recpro">
-      <ebayRecommend></ebayRecommend>
+      <ebayRecommend :indexFlag="indexFlag"></ebayRecommend>
     </div>
     <div v-show="show.repTes">
       <repeatTesting></repeatTesting>
@@ -1546,6 +1546,7 @@ export default {
   },
   data() {
     return {
+      indexFlag:0,
       tableHeight:window.innerHeight -195,
       activeName: "",
       disabled: true,
@@ -1721,6 +1722,7 @@ export default {
       }
       if (this.allMenu[0].route == "/v1/oa-goods/ai-recommend") {
         this.show["recpro"] = true;
+        this.indexFlag=1
         this.activeName=this.allMenu[0].route
       } else {
         this.show["recpro"] = false;

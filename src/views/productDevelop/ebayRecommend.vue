@@ -829,6 +829,7 @@ import {
 import { getEbayXpMind, getEbayRxMind,getWishRxMind,getShopeeMind } from "../../api/profit";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
+  props: ['indexFlag'],  //注意这里要父组件的名字一致
   data() {
     return {
       ebayDataWish:[],
@@ -1872,12 +1873,19 @@ export default {
       });
     }
   },
+  watch:{
+      indexFlag: function(newValue) {
+         if(newValue==1){
+            this.ebayXp();
+            this.ebayRx();
+            this.ebayWish();
+            this.ebayShopee();
+            this.sysUserName = sessionStorage.getItem("user");
+         }
+       }
+  },
   mounted() {
-    this.ebayXp();
-    this.ebayRx();
-    this.ebayWish();
-    this.ebayShopee();
-    this.sysUserName = sessionStorage.getItem("user");
+  
   }
 };
 </script>

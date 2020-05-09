@@ -134,25 +134,41 @@
                          label="成交价$"
                           align="center"
                          :formatter="empty"
-                         sortable="custom"></el-table-column>
+                         sortable="custom">
+                         <template slot-scope="scope">
+                           {{scope.row.salemoneyrmbus | cutOut}}
+                         </template>
+                         </el-table-column>
         <el-table-column min-width="100"
                          prop="salemoneyrmbzn"
                          label="成交价￥"
                           align="center"
                          :formatter="empty"
-                         sortable="custom"></el-table-column>
+                         sortable="custom">
+                         <template slot-scope="scope">
+                           {{scope.row.salemoneyrmbzn | cutOut}}
+                         </template>
+                         </el-table-column>
         <el-table-column min-width="130"
                          prop="ppebayus"
                           align="center"
                          label="交易费汇总$"
                          :formatter="empty"
-                         sortable="custom"></el-table-column>
+                         sortable="custom">
+                         <template slot-scope="scope">
+                           {{scope.row.ppebayus | cutOut}}
+                         </template>
+                         </el-table-column>
         <el-table-column min-width="130"
                          prop="ppebayzn"
                           align="center"
                          label="交易费汇总￥"
                          :formatter="empty"
-                         sortable="custom"></el-table-column>
+                         sortable="custom">
+                         <template slot-scope="scope">
+                           {{scope.row.ppebayzn | cutOut}}
+                         </template>
+                         </el-table-column>
         <el-table-column min-width="115"
                          prop="costmoneyrmb"
                          label="商品成本￥"
@@ -188,7 +204,11 @@
                           align="center"
                          label="毛利￥"
                          :formatter="empty"
-                         sortable="custom"></el-table-column>
+                         sortable="custom">
+                         <template slot-scope="scope">
+                           {{scope.row.netprofit | cutOut}}
+                         </template>
+                         </el-table-column>
         <el-table-column min-width="100"
                          prop="netrate"
                           align="center"

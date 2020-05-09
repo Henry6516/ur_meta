@@ -1129,7 +1129,12 @@ export default {
     },
     // 空值显示“--”
     empty(row, column, cellValue, index) {
-      return cellValue || '--'
+      if(cellValue && !isNaN(cellValue)){
+        cellValue=Number(cellValue).toFixed(2)
+        return cellValue
+      }else{
+        return cellValue || '--'
+      }
     },
     getSummaries(param) {
       const { columns, data } = param

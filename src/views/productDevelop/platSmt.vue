@@ -202,7 +202,7 @@
             <el-col :span="21" style="margin-left: 15px;">
               <el-input v-model="smtForm.wishTags" style="width: 100%" class="aArial"></el-input>
             </el-col>
-          </el-col> -->
+          </el-col>-->
           <el-col :span="24">
             <el-col :span="24" style="margin-top: 15px">
               <span
@@ -297,69 +297,19 @@
             <el-col :span="23">
               <div style="margin-left: 70px">
                 必填
-                <el-input
-                  style="width:19%"
-                  v-model="randomData[0]"
-                  @blur="random()"
-                  class="aArial"
-                ></el-input>
-                <el-input
-                  style="width:19%"
-                  v-model="randomData[1]"
-                  @blur="random()"
-                  class="aArial"
-                ></el-input>
-                <el-input
-                  style="width:19%"
-                  v-model="randomData[2]"
-                  @blur="random()"
-                  class="aArial"
-                ></el-input>
-                <el-input
-                  style="width:19%"
-                  v-model="randomData[3]"
-                  @blur="random()"
-                  class="aArial"
-                ></el-input>
-                <el-input
-                  style="width:19%"
-                  v-model="randomData[4]"
-                  @blur="random()"
-                  class="aArial"
-                ></el-input>
+                <el-input style="width:19%" v-model="randomData[0]" @blur="random()" class="aArial"></el-input>
+                <el-input style="width:19%" v-model="randomData[1]" @blur="random()" class="aArial"></el-input>
+                <el-input style="width:19%" v-model="randomData[2]" @blur="random()" class="aArial"></el-input>
+                <el-input style="width:19%" v-model="randomData[3]" @blur="random()" class="aArial"></el-input>
+                <el-input style="width:19%" v-model="randomData[4]" @blur="random()" class="aArial"></el-input>
               </div>
               <div style="margin-left: 70px;margin-top: 5px">
                 选填
-                <el-input
-                  style="width:19%"
-                  v-model="randomData[5]"
-                  @blur="random()"
-                  class="aArial"
-                ></el-input>
-                <el-input
-                  style="width:19%"
-                  v-model="randomData[6]"
-                  @blur="random()"
-                  class="aArial"
-                ></el-input>
-                <el-input
-                  style="width:19%"
-                  v-model="randomData[7]"
-                  @blur="random()"
-                  class="aArial"
-                ></el-input>
-                <el-input
-                  style="width:19%"
-                  v-model="randomData[8]"
-                  @blur="random()"
-                  class="aArial"
-                ></el-input>
-                <el-input
-                  style="width:19%"
-                  v-model="randomData[9]"
-                  @blur="random()"
-                  class="aArial"
-                ></el-input>
+                <el-input style="width:19%" v-model="randomData[5]" @blur="random()" class="aArial"></el-input>
+                <el-input style="width:19%" v-model="randomData[6]" @blur="random()" class="aArial"></el-input>
+                <el-input style="width:19%" v-model="randomData[7]" @blur="random()" class="aArial"></el-input>
+                <el-input style="width:19%" v-model="randomData[8]" @blur="random()" class="aArial"></el-input>
+                <el-input style="width:19%" v-model="randomData[9]" @blur="random()" class="aArial"></el-input>
               </div>
             </el-col>
           </el-col>
@@ -402,7 +352,7 @@
           </el-col>
           <el-col :span="24">
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">分类</el-col>
+              <el-col :span="8" style="text-align: center;margin-top: 8px;color:red" class="font13">*分类</el-col>
               <el-col :span="15">
                 <el-tooltip
                   class="item"
@@ -424,25 +374,25 @@
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品包装长度(CM)</el-col>
+              <el-col :span="8" style="text-align: center;margin-top: 8px;color:red" class="font13">*商品包装长度(CM)</el-col>
               <el-col :span="15">
                 <el-input v-model="smtForm.packageLength" placeholder="CM"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品包装宽度(CM)</el-col>
+              <el-col :span="8" style="text-align: center;margin-top: 8px;color:red" class="font13">*商品包装宽度(CM)</el-col>
               <el-col :span="15">
                 <el-input v-model="smtForm.packageWidth" placeholder="CM"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 10px">
-              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品包装高度(CM)</el-col>
+              <el-col :span="8" style="text-align: center;margin-top: 8px;color:red" class="font13">*商品包装高度(CM)</el-col>
               <el-col :span="15">
                 <el-input v-model="smtForm.packageHeight" placeholder="CM"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8" style="margin-top: 20px">
-              <el-col :span="8" style="text-align: center;margin-top: 8px" class="font13">商品毛重(KG)</el-col>
+              <el-col :span="8" style="text-align: center;margin-top: 8px;color:red" class="font13">*商品毛重(KG)</el-col>
               <el-col :span="15">
                 <el-input v-model="smtForm.grossWeight" placeholder="KG"></el-input>
               </el-col>
@@ -1079,7 +1029,22 @@ export default {
       this.showattribute = !this.showattribute;
     },
     keep() {
-      if (this.category.length != 0) {
+      if (this.category.length == 0) {
+        this.$message.error("请选择分类");
+        return;
+      } else if (!this.smtForm.packageLength) {
+        this.$message.error("请填写商品包装长度");
+        return;
+      } else if (!this.smtForm.packageWidth) {
+        this.$message.error("请填写商品包装宽度");
+        return;
+      } else if (!this.smtForm.packageHeight) {
+        this.$message.error("请填写商品包装高度");
+        return;
+      } else if (!this.smtForm.grossWeight) {
+        this.$message.error("请填写商品包装毛重");
+        return;
+      } else {
         const data = {
           plat: "smt",
           basicInfo: {},
@@ -1120,12 +1085,25 @@ export default {
             this.$message.error("保存失败");
           }
         });
-      } else {
-        this.$message.error("请选择分类");
       }
     },
     keepWs() {
-      if (this.category.length != 0) {
+      if (this.category.length == 0) {
+        this.$message.error("请选择分类");
+        return;
+      } else if (!this.smtForm.packageLength) {
+        this.$message.error("请填写商品包装长度");
+        return;
+      } else if (!this.smtForm.packageWidth) {
+        this.$message.error("请填写商品包装宽度");
+        return;
+      } else if (!this.smtForm.packageHeight) {
+        this.$message.error("请填写商品包装高度");
+        return;
+      } else if (!this.smtForm.grossWeight) {
+        this.$message.error("请填写商品包装毛重");
+        return;
+      } else {
         const data = {
           id: this.smtForm.infoId,
           plat: "smt",
@@ -1167,8 +1145,6 @@ export default {
             this.$message.error("保存失败");
           }
         });
-      } else {
-        this.$message.error("请选择分类");
       }
     },
     revise(e, index) {

@@ -209,7 +209,7 @@
       style="width: 100%;font-size:13px;"
     >
       <el-table-column
-        width="80"
+        width="85"
         prop="pingtai"
         label="平台"
         fixed
@@ -1140,7 +1140,6 @@ export default {
       for (let i = 0; i < allDepartments.length; i++) {
         allDepartmentsMap[allDepartments[i].id] = allDepartments[i].department;
       }
-      console.log(allDepartmentsMap)
       // 人员处理
       res = this.allMember;
       let per = [];

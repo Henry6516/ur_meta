@@ -1530,7 +1530,12 @@ export default {
     },
     // 格式化数字
     empty(row, column, cellValue, index) {
-      return cellValue || '--'
+      if(cellValue && !isNaN(cellValue)){
+        cellValue=Number(cellValue).toFixed(2)
+        return cellValue
+      }else{
+        return cellValue || '--'
+      }
     },
     // 导出
     exportExcel() {

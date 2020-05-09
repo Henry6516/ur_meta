@@ -3,10 +3,11 @@
     <el-form :model='condition'
              :inline='true'
              ref='condition'
+             label-width="70px"
              style="padding:10px 0;padding-bottom:0"
              class='demo-form-inline toolbar'>
       <el-form-item label="账号"
-                    class="input" style="margin-left:15px;padding-bottom:10px;">
+                    class="input" style="padding-bottom:10px;">
         <el-select size="small"
                    v-model="condition.suffix"
                    filterable
@@ -33,7 +34,6 @@
                    v-model='condition.salesman'
                    filterable
                    multiple
-                   style="width:200px;"
                    collapse-tags
                    placeholder='销售员'>
           <el-button plain
@@ -63,7 +63,7 @@
       </el-form-item>
       <el-form-item label='日期1'
                     prop='lastDateRange'
-                    class="abd"
+                     style="padding-bottom:10px;"
                     :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
         <el-date-picker size="small"
                         v-model='condition.lastDateRange'
@@ -80,7 +80,6 @@
       </el-form-item>
       <el-form-item label='日期2'
                     prop='dateRange'
-                    class="abd abd1"
                     :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]">
         <el-date-picker size="small"
                         v-model='condition.dateRange'

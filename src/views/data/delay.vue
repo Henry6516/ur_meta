@@ -4,11 +4,12 @@
       <el-form :model="condition"
                :inline="true"
                ref="condition"
-               label-width="95px"
+               label-width="75px"
                style="padding-top:12px;padding-bottom:3px;">
         <el-form-item label="部门"
                       class="input">
           <el-select size="small"
+                     class="deWidth"
                      v-model="condition.department"
                      multiple
                      collapse-tags
@@ -31,6 +32,7 @@
         <el-form-item label='二级部门'
                       class='input'>
           <el-select size="small"
+                     class="deWidth"
                      v-model='condition.secDepartment'
                      multiple
                      collapse-tags
@@ -52,11 +54,11 @@
         <el-form-item label="平台"
                       class="input">
           <el-select size="small"
+                     class="deWidth"
                      v-model="condition.plat"
                      multiple
                      collapse-tags
-                     placeholder="平台"
-                     style="height: 3rem;">
+                     placeholder="平台">
             <el-button plain
                        type="info"
                        @click='selectAll("plat")'>全选</el-button>
@@ -74,6 +76,7 @@
         <el-form-item label='销售员'
                       class='input'>
           <el-select size="small"
+                     class="deWidth"
                      v-model='condition.member'
                      filterable
                      multiple
@@ -95,6 +98,7 @@
         <el-form-item label="账号"
                       class="input">
           <el-select size="small"
+                     class="deWidth"
                      v-model="condition.account"
                      filterable
                      multiple
@@ -121,7 +125,7 @@
                       :key="item.id"
                       :label="item.id"
                       :value="item.id"
-                      style="width:103px">{{item.type}}</el-radio>
+                      style="width:90px">{{item.type}}</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="交易时间"
@@ -136,10 +140,10 @@
                           start-placeholder="开始日期"
                           end-placeholder="结束日期"
                           :picker-options="pickerOptions2"
-                          style="width:215px;">
+                          class="deWidth">
           </el-date-picker>
         </el-form-item>
-        <el-form-item style="margin-left:50px">
+        <el-form-item style="margin-left:10px">
           <el-button size="small"
                      type="primary"
                      @click="onSubmit">查询</el-button>
@@ -662,6 +666,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.deWidth{
+  width: 188px;
+}
 </style>
 
 
