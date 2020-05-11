@@ -2017,4 +2017,12 @@ export function getAutoSync() {
     method: 'get'
   })
 }
+export function getSmtLog(param) {
+  const data = { condition: param }
+  return request({
+    url: '/log/smt-export-log?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
 

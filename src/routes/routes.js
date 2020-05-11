@@ -121,6 +121,7 @@ import saleProduct from '../views/productDevelop/saleProduct.vue'
 import global from '../views/productDevelop/global.vue'
 import developTrend from '../views/productDevelop/developTrend.vue'
 import ebayRecommendEdit from '../views/productDevelop/ebayRecommendEdit.vue'
+import smtLog from '../views/productDevelop/smtLog.vue'
 // 数据采集
 import collection from '../views/productDevelop/collection.vue'
 import collectionJoom from '../views/productDevelop/collectionJoom.vue'
@@ -672,6 +673,11 @@ const routes = [
         path: '/v1/oa-goods/list',
         component: productRecommend,
         name: '产品开发'
+      },
+      {
+        path: '/v1/log/smt-export-log',
+        component: smtLog,
+        name: 'SMT日志'
       },
       {
         path: '/v1/check/check-list',
