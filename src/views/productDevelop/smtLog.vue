@@ -8,9 +8,8 @@
       :height="tableHeight"
       :header-cell-style="getRowClass"
     >
-      <el-table-column type="index" label="#" align="center" width="45"></el-table-column>
+      <el-table-column prop="id" label="日志ID" align="center" width="100"></el-table-column>
       <el-table-column prop="goodsName" label="商品名称" align="center"></el-table-column>
-      <el-table-column prop="id" label="日志ID" align="center"></el-table-column>
       <el-table-column prop="ibaySuffix" label="ibay账号简称" align="center"></el-table-column>
       <el-table-column prop="SKU" label="SKU" align="center"></el-table-column>
       <el-table-column prop="mubanId" label="模板ID" align="center"></el-table-column>
@@ -70,8 +69,12 @@ export default {
   },
   filters: {
     cutOutDate(value) {
-      value = value.substring(0, 11);
-      return value;
+      if (value) {
+        value = value.substring(0, 11);
+        return value;
+      }else{
+        return '--';  
+      }
     }
   },
   destroyed: function() {},

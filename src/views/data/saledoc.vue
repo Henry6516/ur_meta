@@ -14,6 +14,9 @@
     <div v-show="show.saleschange">
       <saleschange></saleschange>
     </div>
+    <div v-show="show.global">
+      <global></global>
+    </div>
   </section>
 </template>
 
@@ -21,11 +24,13 @@
 import { getMenu } from "../../api/login";
 import psales from "./psales.vue";
 import saleschange from "./saleschange.vue";
+import global from "./global.vue";
 
 export default {
   components: {
     psales,
-    saleschange
+    saleschange,
+    global
   },
   data() {
     return {
@@ -33,7 +38,8 @@ export default {
       activeName: "",
       show: {
         psales: true,
-        saleschange: false
+        saleschange: false,
+        global:false
       }
     };
   },
@@ -48,6 +54,11 @@ export default {
         this.show["saleschange"] = true;
       } else {
         this.show["saleschange"] = false;
+      }
+      if (tab.name === "/v1/oa-data/global-market") {
+        this.show["global"] = true;
+      } else {
+        this.show["global"] = false;
       }
     }
   },

@@ -51,7 +51,7 @@
                 <el-input v-model="smtForm.sku"></el-input>
               </el-col>
             </el-col>
-            <el-col :span="8" style="margin-top: 10px">
+            <!-- <el-col :span="8" style="margin-top: 10px">
               <el-col
                 :span="6"
                 style="text-align: center;margin-top: 8px;color: red;"
@@ -60,7 +60,7 @@
               <el-col :span="17">
                 <el-input v-model="smtForm.itemtitle"></el-input>
               </el-col>
-            </el-col>
+            </el-col> -->
             <el-col :span="8" style="margin-top: 10px">
               <el-col :span="6" style="text-align: center;margin-top: 8px" class="font13">商品单价</el-col>
               <el-col :span="17">
@@ -759,7 +759,7 @@ export default {
       tableData: [],
       condition: {
         id: 0,
-        plat: "smt"
+        plat: "aliexpress"
       },
       packageType: ["是", "否"],
       productunit: [
@@ -907,7 +907,7 @@ export default {
     delSku(index, row) {
       let aryId = {
         id: row.id,
-        plat: "smt"
+        plat: "aliexpress"
       };
       APIDeleteEbaySku(aryId).then(res => {
         if (res.data.code === 200) {
@@ -1046,7 +1046,7 @@ export default {
         return;
       } else {
         const data = {
-          plat: "smt",
+          plat: "aliexpress",
           basicInfo: {},
           skuInfo: []
         };
@@ -1106,7 +1106,7 @@ export default {
       } else {
         const data = {
           id: this.smtForm.infoId,
-          plat: "smt",
+          plat: "aliexpress",
           basicInfo: {},
           skuInfo: []
         };

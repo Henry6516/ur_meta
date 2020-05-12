@@ -376,7 +376,7 @@
     <el-table
       :data="tableData1"
       @sort-change="sortNumber"
-      height="645"
+      height="650"
       border
       class="elTable"
       v-show="showTable.order"
@@ -438,7 +438,7 @@
     <el-table
       :data="tableData2"
       @sort-change="sortNumber"
-      height="645"
+      height="650"
       v-show="showTable.goods"
       border
       class="elTable"
@@ -503,7 +503,7 @@
       </el-col>
     </div>
     <!-- 死库明细 -->
-    <el-table :data="tableData3" @sort-change="sortNumber" height="645" v-show="showTable.dead" border class="elTable" :header-cell-style="getRowClass" style="width: 100%;font-size:13px;" v-loading="load3">
+    <el-table :data="tableData3" @sort-change="sortNumber" height="650" v-show="showTable.dead" border class="elTable" :header-cell-style="getRowClass" style="width: 100%;font-size:13px;" v-loading="load3">
       <el-table-column prop="plat" label="平台" sortable align="center" width="100" fixed></el-table-column>
       <el-table-column prop="suffix" label="账号" sortable align="center" width="100" fixed></el-table-column>
       <el-table-column prop="salesman" label="销售员" sortable align="center" width="100" fixed></el-table-column>
@@ -560,7 +560,7 @@
     <el-table
       :data="tableData4"
       @sort-change="sortNumber"
-      height="645"
+      height="650"
       v-show="showTable.extra"
       border 
       class="elTable"
@@ -1196,11 +1196,11 @@ export default {
       if (this.show === false) {
         this.text = "显示输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height - 145 + "px";
+        this.tableHeight = height - 135 + "px";
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height - 260;
+        this.tableHeight = height - 255;
       }
     },
     changeActive() {
@@ -1290,7 +1290,7 @@ export default {
         this.getExtra();
       } else {
         const height = document.documentElement.clientHeight;
-        this.tableHeight = height - 260;
+        this.tableHeight = height - 255;
         this.showTable["sell"] = true;
         this.showTable["order"] = false;
         this.showTable["goods"] = false;

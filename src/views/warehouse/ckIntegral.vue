@@ -316,6 +316,11 @@ export default {
       this.listLoading = true;
       getIntegral(this.condition).then(res => {
         this.nostockdata = res.data.data;
+        for(let i =0;i<this.nostockdata.length;i++){
+          if(this.nostockdata[i].total_integral=='0'){
+            this.nostockdata.splice(i--,1);
+          }
+        }
         this.listLoading = false;
       });
     }
