@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="infoTable">
     <el-table
       :data="logData"
       style="width: 98%;margin-top:15px;margin-left:0.8%;font-size:14px;"
@@ -8,34 +8,56 @@
       :height="tableHeight"
       :header-cell-style="getRowClass"
     >
-      <el-table-column prop="id" label="日志ID" align="center" width="100"></el-table-column>
-      <el-table-column prop="goodsName" label="商品名称" align="center"></el-table-column>
-      <el-table-column prop="ibaySuffix" label="ibay账号简称" align="center"></el-table-column>
-      <el-table-column prop="SKU" label="SKU" align="center"></el-table-column>
-      <el-table-column prop="mubanId" label="模板ID" align="center"></el-table-column>
-      <el-table-column prop="creator" label="操作人" align="center"></el-table-column>
+      <el-table-column prop="id" label="日志ID" align="center" width="100">
+        <el-table-column prop="id" :render-header="renderHeader" align="center" width="100"></el-table-column>
+      </el-table-column>
+      <el-table-column prop="goodsName" label="商品名称" align="center">
+        <el-table-column prop="goodsName" :render-header="renderHeader" align="center"></el-table-column>
+      </el-table-column>
+      <el-table-column prop="ibaySuffix" label="ibay账号简称" align="center">
+        <el-table-column prop="ibaySuffix" :render-header="renderHeader" align="center"></el-table-column>
+      </el-table-column>
+      <el-table-column prop="SKU" label="SKU" align="center">
+        <el-table-column prop="SKU" :render-header="renderHeader" align="center"></el-table-column>
+      </el-table-column>
+      <el-table-column prop="mubanId" label="模板ID" align="center">
+        <el-table-column prop="mubanId" :render-header="renderHeader" align="center"></el-table-column>
+      </el-table-column>
+      <el-table-column prop="creator" label="操作人" align="center">
+        <el-table-column prop="creator" :render-header="renderHeader" align="center"></el-table-column>
+      </el-table-column>
       <el-table-column prop="createDate" label="操作时间" align="center">
-        <template slot-scope="scope">{{scope.row.createDate | cutOutDate}}</template>
+        <el-table-column prop="createDate" :render-header="renderHeader" align="center">
+          <template slot-scope="scope">{{scope.row.createDate | cutOutDate}}</template>
+        </el-table-column>
       </el-table-column>
-      <el-table-column prop="completeDate1" label="单属性完成时间" align="center">
-        <template slot-scope="scope">{{scope.row.completeDate1 | cutOutDate}}</template>
+      <el-table-column prop="status1" label="单属性状态" align="center">
+        <el-table-column prop="status1" :render-header="renderHeader" align="center">
+          <template slot-scope="scope">
+            <a
+              :class="scope.row.status1=='0'?'clasRed1':'clasGreen1'"
+            >{{scope.row.status1=='0'?'未完成':'已完成'}}</a>
+          </template>
+        </el-table-column>
       </el-table-column>
-      <el-table-column prop="completeDate2" label="多属性完成时间" align="center">
-        <template slot-scope="scope">{{scope.row.completeDate2 | cutOutDate}}</template>
+      <el-table-column prop="status2" label="多属性状态" align="center">
+        <el-table-column prop="status2" :render-header="renderHeader" align="center">
+          <template slot-scope="scope">
+            <a
+              :class="scope.row.status2=='0'?'clasRed1':'clasGreen1'"
+            >{{scope.row.status2=='0'?'未完成':'已完成'}}</a>
+          </template>
+        </el-table-column>
       </el-table-column>
-      <el-table-column prop="status1" label="单属性完成状态" align="center">
-        <template slot-scope="scope">
-          <a
-            :class="scope.row.status1=='0'?'clasRed1':'clasGreen1'"
-          >{{scope.row.status1=='0'?'未完成':'已完成'}}</a>
-        </template>
+      <el-table-column prop="completeDate1" label="单属性时间" align="center">
+        <el-table-column prop="completeDate1" :render-header="renderHeader" align="center">
+          <template slot-scope="scope">{{scope.row.completeDate1 | cutOutDate}}</template>
+        </el-table-column>
       </el-table-column>
-      <el-table-column prop="status2" label="多属性完成状态" align="center">
-        <template slot-scope="scope">
-          <a
-            :class="scope.row.status2=='0'?'clasRed1':'clasGreen1'"
-          >{{scope.row.status2=='0'?'未完成':'已完成'}}</a>
-        </template>
+      <el-table-column prop="completeDate2" label="多属性时间" align="center">
+        <el-table-column prop="completeDate2" :render-header="renderHeader" align="center">
+          <template slot-scope="scope">{{scope.row.completeDate2 | cutOutDate}}</template>
+        </el-table-column>
       </el-table-column>
     </el-table>
     <div>
@@ -62,6 +84,17 @@ export default {
       logData: [],
       total: 0,
       condition: {
+        goodsName: "",
+        id: "",
+        ibaySuffix: "",
+        SKU: "",
+        mubanId: "",
+        creator: "",
+        createDate: [],
+        completeDate1: [],
+        completeDate2: [],
+        status1: "",
+        status2: "",
         page: 1,
         pageSize: 50
       }
@@ -70,15 +103,316 @@ export default {
   filters: {
     cutOutDate(value) {
       if (value) {
-        value = value.substring(0, 11);
+        value = value.substring(0, 16);
         return value;
-      }else{
-        return '--';  
+      } else {
+        return "--";
       }
     }
   },
   destroyed: function() {},
   methods: {
+    renderHeader(h, { column, $index }) {
+      if ($index === 0) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.id,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.id = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.getData();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 1) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.goodsName,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.goodsName = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.getData();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 2) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.ibaySuffix,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.ibaySuffix = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.getData();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 3) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.SKU,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.SKU = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.getData();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 4) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.mubanId,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.mubanId = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.getData();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 5) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.creator,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.creator = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.getData();
+                }
+              }
+            })
+          ]
+        );
+      } else if ($index === 6) {
+        return h("el-date-picker", {
+          props: {
+            value: this.condition.createDate,
+            size: "mini",
+            type: "daterange",
+            valueFormat: "yyyy-MM-dd"
+          },
+          style: {
+            width: "100%",
+            padding: "2px"
+          },
+          on: {
+            input: value => {
+              this.condition.createDate = value;
+              this.$emit("input", value);
+            },
+            change: value => {
+              this.getData();
+            }
+          }
+        });
+      } else if ($index === 7) {
+        let filters = [
+          { text: "0", value: "未完成" },
+          { text: "1", value: "已完成" }
+        ];
+        return h(
+          "el-select",
+          {
+            props: {
+              placeholder: "请选择",
+              value: this.condition.status1,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.condition.status1 = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.getData();
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item.text,
+                  label: item.value
+                }
+              });
+            })
+          ]
+        );
+      }else if ($index === 8) {
+        let filters = [
+          { text: "0", value: "未完成" },
+          { text: "1", value: "已完成" }
+        ];
+        return h(
+          "el-select",
+          {
+            props: {
+              placeholder: "请选择",
+              value: this.condition.status2,
+              size: "mini",
+              clearable: true
+            },
+            on: {
+              input: value => {
+                this.condition.status2 = value;
+                this.$emit("input", value);
+              },
+              change: searchValue => {
+                this.getData();
+              }
+            }
+          },
+          [
+            filters.map(item => {
+              return h("el-option", {
+                props: {
+                  value: item.text,
+                  label: item.value
+                }
+              });
+            })
+          ]
+        );
+      }else if ($index === 9) {
+        return h("el-date-picker", {
+          props: {
+            value: this.condition.completeDate1,
+            size: "mini",
+            type: "daterange",
+            valueFormat: "yyyy-MM-dd"
+          },
+          style: {
+            width: "100%",
+            padding: "2px"
+          },
+          on: {
+            input: value => {
+              this.condition.completeDate1 = value;
+              this.$emit("input", value);
+            },
+            change: value => {
+              this.getData();
+            }
+          }
+        });
+      } else if ($index === 10) {
+        return h("el-date-picker", {
+          props: {
+            value: this.condition.completeDate2,
+            size: "mini",
+            type: "daterange",
+            valueFormat: "yyyy-MM-dd"
+          },
+          style: {
+            width: "100%",
+            padding: "2px"
+          },
+          on: {
+            input: value => {
+              this.condition.completeDate2 = value;
+              this.$emit("input", value);
+            },
+            change: value => {
+              this.getData();
+            }
+          }
+        });
+      }
+    },
     handleSizeChange(val) {
       this.condition.pageSize = val;
       this.getData();
