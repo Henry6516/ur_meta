@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="perBac" :style="obj">
     <el-form :model='form'
              :inline='true'
              ref='condition'
@@ -40,21 +40,26 @@
                    @click="onSubmit(condition)">查询</el-button>
       </el-form-item>
     </el-form>
-    <div class="tab"
+    <div class="tab tabwidth"
          v-show="show"
          v-loading="listLoading"
          element-loading-text="正在加载中...">
       <el-row>
-        <el-col :span="12">
+        <el-card>
+        <el-col :span="12" style="padding:15px 0">
           <Myechart :options="option"
                     ref="myechart"></Myechart>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="12" style="padding:15px 0">
           <Myechartlre :options="options"
                        ref="myechartlre"></Myechartlre>
         </el-col>
+        </el-card>
       </el-row>
+      <div style="margin-top:15px;margin-bottom:15px;">
+      <el-card>
       <el-tabs v-model="activeName"
+               class="perDemoTab" 
                @tab-click="handleClick"
                v-show="this.tableData1.length>0?true:false">
         <el-tab-pane label="所有状态"
@@ -70,86 +75,135 @@
                     :header-cell-style="getRowClass" 
                     style="width: 100%;">
             <el-table-column fixed
-                             width="125"
+                             min-width="125"
                              prop="salername"
                              label="业绩归属人1"
                              :formatter="empty"
+                             align="center"
                              sortable></el-table-column>
-            <el-table-column width="102"
+            <el-table-column min-width="102"
                              prop="goodsNum"
                              label="商品总数"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
-            <el-table-column width="115"
+            <el-table-column min-width="115"
                              prop="SoldNum"
                              label="出单商品数"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
-            <el-table-column width="100"
+            <el-table-column min-width="100"
                              prop="SoldRate"
                              label="出单率%"
+                             align="center"
                              :formatter="empty"
-                             sortable="custom"></el-table-column>
+                             sortable="custom"></el-table-column>  
             <el-table-column width="102"
                              prop="SkuSoldNum"
                              label="销量数量"
+                             align="center"
+                             v-if="showOpen.sy"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="130"
                              prop="saleMoneyRmb"
+                             align="center"
                              label="销售额(RMB)"
+                             v-if="showOpen.sy"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="115"
                              prop="profitRmb"
                              label="利润(RMB)"
+                             align="center"
+                             v-if="showOpen.sy"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="100"
                              prop="ProfitRate"
                              label="利润率%"
+                             align="center"
+                             v-if="showOpen.sy"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="150"
                              prop="wishSoldNum"
                              label="Wish出单商品数"
+                             v-if="showOpen.sy"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="135"
                              prop="wishRate"
+                             v-if="showOpen.sy"
+                             align="center"
                              label="Wish出单率%"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="150"
                              prop="eabySoldNum"
+                             v-if="showOpen.sy"
+                             align="center"
                              label="eBay出单商品数"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="135"
                              prop="eBayRate"
+                             v-if="showOpen.sy"
+                             align="center"
                              label="eBay出单率%"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="145"
                              prop="SMTSoldNum"
+                             v-if="showOpen.sy"
+                             align="center"
                              label="SMT出单商品数"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="130"
                              prop="SMTRate"
+                             v-if="showOpen.sy"
+                             align="center"
                              label="SMT出单率%"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="170"
                              prop="amaSoldNum"
+                             v-if="showOpen.sy"
+                             align="center"
                              label="Amazon出单商品数"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="155"
                              prop="amaRate"
+                             align="center"
+                             v-if="showOpen.sy"
                              label="Amazon出单率%"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
+            <el-table-column width="110"
+                             label="操作"
+                             align="center"
+                             :formatter="empty">
+                             <template slot-scope="scope">
+                                <el-tooltip content="查看">
+                                  <i
+                                    v-if="!showOpen.sy"
+                                    class="el-icon-circle-plus-outline"
+                                    @click="openSy(scope.$index, scope.row)"
+                                    style="color: #409EFF;cursor:pointer;"
+                                  ></i>
+                                  <i
+                                    v-if="showOpen.sy"
+                                    class="el-icon-remove-outline"
+                                    @click="openSy(scope.$index, scope.row)"
+                                    style="color: #409EFF;cursor:pointer;"
+                                  ></i>
+                                </el-tooltip>
+                              </template>
+                             </el-table-column>                 
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="爆款"
@@ -165,86 +219,135 @@
                     :header-cell-style="getRowClass"
                     style="width: 100%;">
             <el-table-column fixed
-                             width="125"
+                             min-width="125"
                              prop="salername"
                              label="业绩归属人1"
                              :formatter="empty"
+                             align="center"
                              sortable></el-table-column>
-            <el-table-column width="102"
+            <el-table-column min-width="102"
                              prop="goodsNum"
                              label="商品总数"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
-            <el-table-column width="102"
+            <el-table-column min-width="102"
                              prop="SoldNum"
                              label="爆款总数"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
-            <el-table-column width="100"
+            <el-table-column min-width="100"
                              prop="SoldRate"
                              label="爆款率%"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="102"
                              prop="SkuSoldNum"
                              label="销量数量"
+                             v-if="showOpen.bk"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="130"
                              prop="saleMoneyRmb"
+                             align="center"
+                             v-if="showOpen.bk"
                              label="销售额(RMB)"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="115"
                              prop="profitRmb"
                              label="利润(RMB)"
+                             v-if="showOpen.bk"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="100"
                              prop="ProfitRate"
                              label="利润率%"
+                             v-if="showOpen.bk"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="122"
                              prop="wishSoldNum"
                              label="Wish爆款数"
+                             v-if="showOpen.bk"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="162"
                              prop="wishRate"
+                             v-if="showOpen.bk"
                              label="Wish爆款贡献率%"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="122"
                              prop="eabySoldNum"
+                             v-if="showOpen.bk"
+                             align="center"
                              label="eBay爆款数"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="162"
                              prop="eBayRate"
+                             v-if="showOpen.bk"
+                             align="center"
                              label="eBay爆款贡献率%"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="120"
                              prop="SMTSoldNum"
+                             v-if="showOpen.bk"
+                             align="center"
                              label="SMT爆款数"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="160"
                              prop="SMTRate"
                              label="SMT爆款贡献率%"
+                             v-if="showOpen.bk"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="145"
                              prop="amaSoldNum"
                              label="Amazon爆款数"
+                             v-if="showOpen.bk"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="185"
                              prop="amaRate"
                              label="Amazon爆款贡献率%"
+                             v-if="showOpen.bk"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
+            <el-table-column width="110"
+                             label="操作"
+                             align="center"
+                             :formatter="empty">
+                             <template slot-scope="scope">
+                                <el-tooltip content="查看">
+                                  <i
+                                    v-if="!showOpen.bk"
+                                    class="el-icon-circle-plus-outline"
+                                    @click="openBk(scope.$index, scope.row)"
+                                    style="color: #409EFF;cursor:pointer;"
+                                  ></i>
+                                  <i
+                                    v-if="showOpen.bk"
+                                    class="el-icon-remove-outline"
+                                    @click="openBk(scope.$index, scope.row)"
+                                    style="color: #409EFF;cursor:pointer;"
+                                  ></i>
+                                </el-tooltip>
+                              </template>
+                             </el-table-column>                 
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="旺款"
@@ -260,89 +363,140 @@
                     :header-cell-style="getRowClass"
                     style="width: 100%;">
             <el-table-column fixed
-                             width="125"
+                             min-width="125"
                              prop="salername"
                              label="业绩归属人1"
                              :formatter="empty"
+                             align="center"
                              sortable></el-table-column>
-            <el-table-column width="102"
+            <el-table-column min-width="102"
                              prop="goodsNum"
+                             align="center"
                              label="商品总数"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
-            <el-table-column width="102"
+            <el-table-column min-width="102"
                              prop="SoldNum"
+                             align="center"
                              label="旺款总数"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
-            <el-table-column width="100"
+            <el-table-column min-width="100"
                              prop="SoldRate"
+                             align="center"
                              label="旺款率%"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="102"
                              prop="SkuSoldNum"
+                             align="center"
+                             v-if="showOpen.wk"
                              label="销售数量"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="130"
                              prop="saleMoneyRmb"
+                             v-if="showOpen.wk"
+                             align="center"
                              label="销售额(RMB)"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="115"
                              prop="profitRmb"
+                             v-if="showOpen.wk"
+                             align="center"
                              label="利润(RMB)"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="100"
                              prop="ProfitRate"
+                             v-if="showOpen.wk"
+                             align="center"
                              label="利润率%"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="122"
                              prop="wishSoldNum"
+                             v-if="showOpen.wk"
+                             align="center"
                              label="Wish旺款数"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="162"
                              prop="wishRate"
+                             v-if="showOpen.wk"
+                             align="center"
                              label="Wish旺款贡献率%"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="122"
                              prop="eabySoldNum"
+                             v-if="showOpen.wk"
+                             align="center"
                              label="eBay旺款数"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="162"
                              prop="eBayRate"
+                             v-if="showOpen.wk"
+                             align="center"
                              label="eBay旺款贡献率%"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="120"
                              prop="SMTSoldNum"
+                             v-if="showOpen.wk"
+                             align="center"
                              label="SMT旺款数"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="160"
                              prop="SMTRate"
                              label="SMT旺款贡献率%"
+                             v-if="showOpen.wk"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="145"
                              prop="amaSoldNum"
+                             v-if="showOpen.wk"
                              label="Amazon旺款数"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
             <el-table-column width="185"
                              prop="amaRate"
                              label="Amazon旺款贡献率%"
+                             v-if="showOpen.wk"
+                             align="center"
                              :formatter="empty"
                              sortable="custom"></el-table-column>
+            <el-table-column width="110"
+                             label="操作"
+                             align="center"
+                             :formatter="empty">
+                             <template slot-scope="scope">
+                                <el-tooltip content="查看">
+                                  <i
+                                    v-if="!showOpen.wk"
+                                    class="el-icon-circle-plus-outline"
+                                    @click="openWk(scope.$index, scope.row)"
+                                    style="color: #409EFF;cursor:pointer;"
+                                  ></i>
+                                  <i
+                                    v-if="showOpen.wk"
+                                    class="el-icon-remove-outline"
+                                    @click="openWk(scope.$index, scope.row)"
+                                    style="color: #409EFF;cursor:pointer;"
+                                  ></i>
+                                </el-tooltip>
+                              </template>
+                             </el-table-column>                 
           </el-table>
         </el-tab-pane>
       </el-tabs>
+      </el-card>
+      </div>
     </div>
   </div>
 </template>
@@ -353,6 +507,14 @@ import { compareUp, compareDown, getMonthDate } from '../../api/tools'
 export default {
   data() {
     return {
+      obj: {
+        'min-height': window.innerHeight - 105 + "px"
+      },
+      showOpen:{
+        sy:false,
+        bk:false,
+        wk:false,
+      },
       form: {
         dateRange: [],
         newRange: []
@@ -378,6 +540,7 @@ export default {
           data: [String]
         },
         toolbox: {
+          top:'10',
           show: true,
           feature: {}
         },
@@ -508,6 +671,15 @@ export default {
     }
   },
   methods: {
+    openSy(index,row){
+      this.showOpen['sy'] = !this.showOpen.sy
+    },
+    openBk(index,row){
+      this.showOpen['bk'] = !this.showOpen.bk
+    },
+    openWk(index,row){
+      this.showOpen['wk'] = !this.showOpen.wk
+    },
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
         return "color:#337ab7;background:#f5f7fa";
@@ -704,9 +876,23 @@ export default {
 <style lang="scss" scoped>
 .el-form {
   padding-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   .el-form-item {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
+}
+.tabwidth{
+  width: 98%;
+  margin: auto;
+}
+.perBac{
+  background: #f7f7f7;
+}
+</style>
+<style>
+.perDemoTab .el-tabs__nav{
+  left: 50%;
+  margin-left:-100px;
+  line-height: 50px;
 }
 </style>

@@ -9,12 +9,16 @@
       <el-input v-model="condition.devRate" :placeholder="condition.devRate" class="finput"></el-input>
     </div>
     <div class="fl01">
-      <span class="flspan">运营一部开发汇率</span>
+      <span class="flspan">一部开发汇率</span>
       <el-input v-model="condition.devRate1" :placeholder="condition.devRate1" class="finput"></el-input>
     </div>
     <div class="fl01">
-      <span class="flspan">运营五部开发汇率</span>
+      <span class="flspan">五部开发汇率</span>
       <el-input v-model="condition.devRate5" :placeholder="condition.devRate5" class="finput"></el-input>
+    </div>
+    <div class="fl01">
+      <span class="flspan">七部开发汇率</span>
+      <el-input v-model="condition.devRate7" :placeholder="condition.devRate5" class="finput"></el-input>
     </div>
     <div class="fl01" style="margin-left:10px;">
       <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -53,7 +57,8 @@ export default {
         devRate: "",
         salerRate: "",
         devRate1: "",
-        devRate5: ""
+        devRate5: "",
+        devRate7: ""
       }
     };
   },
@@ -102,11 +107,11 @@ export default {
 }
 .ft01 input {
   float: left;
-  width: 250px;
+  width: 100px;
 }
 .finput {
   float: left;
-  width: 250px;
+  width: 160px;
 }
 @media screen and (max-width: 1400px) {
   .flspan {
@@ -118,7 +123,7 @@ export default {
   }
   .finput {
     float: left;
-    width: 140px;
+    width: 100px;
   }
 }
 </style>
