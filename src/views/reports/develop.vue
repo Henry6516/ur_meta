@@ -997,8 +997,8 @@ export default {
       checked38: true,
       checked39: true,
       checked40: true,
-      tableHeight: window.innerHeight -225,
-      tableHeightOb:window.innerHeight -255,
+      tableHeight: window.innerHeight -215,
+      tableHeightOb:window.innerHeight -245,
       allMember: [],
       isA: true,
       text: '显示输入框',
@@ -1266,13 +1266,13 @@ export default {
       if (this.show === false) {
         this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 145 + 'px'
-        this.tableHeightOb = height - 175 + 'px'
+        this.tableHeight = height - 135 + 'px'
+        this.tableHeightOb = height - 170 + 'px'
       } else if (this.show === true) {
         this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 225 + 'px'
-        this.tableHeightOb = height - 255 + 'px'
+        this.tableHeight = height - 215 + 'px'
+        this.tableHeightOb = height - 245 + 'px'
       }
     },
     changeActive() {
@@ -1311,7 +1311,7 @@ export default {
       this.dead.dateType=myform.dateType
       this.dead.dateRange=myform.dateRange
       const height = document.getElementById('app').clientHeight
-      this.tableHeightOb = height - 255 + 'px'
+      this.tableHeightOb = height - 245 + 'px'
       let admin = ''
           const username = sessionStorage.getItem('user')
           for (let i = 0; i < this.res.length; i++) {
@@ -1370,7 +1370,7 @@ export default {
       if(this.activeName === 'second' || this.activeName === 'first'){
         const myform = JSON.parse(JSON.stringify(form))
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 225 + 'px'
+        this.tableHeight = height - 215 + 'px'
         let posseman1Data
         let posseman2Data
         let ret

@@ -479,13 +479,13 @@ export default {
       if (this.show === false) {
         this.text = '显示输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 140 + 'px'
-        this.tableHeightOb = height - 175 + 'px'
+        this.tableHeight = height - 135 + 'px'
+        this.tableHeightOb = height - 170 + 'px'
       } else if (this.show === true) {
         this.text = '隐藏输入框'
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 220 + 'px'
-        this.tableHeightOb = height - 250 + 'px'
+        this.tableHeight = height - 215 + 'px'
+        this.tableHeightOb = height - 245 + 'px'
       }
     },
     changeActive() {
@@ -501,7 +501,7 @@ export default {
       this.dead.dateType=myform.dateType
       this.dead.dateRange=myform.dateRange
       const height = document.getElementById('app').clientHeight
-      this.tableHeightOb = height - 250 + 'px'
+      this.tableHeightOb = height - 245 + 'px'
       let admin = ''
           const username = sessionStorage.getItem('user')
           for (let i = 0; i < this.res.length; i++) {
@@ -546,7 +546,7 @@ export default {
       }else {
         const myform = JSON.parse(JSON.stringify(form))
         const height = document.getElementById('app').clientHeight
-        this.tableHeight = height - 220 + 'px'
+        this.tableHeight = height - 215 + 'px'
         this.showis2 = false
         this.showis1 = true
         this.activeName = 'first'

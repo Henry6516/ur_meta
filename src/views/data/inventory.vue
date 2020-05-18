@@ -1,10 +1,10 @@
 <template>
   <!-- <div>采购毛利润报表</div>     -->
   <div class="toolbar">
-    <el-col :span="24" style="padding:10px 20px;">
-      <el-button @click="exportExcel" type="primary">导出总表</el-button>
-      <el-button @click="exportExcelMx" type="success">导出状态明细表</el-button>
-      <el-button @click="exportExcelMxKf" type="warning">导出开发明细表</el-button>
+    <el-col :span="24" style="padding:10px 15px;">
+      <el-button @click="exportExcel" type="primary" size="small">导出总表</el-button>
+      <el-button @click="exportExcelMx" type="success" size="small">导出状态明细表</el-button>
+      <el-button @click="exportExcelMxKf" type="warning" size="small">导出开发明细表</el-button>
     </el-col>  
     <el-table
       :data="tableData"
@@ -162,7 +162,7 @@ import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
-      tableHeight:window.innerHeight -161,
+      tableHeight:window.innerHeight -155,
       tableData: [],
       listLoading: false,
       viewForm:[],
@@ -258,8 +258,10 @@ export default {
       return cellValue || '--'
     },
     getData() {
+      this.listLoading = true
       getStackStatus().then(response => {
         this.tableData = response.data.data;
+        this.listLoading = false
       });
     },
     getDataMx(){

@@ -181,25 +181,22 @@
       style="width: 100%;font-size:13px;"
     >
       <el-table-column prop="suffix" label="账号" align="center"></el-table-column>
-      <el-table-column prop="pingtai" label="平台" align="center" sortable></el-table-column>
-      <el-table-column prop="salesman" label="销售员" align="center" sortable></el-table-column>
+      <el-table-column prop="pingtai" label="平台" align="center"></el-table-column>
+      <el-table-column prop="salesman" label="销售员" align="center"></el-table-column>
       <el-table-column
         prop="GoodsCode"
         label="商品编码"
         align="center"
-        sortable="custom"
       ></el-table-column>
       <el-table-column
         prop="GoodsName"
         label="商品名称"
         align="center"
-        sortable="custom"
       ></el-table-column>
       <el-table-column
         prop="SalerName"
         label="开发员"
         align="center"
-        sortable="custom"
       ></el-table-column>
       <el-table-column prop="SKUQty" label="销量" align="center" sortable="custom"></el-table-column>
       <el-table-column
@@ -207,26 +204,46 @@
         label="销售额"
         align="center"
         sortable="custom"
-      ></el-table-column>
+      >
+      <template slot-scope="scope">
+        {{scope.row.SaleMoneyRmb | cutOut}}
+      </template>
+      </el-table-column>
       <el-table-column
         prop="refund"
         label="退款￥"
         align="center"
         sortable="custom"
-      ></el-table-column>
+      >
+      <template slot-scope="scope">
+        {{scope.row.refund | cutOut}}
+      </template>
+      </el-table-column>
       <el-table-column
         prop="ProfitRmb"
         label="利润￥"
         align="center"
         sortable="custom"
-      ></el-table-column>
-      <el-table-column prop="rate" label="利润率%" align="center" sortable="custom"></el-table-column>
+      >
+      <template slot-scope="scope">
+        {{scope.row.ProfitRmb | cutOut}}
+      </template>
+      </el-table-column>
+      <el-table-column prop="rate" label="利润率%" align="center" sortable="custom">
+        <template slot-scope="scope">
+          {{scope.row.rate | cutOut}}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="refundRate"
         label="退款利润占比%"
         align="center"
         sortable="custom"
-      ></el-table-column>
+      >
+      <template slot-scope="scope">
+        {{scope.row.refundRate | cutOut}}
+      </template>
+      </el-table-column>
     </el-table>
     <el-col class="toolbar" v-show="total>0">
       <div class="pagination-container">
@@ -274,7 +291,7 @@ export default {
       currentPage: 1,
       pageSize: null,
       total: null,
-      tableHeight: window.innerHeight - 290,
+      tableHeight: window.innerHeight - 285,
       allMember: [],
       isA: true,
       text: "显示输入框",
@@ -333,6 +350,12 @@ export default {
       }
     };
   },
+  filters: {
+    cutOut: function(value) {
+      value = Number(value).toFixed(2);
+      return value;
+    }
+  },  
   methods: {
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
@@ -455,11 +478,11 @@ export default {
       if (this.show === false) {
         this.text = "显示输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height - 175 + "px";
+        this.tableHeight = height - 167 + "px";
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tableHeight = height - 290 + "px";
+        this.tableHeight = height - 285 + "px";
       }
     },
     changeActive() {
@@ -471,7 +494,7 @@ export default {
     onSubmit(form) {
       const myform = JSON.parse(JSON.stringify(form));
       const height = document.getElementById("app").clientHeight;
-      this.tableHeight = height - 290 + "px";
+      this.tableHeight = height - 285 + "px";
       this.show2 = true;
       this.$refs.condition.validate(valid => {
         if (valid) {
