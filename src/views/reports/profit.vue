@@ -183,6 +183,31 @@
         :formatter="empty"
         sortable="custom"
       ></el-table-column>
+      <el-table-column prop="img" label="主图" fixed header-align="center" width="70">
+          <template slot-scope="scope">
+            <el-tooltip
+              placement="right"
+              :open-delay="10"
+              class="exxHover"
+              popper-class="page-login-toolTipClass"
+            >
+              <div slot="content">
+                <img :src="scope.row.img" style="width: 300px;height: 300px;" />
+              </div>
+              <img :src="scope.row.img" style="width: 50px;height: 50px" />
+            </el-tooltip>
+            <!-- <img :src="scope.row.picUrl" style="width: 70px;height: 60px"> -->
+          </template>
+      </el-table-column>
+      <el-table-column
+        width="105"
+        fixed
+        prop="goodsName"
+        label="商品名称"
+        align="center"
+        :formatter="empty"
+        sortable="custom"
+      ></el-table-column>  
       <el-table-column width="105" prop="devDate" label="开发日期" sortable="custom" :formatter="formatter" align="center"></el-table-column>
       <el-table-column
         width="90"
@@ -718,8 +743,8 @@ export default {
           sums[index] = "N/A";
         }
         let arr=sums
-        if(index==8){
-            sums[index] = (arr[7]/arr[6]*100).toFixed(2);
+        if(index==10){
+            sums[index] = (arr[9]/arr[8]*100).toFixed(2);
         }
       });
       // 退款率和利润率核算

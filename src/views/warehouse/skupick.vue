@@ -80,7 +80,7 @@
           :header-cell-style="getRowClass"
           v-loading="listLoading"
           :height="tableHeightstock"
-          style="width: 100%;margin:auto;margin-top:5px;"
+          style="width: 100%;margin:auto;"
         >
           <el-table-column type="index" fixed align="center" width="50" header-align="center"></el-table-column>
           <el-table-column label="sku" header-align="center" align="center" prop="sku"></el-table-column>
@@ -124,7 +124,7 @@ import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 export default {
   data() {
     return {
-      tableHeightstock: window.innerHeight - 160,
+      tableHeightstock: window.innerHeight - 155,
       options: ["备货", "不备货"],
       listLoading: false,
       developer: [],
@@ -213,7 +213,7 @@ export default {
     },
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
-        return "color:#337ab7";
+        return "color:#3c8dbc;background:#f5f7fa";
       } else {
         return "";
       }

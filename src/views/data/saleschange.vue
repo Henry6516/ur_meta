@@ -74,7 +74,7 @@
                         range-separator='至'
                         start-placeholder='开始日期'
                         end-placeholder='结束日期'
-                        style="width: 215px;">
+                        style="width: 200px;">
         </el-date-picker>
         <div style="color: #f56c6c;width: 40px;float: right;" class="cbd">{{this.lastWeek}}</div>
       </el-form-item>
@@ -90,7 +90,7 @@
                         range-separator='至'
                         start-placeholder='开始日期'
                         end-placeholder='结束日期'
-                        style="width: 215px;">
+                        style="width: 200px;">
         </el-date-picker>
         <span style="color: #f56c6c;width: 40px;float: right;" class="cbd">{{this.week}}</span>
       </el-form-item>
@@ -132,7 +132,7 @@
               :header-cell-style="getRowClass"
               style="width:100%">
       <el-table-column prop="suffix"
-                       width="220" 
+                       width="240" 
                        label="账号简称"
                        sortable
                        align="center"></el-table-column>
@@ -147,7 +147,7 @@
                        sortable
                        align="center"></el-table-column>
       <el-table-column prop="goodsName"
-                       width="220"   
+                       width="225"   
                        label="商品名称"
                        align="center"></el-table-column>
       <el-table-column prop="lastNum"

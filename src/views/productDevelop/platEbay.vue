@@ -1054,6 +1054,8 @@ export default {
       // });
       if(this.ebaySiteUr==null){
         this.$message.error('请选择站点');
+      }else if(this.wishForm.listedCate==''){
+        this.$message.error('请填写刊登分类');
       }else if(this.URinShippingMethod1==null){
         this.$message.error('请选择境内运输方式1');
       }else if(this.URoutShippingMethod1==null){
@@ -1678,8 +1680,11 @@ export default {
       });
     },
     keep() {
+      console.log(this.wishForm.listedCate)
       if(this.ebaySiteUr==null){
         this.$message.error('请选择站点');
+      }else if(this.wishForm.listedCate==''){
+        this.$message.error('请填写刊登分类');
       }else if(this.URinShippingMethod1==null){
         this.$message.error('请选择境内运输方式1');
       }else if(this.URoutShippingMethod1==null){

@@ -1,5 +1,5 @@
 <template>
-  <el-form :model='condition' label-width="120px" class="demo-ruleForm login-container" ref="condition">
+  <el-form :model='condition' label-width="100px" class="demo-ruleForm login-container" ref="condition">
     <el-form-item label="卖家账号：" prop="suffix" :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]">
       <el-select v-model="condition.suffix" filterable multiple collapse-tags style="width:315px;">
         <el-button plain type="info" @click="selectall">全选</el-button>
@@ -102,8 +102,8 @@ export default {
   -moz-border-radius: 5px;
   background-clip: padding-box;
   margin: 15rem auto;
-  width: 500px;
-  padding: 40px 40px 40px 40px;
+  width: 450px;
+  padding: 80px 40px 40px 50px;
   background: #fff;
   border: 1px solid #eaeaea;
   box-shadow: 0 0 25px #cac6c6;

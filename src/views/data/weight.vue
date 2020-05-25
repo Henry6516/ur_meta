@@ -180,7 +180,7 @@
                        sortable="custom"></el-table-column>
       <el-table-column label="账号"
                        prop="suffix"
-                       width="200"
+                       width="225"
                        align="center"
                        sortable="custom"></el-table-column>
       <el-table-column label="毛利"
