@@ -1220,7 +1220,7 @@ export default {
               "children"
             );
             this.category = arr["arr"];
-          }, 1500);
+          }, 3000);
         } else {
           this.category = [];
         }
