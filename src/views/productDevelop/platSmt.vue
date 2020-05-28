@@ -902,7 +902,7 @@ export default {
             this.$message({
               type: "success",
               dangerouslyUseHTMLString: true,
-              message: res.data.data
+              message: '导出成功'
             });
           } else {
             this.$message.error(res.data.message);
@@ -1251,7 +1251,6 @@ export default {
               "id",
               "children"
             );
-            console.log(1)
             this.category = arr["arr"];
           }, 3000);
         } else {
@@ -1339,14 +1338,13 @@ export default {
   },
   mounted() {
     this.condition.id = this.$route.params.id;
-    this.getData();
     getPlatSmtAccount().then(response => {
       this.accountNumber = response.data.data;
     });
     getPlatSmtCategory().then(response => {
-      console.log(2)
       this.options = response.data.data;
     });
+    this.getData();
   }
 };
 </script>
