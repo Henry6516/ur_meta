@@ -2025,4 +2025,12 @@ export function getSmtLog(param) {
     data
   })
 }
+export function APIFreight(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/freight?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
 

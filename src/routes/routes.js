@@ -79,6 +79,7 @@ import pickStatistics from '../views/warehouse/pickStatistics.vue'
 import pickStatisticsTable from '../views/warehouse/pickStatisticsTable.vue'
 import skupick from '../views/warehouse/skupick.vue'
 import ckIntegral from '../views/warehouse/ckIntegral.vue'
+import freight from '../views/warehouse/freight.vue'
 // 反馈中心
 import requirements from '../views/feedback/requirements.vue'
 import news from '../views/feedback/news.vue'
@@ -472,6 +473,11 @@ const routes = [
         path: '/v1/warehouse-tools/ware-sku',
         component: skupick,
         name: '仓位SKU对应表'
+      },
+      {
+        path: '/v1/warehouse-tools/freight',
+        component: freight,
+        name: '库位匹配'
       },
       {
         path: '/v1/warehouse-tools/sort-tools',

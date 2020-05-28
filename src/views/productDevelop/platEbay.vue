@@ -198,13 +198,13 @@
           @click="outerVisible = true">设置多属性</el-button>-->
           <el-row>
       <el-col :span="24">
-         <el-button type="primary" style="margin: 10px 0;float:left;margin-top:0px;" @click='showAttribute1'><i :class="[showattribute1?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px;float:left"></i>设置多属性</el-button>
-        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordColor"></el-input>
-        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newColor"></el-input>
-        <el-button type="success" style="float:left;width:100px;margin-left:5px;" @click="replaceColor">替换颜色</el-button>
-        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordSize"></el-input>
-        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newSize"></el-input>
-        <el-button type="danger" style="float:left;width:100px;margin-left:5px;" @click="replaceSize">替换尺寸</el-button>
+         <el-button type="primary" style="margin: 10px 0;float:left;margin-top:0px;" size="medium" @click='showAttribute1'><i :class="[showattribute1?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px;float:left"></i>设置多属性</el-button>
+        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" size="medium" v-model="ordColor"></el-input>
+        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" size="medium" v-model="newColor"></el-input>
+        <el-button type="success" style="float:left;width:100px;margin-left:5px;" size="medium" @click="replaceColor">替换颜色</el-button>
+        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" size="medium" v-model="ordSize"></el-input>
+        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" size="medium" v-model="newSize"></el-input>
+        <el-button type="danger" style="float:left;width:100px;margin-left:5px;" size="medium" @click="replaceSize">替换尺寸</el-button>
     </el-col>
     </el-row>
           <el-row v-if='showattribute1'>

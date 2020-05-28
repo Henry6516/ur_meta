@@ -436,47 +436,55 @@
             <h3 class="toolbar essential">多属性</h3>
           </el-col>
           <el-col :span="24">
-            <el-button style="margin-left:17px;float:left" type="primary" @click="showAttribute">
+            <el-button style="margin-left:17px;float:left" type="primary" @click="showAttribute" size="medium">
               <i :class="[showattribute?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>多属性设置
             </el-button>
             <el-input
               style="float:left;width:100px;margin-left:10px;"
               placeholder="替换前"
+              size="medium"
               v-model="ordColor"
             ></el-input>
             <el-input
               style="float:left;width:100px;margin-left:5px;"
+              size="medium"
               placeholder="替换后"
               v-model="newColor"
             ></el-input>
             <el-button
               type="success"
               style="float:left;width:100px;margin-left:5px;"
+              size="medium"
               @click="replaceColor"
             >替换颜色</el-button>
             <el-input
               style="float:left;width:100px;margin-left:10px;"
               placeholder="替换前"
+              size="medium"
               v-model="ordSize"
             ></el-input>
             <el-input
               style="float:left;width:100px;margin-left:5px;"
               placeholder="替换后"
+              size="medium"
               v-model="newSize"
             ></el-input>
             <el-button
               type="danger"
               style="float:left;width:100px;margin-left:5px;"
+              size="medium"
               @click="replaceSize"
             >替换尺寸</el-button>
             <el-button
               type="warning"
               style="float:left;width:100px;margin-left:10px;"
+              size="medium"
               @click="clearColor"
             >清空颜色</el-button>
             <el-button
               type="warning"
               style="float:left;width:100px;margin-left:10px;"
+              size="medium"
               @click="clearSize"
             >清空尺寸</el-button>
           </el-col>
@@ -1032,7 +1040,19 @@ export default {
       if (this.category.length == 0) {
         this.$message.error("请选择分类");
         return;
-      } else if (!this.smtForm.packageLength) {
+      } else if (!this.smtForm.quantity) {
+        this.$message.error("请填写數量");
+        return;
+      }else if (!this.smtForm.productunit) {
+        this.$message.error("请选择商品单位");
+        return;
+      }else if (!this.smtForm.wsvalidnum) {
+        this.$message.error("请填写商品有效天数");
+        return;
+      }else if (!this.smtForm.deliverytime) {
+        this.$message.error("请填写配货时间");
+        return;
+      }else if (!this.smtForm.packageLength) {
         this.$message.error("请填写商品包装长度");
         return;
       } else if (!this.smtForm.packageWidth) {
@@ -1091,7 +1111,19 @@ export default {
       if (this.category.length == 0) {
         this.$message.error("请选择分类");
         return;
-      } else if (!this.smtForm.packageLength) {
+      } else if (!this.smtForm.quantity) {
+        this.$message.error("请填写數量");
+        return;
+      }else if (!this.smtForm.productunit) {
+        this.$message.error("请选择商品单位");
+        return;
+      }else if (!this.smtForm.wsvalidnum) {
+        this.$message.error("请填写商品有效天数");
+        return;
+      }else if (!this.smtForm.deliverytime) {
+        this.$message.error("请填写配货时间");
+        return;
+      }else if (!this.smtForm.packageLength) {
         this.$message.error("请填写商品包装长度");
         return;
       } else if (!this.smtForm.packageWidth) {

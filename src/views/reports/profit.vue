@@ -11,7 +11,7 @@
           :model="condition"
           :inline="true"
           ref="condition"
-          label-width="70px"
+          label-width="85px"
           class="demo-form-inline"
           v-show="show"
         >
@@ -21,7 +21,7 @@
               v-model="formInline.region"
               multiple
               collapse-tags
-              style="width:170px;"
+              class="proinput"
               placeholder="部门"
               @change="choosed"
             >
@@ -39,7 +39,7 @@
           <el-form-item label="开发员" class="input">
             <el-select
               v-model="condition.developer"
-              style="width:170px;"
+              class="proinput"
               multiple
               collapse-tags
               size="small"
@@ -60,7 +60,7 @@
             <el-select
               size="small"
               v-model="condition.goodsStatus"
-              style="width:180px;"
+              class="proinput"
               multiple
               collapse-tags
               placeholder="产品状态"
@@ -74,12 +74,12 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <!-- <el-form-item label="标准利润" class="input">
-            <el-input v-model="condition.minAvgNumber" size="small" style="width:215px;"></el-input>
+          <el-form-item label="推荐人" class="input">
+            <el-input v-model="condition.introducer" size="small" class="proinput" clearable></el-input>
           </el-form-item>
-          <el-form-item label="最低开发款数" class="input">
-            <el-input v-model="condition.minNumber" size="small" style="width:215px;"></el-input>
-          </el-form-item> -->
+          <el-form-item label="商品编码" class="input">
+            <el-input v-model="condition.goodsCode" size="small" class="proinput" clearable></el-input>
+          </el-form-item>
           <el-form-item label="时间类型" class="input" prop="dateType">
             <el-radio-group v-model="condition.dateType">
               <el-radio
@@ -87,6 +87,7 @@
                 v-for="(item,index) in dateType"
                 :index="index"
                 :key="item.id"
+                class="proradio"
                 :label="item.id"
                 :value="item.id"
               >{{item.type}}</el-radio>
@@ -104,7 +105,7 @@
               value-format="yyyy-MM-dd"
               type="daterange"
               align="right"
-              style="width:215px;"
+              class="proinput"
               unlink-panels
               range-separator="至"
               start-placeholder="开始日期"
@@ -112,7 +113,7 @@
               :picker-options="pickerOptions2"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item>
+          <el-form-item style="margin-left:25px">
             <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
           </el-form-item>
           <el-form-item>
@@ -181,7 +182,6 @@
         fixed
          align="center"
         :formatter="empty"
-        sortable="custom"
       ></el-table-column>
       <el-table-column prop="img" label="主图" fixed header-align="center" width="70">
           <template slot-scope="scope">
@@ -200,15 +200,14 @@
           </template>
       </el-table-column>
       <el-table-column
-        width="105"
+        width="140"
         fixed
         prop="goodsName"
         label="商品名称"
         align="center"
         :formatter="empty"
-        sortable="custom"
       ></el-table-column>  
-      <el-table-column width="105" prop="devDate" label="开发日期" sortable="custom" :formatter="formatter" align="center"></el-table-column>
+      <el-table-column width="105" prop="devDate" label="开发日期" :formatter="formatter" align="center"></el-table-column>
       <el-table-column
         width="90"
         prop="goodsStatus"
@@ -216,6 +215,11 @@
         label="产品状态"
         :formatter="empty"
       ></el-table-column>
+      <el-table-column width="95" prop="introducer" label="推荐人" align="center">
+        <template slot-scope="scope">
+          {{scope.row.introducer?scope.row.introducer:'--'}}
+        </template>
+      </el-table-column>
       <el-table-column width="75" prop="sold" label="销量" :formatter="empty" sortable="custom" align="center"></el-table-column>
       <el-table-column width="95" prop="amt" label="销售额" :formatter="empty" sortable="custom" align="center">
         <template slot-scope="scope">{{scope.row.amt | cutOut1}}</template>
@@ -359,7 +363,7 @@ export default {
       showis1: true,
       showis2: false,
       viewForm: [],
-      tabheight:window.innerHeight -205,
+      tabheight:window.innerHeight -240,
       goodsState: [],
       tableData1: [],
       dead: {
@@ -401,6 +405,8 @@ export default {
         dateType: 1,
         dateRange: [],
         goodsStatus: [],
+        introducer:'',
+        goodsCode:'',
         page: 1,
         pageSize: 20,
         sort: '-profit'
@@ -630,7 +636,7 @@ export default {
       } else if (this.show === true) {
         this.text = "隐藏输入框";
         const height = document.getElementById("app").clientHeight;
-        this.tabheight=window.innerHeight -205
+        this.tabheight=window.innerHeight -240
       }
     },
     changeActive() {
@@ -800,9 +806,23 @@ export default {
 
 <style lang="scss" scoped>
 .el-form {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   .el-form-item {
     margin-bottom: 0px;
+  }
+}
+.proinput{
+  width: 230px;
+}
+  .proradio{
+    width: 110px;
+  }
+@media (max-width: 1400px) {
+  .proinput{
+    width: 182px;
+  }
+  .proradio{
+    width: 85px;
   }
 }
 </style>

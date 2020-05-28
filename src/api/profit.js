@@ -983,3 +983,10 @@ export function changePassword(param) {
   })
 }
 
+export function getMemberCk() {
+  return request({
+    url: '/warehouse-tools/freight-men',
+    method: 'get'
+  })
+}
+

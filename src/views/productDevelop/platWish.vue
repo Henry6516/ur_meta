@@ -370,17 +370,17 @@
     <el-row>
     <!-- <el-button @click="dialogVisible = true" style="margin-left:35px;" type="primary">多属性设置</el-button> -->
       <el-col :span="24">
-        <el-button style="margin-left:17px;float:left" type="primary" @click="showAttribute">
+        <el-button style="margin-left:17px;float:left" type="primary" size="medium" @click="showAttribute">
           <i :class="[showattribute?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>多属性设置
         </el-button>
-        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordColor"></el-input>
-        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newColor"></el-input>
-        <el-button type="success" style="float:left;width:100px;margin-left:5px;" @click="replaceColor">替换颜色</el-button>
-        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" v-model="ordSize"></el-input>
-        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" v-model="newSize"></el-input>
-        <el-button type="danger" style="float:left;width:100px;margin-left:5px;" @click="replaceSize">替换尺寸</el-button>
-        <el-button type="warning" style="float:left;width:100px;margin-left:10px;" @click="clearColor">清空颜色</el-button>
-        <el-button type="warning" style="float:left;width:100px;margin-left:10px;" @click="clearSize">清空尺寸</el-button>
+        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" size="medium" v-model="ordColor"></el-input>
+        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" size="medium" v-model="newColor"></el-input>
+        <el-button type="success" style="float:left;width:100px;margin-left:5px;" size="medium" @click="replaceColor">替换颜色</el-button>
+        <el-input style="float:left;width:100px;margin-left:10px;" placeholder="替换前" size="medium" v-model="ordSize"></el-input>
+        <el-input style="float:left;width:100px;margin-left:5px;" placeholder="替换后" size="medium" v-model="newSize"></el-input>
+        <el-button type="danger" style="float:left;width:100px;margin-left:5px;" size="medium" @click="replaceSize">替换尺寸</el-button>
+        <el-button type="warning" style="float:left;width:100px;margin-left:10px;" size="medium" @click="clearColor">清空颜色</el-button>
+        <el-button type="warning" style="float:left;width:100px;margin-left:10px;" size="medium" @click="clearSize">清空尺寸</el-button>
     </el-col>
     </el-row>
     <el-table
