@@ -178,7 +178,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="完成状况" header-align="center">
-          <el-table-column prop="completeStatus" :render-header="renderHeaderPlat" width="130">
+          <el-table-column prop="completeStatus" :render-header="renderHeaderPlat" width="123">
             <template slot-scope="scope">
               <a
                 :class="!scope.row.completeStatus?'clasRed':''"

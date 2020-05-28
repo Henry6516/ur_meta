@@ -1251,6 +1251,7 @@ export default {
               "id",
               "children"
             );
+            console.log(1)
             this.category = arr["arr"];
           }, 3000);
         } else {
@@ -1343,6 +1344,7 @@ export default {
       this.accountNumber = response.data.data;
     });
     getPlatSmtCategory().then(response => {
+      console.log(2)
       this.options = response.data.data;
     });
   }
