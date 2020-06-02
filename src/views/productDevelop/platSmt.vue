@@ -1242,6 +1242,9 @@ export default {
           }
         }
         this.url.shift();
+        getPlatSmtCategory().then(response => {
+          this.options = response.data.data;
+        });
         if (this.smtForm.category1 != null) {
           setTimeout(() => {
             const arr = this.regroupCascaderData(
@@ -1340,9 +1343,6 @@ export default {
     this.condition.id = this.$route.params.id;
     getPlatSmtAccount().then(response => {
       this.accountNumber = response.data.data;
-    });
-    getPlatSmtCategory().then(response => {
-      this.options = response.data.data;
     });
     this.getData();
   }

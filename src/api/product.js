@@ -2033,4 +2033,12 @@ export function APIFreight(param) {
     data
   })
 }
+export function APIPutJoom(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat-joom-to-backstage',
+    method: 'post',
+    data
+  })
+}
 

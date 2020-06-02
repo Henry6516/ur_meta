@@ -48,6 +48,7 @@
         <el-option v-for="(item, key) in joomArr" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
         <span class="exportAccount" @click="exportJoom">导出Joom</span>
+        <span class="exportAccount accyjsj" @click="putJoom" style="border: #dcdfe6 solid 1px;">一键上架</span>
         <el-select
           placeholder="--请选择账号--"
           clearable
@@ -811,7 +812,8 @@ import {
   APIPlatExportJoom,
   APIDeleteVariant,
   APIDeleteEbaySku,
-  APISaveFinishPlat
+  APISaveFinishPlat,
+  APIPutJoom
 } from "../../api/product";
 export default {
   props: {
@@ -1012,6 +1014,22 @@ export default {
         this.$message.error("请选择账号");
       }
     },
+    putJoom() {
+      if (this.joom!='') {
+        var arrID=this.joom
+        for(var i=0;i<arrID.length;i++){
+          let objStr1 = {
+            id: this.wishForm.infoId,
+            account: [arrID[i]]
+          };
+          APIPutJoom(objStr1).then(res => {
+            
+          });
+        }
+      } else {
+        this.$message.error("请选择账号");
+      }
+    },    
     exportWish() {
       let objStr = {
         id: this.wishForm.infoId
@@ -1657,11 +1675,14 @@ section {
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
 }
 .leftmedia{
-  margin-left: 9.8%;
+  margin-left: 8.8%;
+}
+.accyjsj{
+  margin-left: 5px;
 }
 @media screen and (max-width: 1600px){
    .leftmedia{
-     margin-left: 20px;
+     margin-left: 5px;
    }
   //  .ptom60{
   //    padding-bottom: 50px;
@@ -1685,8 +1706,14 @@ section {
      width: 115px !important;
    }
    .top1601{
-     width: 185px !important;
+     width: 165px !important;
    }
+   .exportAccount{
+     font-size: 12px;
+   }
+   .exportAccount1{
+     font-size: 12px;
+   }   
 }
 @media screen and (max-width: 1350px){
    .sx {
