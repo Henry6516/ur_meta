@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section v-loading='joomloding'>
     <el-col
       :span="24"
       class="toolbar"
@@ -824,6 +824,7 @@ export default {
   },
   data() {
     return {
+      joomloding:false,
       ordColor:null,
       newColor:null,
       ordSize:null,
@@ -1017,15 +1018,22 @@ export default {
     putJoom() {
       if (this.joom!='') {
         var arrID=this.joom
-        for(var i=0;i<arrID.length;i++){
-          let objStr1 = {
-            id: this.wishForm.infoId,
-            account: [arrID[i]]
-          };
-          APIPutJoom(objStr1).then(res => {
-            
-          });
-        }
+        let objStr1 = {
+          id: this.wishForm.infoId,
+          account: arrID
+        };
+        this.joomloding=true
+        APIPutJoom(objStr1).then(res => {
+          if (res.data.code === 200) {
+            this.$message({
+               message: "上架成功",
+              type: "success"
+            });
+           } else {
+            this.$message.error(res.data.message);
+          }
+          this.joomloding=false
+        });
       } else {
         this.$message.error("请选择账号");
       }

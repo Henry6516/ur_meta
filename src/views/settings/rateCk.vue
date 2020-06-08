@@ -134,11 +134,15 @@
             style="width: 97.1%;margin-left:1.2%;margin-top:15px"
           >
             <el-table-column type="index" fixed align="center" width="60" header-align="center"></el-table-column>
-            <el-table-column label="姓名" align="center" prop="name">
+            <el-table-column label="姓 名" align="center" prop="name">
             </el-table-column>
-            <el-table-column label="月份" align="center" prop="month">
+            <el-table-column label="职 位" align="center" prop="job">
             </el-table-column>
-            <el-table-column label="小组" align="center" prop="team">
+            <el-table-column label="组 别" align="center" prop="group">
+            </el-table-column>
+            <el-table-column label="月 份" align="center" prop="month">
+            </el-table-column>
+            <el-table-column label="小 组" align="center" prop="team">
             </el-table-column>
             <el-table-column label="出勤天数" align="center" prop="all_days">
             </el-table-column>
@@ -151,6 +155,9 @@
             <el-table-column label="扣分项" align="center" prop="deduction_integral">
             </el-table-column>
             <el-table-column label="更新时间" align="center" prop="update_time">
+              <template slot-scope="scope">
+                {{scope.row.update_time | cutOutDate}}
+              </template>
             </el-table-column>
           </el-table>
           </el-col>
@@ -253,6 +260,12 @@ export default {
       }
     };
   },
+  filters: {
+    cutOutDate(value) {
+      value = value.substring(0, 15);
+      return value;
+    },
+  },
   methods: {
     tabcl(n){
       this.ckindex=n
@@ -288,6 +301,7 @@ export default {
         {
           "name":'庄美英',
           "month":'2020-03',
+          "group":'生产组',
           "job":'打包',
           "team":'周芹英',
           "all_days":'0',
@@ -300,6 +314,7 @@ export default {
       const th = [
         "name",
         "month",
+        "group",
         "job",
         "team",
         "all_days",
@@ -311,6 +326,7 @@ export default {
       const filterVal = [
         "name",
         "month",
+        "group",
         "job",
         "team",
         "all_days",
