@@ -2041,4 +2041,12 @@ export function APIPutJoom(param) {
     data
   })
 }
-
+export function APIDevelopExport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/develop-profit-detail-export',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}

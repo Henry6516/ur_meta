@@ -2306,6 +2306,11 @@ export default {
     getSecDepartment().then(reseponse => {
       const res = reseponse.data.data;
       this.secDepartment = this.allSecDep = res;
+      for(let i=0;i<this.allSecDep.length;i++){
+        if(this.allSecDep[i].type==null){
+          this.allSecDep[i].type=''
+        }
+      }
     });
     getPlatform().then(response => {
       this.plat = response.data.data;

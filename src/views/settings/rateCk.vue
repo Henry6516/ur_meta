@@ -262,7 +262,7 @@ export default {
   },
   filters: {
     cutOutDate(value) {
-      value = value.substring(0, 15);
+      value = value.substring(0, 16);
       return value;
     },
   },

@@ -990,3 +990,11 @@ export function getMemberCk() {
   })
 }
 
+export function getDevProfitDetail(param) {
+  const data = { condition: param }
+  return request({
+    url: '/report/develop-profit-detail?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
