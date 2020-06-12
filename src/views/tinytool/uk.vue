@@ -80,6 +80,8 @@
               style="width:100%">
       <el-table-column prop="rate"
                        label="毛利率（%）"></el-table-column>
+      <el-table-column prop="name"
+                       label="物流方式"></el-table-column>                 
       <el-table-column prop="eFee"
                        label="eBay交易费（£）"></el-table-column>
       <el-table-column prop="pFee"
