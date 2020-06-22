@@ -215,6 +215,16 @@
             </el-select>
           </el-col>
         </el-col>
+        <el-col :span="8" style="margin-top: 20px">
+          <el-col :span="5" style="text-align: center;margin-top: 8px;color: red" class="font13">
+            *海关编码
+          </el-col>
+          <el-col :span="18">
+            <el-input
+                    v-model="editForm.hsCode"
+                    style=""></el-input>
+          </el-col>
+        </el-col>
         <el-col :span="24"
                 style="padding: 0;margin-left: 15px;">
           <h3 class="toolbar essential" style="margin-top: 15px;margin-bottom: 10px">主信息</h3>
@@ -1248,6 +1258,10 @@ export default {
         this.$message.error('请填写描述')
         return
       }
+      if(!this.editForm.hsCode){
+        this.$message.error('请填写海关编码')
+        return
+      }
       const md = JSON.stringify(this.mandatoryData)
       const mr = JSON.stringify(this.randomData)
       const saveInfo = {
@@ -1360,6 +1374,10 @@ export default {
       }
       if(!this.editForm.description){
         this.$message.error('请填写描述')
+        return
+      }
+      if(!this.editForm.hsCode){
+        this.$message.error('请填写海关编码')
         return
       }
       const md = JSON.stringify(this.mandatoryData)

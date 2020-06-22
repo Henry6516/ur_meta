@@ -238,7 +238,14 @@
       <el-col :span="24">
         <span style="text-align: center;float: left;margin-left: 15px;margin-top: 6px">关键词Tags</span>
         <el-col :span="21" style="margin-left: 15px;">
-          <el-input v-model="wishForm.wishTags" style="width: 100%" class="aArial"></el-input>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="提示：关 键 词 最 多 不 能 超 过 10 个 (以逗号分割)"
+            placement="top"
+          >
+            <el-input v-model="wishForm.wishTags" style="width: 100%" class="aArial"></el-input>
+          </el-tooltip>
         </el-col>
       </el-col>
       <el-col :span="24">
