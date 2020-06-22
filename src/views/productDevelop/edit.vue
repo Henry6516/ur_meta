@@ -1313,7 +1313,8 @@ export default {
             mid: this.editForm.mid,
             extendStatus: this.editForm.extendStatus,
             mapPersons: this.mapPersons1,
-            filterType: this.editForm.filterType
+            filterType: this.editForm.filterType,
+            hsCode:this.editForm.hsCode,
           },
           oaGoods: {
             nid: this.oaGoods.nid,
@@ -1431,7 +1432,8 @@ export default {
             mid: this.editForm.mid,
             extendStatus: this.editForm.extendStatus,
             mapPersons: this.mapPersons1,
-            filterType: this.editForm.filterType
+            filterType: this.editForm.filterType,
+            hsCode:this.editForm.hsCode,
           },
           oaGoods: {
             nid: this.oaGoods.nid,
