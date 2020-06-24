@@ -749,8 +749,8 @@ export default {
           sums[index] = "N/A";
         }
         let arr=sums
-        if(index==10){
-            sums[index] = (arr[9]/arr[8]*100).toFixed(2);
+        if(index==11){
+            sums[index] = (arr[10]/arr[9]*100).toFixed(2);
         }
       });
       // 退款率和利润率核算
