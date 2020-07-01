@@ -1384,7 +1384,7 @@ export default {
             origin3: this.oaGoods.origin3
           }
         },
-        offerId: this.value1688,
+        offerId: this.id1688,
         skuInfo: this.tableData
       }
       APISaveFinishAttribute(saveInfo).then(res => {
@@ -1504,7 +1504,7 @@ export default {
             origin3: this.oaGoods.origin3
           }
         },
-        offerId: this.value1688,
+        offerId: this.id1688,
         skuInfo: this.tableData
       }
       APISaveAttribute(saveInfo).then(res => {
