@@ -42,6 +42,7 @@
           collapse-tags
           v-model="joom"
           style="float: left;width:160px;"
+          class="top1600 top1601"
         >
         <el-button plain type="info" @click="selectalld1">全选</el-button>
         <el-button plain type="info" @click="noselectd1">取消</el-button>
@@ -77,6 +78,11 @@
         <el-option v-for="(item, key) in vovaArr" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
         <span class="exportAccount top1600" @click="exportVova">导出vova</span>
+        <el-button
+          type="success"
+          style="float: left;margin-left: 10px"
+          @click="exportMymall"
+        >导出mymall</el-button>
       </el-col>
     </el-col>
     <el-col :span="24" style="padding: 0;margin-left: 15px">
@@ -814,6 +820,7 @@ import {
   APIShopifyName,
   APIVovaName,
   APIPlatExportWish,
+  APIPlatExportMymall,
   APIPlatExportShopify,
   APIPlatExportVova,
   APIPlatExportJoom,
@@ -879,6 +886,28 @@ export default {
     };
   },
   methods: {
+    exportMymall(){
+      let objStr = {
+        id: this.wishForm.infoId
+      };
+      APIPlatExportMymall(objStr).then(res => {
+        const blob = new Blob([res.data], {
+          type:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+        var filename=JSON.parse(file)
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        // const filename =
+        //   "Wish_" + year + month + strDate + hour + minute + second;
+        downloadElement.download = filename;
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+      });
+    },
     clearColor(){
       for(let i=0;i<this.tableData.length;i++){
           this.tableData[i].color=null
@@ -1690,7 +1719,7 @@ section {
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
 }
 .leftmedia{
-  margin-left: 8.8%;
+  margin-left: 7%;
 }
 .accyjsj{
   margin-left: 5px;
@@ -1718,10 +1747,10 @@ section {
      width: 42% !important;
    }
    .clshopify{
-     width: 115px !important;
+     width: 105px !important;
    }
    .top1601{
-     width: 165px !important;
+     width: 105px !important;
    }
    .exportAccount{
      font-size: 12px;

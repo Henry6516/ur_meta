@@ -799,6 +799,15 @@ export function APIPlatExportWish(param) {
     responseType: 'arraybuffer'
   })
 }
+export function APIPlatExportMymall(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat-export-my-mall',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
 export function APIPlatExportShopify(param) {
   const data = { condition: param }
   return request({
@@ -2048,5 +2057,29 @@ export function APIDevelopExport(param) {
     method: 'post',
     data,
     responseType: 'arraybuffer'
+  })
+}
+export function APIsync1688Goods(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/sync1688-goods',
+    method: 'post',
+    data
+  })
+}
+export function APIget1688Suppliers(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/get1688-suppliers',
+    method: 'post',
+    data
+  })
+}
+export function APIsync1688GoodStyle(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/get1688-goods-style',
+    method: 'post',
+    data
   })
 }

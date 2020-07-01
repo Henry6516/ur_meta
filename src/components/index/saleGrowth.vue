@@ -113,7 +113,7 @@
                 <!-- <el-table-column prop="role"
                                align="center"
                 label="角色"></el-table-column>-->
-                <el-table-column :render-header="renderHeaderCk011"  align="center">
+                <el-table-column :render-header="renderHeaderCk0111"  align="center">
                 <el-table-column prop="lastAmt" align="center" :render-header="renderHeaderCk02none" sortable="custom"></el-table-column>
                 <el-table-column prop="amt" align="center" :render-header="renderHeaderCk01none" sortable="custom"></el-table-column>
                 </el-table-column>
@@ -372,10 +372,18 @@ export default {
         return h(
           'span',
           [ 
-            h('span', '销售额(￥)'),
+            h('span', '销售额($)'),
           ],
         );
-    },    
+    },
+    renderHeaderCk0111(h,{column}) { // h即为cerateElement的简写，具体可看vue官方文档
+        return h(
+          'span',
+          [ 
+            h('span', '销售额($)'),
+          ],
+        );
+    },        
     renderHeaderCk022(h,{column}) { 
         return h(
           'span',
