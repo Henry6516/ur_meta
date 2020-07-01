@@ -751,7 +751,7 @@
                  type="danger" @click="createOrder" :disabled="orderTrue">生成采购单</el-button>
       <el-button size="small"
                  type="success" @click="synchro1688">同步1688</el-button>
-      <el-select v-model="value1688" placeholder="请选择" value-key="companyName" size="small" @change="currentSel">
+      <el-select v-model="value1688" placeholder="请选择offerId" value-key="companyName" size="small" @change="currentSel">
         <el-option
           v-for="item in data1688"
           :key="item.companyName"
@@ -759,7 +759,7 @@
           :value="item">
         </el-option>
       </el-select>
-      <span style="font-size:13px;color:red;margin-left:10px;">单属性产品只需要选择1688商品就可以，无需选择1688样式。</span>                      
+      <span style="font-size:13px;color:red;margin-left:10px;">提示：先同步1688->选择offerId->再选择1688style，如果1688style没有对应信息无需选择。</span>                      
       <!--<el-button size="small"-->
                  <!--type="danger">删除行</el-button>-->
     </div>

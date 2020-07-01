@@ -150,6 +150,8 @@
             </el-table-column>
             <el-table-column label="分拣出勤天数" align="center" prop="sorting_days">
             </el-table-column>
+            <el-table-column label="入库分拣天数" align="center" prop="inbound_sorting_days">
+            </el-table-column>
             <el-table-column label="其它得分项" align="center" prop="other_integral">
             </el-table-column>
             <el-table-column label="扣分项" align="center" prop="deduction_integral">
@@ -307,6 +309,7 @@ export default {
           "all_days":'0',
           "labeling_days":'2',
           "sorting_days":'0',
+          "inbound_sorting_days":'0',
           "other_integral":'11',
           "deduction_integral":'22'
         }
@@ -320,6 +323,7 @@ export default {
         "all_days",
         "labeling_days",
         "sorting_days",
+        "inbound_sorting_days",
         "other_integral",
         "deduction_integral"
       ];
@@ -332,6 +336,7 @@ export default {
         "all_days",
         "labeling_days",
         "sorting_days",
+        "inbound_sorting_days",
         "other_integral",
         "deduction_integral"
       ];
