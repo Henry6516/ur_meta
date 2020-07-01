@@ -72,6 +72,8 @@
       <el-form-item label='产品状态'
                     class='input'>
         <el-select size="small"
+                   multiple
+                   collapse-tags 
                    style="width:220px;"  
                    v-model='condition.goodsSkuStatus'
                    clearable>
@@ -194,7 +196,7 @@ export default {
         endDate: '',
         goodsName: '',
         supplierName: '',
-        goodsSkuStatus: '',
+        goodsSkuStatus: [],
         categoryParentName: '',
         categoryName: '',
         page: 1,

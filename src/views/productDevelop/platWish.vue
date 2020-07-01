@@ -967,6 +967,11 @@ export default {
     },
     keepPerfect() {
       if (this.tips) {
+      const tagsLength=this.wishForm.wishTags.split(',')
+      if(tagsLength.length>10){
+        this.$message.error('关键词不能超过10个,当前数量为:'+ tagsLength.length)
+        return
+      } 
       const md = JSON.stringify(this.mandatoryData);
       const mr = JSON.stringify(this.randomData);
       const data = {
@@ -1462,6 +1467,11 @@ export default {
     },
     // 更新
     update() {
+      const tagsLength=this.wishForm.wishTags.split(',')
+      if(tagsLength.length>10){
+        this.$message.error('关键词不能超过10个,当前数量为:'+ tagsLength.length)
+        return
+      } 
       const md = JSON.stringify(this.mandatoryData);
       const mr = JSON.stringify(this.randomData);
       const data = {

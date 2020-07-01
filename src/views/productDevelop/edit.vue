@@ -658,7 +658,7 @@
         </template>
       </el-table-column>
       <el-table-column label="1688style"
-                       min-width="100"
+                       min-width="130"
                        prop="property2"
                        header-align="center">
         <template slot-scope="scope">
@@ -758,7 +758,8 @@
           :label="item.companyName"
           :value="item">
         </el-option>
-      </el-select>                      
+      </el-select>
+      <span style="font-size:13px;color:red;margin-left:10px;">单属性产品只需要选择1688商品就可以，无需选择1688样式。</span>                      
       <!--<el-button size="small"-->
                  <!--type="danger">删除行</el-button>-->
     </div>
@@ -885,7 +886,16 @@ export default {
       }
       this.loading=true
       APIsync1688Goods(obj).then(res => {
-          this.get1688Suppliers();  
+        if(res.data.code=='200'){
+          this.$message({
+            message: '同步成功',
+            type: 'success'
+          })
+          this.get1688Suppliers();
+        }else{
+          this.loading=false 
+          this.$message.error(res.data.message)
+        }  
       })
     },
     get1688Suppliers(){
@@ -1599,6 +1609,14 @@ export default {
           }
         }
         this.id1688=res.data.data.offerId
+        if(this.id1688){
+          for(var i =0;i<this.data1688.length;i++){
+            if(this.id1688==this.data1688[i].offerId){
+              this.value1688=this.data1688[i]
+            }
+          }
+          this.currentSel(this.value1688)
+        }
       })
     }
   },
@@ -1614,8 +1632,8 @@ export default {
       }
     })
     this.condition.id = this.$route.params.id
-    this.getData()
     this.get1688Suppliers();
+    this.getData()
     getGoodscats().then(response => {
       this.category = this.cate = response.data.data
     })
