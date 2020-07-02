@@ -64,7 +64,8 @@
           </el-table-column>
           <el-table-column label="出勤天数" header-align="center" align="center" prop="all_days" width="110" sortable="custom"></el-table-column>
           <el-table-column label="贴标出勤天数" header-align="center" align="center" prop="labeling_days" width="130" sortable="custom"></el-table-column>
-          <el-table-column label="分拣出勤天数" header-align="center" align="center" prop="sorting_days" width="130" sortable="custom"></el-table-column>  
+          <el-table-column label="分拣出勤天数" header-align="center" align="center" prop="sorting_days" width="130" sortable="custom"></el-table-column>
+          <el-table-column label="入库分拣天数" header-align="center" align="center" prop="inbound_sorting_days" width="130" sortable="custom"></el-table-column>  
           <el-table-column label="组别" header-align="center" align="center" prop="group" width="80"></el-table-column>
           <el-table-column label="职位" header-align="center" align="center" prop="job" width="80"></el-table-column>
           <el-table-column label="小组" header-align="center" align="center" prop="team" width="80"></el-table-column>
@@ -81,6 +82,9 @@
           </el-table-column>
           <el-table-column label="上架" header-align="center" align="center">
           <el-table-column label="PDA入库SKU数" header-align="center" align="center" prop="pda_in_storage_sku_num" width="150" sortable="custom"></el-table-column>
+          </el-table-column>
+          <el-table-column label="入库分拣" header-align="center" align="center">
+          <el-table-column label="入库SKU数" header-align="center" align="center" prop="inbound_pda_in_storage_sku_num" width="150" sortable="custom"></el-table-column>
           </el-table-column>
           <el-table-column label="拣货" header-align="center" align="center">
           <el-table-column label="单品包裹数" header-align="center" align="center" prop="single_package_num" width="115" sortable="custom"></el-table-column>
@@ -99,6 +103,7 @@
           <el-table-column label="打标积分" header-align="center" align="center" prop="marking_integral" width="105" sortable="custom"></el-table-column>
           <el-table-column label="贴标积分" header-align="center" align="center" prop="labeling_integral" width="105" sortable="custom"></el-table-column>
           <el-table-column label="上架积分" header-align="center" align="center" prop="on_shelf_integral" width="105" sortable="custom"></el-table-column>
+          <el-table-column label="入库分拣积分" header-align="center" align="center" prop="inbound_sorting_integral" width="130" sortable="custom"></el-table-column>
           <el-table-column label="拣货积分" header-align="center" align="center" prop="picking_integral" width="105" sortable="custom"></el-table-column>
           <el-table-column label="打包积分" header-align="center" align="center" prop="packing_integral" width="105" sortable="custom"></el-table-column>
           <el-table-column label="分拣积分" header-align="center" align="center" prop="sorting_integral" width="105" sortable="custom"></el-table-column>
