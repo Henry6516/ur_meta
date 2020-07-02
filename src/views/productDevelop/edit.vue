@@ -549,10 +549,10 @@
       <!-- <el-table-column type="selection"
                        align="center"
                        header-align="center"></el-table-column> -->
-      <el-table-column type="index"
+      <!-- <el-table-column type="index"
                        align="center"
                        header-align="center">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="操作"
                        header-align="center"
                        width="50"
@@ -567,7 +567,7 @@
       </el-table-column>
       <el-table-column label="SKU"
                        prop="sku"
-                       min-width="110"
+                       width="160"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -575,7 +575,7 @@
         </template>
       </el-table-column>
       <el-table-column label="款式1"
-                       min-width="100"
+                       width="165"
                        prop="property1"
                        header-align="center">
         <template slot-scope="scope">
@@ -585,7 +585,7 @@
       </el-table-column>
       <el-table-column label="款式2"
                        prop="property2"
-                       min-width="100"
+                       width="100"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -594,7 +594,7 @@
       </el-table-column>
       <el-table-column label="款式3"
                        prop="property3"
-                       min-width="100"
+                       width="100"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -603,7 +603,7 @@
       </el-table-column>
       <el-table-column label="成本价"
                        prop="costPrice"
-                       min-width="100"
+                       width="90"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -612,7 +612,7 @@
       </el-table-column>
       <el-table-column label="重量"
                        prop="weight"
-                       min-width="100"
+                       width="90"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -621,7 +621,7 @@
       </el-table-column>
       <el-table-column label="零售价"
                        prop="retailPrice"
-                       min-width="100"
+                       width="90"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -630,7 +630,7 @@
       </el-table-column>
       <el-table-column label="joom零售价"
                        prop="joomPrice"
-                       min-width="100"
+                       width="100"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -639,7 +639,7 @@
       </el-table-column>
       <el-table-column label="joom运费"
                        prop="joomShipping"
-                       min-width="100"
+                       width="90"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -648,7 +648,7 @@
       </el-table-column>
       <el-table-column label="备货数量"
                        prop="stockNum"
-                       min-width="100"
+                       width="100"
                        header-align="center">
         <template slot-scope="scope">
           <el-input size="small"
@@ -657,17 +657,32 @@
                     v-model="scope.row.stockNum" disabled v-if="editForm.stockUp=='否'"></el-input>
         </template>
       </el-table-column>
-      <el-table-column label="1688style"
-                       min-width="130"
+      <el-table-column label="供应商"
+                       width="195"
                        prop="property2"
                        header-align="center">
         <template slot-scope="scope">
-          <el-select v-model="scope.row.specId" placeholder="请选择">
+          <el-select v-model="scope.row.offerId" placeholder="请选择供应商" size="small" @change="currentSel(scope.$index,$event)">
             <el-option
-              v-for="(item,index) in style1688Data"
+              v-for="(item,index) in data1688"
               :key="index"
-              :label="item.value"
-              :value="item.id">
+              :label="item.companyName"
+              :value="item.offerId">
+            </el-option>
+          </el-select>
+        </template>
+      </el-table-column>
+      <el-table-column label="1688规格"
+                       width="330"
+                       prop="property2"
+                       header-align="center">
+        <template slot-scope="scope">
+          <el-select v-model="scope.row.specId" placeholder="请选择" style="width:100%">
+            <el-option
+              v-for="(item,index) in scope.row.selectData"
+              :key="index"
+              :label="item.style"
+              :value="item.specId">
             </el-option>
           </el-select>
         </template>
@@ -751,15 +766,15 @@
                  type="danger" @click="createOrder" :disabled="orderTrue">生成采购单</el-button>
       <el-button size="small"
                  type="success" @click="synchro1688">同步1688</el-button>
-      <el-select v-model="value1688" placeholder="请选择offerId" value-key="companyName" size="small" @change="currentSel">
+      <!-- <el-select v-model="value1688" placeholder="请选择供应商" value-key="companyName" size="small" @change="currentSel">
         <el-option
           v-for="item in data1688"
           :key="item.companyName"
           :label="item.companyName"
           :value="item">
         </el-option>
-      </el-select>
-      <span style="font-size:13px;color:red;margin-left:10px;">提示：先同步1688->选择offerId->再选择1688style，如果1688style没有对应信息无需选择。</span>                      
+      </el-select> -->
+      <span style="font-size:13px;color:red;margin-left:10px;">提示：先同步1688->选择供应商->再选择1688规格，如果1688规格没有对应信息无需选择。</span>                      
       <!--<el-button size="small"-->
                  <!--type="danger">删除行</el-button>-->
     </div>
@@ -860,25 +875,14 @@ export default {
     }
   },
   methods: {
-    currentSel(selVal){
-      let obj = {
-        offerId:selVal.offerId,
-        subject:selVal.subject,
-        companyName:selVal.companyName,
-      }
-      APIsync1688GoodStyle(obj).then(res => {
-        let obj = res.data.data
-        const arr = []
-        for(var key in obj){
-          let str = {
-            id:key,
-            value:obj[key],
-          }
-          arr.push(str)
+    currentSel(index,e){
+      for(var i =0;i<this.data1688.length;i++){
+        if(this.data1688[i].offerId==e){
+          console.log(this.data1688[i].value)
+          this.tableData[index].selectData=this.data1688[i].value
         }
-        this.style1688Data=arr
-        this.id1688=selVal.offerId
-      })
+      }
+      console.log(i,e)
     },
     synchro1688(){
       let obj={
@@ -1412,6 +1416,15 @@ export default {
       })
     },
     save() {
+      // if(!this.value1688){
+      //   this.$confirm("没选1688商品,确认是否提交?", "提示", {
+      //     confirmButtonText: "确定",
+      //     cancelButtonText: "取消",
+      //     type: "warning"
+      //   }).catch(() => {
+      //     return;     
+      //   });
+      // }
       if(!this.editForm.goodsName){
         this.$message.error('请填写商品名称')
         return
