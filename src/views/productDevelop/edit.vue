@@ -663,7 +663,7 @@
         </template>
       </el-table-column>
       <el-table-column label="供应商"
-                       width="190" 
+                       width="220" 
                        prop="property2"
                        header-align="center">
         <template slot-scope="scope">
@@ -671,7 +671,7 @@
             <el-option
               v-for="(item,index) in data1688"
               :key="index"
-              :label="item.companyName"
+              :label="item.vendor"
               :value="item.offerId">
             </el-option>
           </el-select>
@@ -679,7 +679,7 @@
       </el-table-column>
       <el-table-column label="1688规格"
                        prop="property2"
-                       width="300"
+                       width="270"
                        header-align="center">
         <template slot-scope="scope">
           <el-select v-model="scope.row.specId" placeholder="请选择" style="width:100%">
@@ -775,7 +775,7 @@
             <el-option
               v-for="(item,index) in data1688"
               :key="index"
-              :label="item.companyName"
+              :label="item.vendor"
               :value="item.offerId">
             </el-option>
         </el-select>
