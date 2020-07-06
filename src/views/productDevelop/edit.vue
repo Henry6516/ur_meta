@@ -1290,6 +1290,9 @@ export default {
         obj.did = null
         obj.joomPrice = null
         obj.joomShipping = null
+        obj.offerId = null
+        obj.specId = null
+        obj.selectData = []
         this.tableData.push(obj)
       }
       this.skuTotal = this.tableData.length
