@@ -1058,7 +1058,7 @@ export default {
         this.showTable["dead"] = true;
         this.showTable["extra"] = false;
         this.getDead();
-      } else if (tab.label === "店铺杂费明细") {
+      } else if (tab.label === "运营杂费明细") {
         this.showTable["sell"] = false;
         this.showTable["order"] = false;
         this.showTable["goods"] = false;
