@@ -65,6 +65,7 @@
           ></el-option>
         </el-select>
       <span class="exportAccount" @click="exportSmt">添加导出队列</span>
+      <span class="exportAccountmy" @click="exportMymall" style="margin-left:10px;">导出mymall</span>
     </el-col>
     <el-col :span="24">
       <div class="posIndex">
@@ -530,7 +531,8 @@ import {
   APIVovaName,
   getPlatSmtAccount,
   getPlatSmtCategory,
-  APIPlatExportSmt
+  APIPlatExportSmt,
+  APIPlatExportMymall,
 } from "../../api/product";
 import {
   getAttributeInfoStoreName,
@@ -683,6 +685,36 @@ export default {
     }
   },
   methods: {
+    exportMymall(){
+      if(this.sels.length!=0){
+        const mymallAry = []
+        for (let i = 0; i < this.sels.length; i++) {
+          mymallAry.push(this.sels[i].id);
+        }
+        let objStr = {
+          id: mymallAry
+        };
+        APIPlatExportMymall(objStr).then(res => {
+          const blob = new Blob([res.data], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+          var filename=JSON.parse(file)
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          // const filename =
+          //   "Wish_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename;
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        });
+      }else{
+        this.$message.error('请选择产品');
+      }
+    },
     exportSmt() {
       if(this.accountNum.length!=0 && this.sels.length!=0){
         let smtAry = [];
@@ -2780,6 +2812,18 @@ export default {
   cursor: pointer;
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
 }
+.exportAccountmy {
+  display: block;
+  float: left;
+  border: #dcdfe6 solid 1px;
+  height: 38px;
+  line-height: 38px;
+  background: #fff;
+  padding: 0 14px;
+  font-size: 13px;
+  cursor: pointer;
+  background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
+}
 .signPerfectWish {
   padding: 0 10px;
   display: block;
@@ -2837,14 +2881,14 @@ export default {
 }
 @media (max-width: 1600px) {
   .none1600 {
-    width: 175px !important;
+    width: 150px !important;
   }
   .none16001 {
-    width: 145px !important;
+    width: 130px !important;
     margin-left: 5px !important;
   }
   .none16002 {
-    width: 175px !important;
+    width: 150px !important;
     margin-left: 5px !important;
   }
 }
