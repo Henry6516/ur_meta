@@ -108,6 +108,25 @@
           <el-form-item label="商品编码">
             <el-input size="small" v-model="condition.sku" style="width:215px;"></el-input>
           </el-form-item>
+          <el-form-item
+            label="开发时间"
+            class="input"
+            prop="devDateRange"
+          >
+            <el-date-picker
+              size="small"
+              v-model="condition.devDateRange"
+              type="daterange"
+              value-format="yyyy-MM-dd"
+              align="right"
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions2"
+              style="width:215px;"
+            ></el-date-picker>
+          </el-form-item>
           <el-form-item label="时间类型" class="input" prop="dateType">
             <el-radio-group v-model="condition.dateType">
               <el-radio
@@ -130,26 +149,6 @@
             <el-date-picker
               size="small"
               v-model="condition.dateRange"
-              type="daterange"
-              value-format="yyyy-MM-dd"
-              align="right"
-              unlink-panels
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              :picker-options="pickerOptions2"
-              style="width:215px;"
-            ></el-date-picker>
-          </el-form-item>
-          <el-form-item
-            label="开发时间"
-            class="input"
-            prop="devDateRange"
-            :rules="[{required: true, message: '请选择时间', trigger: 'blur'}]"
-          >
-            <el-date-picker
-              size="small"
-              v-model="condition.devDateRange"
               type="daterange"
               value-format="yyyy-MM-dd"
               align="right"
