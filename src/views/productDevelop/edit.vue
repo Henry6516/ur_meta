@@ -815,7 +815,7 @@
       <el-col :span="24" :offset="8">
         <el-button type="primary"
                    @click="save"
-                   style="width:350px;margin: 5px 0;margin-top: 8px;padding: 15px 0">保 存</el-button>
+                   style="width:350px;margin: 5px 0;margin-top: 8px;padding: 15px 0">保存</el-button>
       </el-col>
     </el-col>
     <div :class="mask?'zhezhao':''"></div>
