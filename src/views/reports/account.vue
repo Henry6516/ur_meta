@@ -381,8 +381,12 @@ export default {
       return value;
     },
     cutOutDate(value){
-      value = value.substring(0, 11);
-      return value;
+      if(value){
+        value = value.substring(0, 11);
+        return value;
+      }else{
+        return '--'
+      }
     },
   },  
   methods: {
