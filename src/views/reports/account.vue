@@ -11,7 +11,7 @@
           :model="condition"
           :inline="true"
           ref="condition"
-          label-width="100px"
+          label-width="95px"
           class="demo-form-inline"
           v-show="show"
         >
@@ -108,6 +108,25 @@
           <el-form-item label="商品编码">
             <el-input size="small" v-model="condition.sku" style="width:215px;"></el-input>
           </el-form-item>
+          <el-form-item
+            label="开发时间"
+            class="input"
+            prop="devDateRange"
+          >
+            <el-date-picker
+              size="small"
+              v-model="condition.devDateRange"
+              type="daterange"
+              value-format="yyyy-MM-dd"
+              align="right"
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions2"
+              style="width:215px;"
+            ></el-date-picker>
+          </el-form-item>
           <el-form-item label="时间类型" class="input" prop="dateType">
             <el-radio-group v-model="condition.dateType">
               <el-radio
@@ -138,11 +157,11 @@
               start-placeholder="开始日期"
               end-placeholder="结束日期"
               :picker-options="pickerOptions2"
-              style="width:218px;"
+              style="width:215px;"
             ></el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button size="small" type="primary" class="input" @click="onTop(condition)" style="margin-left:25px;">查询</el-button>
+            <el-button size="small" type="primary" class="input" @click="onTop(condition)">查询</el-button>
           </el-form-item>
         </el-form>
       </transition>
@@ -178,7 +197,7 @@
       border
       class="elTable"
       :header-cell-style="getRowClass"
-      style="width: 100%;font-size:13px;"
+      style="width: 100%;font-size:12px;"
     >
       <el-table-column prop="suffix" label="账号" align="center"></el-table-column>
       <el-table-column prop="pingtai" label="平台" align="center"></el-table-column>
@@ -198,6 +217,11 @@
         label="开发员"
         align="center"
       ></el-table-column>
+      <el-table-column prop="devDate" label="开发时间" align="center">
+        <template slot-scope="scope">
+          {{scope.row.devDate | cutOutDate}}
+        </template>
+      </el-table-column>
       <el-table-column prop="SKUQty" label="销量" align="center" sortable="custom"></el-table-column>
       <el-table-column
         prop="SaleMoneyRmb"
@@ -315,6 +339,7 @@ export default {
         member: [],
         store: [],
         sku: "",
+        devDateRange:[],
         goodsName: "",
         dateType: 1,
         sort:null,
@@ -354,7 +379,15 @@ export default {
     cutOut: function(value) {
       value = Number(value).toFixed(2);
       return value;
-    }
+    },
+    cutOutDate(value){
+      if(value){
+        value = value.substring(0, 11);
+        return value;
+      }else{
+        return '--'
+      }
+    },
   },  
   methods: {
     getRowClass({ row, column, rowIndex, columnIndex }) {
@@ -787,6 +820,11 @@ export default {
         return sums;        
       }
     }
+  },
+  updated(){
+    this.$nextTick(() => {
+      this.$refs['table'].doLayout();
+    }) 
   },
   mounted() {
     getSection().then(response => {

@@ -1058,7 +1058,7 @@ export default {
         this.showTable["dead"] = true;
         this.showTable["extra"] = false;
         this.getDead();
-      } else if (tab.label === "店铺杂费明细") {
+      } else if (tab.label === "运营杂费明细") {
         this.showTable["sell"] = false;
         this.showTable["order"] = false;
         this.showTable["goods"] = false;
@@ -1286,7 +1286,7 @@ export default {
         this.analysis(form);
       } else if (this.activeName === "死库明细") {
         this.getDead();
-      } else if (this.activeName === "店铺杂费明细") {
+      } else if (this.activeName === "运营杂费明细") {
         this.getExtra();
       } else {
         const height = document.documentElement.clientHeight;
@@ -1375,7 +1375,7 @@ export default {
         } else {
           this.tableData3 = data;
         }
-      } else if (this.activeName === "店铺杂费明细") {
+      } else if (this.activeName === "运营杂费明细") {
         const data = this.searchTable4;
         if (searchValue) {
           this.tableData4 = data.filter(function(row) {
@@ -1422,7 +1422,7 @@ export default {
         } else {
           this.tableData3 = data.sort(compareUp(data, column.prop));
         }
-      } else if (this.activeName === "店铺杂费明细") {
+      } else if (this.activeName === "运营杂费明细") {
         const data = this.tableData4;
         if (column.order === "descending") {
           this.tableData4 = data.sort(compareDown(data, column.prop));
