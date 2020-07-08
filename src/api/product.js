@@ -2083,3 +2083,10 @@ export function APIsync1688GoodStyle(param) {
     data
   })
 }
+export function APIPlatExportWishSuffix() {
+  return request({
+    url: '/basic-info/export-wish-suffix',
+    method: 'get',
+    responseType: 'arraybuffer'
+  })
+}
