@@ -38,6 +38,9 @@
     >
       <el-table-column type="index" label="#" align="center" width="45"></el-table-column>
       <el-table-column prop="SKU" label="SKU" align="center"></el-table-column>
+      <el-table-column prop="property1" label="款式1" align="center"></el-table-column>
+      <el-table-column prop="property2" label="款式2" align="center"></el-table-column>
+      <el-table-column prop="property3" label="款式3" align="center"></el-table-column>
       <el-table-column prop="SKUName" label="商品名称" align="center"></el-table-column>
       <el-table-column prop="companyName" label="供应商" align="center">
         <template slot-scope="scope">
@@ -47,10 +50,11 @@
             style="width:100%;"
             size="small"
           >
-            <el-option v-for="item in companyData" :key="item" :label="item" :value="item"></el-option>
+            <el-option v-for="item in scope.row.values" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </template>
       </el-table-column>
+      <el-table-column prop="style" label="供应商款式" align="center"></el-table-column>
     </el-table>
     <el-dialog title="编辑" :visible.sync="dialog" width="30%">
       <el-select v-model="companyValue" placeholder="请选择" style="width:100%;">
@@ -99,7 +103,13 @@ export default {
   methods: {
     allCom() {
       for (let i = 0; i < this.tableData.length; i++) {
-        this.tableData[i].companyName = this.valueAll;
+        for(let k=0;k<this.tableData[i].value.length;k++){
+          if(this.valueAll==this.tableData[i].value[k]){
+            this.tableData[i].companyName = this.valueAll;
+          }else{
+            this.tableData[i].companyName = '无';
+          }
+        }
       }
     },
     save() {
