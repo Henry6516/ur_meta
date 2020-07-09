@@ -2090,3 +2090,19 @@ export function APIPlatExportWishSuffix() {
     responseType: 'arraybuffer'
   })
 }
+export function getSearchSuppliers(param) {
+  const data = { condition: param }
+  return request({
+    url: '/purchase-tool/search-suppliers',
+    method: 'post',
+    data
+  })
+}
+export function getSaveSkuSuppliers(param) {
+  const data = { condition: param }
+  return request({
+    url: '/purchase-tool/save-sku-suppliers',
+    method: 'post',
+    data
+  })
+}

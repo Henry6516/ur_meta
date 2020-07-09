@@ -1,0 +1,130 @@
+<template>
+  <div class="toolbar">
+    <div class="demo-block demo-box demo-zh-CN demo-transition">
+      <transition name="el-fade-in-linear">
+        <el-form
+          :model="condition"
+          :inline="true"
+          ref="condition"
+          label-width="70px"
+          style="padding-top:10px;"
+          class="demo-form-inline"
+        >
+          <el-form-item label="商品编码" class="input" style="margin-left:12px;">
+            <el-input v-model="condition.goodsCode" size="small"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
+          </el-form-item>
+        </el-form>
+      </transition>
+    </div>
+    <el-table
+      :data="tableData"
+      id="sale-table"
+      v-loading="listLoading"
+      :height="tableHeight"
+      border
+      class="elTable"
+      :header-cell-style="getRowClass"
+      style="width: 98%;font-size:13px;margin-left:0.7%;"
+    >
+      <el-table-column type="index" label="#" align="center" width="45"></el-table-column>
+      <el-table-column label="操作" header-align="center" align="center" width="100">
+        <template slot-scope="scope">
+          <el-tooltip content="更新">
+            <i
+              @click="editArt(scope.$index, scope.row)"
+              class="el-icon-edit"
+              style="color: #409EFF;cursor:pointer;"
+            ></i>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+      <el-table-column prop="SKU" label="SKU" align="center"></el-table-column>
+      <el-table-column prop="SKUName" label="商品名称" align="center"></el-table-column>
+      <el-table-column prop="companyName" label="供应商" align="center"></el-table-column>
+    </el-table>
+    <el-dialog title="编辑" :visible.sync="dialog" width="30%">
+      <el-select v-model="companyValue" placeholder="请选择" style="width:100%;">
+        <el-option v-for="item in companyData" :key="item" :label="item" :value="item"></el-option>
+      </el-select>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialog = false">取 消</el-button>
+        <el-button type="primary" @click="update()">保 存</el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+import { getSearchSuppliers, getSaveSkuSuppliers } from "../../api/product";
+
+export default {
+  data() {
+    return {
+      tableHeight: window.innerHeight - 170,
+      dialog: false,
+      companyValue: null,
+      tableData: [],
+      options: [],
+      nid: null,
+      companyData: [],
+      condition: {
+        goodsCode: ""
+      },
+      listLoading: false
+    };
+  },
+  methods: {
+    update() {
+      let obj = {
+        nid: this.nid,
+        companyName: this.companyValue
+      };
+      getSaveSkuSuppliers(obj).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "编辑成功",
+            type: "success"
+          });
+          this.dialog = false;
+          this.onSubmit(this.condition);
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
+    editArt(index, row) {
+      this.companyValue = row.companyName;
+      this.nid = row.nid;
+      this.dialog = true;
+    },
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#337ab7;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },
+    onSubmit(form) {
+      this.listLoading = true;
+      getSearchSuppliers(form).then(response => {
+        this.listLoading = false;
+        this.tableData = response.data.data.skuInfo;
+        this.companyData = response.data.data.companyName;
+      });
+    }
+  },
+  mounted() {}
+};
+</script>
+
+<style lang="scss" scoped>
+.el-form {
+  margin-bottom: 10px;
+  .el-form-item {
+    margin-bottom: 0px;
+  }
+}
+</style>

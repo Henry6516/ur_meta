@@ -23,6 +23,9 @@
     <div v-show="show.tb">
       <purchaseTb></purchaseTb>
     </div>
+    <div v-show="show.yl">
+      <purchase1688></purchase1688>
+    </div>
   </section>
 </template>
 
@@ -33,6 +36,7 @@ import purchasenQc from "./purchasenQc.vue";
 import purchaseQh from "./purchaseQh.vue";
 import purchaseZd from "./purchaseZd.vue";
 import purchaseTb from "./purchaseTb.vue";
+import purchase1688 from "./purchase1688.vue";
 
 export default {
   components: {
@@ -40,18 +44,20 @@ export default {
     purchasenQc,
     purchaseQh,
     purchaseZd,
-    purchaseTb
+    purchaseTb,
+    purchase1688
   },
   data() {
     return {
       allMenu: [],
       activeName: "",
       show: {
-        qc: true,
+        qc: false,
         nqc: false,
         qh: false,
         zd: false,
-        tb: false
+        tb: false,
+        yl: true
       }
     };
   },
@@ -84,6 +90,11 @@ export default {
         this.show["tb"] = true;
       } else {
         this.show["tb"] = false;
+      }
+      if (tab.name === "/v1/purchase-tool/search-suppliers") {
+        this.show["yl"] = true;
+      } else {
+        this.show["yl"] = false;
       }
     }
   },
