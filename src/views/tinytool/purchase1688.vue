@@ -15,11 +15,12 @@
           </el-form-item>
           <el-form-item>
             <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
-            <el-button size="small" type="primary" @click="all">批量修改</el-button>
+            <!-- <el-button size="small" type="primary" @click="all">批量修改</el-button> -->
             <el-select v-model="valueAll" placeholder="请选择" size="small" style="margin-left:10px;">
               <el-option v-for="item in companyData" :key="item" :label="item" :value="item"></el-option>
             </el-select>
             <el-button size="small" type="primary" @click="allCom">一键应用供应商</el-button>
+            <el-button size="small" type="primary" @click="save">保存</el-button>
           </el-form-item>
         </el-form>
       </transition>
@@ -36,21 +37,20 @@
       style="width: 98%;font-size:13px;margin-left:0.7%;"
     >
       <el-table-column type="index" label="#" align="center" width="45"></el-table-column>
-      <el-table-column type="selection" align="center" header-align="center" width="60"></el-table-column>
-      <el-table-column label="操作" header-align="center" align="center" width="100">
-        <template slot-scope="scope">
-          <el-tooltip content="更新">
-            <i
-              @click="editArt(scope.$index, scope.row)"
-              class="el-icon-edit"
-              style="color: #409EFF;cursor:pointer;"
-            ></i>
-          </el-tooltip>
-        </template>
-      </el-table-column>
       <el-table-column prop="SKU" label="SKU" align="center"></el-table-column>
       <el-table-column prop="SKUName" label="商品名称" align="center"></el-table-column>
-      <el-table-column prop="companyName" label="供应商" align="center"></el-table-column>
+      <el-table-column prop="companyName" label="供应商" align="center">
+        <template slot-scope="scope">
+          <el-select
+            v-model="scope.row.companyName"
+            placeholder="请选择"
+            style="width:100%;"
+            size="small"
+          >
+            <el-option v-for="item in companyData" :key="item" :label="item" :value="item"></el-option>
+          </el-select>
+        </template>
+      </el-table-column>
     </el-table>
     <el-dialog title="编辑" :visible.sync="dialog" width="30%">
       <el-select v-model="companyValue" placeholder="请选择" style="width:100%;">
@@ -98,30 +98,31 @@ export default {
   },
   methods: {
     allCom() {
-      if (this.valueAll) {
-        let obj = {
-          skuInfo: []
-        };
-        for (let i = 0; i < this.tableData.length; i++) {
-          obj.skuInfo.push({
-            nid: this.tableData[i].nid,
-            companyName: this.valueAll
-          });
-        }
-        getSaveSkuSuppliers(obj).then(res => {
-          if (res.data.code == 200) {
-            this.$message({
-              message: "编辑成功",
-              type: "success"
-            });
-            this.onSubmit(this.condition);
-          } else {
-            this.$message.error(res.data.message);
-          }
-        });
-      } else {
-        this.$message.error("请选择供应商");
+      for (let i = 0; i < this.tableData.length; i++) {
+        this.tableData[i].companyName = this.valueAll;
       }
+    },
+    save() {
+      let obj = {
+        skuInfo: []
+      };
+      for (let i = 0; i < this.tableData.length; i++) {
+        obj.skuInfo.push({
+          nid: this.tableData[i].nid,
+          companyName: this.tableData[i].companyName
+        });
+      }
+      getSaveSkuSuppliers(obj).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "保存成功",
+            type: "success"
+          });
+          this.onSubmit(this.condition);
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
     },
     allUpdate() {
       let obj = {
@@ -193,6 +194,7 @@ export default {
     },
     onSubmit(form) {
       this.listLoading = true;
+      this.valueAll = null;
       getSearchSuppliers(form).then(response => {
         this.listLoading = false;
         this.tableData = response.data.data.skuInfo;
