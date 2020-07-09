@@ -534,6 +534,7 @@
         <el-input style="float:left;margin-left:10px;" placeholder="替换前" v-model="ordpro" class="wid100" size="medium"></el-input>
         <el-input style="float:left;margin-left:5px;" placeholder="替换后" v-model="newpro" class="wid100" size="medium"></el-input>
         <el-button type="warning" style="float:left;width:100px;margin-left:5px;" @click="replacePro" size="medium">替换款式3</el-button>
+        <el-button type="primary" style="float:left;width:100px;margin-left:5px;" @click="deleteAll" size="medium">批量删除</el-button>
         <!-- <el-button type="success" style="float:left;width:100px;margin-left:5px;" @click="allStyle" size="medium">填充款式</el-button> -->
     </el-col>
     <el-col :span="24" style="margin-top:15px;">
@@ -547,13 +548,18 @@
                  <!--:value="item.value"></el-option>-->
     <!--</el-select>-->
     <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange" max-height="500" :header-cell-style="getRowClass" v-loading="loading">
-      <!-- <el-table-column type="selection"
+      <el-table-column type="index"
                        align="center"
-                       header-align="center"></el-table-column> -->
-      <!-- <el-table-column type="index"
-                       align="center"
+                       width="40"
+                       label="#"
+                       fixed
                        header-align="center">
-      </el-table-column> -->
+      </el-table-column>
+      <el-table-column type="selection"
+                       align="center"
+                       width="40"
+                       fixed
+                       header-align="center"></el-table-column>
       <el-table-column label="操作"
                        header-align="center"
                        width="50"
@@ -579,7 +585,7 @@
       </el-table-column>
       <el-table-column label="款式1"
                        prop="property1"
-                       width="180"
+                       width="160"
                        fixed
                        header-align="center">
         <template slot-scope="scope">
@@ -589,7 +595,7 @@
       </el-table-column>
       <el-table-column label="款式2"
                        prop="property2"
-                       width="140"
+                       width="120"
                        fixed
                        header-align="center">
         <template slot-scope="scope">
@@ -663,7 +669,7 @@
         </template>
       </el-table-column>
       <el-table-column label="供应商"
-                       width="220" 
+                       width="200" 
                        prop="property2"
                        header-align="center">
         <template slot-scope="scope">
@@ -679,7 +685,7 @@
       </el-table-column>
       <el-table-column label="1688规格"
                        prop="property2"
-                       width="270"
+                       width="250"
                        header-align="center">
         <template slot-scope="scope">
           <el-select v-model="scope.row.specId" placeholder="请选择" style="width:100%">
@@ -892,6 +898,34 @@ export default {
     }
   },
   methods: {
+    deleteAll(){
+      let arrId = []
+      for (let i = 0; i < this.sels.length; i++) {
+        arrId.push(this.sels[i].id);
+      }
+      let aryId={
+        id:arrId
+      }
+      APIDeleteVariant(aryId).then(res => {
+        if (res.data.code === 200) {
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          for(let k =0;k<this.tableData.length;k++){
+            for(let j =0;j<aryId.length;j++){
+              if(this.tableData[k].id==aryId[j]){
+                this.tableData.splice(k, 1)
+              }
+            }
+          }
+          this.skuTotal = this.tableData.length
+//          this.getData()
+        } else {
+          this.$message.error('删除失败')
+        }
+      })
+    },
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
         return "color:#3c8dbc;background:#f5f7fa";

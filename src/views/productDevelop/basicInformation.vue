@@ -14,6 +14,9 @@
           <el-button type="primary" @click="addWish()">
             <i class="el-icon-plus"></i>添加Wish账号
           </el-button>
+          <el-button type="primary" @click="exportWish()">
+            <i class="el-icon-download"></i>导出表格
+          </el-button>
         </el-col>
         <!-- <el-col :span="24" class="cTop">
                     <el-col :span="8">
@@ -333,7 +336,8 @@ import {
   APICreateWish,
   APIDeleteWish,
   APIWishInfo,
-  APIUpdateWish
+  APIUpdateWish,
+  APIPlatExportWishSuffix
 } from "../../api/product";
 import { getMenu } from "../../api/login";
 import basicInformationArt from "./basicInformationArt.vue";
@@ -396,6 +400,25 @@ export default {
     };
   },
   methods: {
+    exportWish(){
+      APIPlatExportWishSuffix().then(res => {
+        const blob = new Blob([res.data], {
+          type:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+        var filename=JSON.parse(file)
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        // const filename =
+        //   "Wish_" + year + month + strDate + hour + minute + second;
+        downloadElement.download = filename;
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+      });
+    },
     addWish() {
       this.dialogPictureWish = true;
     },
