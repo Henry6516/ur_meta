@@ -16,6 +16,10 @@
           <el-form-item>
             <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
             <el-button size="small" type="primary" @click="all">批量修改</el-button>
+            <el-select v-model="valueAll" placeholder="请选择" size="small" style="margin-left:10px;">
+              <el-option v-for="item in companyData" :key="item" :label="item" :value="item"></el-option>
+            </el-select>
+            <el-button size="small" type="primary" @click="allCom">一键应用供应商</el-button>
           </el-form-item>
         </el-form>
       </transition>
@@ -80,6 +84,7 @@ export default {
       dialogAll: false,
       companyValue: null,
       companyValueAll: null,
+      valueAll: null,
       tableData: [],
       sels: [],
       options: [],
@@ -92,6 +97,32 @@ export default {
     };
   },
   methods: {
+    allCom() {
+      if (this.valueAll) {
+        let obj = {
+          skuInfo: []
+        };
+        for (let i = 0; i < this.tableData.length; i++) {
+          obj.skuInfo.push({
+            nid: this.tableData[i].nid,
+            companyName: this.valueAll
+          });
+        }
+        getSaveSkuSuppliers(obj).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              message: "编辑成功",
+              type: "success"
+            });
+            this.onSubmit(this.condition);
+          } else {
+            this.$message.error(res.data.message);
+          }
+        });
+      } else {
+        this.$message.error("请选择供应商");
+      }
+    },
     allUpdate() {
       let obj = {
         skuInfo: []
