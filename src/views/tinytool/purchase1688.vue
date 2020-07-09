@@ -15,6 +15,7 @@
           </el-form-item>
           <el-form-item>
             <el-button size="small" type="primary" @click="onSubmit(condition)">查询</el-button>
+            <el-button size="small" type="primary" @click="all">批量修改</el-button>
           </el-form-item>
         </el-form>
       </transition>
@@ -27,9 +28,11 @@
       border
       class="elTable"
       :header-cell-style="getRowClass"
+      @selection-change="selsChange"
       style="width: 98%;font-size:13px;margin-left:0.7%;"
     >
       <el-table-column type="index" label="#" align="center" width="45"></el-table-column>
+      <el-table-column type="selection" align="center" header-align="center" width="60"></el-table-column>
       <el-table-column label="操作" header-align="center" align="center" width="100">
         <template slot-scope="scope">
           <el-tooltip content="更新">
@@ -54,6 +57,15 @@
         <el-button type="primary" @click="update()">保 存</el-button>
       </div>
     </el-dialog>
+    <el-dialog title="批量修改" :visible.sync="dialogAll" width="30%">
+      <el-select v-model="companyValueAll" placeholder="请选择" style="width:100%;">
+        <el-option v-for="item in companyData" :key="item" :label="item" :value="item"></el-option>
+      </el-select>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialog = false">取 消</el-button>
+        <el-button type="primary" @click="allUpdate()">保 存</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -65,8 +77,11 @@ export default {
     return {
       tableHeight: window.innerHeight - 170,
       dialog: false,
+      dialogAll: false,
       companyValue: null,
+      companyValueAll: null,
       tableData: [],
+      sels: [],
       options: [],
       nid: null,
       companyData: [],
@@ -77,10 +92,48 @@ export default {
     };
   },
   methods: {
+    allUpdate() {
+      let obj = {
+        skuInfo: []
+      };
+      for (let i = 0; i < this.sels.length; i++) {
+        obj.skuInfo.push({
+          nid: this.sels[i].nid,
+          companyName: this.companyValueAll
+        });
+      }
+      getSaveSkuSuppliers(obj).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "编辑成功",
+            type: "success"
+          });
+          this.dialogAll = false;
+          this.onSubmit(this.condition);
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
+    selsChange(sels) {
+      this.sels = sels;
+    },
+    all() {
+      if (this.sels.length != 0) {
+        this.companyValueAll = null;
+        this.dialogAll = true;
+      } else {
+        this.$message.error("请选择SKU");
+      }
+    },
     update() {
       let obj = {
-        nid: this.nid,
-        companyName: this.companyValue
+        skuInfo: [
+          {
+            nid: this.nid,
+            companyName: this.companyValue
+          }
+        ]
       };
       getSaveSkuSuppliers(obj).then(res => {
         if (res.data.code == 200) {
