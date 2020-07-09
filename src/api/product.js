@@ -2093,7 +2093,7 @@ export function APIPlatExportWishSuffix() {
 export function getSearchSuppliers(param) {
   const data = { condition: param }
   return request({
-    url: '/purchase-tool/search-suppliers',
+    url: '/purchase-tool/search-suppliers?sort=' + param.sort,
     method: 'post',
     data
   })
