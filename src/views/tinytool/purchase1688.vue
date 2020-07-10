@@ -32,12 +32,13 @@
       :height="tableHeight"
       border
       class="elTable"
+      @sort-change="sortNumber"
       :header-cell-style="getRowClass"
       @selection-change="selsChange"
       style="width: 98%;font-size:13px;margin-left:0.7%;"
     >
       <el-table-column type="index" label="#" align="center" width="45"></el-table-column>
-      <el-table-column prop="SKU" label="SKU" align="center"></el-table-column>
+      <el-table-column prop="SKU" label="SKU" align="center" sortable="custom"></el-table-column>
       <el-table-column prop="property1" label="款式1" align="center"></el-table-column>
       <el-table-column prop="property2" label="款式2" align="center"></el-table-column>
       <el-table-column prop="property3" label="款式3" align="center"></el-table-column>
@@ -95,19 +96,35 @@ export default {
       nid: null,
       companyData: [],
       condition: {
+        sort: null,
         goodsCode: ""
       },
       listLoading: false
     };
   },
   methods: {
+    sortNumber(column, prop, order) {
+      if (column.order == null) {
+        this.condition.sort = null;
+        this.onSubmit(this.condition);
+      }
+      if (column.order == "ascending") {
+        this.condition.sort = "-" + column.prop;
+        this.onSubmit(this.condition);
+      }
+      if (column.order == "descending") {
+        this.condition.sort = column.prop;
+        this.onSubmit(this.condition);
+      }
+    },
     allCom() {
       for (let i = 0; i < this.tableData.length; i++) {
-        for(let k=0;k<this.tableData[i].value.length;k++){
-          if(this.valueAll==this.tableData[i].value[k]){
+        for (let k = 0; k < this.tableData[i].values.length; k++) {
+          if (this.valueAll == this.tableData[i].values[k]) {
             this.tableData[i].companyName = this.valueAll;
-          }else{
-            this.tableData[i].companyName = '无';
+            break;
+          } else {
+            this.tableData[i].companyName = "无";
           }
         }
       }
