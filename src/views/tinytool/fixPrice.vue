@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="gouba">
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane
         v-for="(item, index) in this.allMenu"
@@ -208,6 +208,9 @@ export default {
 }
 .elTable td {
   padding: 16px 0 !important;
+}
+.gouba .el-tabs__nav-next{
+  right: 6px !important;
 }
 // .el-input__inner{
 //   padding: 0 10px;
