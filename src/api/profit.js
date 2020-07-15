@@ -998,3 +998,27 @@ export function getDevProfitDetail(param) {
     data
   })
 }
+export function getWytSkuStorage(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/wyt-sku-storage?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function getStockSeller(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/stock-seller?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function getModifyOrderLogisticsWay(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/modify-order-logistics-way',
+    method: 'post',
+    data
+  })
+}

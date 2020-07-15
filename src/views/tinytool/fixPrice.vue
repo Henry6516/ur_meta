@@ -157,6 +157,24 @@ export default {
           path: `/v1/tiny-tool/sku`
         });
       }
+      if (tab.name === "/v1/tiny-tool/wyt-sku-storage") {
+        sessionStorage.setItem("fixname", "/v1/tiny-tool/wyt-sku-storage");
+        this.$router.push({
+          path: `/v1/tiny-tool/wyt-sku-storage`
+        });
+      }
+      if (tab.name === "/v1/tiny-tool/stock-seller") {
+        sessionStorage.setItem("fixname", "/v1/tiny-tool/stock-seller");
+        this.$router.push({
+          path: `/v1/tiny-tool/stock-seller`
+        });
+      }
+      if (tab.name === "/v1/tiny-tool/modify-order-logistics-way") {
+        sessionStorage.setItem("fixname", "/v1/tiny-tool/modify-order-logistics-way");
+        this.$router.push({
+          path: `/v1/tiny-tool/modify-order-logistics-way`
+        });
+      }
     }
   },
   mounted() {
