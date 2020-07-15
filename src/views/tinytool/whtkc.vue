@@ -93,7 +93,7 @@ export default {
       purchaser: [],
       condition: {
         sku: "",
-        skName: "",
+        skuName: "",
         pageSize: 20,
         page: 1
       },
