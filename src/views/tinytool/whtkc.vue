@@ -20,10 +20,10 @@
               clearable
             ></el-input>
           </el-form-item>
-          <el-form-item label="skName" class="input">
+          <el-form-item label="skuName" class="input">
             <el-input
-              placeholder="skName"
-              v-model="condition.skName"
+              placeholder="skuName"
+              v-model="condition.skuName"
               style="width:160px;"
               size="small"
               clearable
