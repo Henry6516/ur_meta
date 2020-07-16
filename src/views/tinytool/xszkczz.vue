@@ -52,6 +52,7 @@
     >
       <el-table-column prop="seller1" label="销售" align="center"></el-table-column>
       <el-table-column prop="useNum" label="可用库存" align="center"></el-table-column>
+      <el-table-column prop="costMoney" label="库存金额" align="center"></el-table-column>
       <el-table-column prop="30DaySellCount" label="30天销量" align="center"></el-table-column>
       <el-table-column prop="ave" label="30天平均销量" align="center"></el-table-column>
       <el-table-column prop="sellDays" label="周转天数" align="center"></el-table-column>
