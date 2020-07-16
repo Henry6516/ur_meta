@@ -135,7 +135,10 @@
               </font>
               <br>
               <font color="black">
-                &nbsp;{{item.developer}}
+                &nbsp;开发：{{item.developer}}
+              </font>
+              <font color="black">
+                &nbsp;美工：{{item.possessman1}}
               </font>
             </p>
             <font color="black">&nbsp;{{item.GoodsName}}&nbsp;&nbsp;&nbsp;{{item.GoodsSKUStatus}}</font>
