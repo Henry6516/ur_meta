@@ -9,7 +9,7 @@
     <!--:key="index">-->
     <!--</el-tab-pane>-->
     <!--</el-tabs>-->    
-    <el-col :span="24" style="padding:10px 0;padding-left:10px;">
+    <el-col :span="24" style="padding:10px 0;padding-left:10px;" class="zoomInOt">
       <el-input
         placeholder="SKU查询(逗号隔开)"
         v-model="plat.codeStr"
@@ -66,6 +66,7 @@
         </el-select>
       <span class="exportAccount" @click="exportSmt">添加导出队列</span>
       <span class="exportAccountmy" @click="exportMymall" style="margin-left:10px;">导出mymall</span>
+      <span class="exportAccountmy" @click="exportLazada" style="margin-left:10px;">导出lazada</span>
     </el-col>
     <el-col :span="24">
       <div class="posIndex">
@@ -533,6 +534,7 @@ import {
   getPlatSmtCategory,
   APIPlatExportSmt,
   APIPlatExportMymall,
+  APIPlatExportLazada,
 } from "../../api/product";
 import {
   getAttributeInfoStoreName,
@@ -715,6 +717,36 @@ export default {
         this.$message.error('请选择产品');
       }
     },
+    exportLazada(){
+      if(this.sels.length!=0){
+        const mymallAry = []
+        for (let i = 0; i < this.sels.length; i++) {
+          mymallAry.push(this.sels[i].id);
+        }
+        let objStr = {
+          id: mymallAry
+        };
+        APIPlatExportLazada(objStr).then(res => {
+          const blob = new Blob([res.data], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+          var filename=JSON.parse(file)
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          // const filename =
+          //   "Wish_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename;
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        });
+      }else{
+        this.$message.error('请选择产品');
+      }
+    },    
     exportSmt() {
       if(this.accountNum.length!=0 && this.sels.length!=0){
         let smtAry = [];
@@ -2890,6 +2922,9 @@ export default {
   .none16002 {
     width: 150px !important;
     margin-left: 5px !important;
+  }
+  .zoomInOt{
+    zoom: 0.88;
   }
 }
 .posIndex{

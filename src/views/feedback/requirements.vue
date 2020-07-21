@@ -446,6 +446,7 @@
               <el-checkbox label="周朋许" name="processingPerson"></el-checkbox>
               <el-checkbox label="叶先钱" name="processingPerson"></el-checkbox>
               <el-checkbox label="史伟" name="processingPerson"></el-checkbox>
+              <el-checkbox label="张有良" name="processingPerson"></el-checkbox>
             </el-checkbox-group>
           </el-form-item>
           <el-form-item label="预估时间" prop="deadline">
@@ -722,6 +723,7 @@
               <el-checkbox label="周朋许" name="processingPerson"></el-checkbox>
               <el-checkbox label="叶先钱" name="processingPerson"></el-checkbox>
               <el-checkbox label="史伟" name="processingPerson"></el-checkbox>
+              <el-checkbox label="张有良" name="processingPerson"></el-checkbox>
             </el-checkbox-group>
           </el-form-item>
           <el-form-item label="详情">

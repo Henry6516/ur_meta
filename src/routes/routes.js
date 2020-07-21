@@ -62,6 +62,9 @@ import ukxn from '../views/tinytool/ukxn.vue'
 import ukzc from '../views/tinytool/ukzc.vue'
 import auzc from '../views/tinytool/auzc.vue'
 import hwckc from '../views/tinytool/hwckc.vue'
+import whtkc from '../views/tinytool/whtkc.vue'
+import xszkczz from '../views/tinytool/xszkczz.vue'
+import xgddwlfs from '../views/tinytool/xgddwlfs.vue'
 import joomtool from '../views/tinytool/joomtool.vue'
 import bidding from '../views/tinytool/bidding.vue'
 import ebayBalance from '../views/tinytool/ebayBalance.vue'
@@ -574,6 +577,21 @@ const routes = [
             path: '/v1/tiny-tool/sku',
             component: hwckc,
             name: '海外仓库存'
+          },
+          {
+            path: '/v1/tiny-tool/wyt-sku-storage',
+            component: whtkc,
+            name: '万户通库存'
+          },
+          {
+            path: '/v1/tiny-tool/stock-seller',
+            component: xszkczz,
+            name: '销售总库存周转'
+          },
+          {
+            path: '/v1/tiny-tool/modify-order-logistics-way',
+            component: xgddwlfs,
+            name: '修改订单物流方式'
           },
           {
             path: '/v1/tiny-tool/au',

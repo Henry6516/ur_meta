@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="gouba">
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane
         v-for="(item, index) in this.allMenu"
@@ -157,6 +157,24 @@ export default {
           path: `/v1/tiny-tool/sku`
         });
       }
+      if (tab.name === "/v1/tiny-tool/wyt-sku-storage") {
+        sessionStorage.setItem("fixname", "/v1/tiny-tool/wyt-sku-storage");
+        this.$router.push({
+          path: `/v1/tiny-tool/wyt-sku-storage`
+        });
+      }
+      if (tab.name === "/v1/tiny-tool/stock-seller") {
+        sessionStorage.setItem("fixname", "/v1/tiny-tool/stock-seller");
+        this.$router.push({
+          path: `/v1/tiny-tool/stock-seller`
+        });
+      }
+      if (tab.name === "/v1/tiny-tool/modify-order-logistics-way") {
+        sessionStorage.setItem("fixname", "/v1/tiny-tool/modify-order-logistics-way");
+        this.$router.push({
+          path: `/v1/tiny-tool/modify-order-logistics-way`
+        });
+      }
     }
   },
   mounted() {
@@ -208,6 +226,9 @@ export default {
 }
 .elTable td {
   padding: 16px 0 !important;
+}
+.gouba .el-tabs__nav-next{
+  right: 6px !important;
 }
 // .el-input__inner{
 //   padding: 0 10px;

@@ -135,7 +135,11 @@
               </font>
               <br>
               <font color="black">
-                &nbsp;{{item.developer}}
+                &nbsp;开发：{{item.developer}}
+              </font>
+              <br>
+              <font color="black">
+                &nbsp;美工：{{item.possessman1}}
               </font>
             </p>
             <font color="black">&nbsp;{{item.GoodsName}}&nbsp;&nbsp;&nbsp;{{item.GoodsSKUStatus}}</font>
@@ -323,9 +327,9 @@ export default {
   }
 }
 .el-row {
-  max-height: 65rem;
+  // max-height: 65rem;
   overflow: auto;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   .mix:hover {
     border-radius: 1rem;
     border: 1px solid #03c4eb;

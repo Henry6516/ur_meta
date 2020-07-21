@@ -83,6 +83,11 @@
           style="float: left;margin-left: 10px"
           @click="exportMymall"
         >导出mymall</el-button>
+        <el-button
+          type="success"
+          style="float: left;margin-left: 10px"
+          @click="exportLazada"
+        >导出lazada</el-button>
       </el-col>
     </el-col>
     <el-col :span="24" style="padding: 0;margin-left: 15px">
@@ -821,6 +826,7 @@ import {
   APIVovaName,
   APIPlatExportWish,
   APIPlatExportMymall,
+  APIPlatExportLazada,
   APIPlatExportShopify,
   APIPlatExportVova,
   APIPlatExportJoom,
@@ -908,6 +914,28 @@ export default {
         document.body.removeChild(downloadElement);
       });
     },
+    exportLazada(){
+      let objStr = {
+        id: [this.wishForm.infoId]
+      };
+      APIPlatExportLazada(objStr).then(res => {
+        const blob = new Blob([res.data], {
+          type:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+        var filename=JSON.parse(file)
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        // const filename =
+        //   "Wish_" + year + month + strDate + hour + minute + second;
+        downloadElement.download = filename;
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+      });
+    },    
     clearColor(){
       for(let i=0;i<this.tableData.length;i++){
           this.tableData[i].color=null
@@ -1729,14 +1757,15 @@ section {
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
 }
 .leftmedia{
-  margin-left: 7%;
+  margin-left: 5%;
 }
 .accyjsj{
   margin-left: 5px;
 }
 @media screen and (max-width: 1600px){
    .leftmedia{
-     margin-left: 5px;
+     margin-left: 1%;
+     zoom: 0.87;
    }
   //  .ptom60{
   //    padding-bottom: 50px;

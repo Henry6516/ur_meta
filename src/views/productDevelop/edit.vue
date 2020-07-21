@@ -912,9 +912,10 @@ export default {
             message: '删除成功',
             type: 'success'
           })
+          const arridlength = aryId.id
           for(let k =0;k<this.tableData.length;k++){
-            for(let j =0;j<aryId.length;j++){
-              if(this.tableData[k].id==aryId[j]){
+            for(let j =0;j<arridlength.length;j++){
+              if(this.tableData[k].id==arridlength[j]){
                 this.tableData.splice(k, 1)
               }
             }

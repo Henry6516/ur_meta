@@ -808,6 +808,15 @@ export function APIPlatExportMymall(param) {
     responseType: 'arraybuffer'
   })
 }
+export function APIPlatExportLazada(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat-export-lazada',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
 export function APIPlatExportShopify(param) {
   const data = { condition: param }
   return request({
