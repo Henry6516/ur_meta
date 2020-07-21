@@ -93,6 +93,8 @@
               >{{item.type}}</el-radio>
             </el-radio-group>
           </el-form-item>
+          
+
           <el-form-item
             label="日期"
             class="input"
@@ -111,6 +113,25 @@
               start-placeholder="开始日期"
               end-placeholder="结束日期"
               :picker-options="pickerOptions2"
+            ></el-date-picker>
+          </el-form-item>
+            <el-form-item
+            label="开发时间"
+            class="input"
+            prop="devDateRange"
+          >
+            <el-date-picker
+              size="small"
+              v-model="condition.devDateRange"
+              type="daterange"
+              value-format="yyyy-MM-dd"
+              align="right"
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions2"
+              style="width:215px;"
             ></el-date-picker>
           </el-form-item>
           <el-form-item style="margin-left:25px">
@@ -404,6 +425,7 @@ export default {
         developer: [],
         dateType: 1,
         dateRange: [],
+        devDateRange:[],
         goodsStatus: [],
         introducer:'',
         goodsCode:'',
