@@ -59,6 +59,11 @@
           <template slot-scope="scope">{{scope.row.completeDate2 | cutOutDate}}</template>
         </el-table-column>
       </el-table-column>
+      <el-table-column prop="content" label="提示信息" align="center">
+        <el-table-column prop="content" :render-header="renderHeader" align="center">
+          <template slot-scope="scope">{{scope.row.content}}</template>
+        </el-table-column>
+      </el-table-column>
     </el-table>
     <div>
       <el-pagination
