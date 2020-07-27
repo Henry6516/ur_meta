@@ -65,8 +65,8 @@
           ></el-option>
         </el-select>
       <span class="exportAccount" @click="exportSmt">添加导出队列</span>
-      <span class="exportAccountmy" @click="exportMymall" style="margin-left:10px;">导出mymall</span>
-      <span class="exportAccountmy" @click="exportLazada" style="margin-left:10px;">导出lazada</span>
+      <span class="exportAccountmy" @click="exportMymall" style="margin-left:10px;" :style="{'cursor':Loading?'wait':'pointer'}">导出mymall</span>
+      <span class="exportAccountmy" @click="exportLazada" style="margin-left:10px;" :style="{'cursor':Loading?'wait':'pointer'}">导出lazada</span>
     </el-col>
     <el-col :span="24">
       <div class="posIndex">
@@ -79,7 +79,7 @@
     </el-col>
     <div class="infoTable">
       <!-- 平台信息列表 -->
-      <el-table :data="platData" @selection-change="selsChange" :height="tableHeight">
+      <el-table :data="platData" @selection-change="selsChange" :height="tableHeight"  v-loading="Loading">
         <el-table-column type="selection" fixed align="center" header-align="center"></el-table-column>
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
         <el-table-column label="操作" fixed header-align="center" width="70">
@@ -547,6 +547,7 @@ import { getMenu } from "../../api/login";
 export default {
   data() {
     return {
+      Loading:false,
       defaultPropsApp: {
         children: "children",
         label: "name",
@@ -689,60 +690,72 @@ export default {
   methods: {
     exportMymall(){
       if(this.sels.length!=0){
-        const mymallAry = []
-        for (let i = 0; i < this.sels.length; i++) {
-          mymallAry.push(this.sels[i].id);
-        }
-        let objStr = {
-          id: mymallAry
-        };
-        APIPlatExportMymall(objStr).then(res => {
-          const blob = new Blob([res.data], {
-            type:
-              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        if(!this.Loading){
+          this.Loading = true
+          const mymallAry = []
+          for (let i = 0; i < this.sels.length; i++) {
+            mymallAry.push(this.sels[i].id);
+          }
+          let objStr = {
+            id: mymallAry
+          };
+          APIPlatExportMymall(objStr).then(res => {
+            this.Loading = false
+            const blob = new Blob([res.data], {
+              type:
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+            });
+            var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+            var filename=JSON.parse(file)
+            const downloadElement = document.createElement("a");
+            const objectUrl = window.URL.createObjectURL(blob);
+            downloadElement.href = objectUrl;
+            // const filename =
+            //   "Wish_" + year + month + strDate + hour + minute + second;
+            downloadElement.download = filename;
+            document.body.appendChild(downloadElement);
+            downloadElement.click();
+            document.body.removeChild(downloadElement);
           });
-          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
-          var filename=JSON.parse(file)
-          const downloadElement = document.createElement("a");
-          const objectUrl = window.URL.createObjectURL(blob);
-          downloadElement.href = objectUrl;
-          // const filename =
-          //   "Wish_" + year + month + strDate + hour + minute + second;
-          downloadElement.download = filename;
-          document.body.appendChild(downloadElement);
-          downloadElement.click();
-          document.body.removeChild(downloadElement);
-        });
+        }else{
+          this.$message.error('请勿重复点击');
+        }
       }else{
         this.$message.error('请选择产品');
       }
     },
     exportLazada(){
       if(this.sels.length!=0){
-        const mymallAry = []
-        for (let i = 0; i < this.sels.length; i++) {
-          mymallAry.push(this.sels[i].id);
-        }
-        let objStr = {
-          id: mymallAry
-        };
-        APIPlatExportLazada(objStr).then(res => {
-          const blob = new Blob([res.data], {
-            type:
-              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        if(!this.Loading){
+          this.Loading = true
+          const mymallAry = []
+          for (let i = 0; i < this.sels.length; i++) {
+            mymallAry.push(this.sels[i].id);
+          }
+          let objStr = {
+            id: mymallAry
+          };
+          APIPlatExportLazada(objStr).then(res => {
+            this.Loading = false
+            const blob = new Blob([res.data], {
+              type:
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+            });
+            var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+            var filename=JSON.parse(file)
+            const downloadElement = document.createElement("a");
+            const objectUrl = window.URL.createObjectURL(blob);
+            downloadElement.href = objectUrl;
+            // const filename =
+            //   "Wish_" + year + month + strDate + hour + minute + second;
+            downloadElement.download = filename;
+            document.body.appendChild(downloadElement);
+            downloadElement.click();
+            document.body.removeChild(downloadElement);
           });
-          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
-          var filename=JSON.parse(file)
-          const downloadElement = document.createElement("a");
-          const objectUrl = window.URL.createObjectURL(blob);
-          downloadElement.href = objectUrl;
-          // const filename =
-          //   "Wish_" + year + month + strDate + hour + minute + second;
-          downloadElement.download = filename;
-          document.body.appendChild(downloadElement);
-          downloadElement.click();
-          document.body.removeChild(downloadElement);
-        });
+        }else{
+          this.$message.error('请勿重复点击');
+        }
       }else{
         this.$message.error('请选择产品');
       }

@@ -133,6 +133,7 @@
       <el-table-column prop="goodsCode" label="商品编码" width="100" fixed align="center"></el-table-column>
       <el-table-column prop="goodsStatus" label="状态" width="100" align="center"></el-table-column>
       <el-table-column prop="season" label="季节" width="100" align="center"></el-table-column>
+      <el-table-column prop="class" label="规格" width="100" align="center"></el-table-column>
       <el-table-column prop="categoryName" label="类目" width="100" align="center"></el-table-column>
       <el-table-column prop="price" label="价格" sortable="custom" width="100" align="center"></el-table-column>
       <el-table-column prop="weight" label="重量(g)" sortable="custom" width="100" align="center"></el-table-column>
