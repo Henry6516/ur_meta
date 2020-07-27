@@ -8,8 +8,8 @@
       :height="tableHeight"
       :header-cell-style="getRowClass"
     >
-      <el-table-column prop="id" label="日志ID" align="center" width="100">
-        <el-table-column prop="id" :render-header="renderHeader" align="center" width="100"></el-table-column>
+      <el-table-column prop="id" label="日志ID" align="center" width="80">
+        <el-table-column prop="id" :render-header="renderHeader" align="center" width="80"></el-table-column>
       </el-table-column>
       <el-table-column prop="goodsName" label="商品名称" align="center">
         <el-table-column prop="goodsName" :render-header="renderHeader" align="center"></el-table-column>
@@ -60,7 +60,7 @@
         </el-table-column>
       </el-table-column>
       <el-table-column prop="content" label="提示信息" align="center">
-        <el-table-column prop="content" :render-header="renderHeader" align="center">
+        <el-table-column prop="content" :render-header="renderHeader" align="center" :show-overflow-tooltip="true">
           <template slot-scope="scope">{{scope.row.content}}</template>
         </el-table-column>
       </el-table-column>
@@ -98,6 +98,7 @@ export default {
         createDate: [],
         completeDate1: [],
         completeDate2: [],
+        content:'',
         status1: "",
         status2: "",
         page: 1,
@@ -416,6 +417,33 @@ export default {
             }
           }
         });
+      }else if ($index === 11) {
+        return h(
+          "div",
+          {
+            style: {
+              height: "40px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.condition.content,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.condition.content = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.getData();
+                }
+              }
+            })
+          ]
+        );
       }
     },
     handleSizeChange(val) {
