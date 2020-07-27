@@ -127,13 +127,14 @@
       style="width: 100%;font-size:13px;"
     >
       <el-table-column prop="salerName" label="开发员" width="100" fixed align="center"></el-table-column>
-      <el-table-column prop="seller1" label="销售" width="100" fixed align="center"></el-table-column>
+      <!-- <el-table-column prop="seller1" label="销售" width="100" fixed align="center"></el-table-column> -->
       <el-table-column prop="supplierName" label="供应商" width="140" fixed align="center"></el-table-column>
       <el-table-column prop="SKU" label="sku" width="100" fixed align="center"></el-table-column>
       <el-table-column prop="SKUName" label="SKU名称" width="120" fixed align="center"></el-table-column>
       <el-table-column prop="goodsCode" label="商品编码" width="100" fixed align="center"></el-table-column>
       <el-table-column prop="goodsStatus" label="状态" width="100" align="center"></el-table-column>
       <el-table-column prop="season" label="季节" width="100" align="center"></el-table-column>
+      <el-table-column prop="class" label="规格" width="100" align="center"></el-table-column>
       <el-table-column prop="categoryName" label="类目" width="100" align="center"></el-table-column>
       <el-table-column prop="price" label="价格" sortable="custom" width="100" align="center"></el-table-column>
       <el-table-column prop="weight" label="重量(g)" sortable="custom" width="100" align="center"></el-table-column>

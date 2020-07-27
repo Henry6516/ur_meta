@@ -919,21 +919,35 @@ export default {
         id: [this.wishForm.infoId]
       };
       APIPlatExportLazada(objStr).then(res => {
-        const blob = new Blob([res.data], {
-          type:
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
-        });
-        var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
-        var filename=JSON.parse(file)
-        const downloadElement = document.createElement("a");
-        const objectUrl = window.URL.createObjectURL(blob);
-        downloadElement.href = objectUrl;
-        // const filename =
-        //   "Wish_" + year + month + strDate + hour + minute + second;
-        downloadElement.download = filename;
-        document.body.appendChild(downloadElement);
-        downloadElement.click();
-        document.body.removeChild(downloadElement);
+        if(res.headers["content-disposition"]){
+          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+          var filename=JSON.parse(file)
+          const blob = new Blob([res.data], {
+            type:
+               "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          // const filename =
+          //   "Wish_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename;
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        }else{
+          const that = this
+          const blob = new Blob([res.data], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          var reader = new FileReader();
+          reader.readAsText(blob, 'utf-8');
+          reader.onload = function (e) {
+            const title = JSON.parse(reader.result)
+            that.$message.error(title.message);
+          }
+        }
       });
     },    
     clearColor(){
@@ -1495,11 +1509,13 @@ export default {
     },
     // 更新
     update() {
-      const tagsLength=this.wishForm.wishTags.split(',')
-      if(tagsLength.length>10){
-        this.$message.error('关键词不能超过10个,当前数量为:'+ tagsLength.length)
-        return
-      } 
+      if(this.wishForm.wishTags){
+        const tagsLength=this.wishForm.wishTags.split(',')
+        if(tagsLength.length>10){
+          this.$message.error('关键词不能超过10个,当前数量为:'+ tagsLength.length)
+          return
+        }
+      }
       const md = JSON.stringify(this.mandatoryData);
       const mr = JSON.stringify(this.randomData);
       const data = {
