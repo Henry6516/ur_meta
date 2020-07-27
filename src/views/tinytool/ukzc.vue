@@ -121,12 +121,13 @@
       element-loading-text="正在加载中..."
       @sort-change="sortNumber"
       :height="tableHeight"
-      border 
+      border
       class="elTable"
-      :header-cell-style="getRowClass" 
+      :header-cell-style="getRowClass"
       style="width: 100%;font-size:13px;"
     >
       <el-table-column prop="salerName" label="开发员" width="100" fixed align="center"></el-table-column>
+      <el-table-column prop="seller1" label="销售" width="100" fixed align="center"></el-table-column>
       <el-table-column prop="supplierName" label="供应商" width="140" fixed align="center"></el-table-column>
       <el-table-column prop="SKU" label="sku" width="100" fixed align="center"></el-table-column>
       <el-table-column prop="SKUName" label="SKU名称" width="120" fixed align="center"></el-table-column>

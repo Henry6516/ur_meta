@@ -4,4 +4,6 @@ npm-debug.log
 .editorconfig
 # dist/
 .idea/
+Program Files/
 .vscode/settings.json
+
