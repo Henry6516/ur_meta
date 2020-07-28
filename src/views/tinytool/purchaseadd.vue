@@ -39,25 +39,89 @@
       @selection-change="selsChange"
       style="width: 98%;font-size:13px;margin-left:0.7%;"
     >
-      <el-table-column type="index" label="#" align="center" width="45"></el-table-column>
-      <el-table-column prop="SKU" label="SKU" align="center" sortable="custom"></el-table-column>
-      <el-table-column prop="property1" label="款式1" align="center"></el-table-column>
-      <el-table-column prop="property2" label="款式2" align="center"></el-table-column>
-      <el-table-column prop="property3" label="款式3" align="center"></el-table-column>
-      <el-table-column prop="SKUName" label="商品名称" align="center"></el-table-column>
-      <el-table-column prop="companyName" label="供应商" align="center">
+      <el-table-column type="index" align="center" width="60" label="#" fixed header-align="center"></el-table-column>
+      <el-table-column label="SKU" prop="sku" fixed width="180" header-align="center">
+        <template slot-scope="scope">
+          <el-input size="small" v-model="scope.row.sku" disabled></el-input>
+        </template>
+      </el-table-column>
+      <el-table-column label="款式1" prop="property1" width="160" fixed header-align="center">
+        <template slot-scope="scope">
+          <el-input size="small" v-model="scope.row.property1" disabled></el-input>
+        </template>
+      </el-table-column>
+      <el-table-column label="款式2" prop="property2" width="120" fixed header-align="center">
+        <template slot-scope="scope">
+          <el-input size="small" v-model="scope.row.property2" disabled></el-input>
+        </template>
+      </el-table-column>
+      <el-table-column label="款式3" prop="property3" width="100" header-align="center">
+        <template slot-scope="scope">
+          <el-input size="small" v-model="scope.row.property3" disabled></el-input>
+        </template>
+      </el-table-column>
+      <el-table-column label="成本价" prop="costPrice" width="100" header-align="center">
+        <template slot-scope="scope">
+          <el-input size="small" v-model="scope.row.costPrice" disabled></el-input>
+        </template>
+      </el-table-column>
+      <el-table-column label="重量" prop="weight" width="100" header-align="center">
+        <template slot-scope="scope">
+          <el-input size="small" v-model="scope.row.weight" disabled></el-input>
+        </template>
+      </el-table-column>
+      <el-table-column label="零售价" prop="retailPrice" width="100" header-align="center">
+        <template slot-scope="scope">
+          <el-input size="small" v-model="scope.row.retailPrice" disabled></el-input>
+        </template>
+      </el-table-column>
+      <el-table-column label="joom零售价" prop="joomPrice" width="100" header-align="center">
+        <template slot-scope="scope">
+          <el-input size="small" v-model="scope.row.joomPrice" disabled></el-input>
+        </template>
+      </el-table-column>
+      <el-table-column label="joom运费" prop="joomShipping" width="100" header-align="center">
+        <template slot-scope="scope">
+          <el-input size="small" v-model="scope.row.joomShipping" disabled></el-input>
+        </template>
+      </el-table-column>
+      <el-table-column label="备货数量" prop="stockNum" width="100" header-align="center">
+        <template slot-scope="scope">
+          <el-input size="small" v-model="scope.row.stockNum" disabled></el-input>
+        </template>
+      </el-table-column>
+      <el-table-column label="供应商" width="220" prop="property2" header-align="center">
         <template slot-scope="scope">
           <el-select
-            v-model="scope.row.companyName"
-            placeholder="请选择"
-            style="width:100%;"
+            v-model="scope.row.offerId"
+            placeholder="请选择供应商"
             size="small"
+            style="width:100%;margin-top:5px;"
+            @change="currentSel(scope.$index,$event)"
           >
-            <el-option v-for="item in scope.row.values" :key="item" :label="item" :value="item"></el-option>
+            <el-option
+              v-for="(item,index) in data1688"
+              :key="index"
+              :label="item.vendor"
+              :value="item.offerId"
+            ></el-option>
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column prop="style" label="供应商款式" align="center"></el-table-column>
+      <el-table-column label="1688规格" prop="property2" width="250" header-align="center">
+        <el-table-column prop="property2" :render-header="renderHeader" align="center" width="250">
+          <template slot-scope="scope">
+            <el-select v-model="scope.row.style" placeholder="请选择" style="width:100%" size="small">
+              <el-option
+                v-for="(item,index) in scope.row.selectData"
+                :key="index"
+                :label="item.style"
+                :value="item.style"
+              ></el-option>
+            </el-select>
+          </template>
+        </el-table-column>
+      </el-table-column>
     </el-table>
     <el-dialog title="编辑" :visible.sync="dialog" width="30%">
       <el-select v-model="companyValue" placeholder="请选择" style="width:100%;">
@@ -97,6 +161,7 @@ export default {
       options: [],
       nid: null,
       companyData: [],
+      vague: null,
       condition: {
         goodsCode: "",
         url: "",
@@ -105,6 +170,50 @@ export default {
     };
   },
   methods: {
+    renderHeader(h, { column, $index }) {
+      if ($index === 0) {
+        return h(
+          "div",
+          {
+            style: {
+              widthL: "100%",
+              height: "30px",
+            },
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.vague,
+                size: "mini",
+                clearable: true,
+              },
+              on: {
+                input: (value) => {
+                  this.vague = value;
+                  this.$emit("input", value);
+                },
+                change: (value) => {
+                  this.getDateTable();
+                },
+              },
+            }),
+          ]
+        );
+      }
+    },
+    getDateTable() {
+      let arr = [];
+      let e = this.vague;
+      for (let k = 0; k < this.selectData.length; k++) {
+        if (this.selectData[k].style.indexOf(e) > -1) {
+          arr.push(this.selectData[k]);
+        }
+      }
+      this.vagueData = arr;
+      for (let i = 0; i < this.tableData.length; i++) {
+        this.tableData[i].selectData = this.vagueData;
+      }
+    },
     sortNumber(column, prop, order) {
       if (column.order == null) {
         this.condition.sort = null;

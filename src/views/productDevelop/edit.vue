@@ -978,6 +978,7 @@ export default {
       // }
     },
     selectSupplier(e){
+      this.allspecs=[]
       for(let i =0;i<this.data1688.length;i++){
         if(e==this.data1688[i].offerId){
           this.specs1688=this.data1688[i].value
@@ -1115,7 +1116,11 @@ export default {
       }
       APIget1688Suppliers(obj).then(res => {
          if(res.data.code==200){
-           this.data1688=res.data.data
+           if(res.data.data){
+             this.data1688=res.data.data
+           }else{
+             this.data1688=[]
+           }
          }else{
            this.$message.error(res.data.message)
          }  
@@ -1770,9 +1775,9 @@ export default {
             message: '保存成功',
             type: 'success'
           })
-          //  setTimeout(()=>{
-          //   location.reload()
-          // },1000)
+           setTimeout(()=>{
+            location.reload()
+          },1000)
         } else {
           this.$message.error(res.data.message)
         }
