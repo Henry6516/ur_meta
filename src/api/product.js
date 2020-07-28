@@ -2115,3 +2115,11 @@ export function getSaveSkuSuppliers(param) {
     data
   })
 }
+export function getAddSuppliers(param) {
+  const data = { condition: param }
+  return request({
+    url: '/purchase-tool/add-suppliers',
+    method: 'post',
+    data
+  })
+}

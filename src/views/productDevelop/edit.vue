@@ -547,7 +547,7 @@
                  <!--:label="item.label"-->
                  <!--:value="item.value"></el-option>-->
     <!--</el-select>-->
-    <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange" max-height="500" :header-cell-style="getRowClass" v-loading="loading">
+    <el-table :data="tableData" border style="width: 98%;margin-left: 1%" @selection-change="selsChange" max-height="500" v-loading="loading" :header-cell-style="getRowClass">
       <el-table-column type="index"
                        align="center"
                        width="40"
@@ -687,16 +687,18 @@
                        prop="property2"
                        width="250"
                        header-align="center">
-        <template slot-scope="scope">
-          <el-select v-model="scope.row.specId" placeholder="请选择" style="width:100%">
-            <el-option
-              v-for="(item,index) in scope.row.selectData"
-              :key="index"
-              :label="item.style"
-              :value="item.specId">
-            </el-option>
-          </el-select>
-        </template>
+        <el-table-column prop="property2" :render-header="renderHeader" align="center" width="250">
+          <template slot-scope="scope">
+            <el-select v-model="scope.row.style" placeholder="请选择" style="width:100%" size="small">
+              <el-option
+                v-for="(item,index) in scope.row.selectData"
+                :key="index"
+                :label="item.style"
+                :value="item.style">
+              </el-option>
+            </el-select>
+          </template>
+        </el-table-column>               
       </el-table-column>
     </el-table>
     <el-row style="margin-top:15px;padding-left: 1%">
@@ -770,21 +772,29 @@
                  type="warning" @click="passAll">导入普源</el-button>
       <span class="pob" v-show="titleTips">未导入的商品不能完善</span>           
       <el-button size="small"
-                 type="primary" @click="save1()" :disabled="saveFlag" style="margin-left:12px;">
+                 type="primary" @click="save1()" :disabled="saveFlag" style="margin-left:10px;">
                   <span @mouseover="saveFb" @mouseout="saveFbfalse" style="display:block;width:100%;">保存并完善</span>
                  </el-button>
       <el-button size="small"
                  type="danger" @click="createOrder" :disabled="orderTrue">生成采购单</el-button>
       <el-button size="small"
                  type="success" @click="synchro1688">同步1688</el-button>
-      <el-select v-model="allSupplierValue" placeholder="请选择供应商" size="small">
+      <el-select v-model="allSupplierValue" placeholder="请选择供应商" size="small" style="width:190px;" @change="selectSupplier($event)">
             <el-option
               v-for="(item,index) in data1688"
               :key="index"
               :label="item.vendor"
               :value="item.offerId">
             </el-option>
-        </el-select>
+      </el-select>
+      <el-select v-model="allspecs" placeholder="选择规格" size="small" style="width:215px;" filterable  multiple collapse-tags @change="selectSpecs($event)">
+            <el-option
+              v-for="(item,index) in specs1688"
+              :key="index"
+              :label="item.style"
+              :value="item.specId">
+            </el-option>
+      </el-select>  
       <el-button type="primary" @click="allSupplier" size="small">一键应用供应商</el-button>           
       <el-button size="small"
                  type="warning" @click="allStyle">一键填充款式</el-button>           
@@ -796,7 +806,7 @@
           :value="item">
         </el-option>
       </el-select> -->
-      <span style="font-size:13px;color:red;margin-left:10px;">提示：先同步1688->选择供应商->再选择1688规格，如果对应不了1688规格请选择无。</span>                      
+      <span style="font-size:13px;color:red;margin-left:5px;">提示：先同步1688->选择供应商->再选择1688规格，如果对应不了1688规格请选择无。</span>                      
       <!--<el-button size="small"-->
                  <!--type="danger">删除行</el-button>-->
     </div>
@@ -835,6 +845,8 @@ export default {
   data() {
     return {
       allSupplierValue:null,
+      vague:null,
+      allspecs:[],
       ordColor:'',
       newColor:'',
       ordSize:'',
@@ -891,13 +903,87 @@ export default {
       allMenu:[],
       sels:[],
       data1688:[],
+      specs1688:[],
       value1688:null,
       loading:false,
       style1688Data:[],
       id1688:null,
+      selectData:[],
+      vagueData:[],
     }
   },
   methods: {
+    renderHeader(h, { column, $index }) {
+      if ($index === 0) {
+        return h(
+          "div",
+          {
+            style: {
+              widthL:'100%',
+              height: "30px"
+            }
+          },
+          [
+            h("el-input", {
+              props: {
+                value: this.vague,
+                size: "mini",
+                clearable: true
+              },
+              on: {
+                input: value => {
+                  this.vague = value;
+                  this.$emit("input", value);
+                },
+                change: value => {
+                  this.getDateTable();
+                }
+              }
+            })
+          ]
+        );
+      }
+    },
+    getDateTable(){
+      let arr = []
+      let e = this.vague
+      for(let k =0;k<this.selectData.length;k++){
+        if(this.selectData[k].style.indexOf(e) > -1){
+          arr.push(this.selectData[k])
+        }
+      }
+      this.vagueData = arr
+      for(let i=0;i<this.tableData.length;i++){
+        this.tableData[i].selectData=this.vagueData
+        
+      }
+    },
+    selectSpecs(e){
+      // let arr = []
+      // for(let j =0;j<e.length;j++){
+      //   for(let k =0;k<this.specs1688.length;k++){
+      //     if(e[j]==this.specs1688[k].specId){
+      //       arr.push(this.specs1688[k])
+      //     }
+      //   }
+      //   this.selectData = arr
+      // }
+      // for(let i=0;i<this.tableData.length;i++){
+      //   this.tableData[i].selectData=this.selectData
+      //   for(let h =0;h<e.length;h++){
+      //     if(i==h){
+      //       this.tableData[i].specId=e[h]
+      //     }
+      //   }
+      // }
+    },
+    selectSupplier(e){
+      for(let i =0;i<this.data1688.length;i++){
+        if(e==this.data1688[i].offerId){
+          this.specs1688=this.data1688[i].value
+        }
+      }
+    },
     deleteAll(){
       let arrId = []
       for (let i = 0; i < this.sels.length; i++) {
@@ -953,10 +1039,46 @@ export default {
       for(let i =0;i<this.tableData.length;i++){
         this.tableData[i].offerId=this.allSupplierValue
         this.tableData[i].specId=''
+        this.tableData[i].style=''
         for(let k=0;k<this.data1688.length;k++){
           if(this.tableData[i].offerId==this.data1688[k].offerId){
             this.tableData[i].selectData=this.data1688[k].value
           }
+        }
+      }
+      let arr = []
+      let e = this.allspecs
+      if(e.length!=0){
+        for(let j =0;j<e.length;j++){
+          for(let k =0;k<this.specs1688.length;k++){
+            if(e[j]==this.specs1688[k].specId){
+              arr.push(this.specs1688[k])
+            }
+          }
+          this.selectData = arr
+        }
+        for(let i=0;i<this.tableData.length;i++){
+          this.tableData[i].selectData=this.selectData
+          for(let h =0;h<e.length;h++){
+            if(i==h){
+              this.tableData[i].specId=e[h]
+            }
+          }
+        }
+        for(let i=0;i<this.tableData.length;i++){
+          for(let h =0;h<e.length;h++){
+            if(i==h){
+              for(let b=0;b<this.specs1688.length;b++){
+                if(e[h]==this.specs1688[b].specId){
+                  this.tableData[i].style=this.specs1688[b].style
+                }
+              }
+            }
+          }
+        }
+      }else{
+        for(let i=0;i<this.tableData.length;i++){
+          this.tableData[i].selectData=this.specs1688
         }
       }
     },    
@@ -965,6 +1087,7 @@ export default {
         if(this.data1688[i].offerId==e){
           this.tableData[index].selectData=this.data1688[i].value
           this.tableData[index].specId=''
+          this.tableData[index].style=''
         }
       }
     },
@@ -1327,6 +1450,7 @@ export default {
         obj.joomShipping = null
         obj.offerId = null
         obj.specId = null
+        obj.style = null
         obj.selectData = []
         this.tableData.push(obj)
       }
@@ -1422,6 +1546,17 @@ export default {
       }
       const md = JSON.stringify(this.mandatoryData)
       const mr = JSON.stringify(this.randomData)
+      for(let i=0;i<this.tableData.length;i++){
+         for(let k=0;k<this.data1688.length;k++){
+           if(this.tableData[i].offerId==this.data1688[k].offerId){
+             for(let j=0;j<this.data1688[k].value.length;j++){
+              if(this.tableData[i].style==this.data1688[k].value[j].style){
+                this.tableData[i].specId=this.data1688[k].value[j].specId
+              }
+            } 
+           }
+         } 
+      }
       const saveInfo = {
         basicInfo: {
           goodsInfo: {
@@ -1551,6 +1686,17 @@ export default {
       }
       const md = JSON.stringify(this.mandatoryData)
       const mr = JSON.stringify(this.randomData)
+      for(let i=0;i<this.tableData.length;i++){
+         for(let k=0;k<this.data1688.length;k++){
+           if(this.tableData[i].offerId==this.data1688[k].offerId){
+             for(let j=0;j<this.data1688[k].value.length;j++){
+              if(this.tableData[i].style==this.data1688[k].value[j].style){
+                this.tableData[i].specId=this.data1688[k].value[j].specId
+              }
+            } 
+           }
+         } 
+      }
       const saveInfo = {
         basicInfo: {
           goodsInfo: {
@@ -1624,9 +1770,9 @@ export default {
             message: '保存成功',
             type: 'success'
           })
-           setTimeout(()=>{
-            location.reload()
-          },1000)
+          //  setTimeout(()=>{
+          //   location.reload()
+          // },1000)
         } else {
           this.$message.error(res.data.message)
         }
@@ -1854,6 +2000,9 @@ section {
 @media screen and (max-width: 1500px){
    .font13{
      font-size: 13px;
+   }
+   .pos .el-button+.el-button{
+     margin-left: 0;
    }
 }
 @media screen and (max-width: 1400px){

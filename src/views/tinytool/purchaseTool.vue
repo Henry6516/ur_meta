@@ -26,6 +26,9 @@
     <div v-show="show.yl">
       <purchase1688></purchase1688>
     </div>
+    <div v-show="show.tj">
+      <purchaseadd></purchaseadd>
+    </div>
   </section>
 </template>
 
@@ -37,6 +40,7 @@ import purchaseQh from "./purchaseQh.vue";
 import purchaseZd from "./purchaseZd.vue";
 import purchaseTb from "./purchaseTb.vue";
 import purchase1688 from "./purchase1688.vue";
+import purchaseadd from "./purchaseadd.vue";
 
 export default {
   components: {
@@ -45,7 +49,8 @@ export default {
     purchaseQh,
     purchaseZd,
     purchaseTb,
-    purchase1688
+    purchase1688,
+    purchaseadd
   },
   data() {
     return {
@@ -57,7 +62,8 @@ export default {
         qh: false,
         zd: false,
         tb: false,
-        yl: true
+        yl: false,
+        tj:true,
       }
     };
   },
@@ -95,6 +101,11 @@ export default {
         this.show["yl"] = true;
       } else {
         this.show["yl"] = false;
+      }
+      if (tab.name === "/v1/purchase-tool/add-suppliers") {
+        this.show["tj"] = true;
+      } else {
+        this.show["tj"] = false;
       }
     }
   },
