@@ -817,6 +817,15 @@ export function APIPlatExportLazada(param) {
     responseType: 'arraybuffer'
   })
 }
+export function APIPlatExportShopee(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/plat-export-shopee',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
 export function APIPlatExportShopify(param) {
   const data = { condition: param }
   return request({
