@@ -1085,11 +1085,11 @@ export default {
     },
     allStyle() {
       for (let i = 0; i < this.tableData.length; i++) {
-        const styleNumber = this.tableData[i].specId;
+        const styleNumber = this.tableData[i].style;
         for (let k = 0; k < this.data1688.length; k++) {
           let dataValue = this.data1688[k].value;
           for (let j = 0; j < dataValue.length; j++) {
-            if (styleNumber == dataValue[j].specId) {
+            if (styleNumber == dataValue[j].style) {
               const arr = dataValue[j].style;
               this.tableData[i].property1 = arr.split(" ")[0];
               this.tableData[i].property2 = arr.split(" ")[1];
