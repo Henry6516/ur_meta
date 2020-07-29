@@ -2918,7 +2918,7 @@ export default {
   line-height: 38px;
   border-left: none;
   background: #fff;
-  padding: 0 8px;
+  padding: 0 9px;
   font-size: 13px;
   cursor: pointer;
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
@@ -2930,7 +2930,7 @@ export default {
   height: 38px;
   line-height: 38px;
   background: #fff;
-  padding: 0 8px;
+  padding: 0 9px;
   font-size: 13px;
   cursor: pointer;
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
