@@ -1156,18 +1156,23 @@ export default {
       }
       for (let k = 0; k < e.length; k++) {
         rightArr[k].offerId = this.allSupplierValue;
-        if (e.length != 0) {
-          rightArr[k].selectData = this.selectData;
-        } else {
-          for (let k = 0; k < this.data1688.length; k++) {
-            if (rightArr[k].offerId == this.data1688[k].offerId) {
-              rightArr[k].selectData = this.data1688[k].value;
-            }
-          }
-        }
+        // if (e.length != 0) {
+        //   rightArr[k].selectData = this.selectData;
+        // } else {
+        //   for (let k = 0; k < this.data1688.length; k++) {
+        //     if (rightArr[k].offerId == this.data1688[k].offerId) {
+        //       rightArr[k].selectData = this.data1688[k].value;
+        //     }
+        //   }
+        // }
       }
       for (let j = 0; j < rightArr.length; j++) {
         // rightArr[j].offerId = this.allSupplierValue;
+        for (let k = 0; k < this.data1688.length; k++) {
+          if (rightArr[j].offerId == this.data1688[k].offerId) {
+            rightArr[j].selectData = this.data1688[k].value;
+          }
+        }
         rightArr[j].specId = e[j];
         for (let b = 0; b < this.specs1688.length; b++) {
           if (e[j] == this.specs1688[b].specId) {
