@@ -1,5 +1,31 @@
 <template>
   <section v-loading='joomloding'>
+    <!-- <div class="wishPas">
+      <el-button
+          type="primary"
+          style="float: left;margin-left: 15px;margin-top:15px;"
+          size="mini"
+          @click="exportWish"
+        >导出Wish</el-button>
+    <el-button
+          type="success"
+          style="float: left;margin-left: 10px;margin-top:15px;"
+          size="mini"
+          @click="exportMymall"
+        >导出mymall</el-button>
+        <el-button
+          type="warning"
+          style="float: left;margin-left: 10px;margin-top:15px;"
+          size="mini"
+          @click="exportLazada"
+        >导出lazada</el-button>
+        <el-button
+          type="danger"
+          style="float: left;margin-left: 10px;margin-top:15px;"
+          size="mini"
+          @click="exportShopee"
+        >导出shopee</el-button>
+    </div> -->
     <el-col
       :span="24"
       class="toolbar"
@@ -30,11 +56,24 @@
           <el-option label="Wish" value="Wish"></el-option>
           <el-option label="Joom" value="Joom"></el-option>
         </el-select>
-        <el-button
+        <span class="exportAccount1" style @click="keepExport">
+          <i class="el-icon-download" style="margin-right:5px;"></i>导出
+        </span>
+        <el-select
+          v-model="tipsPlat"
+          placeholder="--保存完善--"
+          style="float: left;width: 105px;margin-right:10px;"
+        >
+          <el-option label="Wish" value="Wish"></el-option>
+          <el-option label="Mymall" value="Mymall"></el-option>
+          <el-option label="Lazada" value="Lazada"></el-option>
+          <el-option label="Shopee" value="Shopee"></el-option>
+        </el-select>
+        <!-- <el-button
           type="success"
           style="float: left;margin-right: 10px"
           @click="exportWish"
-        >导出Wish</el-button>
+        >导出Wish</el-button> -->
         <el-select
           placeholder="--请选择账号--"
           clearable
@@ -78,7 +117,7 @@
         <el-option v-for="(item, key) in vovaArr" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
         <span class="exportAccount top1600" @click="exportVova">导出vova</span>
-        <el-button
+        <!-- <el-button
           type="success"
           style="float: left;margin-left: 10px"
           @click="exportMymall"
@@ -88,6 +127,11 @@
           style="float: left;margin-left: 10px"
           @click="exportLazada"
         >导出lazada</el-button>
+        <el-button
+          type="success"
+          style="float: left;margin-left: 10px"
+          @click="exportShopee"
+        >导出shopee</el-button> -->
       </el-col>
     </el-col>
     <el-col :span="24" style="padding: 0;margin-left: 15px">
@@ -827,6 +871,7 @@ import {
   APIPlatExportWish,
   APIPlatExportMymall,
   APIPlatExportLazada,
+  APIPlatExportShopee,
   APIPlatExportShopify,
   APIPlatExportVova,
   APIPlatExportJoom,
@@ -844,6 +889,7 @@ export default {
   },
   data() {
     return {
+      tipsPlat:'Wish',
       joomloding:false,
       ordColor:null,
       newColor:null,
@@ -949,7 +995,43 @@ export default {
           }
         }
       });
-    },    
+    },
+    exportShopee(){
+      let objStr = {
+        id: [this.wishForm.infoId]
+      };
+      APIPlatExportShopee(objStr).then(res => {
+        if(res.headers["content-disposition"]){
+          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+          var filename=JSON.parse(file)
+          const blob = new Blob([res.data], {
+            type:
+               "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          // const filename =
+          //   "Wish_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename;
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        }else{
+          const that = this
+          const blob = new Blob([res.data], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          var reader = new FileReader();
+          reader.readAsText(blob, 'utf-8');
+          reader.onload = function (e) {
+            const title = JSON.parse(reader.result)
+            that.$message.error(title.message);
+          }
+        }
+      });
+    },        
     clearColor(){
       for(let i=0;i<this.tableData.length;i++){
           this.tableData[i].color=null
@@ -1006,6 +1088,17 @@ export default {
     },
     showAttribute() {
       this.showattribute = !this.showattribute;
+    },
+    keepExport() {
+      if(this.tipsPlat=='Wish'){
+        this.exportWish();
+      }else if(this.tipsPlat=='Mymall'){
+        this.exportMymall();
+      }else if(this.tipsPlat=='Lazada'){
+        this.exportLazada();
+      }else if(this.tipsPlat=='Shopee'){
+        this.exportShopee();
+      }
     },
     keepPerfect() {
       if (this.tips) {
@@ -1634,6 +1727,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.wishPas{
+  position: absolute;
+  right: 15px;
+  top: 10px;
+}
 section {
   padding-bottom: 40px;
 }
@@ -1773,15 +1871,14 @@ section {
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
 }
 .leftmedia{
-  margin-left: 5%;
+  margin-left: 8%;
 }
 .accyjsj{
   margin-left: 5px;
 }
 @media screen and (max-width: 1600px){
    .leftmedia{
-     margin-left: 1%;
-     zoom: 0.87;
+     margin-left: 2.5%;
    }
   //  .ptom60{
   //    padding-bottom: 50px;
