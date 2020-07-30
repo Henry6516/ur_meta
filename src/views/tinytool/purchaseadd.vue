@@ -11,10 +11,10 @@
           class="demo-form-inline"
         >
           <el-form-item label="商品编码" class="input" style="margin-left:12px;">
-            <el-input v-model="condition.goodsCode" size="small"></el-input>
+            <el-input v-model="condition.goodsCode" size="small" style="width:100px"></el-input>
           </el-form-item>
           <el-form-item label="供应商链接" class="input" style="margin-left:12px;">
-            <el-input v-model="condition.url" size="small"></el-input>
+            <el-input v-model="condition.url" size="small" style="width:300px;"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button size="small" type="primary" @click="add">添加</el-button>
