@@ -1008,16 +1008,28 @@ export default {
       }
     },
     getDateTable() {
-      let arr = [];
       let e = this.vague;
-      for (let k = 0; k < this.selectData.length; k++) {
-        if (this.selectData[k].style.indexOf(e) > -1) {
-          arr.push(this.selectData[k]);
-        }
-      }
-      this.vagueData = arr;
+      // for (let k = 0; k < this.selectData.length; k++) {
+      //   if (this.selectData[k].style.indexOf(e) > -1) {
+      //     arr.push(this.selectData[k]);
+      //   }
+      // }
+      // this.vagueData = arr;
       for (let i = 0; i < this.tableData.length; i++) {
-        this.tableData[i].selectData = this.vagueData;
+        let arr = [];
+        if(this.tableData[i].offerId){
+          for(let k =0;k<this.data1688.length;k++){
+            if(this.tableData[i].offerId==this.data1688[k].offerId){
+              let valueArr = this.data1688[k].value
+              for(let j =0;j<valueArr.length;j++){
+                if (valueArr[j].style.indexOf(e) > -1) {
+                  arr.push(valueArr[j]);
+                }                
+              }
+            }
+          }
+        }
+        this.tableData[i].selectData = arr;
       }
     },
     selectSpecs(e) {

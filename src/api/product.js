@@ -2132,3 +2132,19 @@ export function getAddSuppliers(param) {
     data
   })
 }
+export function getSkuInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/purchase-tool/sku-info',
+    method: 'post',
+    data
+  })
+}
+export function getSaveSkuInfo(param) {
+  const data = { condition: param }
+  return request({
+    url: '/purchase-tool/save-sku-info',
+    method: 'post',
+    data
+  })
+}
