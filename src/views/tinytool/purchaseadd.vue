@@ -17,12 +17,18 @@
             <el-input v-model="condition.url" size="small"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button size="small" type="primary" @click="save">添加</el-button>
+            <el-button size="small" type="primary" @click="add">添加</el-button>
             <!-- <el-button size="small" type="primary" @click="all">批量修改</el-button> -->
             <el-select v-model="valueAll" placeholder="请选择" size="small" style="margin-left:10px;">
-              <el-option v-for="item in companyData" :key="item" :label="item" :value="item"></el-option>
+              <el-option
+                v-for="(item,index) in data1688"
+                :key="index"
+                :label="item.vendor"
+                :value="item.offerId"
+              ></el-option>
             </el-select>
             <el-button size="small" type="primary" @click="allCom">一键应用供应商</el-button>
+            <el-button size="small" type="success" @click="save">保存</el-button>
           </el-form-item>
         </el-form>
       </transition>
@@ -39,7 +45,7 @@
       @selection-change="selsChange"
       style="width: 98%;font-size:13px;margin-left:0.7%;"
     >
-      <el-table-column type="index" align="center" width="60" label="#" fixed header-align="center"></el-table-column>
+      <el-table-column type="index" align="center" width="45" label="#" fixed header-align="center"></el-table-column>
       <el-table-column label="SKU" prop="sku" fixed width="180" header-align="center">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.sku" disabled></el-input>
@@ -108,8 +114,18 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="1688规格" prop="property2" width="250" header-align="center">
-        <el-table-column prop="property2" :render-header="renderHeader" align="center" width="250">
+      <el-table-column label="1688规格" prop="property2" width="245" header-align="center">
+        <template slot-scope="scope">
+          <el-select v-model="scope.row.style" placeholder="请选择" style="width:100%" size="small">
+            <el-option
+              v-for="(item,index) in scope.row.selectData"
+              :key="index"
+              :label="item.style"
+              :value="item.style"
+            ></el-option>
+          </el-select>
+        </template>
+        <!-- <el-table-column prop="property2" :render-header="renderHeader" align="center" width="240">
           <template slot-scope="scope">
             <el-select v-model="scope.row.style" placeholder="请选择" style="width:100%" size="small">
               <el-option
@@ -120,7 +136,7 @@
               ></el-option>
             </el-select>
           </template>
-        </el-table-column>
+        </el-table-column>-->
       </el-table-column>
     </el-table>
     <el-dialog title="编辑" :visible.sync="dialog" width="30%">
@@ -145,7 +161,13 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { getSearchSuppliers, getAddSuppliers } from "../../api/product";
+import {
+  getSearchSuppliers,
+  getAddSuppliers,
+  getSkuInfo,
+  APIget1688Suppliers,
+  getSaveSkuInfo
+} from "../../api/product";
 
 export default {
   data() {
@@ -159,6 +181,7 @@ export default {
       tableData: [],
       sels: [],
       options: [],
+      data1688: [],
       nid: null,
       companyData: [],
       vague: null,
@@ -170,6 +193,15 @@ export default {
     };
   },
   methods: {
+    currentSel(index, e) {
+      for (var i = 0; i < this.data1688.length; i++) {
+        if (this.data1688[i].offerId == e) {
+          this.tableData[index].selectData = this.data1688[i].value;
+          this.tableData[index].specId = "";
+          this.tableData[index].style = "";
+        }
+      }
+    },
     renderHeader(h, { column, $index }) {
       if ($index === 0) {
         return h(
@@ -230,23 +262,79 @@ export default {
     },
     allCom() {
       for (let i = 0; i < this.tableData.length; i++) {
-        for (let k = 0; k < this.tableData[i].values.length; k++) {
-          if (this.valueAll == this.tableData[i].values[k]) {
-            this.tableData[i].companyName = this.valueAll;
-            break;
-          } else {
-            this.tableData[i].companyName = "无";
+        this.tableData[i].offerId = this.valueAll;
+        this.tableData[i].specId = "";
+        this.tableData[i].style = "";
+        for (let k = 0; k < this.data1688.length; k++) {
+          if (this.tableData[i].offerId == this.data1688[k].offerId) {
+            this.tableData[i].selectData = this.data1688[k].value;
           }
         }
       }
     },
-    save() {
+    add() {
       getAddSuppliers(this.condition).then((res) => {
         if (res.data.code == 200) {
           this.$message({
             message: "添加成功",
             type: "success",
           });
+          this.get1688Suppliers();
+          this.getData();
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
+    save() {
+      for (let i = 0; i < this.tableData.length; i++) {
+        for (let k = 0; k < this.data1688.length; k++) {
+          if (this.tableData[i].offerId == this.data1688[k].offerId) {
+            for (let j = 0; j < this.data1688[k].value.length; j++) {
+              if (this.tableData[i].style == this.data1688[k].value[j].style) {
+                this.tableData[i].specId = this.data1688[k].value[j].specId;
+              }
+            }
+          }
+        }
+      }
+      let obj ={
+        data:this.tableData
+      }
+      getSaveSkuInfo(obj).then((res) => {
+        if (res.data.code == 200) {
+          this.$message({
+            message: "保存成功",
+            type: "success",
+          });
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
+    get1688Suppliers() {
+      let obj = {
+        goodsCode: this.condition.goodsCode,
+      };
+      APIget1688Suppliers(obj).then((res) => {
+        if (res.data.code == 200) {
+          if (res.data.data) {
+            this.data1688 = res.data.data;
+          } else {
+            this.data1688 = [];
+          }
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
+    getData() {
+      let obj = {
+        goodsCode: this.condition.goodsCode,
+      };
+      getSkuInfo(obj).then((res) => {
+        if (res.data.code == 200) {
+          this.tableData = res.data.data;
         } else {
           this.$message.error(res.data.message);
         }

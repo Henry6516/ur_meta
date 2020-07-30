@@ -20,7 +20,7 @@
               <el-option v-for="item in companyData" :key="item" :label="item" :value="item"></el-option>
             </el-select>
             <el-button size="small" type="primary" @click="allCom">一键应用供应商</el-button>
-            <el-button size="small" type="primary" @click="save">保存</el-button>
+            <el-button size="small" type="success" @click="save">保存</el-button>
           </el-form-item>
         </el-form>
       </transition>
