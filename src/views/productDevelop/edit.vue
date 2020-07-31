@@ -1017,14 +1017,14 @@ export default {
       // this.vagueData = arr;
       for (let i = 0; i < this.tableData.length; i++) {
         let arr = [];
-        if(this.tableData[i].offerId){
-          for(let k =0;k<this.data1688.length;k++){
-            if(this.tableData[i].offerId==this.data1688[k].offerId){
-              let valueArr = this.data1688[k].value
-              for(let j =0;j<valueArr.length;j++){
+        if (this.tableData[i].offerId) {
+          for (let k = 0; k < this.data1688.length; k++) {
+            if (this.tableData[i].offerId == this.data1688[k].offerId) {
+              let valueArr = this.data1688[k].value;
+              for (let j = 0; j < valueArr.length; j++) {
                 if (valueArr[j].style.indexOf(e) > -1) {
                   arr.push(valueArr[j]);
-                }                
+                }
               }
             }
           }
@@ -1112,88 +1112,101 @@ export default {
     },
     allSupplier() {
       let e = this.allspecs;
-      let rightArr = [];
-      let leftArr = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        if (!this.tableData[i].offerId) {
-          rightArr.push(this.tableData[i]);
-        } else {
-          leftArr.push(this.tableData[i]);
-        }
-      }
-      const rlength = rightArr.length;
-      const elength = e.length;
-      if (rlength < elength) {
-        const row = elength - rlength;
-        for (let i = 0; i < row; i++) {
-          var obj = {};
-          obj.id = null;
-          obj.infoId = this.editForm.id;
-          obj.sku = "";
-          obj.property1 = null;
-          obj.property2 = null;
-          obj.property3 = null;
-          obj.weight = null;
-          obj.memo1 = null;
-          obj.memo2 = null;
-          obj.memo3 = null;
-          obj.memo4 = null;
-          obj.linkUrl = null;
-          obj.goodsSkuId = null;
-          obj.retailPrice = null;
-          obj.costPrice = null;
-          obj.stockNum = null;
-          obj.did = null;
-          obj.joomPrice = null;
-          obj.joomShipping = null;
-          obj.offerId = null;
-          obj.specId = null;
-          obj.style = null;
-          obj.selectData = [];
-          rightArr.push(obj);
-        }
-      }
-      let arr = [];
-      // this.tableData[i].offerId = this.allSupplierValue;
       if (e.length != 0) {
-        for (let j = 0; j < e.length; j++) {
-          for (let k = 0; k < this.specs1688.length; k++) {
-            if (e[j] == this.specs1688[k].specId) {
-              arr.push(this.specs1688[k]);
+        let rightArr = [];
+        let leftArr = [];
+        for (let i = 0; i < this.tableData.length; i++) {
+          if (!this.tableData[i].offerId) {
+            rightArr.push(this.tableData[i]);
+          } else {
+            leftArr.push(this.tableData[i]);
+          }
+        }
+        const rlength = rightArr.length;
+        const elength = e.length;
+        if (rlength < elength) {
+          const row = elength - rlength;
+          for (let i = 0; i < row; i++) {
+            var obj = {};
+            obj.id = null;
+            obj.infoId = this.editForm.id;
+            obj.sku = "";
+            obj.property1 = null;
+            obj.property2 = null;
+            obj.property3 = null;
+            obj.weight = null;
+            obj.memo1 = null;
+            obj.memo2 = null;
+            obj.memo3 = null;
+            obj.memo4 = null;
+            obj.linkUrl = null;
+            obj.goodsSkuId = null;
+            obj.retailPrice = null;
+            obj.costPrice = null;
+            obj.stockNum = null;
+            obj.did = null;
+            obj.joomPrice = null;
+            obj.joomShipping = null;
+            obj.offerId = null;
+            obj.specId = null;
+            obj.style = null;
+            obj.selectData = [];
+            rightArr.push(obj);
+          }
+        }
+        let arr = [];
+        // this.tableData[i].offerId = this.allSupplierValue;
+        if (e.length != 0) {
+          for (let j = 0; j < e.length; j++) {
+            for (let k = 0; k < this.specs1688.length; k++) {
+              if (e[j] == this.specs1688[k].specId) {
+                arr.push(this.specs1688[k]);
+              }
+            }
+            this.selectData = arr;
+          }
+          // this.tableData[i].selectData = this.selectData;
+        }
+        for (let k = 0; k < e.length; k++) {
+          rightArr[k].offerId = this.allSupplierValue;
+          // if (e.length != 0) {
+          //   rightArr[k].selectData = this.selectData;
+          // } else {
+          //   for (let k = 0; k < this.data1688.length; k++) {
+          //     if (rightArr[k].offerId == this.data1688[k].offerId) {
+          //       rightArr[k].selectData = this.data1688[k].value;
+          //     }
+          //   }
+          // }
+        }
+        for (let j = 0; j < rightArr.length; j++) {
+          // rightArr[j].offerId = this.allSupplierValue;
+          for (let k = 0; k < this.data1688.length; k++) {
+            if (rightArr[j].offerId == this.data1688[k].offerId) {
+              rightArr[j].selectData = this.data1688[k].value;
             }
           }
-          this.selectData = arr;
-        }
-        // this.tableData[i].selectData = this.selectData;
-      }
-      for (let k = 0; k < e.length; k++) {
-        rightArr[k].offerId = this.allSupplierValue;
-        // if (e.length != 0) {
-        //   rightArr[k].selectData = this.selectData;
-        // } else {
-        //   for (let k = 0; k < this.data1688.length; k++) {
-        //     if (rightArr[k].offerId == this.data1688[k].offerId) {
-        //       rightArr[k].selectData = this.data1688[k].value;
-        //     }
-        //   }
-        // }
-      }
-      for (let j = 0; j < rightArr.length; j++) {
-        // rightArr[j].offerId = this.allSupplierValue;
-        for (let k = 0; k < this.data1688.length; k++) {
-          if (rightArr[j].offerId == this.data1688[k].offerId) {
-            rightArr[j].selectData = this.data1688[k].value;
+          rightArr[j].specId = e[j];
+          for (let b = 0; b < this.specs1688.length; b++) {
+            if (e[j] == this.specs1688[b].specId) {
+              rightArr[j].style = this.specs1688[b].style;
+            }
           }
         }
-        rightArr[j].specId = e[j];
-        for (let b = 0; b < this.specs1688.length; b++) {
-          if (e[j] == this.specs1688[b].specId) {
-            rightArr[j].style = this.specs1688[b].style;
+        const newArr = leftArr.concat(rightArr);
+        this.tableData = newArr;
+      } else {
+        for (let c = 0; c < this.tableData.length; c++) {
+          if (!this.tableData[c].offerId) {
+            this.tableData[c].offerId = this.allSupplierValue;
+            for (let d = 0; d < this.data1688.length; d++) {
+              if (this.tableData[c].offerId == this.data1688[d].offerId) {
+                this.tableData[c].selectData = this.data1688[d].value;
+              }
+            }
           }
         }
       }
-      const newArr = leftArr.concat(rightArr);
-      this.tableData = newArr;
     },
     currentSel(index, e) {
       for (var i = 0; i < this.data1688.length; i++) {
