@@ -12,6 +12,7 @@
         >
           <el-form-item label="商品编码" class="input" style="margin-left:12px;">
             <el-input v-model="condition.goodsCode" size="small" style="width:100px"></el-input>
+            <el-button size="small" type="primary" @click="search" style="margin-left:10px;">查询</el-button>
           </el-form-item>
           <el-form-item label="供应商链接" class="input" style="margin-left:12px;">
             <el-input v-model="condition.url" size="small" style="width:300px;"></el-input>
@@ -166,7 +167,7 @@ import {
   getAddSuppliers,
   getSkuInfo,
   APIget1688Suppliers,
-  getSaveSkuInfo
+  getSaveSkuInfo,
 } from "../../api/product";
 
 export default {
@@ -273,6 +274,10 @@ export default {
       }
     },
     add() {
+      if (!this.condition.goodsCode) {
+        this.$message.error("请填写商品编码");
+        return;
+      }
       getAddSuppliers(this.condition).then((res) => {
         if (res.data.code == 200) {
           this.$message({
@@ -286,6 +291,9 @@ export default {
         }
       });
     },
+    search() {
+      this.getData();
+    },
     save() {
       for (let i = 0; i < this.tableData.length; i++) {
         for (let k = 0; k < this.data1688.length; k++) {
@@ -298,9 +306,9 @@ export default {
           }
         }
       }
-      let obj ={
-        data:this.tableData
-      }
+      let obj = {
+        data: this.tableData,
+      };
       getSaveSkuInfo(obj).then((res) => {
         if (res.data.code == 200) {
           this.$message({
@@ -329,6 +337,10 @@ export default {
       });
     },
     getData() {
+      if (!this.condition.goodsCode) {
+        this.$message.error("请填写商品编码");
+        return;
+      }
       let obj = {
         goodsCode: this.condition.goodsCode,
       };
