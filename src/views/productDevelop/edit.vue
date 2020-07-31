@@ -1197,7 +1197,7 @@ export default {
         this.tableData = newArr;
       } else {
         for (let c = 0; c < this.tableData.length; c++) {
-          if (!this.tableData[c].offerId) {
+          if (!this.tableData[c].offerId || this.tableData[c].offerId && !this.tableData[c].style) {
             this.tableData[c].offerId = this.allSupplierValue;
             for (let d = 0; d < this.data1688.length; d++) {
               if (this.tableData[c].offerId == this.data1688[d].offerId) {
