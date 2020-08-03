@@ -13,12 +13,18 @@
           <el-form-item label="商品编码" class="input" style="margin-left:12px;">
             <el-input v-model="condition.goodsCode" size="small" style="width:100px"></el-input>
             <el-button size="small" type="primary" @click="search" style="margin-left:10px;">查询</el-button>
+            <el-button
+              size="small"
+              type="primary"
+              @click="synchro1688"
+              style="margin-left:10px;"
+            >同步1688</el-button>
           </el-form-item>
           <el-form-item label="供应商链接" class="input" style="margin-left:12px;">
             <el-input v-model="condition.url" size="small" style="width:300px;"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button size="small" type="primary" @click="add">添加</el-button>
+            <el-button size="small" type="primary" @click="add">同步</el-button>
             <!-- <el-button size="small" type="primary" @click="all">批量修改</el-button> -->
             <el-select v-model="valueAll" placeholder="请选择" size="small" style="margin-left:10px;">
               <el-option
@@ -168,6 +174,7 @@ import {
   getSkuInfo,
   APIget1688Suppliers,
   getSaveSkuInfo,
+  APIsync1688Goods,
 } from "../../api/product";
 
 export default {
@@ -194,6 +201,26 @@ export default {
     };
   },
   methods: {
+    synchro1688() {
+      if (!this.condition.goodsCode) {
+        this.$message.error("请填写商品编码");
+        return;
+      }
+      let obj = {
+        goodsCode: this.condition.goodsCode,
+      };
+      APIsync1688Goods(obj).then((res) => {
+        if (res.data.code == "200") {
+          this.$message({
+            message: "同步成功",
+            type: "success",
+          });
+          this.get1688Suppliers();
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
     currentSel(index, e) {
       for (var i = 0; i < this.data1688.length; i++) {
         if (this.data1688[i].offerId == e) {
