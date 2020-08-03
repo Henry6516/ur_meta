@@ -978,6 +978,42 @@ export default {
       }
     };
   },
+  props: ['platName'],
+  watch:{
+    platName: function(newValue) {
+      if(newValue == 'eBay'){
+        this.condition.id = this.$route.params.id;
+        this.getData();
+        getPlatEbayAccount().then(response => {
+          this.resAcc= response.data.data
+          for(let k=0;k<response.data.data.length;k++){
+            this.accountNumber.push(response.data.data[k].ebaySuffix);
+          }
+          // for (var item in response.data.data) {
+          //   this.accountNumber.push(response.data.data[item]);
+          // }
+        });
+        getPlatEbayStore().then(response => {
+          this.warehouse = response.data.data;
+        });
+        getEbaySite().then(response => {
+          this.ebaySite = response.data.data;
+        });
+        setTimeout(() => {
+          for(let i=0;i<this.ebaySite.length;i++){
+              if(this.ebaySite[i].code==this.wishForm.site){
+                this.currencyCode=`--${this.ebaySite[i].currencyCode}--`
+                this.wishForm.site=this.ebaySite[i].name
+                this.ebaySiteUr=this.ebaySite[i].name
+              }
+          }
+          this.OutFirebEbay();
+          this.InFirEbay();
+          this.InSecEbay();
+        }, 2000);
+      }
+    }
+  },  
   methods: {
     ImportEbay(){
      if (this.accountNum != "") {
@@ -1800,35 +1836,37 @@ export default {
     }
   },
   mounted() {
-    this.condition.id = this.$route.params.id;
-    this.getData();
-    getPlatEbayAccount().then(response => {
-      this.resAcc= response.data.data
-      for(let k=0;k<response.data.data.length;k++){
-         this.accountNumber.push(response.data.data[k].ebaySuffix);
-      }
-      // for (var item in response.data.data) {
-      //   this.accountNumber.push(response.data.data[item]);
-      // }
-    });
-    getPlatEbayStore().then(response => {
-      this.warehouse = response.data.data;
-    });
-    getEbaySite().then(response => {
-      this.ebaySite = response.data.data;
-    });
-    setTimeout(() => {
-      for(let i=0;i<this.ebaySite.length;i++){
-          if(this.ebaySite[i].code==this.wishForm.site){
-            this.currencyCode=`--${this.ebaySite[i].currencyCode}--`
-            this.wishForm.site=this.ebaySite[i].name
-            this.ebaySiteUr=this.ebaySite[i].name
-          }
-      }
-      this.OutFirebEbay();
-      this.InFirEbay();
-      this.InSecEbay();
-    }, 2000);
+    if(this.platName == 'eBay'){
+      this.condition.id = this.$route.params.id;
+      this.getData();
+      getPlatEbayAccount().then(response => {
+        this.resAcc= response.data.data
+        for(let k=0;k<response.data.data.length;k++){
+          this.accountNumber.push(response.data.data[k].ebaySuffix);
+        }
+        // for (var item in response.data.data) {
+        //   this.accountNumber.push(response.data.data[item]);
+        // }
+      });
+      getPlatEbayStore().then(response => {
+        this.warehouse = response.data.data;
+      });
+      getEbaySite().then(response => {
+        this.ebaySite = response.data.data;
+      });
+      setTimeout(() => {
+        for(let i=0;i<this.ebaySite.length;i++){
+            if(this.ebaySite[i].code==this.wishForm.site){
+              this.currencyCode=`--${this.ebaySite[i].currencyCode}--`
+              this.wishForm.site=this.ebaySite[i].name
+              this.ebaySiteUr=this.ebaySite[i].name
+            }
+        }
+        this.OutFirebEbay();
+        this.InFirEbay();
+        this.InSecEbay();
+      }, 2000);
+    }
   }
 };
 </script>

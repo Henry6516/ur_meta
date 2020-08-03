@@ -811,6 +811,18 @@ export default {
       smtForm: {}
     };
   },
+  props: ['platName'],  
+  watch:{
+    platName: function(newValue) {
+      if(newValue == 'Aliexpress'){
+        this.condition.id = this.$route.params.id;
+        getPlatSmtAccount().then(response => {
+          this.accountNumber = response.data.data;
+        });
+        this.getData();
+      }
+    }
+  },  
   methods: {
     top(e) {
       this.foremost = e.length;
@@ -1340,11 +1352,13 @@ export default {
     }
   },
   mounted() {
-    this.condition.id = this.$route.params.id;
-    getPlatSmtAccount().then(response => {
-      this.accountNumber = response.data.data;
-    });
-    this.getData();
+    if(this.platName == 'Aliexpress'){
+      this.condition.id = this.$route.params.id;
+      getPlatSmtAccount().then(response => {
+        this.accountNumber = response.data.data;
+      });
+      this.getData();
+    }
   }
 };
 </script>

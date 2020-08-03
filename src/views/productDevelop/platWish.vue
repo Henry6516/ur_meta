@@ -900,7 +900,11 @@ export default {
     id: {
       type: Number,
       default: 5
-    }
+    },
+    platName: {
+      type: String,
+      default: 5
+    },
   },
   data() {
     return {
@@ -952,6 +956,23 @@ export default {
         plat: "wish"
       }
     };
+  },
+  watch:{
+    platName: function(newValue) {
+      if(newValue == 'Wish'){
+        this.condition.id = this.$route.params.id;
+        this.getData();
+        APIJoomName().then(response => {
+          this.joomArr = response.data.data;
+        });
+        APIShopifyName().then(response => {
+          this.shopifyArr = response.data.data;
+        });
+        APIVovaName().then(response => {
+          this.vovaArr = response.data.data;
+        });
+      }
+    }
   },
   methods: {
     getRowClass({ row, column, rowIndex, columnIndex }) {
@@ -1745,17 +1766,19 @@ export default {
     }
   },
   mounted() {
-    this.condition.id = this.$route.params.id;
-    this.getData();
-    APIJoomName().then(response => {
-      this.joomArr = response.data.data;
-    });
-    APIShopifyName().then(response => {
-      this.shopifyArr = response.data.data;
-    });
-    APIVovaName().then(response => {
-      this.vovaArr = response.data.data;
-    });
+    if(this.platName == 'Wish'){
+      this.condition.id = this.$route.params.id;
+      this.getData();
+      APIJoomName().then(response => {
+        this.joomArr = response.data.data;
+      });
+      APIShopifyName().then(response => {
+        this.shopifyArr = response.data.data;
+      });
+      APIVovaName().then(response => {
+        this.vovaArr = response.data.data;
+      });
+    }
   }
 };
 </script>
