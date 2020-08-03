@@ -451,6 +451,7 @@
       border
       style="width:98%;margin-left:1%;margin-top:15px;"
       v-if="showattribute"
+      :header-cell-style="getRowClass"
       max-height="550"
     >
       <!-- <el-table-column type="selection" width="30" align="center" header-align="center"></el-table-column> -->
@@ -484,6 +485,11 @@
       <el-table-column label="数量" prop="inventory" header-align="center" align="center" min-width="100">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.inventory"></el-input>
+        </template>
+      </el-table-column>
+      <el-table-column label="重量" prop="weight" header-align="center" align="center" min-width="100">
+        <template slot-scope="scope">
+          <el-input size="small" v-model="scope.row.weight"></el-input>
         </template>
       </el-table-column>
       <el-table-column label="价格(USD)" prop="price" header-align="center" align="center" min-width="100">
@@ -938,6 +944,13 @@ export default {
     };
   },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#3c8dbc;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },    
     exportMymall(){
       let objStr = {
         id: this.wishForm.infoId
