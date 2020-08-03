@@ -487,7 +487,7 @@
           <el-input size="small" v-model="scope.row.inventory"></el-input>
         </template>
       </el-table-column>
-      <el-table-column label="重量" prop="weight" header-align="center" align="center" min-width="100">
+      <el-table-column label="重量(g)" prop="weight" header-align="center" align="center" min-width="100">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.weight"></el-input>
         </template>
