@@ -560,6 +560,15 @@
       </div>
       <div style="width:180px;overflow:hidden;float:left;margin-top:15px;" class="rd2">
         <input
+          placeholder="重量"
+          v-model="weightNumber"
+          class="rn2"
+          style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+        >
+        <span class="xzz1" @click="setWeight">重量确定</span>
+      </div>
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;" class="rd2">
+        <input
           placeholder="价格"
           v-model="price"
           class="rn2"
@@ -908,6 +917,7 @@ export default {
       dialogFormVisible1: false,
       tips: "Wish",
       num: null,
+      weightNumber:null,
       foremost: 0,
       showattribute: false,
       price: null,
@@ -1541,6 +1551,16 @@ export default {
         obj.joomPrice = null;
         obj.joomShipping = null;
         this.tableData.push(obj);
+      }
+    },
+    // 重量
+    setWeight() {
+      if (this.weightNumber) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].weight = this.weightNumber;
+        }
+      } else {
+        return false;
       }
     },
     // 数量
