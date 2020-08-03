@@ -2148,3 +2148,12 @@ export function getSaveSkuInfo(param) {
     data
   })
 }
+export function APIPlatExportSales(param) {
+  const data = { condition: param }
+  return request({
+    url: '/perform/sales-export',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
