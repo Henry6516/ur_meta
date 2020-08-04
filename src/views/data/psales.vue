@@ -88,7 +88,7 @@
                 border 
                 class="elTable"
                 :header-cell-style="getRowClass"
-                style="width: 100%;font-size:13px;zoom:0.97">
+                style="width: 100%;font-size:12px;">
         <el-table-column width="100"
                          prop="goodsCode"
                          label="商品编码"
@@ -135,31 +135,31 @@
                            {{scope.row.createDate | cutOut}}
                          </template>
                          </el-table-column>
-        <el-table-column width="110"
+        <el-table-column width="105"
                          prop="jinyitian"
                          align="center"
                          label="近1天销量"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column width="110"
+        <el-table-column width="105"
                          prop="shangyitian"
                          align="center"
                          label="上1天销量"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column width="130"
+        <el-table-column width="120"
                          prop="changeOneDay"
                          align="center"
                          label="1天销量变化"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column width="110"
+        <el-table-column width="105"
                          prop="jinwutian"
                          align="center"
                          label="近5天销量"
                          :formatter="empty"
                          sortable></el-table-column>
-        <el-table-column width="110"
+        <el-table-column width="105"
                          prop="shangwutian"
                          align="center"
                          label="上5天销量"
@@ -214,10 +214,11 @@ import { getPsales, getMember, getPlatform, getAccount } from '../../api/profit'
 import FileSaver from 'file-saver'
 import XLSX from 'xlsx'
 import { compareUp, compareDown } from '../../api/tools'
+import { APIPlatExportSales } from "../../api/product";
 export default {
   data() {
     return {
-      tableHeight: window.innerHeight - 175,
+      tableHeight: window.innerHeight - 195,
       downloadLoading: false,
       allData: [],
       allSuffix: [],
@@ -299,67 +300,86 @@ export default {
     },
     // 导出
     exportExcel() {
-      this.downloadLoading = true
-      const th = [
-        '商品编码',
-        '商品名称',
-        '商品状态',
-        '类目',
-        '归属1',
-        '归属2',
-        '创建日期',
-        '近1天销量',
-        '上1天销量',
-        '1天销量变化',
-        '近5天销量',
-        '上5天销量',
-        '5天销量变化',
-        '近10天销量',
-        '上10天销量',
-        '10天销量变化'
-      ]
-      const filterVal = [
-        'GoodsCode',
-        'GoodsName',
-        'GoodsSKUStatus',
-        'CategoryName',
-        'SalerName',
-        'SalerName2',
-        'CreateDate',
-        'jinyitian',
-        'shangyitian',
-        'changeOneDay',
-        'jinwutian',
-        'shangwutian',
-        'changeFiveDay',
-        'jinshitian',
-        'shangshitian',
-        'changeTenDay'
-      ]
-      const form = Object.assign({}, this.condition)
-      form.limit = this.total
-      getPsales(form).then(response => {
-        if (response.data.data.items.length > 0) {
-          this.allData = response.data.data.items
-          const Filename = '销售变化表'
-          const data = this.allData.map(v => filterVal.map(k => v[k]))
-          const [fileName, fileType, sheetName] = [Filename, 'xls']
-          this.$toExcel({ th, data, fileName, fileType, sheetName })
-          this.$message({
-            message: '导出成功',
-            duration: 5000,
-            type: 'success'
-          })
-          this.downloadLoading = false
-        } else {
-          this.$message({
-            message: '数据出错，请联系管理员',
-            duration: 5000,
-            type: 'warning'
-          })
-          this.downloadLoading = false
-        }
-      })
+      this.listLoading = true
+      APIPlatExportSales(this.condition).then(res => {
+        this.listLoading = false
+        const blob = new Blob([res.data], {
+          type:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+        var filename=JSON.parse(file)
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        // const filename =
+        //   "Wish_" + year + month + strDate + hour + minute + second;
+        downloadElement.download = filename;
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+      });
+      // this.downloadLoading = true
+      // const th = [
+      //   '商品编码',
+      //   '商品名称',
+      //   '商品状态',
+      //   '类目',
+      //   '归属1',
+      //   '归属2',
+      //   '创建日期',
+      //   '近1天销量',
+      //   '上1天销量',
+      //   '1天销量变化',
+      //   '近5天销量',
+      //   '上5天销量',
+      //   '5天销量变化',
+      //   '近10天销量',
+      //   '上10天销量',
+      //   '10天销量变化'
+      // ]
+      // const filterVal = [
+      //   'GoodsCode',
+      //   'GoodsName',
+      //   'GoodsSKUStatus',
+      //   'CategoryName',
+      //   'SalerName',
+      //   'SalerName2',
+      //   'CreateDate',
+      //   'jinyitian',
+      //   'shangyitian',
+      //   'changeOneDay',
+      //   'jinwutian',
+      //   'shangwutian',
+      //   'changeFiveDay',
+      //   'jinshitian',
+      //   'shangshitian',
+      //   'changeTenDay'
+      // ]
+      // const form = Object.assign({}, this.condition)
+      // form.limit = this.total
+      // getPsales(form).then(response => {
+      //   if (response.data.data.items.length > 0) {
+      //     this.allData = response.data.data.items
+      //     const Filename = '销售变化表'
+      //     const data = this.allData.map(v => filterVal.map(k => v[k]))
+      //     const [fileName, fileType, sheetName] = [Filename, 'xls']
+      //     this.$toExcel({ th, data, fileName, fileType, sheetName })
+      //     this.$message({
+      //       message: '导出成功',
+      //       duration: 5000,
+      //       type: 'success'
+      //     })
+      //     this.downloadLoading = false
+      //   } else {
+      //     this.$message({
+      //       message: '数据出错，请联系管理员',
+      //       duration: 5000,
+      //       type: 'warning'
+      //     })
+      //     this.downloadLoading = false
+      //   }
+      // })
     },
     handleSearch() {
       const searchValue = this.searchValue && this.searchValue.toLowerCase()

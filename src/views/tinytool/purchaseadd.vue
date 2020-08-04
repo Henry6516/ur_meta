@@ -320,6 +320,7 @@ export default {
     },
     search() {
       this.getData();
+      this.get1688Suppliers();
     },
     save() {
       for (let i = 0; i < this.tableData.length; i++) {

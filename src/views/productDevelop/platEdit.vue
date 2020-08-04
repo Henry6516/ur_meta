@@ -10,15 +10,15 @@
              @tab-click="handleClick" style="margin-top: 0px;">
       <el-tab-pane label='Wish'
                    name='first'>
-        <plat-wish></plat-wish>
+        <plat-wish :platName="platName"></plat-wish>
       </el-tab-pane>
       <el-tab-pane label="eBay"
                    name='second'>
-        <plat-ebay></plat-ebay>
+        <plat-ebay :platName="platName"></plat-ebay>
       </el-tab-pane>
       <el-tab-pane label="Aliexpress"
                    name='third'>
-        <plat-smt></plat-smt>
+        <plat-smt :platName="platName"></plat-smt>
       </el-tab-pane>
     </el-tabs>
   </section>
@@ -41,6 +41,7 @@ export default {
       // select1: '',
       activeName: 'first',
       allMenu:[],
+      platName:'Wish',
       // wishForm: {},
       // mainForm: {},
       // tableData: [
@@ -70,7 +71,17 @@ export default {
         })
       }
     },
-    handleClick() {}
+    handleClick(name) {
+      if(name.name=='first'){
+        this.platName = 'Wish'
+      }
+      if(name.name=='second'){
+        this.platName = 'eBay'
+      }
+      if(name.name=='third'){
+        this.platName = 'Aliexpress'
+      }
+    }
   },
   mounted() {
     getMenu().then(response => {

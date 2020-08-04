@@ -451,6 +451,7 @@
       border
       style="width:98%;margin-left:1%;margin-top:15px;"
       v-if="showattribute"
+      :header-cell-style="getRowClass"
       max-height="550"
     >
       <!-- <el-table-column type="selection" width="30" align="center" header-align="center"></el-table-column> -->
@@ -484,6 +485,11 @@
       <el-table-column label="数量" prop="inventory" header-align="center" align="center" min-width="100">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.inventory"></el-input>
+        </template>
+      </el-table-column>
+      <el-table-column label="重量(g)" prop="weight" header-align="center" align="center" min-width="100">
+        <template slot-scope="scope">
+          <el-input size="small" v-model="scope.row.weight"></el-input>
         </template>
       </el-table-column>
       <el-table-column label="价格(USD)" prop="price" header-align="center" align="center" min-width="100">
@@ -551,6 +557,15 @@
           style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
         >
         <span class="xzz1" @click="setNum">数量确定</span>
+      </div>
+      <div style="width:180px;overflow:hidden;float:left;margin-top:15px;" class="rd2">
+        <input
+          placeholder="重量"
+          v-model="weightNumber"
+          class="rn2"
+          style="width:54%;float: left;border: #ccc solid 1px;border-right: none !important;border-top-left-radius: 4px;border-bottom-left-radius: 4px; line-height: 28px;text-align: center"
+        >
+        <span class="xzz1" @click="setWeight">重量确定</span>
       </div>
       <div style="width:180px;overflow:hidden;float:left;margin-top:15px;" class="rd2">
         <input
@@ -885,7 +900,11 @@ export default {
     id: {
       type: Number,
       default: 5
-    }
+    },
+    platName: {
+      type: String,
+      default: 5
+    },
   },
   data() {
     return {
@@ -902,6 +921,7 @@ export default {
       dialogFormVisible1: false,
       tips: "Wish",
       num: null,
+      weightNumber:null,
       foremost: 0,
       showattribute: false,
       price: null,
@@ -937,7 +957,31 @@ export default {
       }
     };
   },
+  watch:{
+    platName: function(newValue) {
+      if(newValue == 'Wish'){
+        this.condition.id = this.$route.params.id;
+        this.getData();
+        APIJoomName().then(response => {
+          this.joomArr = response.data.data;
+        });
+        APIShopifyName().then(response => {
+          this.shopifyArr = response.data.data;
+        });
+        APIVovaName().then(response => {
+          this.vovaArr = response.data.data;
+        });
+      }
+    }
+  },
   methods: {
+    getRowClass({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex == 0) {
+        return "color:#3c8dbc;background:#f5f7fa";
+      } else {
+        return "";
+      }
+    },    
     exportMymall(){
       let objStr = {
         id: this.wishForm.infoId
@@ -1530,6 +1574,16 @@ export default {
         this.tableData.push(obj);
       }
     },
+    // 重量
+    setWeight() {
+      if (this.weightNumber) {
+        for (let i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].weight = this.weightNumber;
+        }
+      } else {
+        return false;
+      }
+    },
     // 数量
     setNum() {
       if (this.num) {
@@ -1712,17 +1766,19 @@ export default {
     }
   },
   mounted() {
-    this.condition.id = this.$route.params.id;
-    this.getData();
-    APIJoomName().then(response => {
-      this.joomArr = response.data.data;
-    });
-    APIShopifyName().then(response => {
-      this.shopifyArr = response.data.data;
-    });
-    APIVovaName().then(response => {
-      this.vovaArr = response.data.data;
-    });
+    if(this.platName == 'Wish'){
+      this.condition.id = this.$route.params.id;
+      this.getData();
+      APIJoomName().then(response => {
+        this.joomArr = response.data.data;
+      });
+      APIShopifyName().then(response => {
+        this.shopifyArr = response.data.data;
+      });
+      APIVovaName().then(response => {
+        this.vovaArr = response.data.data;
+      });
+    }
   }
 };
 </script>
