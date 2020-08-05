@@ -1103,8 +1103,8 @@ export default {
           for (let j = 0; j < dataValue.length; j++) {
             if (styleNumber == dataValue[j].style) {
               const arr = dataValue[j].style;
-              this.tableData[i].property1 = arr.split(" ")[0];
-              this.tableData[i].property2 = arr.split(" ")[1];
+              this.tableData[i].property1 = arr.split("-->")[0];
+              this.tableData[i].property2 = arr.split("-->")[1];
             }
           }
         }
