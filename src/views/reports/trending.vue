@@ -393,8 +393,18 @@ export default {
         this.condition[name] = this[name].map(ele => ele[name])
         this.member = this.allMember
       } else if (name === 'secDepartment') {
+        const arr = []
         this.condition[name] = this[name].map(ele => ele.department)
-        this.member = this.allMember
+        for(let i = 0;i<this.secDepartment.length;i++){
+          const secname = this.secDepartment[i].department
+          for(let k = 0;k<this.allMember.length;k++){
+            if(secname == this.allMember[k].department){
+              arr.push(this.allMember[k])
+            }
+          }
+        }
+        this.member = arr
+        // this.member = this.allMember
       } else {
         this.condition[name] = this[name].map(ele => ele[name])
       }
@@ -402,6 +412,18 @@ export default {
     unselect(name) {
       if (name === 'department') {
         this.member = this.allMember
+      }
+      if (name === 'secDepartment') {
+        const arr = []
+        for(let i =0;i<this.condition.department.length;i++){
+          const secname = this.condition.department[i]
+          for(let k = 0;k<this.allMember.length;k++){
+            if(secname == this.allMember[k].parent_department){
+              arr.push(this.allMember[k])
+            }
+          }
+        }
+        this.member = arr
       }
       this['condition'][name] = []
     },
@@ -522,7 +544,7 @@ export default {
               this.listLoading = false
               const ret = response.data.data
               if(ret.length==0 || Number(ret[0].totalamt)==0){
-                this.$message.error('数据为空,联系管理员');
+                // this.$message.error('数据为空,联系管理员');
               }
               const lineName = []
               const series = []
@@ -563,7 +585,7 @@ export default {
               this.listLoading = false
               const ret = response.data.data
               if(ret.length==0 || Number(ret[0].totalamt)==0){
-                this.$message.error('数据为空,联系管理员');
+                // this.$message.error('数据为空,联系管理员');
               }
               const lineName = []
               const series = []
@@ -604,7 +626,7 @@ export default {
               this.listLoading = false
               const ret = response.data.data
               if(ret.length==0 || Number(ret[0].totalamt)==0){
-                this.$message.error('数据为空,联系管理员');
+                // this.$message.error('数据为空,联系管理员');
               }
               const lineName = []
               const series = []
@@ -645,7 +667,7 @@ export default {
               this.listLoading = false
               const ret = response.data.data
               if(ret.length==0 || Number(ret[0].totalamt)==0){
-                this.$message.error('数据为空,联系管理员');
+                // this.$message.error('数据为空,联系管理员');
               }
               const lineName = []
               const series = []
