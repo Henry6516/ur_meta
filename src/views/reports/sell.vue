@@ -1114,11 +1114,31 @@ export default {
         allValues.push(item.department);
       }
       this.condition.secDepartment = allValues;
-      this.member = this.allMember;
+      const arr = []
+      for(let i = 0;i<this.secDepartment.length;i++){
+        const secname = this.secDepartment[i].department
+        for(let k = 0;k<this.allMember.length;k++){
+          if(secname == this.allMember[k].department){
+            arr.push(this.allMember[k])
+          }
+        }
+      }
+      this.member = arr
+      // this.member = this.allMember;
     },
     noselectSec() {
       this.condition.secDepartment = [];
-      this.member = this.allMember;
+      const arr = []
+      for(let i =0;i<this.condition.department.length;i++){
+        const secname = this.condition.department[i]
+        for(let k = 0;k<this.allMember.length;k++){
+          if(secname == this.allMember[k].parent_department){
+            arr.push(this.allMember[k])
+          }
+        }
+      }
+      this.member = arr
+      // this.member = this.allMember;
     },
     selectall() {
       const allValues = [];
