@@ -2157,3 +2157,9 @@ export function APIPlatExportSales(param) {
     responseType: 'arraybuffer'
   })
 }
+export function APIsuffixAll() {
+  return request({
+    url: '/oa-goodsinfo/export-condition',
+    method: 'get'
+  })
+}

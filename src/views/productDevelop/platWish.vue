@@ -56,7 +56,7 @@
           <el-option label="Wish" value="Wish"></el-option>
           <el-option label="Joom" value="Joom"></el-option>
         </el-select>
-        <span class="exportAccount1" style @click="keepExport">
+        <!-- <span class="exportAccount1" style @click="keepExport">
           <i class="el-icon-download" style="margin-right:5px;"></i>导出
         </span>
         <el-select
@@ -68,55 +68,50 @@
           <el-option label="Mymall" value="Mymall"></el-option>
           <el-option label="Lazada" value="Lazada"></el-option>
           <el-option label="Shopee" value="Shopee"></el-option>
-        </el-select>
+        </el-select> -->
+        <span class="exportAccount accyjsj" @click="putJoom" style="border: #dcdfe6 solid 1px;">一键上架</span>
         <!-- <el-button
           type="success"
           style="float: left;margin-right: 10px"
           @click="exportWish"
         >导出Wish</el-button> -->
         <el-select
-          placeholder="--请选择账号--"
+          placeholder="--请选择部门--"
           clearable
-          multiple
-          collapse-tags
-          v-model="joom"
-          style="float: left;width:160px;"
+          v-model="departmentValue"
+          @change="selectDep"
+          style="float: left;width:160px;margin-left:10px;"
           class="top1600 top1601"
         >
-        <el-button plain type="info" @click="selectalld1">全选</el-button>
-        <el-button plain type="info" @click="noselectd1">取消</el-button>
-        <el-option v-for="(item, key) in joomArr" :key="item.key" :label="item" :value="item"></el-option>
+        <el-option v-for="(item, key) in department" :key="item.key" :label="item.department" :value="item.department"></el-option>
         </el-select>
-        <span class="exportAccount" @click="exportJoom">导出Joom</span>
-        <span class="exportAccount accyjsj" @click="putJoom" style="border: #dcdfe6 solid 1px;">一键上架</span>
+        <!-- <span class="exportAccount" @click="exportJoom">导出Joom</span> -->
         <el-select
-          placeholder="--请选择账号--"
+          placeholder="--请选择平台--"
           clearable
-          multiple
-          collapse-tags
-          v-model="shopify"
+          v-model="platValue"
           class="clshopify"
+          @change="selectPlat()"
           style="float: left;width:160px;margin-left:10px;"
         >
-        <el-button plain type="info" @click="selectalld2">全选</el-button>
-        <el-button plain type="info" @click="noselectd2">取消</el-button>
-        <el-option v-for="(item, key) in shopifyArr" :key="item.key" :label="item" :value="item"></el-option>
+        <el-option v-for="(item, key) in platData" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
-        <span class="exportAccount" @click="exportShopify" style="margin-right:10px;">导出shopify</span>
+        <!-- <span class="exportAccount" @click="exportShopify" style="margin-right:10px;">导出shopify</span> -->
         <el-select
           placeholder="--请选择账号--"
           clearable
           multiple
           collapse-tags
-          v-model="vova"
+          v-model="suffixValue"
           class="top1600 top1601"
-          style="float: left;width:250px;"
+          style="float: left;width:250px;margin-left:10px;"
         >
         <el-button plain type="info" @click="selectalld3">全选</el-button>
         <el-button plain type="info" @click="noselectd3">取消</el-button>
-        <el-option v-for="(item, key) in vovaArr" :key="item.key" :label="item" :value="item"></el-option>
+        <el-option v-for="(item, key) in suffixData" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
-        <span class="exportAccount top1600" @click="exportVova">导出vova</span>
+        <span class="exportAccount top1600" @click="keepExport" style="padding-left:20px;padding-right:20px;">导 出</span>
+        <!-- <span class="exportAccount top1600" @click="exportVova">导出vova</span> -->
         <!-- <el-button
           type="success"
           style="float: left;margin-left: 10px"
@@ -893,8 +888,12 @@ import {
   APIDeleteVariant,
   APIDeleteEbaySku,
   APISaveFinishPlat,
-  APIPutJoom
+  APIPutJoom,
+  APIsuffixAll,
 } from "../../api/product";
+import {
+  getSection
+} from '../../api/profit'
 export default {
   props: {
     id: {
@@ -908,6 +907,13 @@ export default {
   },
   data() {
     return {
+      departmentValue:null,
+      platValue:null,
+      suffixValue:[],
+      suffixData:[],
+      allSuffix:[],
+      department:[],
+      platData:['Wish','Mymall','Lazada','Shopee','Joom','Shopify','VOVA'],
       tipsPlat:'Wish',
       joomloding:false,
       ordColor:null,
@@ -962,19 +968,75 @@ export default {
       if(newValue == 'Wish'){
         this.condition.id = this.$route.params.id;
         this.getData();
-        APIJoomName().then(response => {
-          this.joomArr = response.data.data;
+        getSection().then(response => {
+          const res = response.data.data
+          this.department = res.filter(ele => ele.department && ele.type === '业务')
+        })
+        APIsuffixAll().then(response => {
+          this.allSuffix =  response.data.data;
         });
+        // APIJoomName().then(response => {
+        //   this.joomArr = response.data.data;
+        // });
         APIShopifyName().then(response => {
           this.shopifyArr = response.data.data;
         });
-        APIVovaName().then(response => {
-          this.vovaArr = response.data.data;
-        });
+        // APIVovaName().then(response => {
+        //   this.vovaArr = response.data.data;
+        // });
       }
     }
   },
   methods: {
+    selectDep(){
+      const arr = []
+      if(this.platValue!='Shopify'){
+        if(this.platValue =='Joom' || this.platValue =='VOVA'){
+          if(!this.departmentValue){
+            for(let i=0;i<this.allSuffix.length;i++){
+              if(this.platValue == this.allSuffix[i].platform){
+                arr.push(this.allSuffix[i].suffix)
+              }
+            }
+          }else{
+            for(let i=0;i<this.allSuffix.length;i++){
+              if(this.platValue == this.allSuffix[i].platform && this.departmentValue == this.allSuffix[i].depart){
+                arr.push(this.allSuffix[i].suffix)
+              }
+            }
+          }
+        }
+      }
+      this.suffixValue = []
+      this.suffixData = arr
+    },
+    selectPlat(){
+      const arr = []
+      if(this.platValue!='Shopify'){
+        if(this.platValue =='Joom' || this.platValue =='VOVA'){
+          if(!this.departmentValue){
+            for(let i=0;i<this.allSuffix.length;i++){
+              if(this.platValue == this.allSuffix[i].platform){
+                arr.push(this.allSuffix[i].suffix)
+              }
+            }
+          }else{
+            for(let i=0;i<this.allSuffix.length;i++){
+              if(this.platValue == this.allSuffix[i].platform && this.departmentValue == this.allSuffix[i].depart){
+                arr.push(this.allSuffix[i].suffix)
+              }
+            }
+          }
+        }
+      }
+      if(this.platValue=='Shopify'){
+        for(let i=0;i<this.shopifyArr.length;i++){
+          arr.push(this.shopifyArr[i])
+        }
+      }
+      this.suffixValue = []
+      this.suffixData = arr
+    },
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
         return "color:#3c8dbc;background:#f5f7fa";
@@ -1122,26 +1184,32 @@ export default {
     },
     selectalld3() {
       var ard1 = [];
-      for (const item in this.vovaArr) {
-        ard1.push(this.vovaArr[item]);
+      for (const item in this.suffixData) {
+        ard1.push(this.suffixData[item]);
       }
-      this.vova = ard1;
+      this.suffixValue = ard1;
     },
     noselectd3() {
-      this.vova = [];
+      this.suffixValue = [];
     },
     showAttribute() {
       this.showattribute = !this.showattribute;
     },
     keepExport() {
-      if(this.tipsPlat=='Wish'){
+      if(this.platValue=='Wish'){
         this.exportWish();
-      }else if(this.tipsPlat=='Mymall'){
+      }else if(this.platValue=='Mymall'){
         this.exportMymall();
-      }else if(this.tipsPlat=='Lazada'){
+      }else if(this.platValue=='Lazada'){
         this.exportLazada();
-      }else if(this.tipsPlat=='Shopee'){
+      }else if(this.platValue=='Shopee'){
         this.exportShopee();
+      }else if(this.platValue=='Joom'){
+        this.exportJoom();
+      }else if(this.platValue=='Shopify'){
+        this.exportShopify();
+      }else if(this.platValue=='VOVA'){
+        this.exportVova();
       }
     },
     keepPerfect() {
@@ -1207,32 +1275,33 @@ export default {
       }
     },
     exportJoom() {
-      if (this.joom!='') {
-        var arrID=this.joom
-        for(var i=0;i<arrID.length;i++){
-          let objStr1 = {
-            id: [this.wishForm.infoId],
-            account: [arrID[i]]
-          };
-          APIPlatExportJoom(objStr1).then(res => {
-            const blob = new Blob([res.data], {
-              type: "data:text/csv;charset=utf-8"
-            });
-            var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
-            var filename=JSON.parse(file)
-            const downloadElement = document.createElement("a");
-            const objectUrl = window.URL.createObjectURL(blob);
-            downloadElement.href = objectUrl;
-            // const filename =
-            //   "joom_" + year + month + strDate + hour + minute + second;
-            downloadElement.download = filename;
-            document.body.appendChild(downloadElement);
-            downloadElement.click();
-            document.body.removeChild(downloadElement);
-          });
-        }
+      let arrID = []
+      if (this.suffixValue.length!=0) {
+        arrID=this.suffixValue
       } else {
-        this.$message.error("请选择账号");
+        arrID=this.suffixData
+      }
+      for(var i=0;i<arrID.length;i++){
+        let objStr1 = {
+          id: [this.wishForm.infoId],
+          account: [arrID[i]]
+        };
+        APIPlatExportJoom(objStr1).then(res => {
+          const blob = new Blob([res.data], {
+            type: "data:text/csv;charset=utf-8"
+          });
+          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+          var filename=JSON.parse(file)
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          // const filename =
+          //   "joom_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename;
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        });
       }
     },
     putJoom() {
@@ -1281,19 +1350,18 @@ export default {
       });
     },
     exportShopify() {
-      let objStr={}
-      if (this.shopify!='') {
-        objStr = {
-          id: [this.wishForm.infoId],
-          account: this.shopify
-        };
-      }else{
-        objStr = {
-          id: [this.wishForm.infoId],
-          account: this.shopifyArr
-        };
+      let arrID = []
+      if (this.suffixValue.length!=0) {
+        arrID=this.suffixValue
+      } else {
+        arrID=this.suffixData
       }
-      APIPlatExportShopify(objStr).then(res => {
+      for(var i=0;i<arrID.length;i++){
+        let objStr1 = {
+          id: [this.wishForm.infoId],
+          account: [arrID[i]]
+        };
+        APIPlatExportShopify(objStr1).then(res => {
           const blob = new Blob([res.data], {
             type:
               "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
@@ -1309,61 +1377,102 @@ export default {
           document.body.appendChild(downloadElement);
           downloadElement.click();
           document.body.removeChild(downloadElement);
-        }); 
+        });   
+      }  
+      // if (this.shopify!='') {
+      //   objStr = {
+      //     id: [this.wishForm.infoId],
+      //     account: this.shopify
+      //   };
+      // }else{
+      //   objStr = {
+      //     id: [this.wishForm.infoId],
+      //     account: this.shopifyArr
+      //   };
+      // }
     },
     exportVova() {
       let objStr={}
-      if (this.vova!='') {
-        var strObj=this.vova
-        for(var i=0;i<strObj.length;i++){
-          objStr = {
-            id: [this.wishForm.infoId],
-            account: [strObj[i]]
-          };
-          APIPlatExportVova(objStr).then(res => {
-          const blob = new Blob([res.data], {
-            type:
-              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
-          });
-          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
-          var filename=JSON.parse(file)
-          const downloadElement = document.createElement("a");
-          const objectUrl = window.URL.createObjectURL(blob);
-          downloadElement.href = objectUrl;
-          // const filename =
-          //   "Wish_" + year + month + strDate + hour + minute + second;
-          downloadElement.download = filename;
-          document.body.appendChild(downloadElement);
-          downloadElement.click();
-          document.body.removeChild(downloadElement);
-        }); 
-        }
-      }else{
-        var strObj=this.vovaArr
-        for(var i=0;i<strObj.length;i++){
-          objStr = {
-            id: [this.wishForm.infoId],
-            account: [strObj[i]]
-          };
-          APIPlatExportVova(objStr).then(res => {
-          const blob = new Blob([res.data], {
-            type:
-              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
-          });
-          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
-          var filename=JSON.parse(file)
-          const downloadElement = document.createElement("a");
-          const objectUrl = window.URL.createObjectURL(blob);
-          downloadElement.href = objectUrl;
-          // const filename =
-          //   "Wish_" + year + month + strDate + hour + minute + second;
-          downloadElement.download = filename;
-          document.body.appendChild(downloadElement);
-          downloadElement.click();
-          document.body.removeChild(downloadElement);
-        }); 
-        }
+      let arrID = []
+      if (this.suffixValue.length!=0) {
+        arrID=this.suffixValue
+      } else {
+        arrID=this.suffixData
       }
+      for(var i=0;i<arrID.length;i++){
+        let objStr1 = {
+          id: [this.wishForm.infoId],
+          account: [arrID[i]]
+        };
+        APIPlatExportVova(objStr1).then(res => {
+          const blob = new Blob([res.data], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+          var filename=JSON.parse(file)
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          // const filename =
+          //   "Wish_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename;
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        });        
+      }  
+      // if (this.vova!='') {
+      //   var strObj=this.vova
+      //   for(var i=0;i<strObj.length;i++){
+      //     objStr = {
+      //       id: [this.wishForm.infoId],
+      //       account: [strObj[i]]
+      //     };
+      //     APIPlatExportVova(objStr).then(res => {
+      //     const blob = new Blob([res.data], {
+      //       type:
+      //         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+      //     });
+      //     var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+      //     var filename=JSON.parse(file)
+      //     const downloadElement = document.createElement("a");
+      //     const objectUrl = window.URL.createObjectURL(blob);
+      //     downloadElement.href = objectUrl;
+      //     // const filename =
+      //     //   "Wish_" + year + month + strDate + hour + minute + second;
+      //     downloadElement.download = filename;
+      //     document.body.appendChild(downloadElement);
+      //     downloadElement.click();
+      //     document.body.removeChild(downloadElement);
+      //   }); 
+      //   }
+      // }else{
+      //   var strObj=this.vovaArr
+      //   for(var i=0;i<strObj.length;i++){
+      //     objStr = {
+      //       id: [this.wishForm.infoId],
+      //       account: [strObj[i]]
+      //     };
+      //     APIPlatExportVova(objStr).then(res => {
+      //     const blob = new Blob([res.data], {
+      //       type:
+      //         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+      //     });
+      //     var file = res.headers["content-disposition"].split(";")[1].split("filename=")[1];
+      //     var filename=JSON.parse(file)
+      //     const downloadElement = document.createElement("a");
+      //     const objectUrl = window.URL.createObjectURL(blob);
+      //     downloadElement.href = objectUrl;
+      //     // const filename =
+      //     //   "Wish_" + year + month + strDate + hour + minute + second;
+      //     downloadElement.download = filename;
+      //     document.body.appendChild(downloadElement);
+      //     downloadElement.click();
+      //     document.body.removeChild(downloadElement);
+      //   }); 
+      //   }
+      // }
     },
     top(e) {
       this.foremost = e.length;
@@ -1769,15 +1878,22 @@ export default {
     if(this.platName == 'Wish'){
       this.condition.id = this.$route.params.id;
       this.getData();
-      APIJoomName().then(response => {
-        this.joomArr = response.data.data;
-      });
+      getSection().then(response => {
+        const res = response.data.data
+        this.department = res.filter(ele => ele.department && ele.type === '业务')
+      })
+      APIsuffixAll().then(response => {
+        this.allSuffix =  response.data.data;
+      });     
+      // APIJoomName().then(response => {
+      //   this.joomArr = response.data.data;
+      // });
       APIShopifyName().then(response => {
         this.shopifyArr = response.data.data;
       });
-      APIVovaName().then(response => {
-        this.vovaArr = response.data.data;
-      });
+      // APIVovaName().then(response => {
+      //   this.vovaArr = response.data.data;
+      // });
     }
   }
 };
@@ -1927,14 +2043,14 @@ section {
   background: linear-gradient(to bottom, #f5f7fa 0%, #f5f7fa 45%, #d4d4d4 100%);
 }
 .leftmedia{
-  margin-left: 8%;
+  margin-left: 16.1%;
 }
 .accyjsj{
-  margin-left: 5px;
+  margin-left: 0px;
 }
 @media screen and (max-width: 1600px){
    .leftmedia{
-     margin-left: 2.5%;
+     margin-left: 6.5%;
    }
   //  .ptom60{
   //    padding-bottom: 50px;
@@ -1957,9 +2073,9 @@ section {
    .clshopify{
      width: 105px !important;
    }
-   .top1601{
-     width: 105px !important;
-   }
+  //  .top1601{
+  //    width: 105px !important;
+  //  }
    .exportAccount{
      font-size: 12px;
    }
