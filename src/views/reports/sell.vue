@@ -1101,11 +1101,14 @@ export default {
       for (const item of this.department) {
         allValues.push(item.department);
       }
+      this.secDepartment = this.allSecDep
       this.condition.department = allValues;
       this.member = this.allMember;
     },
     noselectd() {
       this.condition.department = [];
+      this.condition.secDepartment = [];
+      this.secDepartment = this.allSecDep
       this.member = this.allMember;
     },
     selectallSec() {

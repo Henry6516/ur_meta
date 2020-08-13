@@ -411,6 +411,8 @@ export default {
     },
     unselect(name) {
       if (name === 'department') {
+        this.condition.secDepartment = [];
+        this.secDepartment = this.allSecDep
         this.member = this.allMember
       }
       if (name === 'secDepartment') {
