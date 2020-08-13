@@ -123,7 +123,13 @@
       </el-table-column>
       <el-table-column label="1688规格" prop="property2" width="245" header-align="center">
         <template slot-scope="scope">
-          <el-select v-model="scope.row.style" placeholder="请选择" style="width:100%" size="small">
+          <el-select
+            v-model="scope.row.style"
+            filterable
+            placeholder="请选择"
+            style="width:100%"
+            size="small"
+          >
             <el-option
               v-for="(item,index) in scope.row.selectData"
               :key="index"
@@ -337,7 +343,9 @@ export default {
       let obj = {
         data: this.tableData,
       };
+      this.listLoading = true;
       getSaveSkuInfo(obj).then((res) => {
+        this.listLoading = false;
         if (res.data.code == 200) {
           this.$message({
             message: "保存成功",
@@ -372,11 +380,37 @@ export default {
       let obj = {
         goodsCode: this.condition.goodsCode,
       };
+      this.listLoading = true;
       getSkuInfo(obj).then((res) => {
+        this.listLoading = false;
         if (res.data.code == 200) {
           this.tableData = res.data.data;
+          for (let i = 0; i < this.tableData.length; i++) {
+            const property1 = this.tableData[i].property1
+            const property2 = this.tableData[i].property2
+            const style = this.tableData[i].style
+            const style1 = style.split('-->')[0]
+            const style2 = style.split('-->')[1]?style.split('-->')[1]:null
+            if(property1!=style1 || getFlag(property2,style2)){
+              this.tableData[i].style = ''
+              this.tableData[i].specId = ''
+            }
+          }
         } else {
           this.$message.error(res.data.message);
+        }
+        function getFlag(a,b){
+          if(a=='2XL' && b=='XXL'){
+            return false
+          }else if(a=='3XL' && b=='XXXL'){
+            return false
+          }else if(a=='4XL' && b=='XXXXL'){
+            return false
+          }else if(a=='5XL' && b=='XXXXXL'){
+            return false
+          }else{
+            return a!=b
+          }
         }
       });
     },
