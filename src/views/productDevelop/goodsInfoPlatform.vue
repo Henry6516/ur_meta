@@ -86,7 +86,11 @@
         <el-button plain type="info" @click="noselectd3">取消</el-button>
         <el-option v-for="(item, key) in suffixData" :key="item.key" :label="item" :value="item"></el-option>
       </el-select>
-      <span class="exportAccount" @click="keepExport">导出账号</span>
+      <span
+        class="exportAccount"
+        @click="keepExport"
+        :style="{'cursor':Loading?'wait':'pointer'}"
+      >导出账号</span>
       <el-select
         placeholder="--aliexpress账号--"
         clearable
@@ -772,6 +776,7 @@ export default {
     },
     exportAll(type) {
       if (this.sels.length != 0 && this.platValue) {
+        this.Loading = true;
         let arr = [];
         for (let i = 0; i < this.sels.length; i++) {
           arr.push(this.sels[i].id);
@@ -783,23 +788,38 @@ export default {
           depart: this.departmentValue,
         };
         APIExportTemplate(objStr1).then((res) => {
-          const blob = new Blob([res.data], {
-            type:
-              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
-          });
-          var file = res.headers["content-disposition"]
-            .split(";")[1]
-            .split("filename=")[1];
-          var filename = JSON.parse(file);
-          const downloadElement = document.createElement("a");
-          const objectUrl = window.URL.createObjectURL(blob);
-          downloadElement.href = objectUrl;
-          // const filename =
-          //   "Wish_" + year + month + strDate + hour + minute + second;
-          downloadElement.download = filename;
-          document.body.appendChild(downloadElement);
-          downloadElement.click();
-          document.body.removeChild(downloadElement);
+          this.Loading = false;
+          if (res.headers["content-disposition"]) {
+            const blob = new Blob([res.data], {
+              type:
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
+            });
+            var file = res.headers["content-disposition"]
+              .split(";")[1]
+              .split("filename=")[1];
+            var filename = JSON.parse(file);
+            const downloadElement = document.createElement("a");
+            const objectUrl = window.URL.createObjectURL(blob);
+            downloadElement.href = objectUrl;
+            // const filename =
+            //   "Wish_" + year + month + strDate + hour + minute + second;
+            downloadElement.download = filename;
+            document.body.appendChild(downloadElement);
+            downloadElement.click();
+            document.body.removeChild(downloadElement);
+          } else {
+            const that = this;
+            const blob = new Blob([res.data], {
+              type:
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
+            });
+            var reader = new FileReader();
+            reader.readAsText(blob, "utf-8");
+            reader.onload = function (e) {
+              const title = JSON.parse(reader.result);
+              that.$message.error(title.message);
+            };
+          }
         });
       } else {
         this.$message.error("请选择产品");

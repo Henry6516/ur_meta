@@ -1366,24 +1366,24 @@ export default {
       this.showattribute = !this.showattribute;
     },
     keepExport() {
-      if(!this.platValue){
+      if (!this.platValue) {
         this.$message.error("请选择平台");
-        return
+        return;
       }
       if (this.platValue == "Wish") {
-        this.exportAll('Wish');
+        this.exportAll("Wish");
       } else if (this.platValue == "Mymall") {
-        this.exportAll('Mymall');
+        this.exportAll("Mymall");
       } else if (this.platValue == "Lazada") {
-        this.exportAll('Lazada');
+        this.exportAll("Lazada");
       } else if (this.platValue == "Shopee") {
-        this.exportAll('Shopee');
+        this.exportAll("Shopee");
       } else if (this.platValue == "Joom") {
-        this.exportAll('Joom');
+        this.exportAll("Joom");
       } else if (this.platValue == "Shopify") {
-        this.exportAll('Shopify');
+        this.exportAll("Shopify");
       } else if (this.platValue == "VOVA") {
-        this.exportAll('VOVA');
+        this.exportAll("VOVA");
       }
     },
     keepPerfect(type) {
@@ -1515,27 +1515,41 @@ export default {
       let objStr1 = {
         id: [this.wishForm.infoId],
         account: this.suffixValue,
-        plat:type,
-        depart:this.departmentValue
+        plat: type,
+        depart: this.departmentValue,
       };
       APIExportTemplate(objStr1).then((res) => {
-        const blob = new Blob([res.data], {
-          type:
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
-        });
-        var file = res.headers["content-disposition"]
-          .split(";")[1]
-          .split("filename=")[1];
-        var filename = JSON.parse(file);
-        const downloadElement = document.createElement("a");
-        const objectUrl = window.URL.createObjectURL(blob);
-        downloadElement.href = objectUrl;
-        // const filename =
-        //   "Wish_" + year + month + strDate + hour + minute + second;
-        downloadElement.download = filename;
-        document.body.appendChild(downloadElement);
-        downloadElement.click();
-        document.body.removeChild(downloadElement);
+        if (res.headers["content-disposition"]) {
+          const blob = new Blob([res.data], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
+          });
+          var file = res.headers["content-disposition"]
+            .split(";")[1]
+            .split("filename=")[1];
+          var filename = JSON.parse(file);
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          // const filename =
+          //   "Wish_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename;
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        } else {
+          const that = this;
+          const blob = new Blob([res.data], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
+          });
+          var reader = new FileReader();
+          reader.readAsText(blob, "utf-8");
+          reader.onload = function (e) {
+            const title = JSON.parse(reader.result);
+            that.$message.error(title.message);
+          };
+        }
       });
     },
     exportShopify() {
