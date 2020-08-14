@@ -416,15 +416,19 @@ export default {
         this.member = this.allMember
       }
       if (name === 'secDepartment') {
-        const arr = []
-        for(let i =0;i<this.condition.department.length;i++){
-          const secname = this.condition.department[i]
-          for(let k = 0;k<this.allMember.length;k++){
-            if(secname == this.allMember[k].parent_department){
-              arr.push(this.allMember[k])
+        let arr = []
+        if(this.condition.department.length>0){
+          for(let i =0;i<this.condition.department.length;i++){
+            const secname = this.condition.department[i]
+            for(let k = 0;k<this.allMember.length;k++){
+              if(secname == this.allMember[k].parent_department){
+                arr.push(this.allMember[k])
+              }
             }
           }
-        }
+        }else{
+          arr = this.allMember
+        }  
         this.member = arr
       }
       this['condition'][name] = []

@@ -2163,3 +2163,13 @@ export function APIsuffixAll() {
     method: 'get'
   })
 }
+export function APIExportTemplate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/export-template',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
+
