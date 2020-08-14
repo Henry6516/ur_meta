@@ -88,7 +88,7 @@
       </el-select>
       <span class="exportAccount" @click="keepExport">导出账号</span>
       <el-select
-        placeholder="--所有账号--"
+        placeholder="--aliexpress账号--"
         clearable
         multiple
         collapse-tags
@@ -100,7 +100,7 @@
         <el-button plain type="info" @click="noselectd2">取消</el-button>
         <el-option v-for="(item, key) in accountNumber" :key="item.key" :label="item" :value="item"></el-option>
       </el-select>
-      <span class="exportAccount" @click="exportSmt">添加导出队列</span>
+      <span class="exportAccount" @click="exportSmt">添加aliexpress导出队列</span>
       <!-- <span class="exportAccountmy" @click="exportMymall" style="margin-left:10px;" :style="{'cursor':Loading?'wait':'pointer'}">导出mymall</span>
       <span class="exportAccountmy" @click="exportLazada" style="margin-left:10px;" :style="{'cursor':Loading?'wait':'pointer'}">导出lazada</span>
       <span class="exportAccountmy" @click="exportShopee" style="margin-left:10px;" :style="{'cursor':Loading?'wait':'pointer'}">导出shopee</span>-->
