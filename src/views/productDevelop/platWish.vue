@@ -75,7 +75,7 @@
           <el-button plain type="info" @click="noselectd3">取消</el-button>
           <el-option v-for="(item, key) in suffixData" :key="item.key" :label="item" :value="item"></el-option>
         </el-select>
-        <el-button type="danger" @click="keepExport" style="float: left;">导出账号</el-button>
+        <el-button type="danger" @click="keepExport" style="float: left;">导出模板</el-button>
         <!-- <span class="exportAccount top1600" @click="keepExport" style="padding-left:20px;padding-right:20px;">导 出</span> -->
         <!--<el-dropdown @command="handleCommand"-->
         <!--placement="top-start">-->

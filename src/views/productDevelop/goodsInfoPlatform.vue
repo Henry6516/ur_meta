@@ -90,7 +90,7 @@
         class="exportAccount"
         @click="keepExport"
         :style="{'cursor':Loading?'wait':'pointer'}"
-      >导出账号</span>
+      >导出模板</span>
       <el-select
         placeholder="--aliexpress账号--"
         clearable
