@@ -131,7 +131,7 @@
               start-placeholder="开始日期"
               end-placeholder="结束日期"
               :picker-options="pickerOptions2"
-              style="width:215px;"
+              class="proinput"
             ></el-date-picker>
           </el-form-item>
           <el-form-item style="margin-left:25px">

@@ -2157,3 +2157,19 @@ export function APIPlatExportSales(param) {
     responseType: 'arraybuffer'
   })
 }
+export function APIsuffixAll() {
+  return request({
+    url: '/oa-goodsinfo/export-condition',
+    method: 'get'
+  })
+}
+export function APIExportTemplate(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/export-template',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
+
