@@ -767,11 +767,47 @@ export default {
       } else if (this.platValue == "Shopee") {
         this.exportAll("Shopee");
       } else if (this.platValue == "Joom") {
-        this.exportAll("Joom");
+        this.exportAllJoom();
       } else if (this.platValue == "Shopify") {
         this.exportAll("Shopify");
       } else if (this.platValue == "VOVA") {
         this.exportAll("VOVA");
+      }
+    },
+    exportAllJoom() {
+      let arrID = [];
+      if (this.suffixValue.length != 0) {
+        arrID = this.suffixValue;
+      } else {
+        arrID = this.suffixData;
+      }
+      let arr = [];
+      for (let i = 0; i < this.sels.length; i++) {
+        arr.push(this.sels[i].id);
+      }
+      for (var i = 0; i < arrID.length; i++) {
+        let objStr1 = {
+          id: arr,
+          account: [arrID[i]],
+        };
+        APIPlatExportJoom(objStr1).then((res) => {
+          const blob = new Blob([res.data], {
+            type: "data:text/csv;charset=utf-8",
+          });
+          var file = res.headers["content-disposition"]
+            .split(";")[1]
+            .split("filename=")[1];
+          var filename = JSON.parse(file);
+          const downloadElement = document.createElement("a");
+          const objectUrl = window.URL.createObjectURL(blob);
+          downloadElement.href = objectUrl;
+          // const filename =
+          //   "joom_" + year + month + strDate + hour + minute + second;
+          downloadElement.download = filename;
+          document.body.appendChild(downloadElement);
+          downloadElement.click();
+          document.body.removeChild(downloadElement);
+        });
       }
     },
     exportAll(type) {

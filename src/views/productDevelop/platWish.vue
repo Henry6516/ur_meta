@@ -1379,7 +1379,7 @@ export default {
       } else if (this.platValue == "Shopee") {
         this.exportAll("Shopee");
       } else if (this.platValue == "Joom") {
-        this.exportAll("Joom");
+        this.exportJoom();
       } else if (this.platValue == "Shopify") {
         this.exportAll("Shopify");
       } else if (this.platValue == "VOVA") {
