@@ -166,10 +166,12 @@ export default {
   },
   methods: {
     exportExcel() {
+      this.listLoading = true;
       this.order = Object.assign({}, this.condition);
       this.order.pageSize = 100000;
       if (this.condition.salesName) {
         getEbayVirtualStore(this.order).then(res => {
+          this.listLoading = false;
           this.allDataOrder = res.data.data.items;
           const Filename = "eBay海外仓修改在线数量";
           const data = this.allDataOrder.map(v => filterVal.map(k => v[k]));
@@ -184,6 +186,7 @@ export default {
         }
         if (username === admin || isAdmin() === true) {
           getEbayVirtualStore(this.order).then(res => {
+            this.listLoading = false;
             this.allDataOrder = res.data.data.items;
             const Filename = "eBay海外仓修改在线数量";
             const data = this.allDataOrder.map(v => filterVal.map(k => v[k]));
@@ -194,6 +197,7 @@ export default {
           if (this.res.length != 0) {
             this.order.salesName = this.res[0].username;
             getEbayVirtualStore(this.order).then(res => {
+              this.listLoading = false;
               this.allDataOrder = res.data.data.items;
               const Filename = "eBay海外仓修改在线数量";
               const data = this.allDataOrder.map(v => filterVal.map(k => v[k]));

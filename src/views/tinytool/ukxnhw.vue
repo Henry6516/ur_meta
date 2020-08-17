@@ -160,7 +160,9 @@ export default {
     },
     exportExcel(from) {
       from.type = "uk2";
+      this.listLoading = true;
       APIExportReplenish(from).then(res => {
+        this.listLoading = false;
         const blob = new Blob([res.data], {
           type:
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"

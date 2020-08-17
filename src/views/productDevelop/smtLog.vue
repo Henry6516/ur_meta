@@ -2,7 +2,7 @@
   <div class="infoTable">
     <el-table
       :data="logData"
-      style="width: 98%;margin-top:15px;margin-left:0.8%;font-size:14px;"
+      style="width: 98%;margin-top:15px;margin-left:0.8%;font-size:13px;"
       border
       class="elTable"
       :height="tableHeight"
