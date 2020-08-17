@@ -771,7 +771,7 @@ export default {
       } else if (this.platValue == "Shopify") {
         this.exportAll("Shopify");
       } else if (this.platValue == "VOVA") {
-        this.exportAll("VOVA");
+        this.exportAllJoom();
       }
     },
     exportAllJoom() {
