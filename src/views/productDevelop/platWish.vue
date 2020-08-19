@@ -1379,11 +1379,11 @@ export default {
       } else if (this.platValue == "Shopee") {
         this.exportAll("Shopee");
       } else if (this.platValue == "Joom") {
-        this.exportJoom();
+        this.exportJoom('Joom');
       } else if (this.platValue == "Shopify") {
         this.exportAll("Shopify");
       } else if (this.platValue == "VOVA") {
-        this.exportAll("VOVA");
+        this.exportJoom('VOVA');
       }
     },
     keepPerfect(type) {
@@ -1450,7 +1450,7 @@ export default {
         this.$message.error("请选择要保存的模板");
       }
     },
-    exportJoom() {
+    exportJoom(type) {
       let arrID = [];
       if (this.suffixValue.length != 0) {
         arrID = this.suffixValue;
@@ -1461,8 +1461,10 @@ export default {
         let objStr1 = {
           id: [this.wishForm.infoId],
           account: [arrID[i]],
+          plat: type,
+          depart: this.departmentValue,
         };
-        APIPlatExportJoom(objStr1).then((res) => {
+        APIExportTemplate(objStr1).then((res) => {
           const blob = new Blob([res.data], {
             type: "data:text/csv;charset=utf-8",
           });
