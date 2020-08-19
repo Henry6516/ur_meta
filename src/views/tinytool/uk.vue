@@ -23,6 +23,12 @@
                     placeholder="请填写预计售价" style="width:150px"></el-input>
         </el-form-item>
         <el-form-item prop="rate"
+                      label=" 广告费率">
+          <el-input size="small"
+                    v-model="condition.adRate"
+                    placeholder="请填写预计毛利率(%)" style="width:160px"></el-input>
+        </el-form-item>
+        <el-form-item prop="rate"
                       label="毛利率">
           <el-input size="small"
                     v-model="condition.rate"
@@ -74,6 +80,8 @@
                        label="毛利润（￥）"></el-table-column>
       <el-table-column prop="rate"
                        label="毛利率（%）"></el-table-column>
+      <el-table-column prop="adRate"
+                       label="广告费率（%）"></el-table-column>                 
     </el-table>
     <h4>根据毛利率获取售价</h4>
     <el-table :data="tableData3"
@@ -124,7 +132,8 @@ export default {
         sku: '',
         num: null,
         price: null,
-        rate: null
+        rate: null,
+        adRate:null,
       }
     }
   },
