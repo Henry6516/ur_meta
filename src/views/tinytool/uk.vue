@@ -26,7 +26,7 @@
                       label=" 广告费率">
           <el-input size="small"
                     v-model="condition.adRate"
-                    placeholder="请填写预计毛利率(%)" style="width:160px"></el-input>
+                    placeholder="请填写广告费率(%)" style="width:160px"></el-input>
         </el-form-item>
         <el-form-item prop="rate"
                       label="毛利率">
