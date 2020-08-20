@@ -22,6 +22,12 @@
                     v-model="condition.price"
                     placeholder="请填写预计售价" style="width:150px"></el-input>
         </el-form-item>
+        <el-form-item prop="price"
+                      label="运费（£）">
+          <el-input size="small"
+                    v-model="condition.shippingPrice"
+                    placeholder="请填写运费" style="width:150px"></el-input>
+        </el-form-item>
         <el-form-item prop="rate"
                       label=" 广告费率">
           <el-input size="small"
@@ -134,6 +140,7 @@ export default {
         price: null,
         rate: null,
         adRate:null,
+        shippingPrice:null,
       }
     }
   },
