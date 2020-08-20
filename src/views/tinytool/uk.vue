@@ -3,7 +3,7 @@
     <el-row>
       <el-form :inline="true"
                :model='condition'
-               label-width="80px">
+               label-width="90px">
         <el-form-item prop="sku"
                       label="SKU*">
           <el-input size="small"
@@ -17,7 +17,7 @@
                     placeholder="请填写套装数量" style="width:150px"></el-input>
         </el-form-item>
         <el-form-item prop="price"
-                      label="售价（£）">
+                      label="在线售价(£)">
           <el-input size="small"
                     v-model="condition.price"
                     placeholder="请填写预计售价" style="width:150px"></el-input>
@@ -75,7 +75,7 @@
     <el-table :data="tableData2"
               style="width:100%">
       <el-table-column prop="price"
-                       label="售价（£）"></el-table-column>
+                       label="总售价（£）"></el-table-column>
       <el-table-column prop="eFee"
                        label="eBay交易费（£）"></el-table-column>
       <el-table-column prop="pFee"
@@ -105,7 +105,7 @@
       <el-table-column prop="profitRmb"
                        label="毛利润（￥）"></el-table-column>
       <el-table-column prop="price"
-                       label="售价（£）"></el-table-column>
+                       label="总售价（£）"></el-table-column>
     </el-table>
     <h4>物流信息</h4>
     <el-table :data="tableData4"
