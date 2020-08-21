@@ -175,6 +175,12 @@ export default {
           path: `/v1/tiny-tool/modify-order-logistics-way`
         });
       }
+      if (tab.name === "/v1/tiny-tool/ebay-ad-fee") {
+        sessionStorage.setItem("fixname", "/v1/tiny-tool/ebay-ad-fee");
+        this.$router.push({
+          path: `/v1/tiny-tool/ebay-ad-fee`
+        });
+      }
     }
   },
   mounted() {

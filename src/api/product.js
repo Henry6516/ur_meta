@@ -2172,4 +2172,20 @@ export function APIExportTemplate(param) {
     responseType: 'arraybuffer'
   })
 }
-
+export function getEbayAdFee(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/ebay-ad-fee?page=' + param.page,
+    method: 'post',
+    data
+  })
+}
+export function APIEbayAdFeeExport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/tiny-tool/ebay-ad-fee-export',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
