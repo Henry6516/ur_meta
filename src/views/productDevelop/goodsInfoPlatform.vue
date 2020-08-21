@@ -591,7 +591,6 @@ import {
   getPlatGoodsStatus,
   getPlatCompletedPlat,
   getForbidPlat,
-  getSection,
 } from "../../api/profit";
 import { getMenu } from "../../api/login";
 export default {
@@ -602,7 +601,18 @@ export default {
       suffixValue: [],
       suffixData: [],
       allSuffix: [],
-      department: [],
+      department: [
+        { id: "1", department: "一部", order: "1", type: "业务" },
+        { id: "2", department: "二部", order: "2", type: "业务" },
+        { id: "3", department: "三部", order: "3", type: "业务" },
+        { id: "4", department: "五部", order: "4", type: "业务" },
+        { id: "5", department: "六部", order: "5", type: "业务" },
+        { id: "40", department: "七部", order: "6", type: "业务" },
+        { id: "61", department: "八部", order: "7", type: "业务" },
+        { id: "58", department: "郑州一部", order: "10", type: "业务" },
+        { id: "6", department: "郑州二部", order: "11", type: "业务" },
+        { id: "20", department: "供应链", order: "13", type: "业务" },
+      ],
       platDataAll: [
         "Wish",
         "Mymall",
@@ -3128,12 +3138,12 @@ export default {
     APIVovaName().then((response) => {
       this.vovaArr = response.data.data;
     });
-    getSection().then((response) => {
-      const res = response.data.data;
-      this.department = res.filter(
-        (ele) => ele.department && ele.type === "业务"
-      );
-    });
+    // getSection().then((response) => {
+    //   const res = response.data.data;
+    //   this.department = res.filter(
+    //     (ele) => ele.department && ele.type === "业务"
+    //   );
+    // });
     APIsuffixAll().then((response) => {
       this.allSuffix = response.data.data;
     });
