@@ -158,7 +158,8 @@ export default {
       );
     });
     getAccount().then(response => {
-      this.account = response.data.data;
+      const res = response.data.data;
+      this.account = res.filter((ele) => ele.platform === "eBay");
     });
     getStore().then(response => {
       this.store = response.data.data;
