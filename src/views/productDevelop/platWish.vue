@@ -1519,6 +1519,15 @@ export default {
           data.plat = "joom";
         }
         data.basicInfo.extraImages = url;
+        var wishurl = "";
+        for (var k = 0; k < this.wishurl.length; k++) {
+          if (k == this.wishurl.length - 1) {
+            wishurl += this.wishurl[k];
+          } else {
+            wishurl += this.wishurl[k] + "\n";
+          }
+        }
+        data.basicInfo.wishExtraImages  = wishurl;
         data.basicInfo.id = this.condition.id;
         data.basicInfo.requiredKeywords = md;
         data.basicInfo.randomKeywords = mr;
