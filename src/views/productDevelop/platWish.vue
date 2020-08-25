@@ -1492,6 +1492,8 @@ export default {
         this.exportAll("Shopify");
       } else if (this.platValue == "VOVA") {
         this.exportJoom('VOVA');
+      } else{
+        this.exportAll(this.platValue);
       }
     },
     keepPerfect(type) {
