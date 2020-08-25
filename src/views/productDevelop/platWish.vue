@@ -1130,6 +1130,7 @@ import {
   APIPutJoom,
   APIsuffixAll,
   APIExportTemplate,
+  APIGetPlat
 } from "../../api/product";
 import { getSection } from "../../api/profit";
 export default {
@@ -1162,15 +1163,7 @@ export default {
         { id: "6", department: "郑州二部", order: "11", type: "业务" },
         { id: "20", department: "供应链", order: "13", type: "业务" },
       ],
-      platData: [
-        "Wish",
-        "Mymall",
-        "Lazada",
-        "Shopee",
-        "Joom",
-        "Shopify",
-        "VOVA",
-      ],
+      platData: [],
       tipsPlat: "Wish",
       joomloding: false,
       ordColor: null,
@@ -1244,6 +1237,7 @@ export default {
         APIShopifyName().then((response) => {
           this.shopifyArr = response.data.data;
         });
+        this.getPlatAcc();
         // APIVovaName().then(response => {
         //   this.vovaArr = response.data.data;
         // });
@@ -1251,6 +1245,19 @@ export default {
     },
   },
   methods: {
+    getPlatAcc(){
+      let objStr ={
+        "type":true
+      }
+      APIGetPlat(objStr).then((res) => {
+        let date = res.data.data
+        let arr = []
+        for(let i = 0;i<date.length;i++){
+          arr.push(date[i].plat)
+        }
+        this.platData = arr
+      });
+    },
     selectDep() {
       const arr = [];
       if (this.platValue != "Shopify") {
@@ -2287,6 +2294,7 @@ export default {
       APIShopifyName().then((response) => {
         this.shopifyArr = response.data.data;
       });
+      this.getPlatAcc();
       // APIVovaName().then(response => {
       //   this.vovaArr = response.data.data;
       // });

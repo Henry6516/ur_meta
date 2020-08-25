@@ -2189,3 +2189,11 @@ export function APIEbayAdFeeExport(param) {
     responseType: 'arraybuffer'
   })
 }
+export function APIGetPlat(param) {
+  const data = { condition: param }
+  return request({
+    url: '/condition/plat',
+    method: 'post',
+    data
+  })
+}
