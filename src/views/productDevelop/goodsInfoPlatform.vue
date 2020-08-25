@@ -788,8 +788,51 @@ export default {
         this.exportAll("Shopify");
       } else if (this.platValue == "VOVA") {
         this.exportAllJoom('VOVA');
-      }else{
+      }else if (this.platValue == "eBay") {
+        this.exportAllebay('eBay');
+      } else{
         this.exportAll(this.platValue);
+      }
+    },
+    exportAllebay(type) {
+      if (this.sels.length != 0 && this.platValue) {
+        this.Loading = true;
+        let arrID = [];
+        if (this.suffixValue.length != 0) {
+          arrID = this.suffixValue;
+        } else {
+          arrID = this.suffixData;
+        }
+        let arr = [];
+        for (let i = 0; i < this.sels.length; i++) {
+          let objStr1 = {
+            id: this.sels[i].id,
+            account: arrID,
+            plat: type,
+            depart: this.departmentValue,
+          };
+          APIExportTemplate(objStr1).then((res) => {
+            this.Loading = false;
+            const blob = new Blob([res.data], {
+              type: "data:text/csv;charset=utf-8",
+            });
+            var file = res.headers["content-disposition"]
+              .split(";")[1]
+              .split("filename=")[1];
+            var filename = JSON.parse(file);
+            const downloadElement = document.createElement("a");
+            const objectUrl = window.URL.createObjectURL(blob);
+            downloadElement.href = objectUrl;
+            // const filename =
+            //   "joom_" + year + month + strDate + hour + minute + second;
+            downloadElement.download = filename;
+            document.body.appendChild(downloadElement);
+            downloadElement.click();
+            document.body.removeChild(downloadElement);
+          });
+        }
+      }else{
+        this.$message.error("请选择产品");
       }
     },
     exportAllJoom(type) {
