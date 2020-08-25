@@ -131,7 +131,7 @@ export default {
       };
       APIPictureUpload(strObj).then((res) => {
         if (res.data.code === 200) {
-           this.tableData[index].linkUrl = res.data.data.image 
+          this.tableData[index].linkUrl = res.data.data.image 
         } else {
           this.$message.error(res.data.message);
         }
