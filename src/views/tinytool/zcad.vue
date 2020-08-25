@@ -13,7 +13,7 @@
         >
           <el-form-item label="sku" class="input">
             <el-input
-              placeholder="sku"
+              placeholder="主sku"
               v-model="condition.sku"
               style="width:160px;"
               size="small"
@@ -21,13 +21,22 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="账号" class="input">
-            <el-input
-              placeholder="账号"
+            <el-select
+              size="small"
+              filterable
               v-model="condition.suffix"
               style="width:220px;"
-              size="small"
               clearable
-            ></el-input>
+            >
+              <el-option
+                v-for="(item,index) in account"
+                :index="index"
+                :key="item.id"
+                :label="item.store"
+                :value="item.store"
+              ></el-option>
+              <!-- <el-input size="small" v-model="condition.sellerUserid" clearable></el-input> -->
+            </el-select>
           </el-form-item>
           <el-form-item label="item_id" class="input">
             <el-input
@@ -74,13 +83,13 @@
       style="width: 100%;font-size:13px;"
     >
       <el-table-column prop="suffix" label="账号简称" align="center"></el-table-column>
-      <el-table-column prop="sku" label="SKU" align="center"></el-table-column>
-      <el-table-column prop="ad_rate" label="广告费率" align="center"></el-table-column>
-      <el-table-column prop="ad_fee" label="广告费" align="center"></el-table-column>
-      <el-table-column prop="fee_time" label="交易时间" align="center"></el-table-column>
+      <el-table-column prop="sku" label="主sku" align="center"></el-table-column>
+      <el-table-column prop="ad_rate" label="广告费率(%)" align="center"></el-table-column>
+      <el-table-column prop="ad_fee" label="广告费(￥)" align="center"></el-table-column>
+      <el-table-column prop="fee_time" label="费用时间" align="center"></el-table-column>
       <el-table-column prop="description" label="描述" align="center"></el-table-column>
       <el-table-column prop="item_id" label="itemId" align="center"></el-table-column>
-      <el-table-column prop="transaction_price" label="成交价" align="center"></el-table-column>
+      <el-table-column prop="transaction_price" label="成交价(￥)" align="center"></el-table-column>
       <el-table-column prop="shipping_name" label="物流名称" align="center"></el-table-column>
     </el-table>
     <div class="toolbar" style="overflow:hidden">
@@ -101,7 +110,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { getMember, getUkRealReplenish } from "../../api/profit";
+import { getMember, getUkRealReplenish, getAccount } from "../../api/profit";
 import { APIEbayAdFeeExport, getEbayAdFee } from "../../api/product";
 import { compareUp, compareDown, getMonthDate } from "../../api/tools";
 
@@ -119,6 +128,7 @@ export default {
       trend: ["持续上升", "波动上升", "持续下降", "波动下降", "维持不变"],
       isShipping: ["是", "否"],
       isPurchaser: ["是", "否"],
+      account: [],
       condition: {
         sku: "",
         suffix: "",
@@ -189,6 +199,10 @@ export default {
     },
   },
   mounted() {
+    getAccount().then((response) => {
+      const res = response.data.data;
+      this.account = res.filter((ele) => ele.platform === "eBay");
+    });
     getMember().then((response) => {
       const res = response.data.data;
       this.allMember = this.member = res.filter(

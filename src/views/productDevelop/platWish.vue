@@ -159,15 +159,28 @@
             <el-col :span="20" style="margin-top: 15px">
               <el-input v-model="wishForm.mainImage"></el-input>
             </el-col>
+            <el-col :span="4" class="textZt" style="margin-top: 15px">wish主图</el-col>
+            <el-col :span="20" style="margin-top: 15px">
+              <el-input v-model="wishForm.wishMainImage"></el-input>
+            </el-col>
             <el-col :span="4" class="textZt" style="margin-top: 15px"></el-col>
           </el-col>
-          <el-col :span="10" style="margin-left: 25px">
+          <el-col :span="12" style="padding-left: 25px">
             <a
               :href="wishForm.mainImage"
               target="_blank"
-              style="display: block; width: 155px;height: 155px"
+              style="display: block; width: 155px;height: 155px;float:left"
             >
+              <p style='color:#000'>主图</p>
               <img :src="wishForm.mainImage" style="display: block; width: 155px;height: 155px" />
+            </a>
+            <a
+              :href="wishForm.wishMainImage"
+              target="_blank"
+              style="display: block; width: 155px;height: 155px;float:left;margin-left:25px;"
+            >
+              <p style='color:#000'>wish主图</p>
+              <img :src="wishForm.wishMainImage" style="display: block; width: 155px;height: 155px" />
             </a>
           </el-col>
         </el-col>
@@ -209,7 +222,7 @@
         <el-col style="margin-bottom: 10px;margin-top: 5px" :span="24">
           <span
             @click="sIs()"
-            style="padding: 10px 20px;background: #409EFF;color: #fff;cursor: pointer;display: block;width: 70px;padding-left:10px;text-align: center;margin-left: 15px"
+            style="padding: 8px 8px;background: #409EFF;color: #fff;cursor: pointer;display: block;width: 100px;padding-left:10px;text-align: center;margin-left: 15px"
           >
             <i :class="[shoIS?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>附加图
           </span>
@@ -252,6 +265,53 @@
           </el-col>
         </el-col>
       </el-row>
+      <el-row>
+        <el-col style="margin-bottom: 10px;margin-top: 5px" :span="24">
+          <span
+            @click="sIsWish()"
+            style="padding: 8px 8px;background: #409EFF;color: #fff;cursor: pointer;display: block;width: 100px;padding-left:10px;text-align: center;margin-left: 15px"
+          >
+            <i :class="[shoISwish?'el-icon-minus':'el-icon-plus']" style="margin-right: 5px"></i>wish附加图
+          </span>
+        </el-col>
+      </el-row>
+      <el-row style="margin-left: 15px">
+        <el-col :span="24">
+          <el-col
+            :span="12"
+            style="margin-top: 15px;margin-bottom: 2px"
+            v-for="(item,index) in wishurl"
+            :key="index"
+            v-show="shoISwish"
+          >
+            <el-col :span="19">
+              <el-col :span="24">
+                <el-input v-model="wishurl[index]" @input="wishrevise($event,index)"></el-input>
+              </el-col>
+              <el-col>
+                <p class="sx" @click="wishbotIndex(index)">
+                  <i class="el-icon-arrow-down"></i>下移动
+                </p>
+                <p class="sx" @click="wishtopIndex(index)">
+                  <i class="el-icon-arrow-up"></i>上移动
+                </p>
+                <p class="sx" @click="wishdelDz(index)">
+                  <i class="el-icon-delete"></i>删除
+                </p>
+                <p class="sx" @click="wishdialogFormVisible1 = true">
+                  <i class="el-icon-plus"></i>增加
+                </p>
+                <p class="ss">#{{index+1}}</p>
+              </el-col>
+            </el-col>
+            <el-col :span="3" style="margin-left: 15px">
+              <a :href="wishurl[index]" target="_blank">
+                <img :src="wishurl[index]" style="display: block;width: 90px;height: 90px" />
+              </a>
+            </el-col>
+          </el-col>
+        </el-col>
+      </el-row>      
       <!--<el-col v-for="(item, index) in url"-->
       <!--:key="index" style="margin-top: 15px" v-show="shoIS" :span="24">-->
       <!--<el-col :span="2">-->
@@ -539,7 +599,7 @@
         max-height="550"
       >
         <!-- <el-table-column type="selection" width="30" align="center" header-align="center"></el-table-column> -->
-        <el-table-column type="index" width="50" align="center" header-align="center" fixed></el-table-column>
+        <el-table-column type="index" width="40" align="center" header-align="center" fixed></el-table-column>
         <el-table-column label="操作" width="50" header-align="center" align="center" fixed>
           <template slot-scope="scope">
             <el-tooltip content="删除">
@@ -556,7 +616,7 @@
           prop="sku"
           header-align="center"
           align="center"
-          min-width="140"
+          min-width="130"
           fixed
         >
           <template slot-scope="scope">
@@ -678,10 +738,29 @@
             <el-input size="small" v-model="scope.row.linkUrl"></el-input>
           </template>
         </el-table-column>
+        <el-table-column
+          label="wish主图"
+          prop="wishLinkUrl"
+          header-align="center"
+          min-width="100"
+          align="center"
+        >
+          <template slot-scope="scope">
+            <el-input size="small" v-model="scope.row.wishLinkUrl"></el-input>
+          </template>
+        </el-table-column>
         <el-table-column label="图片" prop="linkUrl" header-align="center" width="70">
           <template slot-scope="scope">
             <img
               :src="scope.row.linkUrl"
+              style="width:50px;height:50px;display: block;margin: auto"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column label="wish图片" prop="wishLinkUrl" header-align="center" width="90">
+          <template slot-scope="scope">
+            <img
+              :src="scope.row.wishLinkUrl"
               style="width:50px;height:50px;display: block;margin: auto"
             />
           </template>
@@ -1021,6 +1100,13 @@
         <el-button type="primary" @click="addRess">确 定</el-button>
       </div>
     </el-dialog>
+    <el-dialog title="增加wish附加图" :visible.sync="wishdialogFormVisible1">
+      <el-input v-model="wishaddPhoto"></el-input>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="wishdialogFormVisible1 = false">取 消</el-button>
+        <el-button type="primary" @click="wishaddRess">确 定</el-button>
+      </div>
+    </el-dialog>
   </section>
 </template>
 <script type="text/ecmascript-6">
@@ -1044,6 +1130,7 @@ import {
   APIPutJoom,
   APIsuffixAll,
   APIExportTemplate,
+  APIGetPlat
 } from "../../api/product";
 import { getSection } from "../../api/profit";
 export default {
@@ -1076,15 +1163,7 @@ export default {
         { id: "6", department: "郑州二部", order: "11", type: "业务" },
         { id: "20", department: "供应链", order: "13", type: "业务" },
       ],
-      platData: [
-        "Wish",
-        "Mymall",
-        "Lazada",
-        "Shopee",
-        "Joom",
-        "Shopify",
-        "VOVA",
-      ],
+      platData: [],
       tipsPlat: "Wish",
       joomloding: false,
       ordColor: null,
@@ -1092,10 +1171,12 @@ export default {
       ordSize: null,
       newSize: null,
       url: [],
+      wishurl:[],
       rows: 1,
       dialogTableVisible: false,
       dialogTable: false,
       dialogFormVisible1: false,
+      wishdialogFormVisible1:false,
       tips: "Wish",
       num: null,
       weightNumber: null,
@@ -1108,6 +1189,7 @@ export default {
       joomArr: [],
       shopifyArr: [],
       addPhoto: "",
+      wishaddPhoto:"",
       advicePrice: null,
       joomPrice: null,
       transport: null,
@@ -1127,6 +1209,7 @@ export default {
       mandatoryData: ["", "", "", "", "", ""],
       randomData: ["", "", "", "", "", "", "", "", "", ""],
       shoIS: false,
+      shoISwish: false,
       activeNames: ["2"],
       condition: {
         id: 0,
@@ -1154,6 +1237,7 @@ export default {
         APIShopifyName().then((response) => {
           this.shopifyArr = response.data.data;
         });
+        this.getPlatAcc();
         // APIVovaName().then(response => {
         //   this.vovaArr = response.data.data;
         // });
@@ -1161,6 +1245,19 @@ export default {
     },
   },
   methods: {
+    getPlatAcc(){
+      let objStr ={
+        "type":true
+      }
+      APIGetPlat(objStr).then((res) => {
+        let date = res.data.data
+        let arr = []
+        for(let i = 0;i<date.length;i++){
+          arr.push(date[i].plat)
+        }
+        this.platData = arr
+      });
+    },
     selectDep() {
       const arr = [];
       if (this.platValue != "Shopify") {
@@ -1429,6 +1526,15 @@ export default {
           data.plat = "joom";
         }
         data.basicInfo.extraImages = url;
+        var wishurl = "";
+        for (var k = 0; k < this.wishurl.length; k++) {
+          if (k == this.wishurl.length - 1) {
+            wishurl += this.wishurl[k];
+          } else {
+            wishurl += this.wishurl[k] + "\n";
+          }
+        }
+        data.basicInfo.wishExtraImages  = wishurl;
         data.basicInfo.id = this.condition.id;
         data.basicInfo.requiredKeywords = md;
         data.basicInfo.randomKeywords = mr;
@@ -1741,6 +1847,9 @@ export default {
     revise(e, index) {
       this.url[index] = e;
     },
+    wishrevise(e, index) {
+      this.wishurl[index] = e;
+    },
     swapItems(arr, index1, index2, direction) {
       if (direction == "up") {
         // 置顶
@@ -1758,6 +1867,29 @@ export default {
         this.url.push(this.addPhoto);
         this.dialogFormVisible1 = false;
       }
+    },
+    wishaddRess() {
+      if (this.wishaddPhoto == "") {
+        this.$message.error("不能为空");
+      } else {
+        this.wishurl.push(this.wishaddPhoto);
+        this.wishdialogFormVisible1 = false;
+      }
+    },
+    wishdelDz(index) {
+      //        this.$confirm('确定删除?', '提示', {
+      //                  confirmButtonText: '确定',
+      //                  cancelButtonText: '取消',
+      //                  type: 'warning'
+      //                })
+      //                .then(() => {
+      //                  this.$message({
+      //                    type: 'success',
+      //                    message: '删除成功!'
+      //                  })
+      this.wishurl.splice(index, 1);
+      //                })
+      //                .catch(() => {})
     },
     delDz(index) {
       //        this.$confirm('确定删除?', '提示', {
@@ -1783,6 +1915,25 @@ export default {
       arr[index1] = arr.splice(index2, 1, arr[index1])[0];
       return arr;
     },
+    wishbotOm(arr, index1, index2, direction) {
+      if (direction == "down") {
+        arr.push(arr[index1]);
+        arr.splice(index1, 1);
+        return arr;
+      }
+      arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+      return arr;
+    },
+    wishbotIndex(index) {
+      if (index == this.wishurl.length - 1) {
+        this.$message({
+          message: "已经是最后一张了",
+          type: "success",
+        });
+        return;
+      }
+      this.botOm(this.wishurl, index, index + 1);
+    },
     botIndex(index) {
       if (index == this.url.length - 1) {
         this.$message({
@@ -1792,6 +1943,16 @@ export default {
         return;
       }
       this.botOm(this.url, index, index + 1);
+    },
+    wishtopIndex(index) {
+      if (index == 0) {
+        this.$message({
+          message: "已经是第一张了",
+          type: "success",
+        });
+        return;
+      }
+      this.swapItems(this.wishurl, index, index - 1);
     },
     topIndex(index) {
       if (index == 0) {
@@ -1832,6 +1993,9 @@ export default {
     },
     sIs() {
       this.shoIS = !this.shoIS;
+    },
+    sIsWish() {
+      this.shoISwish = !this.shoISwish;
     },
     handleChange(val) {},
     // 删除URL
@@ -1895,6 +2059,7 @@ export default {
         obj.shipping = "";
         obj.msrp = null;
         obj.shippingTime = "";
+        obj.wishLinkUrl="";
         obj.linkUrl = "";
         obj.goodsSkuId = null;
         obj.weight = null;
@@ -2010,6 +2175,15 @@ export default {
         }
       }
       data.basicInfo.extraImages = url;
+      var wishurl = "";
+      for (var k = 0; k < this.wishurl.length; k++) {
+        if (k == this.wishurl.length - 1) {
+          wishurl += this.wishurl[k];
+        } else {
+          wishurl += this.wishurl[k] + "\n";
+        }
+      }
+      data.basicInfo.wishExtraImages  = wishurl;
       data.basicInfo.id = this.condition.id;
       data.basicInfo.requiredKeywords = md;
       data.basicInfo.randomKeywords = mr;
@@ -2053,10 +2227,15 @@ export default {
         this.tableData = res.data.data.skuInfo;
         this.condition.id = this.wishForm.id;
         const extraPic = res.data.data.basicInfo.extraImages;
+        const wishextraPic = res.data.data.basicInfo.wishExtraImages ;
         // const picture = extraPic.split("\n")[0];
         this.url = extraPic.split(/[\s\n]/);
         if (this.url[this.url.length - 1] == "") {
           this.url.pop();
+        }
+        this.wishurl = wishextraPic.split(/[\s\n]/);
+        if (this.wishurl[this.wishurl.length - 1] == "") {
+          this.wishurl.pop();
         }
         //          this.url.pop()
         this.wishForm.requiredKeywords = JSON.parse(
@@ -2115,6 +2294,7 @@ export default {
       APIShopifyName().then((response) => {
         this.shopifyArr = response.data.data;
       });
+      this.getPlatAcc();
       // APIVovaName().then(response => {
       //   this.vovaArr = response.data.data;
       // });

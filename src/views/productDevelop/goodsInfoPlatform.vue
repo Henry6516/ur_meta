@@ -584,6 +584,7 @@ import {
   APIPlatExportShopee,
   APIsuffixAll,
   APIExportTemplate,
+  APIGetPlat
 } from "../../api/product";
 import {
   getAttributeInfoStoreName,
@@ -613,15 +614,7 @@ export default {
         { id: "6", department: "郑州二部", order: "11", type: "业务" },
         { id: "20", department: "供应链", order: "13", type: "业务" },
       ],
-      platDataAll: [
-        "Wish",
-        "Mymall",
-        "Lazada",
-        "Shopee",
-        "Joom",
-        "Shopify",
-        "VOVA",
-      ],
+      platDataAll: [],
       Loading: false,
       defaultPropsApp: {
         children: "children",
@@ -763,6 +756,19 @@ export default {
     },
   },
   methods: {
+    getPlatAcc(){
+      let objStr ={
+        "type":true
+      }
+      APIGetPlat(objStr).then((res) => {
+        let date = res.data.data
+        let arr = []
+        for(let i = 0;i<date.length;i++){
+          arr.push(date[i].plat)
+        }
+        this.platDataAll = arr
+      });
+    },
     keepExport() {
       if (!this.platValue) {
         this.$message.error("请选择平台");
@@ -3153,6 +3159,7 @@ export default {
     getPlatSmtCategory().then((response) => {
       this.options = response.data.data;
     });
+    this.getPlatAcc();
   },
 };
 </script>
