@@ -775,7 +775,7 @@ export default {
         return;
       }
       if (this.platValue == "Wish") {
-        this.exportAll("Wish");
+        this.exportAllebay("Wish");
       } else if (this.platValue == "Mymall") {
         this.exportAll("Mymall");
       } else if (this.platValue == "Lazada") {
