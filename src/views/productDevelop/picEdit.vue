@@ -17,7 +17,7 @@
       :height="tableHeight"
       :header-cell-style="getRowClass"
     >
-      <el-table-column type="index" align="center" header-align="center" width="50"></el-table-column>
+      <el-table-column type="index" align="center" header-align="center" width="40"></el-table-column>
       <!-- <el-table-column type="selection"
                        width="55">
       </el-table-column>-->
@@ -31,12 +31,24 @@
       <!--</el-tooltip>-->
       <!--</template>-->
       <!--</el-table-column>-->
-      <el-table-column prop="sku" header-align="center" label="SKU">
+      <el-table-column prop="sku" header-align="center" label="SKU" width="120">
         <template slot-scope="scope">
           <el-input size="small" disabled v-model="scope.row.sku"></el-input>
         </template>
       </el-table-column>
-      <el-table-column prop="linkUrl" width="500" header-align="center" label="图片库地址">
+      <el-table-column header-align="center" label="上传图片" width="90">
+        <template slot-scope="scope">
+          <input
+            type="file"
+            :id="'inputId' + scope.$index"
+            lay-verify="required"
+            style="width:70px;"
+            @change="toBase64(scope.$index,scope.row.sku)"
+            accept="image/jpeg, image/png, image/jpg"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="linkUrl" header-align="center" label="图片库地址" min-width="250">
         <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.linkUrl"></el-input>
         </template>
@@ -81,22 +93,50 @@ import {
   APIPictureInfo,
   APISavePictureInfo,
   APIFinishPicture,
-  APIPictureToFtp
+  APIPictureToFtp,
+  APIPictureUpload
 } from "../../api/product";
 import { getMenu } from "../../api/login";
 export default {
   data() {
     return {
-      tableHeight: window.innerHeight -170,
+      tableHeight: window.innerHeight - 170,
       tableData: [],
       mask: false,
+      imageUrl:null,
       allMenu: [],
       condition: {
-        id: 0
-      }
+        id: 0,
+      },
     };
   },
   methods: {
+    toBase64(index,sku) {
+      var that = this
+      var file = document.getElementById('inputId'+ index).files[0];
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        //把转换后的数据给id为base64Img的src属性
+          that.imageUrl = reader.result
+          that.updataImg(index,sku)
+      }
+      if (file) {
+          reader.readAsDataURL(file);
+      }
+    },
+    updataImg(index,sku){
+      let strObj = {
+        sku: sku,
+        image:this.imageUrl
+      };
+      APIPictureUpload(strObj).then((res) => {
+        if (res.data.code === 200) {
+           this.tableData[index].linkUrl = res.data.data.image 
+        } else {
+          this.$message.error(res.data.message);
+        }
+      });
+    },
     getRowClass({ row, column, rowIndex, columnIndex }) {
       if (rowIndex == 0) {
         return "color:#3c8dbc;background:#f5f7fa";
@@ -108,30 +148,30 @@ export default {
       if (name == "属性信息") {
         sessionStorage.setItem("judge", "属性信息");
         this.$router.push({
-          path: `/v1/oa-goodsinfo/index`
+          path: `/v1/oa-goodsinfo/index`,
         });
       } else if (name == "图片信息") {
         sessionStorage.setItem("judge", "图片信息");
         this.$router.push({
-          path: `/v1/oa-goodsinfo/index`
+          path: `/v1/oa-goodsinfo/index`,
         });
       } else {
         sessionStorage.setItem("judge", "平台信息");
         this.$router.push({
-          path: `/v1/oa-goodsinfo/index`
+          path: `/v1/oa-goodsinfo/index`,
         });
       }
     },
     //保存
     save() {
       let strObj = {
-        pictureInfo: this.tableData
+        pictureInfo: this.tableData,
       };
-      APISavePictureInfo(strObj).then(res => {
+      APISavePictureInfo(strObj).then((res) => {
         if (res.data.code === 200) {
           this.$message({
             message: "保存成功!",
-            type: "success"
+            type: "success",
           });
         } else {
           this.$message.error(res.data.message);
@@ -142,13 +182,13 @@ export default {
     preserve() {
       let strObj1 = {
         pictureInfo: this.tableData,
-        id: this.condition.id
+        id: this.condition.id,
       };
-      APIFinishPicture(strObj1).then(res => {
+      APIFinishPicture(strObj1).then((res) => {
         if (res.data.code === 200) {
           this.$message({
             message: "保存成功!",
-            type: "success"
+            type: "success",
           });
         } else {
           this.$message.error(res.data.message);
@@ -158,12 +198,12 @@ export default {
     //上传
     upload() {
       this.mask = true;
-      APIPictureToFtp(this.condition).then(res => {
+      APIPictureToFtp(this.condition).then((res) => {
         if (res.data.code == 200) {
           this.mask = false;
           this.$message({
             message: "保存成功!",
-            type: "success"
+            type: "success",
           });
         } else {
           this.mask = false;
@@ -173,17 +213,17 @@ export default {
     },
     view(index, row) {},
     getData() {
-      APIPictureInfo(this.condition).then(res => {
+      APIPictureInfo(this.condition).then((res) => {
         this.tableData = res.data.data;
       });
-    }
+    },
   },
   mounted() {
     this.condition.id = this.$route.params.id;
     this.getData();
-    getMenu().then(response => {
+    getMenu().then((response) => {
       const res = response.data.data;
-      const menu = res.filter(e => e.name === "产品中心");
+      const menu = res.filter((e) => e.name === "产品中心");
       let arr = menu[0].children;
       for (let i = 0; i < arr.length; i++) {
         if (arr[i].name == "产品资料") {
@@ -191,7 +231,7 @@ export default {
         }
       }
     });
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -222,5 +262,21 @@ export default {
   z-index: 999;
 }
 </style>
-
-
+<style>
+.newDj .el-upload-dragger {
+  width: 100% !important;
+  height: 32px !important;
+  line-height: 32px !important;
+  float: left;
+  background: #e8f4ff !important;
+  border: #a3d3ff solid 1px !important;
+  border-radius: 3px;
+}
+.newDj .upload-demo {
+  height: 32px !important;
+  width: 50px;
+}
+.newDj .el-upload {
+  width: 100% !important;
+}
+</style>
