@@ -2197,3 +2197,11 @@ export function APIGetPlat(param) {
     data
   })
 }
+export function APIPictureUpload(param) {
+  const data = { condition: param }
+  return request({
+    url: '/oa-goodsinfo/picture-upload',
+    method: 'post',
+    data
+  })
+}
