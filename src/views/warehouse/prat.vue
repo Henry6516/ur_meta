@@ -322,7 +322,6 @@ export default {
           let obj = {
             user: this.condition.user,
             sku: this.condition.sku,
-            number: this.condition.number
           };
           APIaddWarehouse(obj).then(response => {
             if (response.data.code == 200) {
