@@ -2219,3 +2219,11 @@ export function APIaddWarehouse(param) {
     data
   })
 }
+export function APIwarehouseLog(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/warehouse-log',
+    method: 'post',
+    data
+  })
+}

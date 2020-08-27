@@ -57,29 +57,20 @@
     <div v-if="recordTab">
       <el-table :data="tabdate" :height="tableHeight">
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
-        <el-table-column label="分货人" header-align="center">
-          <el-table-column prop="picker" :render-header="renderHeaderPic" align="center"></el-table-column>
+        <el-table-column label="入库人" header-align="center">
+          <el-table-column prop="user" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
-        <el-table-column label="扫描人" header-align="center">
-          <el-table-column prop="scanningMan" :render-header="renderHeaderPic" align="center"></el-table-column>
+        <el-table-column label="SKU" header-align="center">
+          <el-table-column prop="sku" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
-        <el-table-column label="批次号" header-align="center">
-          <el-table-column prop="batchNumber" :render-header="renderHeaderPic" align="center"></el-table-column>
-        </el-table-column>
-        <el-table-column label="完成状态" header-align="center">
-          <el-table-column prop="isDone" :render-header="renderHeaderPic" align="center">
-            <template slot-scope="scope">
-              <a
-                :class="scope.row.isDone=='0'?'clasRed1':'clasGreen1'"
-              >{{scope.row.isDone==0?'未完成':'已完成'}}</a>
-            </template>
-          </el-table-column>
+        <el-table-column label="数量" header-align="center">
+          <el-table-column prop="number" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="扫描时间" header-align="center">
           <el-table-column
             prop="createdTime"
             :render-header="renderHeaderPic"
-            width="200"
+            width="270"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -87,7 +78,7 @@
           <el-table-column
             prop="updatedTime"
             :render-header="renderHeaderPic"
-            width="200"
+            width="270"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -113,7 +104,7 @@ import {
   getPickMembe,
   APIPick
 } from "../../api/profit";
-import { APISortLog, APISortkMember,APISort,APISortMember,APIaddWarehouse } from "../../api/product";
+import { APIwarehouseLog, APISortkMember,APISort,APISortMember,APIaddWarehouse } from "../../api/product";
 import { getMenu } from "../../api/login";
 export default {
   data() {
@@ -133,12 +124,11 @@ export default {
       reccondition: {
         pageSize: 20,
         page: 1,
-        batchNumber: null,
-        picker: null,
-        isDone: null,
-        scanningMan: null,
+        user: null,
+        sku: null,
+        number: null,
+        logisticsNo: null,
         createdTime: [],
-        updatedTime: []
       },
       condition: {
         user: [],
@@ -157,7 +147,7 @@ export default {
       this.getPic();
     },
     getPic() {
-      APISortLog(this.reccondition).then(response => {
+      APIwarehouseLog(this.reccondition).then(response => {
         this.tabdate = response.data.data.items;
         this.total = response.data.data._meta.totalCount;
         this.reccondition.pageSize = response.data.data._meta.perPage;
@@ -203,13 +193,13 @@ export default {
           {
             props: {
               placeholder: "请选择",
-              value: this.reccondition.picker,
+              value: this.reccondition.user,
               size: "mini",
               clearable: true
             },
             on: {
               input: value => {
-                this.reccondition.picker = value;
+                this.reccondition.user = value;
                 this.$emit("input", value);
               },
               change: searchValue => {
@@ -239,13 +229,13 @@ export default {
           [
             h("el-input", {
               props: {
-                value: this.reccondition.scanningMan,
+                value: this.reccondition.sku,
                 size: "mini",
                 clearable: true
               },
               on: {
                 input: value => {
-                  this.reccondition.scanningMan = value;
+                  this.reccondition.sku = value;
                   this.$emit("input", value);
                 },
                 change: value => {
@@ -266,13 +256,13 @@ export default {
           [
             h("el-input", {
               props: {
-                value: this.reccondition.batchNumber,
+                value: this.reccondition.number,
                 size: "mini",
                 clearable: true
               },
               on: {
                 input: value => {
-                  this.reccondition.batchNumber = value;
+                  this.reccondition.number = value;
                   this.$emit("input", value);
                 },
                 change: value => {
@@ -283,41 +273,6 @@ export default {
           ]
         );
       } else if ($index === 3) {
-        let filters = [
-          { text: "0", value: "未完成" },
-          { text: "1", value: "已完成" }
-        ];
-        return h(
-          "el-select",
-          {
-            props: {
-              placeholder: "请选择",
-              value: this.reccondition.isDone,
-              size: "mini",
-              clearable: true
-            },
-            on: {
-              input: value => {
-                this.reccondition.isDone = value;
-                this.$emit("input", value);
-              },
-              change: searchValue => {
-                this.filter();
-              }
-            }
-          },
-          [
-            filters.map(item => {
-              return h("el-option", {
-                props: {
-                  value: item.text,
-                  label: item.value
-                }
-              });
-            })
-          ]
-        );
-      } else if ($index === 4) {
         return h("el-date-picker", {
           props: {
             value: this.time1,
@@ -325,7 +280,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "180px",
+            width: "250px",
             padding: "2px"
           },
           on: {
@@ -338,7 +293,7 @@ export default {
             }
           }
         });
-      } else if ($index === 5) {
+      } else if ($index === 4) {
         return h("el-date-picker", {
           props: {
             value: this.time2,
@@ -346,7 +301,7 @@ export default {
             type: "daterange"
           },
           style: {
-            width: "180px",
+            width: "250px",
             padding: "2px"
           },
           on: {
