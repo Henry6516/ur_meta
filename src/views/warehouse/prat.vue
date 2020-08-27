@@ -37,18 +37,6 @@
             ref="gName"
           ></el-input>
         </el-form-item>
-        <el-form-item
-          label="SKU数量："
-          prop="number"
-          :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]"
-        >
-          <el-input
-            v-model="condition.number"
-            placeholder="--必填--"
-            disabled
-            style="width:230px;"
-          ></el-input>
-        </el-form-item>
         <el-form-item>
           <el-button type="primary" class="input" @click="onSubmit()">提交</el-button>
         </el-form-item>
@@ -62,9 +50,6 @@
         </el-table-column>
         <el-table-column label="SKU" header-align="center">
           <el-table-column prop="sku" :render-header="renderHeaderPic" align="center"></el-table-column>
-        </el-table-column>
-        <el-table-column label="数量" header-align="center">
-          <el-table-column prop="number" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="扫描时间" header-align="center">
           <el-table-column
@@ -133,7 +118,6 @@ export default {
       condition: {
         user: [],
         sku: "",
-        number:'1',
       }
     };
   },
