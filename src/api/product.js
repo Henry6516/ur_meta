@@ -2205,10 +2205,12 @@ export function APIPictureUpload(param) {
     data
   })
 }
-export function APISortMember() {
+export function APISortMember(param) {
+  const data = { condition: param }
   return request({
     url: '/warehouse-tools/sort-member',
-    method: 'get'
+    method: 'post',
+    data
   })
 }
 export function APIaddWarehouse(param) {

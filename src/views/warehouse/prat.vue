@@ -363,7 +363,10 @@ export default {
     APISortkMember().then(response => {
       this.pickName = response.data.data;
     });
-    APISortMember().then(response => {
+    let obj = {
+      type:'warehouse'
+    }
+    APISortMember(obj).then(response => {
       this.suffix = response.data.data;
     });
     this.getPic();
