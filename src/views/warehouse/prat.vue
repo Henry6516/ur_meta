@@ -20,7 +20,7 @@
           prop="user"
           :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]"
         >
-          <el-select v-model="condition.user" style="width:230px;">
+          <el-select v-model="condition.user" filterable @blur="currentSel" style="width:230px;">
             <el-option v-for="item in suffix" :key="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
@@ -122,6 +122,9 @@ export default {
     };
   },
   methods: {
+    currentSel(e){
+      this.condition.user=e.target.value
+    },
     handleSizeChange(val) {
       this.reccondition.pageSize = val;
       this.getPic();
