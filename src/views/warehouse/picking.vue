@@ -24,8 +24,9 @@
             v-model="condition.suffix"
             style="width:230px;"
             filterable
+            allow-create
+            default-first-option
             clearable
-            @blur="currentSel"
           >
             <el-option v-for="item in suffix" :key="item" :value="item"></el-option>
           </el-select>

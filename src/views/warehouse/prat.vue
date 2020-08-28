@@ -20,7 +20,13 @@
           prop="user"
           :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]"
         >
-          <el-select v-model="condition.user" filterable @blur="currentSel" style="width:230px;">
+          <el-select
+            v-model="condition.user"
+            filterable
+            allow-create
+            default-first-option
+            style="width:230px;"
+          >
             <el-option v-for="item in suffix" :key="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
@@ -87,9 +93,15 @@ import {
   geteBaytemplate,
   getToolaccount,
   getPickMembe,
-  APIPick
+  APIPick,
 } from "../../api/profit";
-import { APIwarehouseLog, APISortkMember,APISort,APISortMember,APIaddWarehouse } from "../../api/product";
+import {
+  APIwarehouseLog,
+  APISortkMember,
+  APISort,
+  APISortMember,
+  APIaddWarehouse,
+} from "../../api/product";
 import { getMenu } from "../../api/login";
 export default {
   data() {
@@ -118,12 +130,12 @@ export default {
       condition: {
         user: [],
         sku: "",
-      }
+      },
     };
   },
   methods: {
-    currentSel(e){
-      this.condition.user=e.target.value
+    currentSel(e) {
+      this.condition.user = e.target.value;
     },
     handleSizeChange(val) {
       this.reccondition.pageSize = val;
@@ -134,7 +146,7 @@ export default {
       this.getPic();
     },
     getPic() {
-      APIwarehouseLog(this.reccondition).then(response => {
+      APIwarehouseLog(this.reccondition).then((response) => {
         this.tabdate = response.data.data.items;
         this.total = response.data.data._meta.totalCount;
         this.reccondition.pageSize = response.data.data._meta.perPage;
@@ -157,7 +169,7 @@ export default {
       if (this.time1 !== null && this.time1.length !== 0) {
         this.reccondition.createdTime = [
           this.formatDate(this.time1[0]),
-          this.formatDate(this.time1[1])
+          this.formatDate(this.time1[1]),
         ];
       } else {
         this.reccondition.createdTime = [];
@@ -165,7 +177,7 @@ export default {
       if (this.time2 !== null && this.time2.length !== 0) {
         this.reccondition.updatedTime = [
           this.formatDate(this.time2[0]),
-          this.formatDate(this.time2[1])
+          this.formatDate(this.time2[1]),
         ];
       } else {
         this.reccondition.updatedTime = [];
@@ -182,27 +194,27 @@ export default {
               placeholder: "请选择",
               value: this.reccondition.user,
               size: "mini",
-              clearable: true
+              clearable: true,
             },
             on: {
-              input: value => {
+              input: (value) => {
                 this.reccondition.user = value;
                 this.$emit("input", value);
               },
-              change: searchValue => {
+              change: (searchValue) => {
                 this.filter();
-              }
-            }
+              },
+            },
           },
           [
-            filters.map(item => {
+            filters.map((item) => {
               return h("el-option", {
                 props: {
                   value: item,
-                  label: item
-                }
+                  label: item,
+                },
               });
-            })
+            }),
           ]
         );
       } else if ($index === 1) {
@@ -210,26 +222,26 @@ export default {
           "div",
           {
             style: {
-              height: "30px"
-            }
+              height: "30px",
+            },
           },
           [
             h("el-input", {
               props: {
                 value: this.reccondition.sku,
                 size: "mini",
-                clearable: true
+                clearable: true,
               },
               on: {
-                input: value => {
+                input: (value) => {
                   this.reccondition.sku = value;
                   this.$emit("input", value);
                 },
-                change: value => {
+                change: (value) => {
                   this.filter();
-                }
-              }
-            })
+                },
+              },
+            }),
           ]
         );
       } else if ($index === 2) {
@@ -237,26 +249,26 @@ export default {
           "div",
           {
             style: {
-              height: "30px"
-            }
+              height: "30px",
+            },
           },
           [
             h("el-input", {
               props: {
                 value: this.reccondition.number,
                 size: "mini",
-                clearable: true
+                clearable: true,
               },
               on: {
-                input: value => {
+                input: (value) => {
                   this.reccondition.number = value;
                   this.$emit("input", value);
                 },
-                change: value => {
+                change: (value) => {
                   this.filter();
-                }
-              }
-            })
+                },
+              },
+            }),
           ]
         );
       } else if ($index === 3) {
@@ -264,42 +276,42 @@ export default {
           props: {
             value: this.time1,
             size: "mini",
-            type: "daterange"
+            type: "daterange",
           },
           style: {
             width: "250px",
-            padding: "2px"
+            padding: "2px",
           },
           on: {
-            input: value => {
+            input: (value) => {
               this.time1 = value;
               this.$emit("input", value);
             },
-            change: value => {
+            change: (value) => {
               this.filter();
-            }
-          }
+            },
+          },
         });
       } else if ($index === 4) {
         return h("el-date-picker", {
           props: {
             value: this.time2,
             size: "mini",
-            type: "daterange"
+            type: "daterange",
           },
           style: {
             width: "250px",
-            padding: "2px"
+            padding: "2px",
           },
           on: {
-            input: value => {
+            input: (value) => {
               this.time2 = value;
               this.$emit("input", value);
             },
-            change: value => {
+            change: (value) => {
               this.filter();
-            }
-          }
+            },
+          },
         });
       }
     },
@@ -320,17 +332,17 @@ export default {
       this.onSubmit();
     },
     onSubmit(form) {
-      this.$refs.condition.validate(valid => {
+      this.$refs.condition.validate((valid) => {
         if (valid) {
           let obj = {
             user: this.condition.user,
             sku: this.condition.sku,
           };
-          APIaddWarehouse(obj).then(response => {
+          APIaddWarehouse(obj).then((response) => {
             if (response.data.code == 200) {
               this.$message({
                 message: "提交成功",
-                type: "success"
+                type: "success",
               });
               this.condition.sku = "";
               this.$refs.gName.focus();
@@ -343,22 +355,22 @@ export default {
           this.$refs.gName.focus();
         }
       });
-    }
+    },
   },
   mounted() {
-    APISortkMember().then(response => {
+    APISortkMember().then((response) => {
       this.pickName = response.data.data;
     });
     let obj = {
-      type:'warehouse'
-    }
-    APISortMember(obj).then(response => {
+      type: "warehouse",
+    };
+    APISortMember(obj).then((response) => {
       this.suffix = response.data.data;
     });
     this.getPic();
-    getMenu().then(response => {
+    getMenu().then((response) => {
       const res = response.data.data;
-      const menu = res.filter(e => e.name === "仓库工具");
+      const menu = res.filter((e) => e.name === "仓库工具");
       let arr = menu[0].children;
       for (let i = 0; i < arr.length; i++) {
         if (arr[i].name == "入库工具") {
@@ -366,7 +378,7 @@ export default {
         }
       }
     });
-  }
+  },
 };
 </script>
 
