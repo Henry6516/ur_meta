@@ -517,7 +517,7 @@
                 <a>{{item.target}}</a>
                 <a>{{item.bonus}}</a>
                 <a>{{item.amt}}</a>
-                <a>{{item.dateRate + '%'}}</a>
+                <a>{{item.rate + '%'}}</a>
               </div>
             </div>
           </div>
@@ -558,7 +558,7 @@
                   <a>{{item.bonus}}</a>
                   <a>{{item.vacationDays}}</a>
                   <a>{{item.amt}}</a>
-                  <a>{{item.dateRate + '%'}}</a>
+                  <a>{{item.rate + '%'}}</a>
                   <a>{{item.rxtraBonus}}</a>
                 </div>
               </div>
@@ -601,7 +601,7 @@
                   <a>{{item.bonus}}</a>
                   <a>{{item.vacationDays}}</a>
                   <a>{{item.amt}}</a>
-                  <a>{{item.dateRate + '%'}}</a>
+                  <a>{{item.rate + '%'}}</a>
                   <a>{{item.rxtraBonus}}</a>
                 </div>
               </div>
