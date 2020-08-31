@@ -453,7 +453,7 @@
             <div class="shadow"></div>
             <div class="label" v-if="opindex!=0">
               <div class="icon">
-                <span style="color:#000">奖</span>
+                <span style="color:#000">总</span>
               </div>
             </div>
             <div class="cardCase" v-if="opindex==0">
