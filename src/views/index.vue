@@ -2909,6 +2909,7 @@ h2:hover {
   overflow: hidden;
 }
 .cardLeft {
+  width: 230px;
   float: left;
   color: #fff;
   margin-top: 25px;
