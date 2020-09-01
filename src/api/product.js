@@ -2227,3 +2227,12 @@ export function APIwarehouseLog(param) {
     data
   })
 }
+export function APIEWarehouseLogExport(param) {
+  const data = { condition: param }
+  return request({
+    url: '/warehouse-tools/warehouse-log-export',
+    method: 'post',
+    data,
+    responseType: 'arraybuffer'
+  })
+}
