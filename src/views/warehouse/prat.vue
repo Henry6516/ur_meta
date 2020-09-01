@@ -16,31 +16,30 @@
         ref="condition"
       >
         <el-form-item
-          label="拣货人："
-          prop="suffix"
+          label="入库人："
+          prop="user"
           :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]"
         >
           <el-select
-            v-model="condition.suffix"
-            style="width:230px;"
+            v-model="condition.user"
             filterable
             allow-create
             default-first-option
-            clearable
+            style="width:230px;"
           >
             <el-option v-for="item in suffix" :key="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item
-          label="批次号："
-          prop="goodsCode"
+          label="SKU："
+          prop="sku"
           :rules="[{required: true, message: '请填写字段', trigger: 'blur'}]"
         >
           <el-input
-            v-model="condition.goodsCode"
+            v-model="condition.sku"
             placeholder="--必填--"
-            style="width:230px;"
             @change="myFunction()"
+            style="width:230px;"
             ref="gName"
           ></el-input>
         </el-form-item>
@@ -52,29 +51,17 @@
     <div v-if="recordTab">
       <el-table :data="tabdate" :height="tableHeight">
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
-        <el-table-column label="拣货人" header-align="center">
-          <el-table-column prop="picker" :render-header="renderHeaderPic" align="center"></el-table-column>
+        <el-table-column label="入库人" header-align="center">
+          <el-table-column prop="user" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
-        <el-table-column label="扫描人" header-align="center">
-          <el-table-column prop="scanningMan" :render-header="renderHeaderPic" align="center"></el-table-column>
-        </el-table-column>
-        <el-table-column label="批次号" header-align="center">
-          <el-table-column prop="batchNumber" :render-header="renderHeaderPic" align="center"></el-table-column>
-        </el-table-column>
-        <el-table-column label="完成状态" header-align="center">
-          <el-table-column prop="isDone" :render-header="renderHeaderPic" align="center">
-            <template slot-scope="scope">
-              <a
-                :class="scope.row.isDone=='0'?'clasRed1':'clasGreen1'"
-              >{{scope.row.isDone==0?'未完成':'已完成'}}</a>
-            </template>
-          </el-table-column>
+        <el-table-column label="SKU" header-align="center">
+          <el-table-column prop="sku" :render-header="renderHeaderPic" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="扫描时间" header-align="center">
           <el-table-column
             prop="createdTime"
             :render-header="renderHeaderPic"
-            width="200"
+            width="270"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -82,7 +69,7 @@
           <el-table-column
             prop="updatedTime"
             :render-header="renderHeaderPic"
-            width="200"
+            width="270"
             align="center"
           ></el-table-column>
         </el-table-column>
@@ -106,9 +93,15 @@ import {
   geteBaytemplate,
   getToolaccount,
   getPickMembe,
-  APIPick
+  APIPick,
 } from "../../api/profit";
-import { APIScanningLog, APIPickMember } from "../../api/product";
+import {
+  APIwarehouseLog,
+  APISortkMember,
+  APISort,
+  APISortMember,
+  APIaddWarehouse,
+} from "../../api/product";
 import { getMenu } from "../../api/login";
 export default {
   data() {
@@ -120,7 +113,7 @@ export default {
       pickingTab: true,
       recordTab: false,
       pickName: [],
-      activeName: "拣货扫描",
+      activeName: "入库扫描",
       goodsCode: "",
       total: 0,
       time1: null,
@@ -128,22 +121,21 @@ export default {
       reccondition: {
         pageSize: 20,
         page: 1,
-        batchNumber: null,
-        picker: null,
-        isDone: null,
-        scanningMan: null,
+        user: null,
+        sku: null,
+        number: null,
+        logisticsNo: null,
         createdTime: [],
-        updatedTime: []
       },
       condition: {
-        suffix: [],
-        goodsCode: ""
-      }
+        user: [],
+        sku: "",
+      },
     };
   },
   methods: {
-    currentSel(e){
-      this.condition.suffix=e.target.value
+    currentSel(e) {
+      this.condition.user = e.target.value;
     },
     handleSizeChange(val) {
       this.reccondition.pageSize = val;
@@ -154,7 +146,7 @@ export default {
       this.getPic();
     },
     getPic() {
-      APIScanningLog(this.reccondition).then(response => {
+      APIwarehouseLog(this.reccondition).then((response) => {
         this.tabdate = response.data.data.items;
         this.total = response.data.data._meta.totalCount;
         this.reccondition.pageSize = response.data.data._meta.perPage;
@@ -177,7 +169,7 @@ export default {
       if (this.time1 !== null && this.time1.length !== 0) {
         this.reccondition.createdTime = [
           this.formatDate(this.time1[0]),
-          this.formatDate(this.time1[1])
+          this.formatDate(this.time1[1]),
         ];
       } else {
         this.reccondition.createdTime = [];
@@ -185,7 +177,7 @@ export default {
       if (this.time2 !== null && this.time2.length !== 0) {
         this.reccondition.updatedTime = [
           this.formatDate(this.time2[0]),
-          this.formatDate(this.time2[1])
+          this.formatDate(this.time2[1]),
         ];
       } else {
         this.reccondition.updatedTime = [];
@@ -200,29 +192,29 @@ export default {
           {
             props: {
               placeholder: "请选择",
-              value: this.reccondition.picker,
+              value: this.reccondition.user,
               size: "mini",
-              clearable: true
+              clearable: true,
             },
             on: {
-              input: value => {
-                this.reccondition.picker = value;
+              input: (value) => {
+                this.reccondition.user = value;
                 this.$emit("input", value);
               },
-              change: searchValue => {
+              change: (searchValue) => {
                 this.filter();
-              }
-            }
+              },
+            },
           },
           [
-            filters.map(item => {
+            filters.map((item) => {
               return h("el-option", {
                 props: {
                   value: item,
-                  label: item
-                }
+                  label: item,
+                },
               });
-            })
+            }),
           ]
         );
       } else if ($index === 1) {
@@ -230,26 +222,26 @@ export default {
           "div",
           {
             style: {
-              height: "30px"
-            }
+              height: "30px",
+            },
           },
           [
             h("el-input", {
               props: {
-                value: this.reccondition.scanningMan,
+                value: this.reccondition.sku,
                 size: "mini",
-                clearable: true
+                clearable: true,
               },
               on: {
-                input: value => {
-                  this.reccondition.scanningMan = value;
+                input: (value) => {
+                  this.reccondition.sku = value;
                   this.$emit("input", value);
                 },
-                change: value => {
+                change: (value) => {
                   this.filter();
-                }
-              }
-            })
+                },
+              },
+            }),
           ]
         );
       } else if ($index === 2) {
@@ -257,109 +249,74 @@ export default {
           "div",
           {
             style: {
-              height: "30px"
-            }
+              height: "30px",
+            },
           },
           [
             h("el-input", {
               props: {
-                value: this.reccondition.batchNumber,
+                value: this.reccondition.number,
                 size: "mini",
-                clearable: true
+                clearable: true,
               },
               on: {
-                input: value => {
-                  this.reccondition.batchNumber = value;
+                input: (value) => {
+                  this.reccondition.number = value;
                   this.$emit("input", value);
                 },
-                change: value => {
+                change: (value) => {
                   this.filter();
-                }
-              }
-            })
+                },
+              },
+            }),
           ]
         );
       } else if ($index === 3) {
-        let filters = [
-          { text: "0", value: "未完成" },
-          { text: "1", value: "已完成" }
-        ];
-        return h(
-          "el-select",
-          {
-            props: {
-              placeholder: "请选择",
-              value: this.reccondition.isDone,
-              size: "mini",
-              clearable: true
-            },
-            on: {
-              input: value => {
-                this.reccondition.isDone = value;
-                this.$emit("input", value);
-              },
-              change: searchValue => {
-                this.filter();
-              }
-            }
-          },
-          [
-            filters.map(item => {
-              return h("el-option", {
-                props: {
-                  value: item.text,
-                  label: item.value
-                }
-              });
-            })
-          ]
-        );
-      } else if ($index === 4) {
         return h("el-date-picker", {
           props: {
             value: this.time1,
             size: "mini",
-            type: "daterange"
+            type: "daterange",
           },
           style: {
-            width: "180px",
-            padding: "2px"
+            width: "250px",
+            padding: "2px",
           },
           on: {
-            input: value => {
+            input: (value) => {
               this.time1 = value;
               this.$emit("input", value);
             },
-            change: value => {
+            change: (value) => {
               this.filter();
-            }
-          }
+            },
+          },
         });
-      } else if ($index === 5) {
+      } else if ($index === 4) {
         return h("el-date-picker", {
           props: {
             value: this.time2,
             size: "mini",
-            type: "daterange"
+            type: "daterange",
           },
           style: {
-            width: "180px",
-            padding: "2px"
+            width: "250px",
+            padding: "2px",
           },
           on: {
-            input: value => {
+            input: (value) => {
               this.time2 = value;
               this.$emit("input", value);
             },
-            change: value => {
+            change: (value) => {
               this.filter();
-            }
-          }
+            },
+          },
         });
       }
     },
     handleClick(tab, event) {
-      if (tab.label === "拣货扫描") {
+      if (tab.label === "入库扫描") {
         this.pickingTab = true;
       } else {
         this.pickingTab = false;
@@ -375,19 +332,19 @@ export default {
       this.onSubmit();
     },
     onSubmit(form) {
-      this.$refs.condition.validate(valid => {
+      this.$refs.condition.validate((valid) => {
         if (valid) {
           let obj = {
-            picker: this.condition.suffix,
-            batchNumber: this.condition.goodsCode
+            user: this.condition.user,
+            sku: this.condition.sku,
           };
-          APIPick(obj).then(response => {
+          APIaddWarehouse(obj).then((response) => {
             if (response.data.code == 200) {
               this.$message({
                 message: "提交成功",
-                type: "success"
+                type: "success",
               });
-              this.condition.goodsCode = "";
+              this.condition.sku = "";
               this.$refs.gName.focus();
             } else {
               this.$message.error(res.data.message);
@@ -398,27 +355,30 @@ export default {
           this.$refs.gName.focus();
         }
       });
-    }
+    },
   },
   mounted() {
-    APIPickMember().then(response => {
+    APISortkMember().then((response) => {
       this.pickName = response.data.data;
     });
-    getPickMembe().then(response => {
+    let obj = {
+      type: "warehouse",
+    };
+    APISortMember(obj).then((response) => {
       this.suffix = response.data.data;
     });
     this.getPic();
-    getMenu().then(response => {
+    getMenu().then((response) => {
       const res = response.data.data;
-      const menu = res.filter(e => e.name === "仓库工具");
+      const menu = res.filter((e) => e.name === "仓库工具");
       let arr = menu[0].children;
       for (let i = 0; i < arr.length; i++) {
-        if (arr[i].name == "拣货工具") {
+        if (arr[i].name == "入库工具") {
           this.allMenu = arr[i].tabs;
         }
       }
     });
-  }
+  },
 };
 </script>
 

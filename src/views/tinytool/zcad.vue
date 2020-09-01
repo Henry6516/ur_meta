@@ -86,10 +86,17 @@
       <el-table-column prop="sku" label="主sku" align="center"></el-table-column>
       <el-table-column prop="ad_rate" label="广告费率(%)" align="center"></el-table-column>
       <el-table-column prop="ad_fee" label="广告费(￥)" align="center"></el-table-column>
-      <el-table-column prop="fee_time" label="费用时间" align="center"></el-table-column>
+      <el-table-column prop="ad_fee_original" label="广告费(原币种)" align="center"></el-table-column>
+      <el-table-column prop="fee_time" label="费用时间" align="center">
+        <template slot-scope="scope">
+          {{scope.row.fee_time | cutOutDate}}
+        </template>
+      </el-table-column>
       <el-table-column prop="description" label="描述" align="center"></el-table-column>
       <el-table-column prop="item_id" label="itemId" align="center"></el-table-column>
-      <el-table-column prop="transaction_price" label="成交价(￥)" align="center"></el-table-column>
+      <el-table-column prop="transaction_price_total" label="成交价(￥)" align="center"></el-table-column>
+      <el-table-column prop="transaction_price" label="成交价(原币种)" align="center"></el-table-column>
+      <el-table-column prop="shipping_fee" label="运费" align="center"></el-table-column>
       <el-table-column prop="shipping_name" label="物流名称" align="center"></el-table-column>
     </el-table>
     <div class="toolbar" style="overflow:hidden">
@@ -139,6 +146,12 @@ export default {
       },
       listLoading: false,
     };
+  },
+  filters: {
+    cutOutDate(value){
+      value = value.substring(0, 16);
+      return value;
+    },
   },
   methods: {
     getRowClass({ row, column, rowIndex, columnIndex }) {
