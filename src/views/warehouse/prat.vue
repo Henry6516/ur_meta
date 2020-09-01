@@ -49,6 +49,7 @@
       </el-form>
     </div>
     <div v-if="recordTab">
+      <el-button type="primary" class="input" @click="exportExcel()" size="small" style="margin-left:10px;margin-top:10px;margin-bottom:10px;">导出</el-button>
       <el-table :data="tabdate" :height="tableHeight">
         <el-table-column type="index" fixed align="center" header-align="center"></el-table-column>
         <el-table-column label="入库人" header-align="center">
@@ -101,13 +102,14 @@ import {
   APISort,
   APISortMember,
   APIaddWarehouse,
+  APIEWarehouseLogExport
 } from "../../api/product";
 import { getMenu } from "../../api/login";
 export default {
   data() {
     return {
       suffix: [],
-      tableHeight: window.innerHeight - 135,
+      tableHeight: window.innerHeight - 187,
       allMenu: [],
       tabdate: [],
       pickingTab: true,
@@ -134,6 +136,28 @@ export default {
     };
   },
   methods: {
+    exportExcel(){
+       APIEWarehouseLogExport(this.reccondition).then(res => {
+         this.listLoading = false
+        const blob = new Blob([res.data], {
+          type:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        var file = res.headers["content-disposition"]
+          .split(";")[1]
+          .split("filename=")[1];
+        var filename = JSON.parse(file);
+        const downloadElement = document.createElement("a");
+        const objectUrl = window.URL.createObjectURL(blob);
+        downloadElement.href = objectUrl;
+        // const filename =
+        //   "Wish_" + year + month + strDate + hour + minute + second;
+        downloadElement.download = filename;
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+      });
+    },
     currentSel(e) {
       this.condition.user = e.target.value;
     },

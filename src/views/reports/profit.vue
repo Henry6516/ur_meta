@@ -341,6 +341,42 @@
       >
       <template slot-scope="scope">{{scope.row.amazonProfit | cutOut1}}</template>
       </el-table-column>
+      <el-table-column
+        width="128"
+        prop="vovaSold"
+         align="center"
+        label="vova销量"
+        :formatter="empty"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
+        width="145"
+        prop="vovaProfit"
+         align="center"
+        label="vova利润(￥)"
+        :formatter="empty"
+        sortable="custom"
+      >
+      <template slot-scope="scope">{{scope.row.vovaProfit | cutOut1}}</template>
+      </el-table-column>
+      <el-table-column
+        width="128"
+        prop="lazadaSold"
+         align="center"
+        label="lazada销量"
+        :formatter="empty"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
+        width="145"
+        prop="lazadaProfit"
+         align="center"
+        label="lazada利润(￥)"
+        :formatter="empty"
+        sortable="custom"
+      >
+      <template slot-scope="scope">{{scope.row.lazadaProfit | cutOut1}}</template>
+      </el-table-column>
     </el-table>
     <div class="toolbar">
       <el-pagination
