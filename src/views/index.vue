@@ -448,59 +448,66 @@
           @click="goHome()"
           style="width: 40px;height: 40px;"
         />
-        <div class="options">
-          <div class="option" :class="opindex==0?'active':''" @click="opindexFlag('0')">
-            <div class="shadow"></div>
-            <div class="label" v-if="opindex!=0">
-              <div class="icon">
-                <span style="color:#000">总</span>
+        <div class="rightBox">
+          <div class="cardCase">
+            <div class="cardLeft">
+              <div class="cardLeft01">
+                <p class="zmb">总目标奖金</p>
+                <span class="swhite">{{bonus.total}}元</span>
+                <p class="zmb">已领取奖金</p>
+                <span class="spGreen">{{bonus.pass}}元</span>
+                <p class="zmb">剩余奖金</p>
+                <span>{{bonus.surplus}}元</span>
+                <img src="../assets/jab.png" style="width:49px;height:37px;margin-top:5px;" />
+              </div>
+              <div class="cardLeft01">
+                <p class="zmb">总目标年假</p>
+                <span class="swhite">{{bonus.totalnj}}天</span>
+                <p class="zmb">已领取年假</p>
+                <span class="spGreen">{{bonus.passnj}}天</span>
+                <p class="zmb">剩余年假</p>
+                <span>{{bonus.surplusnj}}天</span>
+                <img src="../assets/jab.png" style="width:49px;height:37px;margin-top:5px;" />
               </div>
             </div>
-            <div class="cardCase" v-if="opindex==0">
-              <div class="cardLeft">
-                <div class="cardLeft01">
-                  <p class="zmb">总目标奖金</p>
-                  <span class="swhite">{{bonus.total}}元</span>
-                  <p class="zmb">已领取奖金</p>
-                  <span class="spGreen">{{bonus.pass}}元</span>
-                  <p class="zmb">剩余奖金</p>
-                  <span>{{bonus.surplus}}元</span>
-                  <img src="../assets/jab.png" style="width:49px;height:37px;margin-top:5px;" />
-                </div>
-                <div class="cardLeft01">
-                  <p class="zmb">总目标年假</p>
-                  <span class="swhite">{{bonus.totalnj}}天</span>
-                  <p class="zmb">已领取年假</p>
-                  <span class="spGreen">{{bonus.passnj}}天</span>
-                  <p class="zmb">剩余年假</p>
-                  <span>{{bonus.surplusnj}}天</span>
-                  <img src="../assets/jab.png" style="width:49px;height:37px;margin-top:5px;" />
-                </div>
+            <!-- <div class="cardRightjd">
+              <div class="luck-user-title">
+                <span>时间进度</span>
               </div>
-              <div class="cardRight">
-                <div class="luck-user-title">
-                  <span>奖金名单</span>
-                </div>
-                <div class="cardText">
-                  <div class="cardText01" v-for="(item,index) in bonusList" :key="index">
-                    <img :src="item.avatar" style="width: 40px;height: 40px;border-radius:50%;" />
-                    <span>{{item.username}}</span>
-                    <p class="njts">{{item.vacationDays}}天</p>
-                    <p>
-                      {{item.bonus | cutOut1}}
-                      <b v-show="item.rxtraBonus!=0">+</b>
-                      <b v-show="item.rxtraBonus!=0">{{item.rxtraBonus | cutOut1}}</b>
-                    </p>
-                  </div>
+              <el-progress :text-inside="true" :stroke-width="26" :percentage="10"></el-progress>
+            </div>-->
+            <div class="cardRight" style="margin-bottom:15px;">
+              <div class="luck-user-title">
+                <span>奖金名单</span>
+              </div>
+              <div class="cardText">
+                <div class="cardText01" v-for="(item,index) in bonusList" :key="index">
+                  <img :src="item.avatar" style="width: 40px;height: 40px;border-radius:50%;" />
+                  <span>{{item.username}}</span>
+                  <p class="njts">{{item.vacationDays}}天</p>
+                  <p>
+                    {{item.bonus | cutOut1}}
+                    <b v-show="item.rxtraBonus!=0">+</b>
+                    <b v-show="item.rxtraBonus!=0">{{item.rxtraBonus | cutOut1}}</b>
+                  </p>
                 </div>
               </div>
             </div>
+            <el-progress
+              :text-inside="true"
+              :stroke-width="20"
+              :percentage="1"
+              style="width:93%;margin-left:22px;"
+            ></el-progress>
           </div>
+        </div>
+        <div class="options">
           <div class="option" :class="opindex==1?'active':''" @click="opindexFlag('1')">
             <div class="shadow"></div>
             <div class="label" v-if="opindex!=1">
               <div class="icon">
-                <span style="color:#000">部</span>
+                <span style="color:#000;display:block;text-align:center;margin-top:10px;">部</span>
+                <span style="color:#000;display:block;text-align:center;">门</span>
               </div>
             </div>
             <p class="tepn" v-if="opindex==1">部门目标完成度</p>
@@ -525,7 +532,8 @@
             <div class="shadow"></div>
             <div class="label" v-if="opindex!=2">
               <div class="icon">
-                <span style="color:#000">销</span>
+                <span style="color:#000;display:block;text-align:center;margin-top:10px;">销</span>
+                <span style="color:#000;display:block;text-align:center;">售</span>
               </div>
             </div>
             <p class="tepn" v-if="opindex==2">销售目标完成度</p>
@@ -545,12 +553,14 @@
                     <img
                       :src="item.avatar"
                       v-if="item.avatar!=null"
-                      style="width: 60px;height: 60px;border-radius:50%;float:left;margin-left:40px;margin-bottom:20px;"
+                      class="img1500"
+                      style="width: 60px;height: 60px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
                     />
                     <img
                       src="../assets/header.png"
                       v-if="item.avatar==null"
-                      style="width: 60px;height: 60px;border-radius:50%;float:left;margin-left:40px;margin-bottom:20px;"
+                      class="img1500"
+                      style="width: 60px;height: 60px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
                     />
                   </a>
                   <a>{{item.username}}</a>
@@ -568,7 +578,8 @@
             <div class="shadow"></div>
             <div class="label" v-if="opindex!=3">
               <div class="icon">
-                <span style="color:#000">开</span>
+                <span style="color:#000;display:block;text-align:center;margin-top:10px;">开</span>
+                <span style="color:#000;display:block;text-align:center;">发</span>
               </div>
             </div>
             <p class="tepn" v-if="opindex==3">开发目标完成度</p>
@@ -588,12 +599,14 @@
                     <img
                       :src="item.avatar"
                       v-if="item.avatar!=null"
-                      style="width: 60px;height: 60px;border-radius:50%;float:left;margin-left:40px;margin-bottom:20px;"
+                      class="img1500"
+                      style="width: 60px;height: 60px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
                     />
                     <img
                       src="../assets/header.png"
                       v-if="item.avatar==null"
-                      style="width: 60px;height: 60px;border-radius:50%;float:left;margin-left:40px;margin-bottom:20px;"
+                      class="img1500"
+                      style="width: 60px;height: 60px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
                     />
                   </a>
                   <a>{{item.username}}</a>
@@ -702,14 +715,14 @@ export default {
   components: { salesRanking, warehouseIntegration, profitGrowth, saleGrowth },
   data() {
     return {
-      departmentArr:[],
-      saleArr:[],
-      devArr:[],
-      saleArrbackups:[],
-      opindex: 0,
+      departmentArr: [],
+      saleArr: [],
+      devArr: [],
+      saleArrbackups: [],
+      opindex: 1,
       activeName: "999",
       loding: false,
-      tableHeightLeft:window.innerHeight - 20,
+      tableHeightLeft: window.innerHeight - 20,
       tableHeightNewTop1: window.innerHeight / 2 - 28,
       tableHeightNewTop2: window.innerHeight / 2,
       tableHeightNewTop: window.innerHeight + 19,
@@ -867,14 +880,17 @@ export default {
   },
   methods: {
     opindexFlag(type) {
-      this.saleArr = []
+      if (type == this.opindex) {
+        return;
+      }
+      this.saleArr = [];
       this.opindex = type;
-      let that = this
-      setTimeout(()=>{
-        if(type=='2'){
-          that.saleArr = that.saleArrbackups
+      let that = this;
+      setTimeout(() => {
+        if (type == "2") {
+          that.saleArr = that.saleArrbackups;
         }
-      },500)
+      }, 500);
     },
     goBlack(n) {
       window.open(n);
@@ -1214,9 +1230,9 @@ export default {
     });
     this.getNews();
     APISiteIndex().then((res) => {
-       this.saleArrbackups = res.data.data.filter(e => e.role === '销售')
-       this.devArr = res.data.data.filter(e => e.role === '开发')
-       this.departmentArr = res.data.data.filter(e => e.role === '部门')
+      this.saleArrbackups = res.data.data.filter((e) => e.role === "销售");
+      this.devArr = res.data.data.filter((e) => e.role === "开发");
+      this.departmentArr = res.data.data.filter((e) => e.role === "部门");
     });
     APISiteSales(this.activePlatpm).then((res) => {
       this.bonusList = res.data.data.list;
@@ -2909,17 +2925,17 @@ h2:hover {
   overflow: hidden;
 }
 .cardLeft {
-  width: 230px;
-  float: left;
+  width: 450px;
   color: #fff;
   margin-top: 25px;
-  font-family: "Consolas";
+  // font-family: "Consolas";
+  overflow: hidden;
 }
 .zmb {
   text-align: center;
   margin: 0;
   margin-top: 5px;
-  color: #000;
+  color: #fff;
   margin-top: 10px;
 }
 .njs {
@@ -2952,7 +2968,7 @@ h2:hover {
   color: #fff;
   text-align: center;
   margin-top: 1px;
-  color: red;
+  color: rgb(241, 238, 3);
 }
 .cardLeft img {
   display: block;
@@ -2961,12 +2977,25 @@ h2:hover {
   height: 53px;
 }
 .cardRight {
-  float: right;
-  width:60%;
-  margin-right: 20px;
-  height: 490px;
-  margin-top: 30px;
-  // background: rgba(255, 255, 255, 0.4);
+  // float: right;
+  width: 90%;
+  margin-left: 25px;
+  height: 500px;
+  // margin-top: 30px;
+  background: rgba($color: #ed5565, $alpha: 0.9);
+  border: #f5ad18 4px solid;
+  border-radius: 12px;
+  position: relative;
+}
+.cardRightjd {
+  // float: right;
+  width: 90%;
+  margin-left: 25px;
+  height: 120px;
+  // margin-top: 30px;
+  margin-bottom: 15px;
+  background: rgba(255, 255, 255, 0.8);
+  border: #f5ad18 4px solid;
   position: relative;
 }
 .luck-user-title {
@@ -2977,7 +3006,7 @@ h2:hover {
   line-height: 50px;
   left: 5%;
   font-size: 18px;
-  color: #f5b43a;
+  color: #fff;
   font-weight: bold;
 }
 .luck-user-title::before {
@@ -2989,7 +3018,7 @@ h2:hover {
   background: -webkit-linear-gradient(
     left,
     rgba(248, 215, 59, 0),
-    #f0d03a,
+    #fff,
     rgba(248, 215, 59, 0)
   );
   height: 2px;
@@ -3009,7 +3038,7 @@ h2:hover {
 .cardText {
   width: 100%;
   margin: auto;
-  margin-top: 62px;
+  margin-top: 32px;
   overflow: hidden;
   color: #fff;
   height: 460px;
@@ -3048,10 +3077,10 @@ h2:hover {
   margin-right: 25px;
 }
 .spGreen {
-  color: #67c23a !important;
+  color: #85f54e !important;
 }
 .swhite {
-  color: #e6a23c !important;
+  color: #64e2f8 !important;
 }
 .jbg {
   animation: rotate 1.5s infinite;
@@ -3577,9 +3606,9 @@ h2:hover {
   float: left;
 }
 .rightBox {
-  width: 30%;
+  // width: 30%;
   height: 475px;
-  float: right;
+  float: left;
   margin-top: 10px;
 }
 .lGoback {
@@ -3591,20 +3620,32 @@ h2:hover {
 }
 .cardLeft01 {
   width: 100%;
-  margin: 0 1%;
+  margin: 0 1.5%;
   margin-top: 20px;
-  background: rgba($color: #fff, $alpha: 0.8);
+  background: rgba($color: rgb(253, 138, 228), $alpha: 0.1);
 }
 .cardLeft {
   margin-left: 20px;
+  margin-bottom: 15px;
 }
-@media (max-width: 1500px) {
-  .options{
+.cardLeft01 {
+  width: 45%;
+  margin: 0 1%;
+  margin-top: 20px;
+  background: rgba($color: #ed5565, $alpha: 0.9);
+}
+@media (max-width: 1600px) {
+  .options {
     margin: auto !important;
-    margin-top: 8% !important;
+    margin-top: 1.5% !important;
+    max-width: 900px !important;
+  }
+  .img1500 {
+    margin-left: 35% !important;
   }
   .cardLeft {
     margin-left: 10px;
+    margin-top: 0px;
   }
   .cardLeft01 {
     margin-left: 0;
@@ -3619,15 +3660,19 @@ h2:hover {
     margin-right: 25px;
   }
   .cardRight {
-    width: 60%;
-    margin-right: 15px;
-    margin-top: 30px;
+    width: 92%;
+    // margin-top: 30px;
+    margin-left: 20px;
+    height: 395px;
+  }
+  .cardText {
+    height: 410px;
   }
   .cardLeft01 {
-    width: 100%;
-    margin: 0 1%;
+    width: 45%;
+    margin: 0 1.5%;
     margin-top: 20px;
-    background: rgba($color: #fff, $alpha: 0.8);
+    background: rgba($color: #ed5565, $alpha: 0.9);
   }
   .cardLeft02 {
     width: 155px;
@@ -3655,7 +3700,7 @@ h2:hover {
 }
 .nbob {
   width: 100%;
-  max-height: 480px;
+  max-height: 580px;
   overflow: hidden;
   overflow-y: auto;
 }
@@ -3667,7 +3712,7 @@ h2:hover {
   display: block;
   float: left;
   color: #fff;
-  font-size: 14px;
+  font-size: 18px;
   width: 20%;
   text-align: center;
   text-decoration: none;
@@ -3681,7 +3726,7 @@ h2:hover {
   display: block;
   float: left;
   color: #fff;
-  font-size: 14px;
+  font-size: 18px;
   width: 12.5%;
   text-align: center;
   text-decoration: none;
@@ -3695,7 +3740,7 @@ h2:hover {
   display: block;
   float: left;
   color: #fff;
-  font-size: 14px;
+  font-size: 18px;
   width: 20%;
   text-align: center;
   line-height: 45px;
@@ -3709,7 +3754,7 @@ h2:hover {
   display: block;
   float: left;
   color: #fff;
-  font-size: 14px;
+  font-size: 18px;
   width: 12.5%;
   text-align: center;
   line-height: 70px;
@@ -3721,11 +3766,11 @@ h2:hover {
   align-items: stretch;
   overflow: hidden;
   min-width: 600px;
-  max-width: 1000px;
+  max-width: 1300px;
   width: calc(100% - 100px);
-  height: 600px;
-  margin-left: 45%;
-  margin-top: 8%;
+  height: 700px;
+  margin-left: 30%;
+  margin-top: 5%;
 }
 
 @media screen and (max-width: 718px) {
@@ -3780,23 +3825,23 @@ h2:hover {
   transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
 }
 
-.options .option:nth-child(1) {
-  background: rgba($color: #ed5565, $alpha: 0.9);
-  // --defaultBackground: #ed5565;
-}
+// .options .option:nth-child(1) {
+//   background: rgba($color: #ed5565, $alpha: 0.9);
+//   // --defaultBackground: #ed5565;
+// }
 
-.options .option:nth-child(2) {
-  background: rgba($color: #fc6e51, $alpha: 0.9);
+.options .option:nth-child(1) {
+  background: rgba($color: #c27ba4, $alpha: 0.9);
   // --defaultBackground: #fc6e51;
 }
 
-.options .option:nth-child(3) {
-  background: rgba($color: #119146, $alpha: 0.9);
+.options .option:nth-child(2) {
+  background: rgba($color: #508064, $alpha: 0.9);
   // --defaultBackground: #119146;
 }
 
-.options .option:nth-child(4) {
-  background: rgba($color: #3b5d8a, $alpha: 0.9);
+.options .option:nth-child(3) {
+  background: rgba($color: #5479a7, $alpha: 0.9);
   // --defaultBackground: #5d9cec;
 }
 
@@ -3812,7 +3857,7 @@ h2:hover {
   flex-grow: 10000;
   -webkit-transform: scale(1);
   transform: scale(1);
-  max-width: 900px;
+  max-width: 1300px;
   margin: 0px;
   border-radius: 40px;
   background-size: auto 100%;
@@ -3846,7 +3891,7 @@ h2:hover {
 }
 
 .options .option:not(.active) .label {
-  bottom: 10px;
+  bottom: 25px;
   left: 10px;
 }
 
@@ -3873,14 +3918,14 @@ h2:hover {
 }
 
 .options .option .label .icon {
-  display: flex;
+  // display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   min-width: 40px;
   max-width: 40px;
-  height: 40px;
-  border-radius: 100%;
+  height: 55px;
+  border-radius: 12px;
   background-color: white;
   color: var(--defaultBackground);
 }
@@ -3911,9 +3956,10 @@ h2:hover {
   text-align: center;
   margin: 0;
   color: #fff;
-  font-size: 20px;
+  font-size: 24px;
   margin-top: 40px;
   margin-bottom: 25px;
+  font-weight: bold;
 }
 </style>
 <style>
