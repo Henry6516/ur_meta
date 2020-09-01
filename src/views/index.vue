@@ -493,12 +493,15 @@
                 </div>
               </div>
             </div>
-            <el-progress
+            <div class="podiv" @mouseover="dindexm()" @mouseout="dindexo()">
+              <span class="podivspan" :style="dindex?'display:block':'display:none'">时间进度</span>
+              <el-progress
               :text-inside="true"
               :stroke-width="20"
-              :percentage="1"
+              :percentage="bonus.dateRate"
               style="width:93%;margin-left:22px;"
             ></el-progress>
+            </div>
           </div>
         </div>
         <div class="options">
@@ -715,6 +718,7 @@ export default {
   components: { salesRanking, warehouseIntegration, profitGrowth, saleGrowth },
   data() {
     return {
+      dindex:false,
       departmentArr: [],
       saleArr: [],
       devArr: [],
@@ -769,6 +773,7 @@ export default {
         totalnj: null,
         passnj: null,
         surplusnj: null,
+        dateRate:0,
       },
       bonusList: [],
       page: null,
@@ -879,6 +884,12 @@ export default {
     };
   },
   methods: {
+    dindexm(){
+      this.dindex = true
+    },
+    dindexo(){
+      this.dindex = false
+    },
     opindexFlag(type) {
       if (type == this.opindex) {
         return;
@@ -1251,6 +1262,7 @@ export default {
       this.bonus.pass = Number(res.data.data.bonusUsedNum).toFixed(0);
       this.bonus.passnj = Number(res.data.data.vacationDaysUsedNum).toFixed(0);
       this.bonus.surplus = Number(res.data.data.bonusUnUsedNum).toFixed(0);
+      this.bonus.dateRate = Number(res.data.data.dateRate).toFixed(0);
       this.bonus.surplusnj = Number(
         res.data.data.vacationDaysUnUsedNum
       ).toFixed(0);
@@ -3960,6 +3972,16 @@ h2:hover {
   margin-top: 40px;
   margin-bottom: 25px;
   font-weight: bold;
+}
+.podiv{
+  position: relative;
+}
+.podivspan{
+  display: block;
+  position: absolute;
+  left: 50%;
+  margin-left: -30px;
+  top: -25px;
 }
 </style>
 <style>
