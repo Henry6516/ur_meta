@@ -408,6 +408,16 @@ export default {
             return false
           }else if(a=='5XL' && b=='XXXXXL'){
             return false
+          }else if(a=='5XL' && b=='XXXXXL'){
+            return false
+          }else if(a=='2X' && b=='XXL'){
+            return false
+          }else if(a=='3X' && b=='XXXL'){
+            return false
+          }else if(a=='4X' && b=='XXXXL'){
+            return false
+          }else if(a=='5X' && b=='XXXXXL'){
+            return false
           }else{
             return a!=b
           }
