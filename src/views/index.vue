@@ -500,6 +500,7 @@
               :stroke-width="25"
               :percentage="bonus.dateRate"
                status="exception"
+               class="opjdt"
               style="width:78%;margin-left:110px;"
             ></el-progress>
             </div>
@@ -544,12 +545,12 @@
             <div class="nbh01" v-if="opindex==2">
               <a>&nbsp;</a>
               <a>姓名</a>
+              <a>排名</a>
               <a>部门</a>
               <a>总目标</a>
               <a>目标奖金</a>
               <a>年假奖励</a>
               <a>已完成</a>
-              <a>排名</a>
               <a>完成度</a>
               <a>超额奖金</a>
               <div class="nbob" v-if="opindex==2"></div>
@@ -570,12 +571,12 @@
                     />
                   </a>
                   <a>{{item.username}}</a>
+                  <a>{{index + 1}}</a>
                   <a>{{item.depart}}</a>
                   <a>{{item.target}}</a>
                   <a>{{item.bonus}}</a>
                   <a>{{item.vacationDays}}</a>
                   <a>{{item.amt}}</a>
-                  <a>{{index + 1}}</a>
                   <a>{{item.rate + '%'}}</a>
                   <a>{{item.rxtraBonus}}</a>
                 </div>
@@ -594,12 +595,12 @@
             <div class="nbh01" v-if="opindex==3">
               <a>&nbsp;</a>
               <a>姓名</a>
+              <a>排名</a>
               <a>部门</a>
               <a>总目标</a>
               <a>目标奖金</a>
               <a>年假奖励</a>
               <a>已完成</a>
-              <a>排名</a>
               <a>完成度</a>
               <a>超额奖金</a>
               <div class="nbob" v-if="opindex==3"></div>
@@ -620,12 +621,12 @@
                     />
                   </a>
                   <a>{{item.username}}</a>
+                  <a>{{index + 1}}</a>
                   <a>{{item.depart}}</a>
                   <a>{{item.target}}</a>
                   <a>{{item.bonus}}</a>
                   <a>{{item.vacationDays}}</a>
                   <a>{{item.amt}}</a>
-                  <a>{{index + 1}}</a>
                   <a>{{item.rate + '%'}}</a>
                   <a>{{item.rxtraBonus}}</a>
                 </div>
@@ -1349,6 +1350,13 @@ export default {
     left: -9.5%;
     top: 16px;
     z-index: 999;
+  }
+  .podivspan{
+    display: block;
+    position: absolute;
+    left: 50%;
+    margin-left: -30px !important;
+    top: -25px;
   }
   .titlea {
     display: block;
@@ -3655,11 +3663,27 @@ h2:hover {
   margin-top: 20px;
   background: rgba($color: #ed5565, $alpha: 0.9);
 }
-@media (max-width: 1600px) {
+@media (max-width: 1700px) {
   .options {
     margin: auto !important;
     margin-top: 1.5% !important;
     max-width: 900px !important;
+  }
+  .nbc01 a{
+    font-size: 14px !important;
+  }
+  .nbh01 a{
+    font-size: 15px !important;
+  }
+  .nbh a{
+    font-size: 15px !important;
+  }
+  .nbc a{
+    font-size: 14px !important;
+  }
+  .opjdt{
+    margin-left: 20px !important;
+    width: 94% !important;
   }
   .img1500 {
     margin-left: 35% !important;
@@ -3993,7 +4017,7 @@ h2:hover {
   display: block;
   position: absolute;
   left: 50%;
-  margin-left: -30px;
+  margin-left: 20px;
   top: -25px;
 }
 </style>
