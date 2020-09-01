@@ -497,9 +497,10 @@
               <span class="podivspan" :style="dindex?'display:block':'display:none'">时间进度</span>
               <el-progress
               :text-inside="true"
-              :stroke-width="20"
+              :stroke-width="25"
               :percentage="bonus.dateRate"
-              style="width:93%;margin-left:22px;"
+               status="exception"
+              style="width:78%;margin-left:110px;"
             ></el-progress>
             </div>
           </div>
@@ -543,10 +544,12 @@
             <div class="nbh01" v-if="opindex==2">
               <a>&nbsp;</a>
               <a>姓名</a>
+              <a>部门</a>
               <a>总目标</a>
               <a>目标奖金</a>
               <a>年假奖励</a>
               <a>已完成</a>
+              <a>排名</a>
               <a>完成度</a>
               <a>超额奖金</a>
               <div class="nbob" v-if="opindex==2"></div>
@@ -557,20 +560,22 @@
                       :src="item.avatar"
                       v-if="item.avatar!=null"
                       class="img1500"
-                      style="width: 60px;height: 60px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
+                      style="width: 52px;height: 52px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
                     />
                     <img
                       src="../assets/header.png"
                       v-if="item.avatar==null"
                       class="img1500"
-                      style="width: 60px;height: 60px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
+                      style="width: 52px;height: 52px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
                     />
                   </a>
                   <a>{{item.username}}</a>
+                  <a>{{item.depart}}</a>
                   <a>{{item.target}}</a>
                   <a>{{item.bonus}}</a>
                   <a>{{item.vacationDays}}</a>
                   <a>{{item.amt}}</a>
+                  <a>{{index + 1}}</a>
                   <a>{{item.rate + '%'}}</a>
                   <a>{{item.rxtraBonus}}</a>
                 </div>
@@ -589,10 +594,12 @@
             <div class="nbh01" v-if="opindex==3">
               <a>&nbsp;</a>
               <a>姓名</a>
+              <a>部门</a>
               <a>总目标</a>
               <a>目标奖金</a>
               <a>年假奖励</a>
               <a>已完成</a>
+              <a>排名</a>
               <a>完成度</a>
               <a>超额奖金</a>
               <div class="nbob" v-if="opindex==3"></div>
@@ -603,20 +610,22 @@
                       :src="item.avatar"
                       v-if="item.avatar!=null"
                       class="img1500"
-                      style="width: 60px;height: 60px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
+                      style="width: 52px;height: 52px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
                     />
                     <img
                       src="../assets/header.png"
                       v-if="item.avatar==null"
                       class="img1500"
-                      style="width: 60px;height: 60px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
+                      style="width: 52px;height: 52px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
                     />
                   </a>
                   <a>{{item.username}}</a>
+                  <a>{{item.depart}}</a>
                   <a>{{item.target}}</a>
                   <a>{{item.bonus}}</a>
                   <a>{{item.vacationDays}}</a>
                   <a>{{item.amt}}</a>
+                  <a>{{index + 1}}</a>
                   <a>{{item.rate + '%'}}</a>
                   <a>{{item.rxtraBonus}}</a>
                 </div>
@@ -1416,7 +1425,7 @@ export default {
   float: left;
   margin-top: 1.5%;
   // height: 915px;
-  background: url(../assets/bgban9.jpg) no-repeat center;
+  background: url(../assets/bgban10.jpg) no-repeat center;
   background-size: 100% 100%;
   position: relative;
 }
@@ -2939,7 +2948,7 @@ h2:hover {
 .cardLeft {
   width: 450px;
   color: #fff;
-  margin-top: 25px;
+  margin-top: 75px;
   // font-family: "Consolas";
   overflow: hidden;
 }
@@ -2990,9 +2999,9 @@ h2:hover {
 }
 .cardRight {
   // float: right;
-  width: 90%;
-  margin-left: 25px;
-  height: 500px;
+  width: 76%;
+  margin-left: 110px;
+  height: 400px;
   // margin-top: 30px;
   background: rgba($color: #ed5565, $alpha: 0.9);
   border: #f5ad18 4px solid;
@@ -3637,7 +3646,7 @@ h2:hover {
   background: rgba($color: rgb(253, 138, 228), $alpha: 0.1);
 }
 .cardLeft {
-  margin-left: 20px;
+  margin-left: 110px;
   margin-bottom: 15px;
 }
 .cardLeft01 {
@@ -3725,6 +3734,8 @@ h2:hover {
   float: left;
   color: #fff;
   font-size: 18px;
+  color: #f8f406;
+  font-weight: bold;
   width: 20%;
   text-align: center;
   text-decoration: none;
@@ -3737,9 +3748,10 @@ h2:hover {
 .nbh01 a {
   display: block;
   float: left;
-  color: #fff;
+  color: #f8f406;
+  font-weight: bold;
   font-size: 18px;
-  width: 12.5%;
+  width: 10%;
   text-align: center;
   text-decoration: none;
   line-height: 35px;
@@ -3752,10 +3764,10 @@ h2:hover {
   display: block;
   float: left;
   color: #fff;
-  font-size: 18px;
+  font-size: 17px;
   width: 20%;
   text-align: center;
-  line-height: 45px;
+  line-height: 40px;
   text-decoration: none;
 }
 .nbc01 {
@@ -3766,10 +3778,11 @@ h2:hover {
   display: block;
   float: left;
   color: #fff;
-  font-size: 18px;
-  width: 12.5%;
+  font-size: 17px;
+  width: 10%;
   text-align: center;
-  line-height: 70px;
+  font-weight: normal;
+  line-height: 58px;
   text-decoration: none;
 }
 .options {
@@ -3967,7 +3980,7 @@ h2:hover {
 .tepn {
   text-align: center;
   margin: 0;
-  color: #fff;
+  color: rgb(248, 244, 6);
   font-size: 24px;
   margin-top: 40px;
   margin-bottom: 25px;
@@ -4029,5 +4042,8 @@ h2:hover {
 }
 .centerBox .el-collapse-item__header.focusing:focus:not(:hover) {
   color: #ffffff;
+}
+.rightBox .el-progress-bar__outer{
+  background-color:rgb(67, 180, 73)  !important;
 }
 </style>
