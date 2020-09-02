@@ -295,13 +295,49 @@ export default {
       }
     },
     allCom() {
+      function getFlag(a, b) {
+        if (a == "2XL" && b == "XXL") {
+          return true;
+        } else if (a == "3XL" && b == "XXXL") {
+          return true;
+        } else if (a == "4XL" && b == "XXXXL") {
+          return true;
+        } else if (a == "5XL" && b == "XXXXXL") {
+          return true;
+        } else if (a == "5XL" && b == "XXXXXL") {
+          return true;
+        } else if (a == "2X" && b == "XXL") {
+          return true;
+        } else if (a == "3X" && b == "XXXL") {
+          return true;
+        } else if (a == "4X" && b == "XXXXL") {
+          return true;
+        } else if (a == "5X" && b == "XXXXXL") {
+          return true;
+        } else {
+          return a == b;
+        }
+      }
       for (let i = 0; i < this.tableData.length; i++) {
         this.tableData[i].offerId = this.valueAll;
-        this.tableData[i].specId = "";
-        this.tableData[i].style = "";
         for (let k = 0; k < this.data1688.length; k++) {
           if (this.tableData[i].offerId == this.data1688[k].offerId) {
             this.tableData[i].selectData = this.data1688[k].value;
+          }
+        }
+        let property1 = this.tableData[i].property1;
+        let property2 = this.tableData[i].property2;
+        for (let j = 0; j < this.tableData[i].selectData.length; j++) {
+          let style = this.tableData[i].selectData[j].style;
+          let style1 = style.split("-->")[0];
+          let style2 = style.split("-->")[1] ? style.split("-->")[1] : null;
+          if (property1 == style1 && getFlag(property2, style2)) {
+            this.tableData[i].specId = this.tableData[i].selectData[j].specId;
+            this.tableData[i].style = this.tableData[i].selectData[j].style;
+            break;
+          } else {
+            this.tableData[i].specId = "";
+            this.tableData[i].style = "";
           }
         }
       }
@@ -386,40 +422,40 @@ export default {
         if (res.data.code == 200) {
           this.tableData = res.data.data;
           for (let i = 0; i < this.tableData.length; i++) {
-            const property1 = this.tableData[i].property1
-            const property2 = this.tableData[i].property2
-            const style = this.tableData[i].style
-            const style1 = style.split('-->')[0]
-            const style2 = style.split('-->')[1]?style.split('-->')[1]:null
-            if(property1!=style1 || getFlag(property2,style2)){
-              this.tableData[i].style = ''
-              this.tableData[i].specId = ''
+            const property1 = this.tableData[i].property1;
+            const property2 = this.tableData[i].property2;
+            const style = this.tableData[i].style;
+            const style1 = style.split("-->")[0];
+            const style2 = style.split("-->")[1] ? style.split("-->")[1] : null;
+            if (property1 != style1 || getFlag(property2, style2)) {
+              this.tableData[i].style = "";
+              this.tableData[i].specId = "";
             }
           }
         } else {
           this.$message.error(res.data.message);
         }
-        function getFlag(a,b){
-          if(a=='2XL' && b=='XXL'){
-            return false
-          }else if(a=='3XL' && b=='XXXL'){
-            return false
-          }else if(a=='4XL' && b=='XXXXL'){
-            return false
-          }else if(a=='5XL' && b=='XXXXXL'){
-            return false
-          }else if(a=='5XL' && b=='XXXXXL'){
-            return false
-          }else if(a=='2X' && b=='XXL'){
-            return false
-          }else if(a=='3X' && b=='XXXL'){
-            return false
-          }else if(a=='4X' && b=='XXXXL'){
-            return false
-          }else if(a=='5X' && b=='XXXXXL'){
-            return false
-          }else{
-            return a!=b
+        function getFlag(a, b) {
+          if (a == "2XL" && b == "XXL") {
+            return false;
+          } else if (a == "3XL" && b == "XXXL") {
+            return false;
+          } else if (a == "4XL" && b == "XXXXL") {
+            return false;
+          } else if (a == "5XL" && b == "XXXXXL") {
+            return false;
+          } else if (a == "5XL" && b == "XXXXXL") {
+            return false;
+          } else if (a == "2X" && b == "XXL") {
+            return false;
+          } else if (a == "3X" && b == "XXXL") {
+            return false;
+          } else if (a == "4X" && b == "XXXXL") {
+            return false;
+          } else if (a == "5X" && b == "XXXXXL") {
+            return false;
+          } else {
+            return a != b;
           }
         }
       });
