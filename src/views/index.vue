@@ -974,6 +974,12 @@ export default {
     };
   },
   methods: {
+    dindexm(){
+      this.dindex = true
+    },
+    dindexo(){
+      this.dindex = false
+    },
     kfpm() {
       if (this.kfpmi == "rise") {
         this.conKf.sort = '-order';
