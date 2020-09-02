@@ -1737,6 +1737,8 @@ export default {
   // height: 915px;
   background: url(../assets/bgban10.jpg) no-repeat center;
   background-size: 100% 100%;
+  box-shadow:0 0 25px 5px rgba(0, 111, 201, 0.3);
+  border-radius: 20px;
   position: relative;
 }
 .box-card {
