@@ -496,13 +496,13 @@
             <div class="podiv" @mouseover="dindexm()" @mouseout="dindexo()">
               <span class="podivspan" :style="dindex?'display:block':'display:none'">时间进度</span>
               <el-progress
-              :text-inside="true"
-              :stroke-width="25"
-              :percentage="bonus.dateRate"
-               status="exception"
-               class="opjdt"
-              style="width:78%;margin-left:110px;"
-            ></el-progress>
+                :text-inside="true"
+                :stroke-width="25"
+                :percentage="bonus.dateRate"
+                status="exception"
+                class="opjdt"
+                style="width:78%;margin-left:110px;"
+              ></el-progress>
             </div>
           </div>
         </div>
@@ -515,14 +515,29 @@
                 <span style="color:#000;display:block;text-align:center;">门</span>
               </div>
             </div>
-            <p class="tepn" v-if="opindex==1">部门目标完成度</p>
+            <p class="tepn" v-if="opindex==1">
+              部门目标完成度
+              <el-input style="width:220px;position: absolute;right:30px;top:2px;" v-model="conBm.search" @change="getTarget()" prefix-icon="el-icon-search" size="small"></el-input>
+            </p>
             <div class="nbob" v-if="opindex==1">
               <div class="nbh">
                 <a>部门</a>
-                <a>总目标</a>
-                <a>目标奖金</a>
-                <a>已完成</a>
-                <a>完成度</a>
+                <a @click="bmzmb()">
+                  总目标
+                  <i class="el-icon-d-caret"></i>
+                </a>
+                <a @click="bmjj()">
+                  目标奖金
+                  <i class="el-icon-d-caret"></i>
+                </a>
+                <a @click="bmywc()">
+                  已完成
+                  <i class="el-icon-d-caret"></i>
+                </a>
+                <a @click="bmwcd()">
+                  完成度
+                  <i class="el-icon-d-caret"></i>
+                </a>
               </div>
               <div class="nbc" v-for="(item,index) in departmentArr" :key="index">
                 <a>{{item.username}}</a>
@@ -541,18 +556,35 @@
                 <span style="color:#000;display:block;text-align:center;">售</span>
               </div>
             </div>
-            <p class="tepn" v-if="opindex==2">销售目标完成度</p>
+            <p class="tepn tepn1" v-if="opindex==2">销售目标完成度
+              <el-input style="width:220px;position: absolute;right:30px;top:2px;" v-model="conXs.search" @change="getXs()" prefix-icon="el-icon-search" size="small"></el-input>
+            </p>
             <div class="nbh01" v-if="opindex==2">
               <a>&nbsp;</a>
+              <a @click="xspm()">
+                排名
+                <i class="el-icon-d-caret"></i>
+              </a>
               <a>姓名</a>
-              <a>排名</a>
               <a>部门</a>
-              <a>总目标</a>
+              <a @click="xszmb()">
+                总目标
+                <i class="el-icon-d-caret"></i>
+              </a>
               <a>目标奖金</a>
               <a>年假奖励</a>
-              <a>已完成</a>
-              <a>完成度</a>
-              <a>超额奖金</a>
+              <a @click="xsywc()">
+                已完成
+                <i class="el-icon-d-caret"></i>
+              </a>
+              <a @click="xswcd()">
+                完成度
+                <i class="el-icon-d-caret"></i>
+              </a>
+              <a @click="xscejj()">
+                超额
+                <i class="el-icon-d-caret"></i>
+              </a>
               <div class="nbob" v-if="opindex==2"></div>
               <div class="nbob">
                 <div class="nbc01" v-for="(item,index) in saleArr" :key="index">
@@ -570,8 +602,8 @@
                       style="width: 52px;height: 52px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
                     />
                   </a>
+                  <a>{{item.order}}</a>
                   <a>{{item.username}}</a>
-                  <a>{{index + 1}}</a>
                   <a>{{item.depart}}</a>
                   <a>{{item.target}}</a>
                   <a>{{item.bonus}}</a>
@@ -591,18 +623,35 @@
                 <span style="color:#000;display:block;text-align:center;">发</span>
               </div>
             </div>
-            <p class="tepn" v-if="opindex==3">开发目标完成度</p>
+            <p class="tepn tepn2" v-if="opindex==3">开发目标完成度
+              <el-input style="width:220px;position: absolute;right:30px;top:2px;" v-model="conKf.search" @change="getDev()" prefix-icon="el-icon-search" size="small"></el-input>
+            </p>
             <div class="nbh01" v-if="opindex==3">
               <a>&nbsp;</a>
+              <a @click="kfpm()">
+                排名
+                <i class="el-icon-d-caret"></i>
+              </a>
               <a>姓名</a>
-              <a>排名</a>
               <a>部门</a>
-              <a>总目标</a>
+              <a @click="kfzmb()">
+                总目标
+                <i class="el-icon-d-caret"></i>
+              </a>
               <a>目标奖金</a>
               <a>年假奖励</a>
-              <a>已完成</a>
-              <a>完成度</a>
-              <a>超额奖金</a>
+              <a @click="kfywc()">
+                已完成
+                <i class="el-icon-d-caret"></i>
+              </a>
+              <a @click="kfwcd()">
+                完成度
+                <i class="el-icon-d-caret"></i>
+              </a>
+              <a @click="kfcejj()">
+                超额
+                <i class="el-icon-d-caret"></i>
+              </a>
               <div class="nbob" v-if="opindex==3"></div>
               <div class="nbob">
                 <div class="nbc01" v-for="(item,index) in devArr" :key="index">
@@ -620,8 +669,8 @@
                       style="width: 52px;height: 52px;border-radius:50%;float:left;margin-left:50%;margin-bottom:20px;"
                     />
                   </a>
+                  <a>{{item.order}}</a>
                   <a>{{item.username}}</a>
-                  <a>{{index + 1}}</a>
                   <a>{{item.depart}}</a>
                   <a>{{item.target}}</a>
                   <a>{{item.bonus}}</a>
@@ -728,7 +777,7 @@ export default {
   components: { salesRanking, warehouseIntegration, profitGrowth, saleGrowth },
   data() {
     return {
-      dindex:false,
+      dindex: false,
       departmentArr: [],
       saleArr: [],
       devArr: [],
@@ -783,7 +832,7 @@ export default {
         totalnj: null,
         passnj: null,
         surplusnj: null,
-        dateRate:0,
+        dateRate: 0,
       },
       bonusList: [],
       page: null,
@@ -891,6 +940,37 @@ export default {
         ama: false,
         joom: false,
       },
+      bmzmbi: "rise",
+      bmjji: "rise",
+      bmywci: "rise",
+      bmwcdi: "rise",
+      xspmi: "rise",
+      xszmbi: "rise",
+      xsywci: "rise",
+      xswcdi: "rise",
+      xscejji: "rise",
+      kfpmi: "rise",
+      kfzmbi: "rise",
+      kfywci: "rise",
+      kfwcdi: "rise",
+      kfcejji: "rise",
+      bmsearch:'',
+      xssearch:'',
+      conBm:{
+        search:'',
+        role:'部门',
+        sort:null,
+      },
+      conKf:{
+        search:'',
+        role:'开发',
+        sort:null,
+      },
+      conXs:{
+        search:'',
+        role:'销售',
+        sort:null,
+      }
     };
   },
   methods: {
@@ -899,6 +979,216 @@ export default {
     },
     dindexo(){
       this.dindex = false
+    },
+    kfpm() {
+      if (this.kfpmi == "rise") {
+        this.conKf.sort = '-order';
+        this.getDev();
+        this.kfpmi = "decline";
+      } else if (this.kfpmi == "decline") {
+        this.conKf.sort = 'order';
+        this.getDev();
+        this.kfpmi = "";
+      } else {
+        this.conKf.sort = null;
+        this.getDev();
+        this.kfpmi = "rise";
+      }
+    },
+    kfzmb() {
+      if (this.kfzmbi == "rise") {
+        this.conKf.sort = '-target';
+        this.getDev();
+        this.kfzmbi = "decline";
+      } else if (this.kfzmbi == "decline") {
+        this.conKf.sort = 'target';
+        this.getDev();
+        this.kfzmbi = "";
+      } else {
+        this.conKf.sort = null;
+        this.getDev();
+        this.kfzmbi = "rise";
+      }
+    },
+    kfywc() {
+      if (this.kfywci == "rise") {
+        this.conKf.sort = '-amt';
+        this.getDev();
+        this.kfywci = "decline";
+      } else if (this.kfywci == "decline") {
+        this.conKf.sort = 'amt';
+        this.getDev();
+        this.kfywci = "";
+      } else {
+        this.conKf.sort = null;
+        this.getDev();
+        this.kfywci = "rise";
+      }
+    },
+    kfwcd() {
+      if (this.kfwcdi == "rise") {
+        this.conKf.sort = '-rate';
+        this.getDev();
+        this.kfwcdi = "decline";
+      } else if (this.kfwcdi == "decline") {
+        this.conKf.sort = 'rate';
+        this.getDev();
+        this.kfwcdi = "";
+      } else {
+        this.conKf.sort = null;
+        this.getDev();
+        this.kfwcdi = "rise";
+      }
+    },
+    kfcejj() {
+      if (this.kfcejji == "rise") {
+        this.conKf.sort = '-rxtraBonus';
+        this.getDev();
+        this.kfcejji = "decline";
+      } else if (this.kfcejji == "decline") {
+        this.conKf.sort = 'rxtraBonus';
+        this.getDev();
+        this.kfcejji = "";
+      } else {
+        this.conKf.sort = null;
+        this.getDev();
+        this.kfcejji = "rise";
+      }
+    },
+    xspm() {
+      if (this.xspmi == "rise") {
+        this.conXs.sort = '-order';
+        this.getXs();
+        this.xspmi = "decline";
+      } else if (this.xspmi == "decline") {
+        this.conXs.sort = 'order';
+        this.getXs();
+        this.xspmi = "";
+      } else {
+        this.conXs.sort = null;
+        this.getXs();
+        this.xspmi = "rise";
+      }
+    },
+    xszmb() {
+      if (this.xszmbi == "rise") {
+        this.conXs.sort = '-target';
+        this.getXs();
+        this.xszmbi = "decline";
+      } else if (this.xszmbi == "decline") {
+        this.conXs.sort = 'target';
+        this.getXs();
+        this.xszmbi = "";
+      } else {
+        this.conXs.sort = null;
+        this.getXs();
+        this.xszmbi = "rise";
+      }
+    },
+    xsywc() {
+      if (this.xsywci == "rise") {
+        this.conXs.sort = '-amt';
+        this.getXs();
+        this.xsywci = "decline";
+      } else if (this.xsywci == "decline") {
+        this.conXs.sort = 'amt';
+        this.getXs();
+        this.xsywci = "";
+      } else {
+        this.conXs.sort = null;
+        this.getXs();
+        this.xsywci = "rise";
+      }
+    },
+    xswcd() {
+      if (this.xswcdi == "rise") {
+        this.conXs.sort = '-rate';
+        this.getXs();
+        this.xswcdi = "decline";
+      } else if (this.xswcdi == "decline") {
+        this.conXs.sort = 'rate';
+        this.getXs();
+        this.xswcdi = "";
+      } else {
+        this.conXs.sort = null;
+        this.getXs();
+        this.xswcdi = "rise";
+      }
+    },
+    xscejj() {
+      if (this.xscejji == "rise") {
+        this.conXs.sort = '-rxtraBonus';
+        this.getXs();
+        this.xscejji = "decline";
+      } else if (this.xscejji == "decline") {
+        this.conXs.sort = 'rxtraBonus';
+        this.getXs();
+        this.xscejji = "";
+      } else {
+        this.conXs.sort = null;
+        this.getXs();
+        this.xscejji = "rise";
+      }
+    },
+    bmzmb() {
+      if (this.bmzmbi == "rise") {
+        this.conBm.sort = '-target';
+        this.getTarget();
+        this.bmzmbi = "decline";
+      } else if (this.bmzmbi == "decline") {
+        this.conBm.sort = 'target';
+        this.getTarget();
+        this.bmzmbi = "";
+      } else {
+        this.conBm.sort = null;
+        this.getTarget();
+        this.bmzmbi = "rise";
+      }
+    },
+    bmjj() {
+      if (this.bmjji == "rise") {
+        this.conBm.sort = '-bonus';
+        this.getTarget();
+        this.bmjji = "decline";
+      } else if (this.bmjji == "decline") {
+        this.conBm.sort = 'bonus';
+        this.getTarget();
+        this.bmjji = "";
+      } else {
+        this.conBm.sort = null;
+        this.getTarget();
+        this.bmjji = "rise";
+      }
+    },
+    bmywc() {
+      if (this.bmywci == "rise") {
+        this.conBm.sort = '-amt';
+        this.getTarget();
+        this.bmywci = "decline";
+      } else if (this.bmywci == "decline") {
+        this.conBm.sort = 'amt';
+        this.getTarget();
+        this.bmywci = "";
+      } else {
+        this.conBm.sort = null;
+        this.getTarget();
+        this.bmywci = "rise";
+      }
+    },
+    bmwcd() {
+      if (this.bmwcdi == "rise") {
+        this.conBm.sort = '-rate';
+        this.getTarget();
+        this.bmwcdi = "decline";
+      } else if (this.bmwcdi == "decline") {
+        this.conBm.sort = 'rate';
+        this.getTarget();
+        this.bmwcdi = "";
+      } else {
+        this.conBm.sort = null;
+        this.getTarget();
+        this.bmwcdi = "rise";
+      }
     },
     opindexFlag(type) {
       if (type == this.opindex) {
@@ -909,7 +1199,7 @@ export default {
       let that = this;
       setTimeout(() => {
         if (type == "2") {
-          that.saleArr = that.saleArrbackups;
+          that.getXs();
         }
       }, 500);
     },
@@ -1200,6 +1490,21 @@ export default {
     dateFormatter(date) {
       return date.substring(0, 10);
     },
+    getTarget(){
+      APISiteIndex(this.conBm).then((res) => {
+        this.departmentArr = res.data.data;
+      });
+    },
+    getDev(){
+      APISiteIndex(this.conKf).then((res) => {
+        this.devArr = res.data.data;
+      });
+    },
+    getXs(){
+      APISiteIndex(this.conXs).then((res) => {
+        this.saleArr = res.data.data;
+      });
+    },
   },
   filters: {
     cutOut: function (value) {
@@ -1250,11 +1555,14 @@ export default {
       this.proTable = res.data.data;
     });
     this.getNews();
-    APISiteIndex().then((res) => {
-      this.saleArrbackups = res.data.data.filter((e) => e.role === "销售");
-      this.devArr = res.data.data.filter((e) => e.role === "开发");
-      this.departmentArr = res.data.data.filter((e) => e.role === "部门");
-    });
+    this.getTarget();
+    this.getDev();
+    // this.getXs();
+    // APISiteIndex().then((res) => {
+    //   this.saleArrbackups = res.data.data.filter((e) => e.role === "销售");
+    //   this.devArr = res.data.data.filter((e) => e.role === "开发");
+    //   this.departmentArr = res.data.data.filter((e) => e.role === "部门");
+    // });
     APISiteSales(this.activePlatpm).then((res) => {
       this.bonusList = res.data.data.list;
       for (var i = 0; i < this.bonusList.length; i++) {
@@ -1351,7 +1659,7 @@ export default {
     top: 16px;
     z-index: 999;
   }
-  .podivspan{
+  .podivspan {
     display: block;
     position: absolute;
     left: 50%;
@@ -1435,6 +1743,8 @@ export default {
   // height: 915px;
   background: url(../assets/bgban10.jpg) no-repeat center;
   background-size: 100% 100%;
+  box-shadow:0 0 15px 4px rgba(126, 125, 125, 0.4);
+  border-radius: 20px;
   position: relative;
 }
 .box-card {
@@ -3669,19 +3979,19 @@ h2:hover {
     margin-top: 1.5% !important;
     max-width: 900px !important;
   }
-  .nbc01 a{
+  .nbc01 a {
     font-size: 14px !important;
   }
-  .nbh01 a{
+  .nbh01 a {
     font-size: 15px !important;
   }
-  .nbh a{
+  .nbh a {
     font-size: 15px !important;
   }
-  .nbc a{
+  .nbc a {
     font-size: 14px !important;
   }
-  .opjdt{
+  .opjdt {
     margin-left: 20px !important;
     width: 94% !important;
   }
@@ -3820,6 +4130,13 @@ h2:hover {
   height: 700px;
   margin-left: 30%;
   margin-top: 5%;
+  moz-user-select: -moz-none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 @media screen and (max-width: 718px) {
@@ -4009,11 +4326,12 @@ h2:hover {
   margin-top: 40px;
   margin-bottom: 25px;
   font-weight: bold;
-}
-.podiv{
   position: relative;
 }
-.podivspan{
+.podiv {
+  position: relative;
+}
+.podivspan {
   display: block;
   position: absolute;
   left: 50%;
@@ -4067,7 +4385,28 @@ h2:hover {
 .centerBox .el-collapse-item__header.focusing:focus:not(:hover) {
   color: #ffffff;
 }
-.rightBox .el-progress-bar__outer{
-  background-color:rgb(67, 180, 73)  !important;
+.rightBox .el-progress-bar__outer {
+  background-color: rgb(67, 180, 73) !important;
+}
+.tepn .el-input__inner{
+  background: rgba(237, 85, 101, 0.1);
+  outline: none !important;
+  color: #fff;
+}
+.tepn .el-input__inner:focus{
+  border: #fff solid 1px !important;
+}
+.tepn1 .el-input__inner{
+  background: rgba(80, 128, 100, 0.1);
+  outline: none !important;
+  color: #fff;
+}
+.tepn2 .el-input__inner{
+  background: rgba(84, 121, 167, 0.1);
+  outline: none !important;
+  color: #fff;
+}
+.tepn i{
+  color: #fff !important;
 }
 </style>

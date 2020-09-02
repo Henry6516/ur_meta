@@ -452,9 +452,9 @@ export function APIBranchDpart() {
   })
 }
 
-export function APISiteIndex() {
+export function APISiteIndex(param) {
   return request({
-    url: '/site/index',
+    url: '/site/index?search=' + param.search + '&role=' + param.role + '&sort=' + param.sort,
     method: 'get'
   })
 }

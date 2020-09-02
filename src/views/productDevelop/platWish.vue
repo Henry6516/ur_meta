@@ -523,6 +523,21 @@
             <el-input v-model="wishForm.shippingTime" style="width:100%" class="aArial"></el-input>
           </el-col>
         </el-col>
+        <el-col :span="24" style="margin-top: 15px">
+          <span
+            style="text-align: right;margin-top: 8px;float: left;padding-left: 30px;margin-right: 10px"
+          >刊登Joom</span>
+          <el-col :span="21">
+            <el-select v-model="wishForm.isJoomPublish" placeholder="请选择" style="width:100%">
+              <el-option
+                v-for="item in joomOptions"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>  
+          </el-col>
+        </el-col>
       </el-row>
     </el-form>
     <el-col :span="24" style="padding: 0;margin-left: 15px">
@@ -1146,6 +1161,7 @@ export default {
   },
   data() {
     return {
+      joomOptions:['是','否'],
       departmentValue: null,
       platValue: null,
       suffixValue: [],

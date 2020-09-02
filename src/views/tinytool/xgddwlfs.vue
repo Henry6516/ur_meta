@@ -3,6 +3,7 @@
     <el-button
       size="small"
       type="primary"
+      :disabled="flag"
       style="margin-top:15px;margin-left:15px;"
       @click="onSubmit()"
     >确定</el-button>
@@ -23,6 +24,7 @@ export default {
       totalPrice1: 0,
       totalPrice: 0,
       member: [],
+      flag:false,
       total: null,
       purchaser: [],
       condition: {
@@ -81,6 +83,7 @@ export default {
       this.onSubmit(this.condition);
     },
     onSubmit() {
+      this.flag = true
       getModifyOrderLogisticsWay().then(res => {
         if (res.data.code === 200) {
           this.$message({
@@ -90,6 +93,7 @@ export default {
         } else {
           this.$message.error(res.data.message);
         }
+        this.flag = false
       });
     }
   },
