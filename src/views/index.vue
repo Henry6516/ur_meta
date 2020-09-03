@@ -1580,7 +1580,7 @@ export default {
       this.bonus.pass = Number(res.data.data.bonusUsedNum).toFixed(0);
       this.bonus.passnj = Number(res.data.data.vacationDaysUsedNum).toFixed(0);
       this.bonus.surplus = Number(res.data.data.bonusUnUsedNum).toFixed(0);
-      this.bonus.dateRate = Number(res.data.data.dateRate).toFixed(0);
+      this.bonus.dateRate = Number(res.data.data.dateRate);
       this.bonus.surplusnj = Number(
         res.data.data.vacationDaysUnUsedNum
       ).toFixed(0);
