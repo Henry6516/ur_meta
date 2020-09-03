@@ -49,6 +49,13 @@
                                              align="center">
                             </el-table-column>
                         </el-table-column>
+                        <el-table-column label="指定子店铺"
+                                         header-align="center">
+                            <el-table-column prop="joomSuffix"
+                                             :render-header="renderHeaderPic"
+                                             align="center">
+                            </el-table-column>
+                        </el-table-column>
                         <el-table-column label="图片网址代码"
                                          header-align="center">
                             <el-table-column prop="imgCode"
@@ -116,6 +123,14 @@
                         </el-col>
                         <el-col :span="24" style="margin-bottom: 20px">
                             <el-col :span="3">
+                                <p class="basp">指定子店铺</p>
+                            </el-col>
+                            <el-col :span="20">
+                                <el-input v-model="joomSuffix"></el-input>
+                            </el-col>
+                        </el-col>
+                        <el-col :span="24" style="margin-bottom: 20px">
+                            <el-col :span="3">
                                 <p class="basp">图片网址代码</p>
                             </el-col>
                             <el-col :span="20">
@@ -156,6 +171,14 @@
                             </el-col>
                             <el-col :span="20">
                                 <el-input v-model="conten.joomName"></el-input>
+                            </el-col>
+                        </el-col>
+                        <el-col :span="24" style="margin-bottom: 20px">
+                            <el-col :span="3">
+                                <p class="basp">指定子店铺</p>
+                            </el-col>
+                            <el-col :span="20">
+                                <el-input v-model="conten.joomSuffix"></el-input>
                             </el-col>
                         </el-col>
                         <el-col :span="24" style="margin-bottom: 20px">
@@ -212,6 +235,7 @@
                 photo:null,
                 masterGraph:null,
                 skuSuffix:null,
+                joomSuffix:null,
                 conten:[],
                 delist:[],
                 condition:{
@@ -230,12 +254,13 @@
                 if(this.joomaccount){
                     var condate={
                         "joomName": this.joomaccount,
-                        "joomSuffix": null,
+                        "joomSuffix": this.joomSuffix,
                         "imgCode": this.photo,
                         "mainImg": this.masterGraph,
                         "skuCode": this.skuSuffix
                     }
                     this.joomaccount = null;
+                    this.joomSuffix = null;
                     this.photo = null;
                     this.masterGraph = null;
                     this.skuSuffix = null;
@@ -367,6 +392,33 @@
                             [
                                 h('el-input', {
                                     props: {
+                                        value: this.condition.joomSuffix,
+                                        size: 'mini',
+                                        clearable: true
+                                    },
+                                    on: {
+                                        input: value => {
+                                            this.condition.joomSuffix = value
+                                            this.$emit('input', value)
+                                        },
+                                        change: value => {
+                                            this.getDate()
+                                        }
+                                    }
+                                })
+                            ]
+                    )
+                }else if ($index === 2) {
+                    return h(
+                            'div',
+                            {
+                                style: {
+                                    height: '30px'
+                                }
+                            },
+                            [
+                                h('el-input', {
+                                    props: {
                                         value: this.condition.imgCode,
                                         size: 'mini',
                                         clearable: true
@@ -383,7 +435,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 2) {
+                } else if ($index === 3) {
                     return h(
                             'div',
                             {
@@ -410,7 +462,7 @@
                                 })
                             ]
                     )
-                } else if ($index === 3) {
+                } else if ($index === 4) {
                     return h(
                             'div',
                             {
