@@ -604,12 +604,12 @@
                   </a>
                   <a>{{item.order}}</a>
                   <a>{{item.username}}</a>
-                  <a>{{item.depart}}</a>
+                  <a style="word-break:keep-all;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">{{item.depart}}</a>
                   <a>{{item.target}}</a>
                   <a>{{item.bonus}}</a>
                   <a>{{item.vacationDays}}</a>
                   <a>{{item.amt}}</a>
-                  <a>{{item.rate + '%'}}</a>
+                  <a :class="item.rate>bonus.dateRate?'rateColor1':'rateColor'">{{item.rate + '%'}}</a>
                   <a>{{item.rxtraBonus}}</a>
                 </div>
               </div>
@@ -676,7 +676,7 @@
                   <a>{{item.bonus}}</a>
                   <a>{{item.vacationDays}}</a>
                   <a>{{item.amt}}</a>
-                  <a>{{item.rate + '%'}}</a>
+                  <a :class="item.rate>bonus.dateRate?'rateColor1':'rateColor'">{{item.rate + '%'}}</a>
                   <a>{{item.rxtraBonus}}</a>
                 </div>
               </div>
@@ -3989,7 +3989,7 @@ h2:hover {
     font-size: 15px !important;
   }
   .nbc a {
-    font-size: 14px !important;
+    font-size: 15px !important;
   }
   .opjdt {
     margin-left: 20px !important;
@@ -4337,6 +4337,12 @@ h2:hover {
   left: 50%;
   margin-left: 20px;
   top: -25px;
+}
+.rateColor{
+  color: #fccf06 !important;
+}
+.rateColor1{
+  color: #04ff04 !important;
 }
 </style>
 <style>
