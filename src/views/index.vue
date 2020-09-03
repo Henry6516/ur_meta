@@ -609,7 +609,7 @@
                   <a>{{item.bonus}}</a>
                   <a>{{item.vacationDays}}</a>
                   <a>{{item.amt}}</a>
-                  <a>{{item.rate + '%'}}</a>
+                  <a :class="item.rate>bonus.dateRate?'rateColor1':'rateColor'">{{item.rate + '%'}}</a>
                   <a>{{item.rxtraBonus}}</a>
                 </div>
               </div>
@@ -676,7 +676,7 @@
                   <a>{{item.bonus}}</a>
                   <a>{{item.vacationDays}}</a>
                   <a>{{item.amt}}</a>
-                  <a>{{item.rate + '%'}}</a>
+                  <a :class="item.rate>bonus.dateRate?'rateColor1':'rateColor'">{{item.rate + '%'}}</a>
                   <a>{{item.rxtraBonus}}</a>
                 </div>
               </div>
@@ -4337,6 +4337,12 @@ h2:hover {
   left: 50%;
   margin-left: 20px;
   top: -25px;
+}
+.rateColor{
+  color: #fccf06 !important;
+}
+.rateColor1{
+  color: #04ff04 !important;
 }
 </style>
 <style>
