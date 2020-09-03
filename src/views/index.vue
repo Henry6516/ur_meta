@@ -604,7 +604,7 @@
                   </a>
                   <a>{{item.order}}</a>
                   <a>{{item.username}}</a>
-                  <a>{{item.depart}}</a>
+                  <a style="word-break:keep-all;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">{{item.depart}}</a>
                   <a>{{item.target}}</a>
                   <a>{{item.bonus}}</a>
                   <a>{{item.vacationDays}}</a>
@@ -3989,7 +3989,7 @@ h2:hover {
     font-size: 15px !important;
   }
   .nbc a {
-    font-size: 14px !important;
+    font-size: 15px !important;
   }
   .opjdt {
     margin-left: 20px !important;
