@@ -544,7 +544,7 @@
                 <a>{{item.target}}</a>
                 <a>{{item.bonus}}</a>
                 <a>{{item.amt}}</a>
-                <a>{{item.rate + '%'}}</a>
+                <a :class="item.rate>bonus.dateRate?'rateColor1':'rateColor'">{{item.rate + '%'}}</a>
               </div>
             </div>
           </div>
